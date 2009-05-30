@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<anydataset>
+  <row>
+    <field name="name">XMLNuke Administrator</field>
+    <field name="username">admin</field>
+    <field name="email">info@xmlnuke.com</field>
+    <field name="password">37FA265330AD83EAA879EFB1E2DB6380896CF639</field>
+    <field name="admin">yes</field>
+    <field name="created">2002-05-01 00:00:00</field>
+  </row>
+</anydataset>

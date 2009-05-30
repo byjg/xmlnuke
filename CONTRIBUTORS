@@ -1,0 +1,47 @@
+Contributors of XMLNuke project
+(Listed in chronological order - oldiest first)
+
+João Gilberto Magalhães (Brazil)
+  -- Concept and creation of XMLNuke project
+  -- C# implementation
+  -- C# and PHP5 maintener
+  -- Documentations maintener
+
+Wilson Coelho (Brazil)
+  -- Help me to make the first version in Java (obsolet)
+
+Johann Roos (South Africa)
+  -- Help in the translation to english to earliest language files
+
+?? (France, I lost my records, sorry!)                                                                         
+  -- Help in the translate sample site and some docs to French                             
+
+Bilge Tutak (Turkey)
+  -- Implemented some features in the ASP version
+
+Vitaly Zabaluev (Russia)
+  -- implemented a download module in the ASP version 
+     (ported to C#/PHP5 by XMLNuke Team)
+
+Yuri Wanderley (Brazil)
+  -- Initial PHP5 implementantion based on C#
+  -- Documentation
+
+Thiago Bellandi (Brazil)
+  -- PHP filemanager admin module
+
+Rafael Lima (Brazil)
+  -- Some improvements in PHP version
+  -- PHP ImageUtil class
+  -- PHP UPloadUtil class
+
+Henrik Våglin (Sweden)
+  -- Translated sample site and some docs to Swedish (sv-se)
+ 
+Carolyn Oliveira (Brazil)
+  -- Translated admin tools and documentation to Englisg (en-us)
+
+Michael Kipp (Germany)
+  -- Translated admin tools and sample site to Germany (de-de)
+  -- Help to organize language files
+

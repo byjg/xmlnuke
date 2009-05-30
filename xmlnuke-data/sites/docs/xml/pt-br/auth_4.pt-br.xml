@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Criando seu próprio módulo de Login</title>
+		<abstract>Como criar o seu próprio módulo de login para efetuar validações de acesso personalizadas. </abstract>
+		<created>15/8/2006 15:38:20</created>
+		<modified>4/2/2008 16:47:33</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_auth</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Criando um módulo de Login</title>
+		<body>
+			<p>Qualquer módulo válido para o XMLNuke pode ser um módulo de Login desde que sejam atendidas as seguintes condições:
+<ul><li>O módulo não deve requerer autenticação</li><li>Deve ao final chamar Context.MakeLogin()</li><li>Deve ser configurado na opção: <b>xmlnuke.LOGINMODULE</b> o nome desse módulo para que o XMLNuke entenda que ele efetuará o login.</li></ul></p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Exemplo</title>
+		<body>
+			<p>O Xmlnuke implementa uma classe chamada LoginBase. Essa classe possui diversas rotinas para enviar email no caso de esquecimento de senha, gerar uma nova senha, dentre outras funções. Para criar o seu módulo de login, a sua classe deverá herdar de LoginBase e deve fazer o mecanismo de logon (pedir usuário, senha, etc). Depois de feito TODO o processo de validação a etapa final devem ser executadas as linhas abaixo para informar ao XMLNuke que o usuário LOGOU no sistema. 
+
+<code information="CSharp"><![CDATA[
+// usernamevalid => LOGIN DO USUÁRIO
+// userid => Código do usuário
+
+this._context.MakeLogin(usernamevalid, userid);
+string Url = FormsAuthentication.GetRedirectUrl(usernamevalid, false);
+this._context.redirectUrl( Url );
+]]></code><code information="PHP"><![CDATA[
+// $usernamevalid => LOGIN DO USUÁRIO
+// $id => Código do usuário
+
+$urlReturn = $this->_context->ContextValue("ReturnUrl");
+
+$this->_context->MakeLogin($usernamevalid, $id);
+$url = XmlnukeManageUrl::decodeParam($urlReturn);
+$this->_context->redirectUrl($url);
+]]></code></p>
+		</body>
+	</blockcenter>
+</page>

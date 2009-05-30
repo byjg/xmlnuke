@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Structure of Directories</title>
+		<abstract>How XMLNuke organizes files within the folders.</abstract>
+		<created>15/8/2006 13:11:09</created>
+		<modified>Sat Sep 13 2008 18:50:18</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_xmlnukeconcepts</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>The Organization of XMLNuke Directories</title>
+		<body>
+			<p>XMLNuke is completely contained in a single folder. Depending on the version you are using, this can be either:
+<ul>
+<li>xmlnuke-php5</li>
+<li>xmlnuke-csharp</li>
+</ul>
+Inside this structure is basically the following structure:
+<code information="Structure of Directories"><![CDATA[
+RAIZ
+  +-- bin
+  +-- common
+  +-- data
+  +-- lib (*)
+]]>
+</code></p>
+		</body>
+	</blockcenter>
+<blockcenter>
+<title>The "bin" folder</title>
+<body>
+<p>This folder contains the KERNEL of XMLNuke with all of its functionalities. There are some details in this folder about every XMLNuke release.
+</p>
+
+<p><b>The bin folder in the CSharp version</b></p>
+<p>In the CSharp version, the <b>bin</b> folder contains only the compiled assemblies of XMLNuke. There are also the assemblies of users that should have the following rule for the name: namespace.namespace.dll</p>
+<p>In this case, all of the classes (modules) should use the namespace defined above. (See the topic Creating User Modules)</p>
+
+<p><b>The bin folder in the PHP version</b></p>
+<p>In the PHP version, the <b>bin</b> folder contains all of the source codes for XMLNuke. If users want to create their own classes and modules THEY SHOULD NOT USE THIS FOLDER. The folder to be used in this case in the PHP version is the <b>lib</b> folder.</p>
+
+</body>
+</blockcenter>
+
+
+<blockcenter>
+<title>The "common" folder</title>
+<body>
+<p>This folder is dedicated to storing images, javascripts and standard styles of XMLNuke?s own engine. For example, the buttons on EditList are in this folder.</p>
+<p>Users can add documents and images to this folder themselves, as well as create their own independent structures.</p>
+</body>
+</blockcenter>
+
+
+<blockcenter>
+<title>The "data" folder</title>
+<body>
+<p>The <b>data</b> folder where the site configurations are stored, as well as the XML and XSL document of the site. This folder can have its location changed through the configuration file and requires write permission by the web application. It has two subdirectories:
+<ul>
+<li>sites: Configurations and documents exclusive to a specific site.</li>
+<li>shared: Shared configurations and documents. If not found in sites, try to locate it in shared.</li>
+</ul>
+</p>
+<p><code information="Directory Structure for the DATA folder"><![CDATA[
+data
+  +-- shared
+          +-- admin
+          +-- anydataset
+          +-- lang
+          +-- setup
+          +-- snippet
+          +-- xsl
+  +-- sites
+          +-- [NOMESITE]
+                  +-- anydataset
+                  +-- cache
+                  +-- lang
+                  +-- offline
+                  +-- snippet
+                  +-- xml
+                  +-- xsl
+]]>
+</code></p>
+</body>
+</blockcenter>
+
+<blockcenter>
+<title>The "lib" folder (only PHP)</title>
+<body>
+<p>This folder exists only in the PHP version. All the modules and classes of users can be shared for any site and must necessarily be within this folder.</p>
+<p>Some important information:
+<ul>
+<li>Programming for XMLNuke, even in the PHP version, is done exclusively through classes</li>
+<li>XMLNuke allows classes to be organized into NameSpaces, which are phsyically organized in sub-categories</li>
+</ul>
+
+The NameSpace concept is particularly interesting to help organize our files in PHP/XMLNuke. For example, if we are going to build an application for a forum and a poll, for example, we can use the following structure to organize the PHP files:
+</p>
+<p><code information="Example of the organization of NameSpaces in PHP"><![CDATA[
+lib
+  +-- common
+          +-- database
+          +-- base
+  +-- forum
+          +-- core
+          +-- modules
+          +-- administration
+                   +-- modules
+                   +-- core
+          +-- xmlobjects
+  +-- poll
+          +-- core
+          +-- xmlobjects
+          +-- modules
+]]>
+</code></p>
+<p>Notice that there are some <b>modules</b> folders. This folder has a special use in XMLNuke; it specifies that the files that are present there correspond to the XMLNuke modules and can be run. The rest of the folders cannot be accessed externally.</p>
+<p>This way, to run a file that is within the modules folder, we can use the following examples:
+<ul>
+<li>xmlnuke.php?module=forum.algumaclassedentrodemodule</li>
+<li>xmlnuke.php?module=forum.administracao.algumaclassedentrodemodule</li>
+<li>xmlnuke.php?module=enquete.algumaclassedentrodemodule</li>
+</ul>
+</p>
+</body>
+</blockcenter>
+
+</page>

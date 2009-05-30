@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<anydataset>
+  <!-- 
+     Maps XSL document in a specific mime-type content. 
+     The default mimetype for all xsl documents is text/html
+     
+     This file may be placed into Anydataset directory existing in site's user dir. 
+  -->
+  
+  <row>
+    <field name="xsl">rss</field>
+    <field name="content-type">text/xml</field>
+  </row>
+  <row>
+    <field name="xsl">wml</field>
+    <field name="content-type">text/vnd.wap.wml</field>
+  </row>
+  <row>
+    <field name="xsl">xmlexcel</field>
+    <field name="content-type">application/vnd.ms-excel</field>
+  </row>
+  <row>
+    <field name="xsl">xmlword</field>
+    <field name="content-type">application/vnd.ms-word</field>
+  </row>
+</anydataset>

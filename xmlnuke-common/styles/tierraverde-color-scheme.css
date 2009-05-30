@@ -1,0 +1,46 @@
+/**********************************************************************
+ * TITLE: Color Scheme Stylesheet for Tierra Verde                    *
+ * URI  : http://www.oswd.org/design/???/tierraverde/color-scheme.css *
+ * MODIF: 2003-02-01 1904 +0800                                       *
+ **********************************************************************/
+
+
+/* ###### General Colors ###### */
+
+/*** Text Color (darker): ***/
+  body, #bodyText a, .sideBar a, .sideBar a:hover, .sideBar span, .subFooter a
+  { color: #22464f; }
+
+/*** Text Color (lighter): ***/
+  .headerTitle span, .menuBar, .menuBar *, .sideBar a:hover, #footer, #footer a
+  { color: white; }
+
+/*** Border Color: ***/
+  #bodyText .boxedDark, #bodyText .boxedLight, .sideBar a, .sideBar a:hover, .sideBar span,
+  #footer a:hover, .subFooter a
+  { border-color: #22464f; }
+
+/*** Background Color (darker): ***/
+  #header, #footer
+  { background-color: #22464f; }
+
+/*** Background Color (lighter): ***/
+  #bodyText .boxedLight, .sideBarTitle
+  { background-color: #cddbcd; }
+
+
+/* ###### Special Colors ###### */
+
+#header { border-color: white; }
+
+.headerTitle { color: #cddbcd; }
+
+.menuBar a:hover { color: #abc3ac; }
+
+body { background-color: #abc3ac; }
+
+#bodyText .boxedDark { color: black; }
+
+#footer a { border-color: white; }
+
+.subFooter a:hover { border-color: #abc3ac; }

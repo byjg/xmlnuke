@@ -1,0 +1,110 @@
+<todo version="0.1.19">
+    <note priority="medium" time="1156724615">
+        PHP
+        <note priority="medium" time="1156724751" done="1184470526">
+            Revisar e consertar modulo admin.BackupModule
+            <comment>
+                Done.
+            </comment>
+        </note>
+        <note priority="medium" time="1156724764" done="1184470536">
+            Revisar e consertar modulo admin.FileManagement
+            <comment>
+                Done.
+            </comment>
+        </note>
+        <note priority="medium" time="1156724777">
+            Some errors when transform a XSL using the REMOTE parameter. Probably this errors occurs because the UTF-8 encoding.
+        </note>
+        <note priority="high" time="1175174806" done="1179414971">
+            Changes DEBUG method to a specific class. (CSharp also)
+            <comment>
+                Done
+            </comment>
+        </note>
+        <note priority="medium" time="1184471004">
+            Feature: Ao desinstalar o modulo, remover a linha CHAVE no AnyDataSet
+        </note>
+    </note>
+    <note priority="medium" time="1156724621">
+        CSharp
+        <note priority="medium" time="1156724807" done="1184470544">
+            Add admin.BackupModule module
+            <comment>
+                Done.
+            </comment>
+        </note>
+        <note priority="medium" time="1156724816" done="1184470550">
+            Add modulo admin.FileManagement module
+            <comment>
+                Done.
+            </comment>
+        </note>
+        <note priority="medium" time="1156724835" done="1184470560">
+            Add XMLFileBrowser (same as another one in PHP)
+            <comment>
+                Done
+            </comment>
+        </note>
+        <note priority="medium" time="1158509416">
+            BUG: When use System.Data.DbType.String in fields with more than 250 characteres the system causes an error. Code Example: new DbParameters("?idsistema", 500, System.Data.DbType.String, varString)
+        </note>
+        <note priority="medium" time="1158509490" done="1179415298">
+            Add in getDataAdapter method functions to create a updatable DataAdapter.
+            <comment>
+                Done.
+            </comment>
+        </note>
+        <note priority="high" time="1175174827" done="1179414997">
+            Changes DEBUG methos to a specific class. (PHP also)
+            <comment>
+                Done.
+            </comment>
+        </note>
+        <note priority="medium" time="1184470905">
+            BUG: Validar extensao do arquivo que foi feito o Upload
+        </note>
+        <note priority="medium" time="1184470945">
+            BUG: Validar diretorio multiplo no FileManager
+        </note>
+        <note priority="medium" time="1184470990">
+            Feature: Ao desinstalar o modulo, remover a linha CHAVE no AnyDataSet
+        </note>
+    </note>
+    <note priority="medium" time="1156724632">
+        Documentation
+        <note priority="medium" time="1156724846">
+            Explicar Parametros - xml, xsl, lang, site, remote, nocache, reset
+        </note>
+        <note priority="medium" time="1156724855" done="1184470576">
+            Explicar estrutura de diretorios
+            <comment>
+                Done.
+            </comment>
+        </note>
+        <note priority="medium" time="1156724875">
+            Como criar um XmlObject (XmlDocument, XmlDocumentObject, XmlCollection...)
+        </note>
+        <note priority="medium" time="1175110494">
+            Explicar os arquivos de configuracao
+        </note>
+        <note priority="medium" time="1179414897">
+            Fazer o GuideLine para criar classes no XMLNUKE
+        </note>
+    </note>
+    <note priority="medium" time="1156725013">
+        XMLNuke Project and Concepts
+        <note priority="veryhigh" time="1156725080" done="1182133838">
+            Mudar o esquema de banco do XML para diretorio Plano e utilizar o conceito de estrutura de diretórios para o Cache. Isso ocorre por que o Cache pode aumentar de tamanho muito mais que o XML e esta ficando dificil manter manualmente a estrutura.
+            <comment>
+                Implemented. Cache and XML may be setup to PLAIN or HASHED directory structure.
+            </comment>
+        </note>
+        <note priority="veryhigh" time="1175110454">
+            Acrescentar uma configuracao que permite deixar FIXO o xsl para um determinado MODULO/XML (muito semelhante ao contenttype.anydata.xml
+        </note>
+        <note priority="veryhigh" time="1180113998">
+            Acrescentar o HANDLE URL. A Url teria a seguinte configuracao: http://www.xmlnuke.com/SITE/MODULO|XML/PAGE/LANG. Em C# existe o RegExUrlMapping e em PHP (Apache tem o mod_rewrite)
+        </note>
+    </note>
+</todo>

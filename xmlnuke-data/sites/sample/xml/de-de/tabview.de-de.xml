@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Tab-Ansicht</title>
+		<abstract>Gruppieren Sie Informationen mit Hilfe von Tabs.</abstract>
+		<created>24/4/2008 22:49:59</created>
+		<modified>4/24/2008 11:01:15 PM</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>all</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Tab-Ansicht</title>
+		<body>
+			<p>Sie können Ihre Informationen mit XMLNuke mittels Tabs gruppieren. Sehen Sie sich dazu nachfolgendes Beispiel an:</p>
+			<p>
+				<code information="XML-Code"><![CDATA[
+<tabview>
+   <tabitem title="1">
+      <p>Dies ist Tab 1</p>
+   </tabitem>
+   <tabitem title="2">
+      <p>Dies ist Tab 2</p>
+   </tabitem>
+   <tabitem title="3">
+      <p>Dies ist Tab 3</p>
+   </tabitem>
+</tabview>
+]]></code>
+			</p>
+			<tabview>
+				<tabitem title="1">
+					<p>Dies ist Tab 1</p>
+				</tabitem>
+				<tabitem title="2">
+					<p>Dies ist Tab 2</p>
+				</tabitem>
+				<tabitem title="3">
+					<p>Dies ist Tab 3</p>
+				</tabitem>
+			</tabview>
+		</body>
+	</blockcenter>
+</page>

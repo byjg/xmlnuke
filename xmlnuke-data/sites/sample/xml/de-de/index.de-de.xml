@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmlindex>
+	<group>
+		<id>mainmenu</id>
+		<title>Hauptmenü</title>
+		<keyword>all</keyword>
+		<page>
+			<id>home</id>
+			<title>Startseite</title>
+			<summary>XMLNuke-Beispiel-Startseite</summary>
+		</page>
+		<page>
+			<id>firstpage</id>
+			<title>Meine erste Seite</title>
+			<summary>Wie Sie Ihre erste XMLNuke-Seite erstellen</summary>
+		</page>
+		<page>
+			<id>dynmenu_main</id>
+			<title>Dynamische Menüs</title>
+			<summary>Wie Sie dynamische Menüs erstellen</summary>
+		</page>
+		<page>
+			<id>forms</id>
+			<title>Formulare in XMLNuke</title>
+			<summary>Formulare in XMLNuke</summary>
+		</page>
+		<page>
+			<id>custommodule</id>
+			<title>Spezifische Module</title>
+			<summary>Die Arbeit mit spezifischen Modulen</summary>
+		</page>
+		<page>
+			<id>formsjs</id>
+			<title>Formulare mit Pflichtfeldern</title>
+			<summary>Wie Sie Formulare verwenden, die mittels JavaScript überprüft werden</summary>
+		</page>
+		<page>
+			<id>editlist</id>
+			<title>Auswahl-Listen</title>
+			<summary>Ein Beispiel zur Benutzung von Auswahl-Listen</summary>
+		</page>
+		<page>
+			<id>calendar</id>
+			<title>Kalender-Beispiel</title>
+			<summary>Ein einfaches Kalender-Beispiel mit XMLNuke</summary>
+		</page>
+		<page>
+			<id>email</id>
+			<title>E-Mail senden</title>
+      <summary>E-Mails mit XMLNuke senden</summary>
+		</page>
+		<page>
+			<id>xmlfaq</id>
+			<title>FAQ-Beispiel</title>
+			<summary>Ein Beispiel zur Benutzung von FAQ's</summary>
+		</page>
+		<page>
+			<id>tabview</id>
+			<title>Tab-Ansicht</title>
+			<summary>Gruppieren Sie Informationen mit Hilfe von Tabs</summary>
+		</page>
+		<page>
+			<id>visualedit</id>
+			<title>Visueller Editor</title>
+			<summary>Eingabe von Text mit einem WYSIWYG-Editor</summary>
+		</page>
+		<page>
+			<id>duallist</id>
+			<title>Duale Listen</title>
+			<summary>Sehen Sie sich Daten aus einer dualen Liste an</summary>
+		</page>
+		<page>
+			<id>treeview</id>
+			<title>Treeview</title>
+			<summary>Strukturieren von Daten mittels der Treeview-Komponente</summary>
+		</page>
+	</group>
+	<group>
+		<id>dynmenu</id>
+		<title>Dynamische Menüs</title>
+		<keyword>grpdynmenu</keyword>
+		<page>
+			<id>dynmenu_page1</id>
+			<title>Seite eins</title>
+			<summary>Dynamische Menüs: Seite eins</summary>
+		</page>
+		<page>
+			<id>dynmenu_page2</id>
+			<title>Seite zwei</title>
+			<summary>Dynamische Menüs: Seite zwei</summary>
+		</page>
+	</group>
+</xmlindex>

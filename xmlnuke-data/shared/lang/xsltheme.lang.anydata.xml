@@ -1,0 +1,23 @@
+﻿<anydataset>
+  <row>
+    <field name="LANGUAGE">en-us</field>
+    <field name="TITLE">XSL Theme Selector</field>
+    <field name="ABSTRACT">Select a XSL theme</field>
+    <field name="LISTPERSONAL">XSL in your site</field>
+    <field name="LISTGENERIC">Generic XSL Templates (all sites)</field>
+  </row>
+  <row>
+    <field name="LANGUAGE">pt-br</field>
+    <field name="TITLE">Seletor de Temas XSL</field>
+    <field name="ABSTRACT">Selecione um tema xsl</field>
+    <field name="LISTPERSONAL">XSL no seu site</field>
+    <field name="LISTGENERIC">Templates XSL genéricos (todos os sites)</field>
+  </row>
+  <row>
+    <field name="LANGUAGE">de-de</field>
+    <field name="TITLE">XSL Design-Auswahl</field>
+    <field name="ABSTRACT">Wählen Sie ein XSL-Design</field>
+    <field name="LISTPERSONAL">XSL in dieser Seite</field>
+    <field name="LISTGENERIC">Allgemeine XSL-Vorlagen (alle Seiten)</field>
+  </row>
+</anydataset>

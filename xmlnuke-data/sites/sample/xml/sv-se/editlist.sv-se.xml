@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Redigera lista</title>
+		<abstract>Hur man skapar specifika taggar - "Redigera lista" som exempel</abstract>
+		<created>25/6/2005 18:44:02</created>
+		<modified>9/18/2005 10:49:11 PM</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>-</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Redigera lista</title>
+		<body>
+			<p>Du kan skapa dina egna taggar med XMLNuke. Det är möjligt att gå vidare längre än med HTML. Din applikation eller dokument förstår inte HTML - bara XML taggar. Den slutliga layouten är producerad av XMLNuke under XSLT-transformeringen och så kallade snippets.</p>
+			<p>Se nedan för den här funkionaliteten.</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Prov 1</title>
+		<body>
+			<p>
+				<code information="EditList XML"><![CDATA[
+<editlist 
+   module="module:somemodule" 
+   name="ELDEMO"
+   title="Prov 1 - EditList" 
+   cols="4" 
+   new="true" 
+   edit="true" 
+   delete="true" 
+   view="true"
+   custom1="true" 
+   url1="module:somemodule2" 
+   img1="common/editlist/ic_custom.gif" 
+   acao1="select" 
+   alt1="Select Item" 
+   >
+   <row>
+        <field name="">1</field>
+        <field name="Namn">ETT</field>
+        <field name="Beskrivning">Du behöver ...</field>
+        <field name="Listning">Ytterliggare ett fält</field>
+  </row>
+</editlist>
+]]></code>
+			</p>
+			<p>
+				<editlist module="module:somemodule" title="Sample 1 - EditList" cols="4" new="true" edit="true" delete="true" view="true" custom1="true" url1="module:somemodule2" img1="common/editlist/ic_custom.gif" acao1="select" alt1="Select Item" name="ELDEMO1">
+					<row>
+				        <field name="">1</field>
+				        <field name="Namn">ETT</field>
+				        <field name="Beskrivning">Du behöver ...</field>
+				        <field name="Listning">Ytterliggare ett fält</field>
+					</row>
+					<row>
+						<field name="">2</field>
+						<field name="Namn">TVÅ</field>
+						<field name="Beskrivning">Användaren väljer om knappen ska visas eller inte.</field>
+						<field name="Listing">Ytterliggare ett fält</field>
+					</row>
+				</editlist>
+			</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Hur fungerar det?</title>
+		<body>
+			<ul>
+				<li>Editlist är ansvarig för att kalla på modulen som definierats av <i>module</i> attributet efter att knappen tryckts ner</li>
+				<li>Modulen tar alltid emot två parameterar: <i>action</i> kan vara: new, redigera, radera, visa eller ett namn användaren definerat kan vara: anpassad1, anpassad2, anpassad3 eller anpassad4</li>
+				<li>En annan parameter är värdet på första kolumnen. Det här värdet är dolt. Parameternamnet är <i>valueid</i>.</li>
+			</ul>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Andra alternativ</title>
+		<body>
+			<p>Samma data kan visas i olika lägen beroende på XSLT-mallarna eller editlist-attributen.</p>
+			<p>Exemplet nedan visar hur EditList använder ett bockalternativ för att välja värdet. </p>
+			<p>
+				<editlist module="module:somemodule" title="Prov 2 - EditList" cols="4" new="true" edit="true" delete="true" view="true" custom1="true" url1="module:somemodule2" img1="common/editlist/ic_custom.gif" acao1="select" alt1="Select Item" selecttype="check" name="ELDEMO2">
+					<row>
+						<field name="">1</field>
+						<field name="Namn">ETT</field>
+						<field name="Beskrivning">You need check the radio on the left side and click in one button below to active this function.</field>
+						<field name="Listning">Ytterliggare ett fält</field>
+					</row>
+					<row>
+						<field name="">2</field>
+						<field name="Namn">TVÅ</field>
+						<field name="Beskrivning">Användaren väljer om knapparna ska visas eller inte.</field>
+						<field name="Listning">Ytterliggare ett fält</field>
+					</row>
+				</editlist>
+			</p>
+			<p>Endast skrivbart läge:</p>
+			<p>
+				<editlist module="module:somemodule" title="Prov 3 - EditList" cols="4" new="true" edit="true" delete="true" view="true" custom1="true" url1="module:somemodule2" img1="common/editlist/ic_custom.gif" acao1="select" alt1="Select Item" readonly="true" name="ELDEMO3">
+					<row>
+						<field name="">1</field>
+						<field name="Name">ETT</field>
+						<field name="Description">You need check the radio on the left side and click in one button below to active this function.</field>
+						<field name="Listning">Ytterliggare ett fält</field>
+					</row>
+					<row>
+						<field name="">2</field>
+						<field name="Namn">TVÅ</field>
+						<field name="Beskrivning">The user choose if the buttons are showed or not.</field>
+						<field name="Listning">Ytterliggare ett fält</field>
+					</row>
+				</editlist>
+			</p>
+		</body>
+	</blockcenter>
+</page>

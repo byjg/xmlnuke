@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<anydataset>
+   <row>
+      <field name="LANGUAGE">en-us</field>
+      <field name="CONTROLPANEL">Control Panel</field>
+      <field name="CONTROLPANEL_HELP">Welcome to the XMLNuke Control Panel.<br/><br/>Select your action from the left option.</field>      
+      <field name="BLOCKINFO_TITLE">Informations</field>
+      <field name="INFO_USER">User: {0} ({1})</field>
+      <field name="INFO_SITE">Selected sites: {0}</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">pt-br</field>
+      <field name="CONTROLPANEL">Painel de Controle</field>
+      <field name="CONTROLPANEL_HELP">Bem vindo ao painel de controle do XMLNuke. <br/><br/>Selecione o que deseja fazer nas opções listadas à esquerda.</field>
+      <field name="BLOCKINFO_TITLE">Informações</field>
+      <field name="INFO_USER">Usuário: {0} ({1})</field>
+      <field name="INFO_SITE">Site selecionado: {0}</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">de-de</field>
+      <field name="CONTROLPANEL">Systemsteuerung</field>
+      <field name="CONTROLPANEL_HELP">Willkommen in der XMLNuke Systemsteuerung.<br/><br/>Wählen Sie eine Aktion.</field>      
+      <field name="BLOCKINFO_TITLE">Informationen</field>
+      <field name="INFO_USER">Benutzer: {0} ({1})</field>
+      <field name="INFO_SITE">Aktive Seite: {0}</field>
+   </row>
+</anydataset>

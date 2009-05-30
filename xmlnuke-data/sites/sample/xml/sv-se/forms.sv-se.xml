@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>XMLNuke och formulär</title>
+		<abstract>XMLNuke och formulär</abstract>
+		<created>13/05/2002 21:09:00</created>
+		<modified>08/06/2005 10:05:06 PM</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword>-</groupkeyword>
+		<keyword>Your First Keyword</keyword>
+		<keyword>Your Second Keyword and so on</keyword>
+	</meta>
+	<script src="common/js/sample.js" />
+	<blockcenter>
+		<title>Arbeta med formulär</title>
+		<body>
+			<p>XMLNuke gör det möjligt för dig att arbeta med formulär. Det är aningen annorlunda från HTML-standarden, men enklare att jobba med. Titta på exemplet nedan (och "Skicka mig uppdateringar" till höger)</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>XMLNuke formulär</title>
+		<body>
+			<p>Nedan kan du se några exempel på indatafält</p>
+			<editform action="#" title="MyEdit Form">
+				<caption>Bara lite text.</caption>
+				<textbox name="a" caption="Skriv något" value="default" size="20" />
+				<password name="d" caption="Det här är ett lösenord" size="30" />
+				<caption>Du kan inte se det, men här är ett dolt fält.</caption>
+				<hidden name="x" value="default3" />
+				<checkbox name="e" caption="Ett bockningsalternativ" value="default3" />
+				<checkbox name="e" caption="Ett annat bockningsalternativ" value="default3" />
+				<checkbox name="e" caption="Ytterligare ett bockningsalternativ" value="default3" />
+				<radiobox name="f" caption="Vilket alternativ valde jag egentligen?" value="default3" />
+				<radiobox name="f" caption="Det här?" value="default3" />
+				<radiobox name="f" caption="Eller det här?" value="default3" />
+				<select name="h" caption="Select">
+					<option value="1">Alternativ 1</option>
+					<option value="2">Alternativ 2</option>
+					<option value="3">Alternativ 3</option>
+				</select>
+				<memo name="ok" caption="Minnesfält" cols="30" rows="5">Ursprungligt värde</memo>
+				<buttons>
+					<submit caption="Skicka" />
+					<reset caption="Återställ" />
+					<button caption="Vilken knapp som helst!" onclick="fireButton()" />
+				</buttons>
+			</editform>
+			<p>Kan du se den här bilden? <img src="common/imgs/logo_xmlnuke.gif" alt="Alternativt namn på bild" width="120" height="50" /></p>
+		</body>
+	</blockcenter>
+</page>

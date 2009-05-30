@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Formulare mit Überprüfung</title>
+		<abstract>Demonstration zur Nutzung von Formularen mit einer Überprüfung durch JavaScript.</abstract>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>all</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Formulare mit JavaScript-Überprüfung</title>
+		<body>
+			<p>XMLNuke ermöglicht die Nutzung von Formularen mit JavaScript-Überprüfung. Um diese Funktion zu Nutzen müssen Sie sich <b>nicht mit JavaScript auskennen</b>.</p>
+			<p>Nehmen Sie das Formular unten als Beispiel: der Nutzer braucht nur ein paar XML-Attribute zu setzen um XMLNuke zu signalisieren, dass die Daten mit JavaScript überprüft werden.</p>
+			<p>
+				<code information="XML-Code"><![CDATA[
+<editform action="module:somemodule" 
+    title="Beispiel-Formular mit JavaScript-Überprüfung" 
+    name="formname" 
+    jsvalidate="true" 
+    decimalseparator="." 
+    dateformat="1">
+       <textbox name="a" caption="Text-Feld: " value="" size="30" 
+             required="true" type="0" />
+       <textbox name="e" caption="Datums-Feld: " value="" size="30" 
+             required="true" type="4" 
+             minvalue="01/01/2004" maxvalue="12/31/2004" />
+</editform>
+
+]]></code>
+			</p>
+			<editform action="#" title="Beispiel-Formular mit JavaScript-Überprüfung" name="formname" jsvalidate="true" decimalseparator="." dateformat="1">
+				<textbox name="a" caption="Text-Feld: " value="" size="30" required="true" type="0" />
+				<textbox name="b" caption="Kleinbuchstaben-Feld: " value="" size="30" required="true" type="1" />
+				<textbox name="c" caption="Großbuchstaben-Feld: " value="" size="30" required="true" type="2" />
+				<textbox name="d" caption="Nummern-Feld: " value="" size="30" required="true" type="3" minvalue="10" maxvalue="20" />
+				<textbox name="e" caption="Datums-Feld: " value="" size="30" required="true" type="4" minvalue="01/01/2004" maxvalue="12/31/2004" />
+				<textbox name="f" caption="ASCII-Großbuchstaben-Feld: " value="" size="30" required="true" type="9" />
+				<textbox name="g" caption="E-Mail-Feld: " value="" size="30" required="true" type="10" />
+				<select name="h" caption="ComboBox: " required="true">
+					<option value="" selected="yes">-- Auswahl --</option>
+					<option value="1">Option 1</option>
+					<option value="2">Opiton 2</option>
+					<option value="3">Option 3</option>
+				</select>
+				<buttons>
+					<submit caption="Senden" />
+					<reset caption="Zurücksetzen" />
+				</buttons>
+			</editform>
+		</body>
+	</blockcenter>
+</page>

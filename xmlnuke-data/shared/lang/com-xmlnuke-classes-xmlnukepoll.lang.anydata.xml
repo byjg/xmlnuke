@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<anydataset>
+   <row>
+      <field name="LANGUAGE">en-us</field>
+      <field name="ERROR_POLLNOTSETUP">Error! The poll is not setup properly. Contact your system administrator to fix this.</field>
+      <field name="SENDBTN">Vote</field>
+      <field name="VIEWRESULTSBTN">View results</field>
+      <field name="POLLENDED">This poll is closed</field>
+      <field name="ERROR_POLLEMPTY">This poll is empty or does not exists.</field>
+      <field name="VOTECOMPUTED">Thank you. Your vote is computed.</field>
+      <field name="CANNOTSHOWRESULTS">Sorry. I cannot show the results for you.</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">pt-br</field>
+      <field name="ERROR_POLLNOTSETUP">Erro! O sistema de enquete não está configurado adequadamente. Contacte com o administrador do sistema para resolver isso.</field>
+      <field name="SENDBTN">Votar</field>
+      <field name="VIEWRESULTSBTN">Ver resultados</field>
+      <field name="POLLENDED">Esse enquete está finalizada.</field>
+      <field name="ERROR_POLLEMPTY">Essa enquete está vazia ou não existe.</field>
+      <field name="VOTECOMPUTED">Obrigado. Seu voto foi computado.</field>
+      <field name="CANNOTSHOWRESULTS">Desculpe, mas não posso mostrar os resultados para você.</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">de-de</field>
+      <field name="ERROR_POLLNOTSETUP">Fehler! Die Abstimmung wurde nicht richtig eingerichtet. Kontaktieren Sie den System-Administrator um dies zu beheben.</field>
+      <field name="SENDBTN">Abstimmen</field>
+      <field name="VIEWRESULTSBTN">Ergebnis ansehen</field>
+      <field name="POLLENDED">Diese Abstimmung ist beendet.</field>
+      <field name="ERROR_POLLEMPTY">Diese Abstimmung ist leer oder existiert nicht.</field>
+      <field name="VOTECOMPUTED">Vielen Dank für Ihre Stimme!</field>
+      <field name="CANNOTSHOWRESULTS">Das Ergebnis kann nicht angezeigt werden. Bitte entschuldigen Sie!</field>
+   </row>
+</anydataset>

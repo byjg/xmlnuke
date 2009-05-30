@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>XMLNuke and Forms</title>
+		<abstract>XMLNuke and Forms</abstract>
+		<created>13/05/2002 21:09:00</created>
+		<modified>08/06/2005 10:05:06 PM</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword>-</groupkeyword>
+		<keyword>Your First Keyword</keyword>
+		<keyword>Your Second Keyword and so on</keyword>
+	</meta>
+	<script src="common/js/sample.js" />
+	<blockcenter>
+		<title>Working with forms</title>
+		<body>
+			<p>XMLNuke enables you to work with Forms. It's slightly different from the HTML standard, but more easy to work with. Look at the sample below (and the Right Side "Send me Updates")</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>XMLNuke Forms</title>
+		<body>
+			<p>Bellow you can see some INPUT examples</p>
+			<editform action="#" title="MyEdit Form">
+				<caption>Just a text.</caption>
+				<textbox name="a" caption="Type something" value="default" size="20" />
+				<password name="d" caption="This is a password" size="30" />
+				<caption>You cannot see it, but here is a hidden field.</caption>
+				<hidden name="x" value="default3" />
+				<checkbox name="e" caption="Checkboxes" value="default3" />
+				<checkbox name="e" caption="Checkboxes (Two)" value="default3" />
+				<checkbox name="e" caption="Checkboxes and Three" value="default3" />
+				<radiobox name="f" caption="Which option have I selected?" value="default3" />
+				<radiobox name="f" caption="This?" value="default3" />
+				<radiobox name="f" caption="Or maybe this?" value="default3" />
+				<select name="h" caption="Select">
+					<option value="1">Option 1</option>
+					<option value="2">Option 2</option>
+					<option value="3">Option 3</option>
+				</select>
+				<memo name="ok" caption="Memo Field" cols="30" rows="5">Default Value</memo>
+				<buttons>
+					<submit caption="Submit" />
+					<reset caption="Reset" />
+					<button caption="Any button!" onclick="fireButton()" />
+				</buttons>
+			</editform>
+			<p>You can see this image? <img src="common/imgs/logo_xmlnuke.gif" alt="Alternate name to image" width="120" height="50" /></p>
+		</body>
+	</blockcenter>
+</page>

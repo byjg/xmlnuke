@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Comment créer des menus dynamiques</title>
+		<abstract>Comment créer des menus dynamiques</abstract>
+		<created>16/1/2004 15:23:56</created>
+		<modified>16/01/2004 15:23:56</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword>grpdynmenu</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Qu'est-ce qu'un menu dynamique ?</title>
+		<body>
+			<p>Organizez votre page et vos menus grace aux GROUPS et aux GROUPKEYWORDs.</p>
+			<p>Lorsque vous créez un groupe (voir l'Admin Tool), vous spécifiez un MOT-CLEF. Par défaut, il s'agit du mot-clef <b>all</b>. Il signifie que seuls les groupes avec le mot-clef "ALL" seront visibles.</p>
+			<p>Si vous choisissez un autre mot-clef, le menu deviendra invisible. Seules les pages avec un tag &lt;GROUPKEYWORD&gt; pourront le rendre de nouveau visible.</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Ou puis-je voir un exemple ?</title>
+		<body>
+			<p>Regardez sur le menu du bloc de gauche. On peut y voir les liens 'Page 1' et 'Page 2'. Ces entrées ont été crées dynamiquement.</p>
+		</body>
+	</blockcenter>
+</page>

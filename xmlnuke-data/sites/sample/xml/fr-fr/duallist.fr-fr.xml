@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Liste double</title>
+		<abstract>View data in a dual list component.</abstract>
+		<created>24/4/2008 23:55:47</created>
+		<modified>25/04/2008 00:18:38</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>-</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Liste double</title>
+		<body>
+			<p>Cette liste permet de sélectionner des éléments. Les éléments sélectionnés est en droite et la dé-sélectionnés itens séjour à gauche.</p>
+			<p>
+				<code information="Code XML"><![CDATA[
+<editform title="Liste double échantillon">
+   <duallist>
+      <leftlist caption="Non sélectionné" size="6" name="left">
+         <item id="1" text="Un" />
+         <item id="3" text="Tróis" />
+         <item id="4" text="Quatre" />
+      </leftlist>
+      <rightlist caption="Sélectionné" size="6" name="right">
+         <item id="2" text="Deux" />
+      </rightlist>
+      <button type="text" all="true" from="left" to="right" value="All to Right" />
+      <button type="text" all="false" from="left" to="right" value="One To Right" />
+      <button type="text" all="false" from="right" to="left" value="One To Left" />
+      <button type="text" all="true" from="right" to="left" value="All To Left" />
+    </duallist>
+</editform>
+]]></code>
+			</p>
+			<p>
+				<editform title="Liste double échantillon">
+					<duallist>
+						<leftlist caption="Non sélectionné" size="6" name="left">
+							<item id="1" text="Un" />
+							<item id="3" text="Tróis" />
+							<item id="4" text="Quatre" />
+						</leftlist>
+						<rightlist caption="Sélectionné" size="6" name="right">
+							<item id="2" text="Deux" />
+						</rightlist>
+						<button type="text" all="true" from="left" to="right" value="All to Right" />
+						<button type="text" all="false" from="left" to="right" value="One To Right" />
+						<button type="text" all="false" from="right" to="left" value="One To Left" />
+						<button type="text" all="true" from="right" to="left" value="All To Left" />
+					</duallist>
+				</editform>
+			</p>
+		</body>
+	</blockcenter>
+</page>

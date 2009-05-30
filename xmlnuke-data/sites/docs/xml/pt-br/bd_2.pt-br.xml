@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Conectando através do BDDataSet</title>
+		<abstract>Descreve como conectar ao banco de dados através de uma conexão feita com o BDDataSet</abstract>
+		<created>22/8/2006 10:34:19</created>
+		<modified>22/8/2006 10:39:06</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>bdref</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Conectando e Lendo um DBDataSet</title>
+		<body>
+			<p>
+Uma vez que foi definida corretamente o string de conexão para o banco de dados, pode-se iniciar o processo de acesso aos dados. Só é necessário apenas um DBDataSet para todos os Iterator que forem definidos.
+         </p>
+			<p>
+				<code information="CSharp"><![CDATA[
+DBDataSet db = new DBDataSet("exemplo1", this._context);
+IIterator it = db.getIterator("select campo1, campo2 from tabela");
+while (it.hasNext())
+{
+	SingleRow sr = it.moveNext();
+	//sr.getField("campo1");
+}
+]]></code>
+			</p>
+			<p>
+				<code information="PHP"><![CDATA[
+// require_once("bin/com.xmlnuke/module.basemodule.class.php");
+$db = new DBDataSet("exemplo1", $this->_context);
+$it = $db->getIterator("select campo1, campo2 from tabela");
+while ($it->hasNext())
+{
+	$sr = $it->moveNext();
+	//$sr->getField("campo2");
+}
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Filtrando os dados de um DBDataSet</title>
+		<body>
+			<p>
+Ao obter o GetIterator o usuário pode efetuar um consulta contendo todas as cláusulas de filtro necessárias. Entretanto, para consultas a uma única tabela pode-se utilizar o IteratorFilter para auxiliar no processo. 
+         </p>
+			<p>
+				<code information="CSharp"><![CDATA[
+IteratorFilter itf = new IteratorFilter();
+itf.addRelation("campo1", Relation.Equal, "valor");
+DbParameters param;
+string sql = itf.getSql("tabela", out param);
+IIterator it = guestbook.getIterator(sql, param);
+]]></code>
+			</p>
+			<p>
+				<code information="PHP"><![CDATA[
+$itf = new IteratorFilter();
+$itf->addRelation("campo1", Relation::Equal, "valor");
+$param = array();
+$sql = $itf->getSql("tabela", $param);
+$it = $db->getIterator($sql, $param);
+]]></code>
+			</p>
+			<p>
+				<b>
+          <i>Dica:</i>
+        </b>
+				<br />
+Você também pode utilizar o IteratorFilter para consultas a tabelas ligadas por Inner Join ou OuterJoin, desde que seja utilizado o modelo SQL ANSI. Ao passar o nome da tabela para o método getSql pode-se passar da seguinte forma:
+         </p>
+			<p>
+getSql("tabela1 inner join tabela2 on tabela1.campo = tabela2.campo");
+
+         </p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Atualizados dados com um DBDataSet</title>
+		<body>
+			<p>
+O processo de atualização de dados no servidor é feito exclusivamente através de comandos SQL.
+</p>
+			<p>
+				<code information="CSharp"><![CDATA[
+DBDataSet db = new DBDataSet("exemplo1", this._context);
+string sql = "update tabela set campo1 = [[val1]] where campo2 = [[val2]]";
+
+DbParameters params = new DbParameters();
+param.Add("val1", System.Data.DbType.String, "valor qualquer")
+param.Add("val2", System.Data.DbType.Int32, 1);
+
+db.execSQL(sql, params);
+]]></code>
+			</p>
+			<p>
+				<code information="PHP"><![CDATA[
+// require_once("bin/com.xmlnuke/module.basemodule.class.php");
+$db = new DBDataSet("exemplo1", $this->_context);
+$sql = "update tabela set campo1 = [[val1]] where campo2 = [[val2]]";
+$param = array();
+$param["val1"] = "valor qualquer";
+$param["val2"] = 1;
+$db->execSQL($sql, $param);
+]]></code>
+			</p>
+      <p>
+        <b>
+          <i>Observação Importante!</i>
+        </b>
+        <br />
+        O Xmlnuke adotou um padrão de passagem de parâmetros que é genérico. Dessa forma o Xmlnuke é capaz de fazer os 
+        ajustes necessários na passagem de parâmetros a depender do banco de dados selecionado. 
+        
+      </p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Utilizando o SQLHelper</title>
+		<body>
+			<p>
+				O SQLHelper é uma classe que permite criar os comandos SQL de <i>Insert</i> e <i>Update</i> além dos parâmetros de banco
+				de forma simplificada, além de garantir que os comandos SQL gerados estão livres do SQL Injection.
+			</p>
+			<p>
+Na classe de acesso a dados padrão (<a href="engine:xmlnuke?xml=creatingapp_csharp">BaseDBAccess</a>) a utilização do SQLHelper 
+se torna acessível, pois essa classe já implementa uma instância do DBDataSet. Sendo assim, basta executar o método <b>getSQLHelper()</b> 
+que devolve um <i>Singleton</i> do SQLHelper. Caso contrário é necessário passar o objeto DBDataSet no seu construtor.
+</p>
+			<p>
+				<code information="CSharp - Usando o SQLHelper dentro de uma classe BaseDBAccess"><![CDATA[
+// Definindo os valores a ser gravados
+SQLFieldArray fields = new SQLFieldArray();
+fields.Add(SQLFieldType.Number, "fldid", folderid, true); // Key - Used in Filter
+fields.Add(SQLFieldType.Text, "fldtext", "SomeValue");
+
+// Obtendo e executando SQL.
+SQLUpdateData updata = this.getSQLHelper().generateSQL("sometable", fields, SQLType.SQL_UPDATE);
+this.executeSQL(update);
+]]></code>
+			</p>
+			<p>
+				<code information="PHP - Usando o SQLHelper dentro de uma classe BaseDBAccess"><![CDATA[
+$param = array();
+
+// Add more fields here.
+$fields = array();
+$fields["fldid"] = array(SQLFieldType::Number, $folderid);
+$fields["fldtext"] = array(SQLFieldType::Text, "SomeValue");
+		
+// Calling XMLNuke PHP SQL Helper
+$sql = $this->getSQLHelper()->generateSQL(
+			"sometable", $fields, $param, SQLType::SQL_INSERT, "", '.');
+		
+$this->executeSQL($sql, $param);
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+
+</page>

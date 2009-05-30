@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<anydataset>
+	<row>
+		<field name="destination_id">DEFAULT</field>
+		<field name="email">info@xmlnuke.com</field>
+		<field name="name">XMLNuke Team</field>
+	</row>
+</anydataset>

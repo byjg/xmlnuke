@@ -1,0 +1,47 @@
+.editlist{
+	  font-family: Verdana, Arial, Helvetica, sans-serif;
+	  font-size: 11px;
+}
+
+.editlist table {
+	border-collapse: collapse;
+	margin: 10px 15px;	
+}
+.editlist th {
+	background: #E6E6E6;
+	height: 29px;
+	padding-left: 11px;
+	padding-right: 11px;
+	color: #000;
+	text-align: left;
+	border-left: 1px solid #FFF;
+	border-bottom: solid 2px #FFF;
+}
+.editlist th.editlisttitle{
+	background: #CAD7E8;
+}
+.editlist tr {
+	height: 30px;
+}
+.editlist td {
+	padding-left: 11px;
+	padding-right: 11px;
+	/* border-left: 1px solid #FFE1C3; */
+	border-left: 1px solid #FFF;
+	border-bottom: solid 1px #ffffff;
+}
+.editlist td.first,.editlist th.first {
+	border-left: 0px;
+}
+.editlist tr.row-a {
+	background: #F8F8F8;
+}
+.editlist tr.row-b {
+	background: #EFEFEF;
+}
+
+.el_buttons  {
+    background-color: #E6E6E6; 
+    background-image: url(bg_rajado.gif)
+}
+

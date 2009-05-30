@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Installing XMLNuke CSharp on Windows</title>
+		<abstract>Step-by-step tutorial to install XMLNuke CSharp on Windows.</abstract>
+		<created>27/8/2007 14:42:22</created>
+		<modified>Wed Nov 19 2008 16:33:21</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_installing</groupkeyword>
+		<revision>$Revision: 1.1 $</revision>
+	</meta>
+	<blockcenter>
+		<title>Installing XMLNuke CSharp on Windows</title>
+		<body>
+			<p>Before installing XMLNuke, you must have the following software:
+				<ul>
+					<li>Windows 2000, XP or 2003 Server with the IIS installed</li>
+					<li>Windows Installer 3.1 to install the &gt;NET packages. Download <a href="http://www.microsoft.com/downloads/details.aspx?familyid=5FBC5470-B259-4733-A914-A956122E08E8&amp;displaylang=[param:lang]">here</a></li>
+					<li>Framework .NET 2.0 (Redistributable). Download <a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=0856eacb-4362-4b0d-8edd-aab15c5e04f5&amp;displaylang=[param:lang]">aqui</a>.</li>
+					<li>Framework .NET 2.0 (SDK). Download <a href="http://www.microsoft.com/downloads/details.aspx?familyid=FE6F2099-B7B4-4F47-A244-C96D69C35DEC&amp;displaylang=en">aqui</a> (página em inglês).</li>
+					<li><b>NOTE:</b> SIf the IIS is installed before .NET, the following command must be run after finalizing the installation process above: "C:WINDOWSMicrosoft.NETFrameworkv2.0.50727aspnet_regiis.exe -i" (remove quotes)</li>
+					<li>Copy of XMLNuke.</li>
+				</ul>
+				Install the software in the order above. XMLNuke may be installed on any folder on the machine, but in order for it to work properly the steps above must be followed.
+			</p>
+
+			<p>Click on Start ? Control Panel and select "Administrative Tools". Inside this folder, select the option Internet Information Services.
+			<br/>
+			<img src="common/imgs/docs/iis_inst1.png" alt="Figure 1"/>
+			</p>
+		
+			<p>Right click on "Standard Web Site" and select New ? Virtual Directory.
+			<br/>
+			<img src="common/imgs/docs/iis_inst2.png" alt="Figure 2"/>
+			</p>
+		
+			<p>Next, an "Assistant" window will appear. On this window, indicate the name of the virtual directory (this is how you will execute XMLNuke) and the physical path where it is located. In our example: c:wwwxmlnuke-csharp.
+			<br/>
+			<img src="common/imgs/docs/iis_inst2_1.png" alt="Figure 2"/>
+			<br/>
+			<img src="common/imgs/docs/iis_inst2_2.png" alt="Figure 2"/>
+			<br/>
+			<img src="common/imgs/docs/iis_inst2_3.png" alt="Figure 2"/>
+			<br/>
+			<img src="common/imgs/docs/iis_inst2_4.png" alt="Figure 2"/>
+			<br/>
+			<img src="common/imgs/docs/iis_inst2_5.png" alt="Figure 2"/>
+			</p>
+		
+			<p>Right click on the new virtual directory and select "Properties".
+			<br/>
+			<img src="common/imgs/docs/iis_inst3.png" alt="Figure 3"/>
+			</p>
+		
+			<p>With the Properties window open, click on the "Virtual Directory" tab and next:
+			<ol>
+			<li>Click on "Create". If instead it says "Remove", click on remove and then on "Create".</li>
+			<li>In "Write Permission", check that "only scripts" is selected.</li>
+			</ol>
+			<br/>
+			<img src="common/imgs/docs/iis_inst4.png" alt="Figure 4"/>
+			</p>
+		
+			<p>Next, click on the "ASP.NET" tab. If there is more than one version, make sure that version 2.0 is selected. Click on "OK".
+			<br/>
+			<img src="common/imgs/docs/iis_inst5.png" alt="Figure 5"/>
+			</p>
+		
+			<p>If everything goes well, the virtual directory will be as shown in the figure below. 
+			<br/>
+			<img src="common/imgs/docs/iis_inst6.png" alt="Figure 6"/>
+			</p>
+		
+			<p>Close the configuration window and open Windows Explorer. Look for the "xmlnuke-csharp" folder?. Inside this folder there is a "data" call. Press the right button on top of it and click on "Properties"
+			<br/>
+			<img src="common/imgs/docs/iis_inst7.png" alt="Figure 7"/>
+			</p>
+		
+			<p>A list of users will appear in the window. One of them is Invited User from the Internet.  (IUSR_NAMEOFYOURMACHINE). Click on it (1) and select the option modify (2). If the user is not appearing on the list, click on "Add" and look for the user in the next window. Click on OK. 
+			<br/>
+			<img src="common/imgs/docs/iis_inst8.png" alt="Figure 8"/>
+			</p>
+		
+			<p>After following these steps, XMLNuke should be working. <b>Important:</b> When the IIS is installed <u>after</u> .NET, it may present some strange behavior. To resolve this problem execute the following file: "C:WINDOWSMicrosoft.NETFrameworkv2.0.50727aspnet_regiis.exe -i" (remove quotes)</p>
+		</body>
+	</blockcenter>
+</page>

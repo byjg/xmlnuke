@@ -1,0 +1,5 @@
+<!ELEMENT anydataset (row+)>
+<!ELEMENT row (field+)>
+
+<!ELEMENT field (#PCDATA)>
+<!ATTLIST field name CDATA #REQUIRED>

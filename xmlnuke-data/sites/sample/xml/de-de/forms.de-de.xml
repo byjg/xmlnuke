@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>XMLNuke and Forms</title>
+		<abstract>Formulare in XMLNuke</abstract>
+		<created>13/05/2002 21:09:00</created>
+		<modified>08/06/2005 10:05:06 PM</modified>
+		<keyword>XMLSeite ByJG</keyword>
+		<groupkeyword>-</groupkeyword>
+    <keyword>Ihr erstes Stichwort</keyword>
+    <keyword>Ihr zweites Stichwort und so weiter</keyword>
+	</meta>
+	<script src="common/js/sample.js" />
+	<blockcenter>
+		<title>Mit Formularen arbeiten</title>
+		<body>
+			<p>XMLNuke ermöglicht Ihnen die Arbeit mir Formularen. In XMLNuke funktioniert das ein wenig anders als im HTML-Standard, aber es kann einfacher damit gearbeitet werden. Sehen Sie sich das Beispiel unten an (und "Halten Sie mich auf dem Laufenden" auf der rechten Seite).</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>XMLNuke-Formulare</title>
+		<body>
+			<p>Unten sehen Sie ein paar Beispiele dazu.</p>
+			<editform action="#" title="Mein Formular">
+				<caption>Nur Text.</caption>
+				<textbox name="a" caption="Geben Sie etwas ein: " value="default" size="20" />
+				<password name="d" caption="Dies ist ein Passwort: " size="30" />
+				<caption>Sie können es nicht sehen, aber hier befindet sich ein verstecktes Feld.</caption>
+				<hidden name="x" value="default3" />
+				<checkbox name="e" caption="Checkboxen" value="default3" />
+				<checkbox name="e" caption="Checkboxen (Zwei)" value="default3" />
+				<checkbox name="e" caption="Checkboxen (Drei)" value="default3" />
+				<radiobox name="f" caption="Welche Option habe ich ausgewählt?" value="default3" />
+				<radiobox name="f" caption="Diese?" value="default3" />
+				<radiobox name="f" caption="Oder vielleicht diese?" value="default3" />
+				<select name="h" caption="Auswahl: ">
+					<option value="1">Option 1</option>
+					<option value="2">Option 2</option>
+					<option value="3">Option 3</option>
+				</select>
+				<memo name="ok" caption="Notiz-Feld: " cols="30" rows="5">Standard-Text</memo>
+				<buttons>
+					<submit caption="Senden" />
+					<reset caption="Zurücksetzen" />
+					<button caption="Irgendein Knopf!" onclick="fireButton()" />
+				</buttons>
+			</editform>
+			<p>Sehen Sie dieses Bild? <img src="common/imgs/logo_xmlnuke.gif" alt="Alternativer Name für das Bild" width="120" height="50" /></p>
+		</body>
+	</blockcenter>
+</page>

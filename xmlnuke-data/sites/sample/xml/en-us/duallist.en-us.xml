@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Dual List</title>
+		<abstract>View data in a dual list component.</abstract>
+		<created>24/4/2008 23:55:47</created>
+		<modified>4/25/2008 12:14:30 AM</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>all</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Dual List</title>
+		<body>
+			<p>This list makes possible select items. The selected items is in right side and the unselected itens stay in left side.</p>
+			<p>
+				<code information="XML Code"><![CDATA[
+<editform title="Dual List sample">
+   <duallist>
+      <leftlist caption="Not selected" size="6" name="left">
+         <item id="1" text="One" />
+         <item id="3" text="Three" />
+         <item id="4" text="Four" />
+      </leftlist>
+      <rightlist caption="Selected" size="6" name="right">
+         <item id="2" text="Two" />
+      </rightlist>
+      <button type="text" all="true" from="left" to="right" value="All to Right" />
+      <button type="text" all="false" from="left" to="right" value="One To Right" />
+      <button type="text" all="false" from="right" to="left" value="One To Left" />
+      <button type="text" all="true" from="right" to="left" value="All To Left" />
+    </duallist>
+</editform>
+]]></code>
+			</p>
+			<p>
+				<editform title="Dual List sample">
+					<duallist>
+						<leftlist caption="Not selected" size="6" name="left">
+							<item id="1" text="One" />
+							<item id="3" text="Three" />
+							<item id="4" text="Four" />
+						</leftlist>
+						<rightlist caption="Selected" size="6" name="right">
+							<item id="2" text="Two" />
+						</rightlist>
+						<button type="text" all="true" from="left" to="right" value="All to Right" />
+						<button type="text" all="false" from="left" to="right" value="One To Right" />
+						<button type="text" all="false" from="right" to="left" value="One To Left" />
+						<button type="text" all="true" from="right" to="left" value="All To Left" />
+					</duallist>
+				</editform>
+			</p>
+		</body>
+	</blockcenter>
+</page>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmlindex>
+	<group>
+		<id>main</id>
+		<title>Tutorials List</title>
+		<keyword>all</keyword>
+	<page><id>home</id><title>Documentation Site</title><summary>Site of documentation of XMLNuke. Through this site you can consult the documentation available for the XMLNuke.</summary></page></group>
+	<group>
+		<id>whytouse</id>
+		<title>Why to use XMLNuke</title>
+		<keyword>whytouse_key</keyword><page><id>whytouse_1</id><title>What is XMLNuke?</title><summary>About XMLNuke and its characteristics. </summary></page>
+	<page><id>whytouse_2</id><title>Features and Advantages of using XMLNuke </title><summary>This article will demonstrate the features and advantages of using XMLNuke </summary></page><page><id>whytouse_3</id><title>Explore the Power of XML with XMLNuke </title><summary>See examples of how powerful XML can be when using XMLNuke for developing web applications. </summary></page></group>
+	<group>
+		<id>xmlnuke_concepts</id>
+		<title>Reasons for the XMLNuke</title>
+		<keyword>key_xmlnukeconcepts</keyword>
+	<page><id>fund_1</id><title>Introductory Concepts </title><summary>Basic concepts for programming using XMLNuke</summary></page><page><id>fund_2</id><title>The Context class</title><summary>The Context class - Their use and importance to the XMLNuke</summary></page>
+		<page>
+			<id>fund_3</id>
+			<title>The FilenameProcessor Class </title>
+			<summary>How to access files through XMLNuke </summary>
+		</page>
+		<page>
+			<id>fund_4</id>
+			<title>The LanguageCollection Class </title>
+			<summary>Using a word dictionary to assist with the internationalization of the modules </summary>
+		</page>
+		<page>
+			<id>fund_5</id>
+			<title>AnyDataSet and Data Access </title>
+			<summary>How to use the Iterator and the variations of AnyDataSet to access various types of data </summary>
+		</page>
+		<page>
+			<id>fund_6</id>
+			<title>The "Util" NameSpace</title>
+			<summary>The Useful classes of XMLNuke to manipulate files and XML </summary>
+		</page>
+		<page>
+			<id>directorystructure</id>
+			<title>Structure of Directories </title>
+			<summary>How XMLNuke organizes files within the folders. </summary>
+		</page>
+	</group>
+	<group>
+		<id>createmodules</id>
+		<title>Creating User Modules</title>
+		<keyword>createmodules</keyword>
+		<page>
+			<id>creatingmodule_2</id>
+			<title>Initial Considerations </title>
+			<summary>Creating user modules with XMLNuke - Initial considerations </summary>
+		</page>
+		<page>
+			<id>creatingmodule_3</id>
+			<title>XmlFormCollection and ContextValue </title>
+			<summary>Learn how to work with XMLFormCollection and the Context methods. </summary>
+		</page>
+		<page>
+			<id>creatingmodule_4</id>
+			<title>XmlEditList</title>
+			<summary>Learn how to use XmlEditList </summary>
+		</page>
+		<page>
+			<id>createmodule_5</id>
+			<title>ProcessPageStateBase</title>
+			<summary>Create complete registration screens (inclusion, alteration, and exclusion) in a few minutes. </summary>
+		</page>
+	</group>
+	<group>
+		<id>auth</id>
+		<title>Safe modules in XMLNuke</title>
+		<keyword>key_auth</keyword>
+		<page>
+			<id>auth_1</id>
+			<title>How does validation for secure modules work? </title>
+			<summary>How does the validation and access process work for modules that require user authentication? </summary>
+		</page>
+		<page>
+			<id>auth_2</id>
+			<title>Creating Users and Associating Roles </title>
+			<summary>How to create a user and associate a role. Internal details on how a user is stored and how to customize the user repository. </summary>
+		</page>
+		<page>
+			<id>auth_3</id>
+			<title>How to configure a module? </title>
+			<summary>How to configure a module so that it requires authentication and how to define a role that this module supports. Techniques for personalizing the authentication routine. </summary>
+		</page>
+		<page>
+			<id>auth_4</id>
+			<title>Creating your own Login module </title>
+			<summary>How to create your own login module to create personalized access validations. </summary>
+		</page>
+		<page>
+			<id>auth_5</id>
+			<title>How to create your own validation mechanism </title>
+			<summary>Describes how to create your own authentication mechanism, whether using roles or not. </summary>
+		</page>
+	</group>
+	<group>
+		<id>bdref</id>
+		<title>Database Access</title>
+		<keyword>bdref</keyword>
+		<page>
+			<id>bd_1</id>
+			<title>Configuring the Connection to the Database </title>
+			<summary>How XMLNuke connects to the database and how to configure the access connection. </summary>
+		</page>
+		<page>
+			<id>bd_2</id>
+			<title>Connecting through the DBDataSet</title>
+			<summary>Describes how to connect to the database through a connecting using DBDataSet. </summary>
+		</page>
+		<page>
+			<id>db_3</id>
+			<title>The IIterator interface and the objects for standardized data access. </title>
+			<summary>The standardized method for accessing any data source through the IIterator interface and the objects for accessing data existing in XLMNuke. </summary>
+		</page>
+	</group>
+	<group>
+		<id>technicalref</id>
+		<title>Techinical Reference</title>
+		<keyword>technicalref</keyword>
+		<page>
+			<id>technicalref_2</id>
+			<title>The IModule Interface </title>
+			<summary>Methods in the IModule interface </summary>
+		</page>
+		<page>
+			<id>technicalref_3</id>
+			<title>Data Repository - AnyDataSet </title>
+			<summary>Data Repository - AnyDataSet </summary>
+		</page>
+		<page>
+			<id>ref_upload</id>
+			<title>Uploading Documents </title>
+			<summary>How to upload documents using XMLNuke. </summary>
+		</page>
+		<page>
+			<id>ref_inputgroup</id>
+			<title>Grouping data entries in XMLNuke </title>
+			<summary>How to use XMLInputGroup to improve data entries in your forms. </summary>
+		</page>
+		<page>
+			<id>ref_jsvalidator</id>
+			<title>Personalized validation in JavaScript </title>
+			<summary>How to personalize the validation form for a set of data entries. </summary>
+		</page>
+		<page>
+			<id>ref_addjs</id>
+			<title>Adding Pieces of JavaScript Code </title>
+			<summary>How to add a piece of JavaScript to your code so that it interacts with the created document. </summary>
+		</page>
+		<page>
+			<id>ref_customxmldocs</id>
+			<title>Creating your own XML objects </title>
+			<summary>Creating your own XML objects </summary>
+		</page>
+		<page>
+			<id>ref_internationalization</id>
+			<title>Internationalization with XMLNuke. </title>
+			<summary>Internationalization with XMLNuke. </summary>
+		</page>
+		<page>
+			<id>ref_events</id>
+			<title>Processing Events with the Click of a Button. </title>
+			<summary>Processing Events with the Click of a Button. </summary>
+		</page>
+		<page>
+			<id>ref_bindparam</id>
+			<title>Automatically defining the values of Properties </title>
+			<summary>Automatically defining the values of Properties </summary>
+		</page>
+	</group>
+	<group>
+		<id>analysis</id>
+		<title>Project and Analysis</title>
+		<keyword>key_analysis</keyword>
+		<page>
+			<id>analysis</id>
+			<title>Analyzing and Projecting with XMLNuke </title>
+			<summary>Tips for analyzing and projecting applications using the XMLNuke framework </summary>
+		</page>
+		<page>
+			<id>implsolution</id>
+			<title>Implementing the solution. </title>
+			<summary>Tips on how to implement a solution using XMLNuke. </summary>
+		</page>
+		<page>
+			<id>creatingapp_php</id>
+			<title>Creating an XMLNuke Application in PHP </title>
+			<summary>Suggestion for creating projects with XMLNuke using the PHP engine. </summary>
+		</page>
+		<page>
+			<id>creatingapp_csharp</id>
+			<title>Creating an XMLNuke Application in CSharp </title>
+			<summary>Suggestion for creating projects with XMLNuke using the CSharp Engine. </summary>
+		</page>
+		<page>
+			<id>buildrelease</id>
+			<title>Building an XMLNuke Package </title>
+			<summary>How to build an XMLNuke package directly from XMLNuke sources </summary>
+		</page>
+	</group>
+	<group>
+		<id>installing</id>
+		<title>Installing XMLNuke</title>
+		<keyword>key_installing</keyword>
+		<page>
+			<id>install_windows_csharp</id>
+			<title>Installing XMLNuke CSharp on Windows </title>
+			<summary>Step-by-step tutorial to install XMLNuke CSharp on Windows. </summary>
+		</page>
+		<page>
+			<id>install_windows_php</id>
+			<title>Installing XMLNuke PHP5 on Windows </title>
+			<summary>Step-by-step tutorial on how to install XMLNuke PHP5 on Windows. </summary>
+		</page>
+		<page>
+			<id>install_ubuntu_csharp</id>
+			<title>Installing XLMNuke CSharp on Ubunto(Gutsy)/Debian/Linux </title>
+			<summary>How to install XMLNuke CSharp on Ubuntu(Gutsy)/Debian/Linux. </summary>
+		</page>
+	</group>
+	<group>
+		<id>xsl</id>
+		<title>Creating Layouts for XMLNuke</title>
+		<keyword>key_xsl</keyword>
+		<page>
+			<id>xsl_p01</id>
+			<title>Creating Layouts with XMLNuke </title>
+			<summary>How to create visual layouts for documents produced with XMLNuke. </summary>
+		</page>
+		<page>
+			<id>xsl_p02</id>
+			<title>Creating Structural Snippets </title>
+			<summary>How to create Structural Snippets. </summary>
+		</page>
+		<page>
+			<id>xsl_p03</id>
+			<title>Creating Template Snippets </title>
+			<summary>How to create Template Snippets. </summary>
+		</page>
+	</group>
+</xmlindex>

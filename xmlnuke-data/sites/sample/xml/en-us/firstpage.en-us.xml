@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>My First Page</title>
+		<abstract>How to create your First XMLNuke page</abstract>
+		<created>2/7/2005 11:53:00</created>
+		<modified>7/2/2005 1:09:00 PM</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>-</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>How to create your First XMLNuke page</title>
+		<body>
+			<p>XMLNuke divide the page creation in two parts: LAYOUT and DATA.</p>
+			<p>The layout is created using XSLT and must have only instructions to use data and generate a proper output like XHTML, RSS, WML and outhers.</p>
+			<p>The data are XML documents and must contain only your informations. You can (if you want) create your own XML format. But, to make easy start using XMLNuke we suggest and implement a specific data format. The data is separeted in two parts: 
+<ul><li>Header</li><li>Data blocks</li></ul></p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Header</title>
+		<body>
+			<p>The header contains informations about the XML document like page title, abstract and creation/modification date. The user can add your own definition.</p>
+			<p>
+				<code><![CDATA[
+<page>
+  <meta>
+    <title>Put your title here.</title>
+    <abstract>Put your abstract here.</abstract>
+    <created>2/7/2005 11:53:00</created>
+    <modified/>
+    <keyword>xmlnuke</keyword>
+    <groupkeyword>all</groupkeyword>
+  </meta>
+</page>
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Data Block</title>
+		<body>
+			<p>The document is created using data blocks. These blocks are called by <b>blockcenter</b>, <b>blockleft</b> and <b>blockright</b>. The default XSLT transform these blocks putting it at center, left and right, but you can transform it and put at a specific position. See an example:</p>
+			<p>
+				<code><![CDATA[
+  <blockcenter>
+    <title>Block title</title>
+    <body>
+      <p>This your the first paragraph.</p>
+    </body>
+  </blockcenter>
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+</page>

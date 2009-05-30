@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<anydataset>
+   <row>
+      <field name="LANGUAGE">en-us</field>
+      <field name="TITLE">Select the working language</field>
+      <field name="DESCRIPTION">Use this option to select a language which admin tool will be working.</field>
+      <field name="SELECTLANG">Select language from Languages Available below. Current Language: [param:lang]</field>
+      <field name="CREATEREPOSITORY">Create Repository</field>
+      <field name="PREVIEWPAGE">Preview This Page</field>
+      <field name="SELECT">Select</field>
+      <field name="CREATED">created.</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">pt-br</field>
+      <field name="TITLE">Selecionar linguagem de trabalho</field>
+      <field name="DESCRIPTION">Use esta opção para selecionar uma linguagem na qual trabalhará a ferramenta administrativa.</field>
+      <field name="SELECTLANG">Selecione uma das linguagem disponíveis abaixo. Linguagem atual: [param:lang]</field>
+      <field name="CREATEREPOSITORY">Criar Repositório</field>
+      <field name="PREVIEWPAGE">Visualizar esta página</field>
+      <field name="SELECT">Selecionar</field>
+      <field name="CREATED">Criado.</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">de-de</field>
+      <field name="TITLE">Wählen Sie eine Sprache</field>
+      <field name="DESCRIPTION">Wählen Sie hier die Sprache des Administrations-Programmes.</field>
+      <field name="SELECTLANG">Wählen Sie eine Sprache aus den unten verfügbaren. Aktuelle Sprache: [param:lang]</field>
+      <field name="CREATEREPOSITORY">Speicherort erstellen</field>
+      <field name="PREVIEWPAGE">Vorschau dieser Seite</field>
+      <field name="SELECT">Wählen</field>
+      <field name="CREATED">Erstellt.</field>
+   </row>
+</anydataset>

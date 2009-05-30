@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<anydataset>
+   <row>
+      <field name="LANGUAGE">en-us</field>
+      
+      <field name="GROUP_CONTENT">Contents</field>
+      <field name="GROUP_MANAGEMENT">Management</field>
+      <field name="GROUP_USERMODULES">User Modules</field>
+      
+      <field name="MODULE_TITLE_XMLGROUP">XML Groups</field>
+      <field name="MODULE_ABSTRACT_XMLGROUP">Organize your XML documents in groups.</field>
+      <field name="MODULE_TITLE_XMLDOCUMENT">XML Documents</field>
+      <field name="MODULE_ABSTRACT_XMLDOCUMENT">Create or edit XML documents</field>
+      <field name="MODULE_TITLE_XSLDOCUMENT">XSLT Document</field>
+      <field name="MODULE_ABSTRACT_XSLDOCUMENT">Create, edit or remove xslt templates.</field>
+      <field name="MODULE_TITLE_LANGFILE">Language Options</field>
+      <field name="MODULE_ABSTRACT_LANGFILE">Add or remove language files in your site.</field>
+      <field name="MODULE_TITLE_CONFIGEMAIL">Email Aliases</field>
+      <field name="MODULE_ABSTRACT_CONFIGEMAIL">Hide your true email from web robots.</field>
+      <field name="MODULE_TITLE_MANAGEUSERS">User Accounts</field>
+      <field name="MODULE_ABSTRACT_MANAGEUSERS">Add or remove users. Define access control rules.</field>
+      <field name="MODULE_TITLE_MANAGESITES">Manage Sites</field>
+      <field name="MODULE_ABSTRACT_MANAGESITES">Add or remove sites to your XMLNuke engine.</field>
+      <field name="MODULE_TITLE_XMLINDEX">XML DB Index</field>
+      <field name="MODULE_ABSTRACT_XMLINDEX">Manage the XML BTree index. This index stores the words of your XML documents.</field>
+      <field name="MODULE_TITLE_CUSTOMCONFIG">Custom Options</field>
+      <field name="MODULE_ABSTRACT_CUSTOMCONFIG">Setup your custom private options.</field>
+      <field name="MODULE_TITLE_CACHE">Cache Files</field>
+      <field name="MODULE_ABSTRACT_CACHE">View or remove cache files.</field>
+      <field name="MODULE_TITLE_BACKUP">Add/Remove Modules</field>
+      <field name="MODULE_ABSTRACT_BACKUP">Add or remove user modules in XMLNuke. Use this feature to backup you projects also.</field>
+      <field name="MODULE_TITLE_FILEMAN">File Management</field>
+      <field name="MODULE_ABSTRACT_FILEMAN">Upload, Edit, delete or rename files.</field>
+      <field name="MODULE_TITLE_DOWNLOAD">Download Module</field>
+      <field name="MODULE_ABSTRACT_DOWNLOAD">Add or remove category and files for download.</field>
+      <field name="MODULE_TITLE_CONFIGSEARCH">Search Module</field>
+      <field name="MODULE_ABSTRACT_CONFIGSEARCH">Manage how the search module will find titles and abstracts from your document.</field>
+      <field name="MODULE_TITLE_MANAGEDBCONN">DB Connection String</field>
+      <field name="MODULE_ABSTRACT_MANAGEDBCONN">Create, Edit or Test database connections string.</field>
+      <field name="MODULE_TITLE_MANAGEPOLL">Manage Poll</field>
+      <field name="MODULE_ABSTRACT_MANAGEPOLL">Create or Edit Polls in XMLNuke</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">pt-br</field>
+
+      <field name="GROUP_CONTENT">Conteúdo</field>
+      <field name="GROUP_MANAGEMENT">Gerenciamento</field>
+      <field name="GROUP_USERMODULES">Módulos Usuário</field>
+      
+      <field name="MODULE_TITLE_XMLGROUP">Grupos de arquivos XML</field>
+      <field name="MODULE_ABSTRACT_XMLGROUP">Organize seus documentos XML em grupos.</field>
+      <field name="MODULE_TITLE_XMLDOCUMENT">Documentos XML</field>
+      <field name="MODULE_ABSTRACT_XMLDOCUMENT">Crie ou edite documentos XML do seu site.</field>
+      <field name="MODULE_TITLE_XSLDOCUMENT">Documentos XSLT</field>
+      <field name="MODULE_ABSTRACT_XSLDOCUMENT">Crie ou edite documentos XSLT. Esses documentos correspondem ao Layout do seu site.</field>
+      <field name="MODULE_TITLE_LANGFILE">Opções de Linguagens</field>
+      <field name="MODULE_ABSTRACT_LANGFILE">Crie ou edite arquivos de linguagens para serem utilizados nos seus módulos.</field>
+      <field name="MODULE_TITLE_CONFIGEMAIL">Apelidos de Email</field>
+      <field name="MODULE_ABSTRACT_CONFIGEMAIL">Esconda o seu email verdadeiro dentro dos formulários para evitar robôs da Web</field>
+      <field name="MODULE_TITLE_MANAGEUSERS">Contas de Usuário</field>
+      <field name="MODULE_ABSTRACT_MANAGEUSERS">Adicione ou remova usuários do XMLNuke. Defina as regras de acesso desses usuários.</field>
+      <field name="MODULE_TITLE_MANAGESITES">Gerenciar Sites</field>
+      <field name="MODULE_ABSTRACT_MANAGESITES">Adicione ou remova sites no XMLNuke.</field>
+      <field name="MODULE_TITLE_XMLINDEX">Indíce BD XML</field>
+      <field name="MODULE_ABSTRACT_XMLINDEX">Gerencie o índice do BTree do banco de dados XML. Esse índice organiza as palavras dos seus documentos XML.</field>
+      <field name="MODULE_TITLE_CUSTOMCONFIG">Opções Personalizadas</field>
+      <field name="MODULE_ABSTRACT_CUSTOMCONFIG">Configure opções particulares para o seu site.</field>
+      <field name="MODULE_TITLE_CACHE">Arquivos de Cache</field>
+      <field name="MODULE_ABSTRACT_CACHE">Veja ou remova os arquivos de cache.</field>
+      <field name="MODULE_TITLE_BACKUP">Instalar/Remover Módulos</field>
+      <field name="MODULE_ABSTRACT_BACKUP">Instale ou remova módulos de usuário no XMLNuke. Utilize essa função para fazer backup dos seus projetos.</field>
+      <field name="MODULE_TITLE_FILEMAN">Gerenciamento de Arquivos</field>
+      <field name="MODULE_ABSTRACT_FILEMAN">Faça Upload de Arquivos, edite arquivos texto, remova ou renomeie arquivos.</field>
+      <field name="MODULE_TITLE_DOWNLOAD">Módulo de Download</field>
+      <field name="MODULE_ABSTRACT_DOWNLOAD">Configure as categorias e arquivos existentes no módulo de download.</field>
+      <field name="MODULE_TITLE_CONFIGSEARCH">Módulo de Busca</field>
+      <field name="MODULE_ABSTRACT_CONFIGSEARCH">Gerencie como o módulo de pesquisa irá procurar títulos e resumos do seu documento.</field>
+      <field name="MODULE_TITLE_MANAGEDBCONN">String de Conexão de BD</field>
+      <field name="MODULE_ABSTRACT_MANAGEDBCONN">Crie, edite ou teste string de conexão de banco de dados.</field>
+      <field name="MODULE_TITLE_MANAGEPOLL">Gerenciar Enquetes</field>
+      <field name="MODULE_ABSTRACT_MANAGEPOLL">Crie ou Edite enquetes no XMLNuke</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">de-de</field>
+      
+      <field name="GROUP_CONTENT">Inhalt</field>
+      <field name="GROUP_MANAGEMENT">Verwaltung</field>
+      <field name="GROUP_USERMODULES">Benutzer-Module</field>
+      
+      <field name="MODULE_TITLE_XMLGROUP">XML-Gruppen</field>
+      <field name="MODULE_ABSTRACT_XMLGROUP">Gruppen für die XML-Dokumente verwalten.</field>
+      <field name="MODULE_TITLE_XMLDOCUMENT">XML-Dokumente</field>
+      <field name="MODULE_ABSTRACT_XMLDOCUMENT">XML-Dokumente erstellen oder ändern.</field>
+      <field name="MODULE_TITLE_XSLDOCUMENT">XSLT-Dokumente</field>
+      <field name="MODULE_ABSTRACT_XSLDOCUMENT">XSLT-Vorlagen erstellen, ändern oder löschen.</field>
+      <field name="MODULE_TITLE_LANGFILE">Spach-Einstellungen</field>
+      <field name="MODULE_ABSTRACT_LANGFILE">Sprach-Dateien hinzufügen, bearbeiten oder entfernen.</field>
+      <field name="MODULE_TITLE_CONFIGEMAIL">E-Mail-Pseudonyme</field>
+      <field name="MODULE_ABSTRACT_CONFIGEMAIL">Wirkliche E-Mail-Adresse verstecken.</field>
+      <field name="MODULE_TITLE_MANAGEUSERS">Benutzerkonten</field>
+      <field name="MODULE_ABSTRACT_MANAGEUSERS">Benutzer hinzufügen oder entfernen und Zugangsrechte vergeben.</field>
+      <field name="MODULE_TITLE_MANAGESITES">Seiten verwalten</field>
+      <field name="MODULE_ABSTRACT_MANAGESITES">Seiten hinzufügen oder entfernen.</field>
+      <field name="MODULE_TITLE_XMLINDEX">XML DB Index</field>
+      <field name="MODULE_ABSTRACT_XMLINDEX">XML-BTree-Index verwalten. Dieser Index speichert den Inhalt Ihrer XML-Dokumente.</field>
+      <field name="MODULE_TITLE_CUSTOMCONFIG">Spezifische Einstellungen</field>
+      <field name="MODULE_ABSTRACT_CUSTOMCONFIG">Spezifische Einstellungen vornehmen.</field>
+      <field name="MODULE_TITLE_CACHE">Cache-Dateien</field>
+      <field name="MODULE_ABSTRACT_CACHE">Cache-Dateien ansehen oder entfernen.</field>
+      <field name="MODULE_TITLE_BACKUP">Module hinzufügen/entfernen</field>
+      <field name="MODULE_ABSTRACT_BACKUP">Module hinzufügen oder entfernen. Nutzen Sie dieses Feature auch um Ihr Projekt zu sichern.</field>
+      <field name="MODULE_TITLE_FILEMAN">Datei-Verwaltung</field>
+      <field name="MODULE_ABSTRACT_FILEMAN">Dateien hochladen, bearbeiten, löschen oder umbenennen.</field>
+      <field name="MODULE_TITLE_DOWNLOAD">Download-Modul</field>
+      <field name="MODULE_ABSTRACT_DOWNLOAD">Kategorien und Dateien hinzufügen, ansehen, bearbeiten oder entfernen.</field>
+      <field name="MODULE_TITLE_CONFIGSEARCH">Such-Modul</field>
+      <field name="MODULE_ABSTRACT_CONFIGSEARCH">Festlegen wie das Such-Modul Titel und Auszüge Ihrer Dokumente findet.</field>
+      <field name="MODULE_TITLE_MANAGEDBCONN">DB-Verbindung</field>
+      <field name="MODULE_ABSTRACT_MANAGEDBCONN">Datenbank-Verbindung erstellen, bearbeiten oder testen.</field>
+      <field name="MODULE_TITLE_MANAGEPOLL">Abstimmungen verwalten</field>
+      <field name="MODULE_ABSTRACT_MANAGEPOLL">Abstimmungen erstellen oder bearbeiten.</field>
+   </row>
+</anydataset>

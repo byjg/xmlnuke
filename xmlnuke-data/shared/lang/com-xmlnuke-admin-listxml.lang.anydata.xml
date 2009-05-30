@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<anydataset>
+   <row>
+      <field name="LANGUAGE">en-us</field>
+      <field name="TITLE">Manage XML Documents</field>
+      <field name="DESCRIPTION">Select in the working area the proper action related to XML documents.</field>
+      <field name="EDITALLXML">Edit default XML</field>
+      <field name="NEWXML">New XML Document</field>
+      <field name="NEWGROUP">New XML Group</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">pt-br</field>
+      <field name="TITLE">Gerenciar Documentos XML</field>
+      <field name="DESCRIPTION">Selecione na caixa ao lado a opção apropriada relacionada a documentos XML.</field>
+      <field name="EDITALLXML">Editar XML Padrão</field>
+      <field name="NEWXML">Novo documento XML</field>
+      <field name="NEWGROUP">Novo grupo XML</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">de-de</field>
+      <field name="TITLE">XML-Dokumente verwalten</field>
+      <field name="DESCRIPTION">Bearbeiten oder löschen Sie vorhandene XML-Dokumente / XML-Gruppen oder erstellen Sie neue.</field>
+      <field name="EDITALLXML">Standard XML bearbeiten</field>
+      <field name="NEWXML">Neues XML-Dokument</field>
+      <field name="NEWGROUP">Neue XML-Gruppe</field>
+   </row>
+</anydataset>

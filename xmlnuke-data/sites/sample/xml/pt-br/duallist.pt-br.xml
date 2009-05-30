@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Lista Dupla</title>
+		<abstract>Como visualizar dados em lista dupla.</abstract>
+		<created>24/4/2008 23:55:47</created>
+		<modified>25/4/2008 00:10:43</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>all</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Lista Dupla</title>
+		<body>
+			<p>Este tipo de lista possibilita a seleção de elementos. Os elementos selecionados ficam na listagem à direita, e os não selecionados ficam à esquerda.</p>
+			<p>
+				<code information="Código XML"><![CDATA[
+<editform title="Exemplo de Lista Dupla">
+   <duallist>
+      <leftlist caption="Não selecionado" size="6" name="left">
+         <item id="1" text="Um" />
+         <item id="3" text="Três" />
+         <item id="4" text="Quatro" />
+      </leftlist>
+      <rightlist caption="Selecionado" size="6" name="right">
+         <item id="2" text="Dois" />
+      </rightlist>
+      <button type="text" all="true" from="left" to="right" value="Todos Direita" />
+      <button type="text" all="false" from="left" to="right" value="Para Direita" />
+      <button type="text" all="false" from="right" to="left" value="Para Esquerda" />
+      <button type="text" all="true" from="right" to="left" value="Todos Esquerda" />
+    </duallist>
+</editform>
+]]></code>
+			</p>
+			<p>
+				<editform title="Exemplo de Lista Dupla">
+					<duallist>
+						<leftlist caption="Não selecionado" size="6" name="left">
+							<item id="1" text="Um" />
+							<item id="3" text="Três" />
+							<item id="4" text="Quatro" />
+						</leftlist>
+						<rightlist caption="Selecionado" size="6" name="right">
+							<item id="2" text="Dois" />
+						</rightlist>
+						<button type="text" all="true" from="left" to="right" value="Todos Direita" />
+						<button type="text" all="false" from="left" to="right" value="Para Direita" />
+						<button type="text" all="false" from="right" to="left" value="Para Esquerda" />
+						<button type="text" all="true" from="right" to="left" value="Todos Esquerda" />
+					</duallist>
+				</editform>
+			</p>
+		</body>
+	</blockcenter>
+</page>

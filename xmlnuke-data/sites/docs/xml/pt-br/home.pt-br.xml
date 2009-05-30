@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Site de Documentação</title>
+		<abstract>Site de documentação do XMLNuke. Através desse site você poderá consultar a documentação disponível para o XMLNuke.</abstract>
+		<created>26/9/2004 17:31:34</created>
+		<modified>14/8/2006 16:12:13</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>all</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Site de Documentação</title>
+		<body>
+			<p><a href="engine:xmlnuke?xml=index&amp;xsl=index">Clique aqui</a> para visualizar a lista de tópicos</p>
+		</body>
+	</blockcenter>
+</page>

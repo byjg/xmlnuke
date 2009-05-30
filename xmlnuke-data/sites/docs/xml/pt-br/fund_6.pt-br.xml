@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>O NameSpace Util</title>
+		<abstract>As classes de Utilidade do XMLNuke para manipular arquivos e XML.</abstract>
+		<created>15/8/2006 13:14:17</created>
+		<modified>Sun Sep 9 2007 13:16:10</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_xmlnukeconcepts</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>O NameSpaceUtil</title>
+		<body>
+			<p>O XMLNuke contém um conjunto de classes que facilitam algumas atividades básicas de trabalho. São as seguintes:
+<ul>
+  <li><b>DateUtil</b>: Permite manipular datas e converter de um formato para o outro.</li>
+  <li><b>Debug</b>: Métodos para auxiliar a depuração da aplicação.</li>
+  <li><b>XmlUtil</b>: Métodos para manipular documentos XML, adicionar nós e atributos.</li>
+	<li><b>FileUtil</b>: Métodos para manipular arquivos dentro do sistema de arquivos da máquina. Trabalha junto com o FileNameProcessor.</li>
+	<li><b>MailUtil</b>: Métodos para auxiliar o envio de email atravé do XMLNuke.</li>
+	<li><b>Conversion</b>: Métodos para auxiliar a conversão de caracteres UTF8 para outros formatos e vice-versa. (PHP apenas)</li>
+</ul>
+
+</p>
+		</body>
+	</blockcenter>
+</page>

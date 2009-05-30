@@ -1,0 +1,44 @@
+<?php
+
+class Home extends BaseModule
+{
+	/**
+	*@desc Default constructor
+	*/
+	public function __constructor()
+	{}
+
+	/**
+	 * Returns if use cache
+	 *
+	 * @return bool
+	 */
+	public function useCache() 
+	{
+		return false;
+	}
+
+	public function CreatePage() 
+	{
+		$myWords = $this->WordCollection();		
+		
+		$this->defaultXmlnukeDocument = new XmlnukeDocument("Template", "Template Document");
+		
+		$block = new XmlBlockCollection("Template Block", BlockPosition::Center);
+		$this->defaultXmlnukeDocument->addXmlnukeObject($block);
+					
+		$p = new XmlParagraphCollection();
+		$p->addXmlnukeObject(new XmlnukeText("Template Text"));
+		$block->addXmlnukeObject($p);
+		
+		return $this->defaultXmlnukeDocument;
+	}
+	
+	public function requiresAuthentication()
+	{
+		return false;
+	}
+	
+}
+
+?>

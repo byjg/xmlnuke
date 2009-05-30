@@ -1,0 +1,39 @@
+﻿<?xml version="1.0"?>
+<anydataset>
+   <row>
+      <field name="LANGUAGE">en-us</field>
+      <field name="TITLE">Manage Groups</field>
+      <field name="DESCRIPTION">Groups are logical XML file separators. Using groups you can organize your XML files and change the menu view.</field>
+      <field name="CONFIRMDELETE">Please, click here to confirm the deletion of the group: {0}</field>
+      <field name="DELETED">Group is deleted.</field>
+      <field name="SAVED">Group {0} saved.</field>
+      <field name="EDITINGID">Editing Group Id: {0}</field>
+      <field name="GROUPID">Group Id: </field>
+      <field name="TITLEBOX">Title: </field>
+      <field name="KEYWORDBOX">Keyword: </field>
+   </row>
+   <row>
+      <field name="LANGUAGE">pt-br</field>
+      <field name="TITLE">Gerenciar Grupos</field>
+      <field name="DESCRIPTION">Grupo é um separador lógico de XML. Usando o conceito de grupo você pode organizar os seus documentos XML e modificar a visualização do menu.</field>
+      <field name="CONFIRMDELETE">Clique aqui para apagar definitivamente o grupo {0}</field>
+      <field name="DELETED">Grupo apagado.</field>
+      <field name="SAVED">Grupo {0} salvo.</field>
+      <field name="EDITINGID">Editando grupo: {0}</field>
+      <field name="GROUPID">Grupo:</field>
+      <field name="TITLEBOX">Título: </field>
+      <field name="KEYWORDBOX">Chave: </field>
+   </row>
+   <row>
+      <field name="LANGUAGE">de-de</field>
+      <field name="TITLE">Gruppen verwalten</field>
+      <field name="DESCRIPTION">Gruppen dienen zur logischen Trennung von XML-Dateien. Durch die Benutzung von Gruppen können Sie Ihre XML-Dateien organisieren und die Menü-Ansicht verändern.</field>
+      <field name="CONFIRMDELETE">Gruppe '{0}' löschen</field>
+      <field name="DELETED">Gruppe wurde gelöscht.</field>
+      <field name="SAVED">Gruppe '{0}' wurde gespeichert.</field>
+      <field name="EDITINGID">Gruppen-ID '{0}' bearbeiten</field>
+      <field name="GROUPID">Gruppen-ID: </field>
+      <field name="TITLEBOX">Titel: </field>
+      <field name="KEYWORDBOX">Stichwort: </field>
+   </row>
+</anydataset>

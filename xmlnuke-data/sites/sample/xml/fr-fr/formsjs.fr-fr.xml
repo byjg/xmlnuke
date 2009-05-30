@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Formularies avec la validation</title>
+		<abstract>Démontrez comment employer des formularies avec la validation en utilisant le Javascript.</abstract>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>-</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Formes avec la validation</title>
+		<body>
+			<p>XMLNuke est prêt à employer des formularies avec la validation de Javascript. Cependant, pour employer ce dispositif, l'utilisateur <b>n'a pas besoin de savoir le Javascript</b>.</p>
+			<p>Par exemple, la forme a énuméré le beuglement que le besoin d'utilisateur seulement a placé quelques attributs de xml pour informer XMLNuke sera valident des données avec le Javascript. <a href="engine:xmlnuke?xsl=rawxml">Voir le document de XML</a> pour cette page.
+</p>
+			<editform action="#" title="Formularies avec la validation de Javascript" name="nomedoform" jsvalidate="true" decimalseparator="," dateformat="0">
+				<textbox name="a" caption="Champ Text" value="" size="30" required="true" type="0" />
+				<textbox name="b" caption="Champ Minuscule" value="" size="30" required="true" type="1" />
+				<textbox name="c" caption="Champ Majuscule" value="" size="30" required="true" type="2" />
+				<textbox name="d" caption="Champ Nombre" value="" size="30" required="true" type="3" minvalue="10" maxvalue="20" />
+				<textbox name="e" caption="Champ Date" value="" size="30" required="true" type="4" minvalue="01/01/2004" maxvalue="31/12/2004" />
+				<textbox name="f" caption="Champ ASCII Majuscule" value="" size="30" required="true" type="9" />
+				<textbox name="g" caption="Champ Email" value="" size="30" required="true" type="10" />
+				<select name="h" caption="ComboBox" required="true">
+					<option value="" selected="yes">-- Select --</option>
+					<option value="1">Option 1</option>
+					<option value="2">Opiton 2</option>
+					<option value="3">Option 3</option>
+				</select>
+				<buttons>
+					<submit caption="Envoyer" />
+					<reset caption="Reset" />
+				</buttons>
+			</editform>
+		</body>
+	</blockcenter>
+</page>

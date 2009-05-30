@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>XMLNuke skicka Epost</title>
+		<abstract>XMLNuke skicka Epost</abstract>
+		<created>10/20/2002 8:13:51 PM</created>
+		<modified>08/06/2005 8:13:51 PM</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword>all</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Skicka Epost</title>
+		<body>
+			<p>Den här sidan använder en anpassad modul 'sendmail' distributerad med den ursprungliga installationen av XMLNuke. Du kan skapa ett anpassat formulär för att POST:a data till sendmail-sidan. 
+</p>
+			<p>
+				<editform action="module:sendemail" title="Fyll i fälten nedan för att skicka ett epost" name="formemail" jsvalidate="true">
+					<textbox name="name" caption="Namn" value="" size="30" required="true" type="0" />
+					<textbox name="email" caption="Epost" value="" size="30" required="true" type="10" />
+					<textbox name="subject" caption="Ämne" value="" size="40" required="true" type="0" />
+					<memo name="message" caption="Medelande" cols="40" rows="5"></memo>
+					<hidden name="toname_id" value="DEFAULT" />
+					<imagevalidate caption="Type the text bellow: " />
+					<buttons>
+						<submit caption="Skicka" />
+						<reset caption="Återställ" />
+					</buttons>
+				</editform>
+			</p>
+		</body>
+	</blockcenter>
+</page>

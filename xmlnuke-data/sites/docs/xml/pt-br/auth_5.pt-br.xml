@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Como fazer seu próprio mecanismo de validação</title>
+		<abstract>Descreve como criar o seu próprio mecanismo de autenticação, seja através de papéis ou não.</abstract>
+		<created>15/8/2006 15:39:39</created>
+		<modified>Wed Feb 4 2009 0:21:41</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_auth</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Como autenticar um usuário por outras fontes de dados?</title>
+		<body>
+			<p>Com o XMLNuke é possível autenticar os usuários através de qualquer fonte OU mecanismo de acesso a dados. Isso significa, por exemplo, que é possível autenticar através de uma árvore LDAP, ou fazer uma autenticação personalizada já existente através de um sistema.</p>
+			<p>Para isso é necessário executar algumas etapas importantes:
+
+<ul>
+<li>Conhecer como um usuário é reconhecido através do XMLNuke. O usuário possui algumas características básicas (nome, login, senha, etc), papéis (1-N) e metadados (1-N). Para saber mais leia em "<a href="engine:xmlnuke?xml=auth_2">Conhecendo um usuário por dentro</a>"</li>
+<li>Criar uma classe que implemente a interface IUsersBase. Note que todos os métodos dessa interface manipulam (para leitura e escrita) os dados dos usuários, tanto seus dados básicos, como os metadados. <b>A classe deverá obrigatoriamente possuir um construtor que receba dois parâmetros: engine.Context e o string de conexão</b></li>
+<li>Depois de criada a classe, é necessário que o seu módulo saiba que deverá buscar essa classe para validar e procurar os usuários. que irá utilizar essa conexão. Sendo assim, configure em "xmlnuke.USERSCLASS" o namespace completo para localizar a classe criada. </li>
+<li>Opcionalmente modifique xmlnuke.USERSDATABASE para informar o string de conexão dessa classe</li>
+<li>Veja mais informações <a href="engine:xmlnuke?xml=auth_2">aqui</a></li>
+</ul></p>
+		</body>
+	</blockcenter>
+</page>

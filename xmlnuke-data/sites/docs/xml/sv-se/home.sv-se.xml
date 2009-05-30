@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Skriv in din titel här</title>
+		<abstract>Beskriv sidan kortfattat här</abstract>
+		<created>2004-09-26 17:31:34</created>
+		<modified>2006-05-07 17:31:50</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>main_keyword</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Blocktitel</title>
+		<body>
+			<p>Det här är första paragrafen</p>
+		</body>
+	</blockcenter>
+</page>

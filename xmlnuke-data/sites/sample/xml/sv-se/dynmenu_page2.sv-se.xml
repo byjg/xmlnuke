@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Dynamiska menyer</title>
+		<abstract>Dynamiska menyer: Sida två</abstract>
+		<created>13/05/2002 20:45:49</created>
+		<modified>08/06/2005 20:58:45</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword>grpdynmenu</groupkeyword>
+		<keyword>Your First Keyword</keyword>
+		<keyword>Your Second Keyword and so on</keyword>
+	</meta>
+	<blockcenter>
+		<title>Det här är sida två</title>
+		<body>
+			<p>Så enkelt!</p>
+		</body>
+	</blockcenter>
+</page>

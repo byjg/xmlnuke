@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Das Erstellen von dynamischen Menüs</title>
+		<abstract>Das Erstellen von dynamischen Menüs</abstract>
+		<created>13/05/2002 20:43:05</created>
+		<modified>08/06/2005 20:56:11</modified>
+		<keyword>XMLSeite ByJG</keyword>
+		<groupkeyword>grpdynmenu</groupkeyword>
+    <keyword>Ihr erstes Stichwort</keyword>
+    <keyword>Ihr zweites Stichwort und so weiter</keyword>
+	</meta>
+	<blockcenter>
+		<title>Was ist ein dynamisches Menü?</title>
+		<body>
+			<p>Es ist sehr einfach Ihre Seiten und Menüs zu organisieren. XMLNuke kennt 'GROUPS' und 'GROUPKEYWORD's, die zur Organisation benutzt werden.</p>
+			<p>Wenn Sie eine Gruppe erstellen (siehe Systemsteuerung), vergeben Sie ein 'KEYWORD' (Stichwort). Das Standard-Stichwort ist <b>all</b>. Das bedeutet, dass nur Gruppen, die 'ALL' als Stichwort enthalten das Menü sichtbar machen.</p>
+			<p>Wenn Sie ein anderes Stichwort angeben wird das Menü versteckt. Nur Seiten mit dem entsprechenden Stichwort &lt;GROUPKEYWORD&gt; können es dann aktivieren.</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Kann ich ein Beispiel sehen?</title>
+		<body>
+			<p>Sehen Sie sich das Menü auf der linken Seite an. Dort sehen Sie 'Seite eins' und 'Seite zwei'. Durch diese Links können Sie auf die zwei Seiten dieses versteckten Menüs zugreifen.</p>
+		</body>
+	</blockcenter>
+</page>

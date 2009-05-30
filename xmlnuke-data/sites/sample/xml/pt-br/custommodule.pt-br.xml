@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Módulos de Usuário</title>
+		<abstract>Trabalhando com Módulos de Usuário</abstract>
+		<created>13/05/2002 21:18:26</created>
+		<modified>15/05/2002 13:33:42</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword />
+		<keyword>Your First Keyword</keyword>
+		<keyword>Your Second Keyword and so on</keyword>
+	</meta>
+	<blockcenter>
+		<title>Trabalhando com Módulos de Usuário</title>
+		<body>
+			<p>O XMLNuke pode trabalhar com módulos de usuário. Módulos de usuários são PÁGINAS CONTENDO SCRIPTS (ASP, PHP, JAVA) escritos na linguagem da engine utilizada. Módulos de usuários podem adicionar maior força ao seu site. </p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Características</title>
+		<body>
+			<p>A engine do XMLNuke possui muitas funções para abstrair a criação de módulos de usuário. Possui classes para abstratrair a criação da página XML, AnyDataSet (veja Guestbook), funções e mais.</p>
+		</body>
+	</blockcenter>
+</page>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Introductory Concepts</title>
+		<abstract>Basic concepts for programming using XMLNuke</abstract>
+		<created>15/8/2006 12:39:36</created>
+		<modified>Sat Sep 13 2008 18:21:14</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_xmlnukeconcepts</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Introductory Concepts</title>
+		<body>
+			<p>XMLNuke is a framework for developing applications which use the web as a platform. The creation of this framework is based on a few premises: 
+<ul>
+	<li>Independence from the operating system</li>
+	<li>Independence from the web server and the web environment</li>
+	<li>HIndependence of the HTML</li>
+	<li>Focus on the information produced (XML)</li>
+	<li>Possibility for internationalization</li>
+	<li>Be completely extensible</li>
+	<li>Easy to install</li></ul>
+	
+XMLNuke was created according to these premises and based on the experimentation of a few methodologies developed in a real-world production environment.
+</p>
+			<p>
+To meet these objectives, the framework was developed in such a way that the programmer can have the freedom necessary to program, but that at the same time, the environment which he is programming in provides all the required elements.
+</p>
+			<p>
+The biggest challenge in this case was establishing a programming mechanism that offers uniformization in the programming, but that at the same time does not limit the programming of the user. Opting for XML was crucial to resolve this problem. With XML it was possible to define iteration structures, client objects, elements for the exchange of information, aside from, of course, the XML being completely extensible. In other words, the FRAMEWORK defines the base for how it should be done, and the programming specializes as needed.
+</p>
+			<p>
+It?s important to note that XMLNuke is recommended for applications where the information to be produced is well known, and that the standards for the screen are also known. XMLNuke is not recommended for applications where EACH screen follows a different format with no known standards.
+</p>
+			<p>
+The other challenge was to make the program developed for XMLNuke not tied to the web server or operating system. Various classes were then developed for the abstraction of these elements.
+</p>
+			<p>
+The most important class is Context. It follows the Design Pattern Façade and implements ALL the functions that the programmer needs to interact with the web service.
+</p>
+			<p>
+The following topics will explain these abstraction classes and how they are used in XMLNuke.
+</p>
+		</body>
+	</blockcenter>
+</page>

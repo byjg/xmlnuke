@@ -1,0 +1,55 @@
+﻿<?xml version="1.0"?>
+<page>
+	<blockleft>
+		<title>Módulos disponíveis</title>
+		<body>
+			<p>
+				<a href="module:guestbook">Livro de Visitas</a><br/>
+				<a href="module:search">Pesquise no Site</a><br/>
+				<a href="module:sendpage">Enviar essa página</a><br/>
+				<a href="module:userprofile">Ver perfil de usuário</a><br/>
+				<a href="engine:xmlnuke?xml=email">Enviar email</a><br/>
+				<a href="module:Download">Área de Download</a><br/>
+				<a href="module:XSLTheme">Selecionar Tema</a><br/>
+				<a href="module:Sample">Exemplo</a><br/>
+				News<br/>
+				Forum<br/>
+			</p>
+		</body>
+	</blockleft>
+	<blockright>
+		<title>Ajude-nos</title>
+		<body>
+			<p>
+				<b>Você acha o XMLNUke útil?</b>
+			</p>
+			<p>Você pode ajudar a implementar mais recursos. Nós precisamos de estilos e páginas web. Nós precisamos de módulos customizados. Nós precisamos suportar mais linguagens!</p>
+			<p>Ajude-nos!</p>
+		</body>
+	</blockright>
+	<blockright>
+		<title>Avisar atualização</title>
+		<body>
+			<p>
+				<editform action="module:sendemail" title="Adicionar Usuário">
+					<hidden name="name" value="Site em Português" />
+					<hidden name="Subject" value="Avisar sobre atualizações do projeto XMLNuke" />
+					<hidden name="toname_id" value="DEFAULT" />
+					<hidden name="Message" value="Avisar sobre atualizações do projeto XMLNuke" />
+					<textbox name="email" caption="eMail" value="" size="10" />
+					<buttons>
+						<submit caption="Enviar" />
+					</buttons>
+				</editform>
+			</p>
+		</body>
+	</blockright>
+	<blockcenter>
+		<title />
+		<body>
+			<p>
+				<a href="engine:xmlnuke?rawxml=true">Veja o XML</a> desta página.
+</p>
+		</body>
+	</blockcenter>
+</page>

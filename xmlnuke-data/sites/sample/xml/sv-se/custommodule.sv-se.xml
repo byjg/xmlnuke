@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Anpassade moduler</title>
+		<abstract>Att arbeta med anpassade moduler</abstract>
+		<created>13/05/2002 21:18:26</created>
+		<modified>08/06/2005 21:22:11</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword />
+		<keyword>Your First Keyword</keyword>
+		<keyword>Your Second Keyword and so on</keyword>
+	</meta>
+	<blockcenter>
+		<title>Arbeta med anpassade moduler</title>
+		<body>
+			<p>XMLNuke kan arbeta med anpassade moduler. Anpassade moduler är SCRIPT SIDOR på kärnmotorns språk (ASP, PHP, JAVA). Anpassade moduler kan utöka din webbplats kraftfullhet. </p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Funktioner</title>
+		<body>
+			<p>XMLNuke's motor har många inbyggda funktioner för att abstraktera skapandet av anpassade moduler. Klasser för att abstraktera XML-sidor, AnyDataSet (se till exempel gästboken), många funktioner och ännu mer.</p>
+		</body>
+	</blockcenter>
+</page>

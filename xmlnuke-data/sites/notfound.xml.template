@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Página não encontrada / Page Not Found / Page Non trouvée / Seite nicht gefunden</title>
+		<abstract>Página não encontrada / Page Not Found / Page Non trouvée / Seite nicht gefunden</abstract>
+		<created>01/06/02 19:24:12</created>
+		<modified>01/06/02 19:24:12</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword />
+		<keyword>xmlnuke</keyword>
+	</meta>
+	<blockcenter>
+		<title>Page Not Found</title>
+		<body>
+			<p>The Requested Page "[param:xml]" doesn't exists or doesn't have an english version</p>
+			<p>Try to access this page in another language: [param:languageselector]</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Página não encontrada</title>
+		<body>
+			<p>A página "[param:xml]" solicitada não existe ou não possui uma versão para o português. </p>
+			<p>Tente acessar essa página em outra linguagem: [param:languageselector]</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Page Non trouvée</title>
+		<body>
+			<p>La Page Demandée "[param:xml]" n'a pas une version française</p>
+			<p>Accès d'essai cette page en une autre langue: [param:languageselector]</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Seite nicht gefunden</title>
+		<body>
+			<p>Die angeforderte Seite "[param:xml]" existiert nicht oder es gibt keine deutsche Version davon.</p>
+			<p>Versuchen Sie die Seite in einer anderen Sprache aufzurufen: [param:languageselector]</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Sidan kunde inte hittas</title>
+		<body>
+			<p>den efterfrågade sidan finns inte, eller har inte någon svensk version</p>
+			<p>Prova att nå sidan på ett annat språk: [param:languageselector]</p>
+		</body>
+	</blockcenter>
+
+</page>

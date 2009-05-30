@@ -1,0 +1,57 @@
+<anydataset>
+   <row>
+      <field name="LANGUAGE">en-us</field>
+      <field name="BLACK">black</field>
+      <field name="RED">red</field>
+      <field name="GREEN">green</field>
+      <field name="BLUE">blue</field>
+      <field name="CONSONANT">consonant</field>
+      <field name="VOWEL">vowel</field>
+      <field name="CHALLENGEQUESTION">What letters are {0}?</field>
+      <field name="SIMPLEQUESTION">What letters are shown?</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">pt-br</field>
+      <field name="BLACK">pretas</field>
+      <field name="RED">vermelhas</field>
+      <field name="GREEN">verdes</field>
+      <field name="BLUE">azuis</field>
+      <field name="CONSONANT">consoantes</field>
+      <field name="VOWEL">vogais</field>
+      <field name="CHALLENGEQUESTION">Quais letras são {0}?</field>
+      <field name="SIMPLEQUESTION">Quais letras são mostradas?</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">de-de</field>
+      <field name="BLACK">schwarz</field>
+      <field name="RED">rot</field>
+      <field name="GREEN">grün</field>
+      <field name="BLUE">blau</field>
+      <field name="CONSONANT">konsonanten</field>
+      <field name="VOWEL">vokal</field>
+      <field name="CHALLENGEQUESTION">Welche Buchstaben sind {0}?</field>
+      <field name="SIMPLEQUESTION">Welche Buchstaben sind?</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">fr-fr</field>
+      <field name="BLACK">noir</field>
+      <field name="RED">rouge</field>
+      <field name="GREEN">vertes</field>
+      <field name="BLUE">bleu</field>
+      <field name="CONSONANT">consonne</field>
+      <field name="VOWEL">voyelle</field>
+      <field name="CHALLENGEQUESTION">Qu'est-ce que les lettres sont {0}?</field>
+      <field name="SIMPLEQUESTION">Qu'est-ce que les lettres sont présentées?</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">sv-se</field>
+      <field name="BLACK">svart</field>
+      <field name="RED">röda</field>
+      <field name="GREEN">gröna</field>
+      <field name="BLUE">blå</field>
+      <field name="CONSONANT">konsonant</field>
+      <field name="VOWEL">vokal</field>
+      <field name="CHALLENGEQUESTION">Vad bokstäverna är {0}?</field>
+      <field name="SIMPLEQUESTION">Vilka bokstäver visas?</field>
+   </row>
+</anydataset>

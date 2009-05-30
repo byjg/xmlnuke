@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>How to configure a module?</title>
+		<abstract>How to configure a module so that it requires authentication and how to define a role that this module supports. Techniques for personalizing the authentication routine.</abstract>
+		<created>15/8/2006 15:37:17</created>
+		<modified>Sun Sep 14 2008 12:08:31</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_auth</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>The Default Way</title>
+		<body>
+			<p>To configure a module so that it requires authentication, the following methods must be overwritten: 
+
+<code information="CSharp"><![CDATA[
+public override bool requiresAuthentication()
+{
+	return true; 
+}
+
+public override AccessLevel getAccessLevel()
+{
+	return AccessLevel.OnlyAdmin; // See first topic for other methods of access
+}
+
+public override string getRole()
+{
+        // Specify WHICH role this module supports.
+        // Only if getAccessLevel() is setted to OnlyRole or CurrentSiteAndRole
+	return ""; 
+}
+]]></code><code information="PHP"><![CDATA[
+public function requiresAuthentication()
+{
+	return true;
+}
+
+public function getAccessLevel()
+{
+	return AccessLevel::OnlyAdmin; // See first topic for other methods of access
+}
+
+public function getRole()
+{
+        // Especifique QUAL o papel que esse módulo suporta.
+        // Only if getAccessLevel() is setted to OnlyRole or CurrentSiteAndRole
+	return "";
+}
+]]></code></p>
+			<p>
+XMLNuke automatically understands that the module requires authentication and will make the necessary request to guarantee that only the users that meet the configurations have access to the modules.
+
+.</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Personalizing the method for user validation</title>
+		<body>
+			<p>In some cases the user validation method does not meet the default configurations of XMLNuke, like when using LDAP or integrating it to existing validation systems. In these cases it is necessary to implement your own validation method.</p>
+			<p>To do this, we must overwrite the <b>accessGranted()</b> method. It is important that this method returns TRUE or FALSE. 
+</p>
+		</body>
+	</blockcenter>
+</page>

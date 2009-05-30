@@ -1,0 +1,60 @@
+﻿<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>XMLNuke Treeview</title>
+		<abstract>XMLNuke Treeview</abstract>
+		<created>20/10/2002 20:14:18</created>
+		<modified>10/20/2002 8:14:18 PM</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword>all</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Treeview</title>
+		<body>
+			<p>Den XMLNuke har en del att visa data i TreeView.
+			Dessa uppgifter kan organiseras hieraquicamente och kan utföra ett JavaScript när du klickar.
+			Denna del kan kombineras med komponent Container att öppna sidor utan omlastning sidan.
+			<code information="Código XML"><![CDATA[
+<treeview title="Windows XP Explorer Treview">
+
+  <folder title="My documents" img="mydocuments.gif" 
+    action="document.getElementById('here').style.display='none';">
+    
+    <leaf title="What's going on?" code="1" img="ie_link.gif" 
+      action="loadUrl('here', '?module=sample&amp;xsl=blank');"/>
+        
+  </folder>
+  
+</treeview>			
+]]></code>
+			</p>
+			<p>
+				<treeview title="Windows XP Explorer Treview">
+					<folder title="My documents" img="mydocuments.gif" action="document.getElementById('here').style.display='none';">
+						<folder title="House" img="folder.gif">
+							<leaf title="What's going on?" code="1" img="ie_link.gif" action="loadUrl('here', '?module=sample&amp;op=1&amp;xsl=blank');"/>
+							<leaf title="What's up?" code="1" img="question.gif"  action="loadUrl('here', '?module=sample&amp;op=2&amp;xsl=blank');"/>
+							<leaf title="Why you should hire me?" code="1" img="question.gif" action="loadUrl('here', '?module=sample&amp;op=3&amp;xsl=blank');"/>
+						</folder>
+						<folder title="My images" img="myimages.gif">
+							<leaf title="funny" code="1" img="red_ball.gif"  action="loadUrl('here', '?module=sample&amp;op=4&amp;xsl=blank');"/>
+							<leaf title="ounga ounga" code="1" img="red_ball.gif"  action="loadUrl('here', '?module=sample&amp;op=5&amp;xsl=blank');"/>
+						</folder>
+					</folder>
+					<folder title="My computer" img="computer.gif" action="document.getElementById('here').style.display='none';">
+						<folder title="Floppy (A:)" code="1" img="floppy.gif"/>
+						<folder title="Hard drive (C:)" code="1" img="harddrive.gif">
+							<leaf title="Linux" code="1" img="folder.gif"/>
+							<leaf title="Open source" code="1" img="folder.gif" action="loadUrl('here', '?xml=treeview&amp;xsl=blank&amp;rawxml=true&amp;xpath=//blockcenter');"/>
+							<leaf title="Freedom" code="1" img="folder.gif"/>
+						</folder>
+						<leaf title="Configuration Pannel" code="1" img="config.gif"/>
+						<leaf title="Shared documents" code="1" img="folder.gif"/>
+					</folder>
+					<folder title="Network" img="network.gif" action="alert('Empty!');"/>
+					<folder title="Trash" img="trash.gif" action="alert('Empty!');"/>
+				</treeview>
+				<container style="display: none; width: 100%; height: 400px" id="here"/>			</p>
+		</body>
+	</blockcenter>
+</page>

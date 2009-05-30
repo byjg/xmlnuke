@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Formulários</title>
+		<abstract>XMLNuke e a utilização de Formulários</abstract>
+		<created>13/05/2002 21:09:00</created>
+		<modified>05/02/2004 15:28:42</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword>all</groupkeyword>
+		<keyword>Your First Keyword</keyword>
+		<keyword>Your Second Keyword and so on</keyword>
+	</meta>
+	<script src="common/js/sample.js" />
+	<blockcenter>
+		<title>Trabalhando com formulários</title>
+		<body>
+			<p>XMLNuke permite que você trabalhe com formulários. É um pouco diferente do formulário em HTML padrão. Mas é mais fácil! Veja um exemplo abaixo (e do lado direito, "Avisar Atualização")</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Formulário do XMLNuke</title>
+		<body>
+			<p>Abaixo você tem alguns exemplo de ENTRADA de dados:</p>
+			<editform action="#" title="Meu formulário de edição">
+				<caption>Apenas um texto</caption>
+				<textbox name="a" caption="Escreva algo" value="default" size="20" />
+				<label caption="Titulo" value="Valor a ser exibido" />
+				<password name="d" caption="Este campo é de senha" size="30" />
+				<caption>Você não pode ver, mas arqui existe um campo escondido</caption>
+				<hidden name="x" value="default3" />
+				<checkbox name="e" caption="Caixas de Seleção" value="default3" />
+				<checkbox name="e" caption="Caixas de Seleção (Dois)" value="default3" selected="yes" />
+				<checkbox name="e" caption="Caixas de Seleção (Três)" value="default3" />
+				<radiobox name="f" caption="Qual opção irei selecionar?" value="default3" />
+				<radiobox name="f" caption="Esta?" value="default3" selected="yes" />
+				<radiobox name="f" caption="Ou será esta?" value="default3" />
+				<select name="h" caption="ComboBox">
+					<option value="1">Opção 1</option>
+					<option value="2" selected="yes">Opção 2</option>
+					<option value="3">Opção 3</option>
+				</select>
+				<memo name="ok" caption="Campo Memo" cols="30" rows="5">Valor padrão</memo>
+				<buttons>
+					<submit caption="Enviar" />
+					<reset caption="Limpar" />
+					<button caption="Botão Qualquer!" onclick="fireButton()" />
+				</buttons>
+			</editform>
+			<p>Você pode ver essa imagem? <img src="common/imgs/logo_xmlnuke.gif" alt="Nome alternativo para a imagem" width="120" height="50" /></p>
+		</body>
+	</blockcenter>
+</page>

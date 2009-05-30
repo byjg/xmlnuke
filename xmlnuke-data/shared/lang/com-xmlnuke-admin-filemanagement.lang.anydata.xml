@@ -1,0 +1,21 @@
+﻿<?xml version="1.0"?>
+<anydataset>
+   <row>
+      <field name="LANGUAGE">en-us</field>
+      <field name="TITLE">Backup of Projects</field>
+      <field name="DESCRIPTION">Module to create backups of projects.</field>
+      <field name="FILEMANAGEMENT">File Management</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">pt-br</field>
+      <field name="TITLE">Backup de Projetos</field>
+      <field name="DESCRIPTION">Módulo para gerar backup de projetos.</field>
+      <field name="FILEMANAGEMENT">Gerenciamento de Arquivos</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">de-de</field>
+      <field name="TITLE">Projekt-Sicherung</field>
+      <field name="DESCRIPTION">Erstellen Sie Sicherungen von Projekten.</field>
+      <field name="FILEMANAGEMENT">Dateien verwalten</field>
+   </row>
+</anydataset>

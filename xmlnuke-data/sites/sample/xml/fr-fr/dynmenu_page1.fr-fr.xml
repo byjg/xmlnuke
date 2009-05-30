@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Menus dynamiques page 1</title>
+		<abstract>Menu dynamique page 1</abstract>
+		<created>16/1/2004 15:24:32</created>
+		<modified>16/01/2004 15:24:32</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword>grpdynmenu</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Voici la page 1</title>
+		<body>
+			<p>Voilà. Maintenant, cliquez sur 'Page 2'.</p>
+		</body>
+	</blockcenter>
+</page>

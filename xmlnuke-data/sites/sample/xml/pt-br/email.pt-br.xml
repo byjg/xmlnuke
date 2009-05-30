@@ -1,0 +1,32 @@
+﻿<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>XMLNuke Enviar e-Mail</title>
+		<abstract>XMLNuke Enviar e-Mail</abstract>
+		<created>20/10/2002 20:14:18</created>
+		<modified>10/20/2002 8:14:18 PM</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword>all</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Enviar eMail</title>
+		<body>
+			<p>Esta página utiliza o Módulo Customizado para envio de mail chamado 'sendmail'. Esse módulo é disponibilizado com a Engine do XMLNUke. Você pode criar formulários customizados e postar os dados para o módulo 'sendmail'. 
+</p>
+			<p>
+				<editform action="module:sendemail" title="Preencha os campos para enviar o email" name="formemail" jsvalidate="true">
+					<textbox name="name" caption="Nome" value="" size="30" required="true" type="0" />
+					<textbox name="email" caption="eMail" value="" size="30" required="true" type="10" />
+					<textbox name="subject" caption="Assunto" value="" size="40" required="true" type="0" />
+					<memo name="message" caption="Mensagem" cols="40" rows="5"></memo>
+					<hidden name="toname_id" value="DEFAULT" />
+					<imagevalidate caption="Digite o texto ao lado: " />
+					<buttons>
+						<submit caption="Enviar" />
+						<reset caption="Limpar" />
+					</buttons>
+				</editform>
+			</p>
+		</body>
+	</blockcenter>
+</page>

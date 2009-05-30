@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Implementando a solução.</title>
+		<abstract>Dicas de como implementar uma solução usando o XMLNuke.</abstract>
+		<created>16/7/2007 15:46:14</created>
+		<modified>Sun Aug 26 2007 16:18:33</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_analysis</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Implementando a solução</title>
+		<body>
+			<p>
+				<ol>
+					<li>Mesmo que não seja necessário herde a class BaseModule do Xmlnuke. Por exemplo, se vc está fazendo um sistema chamado "Agenda", crie a classe ForumBaseModule. 
+<br/><br/>
+Isso é muito importante, pois a classe BaseModule é a primeira classe a ser executada durante o processamento de um módulo e nela poderemos definir comportamentos e ações padrões. Podemos sobrescrever os métodos padrões para requerer sempre autenticação, ou definir o que será feito em caso de processsamento insuficiente. 
+<br/><br/>
+Também podemos instanciar objetos que sempre serão instanciados, como por exemplo a estrutura hierárquica ou definir MENUS de acordo com o Perfil. 
+<br/><br/>
+Os módulos em si, só devem implementar os métodos Setup e CreatePage.<br/><br/></li>
+					<li>O XMLNuke implementa a classe BaseDBAccess que contém métodos específicos para acesso a banco de dados. É recomendável que todo acesso ao banco de dados seja feito através de uma classe que herda de BaseDBAccess. Assim não misturamos comandos SQL dentro dos módulos e facilitamos a nossa manutenção de código. 
+<br/><br/>
+No mesmo exemplo do Fórum, temos uma classe chamada "ForumBD" que herda de "BaseDBAccess" e nela implementamos os métodos: ObterForumPorId(), PesquisarForum(), InserirForum(), dentre outros. <br/><br/></li>
+					<li>O SITE está totalmente dessassociado do módulo e isso é uma característica importante. Por exemplo: Ao desenvolvermos um fórum, este pode ser visto em qualquer site e não em um site específico, com um layout específico. <br/><br/></li>
+					<li>
+						<b>Organização dos arquivos do projeto - PHP</b>
+						<br/>
+						<br/>
+Todos os módulos no PHP estão em uma pasta chamada "MODULES" dentro da pasta LIB. Ao definir o nome, a forma mais usual é lib/NOME_DA_APLICACAO/modules. Se a aplicação é muito extensa podemos organizar a definição das pastas com sub pastas. Por exemplo:
+<br/><br/><code information="Estrutura de Diretórios">lib/NOME_DA_APLICACAO/financeiro/modules
+lib/NOME_DA_APLICACAO/vendas/modules
+   .
+   .
+   .
+lib/NOME_DA_APLICACAO/admin/modules</code><br/>
+Essa estrutura de diretórios define NAMESPACES que facilita a organização do código através do nome. 
+<br/><br/>
+Note que ao estruturar dessa forma, a chamada ao módulo também obedecerá essa regra. Seguindo a nomemclatura anterior temos: 
+<br/><br/><code information="Chamada ao módulo">xmlnuke.php?module=NOME_DA_APLICACAO.financeiro.NOME_DO_MODULO
+xmlnuke.php?module=NOME_DA_APLICACAO.vendas.NOME_DO_MODULO
+   .
+   .
+   .
+xmlnuke.php?module=NOME_DA_APLICACAO.admin.NOME_DO_MODULO</code><br/><br/></li>
+					<li>
+						<b>Organização dos arquivos do projeto - CSharp</b>
+						<br/>
+						<br/>
+A programação com CSharp se torna mais produtiva utilizando o Visual Studio. Sendo assim, foi criado um arquivo "create-xmlnuke-project.vbs" que cria a solução em Visual Studio pronta para ser utilizada. É importante notar que CADA PROJETO deve agrupar todos os módulos de acordo com o seu NameSpace e a relação do nome do Assembly. 
+                  <br/><br/></li>
+					<li>
+						<b>Acesso a arquivos em disco.</b>
+						<br/>
+						<br/>
+O XMLnuke possui uma classe chamada FilenameProcessor que implementa todas as regras para se definir um nome de arquivo de acordo com a internacionalização, instalação do XMLNUke, site, etc. Sendo assim, evite utilizar constantes literais. Utilize SEMPRE uma das classes FilenameProcessor existentes, e se não lhe atender, prefira criar a sua. Essa pequena regra garante a facilidade de instalação de suas aplicações. 
+                  <br/><br/></li>
+					<li>
+						<b>Referências a links do XMLNuke</b>
+						<br/>
+						<br/>
+Jamais defina o endereço que você utilizaria no navegador para referenciar páginas dentro de aplicações XMLNuke. O XMLNuke utiliza o conceito de HTTP ALIAS para referenciar uma página ou módulo. Prefira utilizá-lo sempre. 
+                  <br/><br/><code information="Para referenciar documentos XML">
+- engine:xmlnuke?xml=doc
+- engine:xmlnuke?xml=doc&amp;xsl=preview
+- engine:xmlnuke?xml=doc&amp;xsl=preview&amp;site=teste
+- engine:xmlnuke?xml=doc&amp;xsl=preview&amp;site=teste&amp;lang=pt-br
+</code><br/><br/><code information="Para referenciar módulos">
+- module:NOME_DA_APLICACAO.NOME_DO_MODULO
+- module:NOME_DA_APLICACAO.NOME_DO_MODULO&amp;xsl=preview
+- module:NOME_DA_APLICACAO.NOME_DO_MODULO&amp;xsl=preview&amp;site=teste
+- module:NOME_DA_APLICACAO.NOME_DO_MODULO&amp;xsl=preview&amp;site=teste&amp;lang=pt-br
+</code><br/><br/>
+Por manipular documentos XML, no lugar do &amp; devemos sempre utilizar o &amp;amp;amp; . Em alguns casos essa utilização pode se tornar confusa. Se preferir utilize a classe XmlnukeManageUrl para gerar a url corretamente.
+                  <br/><br/></li>
+					<li>
+						<b>Internacionalização</b>
+						<br/>
+						<br/>
+O XMLNuke contém um classe que permite definir um dicionário de linguagem em XML, e este dicionário pode ser utilizado dentro dos módulos. Ele é definido dentro da pasta datasharedlang ou datasites[site]lang. O nome do arquivo de linguagem deve ter o nome do completo do módulo (incluindo o namespace, substituindo o ponto traços)
+                  <br/><br/><code information="Exemplo: forum-posttopic.lang.anydata.xml"><![CDATA[
+<anydataset>
+  <row>
+    <field name="LANGUAGE">en-us</field>
+    <field name="TITLE">Post a new topic for {0}</field>
+    <field name="ABSTRACT">Post a new topic in the system</field>
+  </row>
+  <row>
+    <field name="LANGUAGE">pt-br</field>
+    <field name="TITLE">Defina um novo tópico em {0}</field>
+    <field name="ABSTRACT">Defina um novo tópico no sistema.</field>
+  </row>
+</anydataset>]]></code><br/><br/>
+Nesse exemplo, o nome do módulo é "forum.posttopic". Para utilizar uma palavra do dicionário, basta chamar o método WordCollection dentro do método CreatePage.
+<br/><br/><code information="CSharp">
+protected LanguageCollection _myWords;
+
+override public IXmlnukeDocument CreatePage() 
+{	
+	this._myWords = this.WordCollection();
+	.
+	.
+	.
+	// Para usar. Note que {0} será substituído por Xmlnuke
+	this._myWords.Value("TITLE", new string[] {"Xmlnuke"});
+}
+</code><br/><br/><code information="PHP"><![CDATA[
+protected $_myWords;
+
+public function CreatePage() 
+{	
+	$this->_myWords = $this->WordCollection();
+	.
+	.
+	.
+	// Para usar. Note que {0} será substituído por Xmlnuke
+	$this->_myWords->Value("TITLE", new array("Xmlnuke") );
+}
+]]></code><br/><br/></li>
+					<li>
+						<b>Organizando seu código</b>
+						<br/>
+						<br/>
+
+O método Setup é o primeiro método disponível que já é conhecido o Contexto. Portanto definição de variáveis e parâmetros podem ser feitas nesse método. 
+                  <br/><br/>
+
+No método CreatePage é onde efetivamente será criado o XML. Se o módulo receber parâmetros para executar ações específicas, então é recomendado fazer um Swicth Case e de acordo com as opções chamar uma função específica dentro do próprio módulo. Seu código ficará muito mais legível. 
+
+                  <br/><br/></li>
+<!--
+	<li>
+		<br />
+		<br />
+	</li>
+-->
+				</ol>
+			</p>
+		</body>
+	</blockcenter>
+</page>

@@ -1,0 +1,88 @@
+<!ELEMENT page (meta, (script|blockcenter|blockleft|blockright)* )>
+<!ELEMENT meta (title|abstract|created|modified|groupkeyword|keyword)+>
+<!ELEMENT title (#PCDATA)>
+<!ELEMENT abstract (#PCDATA)>
+<!ELEMENT created (#PCDATA)>
+<!ELEMENT modified (#PCDATA)>
+<!ELEMENT keyword (#PCDATA)>
+<!ELEMENT groupkeyword (#PCDATA)>
+
+<!ELEMENT script (#PCDATA)>
+<!ATTLIST script src CDATA #REQUIRED>
+
+<!ELEMENT blockcenter (title,body)>
+<!ELEMENT blockleft (title,body)>
+<!ELEMENT blockright (title,body)>
+<!ELEMENT body (p | editform)+>
+<!ELEMENT p ((#PCDATA) | br | b | i | img | a)*>
+<!ELEMENT br EMPTY>
+<!ELEMENT b (#PCDATA)>
+<!ELEMENT i (#PCDATA)>
+
+<!ELEMENT img EMPTY>
+<!ATTLIST img src CDATA #REQUIRED>
+<!ATTLIST img alt CDATA #IMPLIED>
+<!ATTLIST img width CDATA #IMPLIED>
+<!ATTLIST img height CDATA #IMPLIED>
+
+<!ELEMENT a (#PCDATA | img)*>
+<!ATTLIST a href CDATA #REQUIRED>
+
+<!ELEMENT editform (hidden* | caption* | textbox* | password* | memo* | checkbox* | radiobox* | select* | buttons?)*>
+<!ATTLIST editform action CDATA #IMPLIED>
+<!ATTLIST editform title CDATA #IMPLIED>
+
+<!ELEMENT hidden EMPTY>
+<!ATTLIST hidden name CDATA #REQUIRED>
+<!ATTLIST hidden value CDATA #REQUIRED>
+
+<!ELEMENT caption (#PCDATA)>
+<!ELEMENT textbox EMPTY>
+<!ATTLIST textbox name CDATA #REQUIRED>
+<!ATTLIST textbox caption CDATA #REQUIRED>
+<!ATTLIST textbox value CDATA #IMPLIED>
+<!ATTLIST textbox size CDATA #REQUIRED>
+
+<!ELEMENT password EMPTY>
+<!ATTLIST password name CDATA #REQUIRED>
+<!ATTLIST password caption CDATA #REQUIRED>
+<!ATTLIST password value CDATA #IMPLIED>
+<!ATTLIST password size CDATA #REQUIRED>
+
+<!ELEMENT memo (#PCDATA)>
+<!ATTLIST memo name CDATA #REQUIRED>
+<!ATTLIST memo caption CDATA #REQUIRED>
+<!ATTLIST memo rows CDATA #REQUIRED>
+<!ATTLIST memo cols CDATA #REQUIRED>
+
+<!ELEMENT checkbox EMPTY>
+<!ATTLIST checkbox name CDATA #REQUIRED>
+<!ATTLIST checkbox value CDATA #REQUIRED>
+<!ATTLIST checkbox caption CDATA #REQUIRED>
+
+<!ELEMENT radiobox EMPTY>
+<!ATTLIST radiobox name CDATA #REQUIRED>
+<!ATTLIST radiobox value CDATA #REQUIRED>
+<!ATTLIST radiobox caption CDATA #REQUIRED>
+
+<!ELEMENT select (option+)>
+<!ATTLIST select name CDATA #REQUIRED>
+<!ATTLIST select caption CDATA #REQUIRED>
+
+<!ELEMENT option (#PCDATA)>
+<!ATTLIST option value CDATA #REQUIRED>
+
+<!ELEMENT buttons (submit+, reset*, button*)>
+
+<!ELEMENT submit EMPTY>
+<!ATTLIST submit name CDATA #IMPLIED>
+<!ATTLIST submit caption CDATA #REQUIRED>
+
+<!ELEMENT reset EMPTY>
+<!ATTLIST reset name CDATA #IMPLIED>
+<!ATTLIST reset caption CDATA #REQUIRED>
+
+<!ELEMENT button EMPTY>
+<!ATTLIST button name CDATA #IMPLIED>
+<!ATTLIST button caption CDATA #REQUIRED>
+<!ATTLIST button onclick CDATA #REQUIRED>

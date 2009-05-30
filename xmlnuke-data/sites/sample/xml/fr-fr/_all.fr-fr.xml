@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<page>
+	<blockleft>
+		<title>Modules disponibles</title>
+		<body>
+			<p>
+				<a href="module:guestbook">Livre d'or</a>
+				<br />
+				<a href="module:search">Recherche</a>
+				<br />
+				<a href="module:sendpage">Envoyer à un ami</a>
+				<br />
+				<a href="module:userprofile">Profil d'utilisateur de vue</a>
+				<br />
+				<a href="engine:xmlnuke?xml=email">Envoyer un email</a>
+				<br />
+				<a href="module:Download">Téléchargement</a>
+				<br />
+				<a href="module:XSLTheme">Sélecteur De Thème</a>
+				<br />
+				<a href="module:Sample">Exemple</a>
+				<br />
+News<br />
+Forum</p>
+		</body>
+	</blockleft>
+	<blockright>
+		<title>Aidez-nous</title>
+		<body>
+			<p>
+				<b>Vous trouvez XMLNuke utile ?</b>
+			</p>
+			<p>Aidez-nous à l'améliorer. Nous avons besoin de plus de thèmes, de plus de styles et de pages web.
+Ainsi que plus de modules de personnalisation.<br />
+Nous voudrions supporter plus de langues.</p>
+			<p>Aidez nous !</p>
+		</body>
+	</blockright>
+	<blockright>
+		<title>Recevoir les mises à jour</title>
+		<body>
+			<p>
+				<editform action="module:sendemail" title="S'inscrire">
+					<hidden name="name" value="From web Site" />
+					<hidden name="toname_id" value="DEFAULT" />
+					<hidden name="Subject" value="Send me updates from XMLNuke project" />
+					<hidden name="Message" value="Send me updates from XMLNuke project" />
+					<textbox name="email" caption="Email" value="" size="10" />
+					<buttons>
+						<submit caption="Envoyer" />
+					</buttons>
+				</editform>
+			</p>
+		</body>
+	</blockright>
+	<blockright>
+		<title>Crédits</title>
+		<body>
+			<p>
+Traduit au Français pour Baptiste Autin [b.autin at preferences.fr]. <br />Merci.</p>
+		</body>
+	</blockright>
+</page>

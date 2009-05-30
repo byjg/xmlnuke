@@ -1,0 +1,56 @@
+﻿<anydataset>
+   <row>
+      <field name="LANGUAGE">en-us</field>
+      <field name="TITLE">User profile: {0}</field>
+      <field name="UPDATEOK">Updated.</field>
+      <field name="CHANGEPASSOLDPASSFAILED">Current password is wrong.</field>
+      <field name="CHANGEPASSNOTMATCH">New password did not match.</field>
+      <field name="CHANGEPASSOK">Password updated.</field>
+      <field name="UPDATETITLE">Update my personal information</field>
+      <field name="CHANGEPASSTITLE">Change password</field>
+      <field name="CHANGEPASSOLDPASS">Current Password: </field>
+      <field name="CHANGEPASSNEWPASS">New password: </field>
+      <field name="CHANGEPASSNEWPASS2">Retype new password: </field>
+      <field name="CHANGEPASSBUTTON">Change password</field>
+      <field name="OTHERTITLE">Other information</field>
+      <field name="OTHERSITE">Related sites: </field>
+      <field name="OTHERROLE">Related roles: </field>
+      <field name="CUSTOMFIELDS">Custom Fields</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">pt-br</field>
+      <field name="TITLE">Dados do usuário: {0}</field>
+      <field name="UPDATEOK">Dados atualizados.</field>
+      <field name="CHANGEPASSOLDPASSFAILED">Senha atual não foi digitada corretamente.</field>
+      <field name="CHANGEPASSNOTMATCH">A nova senha não foi digitada corretamente.</field>
+      <field name="CHANGEPASSOK">Senha atualizada.</field>
+      <field name="UPDATETITLE">Atualizar informações pessoais</field>
+      <field name="CHANGEPASSTITLE">Mudar senha</field>
+      <field name="CHANGEPASSOLDPASS">Senha atual: </field>
+      <field name="CHANGEPASSNEWPASS">Nova senha: </field>
+      <field name="CHANGEPASSNEWPASS2">Redigite nova senha: </field>
+      <field name="CHANGEPASSBUTTON">Mudar senha</field>
+      <field name="OTHERTITLE">Outras informações</field>
+      <field name="OTHERSITE">Sites associados: </field>
+      <field name="OTHERROLE">Regras associadas: </field>
+      <field name="CUSTOMFIELDS">Campos Personalizados</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">de-de</field>
+      <field name="TITLE">Benutzer-Profil: {0}</field>
+      <field name="UPDATEOK">Profil wurde aktualisiert.</field>
+      <field name="CHANGEPASSOLDPASSFAILED">Das aktuelle Passwort wurde falsch eingegeben.</field>
+      <field name="CHANGEPASSNOTMATCH">Das neue Passwort und die Passwort-Bestätigung stimmen nicht überein.</field>
+      <field name="CHANGEPASSOK">Das Passwort wurde geändert.</field>
+      <field name="UPDATETITLE">Persönliche Angaben aktualisieren</field>
+      <field name="CHANGEPASSTITLE">Passwort ändern</field>
+      <field name="CHANGEPASSOLDPASS">Aktuelles Passwort:</field>
+      <field name="CHANGEPASSNEWPASS">Neues Passwort:</field>
+      <field name="CHANGEPASSNEWPASS2">Passwort bestätigen:</field>
+      <field name="CHANGEPASSBUTTON">Passwort ändern</field>
+      <field name="OTHERTITLE">Andere Informationen</field>
+      <field name="OTHERSITE">Zugehörige Seite(n):</field>
+      <field name="OTHERROLE">Zugehörige Funktion(en):</field>
+      <field name="CUSTOMFIELDS">Spezifische Felder</field>
+   </row>
+</anydataset>

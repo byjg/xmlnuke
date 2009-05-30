@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Edit List</title>
+		<abstract>How to create specific tags - Edit List an Example</abstract>
+		<created>25/6/2005 18:44:02</created>
+		<modified>9/18/2005 10:49:11 PM</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>-</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Edit List</title>
+		<body>
+			<p>You can create your own tags using XMLNuke. It is possible go to beyond the HTML. Your application or document doesn't understand HTML - just XML tags. The final layout is produced by XMLNuke using XSLT transformation and snippets.</p>
+			<p>See below for the funcionality.</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Sample 1</title>
+		<body>
+			<p>
+				<code information="EditList XML"><![CDATA[
+<editlist 
+   module="module:somemodule" 
+   name="ELDEMO"
+   title="Sample 1 - EditList" 
+   cols="4" 
+   new="true" 
+   edit="true" 
+   delete="true" 
+   view="true"
+   custom1="true" 
+   url1="module:somemodule2" 
+   img1="common/editlist/ic_custom.gif" 
+   acao1="select" 
+   alt1="Select Item" 
+   >
+   <row>
+        <field name="">1</field>
+        <field name="Name">ONE</field>
+        <field name="Description">You need ...</field>
+        <field name="Listing">Another field</field>
+  </row>
+</editlist>
+]]></code>
+			</p>
+			<p>
+				<editlist module="module:somemodule" title="Sample 1 - EditList" cols="4" new="true" edit="true" delete="true" view="true" custom1="true" url1="module:somemodule2" img1="common/editlist/ic_custom.gif" acao1="select" alt1="Select Item" name="ELDEMO1">
+					<row>
+						<field name="">1</field>
+						<field name="Name">ONE</field>
+						<field name="Description">You need to check the radio on the left side and click in one button below to activate this function.</field>
+						<field name="Listing">Another Field</field>
+					</row>
+					<row>
+						<field name="">2</field>
+						<field name="Name">TWO</field>
+						<field name="Description">The user chooses if the buttons are showed or not.</field>
+						<field name="Listing">Another Field</field>
+					</row>
+				</editlist>
+			</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>How it works?</title>
+		<body>
+			<ul>
+				<li>The Editlist is responsible to call the module defined by <i>module</i> attribute after the button is pressed</li>
+				<li>The module always receives two parameters: <i>action</i> it can be: new, edit, delete, view or a name user defined which can be: custom1, custom2, custom3 or custom4</li>
+				<li>The other parameter is the value of the first column. This value is hidden. The parameter name is <i>valueid</i></li>
+			</ul>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Other Options</title>
+		<body>
+			<p>The same data can be showed in different modes depending on XSLT templates or editlist attributes.</p>
+			<p>In the sample below the EditList uses checkboxes to select the values. </p>
+			<p>
+				<editlist module="module:somemodule" title="Sample 2 - EditList" cols="4" new="true" edit="true" delete="true" view="true" custom1="true" url1="module:somemodule2" img1="common/editlist/ic_custom.gif" acao1="select" alt1="Select Item" selecttype="check" name="ELDEMO2">
+					<row>
+						<field name="">1</field>
+						<field name="Name">ONE</field>
+						<field name="Description">You need to check the checkbox on the left side and click in one button below to active this function.</field>
+						<field name="Listing">Another Field</field>
+					</row>
+					<row>
+						<field name="">2</field>
+						<field name="Name">TWO</field>
+						<field name="Description">The user chooses if the buttons are showed or not.</field>
+						<field name="Listing">Another Field</field>
+					</row>
+				</editlist>
+			</p>
+			<p>Read only mode:</p>
+			<p>
+				<editlist module="module:somemodule" title="Sample 3 - EditList" cols="4" new="true" edit="true" delete="true" view="true" custom1="true" url1="module:somemodule2" img1="common/editlist/ic_custom.gif" acao1="select" alt1="Select Item" readonly="true" name="ELDEMO3">
+					<row>
+						<field name="">1</field>
+						<field name="Name">ONE</field>
+						<field name="Description">Here you can't select anything.</field>
+						<field name="Listing">Another Field</field>
+					</row>
+					<row>
+						<field name="">2</field>
+						<field name="Name">TWO</field>
+						<field name="Description">The user chooses if the buttons are showed or not.</field>
+						<field name="Listing">Another Field</field>
+					</row>
+				</editlist>
+			</p>
+		</body>
+	</blockcenter>
+</page>

@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Formulär med validering</title>
+		<abstract>Det här demonstrerar hur man använder formulär med validering genom att använda JavaScript.</abstract>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>all</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Formulär med JavaScript-validering</title>
+		<body>
+			<p>XMLNuke har, färdiga att använda, formulär med javascript-validering. Men för att använda den här funktionen, <b>"behöver inte användaren kunna javascript"</b>.</p>
+			<p>Till exempel som i formuläret nedan, behöver användaren endast sätta några xml attribut för att informera XMLNuke att data ska komma att valideras med javascript. 
+Se ett exempel: </p>
+			<p>
+				<code information="EditForm XML"><![CDATA[
+<editform action="module:somemodule" 
+    title="Form with JavaScript validation" 
+    name="formname" 
+    jsvalidate="true" 
+    decimalseparator="." 
+    dateformat="1">
+       <textbox name="a" caption="Text Field" value="" size="30" 
+             required="true" type="0" />
+       <textbox name="e" caption="Date Field" value="" size="30" 
+             required="true" type="4" 
+             minvalue="01/01/2004" maxvalue="12/31/2004" />
+</editform>
+
+]]></code>
+			</p>
+			<editform action="#" title="Form with JavaScript validation" name="formname" jsvalidate="true" decimalseparator="." dateformat="1">
+				<textbox name="a" caption="Text Field" value="" size="30" required="true" type="0" />
+				<textbox name="b" caption="Lowercase Field" value="" size="30" required="true" type="1" />
+				<textbox name="c" caption="Uppercase Field" value="" size="30" required="true" type="2" />
+				<textbox name="d" caption="Number Field" value="" size="30" required="true" type="3" minvalue="10" maxvalue="20" />
+				<textbox name="e" caption="Date Field" value="" size="30" required="true" type="4" minvalue="01/01/2004" maxvalue="12/31/2004" />
+				<textbox name="f" caption="Ascii Uppercase Field" value="" size="30" required="true" type="9" />
+				<textbox name="g" caption="Email Field" value="" size="30" required="true" type="10" />
+				<select name="h" caption="ComboBox" required="true">
+					<option value="" selected="yes">-- Select --</option>
+					<option value="1">Alternativ 1</option>
+					<option value="2">Alternativ 2</option>
+					<option value="3">Alternativ 3</option>
+				</select>
+				<buttons>
+					<submit caption="Skicka" />
+					<reset caption="Återställ" />
+				</buttons>
+			</editform>
+		</body>
+	</blockcenter>
+</page>

@@ -1,0 +1,218 @@
+BODY  {
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size:  11px;
+    font-weight:    normal;
+}
+H1  {
+    font-size:  16px;
+    font-weight:    bold;
+}
+H2  {
+    font-size:  14px;
+    font-weight:    bold;
+}
+H3  {
+    font-size:  12px;
+    font-style: italic;
+    font-weight:    bold;
+}
+TABLE  {
+    font-size:  11px;
+}
+TH  {
+    font-size:  12px;
+    font-weight:    bold;
+    background-color: #CAD7E8
+}
+INPUT {
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size:  11px;
+    font-weight:    normal;
+    border-width: 1;
+    border-color: black;
+}
+SELECT {
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size:  11px;
+    font-weight:    normal;
+    border-width: 1;
+    border-color: black;
+}
+TEXTAREA {
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size:  11px;
+    font-weight:    normal;
+    border-width: 1;
+    border-color: black;
+}
+A:link  {
+    font-family: Verdana, Helvetica, sans-serif;
+    text-decoration:    none;
+    color:  #3366CC;
+}
+
+A:visited   {
+    font-family: Verdana, Helvetica, sans-serif;
+    text-decoration:    none;
+    color: #666666 ;
+}
+
+A:active    {
+    font-family: Verdana, Helvetica, sans-serif;
+    text-decoration:    none;
+    color:  #666666;
+}
+
+A:hover {
+    font-family: Verdana, Helvetica, sans-serif;
+    text-decoration:    underline;
+    color:  #0033CC;
+}
+
+
+
+
+.MAINTITLEBACKGROUND  {
+    font-size:  20px;
+    font-weight:    bold;
+    COLOR: #000000;
+    FONT-FAMILY: Verdana, Arial;
+    background-color: #CAD7E8
+}
+.SUBMAINTITLEBACKGROUND
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 14px;
+    COLOR: #CAD7E8;
+    FONT-FAMILY: Verdana, Arial;
+    BACKGROUND-COLOR: #003399;
+    TEXT-DECORATION: none
+}
+
+
+
+.menubackground {
+    background-color: #003399;
+    width: 140px;
+} 
+.menutitle {
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size:  12px;
+    font-weight:    bold;
+    TEXT-ALIGN: center;
+    color: #003399 ;
+    background-color: #ffffff;
+    width: 120px;
+}
+.menutextarea {
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size:  11px;
+    font-weight:    normal;
+    TEXT-ALIGN: center;
+    background-color: #ffffff;
+}
+.menutitlehoriz
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 12px;
+    WIDTH: 120px;
+    COLOR: #003399;
+    FONT-FAMILY: Verdana, Helvetica, sans-serif;
+    BACKGROUND-COLOR: #ffffff;
+    TEXT-ALIGN: center
+}
+.menutextareahoriz
+{
+    FONT-WEIGHT: normal;
+    FONT-SIZE: 11px;
+    FONT-FAMILY: Verdana, Helvetica, sans-serif;
+    BACKGROUND-COLOR: #eeeeee;
+    TEXT-ALIGN: left
+}
+
+
+
+.tableoftextarea {
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size:  11px;
+    font-weight:    normal;
+    TEXT-ALIGN: center;
+    background-color: #ffffff;
+}
+.tableofitem {
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size:  11px;
+    font-weight:    normal;
+    background-color: #ffffff;
+}
+
+
+
+
+.blockbackground {
+    background-color: #ffffff
+} 
+.blocksep {
+    background-color: #ffffff
+} 
+.blocktitle {
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size:  15px;
+    font-weight:    bold;
+    color: #003399 ;
+    background-color: #ffffff
+}
+.blocktext {
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size:  11px;
+    font-weight:    normal;
+    background-color: #ffffff
+}
+
+
+
+.blockleftbackground {
+    background-color: #003399;
+    width: 140px;
+} 
+.blockleftsep {
+    background-color: #003399
+} 
+.blocklefttitle {
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size:  10px;
+    font-weight:    bold;
+    TEXT-ALIGN: center;
+    color: #FFFFFF ;
+    background-color: #003399
+}
+.blocklefttext {
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size:  10px;
+    font-weight:    normal;
+    background-color: #eeeeee
+}
+
+
+.blockrightbackground {
+    background-color: #003399;
+    width: 150px;
+} 
+.blockrightsep {
+    background-color: #003399
+} 
+.blockrighttitle {
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size:  10px;
+    font-weight:    bold;
+    TEXT-ALIGN: center;
+    color: #FFFFFF ;
+    background-color: #003399;
+}
+.blockrighttext {
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size:  10px;
+    font-weight:    normal;
+    background-color: #eeeeee
+}
+

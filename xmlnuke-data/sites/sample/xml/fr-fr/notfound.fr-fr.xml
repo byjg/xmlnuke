@@ -1,0 +1,19 @@
+﻿<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Page Non trouvée</title>
+		<abstract>Page Non trouvée</abstract>
+		<created>01/06/02 19:24:12</created>
+		<modified>01/06/02 19:24:12</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword />
+		<keyword>xmlnuke</keyword>
+	</meta>
+	<blockcenter>
+		<title>Page Non trouvée</title>
+		<body>
+			<p>La Page Demandée "[param:xml]" n'a pas une version française</p>
+			<p>Accès d'essai cette page en une autre langue: [param:languageselector]</p>
+		</body>
+	</blockcenter>
+</page>

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Análise e Projeto com o XMLNuke</title>
+		<abstract>Dicas para Análise e Projeto de aplicações utilizando o framework XMLNuke</abstract>
+		<created>16/7/2007 15:25:48</created>
+		<modified>16/7/2007 15:45:17</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_analysis</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Análise e Projeto com o XMLNuke</title>
+		<body>
+			<p>
+				<ol>
+					<li>Não utilize comandos para escrever HTML diretamente para o usuário como o "echo" em PHP ou o "Response.Write" em CSharp. Os módulos em XMLNuke não produzem nenhuma saída diretamente para o usuário, apenas XML, que será transformado pela engine por um XSL. Se for realmente necessário escrever o HTML diretamente, acredite, estamos utilizando o framework errado. <br /><br /></li>
+					<li>Ao projetar a sua aplicação tenha em mente que os módulos correspondem a uma funcionalidade da sua aplicação, por exemplo, cadastrar cliente. Mas os módulos devem ter apenas a inteligência de montar o XML para o usuário. As regras de negócio e como devem ser feitos os acessos ao banco de dados devem estar em classes específicas para tal fim. Os módulos apenas devem utilizá-las. 
+<br /><br />
+Especificamente relacionado a análise orientada a objetos, podemos fazer uma comparação do módulo a um Use Case. <br /><br /></li>
+					<li>Ainda em relação ao projeto, pelo fato do XMLNuke trabalhar com XML, podemos pensar nossa aplicação totalmente componentizada. Por exemplo, se vamos fazer uma agenda de telefones poderiámos criar uma definição de XML para suportar a agenda, criar uma classe XML Object que gere e manipule aquele XML. E no final teríamos um XSL (Snippet) que entenderia esse XML. Essa abordagem é particularmente útil pois facilita muito o projeto. 
+<br /><br />
+Alguns casos práticos: No Jacotei (sistema de busca de preços) foram definidos vários XML. Um para listar as categorias, outro para os mais procurados, outro para os mais vendidos, um para detalhes do produto, dentro outros. A vantagem nesse caso é que no momento de criar a solução pensamos em cada elemento especificamente. O que deve fazer o bloco de MAIS PROCURADOS? Quais as particularidades? Criamos um XML Object que executava tudo isso e um XSL que transformava o resultado do XML. 
+<br /><br />
+Essa abordagem facilita muito o entendimento da aplicação. O módulo apenas recebe a requisição e instacia os XML Objects na ordem correta. A produtividade e reaproveitamento também é muito alta.
+<br /><br />
+Sendo assim é válido pensar na aplicação como um conjunto de objetos funcionais tal como pensamos em um carro. Por exemplo: O carro tem motor, rodas, suspensão. Cada uma delas faz a sua tarefa específica, tem as suas propriedades, e juntas colocam o carro em movimento. 
+<br /><br /></li>
+					<li>Se a sua aplicação requer autenticação faça um estudo dos perfis que irão acessá-la e defina papéis. A idéia de papel é muito próxima a realidade dos ambientes de trabalho. Nós temos gerentes, coordenadores, secretárias, operadores, etc e cada um deles desempenha uma tarefa específica na organização com acesso a recursos específicos. Isso são papéis. E essa mesma abordagem é utilizada no XMLNuke. De acordo com o papel o usuário terá ou não acesso ao módulo. No Xmlnuke a definição de papel é múltipla: Cada módulo poderá ter um ou mais papéis associados a ele, bem como cada usuário pode ter um ou mais papéis associados. 
+<br /><br />
+Essa combinação é abrangente pois estabelece a realidade das aplicações reais. 
+<br /><br />
+É importante observar que se um módulo aceita um determinado papel e um usuário possui aquele papel, o XMLNuke irá garantir acesso pleno do usuário aquele módulo. Cabe ao programador fazer as devidas validações para restrições específicas dentro daquele módulo.<br /><br /></li>
+				</ol>
+			</p>
+		</body>
+	</blockcenter>
+</page>

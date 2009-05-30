@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+  <meta>
+    <title>Building an XMLNuke Package</title>
+    <abstract>How to build an XMLNuke package directly from XMLNuke sources</abstract>
+    <created>Sun Jun 24 2007 19:43:31</created>
+    <modified>Wed Nov 19 2008 16:24:08</modified>
+    <keyword>xmlnuke</keyword>
+    <groupkeyword>key_analysis</groupkeyword>
+  </meta>
+  <blockcenter>
+    <title>Building an XMLNuke package</title>
+    <body>
+      <p>To generate a package ready to run on XMLNuke, two Shell Scripts were created that download the latest stable version of XMLNuke existing in the repository of the site SourceForge.net, which performs all the necessary procedures so that it works and compiles it.</p>
+      <p>The pre-compiled versions existing on SourceForge.net are only updated when a set of requirements is fulfilled. However, these new updates are always implemented. If you want to always have these new updates, generating a package is the best option for those who want to use XMLNuke with the latest functionalities as quickly as possible.</p>
+      <p>Scripts to generate the packages are: 
+ <ul><li>build-csharp-release-package.sh</li><li>build-php5-release-package.sh</li></ul>
+      </p>
+    </body>
+  </blockcenter>
+  <blockcenter>
+    <title>Requirements for compilation</title>
+    <body>
+      <p><b>CSharp - Linux</b></p>
+      <p>
+         <ul>
+          <li>SVN, Tar e GZ</li>
+          <li>Mono</li>
+         </ul>
+      </p>
+      <p><b>PHP5 - Linux</b></p>
+      <p>
+         <ul>
+          <li>SVN, Tar e GZ</li>
+         </ul>
+      </p>
+      <p><b>CSharp - Windows</b></p>
+      <p>
+         <ul>
+          <li>Cygwin com Bash, SVN, Tar e GZ</li>
+          <li>Microsoft .NET 2.0 SDK</li>
+         </ul>
+      </p>
+      <p><b>PHP5 - Windows</b></p>
+      <p>
+         <ul>
+          <li>Cygwin com Bash, SVN, Tar e GZ</li>
+         </ul>
+      </p>
+    </body>
+  </blockcenter>
+</page>

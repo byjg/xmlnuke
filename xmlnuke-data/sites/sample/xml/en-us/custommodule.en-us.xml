@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Custom Modules</title>
+		<abstract>Working with Custom Modules</abstract>
+		<created>13/05/2002 21:18:26</created>
+		<modified>08/06/2005 21:22:11</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword />
+		<keyword>Your First Keyword</keyword>
+		<keyword>Your Second Keyword and so on</keyword>
+	</meta>
+	<blockcenter>
+		<title>Working with Custom Modules</title>
+		<body>
+			<p>XMLNuke can work with Custom Modules. Custom Modules are SCRIPT PAGES (ASP, PHP, JAVA) written in the core engine's language. Custom modules can add more power to your site. </p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Features</title>
+		<body>
+			<p>XMLNuke's engine has many built in functions to abstract Custom Modules creation. Classes to abstract XML pages, AnyDataSet (see Guestbook), Many Functions and more.</p>
+		</body>
+	</blockcenter>
+</page>

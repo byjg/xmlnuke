@@ -1,0 +1,51 @@
+﻿<?xml version="1.0"?>
+<anydataset>
+   <row>
+      <field name="LANGUAGE">en-us</field>
+      <field name="TITLE">Manage Download Area</field>
+      <field name="TITLE_FILE">Listing files from category '{0}'</field>
+      <field name="TITLE_CATEGORY">Listing all availables categories</field>
+      <field name="DESCRIPTION">Use this option to manage the Download Area. You can create Category and list files for each category created.</field>
+      <field name="NOTE_FILE">You are listing files from category '{0}'. To see all categories available click here.</field>
+      <field name="NOTE_CATEGORY">To see all files from one category, first select one category and then click in "View" button</field>
+      <field name="FORMTYPE">Editing entry:</field>
+      <field name="FORMDESCRIPTION">Description: </field>
+      <field name="FORMCATEGORY">Id Category: </field>
+      <field name="FORMFILE">Id File: </field>
+      <field name="FORMEMAILTO">Send email to: </field>
+      <field name="FORMURL">Url: </field>
+      <field name="FORMSEEMORE">See More: </field>
+   </row>
+   <row>
+      <field name="LANGUAGE">pt-br</field>
+      <field name="TITLE">Gerenciamento da Área de Download</field>
+      <field name="TITLE_FILE">Listando arquivos da categoria '{0}'</field>
+      <field name="TITLE_CATEGORY">Listando todas as categorias disponíveis</field>
+      <field name="DESCRIPTION">Use esta opção para gerenciar a Área de Download. Você pode criar Categorias e lista de Arquivos para cada categoria criada.</field>
+      <field name="NOTE_FILE">Você está vendo os arquivos da categoria '{0}'. Para ver todas as categorias visíveis clique aqui.</field>
+      <field name="NOTE_CATEGORY">To see all files from one category, first select one category and then click in "View" button</field>
+      <field name="FORMTYPE">Editando entrada:</field>
+      <field name="FORMDESCRIPTION">Descrição </field>
+      <field name="FORMCATEGORY">Categoria Id </field>
+      <field name="FORMFILE">Arquivo Id </field>
+      <field name="FORMEMAILTO">Enviar email para </field>
+      <field name="FORMURL">Url </field>
+      <field name="FORMSEEMORE">Veja mais </field>
+   </row>
+   <row>
+      <field name="LANGUAGE">de-de</field>
+      <field name="TITLE">Download-Bereich verwalten</field>
+      <field name="TITLE_FILE">Dateien in der Kategorie '{0}'</field>
+      <field name="TITLE_CATEGORY">Auflistung aller verfügbaren Kategorien</field>
+      <field name="DESCRIPTION">Erstellen Sie Download-Kategorien und gruppieren damit die verfügbaren Downloads.</field>
+      <field name="NOTE_FILE">Nachfolgend sehen Sie die Dateien der Kategorie '{0}'. Um alle Kategorien anzuzeigen klicken Sie hier.</field>
+      <field name="NOTE_CATEGORY">Um die Dateien einer Kategorie anzuzeigen, markieren Sie diese Kategorie und klicken auf "Ansehen".</field>
+      <field name="FORMTYPE">Bearbeiten von: </field>
+      <field name="FORMDESCRIPTION">Beschreibung: </field>
+      <field name="FORMCATEGORY">Kategorie-ID: </field>
+      <field name="FORMFILE">Datei-ID: </field>
+      <field name="FORMEMAILTO">E-Mail senden an: </field>
+      <field name="FORMURL">URL: </field>
+      <field name="FORMSEEMORE">Mehr dazu: </field>
+   </row>
+</anydataset>

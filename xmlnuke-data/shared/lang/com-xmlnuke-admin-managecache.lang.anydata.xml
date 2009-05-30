@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<anydataset>
+   <row>
+      <field name="LANGUAGE">en-us</field>
+      <field name="TITLE">Manage Cache System</field>
+      <field name="SELECTIONAREA">Cache list</field>
+      <field name="DELETED">All cache is erased.</field>
+      <field name="CACHELIST">Click here to LIST cache</field>
+      <field name="DELETEBUTTON">Click here to ERASE ALL cache</field>     
+      <field name="HELP">Erase all cache from current site.</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">pt-br</field>
+      <field name="TITLE">Configura sistema de cahce</field>
+      <field name="SELECTIONAREA">Lista do Cache</field>
+      <field name="DELETED">Todo o cache foi apagado.</field>
+      <field name="CACHELIST">Clique aqui para listar o cache.</field>
+      <field name="DELETEBUTTON">Clique aqui para apagar TODO O CACHE.</field>
+      <field name="HELP">Apague todo o cache do seu site atual.</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">de-de</field>
+      <field name="TITLE">Cache-Verwaltung</field>
+      <field name="SELECTIONAREA">Aktuell vorhandene Cache-Dateien</field>
+      <field name="DELETED">Cache wurde gelöscht.</field>
+      <field name="CACHELIST">Cache anzeigen</field>
+      <field name="DELETEBUTTON">Kompletten Cache löschen</field>     
+      <field name="HELP">Sehen Sie sich den aktuell angelegten Cache der Seiten an oder löschen ihn.</field>
+   </row>
+</anydataset>

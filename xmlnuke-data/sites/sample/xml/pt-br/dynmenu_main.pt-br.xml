@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Como criar menus dinâmicos?</title>
+		<abstract>Como criar menus dinâmicos?</abstract>
+		<created>13/05/2002 20:43:05</created>
+		<modified>14/05/2002 14:36:36</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword>grpdynmenu</groupkeyword>
+		<keyword>Your First Keyword</keyword>
+		<keyword>Your Second Keyword and so on</keyword>
+	</meta>
+	<blockcenter>
+		<title>O que é um menu dinâmico?</title>
+		<body>
+			<p>Você pode organizar suas páginas e menus. XMLNuke tem o conceito de GROUPS e GROUPKEYWORDs para fazer isso.</p>
+			<p>Quando você cria um grupo (veja Ferramenta de Admiinstração), você define uma KEYWORD (Palavra Chave). A palavra chave padrão é <b>all</b>. Isso significa que apenas grupos com a palavra chave "ALL" serão visíveis.</p>
+			<p>Se você configurar outro valor de Palavra Chave, o menu ficará invisível. Somente as páginas com o tag GROUPKEYWORD podem ativá-lo.</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Posso ver um exemplo?</title>
+		<body>
+			<p>Selecione o menu do lado esquerdo. Você verá 'Página Um' e 'Página Dois'. Essas duas páginas estão no menu escondido, e você poderá ativá-las.</p>
+		</body>
+	</blockcenter>
+</page>

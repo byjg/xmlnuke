@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+  <meta>
+    <title>Creating Template Snippets</title>
+    <abstract>How to create Template Snippets.</abstract>
+    <created>Wed Sep 5 2007 17:32:23</created>
+    <modified>Wed Nov 19 2008 17:11:54</modified>
+    <keyword>xmlnuke</keyword>
+    <groupkeyword>key_xsl</groupkeyword>
+  </meta>
+  <blockcenter>
+    <title>Template Snippets</title>
+    <body>
+      <p>
+Template snippets are passive; in other words, they expect to be named. This behavior is different from structural snippets that define a structure. Normally, snippets are only verified when there is an "apply-template" command. It's very important that the requests for these snippets stay within the space number 3 as shown in the figure in the first chapter of this series.
+</p>
+<p>
+The most common uses for this type of snippet are: 
+<ul>
+  <li>Templates for the XML Objects created by users</li>
+  <li>Mapping XML nodes to HTML</li>
+</ul>
+</p>
+    </body>
+  </blockcenter>
+  <blockcenter>
+    <title>Creation Example</title>
+    <body>
+      <p>To create this Snippet, it's very important to note that an "apply-template" must be requested. In the standard model of XMLNuke, everything that is within a page/blockcenter/body is requested.</p>
+<p>
+<code information="Standard structure of an XML document"><![CDATA[
+<page>
+
+	<!-- PAGE HEADER -->
+	<meta>
+		<title></title>
+		<abstract></abstract>
+		<created></created>
+		<modified></modified>
+		<keyword></keyword>
+		<groupkeyword></groupkeyword>
+	</meta>
+
+	<!-- INFORMATION AREA -->
+	<blockcenter>
+		<title>Template Snippets</title>
+		<body>
+			<p> </p>
+			<card name="testing">Card Name</card>
+		</body>
+	</blockcenter>
+
+</page>
+]]></code>
+</p>
+<p>Based on the example above, we can build the following template snippets:
+</p>
+<p><code information="Snippet to map 'p' node"><![CDATA[
+<xsl:template match="p">
+	<p><xsl:apply-templates/></p>
+</xsl:template>
+]]></code></p>
+<p>In this example, the template indicates that it is waiting for a "p" type node. When it finds it, it will write the "p" HTML (note that the XML node is different HTML). After this, it will look for more templates with the "apply-templates" command.
+</p>
+<p>
+The example below is a little different, since we are creating an XML node again. In this case, the process is very similar. 
+</p>
+<p><code information="Snippet to map a node defined by a user"><![CDATA[
+<xsl:template match="card">
+	<div id="csscard" style="display: block">
+		<h2><xsl:value-of select="@name" /></h2>
+		<div id="cssdata">
+			<xsl:value-of select="text()" />
+		</div>
+	</div>
+</xsl:template>
+]]></code></p>
+<p>Some observations must be made about this example. The first is that this template does not want to process new templates, therefore the "apply-templates" was not defined. The second is that the "value-of" command may get the value of the node by specifying only the name; take an attribute, adding the "@" symbol before the attribute; take the content of the chain node by using the function "text()".
+</p>
+    </body>
+  </blockcenter>
+</page>

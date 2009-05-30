@@ -1,0 +1,9 @@
+<anydataset>
+  <row>
+    <field name="fromname">First Message</field>
+    <field name="frommail">someone@company.com</field>
+    <field name="message">This is the first message from XMLNuke</field>
+    <field name="date">2002-5-13 2:31:19 PM</field>
+    <field name="ip">127.0.0.1</field>
+  </row>
+</anydataset>

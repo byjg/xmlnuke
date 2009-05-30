@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Put your title here</title>
+		<abstract>Put page abstract informations here</abstract>
+		<created>26/9/2004 17:31:34</created>
+		<modified>26/9/2004 17:31:50</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>main_keyword</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Block Title</title>
+		<body>
+			<p>This is the first paragraph</p>
+		</body>
+	</blockcenter>
+</page>

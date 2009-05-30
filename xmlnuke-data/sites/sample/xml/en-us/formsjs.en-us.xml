@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Forms with validation</title>
+		<abstract>This demonstrates how to use forms with validation, using JavaScript.</abstract>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>all</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Forms with JavaScript validation</title>
+		<body>
+ 			<p>XMLNuke is ready to use forms with javascript validation. However, to use this feature, the user <b>"don't need know javascript"</b>.</p>
+ 			<p>For example, in the form listed below, the user only need to set some xml attributes to inform XMLNuke data will be validated with javascript. 
+See an example: </p>
+			<p>
+				<code information="EditForm XML"><![CDATA[
+<editform action="module:somemodule" 
+    title="Form with JavaScript validation" 
+    name="formname" 
+    jsvalidate="true" 
+    decimalseparator="." 
+    dateformat="1">
+       <textbox name="a" caption="Text Field" value="" size="30" 
+             required="true" type="0" />
+       <textbox name="e" caption="Date Field" value="" size="30" 
+             required="true" type="4" 
+             minvalue="01/01/2004" maxvalue="12/31/2004" />
+</editform>
+
+]]></code>
+			</p>
+			<editform action="#" title="Form with JavaScript validation" name="formname" jsvalidate="true" decimalseparator="." dateformat="1">
+				<textbox name="a" caption="Text Field" value="" size="30" required="true" type="0" />
+				<textbox name="b" caption="Lowercase Field" value="" size="30" required="true" type="1" />
+				<textbox name="c" caption="Uppercase Field" value="" size="30" required="true" type="2" />
+				<textbox name="d" caption="Number Field" value="" size="30" required="true" type="3" minvalue="10" maxvalue="20" />
+				<textbox name="e" caption="Date Field" value="" size="30" required="true" type="4" minvalue="01/01/2004" maxvalue="12/31/2004" />
+				<textbox name="f" caption="Ascii Uppercase Field" value="" size="30" required="true" type="9" />
+				<textbox name="g" caption="Email Field" value="" size="30" required="true" type="10" />
+				<select name="h" caption="ComboBox" required="true">
+					<option value="" selected="yes">-- Select --</option>
+					<option value="1">Option 1</option>
+					<option value="2">Opiton 2</option>
+					<option value="3">Option 3</option>
+				</select>
+				<buttons>
+					<submit caption="Send" />
+					<reset caption="Reset" />
+				</buttons>
+			</editform>
+		</body>
+	</blockcenter>
+</page>

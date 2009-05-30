@@ -1,0 +1,156 @@
+/* ### Universal Elements ### */
+
+BODY { 
+		font-family: Verdana, Tahoma, Arial, sans-serif;
+		background-color: #F0ECEC;
+		color: #000000;
+		font-size: 11pt;
+}
+
+a:link {
+		color: #000000;
+		background-color: transparent;
+}
+
+a:hover, a:active, a:visited {
+		background-color: transparent;
+		color: #000055;
+}
+
+a:hover {
+		text-decoration: none;
+}
+
+IMG { 
+		border: 0px; 
+}
+
+acronym {
+		border-bottom-style: dotted;
+		border-bottom-width: 1px;
+		cursor: help;
+}
+
+.readmorecolor, a:link.readmorecolor {
+		background-color: transparent;
+		color: #595959;
+		text-decoration: none;
+}
+
+/* ### SideBar Elements ### */
+
+.sidebox { 
+		width: 25%;
+		background-color: transparent;
+		border: solid #5B5A5A 2px;
+		color: #000000;
+		float: left;
+		clear: left;
+		margin-bottom: 30px;
+}
+
+#alertfont { 
+		font-size: 10pt;
+}
+
+.readmorefontalert { 
+		text-align: right;
+		font-size: 10pt;
+		font-weight: bold;
+		background-color: transparent;
+		color: #595959;
+		margin-top: 10px;
+		margin-right: 7px;
+		vertical-align: bottom;
+}
+
+.sideboxtitlebg { 
+		width: 100%;
+		background-color: #DACECE;
+		color: #000000;
+		vertical-align: top;
+}
+
+.titlefont { 
+		font-size: 12pt;
+          font-weight: bold;
+		vertical-align: top;
+}
+
+.menumargin { 
+		margin-left: 5px;
+          margin-top: 5px;
+		margin-bottom: 5px;
+}
+
+/* ### Header Elements ### */
+
+.title { 
+	    font-size: 40pt;
+	    letter-spacing: 10px;
+	    padding-left: 27%;
+}
+
+/* ### Used for full CSS2 reading browsers as a hack because 
+IE can't get its margins right sometimes ### */
+[class~="title"] {
+		margin-bottom: 2%;
+}
+
+/* ### Content Area Elements ### */
+
+.contentarea {
+		width: 88%;
+		margin-top: 2%;
+		margin-left: 28%;
+		border-bottom: solid 1px #000000;
+}
+
+/* ### Used for full CSS2 reading browsers as a hack because 
+IE can't get its widths right ### */
+[class~="contentarea"] {
+		width: 60%;
+}
+
+.articletitle { 
+		font-size: 12pt;
+		color: #595959;
+		background-color: transparent;
+		text-decoration: underline;
+		font-weight: bold;
+}
+
+.date { 
+		text-align: left;
+		font-size: 10pt;
+		font-weight: bold;
+		background-color: transparent;
+		color: #595959;
+		margin-top: 5px;
+		margin-right: 40%; 
+}
+
+.readmorecontent {  
+		text-align: right;
+		font-size: 10pt;
+		font-weight: bold;
+		margin-top: 5px;
+}
+
+/* ### Footer Elements ### */
+
+.footertext {
+		width: 88%;
+		margin-top: 2%;
+		margin-left: 28%;
+		background-color: #DACECE;
+		color: #000000;
+		text-align: center;
+		font-size: 10pt;
+}
+
+/* ### Used for full CSS2 reading browsers as a hack because 
+IE can't get its widths right ### */
+[class~="footertext"] {
+		width: 60%;
+}

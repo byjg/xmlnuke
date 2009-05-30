@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Repositório de Dados - AnyDataSet</title>
+		<abstract>Repositório de Dados - AnyDataSet</abstract>
+		<created>20/9/2005 00:29:04</created>
+		<modified>Sun Aug 26 2007 16:22:36</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>technicalref</groupkeyword>
+		<revision>$Revision: 1.1 $</revision>
+	</meta>
+	<code information="PHP"><![CDATA[
+
+]]></code>
+	<blockcenter>
+		<title>Repositório de Dados - AnyDataSet</title>
+		<body>
+			<p>
+O XMLNuke possui diversas formas para armazenar e recuperar informações de um repositório de dados, seja através de uma base local (para muito poucos dados) ou em uma base relacional como o MySQL ou Oracle, por exemplo.
+         </p>
+			<p>
+É importante frisar que independente do método de acesso aos dados, o método de manipulação é praticamente o mesmo (para as consultas).
+         </p>
+			<p>
+O AnyDataSet é bastante flexível pois não possui uma estrutura de dados pré-definida, podendo cada linha conter registros distintos. De qualquer forma, é recomendado o seu uso para pouquíssimos registros apenas.
+         </p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Lendo um AnyDataSet</title>
+		<body>
+			<p>
+				<code information="CSharp"><![CDATA[
+AnydatasetFilenameProcessor guestbookFile = 
+new AnydatasetFilenameProcessor("guestbook", this._context);
+AnyDataSet guestbook = new anydataset.AnyDataSet(guestbookFile);
+Iterator it = guestbook.getIterator();
+while (it.hasNext())
+{
+	SingleRow sr = it.moveNext();
+	//sr.getField("campo");
+}
+]]></code>
+			</p>
+			<p>
+				<code information="PHP"><![CDATA[
+// require_once("bin/com.xmlnuke/module.basemodule.class.php");
+$guestbookFile = new AnydatasetFilenameProcessor("guestbook", $this->_context);
+$guestbook = new AnyDataSet($guestbookFile);
+$it = $guestbook->getIterator();
+while ($it->hasNext())
+{
+	$sr = $it->moveNext();
+	//$sr->getField("campo");
+}
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Filtrando os dados de um AnyDataSet</title>
+		<body>
+			<p>
+No momento de obter os dados de um AnyDataSet com o método getIterator() pode-se passar um IteratorFilter.
+</p>
+			<p>
+				<code information="CSharp"><![CDATA[
+IteratorFilter itf = new IteratorFilter();
+itf.addRelation("destination_id", Relation.Equal, "valor");
+Iterator it = guestbook.getIterator(itf);
+]]></code>
+			</p>
+			<p>
+				<code information="PHP"><![CDATA[
+$itf = new IteratorFilter();
+$itf->addRelation("destination_id", Relation::Equal, $destination_id);
+$it = $configEmail->getIterator($itf);
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Inserindo dados em um AnyDataSet</title>
+		<body>
+			<p>
+O processo de inserção de dados no AnyDataSet é bastante simplificado.
+         </p>
+			<p>
+				<code information="CSharp"><![CDATA[
+anydata.appendRow();
+anydata.addField("fromname", "nome");
+anydata.addField("frommail", "email");
+anydata.addField("ip", this._context.ContextValue("REMOTE_ADDR"));
+anydata.Save(guestbookFile);
+]]></code>
+			</p>
+			<p>
+				<code information="PHP"><![CDATA[
+$anydata->appendRow();
+$anydata->addField("fromname", "nome");
+$anydata->addField("frommail", "email");
+$anydata->addField("ip", $this->_context->ContextValue("REMOTE_ADDR"));
+$anydata->Save(guestbookFile);
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+</page>

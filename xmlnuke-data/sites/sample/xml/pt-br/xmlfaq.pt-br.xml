@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+  <meta>
+    <title>Exemplo de Faq</title>
+    <abstract>Exemplo de como utilizar o XML FAQ</abstract>
+    <created>Mon Oct 23 2006 1:22:16</created>
+    <modified>Mon Oct 23 2006 1:24:27</modified>
+    <keyword>xmlnuke</keyword>
+    <groupkeyword>-</groupkeyword>
+  </meta>
+  <blockcenter>
+    <title>Exemplo de Faq</title>
+    <body>
+      <p>
+         <faq title="Teste">
+            <item question="Pergunta 1">
+              Essa é a resposta.
+            </item>
+            <item question="Pergunta 2">
+              Essa é a resposta.
+            </item>
+         </faq>
+      </p>
+    </body>
+  </blockcenter>
+</page>

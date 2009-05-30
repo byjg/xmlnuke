@@ -1,0 +1,35 @@
+﻿<anydataset>
+  <row>
+    <field name="LANGUAGE">en-us</field>
+    <field name="TITLENOTFOUND">Module Requested Not Found.</field>
+    <field name="TITLEERRORMESSAGE">Module Caused an Unexpected Error.</field>
+    <field name="MESSAGE">The requested module "{0}" caused an error. See below for more information.</field>
+    <field name="ORIGINALMESSAGE">Original Error Message: {0}</field>
+    <field name="FINDMESSAGE">Related Error Message: {0}</field>
+    <field name="GOBACK">Try Again</field>
+    <field name="404">Module not found.</field>
+    <field name="200">Missing user.</field>
+  </row>
+  <row>
+    <field name="LANGUAGE">pt-br</field>
+    <field name="TITLENOTFOUND">Módulo solicitado não foi encontrado</field>
+    <field name="TITLEERRORMESSAGE">Módulo provoca um erro inesperado</field>
+    <field name="MESSAGE">O módulo solicitado "{0}" provocou um erro. Veja abaixo mais detalhes</field>
+    <field name="ORIGINALMESSAGE">Mensagem de erro original: {0}</field>
+    <field name="FINDMESSAGE">Messagem de erro relacionada: {0}</field>
+    <field name="GOBACK">Tentar Novamente</field>
+    <field name="404">Módulo não encontrado</field>
+    <field name="200">Usuário perdido</field>
+  </row>
+  <row>
+    <field name="LANGUAGE">de-de</field>
+    <field name="TITLENOTFOUND">Das angeforderte Modul wurde nicht gefunden.</field>
+    <field name="TITLEERRORMESSAGE">Das Modul verursachte einen unerwarteten Fehler.</field>
+    <field name="MESSAGE">Das angeforderte Modul '{0}' verursachte einen Fehler. Nachfolgend finden Sie weitere Informationen dazu.</field>
+    <field name="ORIGINALMESSAGE">Ursprüngliche Fehler-Meldung: {0}</field>
+    <field name="FINDMESSAGE">Zugehörige Fehler-Meldung: {0}</field>
+    <field name="GOBACK">Erneut versuchen</field>
+    <field name="404">Modul wurde nicht gefunden.</field>
+    <field name="200">Fehlender Benutzer.</field>
+  </row>
+</anydataset>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+  <meta>
+    <title>Creating Layouts with XMLNuke</title>
+    <abstract>CHow to create visual layouts for documents produced with XMLNuke.</abstract>
+    <created>Wed Aug 29 2007 12:15:08</created>
+    <modified>Wed Nov 19 2008 16:58:53</modified>
+    <keyword>xmlnuke</keyword>
+    <groupkeyword>key_xsl</groupkeyword>
+  </meta>
+  <blockcenter>
+    <title>Introduction</title>
+    <body>
+<p>
+Because XMLNuke generates only XML documents, these documents must be transformed so that the user can understand them. This transformation process will generate a resulting document like XHTML or any other type of document.
+</p><p>
+The document that transforms an XML into another is the XSLT (eXtensible Style Sheet Transformation). This document contains commands to iterate the XML elements, extract information, and apply a certain formatting or transformation to it.
+</p><p>
+When using XMLNuke, the creation process for XSLT documents is made much easier than the implementation of ?snippets? codes. This technique allows us to concentrate ONLY on what we really want to do.
+</p><p>
+For this, XMLNuke assumes that a standard page has the following layout:
+</p><p>
+<img src="common/imgs/docs/cm2-blocos.png"/>
+</p><p>
+Composed of: 
+<ul>
+<li>The design of this page</li>
+<li>Blocks of code (to the left, centralized, to the right)</li>
+<li>Menu</li>
+</ul>
+</p><p>The Design of the page corresponds to the visual organization of the page and how the blocks will be layed out. Obviously, the blocks do not necessarily need to be layed out according to the layout of the figure above, but it is there to give an example of how to organize ourselves. If you have advanced knowledge of XML and XSLT, you can create your own layout and document structure. The following topics will deal with how to create an XSLT document.
+</p>
+    </body>
+  </blockcenter>
+  <blockcenter>
+    <title>Creating an XSLT document</title>
+    <body>
+      <p>
+The basic document structure that can be used by any page or even a file format is the following:
+</p><p>
+<img src="common/imgs/docs/xsl_01.png"/>
+</p><p>
+Note that items 1 and 3 will always be the same. The personalization of your HTML layout must be done in space number 2. It's important to note that this layout may be developed by any visual editing tool or not, such as Dreamweaver, Homesite, etc. The only restriction is that <b>all</b> of the tags must be closed, even the ones that wouldn't in HTML. For example:
+</p><p>
+<code information="Document Formatting"><![CDATA[
+Open tags that do not close in HTML must "close" in XML/XSLT:
+
+<br> change to <br />
+<img src=""> change to <img src="" />
+<input ...> change to <input .... />
+<hr> change to <hr />
+]]>
+</code>
+</p><p>
+Note too that in space 2 and space 3 there are some references:
+</p><p>
+<code information="References to Snippets"><![CDATA[
+<xmlnuke-menucss/>
+<xmlnuke-blockcentercss />
+<xmlnuke-blockleftcss />
+<xmlnuke-blockrightcss />
+<xmlnuke-htmlbody />
+]]>
+</code>
+</p><p>
+...and so on. These tags started by XMLNuke make references to the snippets that have the names: snippet_menucss.inc, snippet_blockcentercss, etc.
+</p><p>
+Note: The <b>htmlbody</b> Snippet requires that the <b>htmlheader</b> snippet be used within the HTML.
+</p><p>
+These snippets may be located in two folders:
+<ul>
+<li>data/shared/snippet</li>
+<li>data/sites/YOURSITE/snippet</li>
+</ul>
+The location that is within your site always has priority and overwrites any definition in "data/shared". Because of this, it is advisable to copy the snippets that will be modified to the folder on your site.
+</p><p>
+Another important piece of information: The Snippets created within space number 2 (in the previous figure) are called <b>Structural Snippets</b> and the snippets created in space number 3 are called <b>Snippets of Xml Objects</b> ou <b>Template Snippets</b>
+</p>
+    </body>
+  </blockcenter>
+</page>

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0"?>
+<anydataset>
+   <row>
+      <field name="LANGUAGE">en-us</field>
+      <field name="TITLE">Manage XMLDB Index</field>
+      <field name="LINKRECREATE">Click here to recreate XMLDB {0} Index</field>
+      <field name="RECREATE">Index was created.</field>
+      <field name="DESCRIPTION">XMLDB Index enable you search any word existing in XML documents.<br/><br/>Warning:<br/>This operation may take several minutes.</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">pt-br</field>
+      <field name="TITLE">Gerenciador para XMLDB Index</field>
+      <field name="LINKRECREATE">Clique aqui para recriar o XMLDB {0} índice</field>
+      <field name="RECREATE">O Índice foi criado.</field>
+      <field name="DESCRIPTION">XMLDB Index ativa sua busca por qualquer palavra existentes em arquivos XML. Cuidado: Esta operação pode levar alguns minutos.</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">de-de</field>
+      <field name="TITLE">XMLDB-Index verwalten</field>
+      <field name="LINKRECREATE">XMLDB '{0}' Index neu erstellen</field>
+      <field name="RECREATE">Index wurde erstellt.</field>
+      <field name="DESCRIPTION">Mit Hilfe des XMLDB-Index kann jedes XML-Dokument nach einem beliebigen Wort durchsucht werden.<br/><br/>Warnung:<br/>Das Erstellen kann einige Minuten dauern.</field>
+   </row>
+</anydataset>

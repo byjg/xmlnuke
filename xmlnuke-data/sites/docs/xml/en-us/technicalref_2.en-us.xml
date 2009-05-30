@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>The IModule Interface</title>
+		<abstract>Methods in the IModule interface</abstract>
+		<created>20/9/2005 00:20:39</created>
+		<modified>Wed Nov 19 2008 14:53:50</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>technicalref</groupkeyword>
+		<revision>$Revision: 1.1 $</revision>
+	</meta>
+	<blockcenter>
+		<title>The BaseModule class</title>
+		<body>
+			<p>
+The BaseModule class implements the minimum functionalities required for a user module to work through the IModule interface.
+         </p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>The IModule interface</title>
+		<body>
+			<p>The IModule interface has the following methods:  </p>
+			<p>
+				<b>void Setup(XMLFilenameProcessor xml, Context context, object customArgs);</b>
+				<br/>
+This is the first method to be run during the processing of a module. It is equivalent to the builder method, which when implementing a module should not exist. Thus, this is the appropriate method to set the initial configurations and define private variables.
+</p>
+			<p>
+				<b>international.LanguageCollection WordCollection();</b>
+				<br/>
+Returns a collection of the LangCollection type. Using this method is interesting to separate the text messages within the programming code module. This way, any change to the text message will not require a recompilation of the module.
+</p>
+			<p>
+				<b>classes.PageXml CreatePage();</b>
+				<br/>
+This method is the main method of a user module. It returns a PageXML object that encapsulates an XML document.
+</p>
+			<p>
+				<b>bool hasInCache();</b>
+				<br/>
+Implemented in the BaseModule class. Return True if the document is already found in the cache. It is not necessary to overwrite this method.
+</p>
+			<p>
+				<b>bool useCache();</b>
+				<br/>
+Implemented in the BaseModule class. Algorithm to determine if the page should use cache or not.
+</p>
+			<p>
+				<b>string getFromCache();</b>
+				<br/>
+Implemented in the BaseModule class. Obtains the cache page. It is not necessary to overwrite this method.
+</p>
+			<p>
+				<b>void saveToCache(string content);</b>
+				<br/>
+Implemented in the BaseModule class. Saves the XML document transformed in the cache. It is not necessary to overwrite this method.
+</p>
+			<p>
+				<b>void resetCache();</b>
+				<br/>
+Implemented in the BaseModule class. Erases cache content. It is not necessary to overwrite this method.
+</p>
+			<p>
+				<b>bool requiresAuthentication();</b>
+				<br/>
+Indicates if the user module needs an authenticated context. The default defined in the BaseModule class is not to require authentication; however, the method may be overwritten to require authentication.
+</p>
+			<p>
+				<b>bool accessGranted();</b>
+				<br/>
+The user may be authenticated, but may not have access to the module. In this case the default implementation of the BaseModule queries the getAccessLevel method to identify the criteria used to discover if access is guaranteed.
+</p>
+			<p>
+				<b>AccessLevel getAccessLevel();</b>
+				<br/>
+Determines which validation method will be used to discover if the authenticated user has permission to access the module. There are 5 possibilities:
+<ul>
+<li>OnlyAuthenticated: The user must only be authenticated to access the module.</li>
+<li>OnlyAdmin: Only users with administrative profiles may access the module.
+</li>
+<li>OnlyCurrentSite: Only users that have access to the site to which the module belongs will have access. For example, the module may only be executed for users from site "X".</li>
+<li>OnlyRole: Each user can have a different profile description (ROLE) associated to them. In this case, the user will only gain access to the module if they have a specific ROLE. It is then required to implement the getRole() method.</li>
+<li>CurrentSiteAndRole: Equivalent to OnlyCurrentSite and OnlyRole simultaneously.</li>
+</ul></p>
+			<p>
+				<b>void processInsufficientPrivilege();</b>
+				<br/>
+Allows the programmer to treat the exceptions in cases where the user does not have the required privileges in accessGranted(). The default implemented by the BaseModule class is to create an exception for the interface.
+</p>
+			<p>
+				<b>string getRole();</b>
+				<br/>
+Text that defines what ROLE users need to have to get guaranteed access to the module.
+</p>
+		</body>
+	</blockcenter>
+</page>

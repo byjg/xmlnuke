@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Adding Pieces of JavaScript Code</title>
+		<abstract>How to add a piece of JavaScript to your code so that it interacts with the created document.</abstract>
+		<created>Tue Nov 6 2007 1:37:03</created>
+		<modified>Wed Nov 19 2008 15:17:44</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>technicalref</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Adding pieces of JavaScript code</title>
+		<body>
+			<p>It's possible to add pieces of JavaScript code to XMLNuke that can interact with the generated document. To do this, XMLNuke implements in a native manner a function in JavaScript which allows it to "connect" to a text box, an event and a JavaScript code.</p>
+			<p>
+				<code information="JavaScript Function">fn_addEvent("name_box_text", "JS event", functionJS);
+</code>
+			</p>
+			<p>
+To add a JS code, the addJavaScriptSource() method existing in the XMLNukeDocument object must be used. In the example below, we will add a JavaScript to the control when the CHANGE event is set off.
+</p>
+			<p>
+				<code information="Example"><![CDATA[
+fn_addEvent('iddocumenttype', 'change', cleanDoc);
+				
+function cleanDoc(e) 
+{
+	numdoc = document.getElementById('numdocument');
+	numdoc.value = '';
+}
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>XMLNuke Objects that generate JavaScript</title>
+		<body>
+			<p>Some objects in XMLNuke generate JavaScript code which can be used by other functions. The <b>XmlInputGroup</b> function generates a function called <i>showHide_[nome do grupo](bool)</i> which allows the "name of group" name of group to be shown or hidden.</p>
+			<p>All of the Input objects can generate personalized JavaScript to validate the entered content.</p>
+		</body>
+	</blockcenter>
+</page>

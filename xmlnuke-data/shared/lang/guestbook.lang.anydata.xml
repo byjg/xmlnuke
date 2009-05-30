@@ -1,0 +1,38 @@
+﻿<anydataset>
+  <row>
+    <field name="LANGUAGE">en-us</field>
+    <field name="TITLE">GuestBook for site {0}</field>
+    <field name="ABSTRACT">Read opinions and Write your own about our site {0} in my guestbook.</field>
+    <field name="MYGUEST">My Guestbook</field>
+    <field name="SIGN">Sign My GuestBook</field>
+    <field name="FILL">Fill in Form</field>
+    <field name="ERRORTITLE">An error occured whilst adding a message.</field>
+    <field name="ERRORMESSAGE">Your message was not added because not all required fields are completed.</field>
+    <field name="TYPETEXTFROMIMAGE">Type Numbers below:</field>
+    <field name="OBJECTIMAGEINVALID">The numbers you typed didn't match. You need to type the text correctly.</field>
+  </row>
+  <row>
+    <field name="LANGUAGE">pt-br</field>
+    <field name="TITLE">Livro de Visitas do site {0}</field>
+    <field name="ABSTRACT">Leia e escreva suas opiniões sobre o site {0} no meu livro de visitas</field>
+    <field name="MYGUEST">Meu Livro de Visitas</field>
+    <field name="SIGN">Assine no meu livro de visitas</field>
+    <field name="FILL">Preencha o formulário</field>
+    <field name="ERRORTITLE">Ocorreu um erro ao adicionar a mensagem</field>
+    <field name="ERRORMESSAGE">Sua mensagem não foi adicionada por que todos os campos são obrigatórios.</field>
+    <field name="TYPETEXTFROMIMAGE">Digite números ao lado: </field>
+    <field name="OBJECTIMAGEINVALID">O texto que você digitou não confere. Você precisa digitar o texto corretamente para prosseguir. </field>
+  </row>
+  <row>
+    <field name="LANGUAGE">de-de</field>
+    <field name="TITLE">Gästebuch von {0}</field>
+    <field name="ABSTRACT">Lesen Sie Meinungen anderer und schreiben Sie Ihre eigene Meinung über {0} ins Gästebuch.</field>
+    <field name="MYGUEST">Gästebuch</field>
+    <field name="SIGN">Ins Gästebuch eintragen</field>
+    <field name="FILL">Füllen Sie die nachfolgenden Felder aus</field>
+    <field name="ERRORTITLE">Beim Hinzufügen Ihrer Nachricht ist ein Fehler aufgetreten.</field>
+    <field name="ERRORMESSAGE">Ihre Nachricht wurde nicht hinzugefügt, da nicht alle Felder ausgefüllt waren.</field>
+    <field name="TYPETEXTFROMIMAGE">Sicherheitsabfrage:</field>
+    <field name="OBJECTIMAGEINVALID">Sie haben die Sicherheitsabfrage nicht oder falsch beantwortet. Bitte gehen Sie zurück und überprüfen Sie die Eingabe.</field>
+  </row>
+</anydataset>

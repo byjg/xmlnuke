@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Implementing the solution.</title>
+		<abstract>Tips on how to implement a solution using XMLNuke. </abstract>
+		<created>16/7/2007 15:46:14</created>
+		<modified>Wed Nov 19 2008 15:51:57</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_analysis</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Implementing the solution</title>
+		<body>
+			<p>
+				<ol>
+					<li>Even if it's not necessary, inherit the BaseModule class from XMLNuke. For example, if you are creating a system called "Agenda", create the ForumBaseModule class. 
+<br/><br/>
+This is very important, because the BaseModule class is the first one to be run during the processing of a module and in it we can define behaviors and default actions. We can overwrite the standard methods to always require authentication, or define what will be done in case of insufficient processing. <br/><br/>
+We can also instance objects that will always be instanced, like a hierarchical structure for example, or define MENUS according to Profile. 
+<br/><br/>
+The modules in themselves should only implement the Setup and CreatePage methods.
+<br/><br/></li>
+					<li>XMLNuke implements the BaseDBAccess class that contains the specific methods for accessing the database. It's recommended that every access to the database be done through a class that inherits the BaseDBAccess. This way we do not mix SQL commands inside the modules and we make code maintenance easier. 
+<br/><br/>
+In the same example of the Forum, we have a class called ?ForumDB? which inherits from "BaseDBAccess", and in it we implement the methods: ObterForumPorId() (ObtainForumByID()), PesquisarForum() (SearchForum()), InserirForum() (InsertForum), among others.
+<br/><br/></li>
+					<li>The SITE is completely disassociated from the module, and this is an important characteristic. For example: When we develop a forum, this can be seen in any site and not only one specific site with a specific layout. <br/><br/></li>
+					<li>
+						<b>Organization of the project files - PHP</b>
+						<br/>
+						<br/>
+All of the PHP modules are in a folder called "MODULES" within the LIB folder. When defining a name, the most common form is lib/NAME_OF_APPLICATION/modules. If the application is very extensive, we can organize the definition of folders with subfolders. For example:
+<br/><br/><code information="Structure of Directories">lib/NAME_OF_APPLICATION/financial/modules
+lib/NAME_OF_APPLICATION/sales/modules
+   .
+   .
+   .
+lib/NAME_OF_APPLICATION/admin/modules</code><br/>
+Essa estrutura de diretórios define NAMESPACES que facilita a organização do código através do nome. 
+<br/><br/>
+This structure of directories defines NAMESPACES which facilitate organization of the code through the name. Note that when structured this way, the call to the module will also obey this rule. Following previous naming rules, we have:
+<br/><br/><code information="Call to the module">xmlnuke.php?module=NAME_OF_APPLICATION.financial.NAME_OF_MODULE
+xmlnuke.php?module=NAME_OF_APPLIACTION.sales.NAME_OF_MODULE
+   .
+   .
+   .
+xmlnuke.php?module=NAME_OF_APPLICATION.admin.NAME_OF_MODULE</code><br/><br/></li>
+					<li>
+						<b>Organizing the project files - CSharp</b>
+						<br/>
+						<br/>
+Programming with CSharp becomes more productive using Visual Studio. Because of this, a file was created called ?create-xmlnuke-project.vbs? which creates the solution in Visual Studio ready for use. It's important to note that EVERY PROJECT should group all of the modules according to their NameSpace and their relation to the Assembly name.
+                  <br/><br/></li>
+					<li>
+						<b>Accessing files on harddrive
+</b>
+						<br/>
+						<br/>
+XMLNuke has a class called FilenameProcessor, which implements all of these rules to define a file name according to the internationalization, installation of XMLNuke, site, etc. Because of this, avoid using literal constants. ALWAYS use one of the existing FilenameProcessor classes, and if this does not meet your requirements, preferably create one of your own. This simple rule guarantees easy installation of your applications.
+                  <br/><br/></li>
+					<li>
+						<b>References to XMLNuke links
+</b>
+						<br/>
+						<br/>
+Never define an address that you will use on your browser to reference pages within XMLNuke applications. XMLNuke uses the HTTP ALIAS concept to reference a page or a module. Preferably always use it.
+                  <br/><br/><code information="To reference XML documents">
+- engine:xmlnuke?xml=doc
+- engine:xmlnuke?xml=doc&amp;xsl=preview
+- engine:xmlnuke?xml=doc&amp;xsl=preview&amp;site=teste
+- engine:xmlnuke?xml=doc&amp;xsl=preview&amp;site=teste&amp;lang=pt-br
+</code><br/><br/><code information="To reference modules">
+- module:NAME_OF_APPLICATION.NAME_OF_MODULE
+- module:NAME_OF_APPLICATION.NAME_OF_MODULE&amp;xsl=preview
+- module:NAME_OF_APPLICATION.NAME_OF_MODULE&amp;xsl=preview&amp;site=test
+- module:NAME_OF_APPLICATION.NAME_OF_MODULE&amp;xsl=preview&amp;site=test&amp;lang=en-us
+</code><br/><br/>
+Because it manipulates XML documents, instead of &amp; we should always use the &amp;amp;. In some cases this utilization may become confusing. If you prefer, use the XMLNukeManageURL class to generate the URL correctly.
+                  <br/><br/></li>
+					<li>
+						<b>Internationalization</b>
+						<br/>
+						<br/>
+XMLNuke contains a class which allows a language dictionary to be defined in XML, and this dictionary may be used within the modules. It is defined within the datasharedlang or datasites[site]lang folders. The name of the language file should have the complete name of the module (including the namespace, substituting periods with dashes)
+                  <br/><br/><code information="Exemplo: forum-posttopic.lang.anydata.xml"><![CDATA[
+<anydataset>
+  <row>
+    <field name="LANGUAGE">en-us</field>
+    <field name="TITLE">Post a new topic for {0}</field>
+    <field name="ABSTRACT">Post a new topic in the system</field>
+  </row>
+  <row>
+    <field name="LANGUAGE">pt-br</field>
+    <field name="TITLE">Defina um novo tópico em {0}</field>
+    <field name="ABSTRACT">Defina um novo tópico no sistema.</field>
+  </row>
+</anydataset>]]></code><br/><br/>
+In this example, the name of the module is "forum.posttopic". To use a word from the dictionary, simply call the WordCollection method instead of the CreatePage method.
+<br/><br/><code information="CSharp">
+protected LanguageCollection _myWords;
+
+override public IXmlnukeDocument CreatePage() 
+{	
+	this._myWords = this.WordCollection();
+	.
+	.
+	.
+	// To use. Note that {0} will be substituted by XMLNuke
+	this._myWords.Value("TITLE", new string[] {"Xmlnuke"});
+}
+</code><br/><br/><code information="PHP"><![CDATA[
+protected $_myWords;
+
+public function CreatePage() 
+{	
+	$this->_myWords = $this->WordCollection();
+	.
+	.
+	.
+	// To use. Note that {0} will be substituted by XMLNuke
+	$this->_myWords->Value("TITLE", new array("Xmlnuke") );
+}
+]]></code><br/><br/></li>
+					<li>
+						<b>Organizing your code</b>
+						<br/>
+						<br/>
+
+he Setup method is the first method available whose context is already known. Therefore, variables and parameters may be defined in this method. 
+                  <br/><br/>
+It is in the CreatePage method where the XML will effectively be created. If the module receives parameters to execute specific actions, it is recommended to do a SwitchCase, and according to the options, call a specific function within the same module. Your code will become much more legible.
+                  <br/><br/></li>
+<!--
+	<li>
+		<br />
+		<br />
+	</li>
+-->
+				</ol>
+			</p>
+		</body>
+	</blockcenter>
+</page>

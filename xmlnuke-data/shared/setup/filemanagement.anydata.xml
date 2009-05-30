@@ -1,0 +1,65 @@
+<anydataset>
+	<row>
+		<field name="type">INITIAL_DIR</field>
+		<field name="value">common/imgs</field>
+		<field name="value">lib</field>
+	</row>
+	<row>
+		<field name="type">VALID_FILE_NEW</field>
+		<field name="value">.txt</field>
+		<field name="value">.htm</field>
+		<field name="value">.html</field>
+		<field name="value">.js</field>
+		<field name="value">.css</field>
+		<field name="value">.php</field>
+	</row>
+	<row>
+		<field name="type">VALID_FILE_EDIT</field>
+		<field name="value">.txt</field>
+		<field name="value">.htm</field>
+		<field name="value">.html</field>
+		<field name="value">.js</field>
+		<field name="value">.css</field>
+	</row>
+	<row>
+		<field name="type">VALID_FILE_VIEW</field>
+		<field name="value">.txt</field>
+		<field name="value">.htm</field>
+		<field name="value">.html</field>
+		<field name="value">.js</field>
+		<field name="value">.css</field>
+		<field name="value">.png</field>
+		<field name="value">.php</field>
+	</row>
+	<row>
+		<field name="type">VALID_FILE_DELETE</field>
+		<field name="value">.txt</field>
+		<field name="value">.htm</field>
+		<field name="value">.html</field>
+		<field name="value">.js</field>
+		<field name="value">.css</field>
+		<field name="value">.png</field>
+	</row>
+	<row>
+		<field name="type">VALID_FILE_UPLOAD</field>
+		<field name="value">.gif</field>
+		<field name="value">.jpg</field>
+		<field name="value">.png</field>
+	</row>
+	<row>
+		<field name="type">VALID_FILE_MAX_UPLOAD</field>
+		<field name="value">2096</field>
+	</row>
+	<row>
+		<field name="type">PERMISSION</field>
+		<field name="folder_new">false</field>
+		<field name="folder_view">true</field>
+		<field name="folder_edit">false</field>
+		<field name="folder_delete">false</field>
+		<field name="file_new">false</field>
+		<field name="file_view">true</field>
+		<field name="file_edit">true</field>
+		<field name="file_delete">false</field>
+		<field name="file_upload">false</field>
+	</row>
+</anydataset>

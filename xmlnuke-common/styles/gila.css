@@ -1,0 +1,230 @@
+/*******************************************************
+ * TITLE: Common Stylesheet for Gila                   * 
+ * URI  : http://www.oswd.org/design/???/gila/gila.css *
+ * MODIF: 2003-02-03 1231 +0800                        *
+ *******************************************************/
+
+
+/* ###### Body Text ###### */
+
+body {
+  font-family: verdana, tahoma, helvetica, arial, sans-serif;
+  font-size: 94%;
+  margin: 0;
+}
+
+h1, h2, h3 {
+  font-family: arial, verdana, tahoma, sans-serif;
+}
+
+h1 {
+  font-size: 164%;
+  font-weight: bold;
+  font-style: italic;
+  padding-top: 1em;
+  border-top-style: solid;
+  border-top-width: 1px;
+}
+
+p {
+  padding-bottom: 1ex;
+}
+
+img {
+  border: none;
+}
+
+acronym {
+  border-bottom-style: dotted;
+  border-bottom-width: 1px;
+  cursor: help;
+}
+
+code {
+  font-family: "lucida console", monospace;
+  font-size: 95%;
+}
+
+dt {
+  font-weight: bold;
+}
+
+dd {
+  padding-bottom: 1.5em;
+}
+
+#bodyText {
+  text-align: justify;
+  line-height: 1.5em;
+  margin-left: 12em;
+  padding: 0.5ex 14em 1em 1em;
+  border-left-style: solid;
+  border-left-width: 1px;
+}
+
+#bodyText a {
+  /* See color-scheme.css */
+}
+
+#bodyText a:hover {
+  text-decoration: none;
+}
+
+.smallCaps {
+  font-variant: small-caps;
+}
+
+
+/* ###### Header ###### */
+
+#header {
+  height: 4em;
+  padding: 0.25em 2.5mm 0 4mm;
+}
+
+.headerTitle {
+  font-size: 252%;
+  text-decoration: none;
+  font-weight: bold;
+  font-style: italic;
+  line-height: 1.5em;
+}
+
+.headerTitle span {
+  font-weight: normal;
+}
+
+.headerLinks {
+  font-size: 87%;
+  padding: 0.5ex 10em 0.5ex 1em;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.headerLinks * {
+  text-decoration: none;
+  padding: 0 2ex 0 1ex;
+}
+
+.headerLinks a:hover {
+  text-decoration: underline;
+}
+
+.menuBar {
+  text-align: center;
+  padding: 0.5ex 0;
+}
+
+.menuBar * {
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0 2ex 0 1ex;
+}
+
+.menuBar a:hover {
+  /* See color-scheme.css */
+}
+
+
+/* ###### Left Sidebar ###### */
+
+.leftSideBar {
+  font-size: 95%;
+  width: 12.65em;
+  float: left;
+  clear: left;
+}
+
+.leftSideBar a, .leftSideBar span {
+  text-decoration: none;
+  font-weight: bold;
+  line-height: 2em;
+  padding: 0.75ex 1ex;
+  display: block;
+}
+
+[class~="leftSideBar"] a, [class~="leftSideBar"] span {
+  line-height: 1.5em;
+}
+
+.leftSideBar a:hover {
+  /* See color-scheme.css */
+}
+
+.leftSideBar .sideBarTitle {
+  font-weight: bold;
+  padding: 0.75ex 1ex;
+}
+
+.leftSideBar .sideBarText {
+  font-weight: normal;
+  padding: 1ex 0.75ex 1ex 1ex;
+}
+
+.leftSideBar .thisPage {
+  /* See color-scheme.css */
+}
+
+
+/* ###### Right Sidebar ###### */
+
+.rightSideBar {
+  font-size: 95%;
+  width: 12.65em;
+  margin: 2ex 0.8ex 0 0;
+  float: right;
+  clear: right;
+  border-style: solid;
+  border-width: 1px;
+}
+
+[class~="rightSideBar"] {
+  margin-right: 1.5ex;
+}
+
+.rightSideBar a {
+  font-weight: bold;
+}
+
+.rightSideBar a:hover {
+  text-decoration: none;
+}
+
+.rightSideBar .sideBarTitle {
+  font-weight: bold;
+  margin: 1em 1ex;
+  padding: 0.75ex 1ex;
+}
+
+.rightSideBar .sideBarText {
+  font-weight: normal;
+  line-height: 1.5em;
+  padding: 0 3ex 1em 2ex;
+}
+
+
+/* ###### Footer ###### */
+
+#footer {
+  font-size: 85%;
+  text-align: center;
+  line-height: 1.25em;
+  padding: 1em 4mm 1.5em 4mm;
+  clear: left;
+}
+
+#footer div {
+  padding-bottom: 1ex;
+}
+
+#footer a {
+  text-decoration: none;
+  font-weight: bold;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+}
+
+#footer a:hover {
+  border-bottom: 0;
+}

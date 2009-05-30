@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>The LanguageCollection Class</title>
+		<abstract>Using a word dictionary to assist with the internationalization of the modules</abstract>
+		<created>15/8/2006 13:11:09</created>
+		<modified>Sat Sep 13 2008 18:35:24</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_xmlnukeconcepts</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>The LanguageCollection Class</title>
+		<body>
+			<p>To support the internationalization of user modules, it was necessary to create a class that could manipulate a small data dictionary efficiently. The LanguageCollection class only loads in its memory words from the language dictionary that is selected.</p>
+			<p>For example, to manually create a word dictionary:
+
+<code information="CSharp"><![CDATA[
+// using com.xmlnuke.international;
+
+LanguageCollection myWords = new LanguageCollection(this._context);
+// English Words
+myWords.addText("en-us", "TITLE", "Download Module");
+myWords.addText("en-us", "ABSTRACT", "Abstract for this module {0}");
+
+// Portuguese Words
+myWords.addText("pt-br", "TITLE", "Módulo de Download");
+myWords.addText("pt-br", "ABSTRACT", "Resumo para este módulo {0}");
+]]></code><code information="PHP"><![CDATA[
+$myWords = new LanguageCollection($this->_context);
+// English Words
+$myWords->addText("en-us", "TITLE", "Download Module");
+$myWords->addText("en-us", "ABSTRACT", "Abstract for this module {0}");
+
+// Portuguese Words
+$myWords->addText("pt-br", "TITLE", "Módulo de Download");
+$myWords->addText("pt-br", "ABSTRACT", "Resumo para este módulo {0}");
+]]></code></p>
+			<p>
+To use a word defined in the dictionary: 
+
+<code information="CSharp"><![CDATA[
+this._myWords.Value("TITLE")
+// ou
+this._myWords.Value("ABSTRACT", new string[]{"VALOR"})
+]]></code><code information="PHP"><![CDATA[
+$this->_myWords.Value("TITLE")
+// ou
+this._myWords.Value("ABSTRACT", array("VALOR"))
+]]></code></p>
+			<p>
+In the moldules, words in the LanguageCollection are read as a configuration file. This configuration file resides in the LANG file within the Shared folder or on the site itself. The priority is to open files from the very same site.
+</p><p>
+The file name is defined as the name of the module, including its namespace. For example: To run the ?namespace.module? module, the language file name should be: ?namespace-module.lang.anydata.xml?. Once read, the file can be used again normally, as seen previously.
+
+
+<code information="Example of a Language File"><![CDATA[
+<anydataset>
+  <row>
+    <field name="LANGUAGE">en-us</field>
+    <field name="TITLE">XmlNuke - Download Area</field>
+    <field name="ABSTRACT">Download Area</field>
+    <field name="BLOCKTITLE">Download Area</field>
+    <field name="FORMTITLE">Download Information</field>
+  </row>
+  <row>
+    <field name="LANGUAGE">pt-br</field>
+    <field name="TITLE">XmlNuke - Área de Download</field>
+    <field name="ABSTRACT">Área de Download</field>
+    <field name="BLOCKTITLE">Área de Download</field>
+    <field name="FORMTITLE">Informações para Download</field>
+  </row>
+</anydataset>
+
+]]></code></p>
+		</body>
+	</blockcenter>
+</page>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>How does validation for secure modules work?</title>
+		<abstract>How does the validation and access process work for modules that require user authentication?</abstract>
+		<created>15/8/2006 14:55:41</created>
+		<modified>Sun Sep 14 2008 11:54:15</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_auth</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>What is a secure module?</title>
+		<body>
+			<p>A secure module is a module which requires some type of authentication  before it can run. XMLNuke implements a mechanism which, if the context is not authenticated, automatically deviates the execution to a Login module until the process is validated.</p>
+			<p>It can be illustrated using the figure below:</p>
+			<p>
+				<img src="common/imgs/docs/au-modelo.png"/>
+				<ol>
+					<li>The request is sent to the module</li>
+					<li>The context is not authenticated, the execution is deviated to a Login module</li>
+					<li>The context is already authenticated and the execution proceeds normally to the module</li>
+					<li>The context is already authenticated, but the credentials are not authorized to execute the module and an error message is generated</li>
+					<li>Once authenticated and validated, it can make requests</li>
+				</ol>
+			</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Security elements in XMLNuke</title>
+		<body>
+			<p>XMLNuke has the following security elements: 
+<ul>
+					<li>Administrator: Has UNRESTRICTED access to ALL the modules</li>
+					<li>Site: A user can be associated to one or more sites. Some configurations require that a user to be associated to a site in order to gain access.</li>
+					<li>Role: A generic definition, normally associated with a user. For example: editor or designer. Configuration of the module may oblige the user to belong to one of these roles to gain access. </li></ul><img src="common/imgs/docs/au-papel.png"/></p>
+			<p>
+The possible configurations are: 
+<ul>
+					<li>OnlyAdministrator: Only the Administrator may access it.</li>
+					<li>OnlyAuthenticated: The user must authenticate through a password to gain access to the module.</li>
+					<li>OnlyRole: The user must have the role specified by the module</li>
+					<li>OnlySite: The user must be associated to the current site to gain access to the module</li>
+					<li>CurrentSiteAndRole: The user must have the role specified by the module and must be associated to the current site to access the module. </li></ul></p>
+		</body>
+	</blockcenter>
+</page>

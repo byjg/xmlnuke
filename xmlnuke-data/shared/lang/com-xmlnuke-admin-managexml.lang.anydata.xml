@@ -1,0 +1,63 @@
+﻿<?xml version="1.0"?>
+<anydataset>
+   <row>
+      <field name="LANGUAGE">en-us</field>
+      <field name="TITLE">Edit XML</field>
+      <field name="DESCRIPTION">Edit XML documents. The XML Documents contains all site information.</field>
+      <field name="WORKINGAREA">Working Area</field>
+      <field name="SAVED">XML Document Saved.</field>
+      <field name="CONFIRMDELETE">Click here to confirm deletion '{0}' document</field>
+      <field name="DELETED">XML Document Deleted.</field>
+      <field name="PREVIEWMENU">Preview this page</field>
+      <field name="NEWXMLMENU">New XML</field>
+      <field name="EDITXMLMENU">Edit XML in {0}</field>
+      <field name="CREATEXMLMENU">Create XML in {0}</field>
+      <field name="XMLBOX">XML Name: </field>
+      <field name="LANGUAGEBOX">Language: </field>
+      <field name="TITLEINXML">Put the document title here.</field>
+      <field name="ABSTRACTINXML">Put the abstract about this document here.</field>
+      <field name="BLOCKTITLEINXML">Block Title</field>
+      <field name="PARAGRAPHINXML">This is the first paragraph.</field>
+      <field name="SITEMAPINFO">====== Site MAP/Index Information ======</field>
+      <field name="INDEXBOX">Index Title: </field>
+      <field name="LISTEDBOX">Listed in group: </field>
+      <field name="INDEXSUMMARYBOX">Index summary: </field>
+      <field name="PAGEINFO">====== Page Specific Information ======</field>
+      <field name="SHOWMENUBOX">Show menu from: </field>
+      <field name="NOTLISTEDOPTION">-- Doesn't show in menu --</field>
+      <field name="XMLEDITINFO">====== XML Editing ======</field>
+      <field name="XMLCONTENTBOX">XML: </field>
+      <field name="SAVEBUTTON">Save</field>
+      <field name="GOBACK">Go back</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">pt-br</field>
+      <field name="TITLE">Editar XML</field>
+      <field name="DESCRIPTION">Editar documentos XML. Os documentos XML contém todas as informações do site.</field>
+      <field name="WORKINGAREA">Área de Trabalho</field>
+      <field name="SAVED">Documento XML salvo.</field>
+      <field name="CONFIRMDELETE">Clique aqui para confirmar apagar o documento '{0}'</field>
+      <field name="DELETED">Documento XML apagado.</field>
+      <field name="PREVIEWMENU">Visualizar essa página</field>
+      <field name="NEWXMLMENU">Novo XML</field>
+      <field name="EDITXMLMENU">Editar XML em {0}</field>
+      <field name="CREATEXMLMENU">Criar XML em {0}</field>
+      <field name="XMLBOX">Nome do XML: </field>
+      <field name="LANGUAGEBOX">Linguagem: </field>
+      <field name="TITLEINXML">Coloque o título aqui.</field>
+      <field name="ABSTRACTINXML">Coloque o resumo do documento aqui.</field>
+      <field name="BLOCKTITLEINXML">Título do bloco</field>
+      <field name="PARAGRAPHINXML">Este é o primeiro parágrafo.</field>
+      <field name="SITEMAPINFO">====== Informações referentes ao Mapa do Site/Índice ======</field>
+      <field name="INDEXBOX">Título do Índice: </field>
+      <field name="LISTEDBOX">Listado no grupo: </field>
+      <field name="INDEXSUMMARYBOX">Resumo: </field>
+      <field name="PAGEINFO">====== Informações específicas do documento XML ======</field>
+      <field name="SHOWMENUBOX">Listar menu de: </field>
+      <field name="NOTLISTEDOPTION">-- Não mostrar menu --</field>
+      <field name="XMLEDITINFO">====== Edição do XML ======</field>
+      <field name="XMLCONTENTBOX">XML: </field>
+      <field name="SAVEBUTTON">Salvar</field>
+      <field name="GOBACK">Voltar</field>
+   </row>
+</anydataset>

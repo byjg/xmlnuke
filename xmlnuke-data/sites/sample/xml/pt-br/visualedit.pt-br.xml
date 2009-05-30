@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Editor Visual.</title>
+		<abstract>Editando textos e os visualizando no formato em que você gostaria que ele ficasse</abstract>
+		<created>24/4/2008 23:08:18</created>
+		<modified>24/4/2008 23:45:23</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>all</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Editor Visual</title>
+		<body>
+			<p>Com o XMLNUke é possível editar textos e os visualizar já no formato em que se espera o resultado.</p>
+			<p>
+				<code information="Código XML"><![CDATA[
+<editform title="Editor Visual" action="module:somemodule">
+   <memo name="exemplo" caption="Campo Memo" visualedit="true"></memo>
+   <buttons>
+      <button caption="Ver Código XML da seleção" 
+         onclick="alert(tinyMCE.activeEditor.selection.getContent());" />
+   </buttons>
+</editform>
+]]></code>
+			</p>
+			<p>
+				<editform title="Editor Visual" action="module:somemodule">
+					<memo name="exemplo" caption="Campo Memo" cols="30" rows="5" visualedit="true">
+					</memo>
+					<buttons>
+						<button caption="Ver Código XML da seleção" onclick="alert(tinyMCE.activeEditor.selection.getContent());" />
+					</buttons>
+				</editform>
+			</p>
+		</body>
+	</blockcenter>
+</page>

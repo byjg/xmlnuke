@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+  <meta>
+    <title>Upload de Documentos</title>
+    <abstract>Como fazer o Upload de Documentos usando o XMLNuke</abstract>
+    <created>Mon Nov 5 2007 20:34:05</created>
+    <modified>Mon Nov 5 2007 20:41:11</modified>
+    <keyword>xmlnuke</keyword>
+    <groupkeyword>technicalref</groupkeyword>
+  </meta>
+  <blockcenter>
+    <title>Upload</title>
+    <body>
+      <p>O Xmlnuke possui suporte para Upload de arquivos simples e múltiplos. O processo é simplficado através de um único método que permite salvar os arquivos no diretório especificado. </p>
+      <p><code information="Montar o Formulário - CSharp"><![CDATA[ 
+XmlFormCollection form = new XmlFormCollection(this._context, "module:sample", "Formulário");
+XmlInputFile inf = new XmlInputFile("Upload: ", "filetoupload");
+form.addXmlnukeObject(inf);
+]]></code></p>
+      <p><code information="Montar o Formulário - PHP"><![CDATA[ 
+$form = new XmlFormCollection($this->_context, "module:sample", "Formulário");
+$fileField = new XmlInputFile("Upload", 'filetoupload');
+$form->addXmlnukeObject($fileField);
+]]></code></p>
+<p>Uma vez que o formulário é submetido ele precisa ser tratado para localizar os arquivos que foram submetidos e salvá-los.</p>
+      <p><code information="Processar o Upload - CSharp"><![CDATA[ 
+// O UploadFilenameProcessor serve para definir o caminho que será salvo o
+arquivo.
+UploadFilenameProcessor uploadFilename = 
+	new UploadFilenameProcessor("common" + util.FileUtil.Slash() + "files", this._context);
+uploadFilename.FilenameLocation = ForceFilenameLocation.SharedPath;
+
+// Salva os arquivos do formulário
+ArrayList files = this._context.processUpload(uploadFilename, false, "filetoupload");
+]]></code></p>
+      <p><code information="Processar o Upload - PHP"><![CDATA[ 
+// O UploadFilenameProcessor serve para definir o caminho que será salvo o
+arquivo.
+$fileProcessor = new UploadFilenameProcessor('*', $this->_context);
+$fileProcessor->setFilenameLocation(ForceFilenameLocation::DefinePath, "common" . FileUtil::Slash() . "files");
+
+// Salva os arquivos do formulário
+$result = $this->_context->processUpload($fileProcessor, false, "filetoupload");
+]]></code></p>
+    </body>
+  </blockcenter>
+  <blockcenter>
+    <title>Observações</title>
+    <body>
+      <p>
+<ul>
+<li>O ArrayList de retorno contém os nomes dos arquivos que foram salvos.</li>
+<li>O Segundo argumento argumento informa se o nome virá do próprio arquivo (false) ou será definido pelo UploadFileNameProcessor (true). </li>
+<li>O terceiro parâmetro informa que você irá salvar APENAS o arquivo que foi submetido pelo INPUT TYPE=FILE informado no nome.</li>
+</ul>
+</p>
+    </body>
+  </blockcenter>
+</page>

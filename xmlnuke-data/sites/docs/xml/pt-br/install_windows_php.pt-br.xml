@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Instalando o XMLNuke PHP5 no Windows</title>
+		<abstract>Tutorial passo a passo de como instalar o XMLNuke PHP5 no Windows.</abstract>
+		<created>4/2/2008 17:13:25</created>
+		<modified>Fri Aug 15 2008 14:52:57</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_installing</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Instalando o XMLNuke PHP5 no Windows</title>
+		<body>
+			<p>Antes de instalar o XMLNuke é necessário possuir os seguintes softwares:
+
+<ul><li>Apache 2.2.x. Download <a href="http://httpd.apache.org/download.cgi">aqui</a>. Procure por "Win32 Binary without crypto (no mod_ssl) (MSI Installer)". Fazer a instalação padrão.</li><li>PHP 5.x. Download <a href="http://www.php.net/downloads.php">aqui</a>. Procure por "PHP 5.x Installer".</li><li>MySQL (Opcional)</li><li>Cópia do XMLNuke.</li></ul>
+
+Instale os softwares na ordem acima. O XMLNuke pode ser instalado em qualquer pasta da máquina. Mas para ele funcionar adequadamente é necessário seguir os passos abaixo.</p>
+<p><b>Instalação do Apache</b></p>
+<p>Instale o Apache com todas as configurações padrões.</p>
+<p><b>Instalação do PHP5</b></p>
+			<p>Após ter instalado o Apache, inicie o processo de instalação do PHP5.</p>
+			<p>Escolha o diretório padrão.</p>
+			<p>Selecione a opção Apache 2.2.x Module</p>
+			<p>
+				<img src="common/imgs/docs/php_win1.jpg"/>
+			</p>
+			<p>Informe o caminho em que se encontra o
+Apache. Se foi instalado com a configuração padrão o diretório será:</p>
+			<p>C:\Program Files\Apache Software Foundation\Apache2.2\conf</p>
+			<p>
+				<img src="common/imgs/docs/php_win2.jpg"/>
+			</p>
+			<p>Certifique-se que as extensões <b>xsl</b> e <b>GD</b> estão selecionadas para instalação.</p>
+			<p>Outras extensões podem ser adicionadas, inclusive a <b>PDO</b> para acesso a banco de dados. Entretanto não instale a extensão domxml, pois o sistema não irá funcionar.</p>
+			<p>
+				<img src="common/imgs/docs/php_win3.jpg"/>
+			</p>
+			<p>
+				<img src="common/imgs/docs/php_win4.jpg"/>
+			</p>
+			<p>Após essa etapa será iniciada a instalação.</p>
+			<p><b>Instalação do MySQL</b></p>
+			<p>Faça o Download de:</p>
+			<p>http://dev.mysql.com/get/Downloads/MySQL-5.0/mysql-5.0.45-win32.zip/from/pick#mirrors</p>
+			<p>Inicie a instalação. Selecione "Typical Setup"</p>
+			<p>
+				<img src="common/imgs/docs/php_win5.jpg"/>
+			</p>
+			<p>A instalação ocorrerá normalmente.</p>
+			<p><b>Instalação do XMLNuke</b></p>
+			<p>Faça o download e extraia os arquivos em qualquer pasta, por exemplo:
+c:\apps\xmlnuke-php5</p>
+			<p>Abra o arquivo: </p>
+			<p>C:\Program Files\Apache Software Foundation\Apache2.2\conf\httpd.conf</p>
+			<p>E adicione  ao final as segintes linhas</p>
+			<code information="Modificação no httpd.conf"><![CDATA[
+Alias /xmlnuke-php5 "C:/apps/xmlnuke-php5"
+<Directory "c:/apps/xmlnuke/xmlnuke-php5">
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    Order allow,deny
+    Allow from all
+</Directory>
+]]></code>
+			<p>Para testar, abra no navegador:</p>
+			<p>http://localhost/xmlnuke-php5</p>
+		</body>
+	</blockcenter>
+</page>

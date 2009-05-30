@@ -1,0 +1,113 @@
+<%@ Page Language="C#" %>
+<script runat="server">
+
+    // Insert page code here
+         //
+    
+	private com.xmlnuke.engine.Context context;
+
+	void Page_Load(Object sender, EventArgs e) 
+	{
+		try
+		{
+			context = new com.xmlnuke.engine.Context(Context);
+			siteList.DataSource = context.ExistingSites();
+
+			Page.DataBind();
+		}
+		catch (System.IO.DirectoryNotFoundException)
+		{
+			Response.Redirect("check_install.aspx");
+		}
+		if (context.ContextValue("xmlnuke.ROOTDIR") == "")
+		{
+			Response.Redirect("check_install.aspx");
+		}
+		if (System.IO.File.Exists("check_install.aspx"))
+		{
+			Response.Write("<br><b>Warning! <font color=red>Security failure</font>!</b> You have to delete the file 'check_install.aspx'<br>");
+		}
+	}
+    
+	void siteList_ItemCreated(Object sender, DataListItemEventArgs e) 
+	{
+		DataListItem currentItem = (DataListItem)e.Item;
+		if((currentItem!=null) && ((currentItem.ItemType==ListItemType.Item) || currentItem.ItemType==ListItemType.AlternatingItem))
+		{
+			string folder = (string)currentItem.DataItem;
+			string folderName = com.xmlnuke.util.FileUtil.ExtractFileName(folder);
+
+			currentItem.DataItem = folderName ;
+		}
+	}
+    
+	string getUrlImage(object site) 
+	{
+		return "common/icons/" + site.ToString() + ".png";			
+	}
+
+
+	string getUrlEnterSite(object site) 
+	{
+		string targetPage = context.UrlXmlNukeEngine + "?xml=home";
+
+		return  targetPage + "&site=" + site;
+	}
+
+
+	string getUrlAdmin(object site) 
+	{
+		string targetAdmin = context.UrlXmlNukeAdmin;
+
+		return  targetAdmin + "?site=" + site;
+	}
+
+	string getVersion()
+	{
+		return context.XmlNukeVersion;
+	}
+
+	string getPlatform()
+	{
+		return System.Environment.OSVersion.Platform.ToString();
+	}
+
+</script>
+<html>
+<head>
+    <title>XMLNuke Site Selector</title> <style>BODY {
+	FONT-WEIGHT: normal; FONT-SIZE: 16px; FONT-FAMILY: Verdana, Helvetica, sans-serif
+}
+H1 {
+	FONT-WEIGHT: bold; FONT-SIZE: 20px
+}
+</style>
+</head>
+<body>
+    <form runat="server">
+        <asp:DataList id="siteList" runat="server" OnItemCreated="siteList_ItemCreated" RepeatColumns="3" RepeatDirection="Horizontal" BorderStyle="Ridge" CellSpacing="1" BorderWidth="2px" BorderColor="White" BackColor="White" CellPadding="3">
+            <ItemStyle horizontalalign="Center" forecolor="Black" verticalalign="Middle" backcolor="#DEDFDE"></ItemStyle>
+            <FooterStyle font-size="12px" font-bold="True" horizontalalign="Right" forecolor="Black" backcolor="#C6C3C6"></FooterStyle>
+            <HeaderStyle font-size="Large" font-bold="True" forecolor="#E7E7FF" backcolor="#4A3C8C"></HeaderStyle>
+            <SelectedItemStyle font-bold="True" forecolor="White" backcolor="#9471DE"></SelectedItemStyle>
+            <ItemTemplate>
+                <asp:HyperLink id="HyperLink1" runat="server" NavigateUrl="<%#getUrlEnterSite(Container.DataItem)%>" Font-Size="10px">
+                    <img src="<%#getUrlImage(Container.DataItem)%>" alt="<%# Container.DataItem %>" title="<%# Container.DataItem %>"  onerror="this.onerror=null; this.src='common/icons/.png'" />
+                    <br />
+                == Access this site ==
+                </asp:HyperLink>
+                <br />
+                <asp:HyperLink id="HyperLink2" runat="server" NavigateUrl="<%#getUrlAdmin(Container.DataItem)%>" Font-Size="10px">Admin</asp:HyperLink>
+            </ItemTemplate>
+            <HeaderTemplate>
+                XMLNuke Site Selector 
+            </HeaderTemplate>
+            <FooterTemplate>
+                <%# getVersion() %> 
+                <br />
+                Platform: <%# getPlatform() %> 
+            </FooterTemplate>
+        </asp:DataList>
+    </form>
+</body>
+</html>

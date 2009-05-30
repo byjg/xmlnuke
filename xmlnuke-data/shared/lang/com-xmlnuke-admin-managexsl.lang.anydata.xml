@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<anydataset>
+   <row>
+      <field name="LANGUAGE">en-us</field>
+      <field name="TITLE">Edit XSLT Pages</field>
+      <field name="DESCRIPTION">XSLT Pages are used to format XML output.</field>
+      <field name="SAVED">XSLT Document Saved.</field>
+      <field name="CONFIRMDELETE">Click here to confirm delete '{0}' XSLT document</field>
+      <field name="DELETED">XSLT Document Deleted.</field>
+      <field name="SELECTPAGE">Select the XSL template you want edit or create new a one below.</field>
+      <field name="EDITXSLMENU">Edit XSLT in {0}</field>
+      <field name="XSLBOX">Editing XSLT Name: </field>
+      <field name="LANGUAGEBOX">Language:</field>
+      <field name="PREVIEWPAGE">Preview this Page</field>
+      <field name="NEWPAGE">Create new page</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">pt-br</field>
+      <field name="TITLE">Editar documentos XSLT</field>
+      <field name="DESCRIPTION">Documentos XSLT são utilizados para formatar como os documentos XML serão exibidos.</field>
+      <field name="SAVED">Documento XSLT salvo.</field>
+      <field name="CONFIRMDELETE">Clique aqui para apagar o documento XSLT '{0}'</field>
+      <field name="DELETED">Documento XSLT apagado.</field>
+      <field name="SELECTPAGE">Selecione abaixo o documento XSLT que você quer editar ou apagar</field>
+      <field name="EDITXSLMENU">Editar XSLT em {0}</field>
+      <field name="XSLBOX">Editando XSLT:</field>
+      <field name="LANGUAGEBOX">Linguagem: </field>
+      <field name="PREVIEWPAGE">Visualizar essa página</field>
+      <field name="NEWPAGE">Criar nova página</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">de-de</field>
+      <field name="TITLE">XSLT-Seiten verwalten</field>
+      <field name="DESCRIPTION">Formatieren Sie XML-Ausgaben mittels XSLT-Seiten.</field>
+      <field name="SAVED">XSLT-Dokument gespeichert.</field>
+      <field name="CONFIRMDELETE">XSLT-Dokument '{0}' löschen</field>
+      <field name="DELETED">XSLT-Dokument wurde gelöscht.</field>
+      <field name="SELECTPAGE">Wählen Sie die XSL-Vorlage die Sie bearbeiten möchten oder erstellen Sie eine neue.</field>
+      <field name="EDITXSLMENU">XSLT in {0} bearbeiten</field>
+      <field name="XSLBOX">XSLT-Name: </field>
+      <field name="LANGUAGEBOX">Sprache:</field>
+      <field name="PREVIEWPAGE">Vorschau dieser Seite</field>
+      <field name="NEWPAGE">Neue Seite erstellen</field>
+   </row>
+</anydataset>

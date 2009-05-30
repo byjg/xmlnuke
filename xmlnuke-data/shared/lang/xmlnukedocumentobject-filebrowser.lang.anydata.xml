@@ -1,0 +1,90 @@
+﻿<?xml version="1.0"?>
+<anydataset>
+   <row>
+      <field name="LANGUAGE">en-us</field>
+      <field name="TITLE">Backup of Projects</field>
+      <field name="DESCRIPTION">Module to create backups of projects.</field>
+      <field name="FILEBROWSER">File Browser</field>
+      <field name="SUBFOLDERS">Sub Folders</field>
+      <field name="FILES">Files</field>
+      <field name="FILE">file</field>
+      <field name="NEWDIRECTORY">New Directory</field>
+      <field name="NEWFOLDERNOTPERMITTED">You don't have the permission to create new folders</field>
+      <field name="NEWFILENOTPERMITTED">You don't have the permission to create new files</field>
+      <field name="UPLOADNOTPERMITTED">You don't have the permission to upload files</field>
+      <field name="EXTENSIONNOTPERMITTED">This file is not permited</field>
+      <field name="EXTENSIONEDITNOTPERMITTED">You don't have the permission to edit this file</field>
+      <field name="EDITFOLDERNOTPERMITTED">You don't have the permission to edit folders</field>
+      <field name="EDITFILENOTPERMITTED">You don't have the permission to edit files</field>
+      <field name="VIEWFOLDERNOTPERMITTED">You don't have the permission to view folders</field>
+      <field name="VIEWFILENOTPERMITTED">You don't have the permission to view files</field>
+      <field name="DELETEFOLDERNOTPERMITTED">You don't have the permission to delete folders</field>
+      <field name="DELETEFILENOTPERMITTED">You don't have the permission to delete files</field>
+      <field name="NEWFILE">New File</field>
+      <field name="NEWNAME">New name</field>
+      <field name="EDITFILE">Edit File</field>
+      <field name="UPLOAD">Upload</field>
+      <field name="SEND">Send</field>
+      <field name="SENDED">sent</field>
+      <field name="FOLDEREDIT">Edit Folder</field>
+      <field name="IMAGE">Image</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">pt-br</field>
+      <field name="TITLE">Backup de Projetos</field>
+      <field name="DESCRIPTION">Módulo para gerar backup de projetos.</field>
+      <field name="FILEBROWSER">File Browser</field>
+      <field name="SUBFOLDERS">Sub Pastas</field>
+      <field name="FILES">Arquivos</field>
+      <field name="FILE">Arquivo</field>
+      <field name="NEWDIRECTORY">Novo Diretório</field>
+      <field name="NEWFOLDERNOTPERMITTED">Você não tem permissão de criar uma nova pasta</field>
+      <field name="NEWFILENOTPERMITTED">Você não tem permissão de criar um novo arquivo</field>
+      <field name="UPLOADNOTPERMITTED">Você não tem permissão de enviar arquivos</field>
+      <field name="EXTENSIONNOTPERMITTED">Não é permitido o envio deste tipo de arquivo</field>
+      <field name="EXTENSIONEDITNOTPERMITTED">Não não tem permissão de editar este tipo de arquivo</field>
+      <field name="EDITFOLDERNOTPERMITTED">Você não tem permissão de editar pastas</field>
+      <field name="EDITFILENOTPERMITTED">Você não tem permissão de editar arquivos</field>
+      <field name="VIEWFOLDERNOTPERMITTED">Você não tem permissão para ver pastas</field>
+      <field name="VIEWFILENOTPERMITTED">Você não tem permissão para ver arquivos</field>
+      <field name="DELETEFOLDERNOTPERMITTED">Você não tem permissão para deletar pastas</field>
+      <field name="DELETEFILENOTPERMITTED">Você não tem permissão para deletar arquivos</field>
+      <field name="NEWFILE">Novo Arquivo</field>
+      <field name="NEWNAME">Novo Nome</field>
+      <field name="EDITFILE">Editar Arquivo</field>
+      <field name="UPLOAD">Upload</field>
+      <field name="SEND">Enviar</field>
+      <field name="SENDED">foi enviado</field>
+      <field name="FOLDEREDIT">Editar Pasta</field>
+      <field name="IMAGE">Imagem</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">de-de</field>
+      <field name="TITLE">Projekt-Sicherung</field>
+      <field name="DESCRIPTION">Erstellen Sie Sicherungen von Ihren Projekten.</field>
+      <field name="FILEBROWSER">Datei-Browser</field>
+      <field name="SUBFOLDERS">Unterverzeichnis(se)</field>
+      <field name="FILES">Datei(en)</field>
+      <field name="FILE">Datei</field>
+      <field name="NEWDIRECTORY">Neues Verzeichnis</field>
+      <field name="NEWFOLDERNOTPERMITTED">Ihnen ist es nicht erlaubt neue Verzeichnisse zu erstellen</field>
+      <field name="NEWFILENOTPERMITTED">Ihnen ist es nicht erlaubt neue Dateien zu erstellen</field>
+      <field name="UPLOADNOTPERMITTED">Ihnen ist es nicht erlaubt Dateien hochzuladen</field>
+      <field name="EXTENSIONNOTPERMITTED">Dieser Dateityp ist nicht zugelassen</field>
+      <field name="EXTENSIONEDITNOTPERMITTED">Ihnen ist es nicht erlaubt diese Datei zu bearbeiten</field>
+      <field name="EDITFOLDERNOTPERMITTED">Ihnen ist es nicht erlaubt Verzeichnisse zu bearbeiten</field>
+      <field name="EDITFILENOTPERMITTED">Ihnen ist es nicht erlaubt Dateien zu bearbeiten</field>
+      <field name="VIEWFOLDERNOTPERMITTED">Ihnen ist es nicht erlaubt sich Verzeichnisse anzusehen</field>
+      <field name="VIEWFILENOTPERMITTED">Ihnen ist es nicht erlaubt sich Dateien anzusehen</field>
+      <field name="DELETEFOLDERNOTPERMITTED">Ihnen ist es nicht erlaubt Verzeichnisse zu löschen</field>
+      <field name="DELETEFILENOTPERMITTED">Ihnen ist es nicht erlaubt Dateien zu löschen</field>
+      <field name="NEWFILE">Neue Datei</field>
+      <field name="NEWNAME">Neuer Name</field>
+      <field name="EDITFILE">Datei bearbeiten</field>
+      <field name="UPLOAD">Hochladen</field>
+      <field name="SEND">Senden</field>
+      <field name="SENDED">Gesendet</field>
+      <field name="FOLDEREDIT">Verzeichnis bearbeiten</field>
+      <field name="IMAGE">Bild</field>
+   </row>
+</anydataset>

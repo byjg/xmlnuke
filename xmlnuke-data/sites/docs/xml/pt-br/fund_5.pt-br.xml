@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Anydataset e acesso a dados</title>
+		<abstract>Como utilizar o Iterator e variações do Anydataset para acessar os diversos tipos de dados</abstract>
+		<created>15/8/2006 13:12:42</created>
+		<modified>Sun Sep 9 2007 12:52:49</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_xmlnukeconcepts</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>AnyDataSet</title>
+		<body>
+			<p>O AnyDataSet é um modelo para armazenar uma pequena quantidade de dados. A estrutura do arquivo AnyDataSet é bem próxima à estrutura de armazenamento relacional, porém a persistência física ocorre em um documento XML. Entretanto o mesmo não segue uma orientação rígida de definição dos dados, fazendo com que cada registro possa ter a sua própria estrutura de campos.</p>
+<p><code information="Exemplo de um XML de um AnyDataSet"><![CDATA[
+<anydataset>
+  <row>
+    <field name="key1">Value 1</field>
+    <field name="key2">Value 2</field>
+    <field name="key3">Value 3</field>
+  </row>
+  <row>
+    <field name="key1">Value 1</field>
+    <field name="key2">Value 2</field>
+  </row>
+</anydataset>]]></code>
+</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Percorrendo um AnyDataSet - IIterator</title>
+		<body>
+<p>O AnyDataSet tem um mecanismo para percorrer a sua estrutura que é chamado de Iterator. Isso é bastante interessante pois estabelece uma forma padrão para percorrer toda a estrutura de dados de uma forma singular.</p>
+
+<p>Atualmente todos os objetos de acesso a dados pelo XMLNuke implementam a mesma interface de IIterator, ou seja, tanto faz se você acessa um Banco de Dados ou um arquivo XML a forma de obter os dados será sempre a mesma!</p>
+
+<p>Atualmente o XMLNuke implementa os seguintes métodos de acesso a dados:
+<ul>
+  <li>Arquivos XML - AnyDataSet</li>
+  <li>Banco de Dados, diversas fontes - DBDataSet (<a href="engine:xmlnuke?xml=bd_1">ver mais</a>)</li>
+  <li>Arquivos CSV, local e remoto - TextFileDataSet</li>
+  <li>Array e Vetores - ArrayDataSet</li>
+  <li>DataSet .NET object - DSDataSet</li>
+</ul>
+
+Em qualquer um dos casos, todos eles possuem um método que devolve um objeto do tipo IIterator, e que possibilita uma forma única de percorrer os mais diversos tipos de banco de dados da mesma forma. 
+</p>
+<p>Por exemplo, um objeto <a href="engine:xmlnuke?xml=creatingmodule_4">XmlEditList</a> pode ser montado por qualquer fonte de dados, seja um Banco de Dados, um arquivo XML ou um Array, por exemplo.</p>
+
+<p>Para maiores informações sobre como acessar o AnyDataSet acesse o <a href="engine:xmlnuke?xml=technicalref_3">referencial técnico</a>.</p>
+		</body>
+	</blockcenter>
+</page>

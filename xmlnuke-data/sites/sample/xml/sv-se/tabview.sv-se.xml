@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Tab View</title>
+		<abstract>How to group visual controls in Tabs</abstract>
+		<created>24/4/2008 22:49:59</created>
+		<modified>2008-04-24 23:07:11</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>all</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Tab View</title>
+		<body>
+			<p>You can organize your visual controls using Tabs with XMLNuke. See the sample below:</p>
+			<p>
+				<code information="Tab View XML code "><![CDATA[
+<tabview>
+   <tabitem title="1">
+      <p>This is the tab 1</p>
+   </tabitem>
+   <tabitem title="2">
+      <p>This is the tab 2</p>
+   </tabitem>
+   <tabitem title="3">
+      <p>This is the tab 3</p>
+   </tabitem>
+</tabview>
+]]></code>
+			</p>
+			<tabview>
+				<tabitem title="1">
+					<p>This is the tab 1</p>
+				</tabitem>
+				<tabitem title="2">
+					<p>This is the tab 2</p>
+				</tabitem>
+				<tabitem title="3">
+					<p>This is the tab 3</p>
+				</tabitem>
+			</tabview>
+		</body>
+	</blockcenter>
+</page>

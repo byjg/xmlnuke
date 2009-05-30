@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Estrutura de Diretórios</title>
+		<abstract>Como o XML organiza os arquivos dentro das pastas.</abstract>
+		<created>15/8/2006 13:11:09</created>
+		<modified>Wed Mar 28 2007 11:22:59</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_xmlnukeconcepts</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>A Organização de Diretórios do XMLNuke</title>
+		<body>
+			<p>O XMLNuke está totalmente contido em uma única pasta. A depender da versão que esteja utilizando pode ser:
+<ul>
+<li>xmlnuke-php5</li>
+<li>xmlnuke-csharp</li>
+</ul>
+Dentro dessa estrutura existe basicamente a seguinte estrutura:
+<code information="Estrutura de Diretórios"><![CDATA[
+RAIZ
+  +-- bin
+  +-- common
+  +-- data
+  +-- lib (*)
+]]>
+</code></p>
+		</body>
+	</blockcenter>
+<blockcenter>
+<title>A pasta "bin"</title>
+<body>
+<p>Essa pasta contém o KERNEL do Xmlnuke, com todas as suas funcionalidades. Existem algumas particulidares nessa pasta em cada release do XMLNUKE.</p>
+
+<p><b>A pasta bin na versão CSharp</b></p>
+<p>Na versão CSharp a pasta <b>bin</b> contém apenas os assemblies compilados do XMLNuke. Também contém os assemblies do usuários que deve ter a seguinte regra para o nome: namespace.namespace.dll</p>
+<p>Nesse caso, todas as classes (módulos) deverão estar com o namespace definido acima. (Ver o tópico Criando Módulos de usuário)</p>
+
+<p><b>A pasta bin na versão PHP</b></p>
+<p>Na versão PHP a pasta <b>bin</b> contém todos os códigos fontes do XMLNuke. Caso o usuário queria criar suas próprias classes e módulos NÃO DEVEM USAR ESSA PASTA. A pasta a ser utilizada para esse caso na versão PHP é a pasta <b>lib</b>.</p>
+
+</body>
+</blockcenter>
+
+
+<blockcenter>
+<title>A pasta "common"</title>
+<body>
+<p>Essa pasta é dedicada a guardar as imagens, javascripts e estilos padrões da própria engine do XMLNuke. Por exemplo, os botões do EditList estão nessa pasta, por exemplo.</p>
+<p>O próprio usuário poderá adicionar documentos e imagens a essa pasta como poderá criar a sua própria estrutura independente.</p>
+</body>
+</blockcenter>
+
+
+<blockcenter>
+<title>A pasta "data"</title>
+<body>
+<p>A pasta <b>data</b> é o local onde as configurações do site são armazenadas, bem como o próprio documento XML e XSL do site. Essa pasta pode ser mudada de localização através do arquivo de configuração e precisa ter permissão de escrita pela aplicação WEB. Possui dois subdiretórios:
+<ul>
+<li>sites: Configurações e documentos exclusivos de um determinado site.</li>
+<li>shared: Configurações e documentos compartilhados. Se não for encontrado em sites, tenta localizar em shared.</li>
+</ul>
+</p>
+<p><code information="Estrutura de Diretórios da pasta DATA"><![CDATA[
+data
+  +-- shared
+          +-- admin
+          +-- anydataset
+          +-- lang
+          +-- setup
+          +-- snippet
+          +-- xsl
+  +-- sites
+          +-- [NOMESITE]
+                  +-- anydataset
+                  +-- cache
+                  +-- lang
+                  +-- offline
+                  +-- snippet
+                  +-- xml
+                  +-- xsl
+]]>
+</code></p>
+</body>
+</blockcenter>
+
+<blockcenter>
+<title>A pasta "lib" (apenas PHP)</title>
+<body>
+<p>Essa pasta existe apenas na versão PHP. Todos os módulos e classes de usuários podem ser compartilhados para qualquer site e devem necessariamente estar dentro dessa pasta.</p>
+<p>Algumas informações importantes:
+<ul>
+<li>A programação no XMLNuke, mesmo na versão PHP, é exclusivamente feita através de classes</li>
+<li>O XMLNuke permite organizar as classes em NameSpaces que são fisicamente organizados em sub-diretórios</li>
+</ul>
+
+O conceito de NameSpace é particularmente interessante para ajudar a organizar os nossos arquivos em PHP/XMLNuke. Por exemplo, se vamos construir uma aplicação como por exemplo, um fórum e uma enquete, poderíamos utilizar a seguinte estrutura para organizar os arquivos em PHP:
+</p>
+<p><code information="Exemplo de organização de NameSpaces em PHP"><![CDATA[
+lib
+  +-- comum
+          +-- bancodedados
+          +-- base
+  +-- forum
+          +-- core
+          +-- modules
+          +-- administracao
+                   +-- modules
+                   +-- core
+          +-- xmlobjects
+  +-- enquete
+          +-- core
+          +-- xmlobjects
+          +-- modules
+]]>
+</code></p>
+<p>Note que existem algumas pastas <b>modules</b>. Essa pasta tem uma utilização especial no XMLNuke que serve para identificar que os arquivos que estão lá presentes corresponde a módulos do XMLNuke e podem ser executados. As demais pastas não podem ser acessadas externamente.</p>
+<p>Dessa forma, para executar um arquivo que está dentro da pasta modules poderiámos utilizar os seguintes exemplos:
+<ul>
+<li>xmlnuke.php?module=forum.algumaclassedentrodemodule</li>
+<li>xmlnuke.php?module=forum.administracao.algumaclassedentrodemodule</li>
+<li>xmlnuke.php?module=enquete.algumaclassedentrodemodule</li>
+</ul>
+</p>
+</body>
+</blockcenter>
+
+</page>

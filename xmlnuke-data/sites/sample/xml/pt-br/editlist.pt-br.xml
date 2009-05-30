@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Lista de Edição</title>
+		<abstract>Demonstra como é possível criar novos TAGS com objetivos específicos.</abstract>
+		<created>25/6/2005 18:44:02</created>
+		<modified>18/9/2005 23:01:42</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>all</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Listas de Edição</title>
+		<body>
+			<p>Com o XMLNuke é possível criar seus próprios TAGS. É possível ir muito além do próprio HTML. A sua aplicação ou documento, ao invés de guardar HTML, guardará a sua marca criada. Isso significa, que a apresentação dos dados não é mais responsabilidade da aplicação e sim do XMLNuke através dos templates XSLT e snippets.</p>
+			<p>Confira nos exemplos abaixo essa nova funcionalidade.</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Exemplo 1</title>
+		<body>
+			<p>
+				<code information="XML do EditList"><![CDATA[
+<editlist 
+   module="module:somemodule" 
+   name="ELDEMO"
+   title="Exemplo 1 - EditList" 
+   cols="4" 
+   new="true" 
+   edit="true" 
+   delete="true" 
+   view="true"
+   custom1="true" 
+   url1="module:somemodule2" 
+   img1="common/editlist/ic_custom.gif" 
+   acao1="selecionar" 
+   alt1="Selecionar" 
+   >
+   <row>
+        <field name="">1</field>
+        <field name="Nome">Opção 1</field>
+        <field name="Descrição">Você precisa...</field>
+        <field name="Listagem">Outro Campo</field>
+  </row>
+</editlist>
+]]></code>
+			</p>
+			<p>
+				<editlist module="module:somemodule" title="Exemplo 1 - EditList" cols="4" new="true" edit="true" delete="true" view="true" custom1="true" url1="module:somemodule2" img1="common/editlist/ic_custom.gif" acao1="selecionar" alt1="Selecionar" name="ELDEMO1">
+					<row>
+						<field name="">1</field>
+						<field name="Nome">UM</field>
+						<field name="Descrição">Para selecionar essa opção é necessário que o usuário selecione a caixa ao lado e clique em uma das opções abaixo.</field>
+						<field name="Listagem">Outro Campo</field>
+					</row>
+					<row>
+						<field name="">2</field>
+						<field name="Nome">DOIS</field>
+						<field name="Descrição">Note que os botões aparecem ou não a depender da opção do usuario</field>
+						<field name="Listagem">Outro Campo</field>
+					</row>
+				</editlist>
+			</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Como funciona?</title>
+		<body>
+			<ul>
+				<li>O Editlist garante a execução do modulo definido pelo parâmetro <i>module</i></li>
+				<li>O módulo receberá sempre dois parâmetros: <i>acao</i> que pode ser: new, edit, delete, view ou um nome definido pelo usuario ser for definido custom1, custom2, custom3 ou custom4</li>
+				<li>O outro parâmetro é o valor da primeira coluna (que sempre fica oculto no grid) e tem o nome de <i>valueid</i>.</li>
+			</ul>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Outros métodos do EditList</title>
+		<body>
+			<p>Os mesmos dados do EditList podem ser visualizados de forma diferenciada a depender dos parâmetros ou dos templates XSLT.</p>
+			<p>No exemplo abaixo, o EditList está possibilitando a múltipla seleção de dados</p>
+			<p>
+				<editlist module="module:somemodule" title="Exemplo 1 - EditList" cols="4" new="true" edit="true" delete="true" view="true" custom1="true" url1="module:somemodule2" img1="common/editlist/ic_custom.gif" acao1="selecionar" alt1="Selecionar" selecttype="check" name="ELDEMO2">
+					<row>
+						<field name="">1</field>
+						<field name="Nome">UM</field>
+						<field name="Descrição">Para selecionar essa opção é necessário que o usuário selecione a caixa ao lado e clique em uma das opções abaixo.</field>
+						<field name="Listagem">Outro Campo</field>
+					</row>
+					<row>
+						<field name="">2</field>
+						<field name="Nome">DOIS</field>
+						<field name="Descrição">Note que os botões aparecem ou não a depender da opção do usuario</field>
+						<field name="Listagem">Outro Campo</field>
+					</row>
+				</editlist>
+			</p>
+			<p>No outro exemplo, no modo apenas leitura:</p>
+			<p>
+				<editlist module="module:somemodule" title="Exemplo 1 - EditList" cols="4" new="true" edit="true" delete="true" view="true" custom1="true" url1="module:somemodule2" img1="common/editlist/ic_custom.gif" acao1="selecionar" alt1="Selecionar" readonly="true" name="ELDEMO3">
+					<row>
+						<field name="">1</field>
+						<field name="Nome">UM</field>
+						<field name="Descrição">Para selecionar essa opção é necessário que o usuário selecione a caixa ao lado e clique em uma das opções abaixo.</field>
+						<field name="Listagem">Outro Campo</field>
+					</row>
+					<row>
+						<field name="">2</field>
+						<field name="Nome">DOIS</field>
+						<field name="Descrição">Note que os botões aparecem ou não a depender da opção do usuario</field>
+						<field name="Listagem">Outro Campo</field>
+					</row>
+				</editlist>
+			</p>
+		</body>
+	</blockcenter>
+</page>

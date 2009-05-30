@@ -1,0 +1,53 @@
+﻿<anydataset>
+   <row>
+      <field name="LANGUAGE">en-us</field>
+      <field name="TITLE">XmlNuke - Download Area</field>
+      <field name="ABSTRACT">Download Area</field>
+      <field name="BLOCKTITLE">Download Area</field>
+      <field name="FORMTITLE">Download Informations</field>
+      <field name="FORMWARNING">These fields are not required to download your file.</field>
+      <field name="FORMFILE">Filename: </field>
+      <field name="FORMSUBMIT">Download Now</field>
+      <field name="EMAILMESSAGE">{0} Downloaded. Just a informational message.</field>
+      <field name="EMAILSUBJECT">[Xmlnuke Download] {0} Downloaded</field>
+      <field name="FILEERROR">== File not found ==</field>
+      <field name="SELECTCATEGORY">Select a category below:</field>
+      <field name="SELECTFILE">Select a file below:</field>
+      <field name="SELECTFORDOWNLOAD">Download this file</field>
+      <field name="MOREINFO">More information</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">pt-br</field>
+      <field name="TITLE">XmlNuke - Área de Download</field>
+      <field name="ABSTRACT">Área de Download</field>
+      <field name="BLOCKTITLE">Área de Download</field>
+      <field name="FORMTITLE">Informações para Download</field>
+      <field name="FORMWARNING">Não é obrigatório o preenchimento dessas informações para efetuar o download.</field>
+      <field name="FORMFILE">Arquivo: </field>
+      <field name="FORMSUBMIT">Efetuar Download</field>
+      <field name="EMAILMESSAGE">Download do arquivo {0}. Mensagem apenas informativa.</field>
+      <field name="EMAILSUBJECT">[Xmlnuke Download] Aviso de Download - {0}</field>
+      <field name="FILEERROR">== Arquivo não encontrado  ==</field>
+      <field name="SELECTCATEGORY">Selecione uma das categorias abaixo:</field>
+      <field name="SELECTFILE">Selecione uma dos arquivos abaixo:</field>
+      <field name="SELECTFORDOWNLOAD">Download desse arquivo</field>
+      <field name="MOREINFO">Mais informações</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">de-de</field>
+      <field name="TITLE">Download-Bereich</field>
+      <field name="ABSTRACT">Download-Bereich</field>
+      <field name="BLOCKTITLE">Download-Bereich</field>
+      <field name="FORMTITLE">Download Informationen</field>
+      <field name="FORMWARNING">Die folgenden Angaben sind freiwillig.</field>
+      <field name="FORMFILE">Dateiname:</field>
+      <field name="FORMSUBMIT">Jetzt herunterladen</field>
+      <field name="EMAILMESSAGE">'{0}' heruntergeladen.</field>
+      <field name="EMAILSUBJECT">[XMLNuke Download] '{0}' heruntergeladen.</field>
+      <field name="FILEERROR">== Datei nicht gefunden ==</field>
+      <field name="SELECTCATEGORY">Wählen Sie aus den folgenden Kategorien</field>
+      <field name="SELECTFILE">Wählen Sie aus den folgenden Dateien</field>
+      <field name="SELECTFORDOWNLOAD">Herunterladen</field>
+      <field name="MOREINFO">Mehr Informationen</field>
+   </row>
+</anydataset>

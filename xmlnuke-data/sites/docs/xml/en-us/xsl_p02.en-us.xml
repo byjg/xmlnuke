@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+  <meta>
+    <title>Creating Structural Snippets</title>
+    <abstract>How to create Structural Snippets.</abstract>
+    <created>Wed Sep 5 2007 17:32:23</created>
+    <modified>Wed Nov 19 2008 17:06:44</modified>
+    <keyword>xmlnuke</keyword>
+    <groupkeyword>key_xsl</groupkeyword>
+  </meta>
+  <blockcenter>
+    <title>Structural Snippets</title>
+    <body>
+      <p>
+Structural snippets are called this since they behave differently on the XML nodes by permitting iteration through the elements and generating their own definition. These Snippets should always be within the area number 2 (see figure in previous chapter) and normally use the <b>xsl:for-each</b> commands to locate the elements:
+</p>
+<p>
+The most common uses for this type of snippet are: 
+<ul>
+  <li>Definition of MENUS</li>
+  <li>Definition of Data Blocks</li>
+</ul>
+</p>
+    </body>
+  </blockcenter>
+  <blockcenter>
+    <title>Creation Example</title>
+    <body>
+      <p>To create this Snippet, it's important to observe the XML document produced by XMLNuke. A standard structure is defined below.</p>
+<p>
+<code information="Standard structure of an XML document"><![CDATA[
+<page>
+
+	<!-- PAGE HEADER -->
+	<meta>
+		<title></title>
+		<abstract></abstract>
+		<created></created>
+		<modified></modified>
+		<keyword></keyword>
+		<groupkeyword></groupkeyword>
+	</meta>
+
+	<!-- INFORMATION AREA -->
+	<blockcenter>
+		<title>Snippets Estruturais</title>
+		<body>
+			<p></p>
+		</body>
+	</blockcenter>
+
+	
+	<!-- THIS BLOCK IS ADDED BY XMLNUKE -->
+	<!-- YOU SHOULD NOT CREATE THIS BLOCK -->
+	<group>
+		<id>IDMENU</id>
+		<title>Title of menu group</title>
+		<keyword>all</keyword>
+
+		<page>
+			<id>home</id>
+			<title>Site Documentation</title>
+			<summary>Site Documentation for XMLNuke.</summary>
+		</page>
+	</group>
+
+</page>
+]]></code>
+</p>
+<p>It's important to note that to build this type of Snippet, you must work directly with <b>XPATH</b>. XPATH indicates the position of a specific XML node within the document. For example, the "blockcenter" node is within the "page" and it is not within any other. Thus, the XPATH would be /page/blockcenter.
+</p>
+<p>
+With this information, see an example of BLOCKCENTER. IMPORTANT: All the structural snippets should be created EXACTLY in the position which we want them to appear.
+</p>
+<p><code information="Snippet to create a 'blockcenter'"><![CDATA[
+<xsl:for-each select="page/blockcenter">
+	<h1><xsl:value-of select="title"/></h1>
+	<xsl:apply-templates select="body"/>
+</xsl:for-each>
+]]></code></p>
+<p>In this example, the for-each looks for all of the "blockcenter" nodes within a "page", and for each of these will write the HTML commands within them. Note, however, that there are two other commands: "value-of" which takes the value of "title" that is within a "blockcenter" and "apply-templates" that gives the information to search for template snippets (next chapter).
+</p>
+<p>
+Below is another example on how to build a menu. Observe that the menu structure does NOT have to be included when creating the document, because XMLNuke automatically includes an adequate menu structure.
+</p>
+<p><code information="Snippet for a simple menu"><![CDATA[
+<xsl:for-each select="page/group">
+	<h1><xsl:value-of select="title"/></h1>
+	<ul>
+	<xsl:for-each select="page">
+	<li>
+	   <a><xsl:attribute name="href">
+		<xsl:value-of select="id" />
+	      </xsl:attribute>
+	   </a></li>
+	</xsl:for-each>
+	</ul>
+</xsl:for-each>
+]]></code></p>
+    </body>
+  </blockcenter>
+</page>

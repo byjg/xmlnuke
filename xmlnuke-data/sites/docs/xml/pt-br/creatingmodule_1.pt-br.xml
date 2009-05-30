@@ -1,0 +1,18 @@
+﻿<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Criando Módulos de Usuário</title>
+		<abstract>Explica através de exemplos, como criar módulos de usuário</abstract>
+		<created>19/9/2005 14:40:43</created>
+		<modified>20/9/2005 00:38:55</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>createmodules</groupkeyword>
+		<revision>$Revision: 1.1 $</revision>
+	</meta>
+	<blockcenter>
+		<title>Criando Módulos de Usuário</title>
+		<body>
+			<p>Nesse tutprial você acompanhará passo a passo como criar um módulo de usuário.</p>
+		</body>
+	</blockcenter>
+</page>

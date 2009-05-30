@@ -1,0 +1,160 @@
+﻿<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>XmlFormCollection e ContextValue</title>
+		<abstract>Aprenda a trabalhar com XmlFormCollection e os métodos de Contexto.</abstract>
+		<created>19/9/2005 15:30:08</created>
+		<modified>19/9/2005 15:43:13</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>createmodules</groupkeyword>
+		<revision>$Revision: 1.1 $</revision>
+	</meta>
+	<blockcenter>
+		<title>Entrada de dados através de formulários</title>
+		<body>
+			<p>Para que seja possível a interação com o usuário o XMLNuke provê um XML Object para criar um formulário de entrada de dados para interação com o usuário. Esse objeto é denominado de EditForm.        </p>
+			<p>O EditForm é uma coleção de XmlInputObjects e XmlInputButtons. A seguir são listados os códigos necessários para produzir um resultado semelhante ao listado abaixo:
+         </p>
+			<p>
+				<img src="common/imgs/docs/cm3-form.png" />
+			</p>
+			<p>
+				<code information="CSharp"><![CDATA[
+// Cria um Formulário
+XmlFormCollection form = new XmlFormCollection(this._context, "module:sample", "Formulário de Edição");
+form.setJSValidate(true);
+form.addXmlnukeObject(new XmlInputHidden("op", "2"));
+form.addXmlnukeObject(new XmlInputLabelField("Caption", "Value"));
+XmlInputTextBox text = new XmlInputTextBox("Campo Obrigatorio", "campo1", "");
+text.setRequired(true);
+form.addXmlnukeObject(text);
+XmlInputTextBox text2 = new XmlInputTextBox("Campo do tipo email", "campo2", "");
+text2.setRequired(true);
+text2.setDataType(INPUTTYPE.EMAIL);
+form.addXmlnukeObject(text2);
+form.addXmlnukeObject(new XmlInputMemo("Memorando", "campo3", "Value"));
+form.addXmlnukeObject(new XmlInputCheck("Checkbox", "check1", "Value"));
+XmlInputCheck ic = new XmlInputCheck("Caption ReadOnly:", "check2", "Valor");
+ic.setChecked(true);
+ic.setReadOnly(true);
+form.addXmlnukeObject(ic);
+XmlInputTextBox itb = new XmlInputTextBox("Input ReadOnly:", "campo4", "Valor");
+itb.setReadOnly(true);
+form.addXmlnukeObject(itb);
+XmlInputButtons buttons = new XmlInputButtons();
+buttons.addSubmit("Submit", "bs");
+buttons.addReset("Reset", "br");
+buttons.addButton("Button", "bt", "javascript:alert('ok')");
+form.addXmlnukeObject(buttons);
+
+block.addXmlnukeObject(form);
+
+]]></code>
+			</p>
+			<p>
+				<code information="PHP"><![CDATA[
+// Cria um Formulário
+$form = new XmlFormCollection($this->_context, "module:sample", "Formulário de Edição");
+$form->setJSValidate(true);
+$form->addXmlnukeObject(new XmlInputHidden("op", "2"));
+$form->addXmlnukeObject(new XmlInputLabelField("Caption", "Value"));
+$text = new XmlInputTextBox("Campo Obrigatorio", "campo1", "");
+$text->setRequired(true);
+$form->addXmlnukeObject($text);
+$text2 = new XmlInputTextBox("Campo do tipo email", "campo2", "");
+$text2->setRequired(true);
+$text2->setDataType(INPUTTYPE::EMAIL);
+$form->addXmlnukeObject($text2);
+$form->addXmlnukeObject(new XmlInputMemo("Memorando", "campo3", "Value"));
+$form->addXmlnukeObject(new XmlInputCheck("Checkbox", "check1", "Value"));
+$ic = new XmlInputCheck("Caption ReadOnly:", "check2", "Valor");
+$ic->setChecked(true);
+$ic->setReadOnly(true);
+$form->addXmlnukeObject($ic);
+$itb = new XmlInputTextBox("Input ReadOnly:", "campo4", "Valor");
+$itb->setReadOnly(true);
+$form->addXmlnukeObject($itb);
+$buttons = new XmlInputButtons();
+$buttons->addSubmit("Submit", "bs");
+$buttons->addReset("Reset", "br");
+$buttons->addButton("Button", "bt", "javascript:alert('ok')");
+$form->addXmlnukeObject($buttons);
+
+$block->addXmlnukeObject($form);	
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>
+		</title>
+		<body>
+			<p>
+Informações importantes sobre o processamento de requisição:
+<ul><li>Toda vez que for necessário fazer uma requisição a uma página é aconselhável NÃO utilizar o endereço real, mas sim o utilizar o endereçamento do XMLNuke. Por exemplo:
+<ul><li>Para chamar um módulo module:sample</li><li>Para chamar um módulo e definir um argumento module:sample?op=2</li><li>Para chamar uma página estática engine:xmlnuke?xml=home</li><li>Para chamar o módulo de adminstração admin:engine</li><li>Para chamar um módulode administração: admin:managexml</li></ul></li><li>Todo objeto input de edição pode ficar “Somente Leitura”, ou seja, mudando um único parâmetro, o objeto ficará visualmente em modo somente leitura. Mesmo assim, caso o usuário submeta a requisição o valor será enviado.</li><li>O XmlNuke no momento de gerar o código HTML é capaz de fazer validações JavaScript para determinar se o campo é obrigatório ou se o tipo de dado digitado corresponde ao tipo de dado solicitado. Por exemplo: EMAIL, DATA, NUMERO, TEXTO, etc.(Ver o enum INPUTTYPE)</li></ul></p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Processando as requisições</title>
+		<body>
+			<p>Para obter um valor que foi postado pelo formulário é necessário utilizar o método ContextValue da classe Context. O valor retornado SEMPRE será do tipo String. Como dica para tornar mais fácil o desenvolvimento do módulo, sugerimos que as opções sejam tratadas em funções ao invés de todas as funcionalidades estarem em um método do CreatePage. Essa é uma boa prática de programação no XMLNuke e recomendamos fortemente o seu uso. 
+         </p>
+			<p>
+				<code information="CSharp"><![CDATA[
+int opcao;
+try
+{
+   opcao = Convert.ToInt32(this._context.ContextValue("op"));
+}
+catch
+{
+   opcao = 0;
+}
+
+switch (opcao)
+{
+   case 1:
+   {
+      this.Opcao1(xmlnukeDoc);
+      break;
+   }
+   case 2:
+   {
+      this.Opcao2(xmlnukeDoc);
+      break;
+   }
+   default:
+   {
+      this.OpcaoDefault(xmlnukeDoc);
+      break;
+   }
+}
+]]></code>
+			</p>
+			<p>
+				<code information="PHP"><![CDATA[
+$opcao = $this->_context->ContextValue("op");
+switch ($opcao)
+{
+   case 1:
+   {
+	$this->Opcao1($xmlnukeDoc);
+	break;
+   }
+   case 2:
+   {
+	$this->Opcao2($xmlnukeDoc);
+	break;
+   }
+   default:
+   {
+	$this->OpcaoDefault($xmlnukeDoc);
+	break;
+   }
+}
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+</page>

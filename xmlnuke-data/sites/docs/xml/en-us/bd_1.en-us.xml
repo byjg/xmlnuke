@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Configuring the Connection to the Database</title>
+		<abstract>How XMLNuke connects to the database and how to configure the access connection.</abstract>
+		<created>20/9/2005 00:39:01</created>
+		<modified>Sun Sep 14 2008 12:38:53</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>bdref</groupkeyword>
+		<revision>$Revision: 1.1 $</revision>
+	</meta>
+	<blockcenter>
+		<title>Data Repository - DBDataSet</title>
+		<body>
+			<p>XMLNuke also allows programmers to read and store information through a relational Database. The class used for this is the DBDataSet and DBIterator. The main difference is that because XMLNuke works with XML, every access to the database is understood, by both the framework and the programmer, as an access to an XML file. Thus, manipulating an AnyDataSet document or a connection through a DBDataSet is done in a way that is both similar and transparent to the user.
+</p>
+			<p>
+Every process then has the following steps: 
+<ol>
+					<li>Configure the connection to the Database</li>
+					<li>Use a DBDataSet to run a query</li>
+					<li>Iterate the query through the DBIterator</li></ol>
+The following topics will define how to connect to the Database with XMLNuke. 
+</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Defining the configuration of the database</title>
+		<body>
+			<p>
+The configuration file should be called _db.anydata.xml and should be located in the AnyDataSet folder of the site or in the SHARED folder of XMLNuke. Below is an example of a configuration file: 
+         </p>
+			<p>
+				<code information="XML"><![CDATA[
+<anydataset>
+	<row>
+		<field name="dbname">exemple1</field>
+		<field name="dbtype">ODBC</field>
+		<field name="dbconnectionstring">
+			Driver={MySQL ODBC 3.51 Driver};
+			Server=ipservidor;
+			UID=user;
+			PWD=password;Database=dbname
+		</field>
+	</row>
+	<row>
+		<field name="dbname">exemple2</field>
+		<field name="dbtype">ODBC</field>
+		<field name="dbconnectionstring">DSN=dsnname;</field>
+	</row>
+</anydataset>
+]]></code>
+			</p>
+			<p>
+It's important to note that each ROW line contains the information required to connect to a DATABASE. Thus, in the example, there are two configurations to access the database, which are called example1 and example2.
+         </p>
+			<p>
+Below is the explanation for each field: 
+<ul>
+					<li>
+						<b>dbname</b>: Contains the NAME of the connection for XMLNuke. The programmer ONLY needs to know the dbname to establish the connection.</li>
+					<li>
+						<b>dbtype</b>: The type of connection and/or database. See details in the following topic specific for each database and engine.</li>
+					<li>
+						<b>dbconnectionstring</b>: The connection String according to dbtype</li></ul></p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Defining a connection for CSharp</title>
+		<body>
+			<p>
+Since version 3.1 of Xmlnuke the system is using the class DbProviderFactories to detect what is the class most appropriate to connect to database. All other mechanisms for connecting existing before version 3.1 no longer exist. With this mechanism in the connection you must install the NET provider of database and then set the connection string through the tool of administration "DB Connection Manager". You can also configure the setting appropriate values in the XML _db.anydata.xml according to the values in the file "machine.config" of the client. See example:</p>
+<p>
+<code information="'machine.config' File"><![CDATA[
+...
+<system.data>
+  <DbProviderFactories>
+    <add name="SqlClient Data Provider"    invariant="System.Data.SqlClient"    
+	 description=".Net Framework Data Provider for SqlServer" 
+	 type="System.Data.SqlClient.SqlClientFactory, System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
+  </DbProviderFactories>
+</system.data>
+...
+]]></code>
+</p>
+<p>
+<code information="Configuring the connection in Xmlnuke"><![CDATA[
+<anydataset>
+	<row>
+		<field name="dbname">your_connection_name</field>
+		<field name="dbtype">System.Data.SqlClient</field>
+		<field name="dbconnectionstring">Data Source=server; Database=database; User id=user; Password=pass</field>
+	</row>
+</anydataset>
+]]></code>
+</p>
+<p>
+	Note that the "System.Data.SqlClient" which is assigned to the property <b>dbtype</b> is the value defined in the attribute "invariant" in the node DbProviderFactories.
+</p>
+      <p>Below are listed some of the possible values of "invariant":
+          <table style="border: 1px solid #ddd;">
+            <tr style="background-color: silver; text-weight: bold">
+              <td>
+                <b>DbType</b>
+              </td>
+              <td>
+                <b>Database</b>
+              </td>
+              <td>
+                <b>Provider</b>
+              </td>
+            </tr>
+
+            <tr style="">
+              <td>
+                <b>System.Data.OleDb</b>
+              </td>
+              <td>
+                Generic providers based on OleDb
+              </td>
+              <td>
+                System.Data.OleDb.OleDbFactory. Native provider. Not tunned for specific databases.
+              </td>
+            </tr>
+            <tr style="">
+              <td>
+                <b>System.Data.Odbc</b>
+              </td>
+              <td>
+                Generic providers based on ODBC
+              </td>
+              <td>
+                System.Data.Odbc.OdbcFactory. Native Provider. Not tunned for specific databases.
+              </td>
+            </tr>
+            <tr style="">
+              <td>
+                <b>System.Data.SqlClient</b>
+              </td>
+              <td>
+                Microsoft SQL Server. All versions.
+              </td>
+              <td>
+                System.Data.SqlClient.SqlClientFactory. Native Provider.
+              </td>
+            </tr>
+            <tr style="">
+              <td>
+                <b>MySql.Data.MySqlClient</b>
+              </td>
+              <td>
+                MySQL Server 4.x e 5.x
+              </td>
+              <td>
+                MySql.Data.MySqlClient.MySqlClientFactory. Official MySQL connector v5.2. Download <a href="http://dev.mysql.com/downloads/connector/net/5.2.html">here</a>.
+              </td>
+            </tr>
+            <tr style="">
+              <td>
+                <b>System.Data.OracleClient</b>
+              </td>
+              <td>
+                Oracle Database Server 8, 9, 10 and 11.
+              </td>
+              <td>
+                System.Data.OracleClient.OracleClientFactory. Official Oracle connector (ODPNET). Download <a href="http://www.oracle.com/technology/tech/windows/odpnet/index.html">here</a>.
+              </td>
+            </tr>
+            <tr style="">
+              <td>
+                <b>Mono.Data.Sqlite</b>
+              </td>
+              <td>
+                SQLite 3.0. Mono.
+              </td>
+              <td>
+                Mono.Data.Sqlite.SqliteFactory. Native in Mono installations. 
+              </td>
+            </tr>
+            <tr style="">
+              <td>
+                <b>System.Data.SQLite</b>
+              </td>
+              <td>
+                SQLite 3.0. Windows.
+              </td>
+              <td>
+                System.Data.SQLite.SQLiteFactory. Download <a href="http://sqlite.phxsoftware.com/">here</a> the latest version.
+              </td>
+            </tr>
+            <tr style="">
+              <td>
+                <b>Npgsql</b>
+              </td>
+              <td>
+                PostGres SQL. Several versions.
+              </td>
+              <td>
+                Npgsql.NpgsqlFactory . Download <a href="http://pgfoundry.org/projects/npgsql">here</a>.
+              </td>
+            </tr>
+            <tr style="">
+              <td>
+                <b>FirebirdSql.Data.FirebirdClient</b>
+              </td>
+              <td>
+                Firebird and Interbase
+              </td>
+              <td>
+                FirebirdSql.Data.FirebirdClient.FirebirdClientFactory. Official Firebird Provider. Download <a href="http://sourceforge.net/project/showfiles.php?group_id=9028&amp;package_id=62107">here</a>.
+              </td>
+            </tr>
+          </table>
+      </p>
+<p>
+Important Note: The provider of connection to the database must be registered in the GAC.
+</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Defining the connection for PHP</title>
+		<body>
+			<p>XMLNuke PHP uses native access from PHP5 to connect to the database. One of the advantages of using the PDO is the fact that it is native to the PHP language. It also offers the standardization for accessing the database. XMLNuke PHP has two ways of defining a connection to the database: 
+
+</p>
+			<p>
+				<b>dbtype=PDODRIVER</b>
+			</p>
+			<p>
+For this method, the DBTYPE should be configured with the NAME of the driver on PHP (see table below). The dbconnectionstring field should then be configured to: 
+</p>
+			<p>
+server_name;user;password;database
+</p>
+      <p>
+        <code information="XML for Connection to PHP5 - Driver"><![CDATA[
+<anydataset>
+	<row>
+		<field name="dbname">exemple</field>
+		<field name="dbtype">mysql</field>
+		<field name="dbconnectionstring">server;username;password;datasource</field>
+	</row>
+</anydataset>
+]]></code>
+</p>
+<p>
+<b>dbtype=dsn</b>
+</p>
+<p>
+For this method, a default connection is used similar to a URL and it is the recommended default for using with XMLNuke. This method should be defined as follows: 
+</p>
+			<p>
+database://username:password@server/database
+         </p>
+			<p>
+An example of the connection can be: oci://scott:tiger@192.168.1.15/database
+</p>
+      <p>
+        <code information="XML for Connecting to PHP - DSN"><![CDATA[
+<anydataset>
+	<row>
+		<field name="dbname">exemple</field>
+		<field name="dbtype">dsn</field>
+		<field name="dbconnectionstring">oci://scott:tiger@192.168.1.15/database</field>
+	</row>
+</anydataset>
+]]></code>
+      </p>
+			<p>
+The possible configurations are:
+
+<table style="border: 1px solid #ddd;">
+					<tr style="background-color: silver">
+						<td>
+							<b>Name</b>
+						</td>
+						<td style="width: 340px;">
+							<b>Database</b>
+						</td>
+					</tr>
+					<tr style="">
+						<td>
+							<b>dblib</b>
+						</td>
+						<td style="width: 340px;">
+							FreeTDS / Microsoft SQL Server / Sybase
+						</td>
+					</tr>
+					<tr style="">
+						<td>
+							<b>firebird</b>
+						</td>
+						<td style="width: 340px;">
+							Firebird/Interbase 6
+						</td>
+					</tr>
+					<tr style="">
+						<td>
+							<b>informix</b>
+						</td>
+						<td style="width: 340px;">
+							IBM Informix Dynamic Server
+						</td>
+					</tr>
+					<tr style="">
+						<td>
+							<b>mysql</b>
+						</td>
+						<td style="width: 340px;">
+							MySQL 3.x/4.x/5.x
+						</td>
+					</tr>
+					<tr style="">
+						<td>
+							<b>oci</b>
+						</td>
+						<td style="width: 340px;">
+							Oracle Call Interface
+						</td>
+					</tr>
+					<tr style="">
+						<td>
+							<b>odbc</b>
+						</td>
+						<td style="width: 340px;">
+							ODBC v3 (IBM DB2, unixODBC and win32 ODBC)
+						</td>
+					</tr>
+					<tr style="">
+						<td>
+							<b>pgsql</b>
+						</td>
+						<td style="width: 340px;">
+							PostgreSQL
+						</td>
+					</tr>
+					<tr style="">
+						<td>
+							<b>sqlite</b>
+						</td>
+						<td style="width: 340px;">
+							SQLite 3 and SQLite 2
+						</td>
+					</tr>
+
+				</table></p>
+			<p>
+			</p>
+		</body>
+	</blockcenter>
+</page>

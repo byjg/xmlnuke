@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<xmlindex>
+	<group>
+		<id>mainmenu</id>
+		<title>Huvudmeny</title>
+		<keyword>all</keyword>
+		<page>
+			<id>home</id>
+			<title>Huvudsida</title>
+			<summary>XML Nuke Exempelsida</summary>
+		</page>
+		<page>
+			<id>firstpage</id>
+			<title>Min första sida</title>
+			<summary>Hur du skapar din första XMLNuke-sida</summary>
+		</page>
+		<page>
+			<id>dynmenu_main</id>
+			<title>Dynamiska menyer</title>
+			<summary>Hur du skapar dynamiska menyer</summary>
+		</page>
+		<page>
+			<id>forms</id>
+			<title>XMLNUke och formulär</title>
+			<summary>XMLNuke och formulär</summary>
+		</page>
+		<page>
+			<id>custommodule</id>
+			<title>Anpassade moduler</title>
+			<summary>Arbeta med anpassade moduler</summary>
+		</page>
+		<page>
+			<id>formsjs</id>
+			<title>Formulär med validering</title>
+			<summary>Demonstration av hur man kan använda formulär med validering genom att använda JavaScript.</summary>
+		</page>
+		<page>
+			<id>editlist</id>
+			<title>Redigera lista</title>
+			<summary>Hur man skapar specifika taggar - Redigera lista exempel</summary>
+		</page>
+		<page>
+			<id>calendar</id>
+			<title>Kalenderexempel</title>
+			<summary>Visar ett enkelt prov på kalenderfunktion i XMLnuke.</summary>
+		</page>
+		<page>
+			<id>email</id>
+			<title>Skicka epost</title>
+			<summary>XMLNuke-modulen för att skicka epost</summary>
+		</page>
+		<page>
+			<id>tabview</id>
+			<title>Tab View</title>
+			<summary>Hur grupp visuella kontroller i flikar</summary>
+		</page>
+		<page>
+			<id>visualedit</id>
+			<title>Visual Editor</title>
+			<summary>Redigera text och vad du ser är vad du får.</summary>
+		</page>
+		<page>
+			<id>duallist</id>
+			<title>Dual List</title>
+			<summary>Visa data i en dubbel-listan komponent.</summary>
+		</page>
+		<page>
+			<id>treeview</id>
+			<title>Treeview</title>
+			<summary>TreeView komponent.</summary>
+		</page>
+	</group>
+	<group>
+		<id>dynmenu</id>
+		<title>Dynamiska menyer</title>
+		<keyword>grpdynmenu</keyword>
+		<page>
+			<id>dynmenu_page1</id>
+			<title>Sida ett</title>
+			<summary>Dynamisk meny sida ett</summary>
+		</page>
+		<page>
+			<id>dynmenu_page2</id>
+			<title>Sida två</title>
+			<summary>Dynamisk meny sida två</summary>
+		</page>
+	</group>
+</xmlindex>

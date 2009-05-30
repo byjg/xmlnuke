@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+  <meta>
+    <title>Criando Layouts com o XMLNuke</title>
+    <abstract>Como criar layouts visuais para os documentos produzidos com o XMLNuke.</abstract>
+    <created>Wed Aug 29 2007 12:15:08</created>
+    <modified>Wed Sep 5 2007 17:32:14</modified>
+    <keyword>xmlnuke</keyword>
+    <groupkeyword>key_xsl</groupkeyword>
+  </meta>
+  <blockcenter>
+    <title>Introdução</title>
+    <body>
+<p>
+Pelo fato do XMLNuke gerar apenas documentos XML, é necessário que esses documentos sejam transformados para que o usuário possam entender. Esse processo de transformação irá gerar um documento resultante como o XHTML ou qualquer outro tipo de documento. 
+</p><p>
+O documento que transforma um XML em outro é o XSLT (eXtensible Style Sheet Transformation). Este documento contém comandos para percorrer os elementos do XML, extrair informações, aplicar alguma formatação ou transformação sobre ele. 
+</p><p>
+Ao utilizar o XMLNuke o processo de criação dos documentos XSLT é muito facilitado graças a implementação de code "snippets". Esta técnica permite que nos concentremos APENAS no que realmente queremos fazer. 
+</p><p>
+Para isso, o XMLNuke assume que uma página padrão tem o seguinte layout:
+</p><p>
+<img src="common/imgs/docs/cm2-blocos.png"/>
+</p><p>
+Composto de:
+<ul>
+<li>O design da página propriamente dita</li>
+<li>Blocos de código (à esquerda, centralizado e à direita)</li>
+<li>Menu</li>
+</ul>
+</p><p>
+O Design da página corresponde à organização visual da página e como os blocos estarão dispostos. Obviamente os blocos não necessariamente precisam estar dispostos conforme o layout da figura acima, mas serve para dar uma noção de como nos organizaremos. Se você tem conhecimentos avançados de XML e XSLT poderá criar a sua própria disposição e estrutura de documentos. Nos tópicos seguintes serão abordados como criar um documento XSLT.
+</p>
+    </body>
+  </blockcenter>
+  <blockcenter>
+    <title>Criando um documento XSLT</title>
+    <body>
+      <p>
+A estrutura de documento básica que pode ser utilizado por qualquer página ou até mesmo formato de arquivo é a seguinte:
+</p><p>
+<img src="common/imgs/docs/xsl_01.png"/>
+</p><p>
+Observe que os itens 1 e 3 serão sempre os mesmos. A personalização de seu layout HTML deverá ser feita no espaço de número 2. É importante observar que esse layout pode ser desenvolvido por qualquer ferramenta de edição visual ou não, como Dreamweaver, Homesite, etc. A única restrição é que <b>todos</b> os tags devem ser fechados, mesmo os que não precisariam em HTML. Por exemplo:
+</p><p>
+<code information="Formatação do Documento"><![CDATA[
+Tags abertos que não fecham em html devem "fechar" em XML/XSLT:
+
+<br> muda para <br />
+<img src=""> muda para <img src="" />
+<input ...> muda para <input .... />
+<hr> muda para <hr />
+]]>
+</code>
+</p><p>
+Note também que no espaço 2 e no espaço 3 existem algumas referências:
+</p><p>
+<code information="Referências aos Snippets"><![CDATA[
+<xmlnuke-menucss/>
+<xmlnuke-blockcentercss />
+<xmlnuke-blockleftcss />
+<xmlnuke-blockrightcss />
+<xmlnuke-htmlbody />
+]]>
+</code>
+</p><p>
+e assim sucessivamente. Essas tags começados por XMLNUKE fazem referências aos snippets que possuem os nomes: snippet_menucss.inc, snippet_blockcentercss, etc. 
+</p><p>
+Obs: O Snippet <b>htmlbody</b> requer que seja utilizado o snippet <b>htmlheader</b> dentro do HTML.
+</p><p>
+Esses snippets podem estar localizados em duas pastas:
+<ul>
+<li>data/shared/snippet</li>
+<li>data/sites/SEUSITE/snippet</li>
+</ul>
+Sendo que o local que está dentro do seu site tem sempre prioridade e sobrescreve qualquer definição em "data/shared". Sendo assim é aconselhável que os snippets que serão modificados sejam copiados para a pasta no seu site. 
+</p><p>
+Outra informação muito importante: Os snippets criados dentro do espaço número 2 (na figura anterior) são chamados de <b>Snippets Estruturais</b> e os snippets criados no espaço número 3 são chamados de <b>Snippets de Xml Objects</b> ou <b>Snippets de Templates</b>
+</p>
+    </body>
+  </blockcenter>
+</page>

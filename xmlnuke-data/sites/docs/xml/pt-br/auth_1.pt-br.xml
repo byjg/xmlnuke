@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Como funciona a validação de módulos seguros?</title>
+		<abstract>Como funciona o processo de validação e acesso a modulos que requerem autenticação de usuário</abstract>
+		<created>15/8/2006 14:55:41</created>
+		<modified>Sun Aug 26 2007 16:26:20</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_auth</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>O que é um módulo Seguro?</title>
+		<body>
+			<p>Um módulo seguro é aquele módulo que requer que algum tipo de autenticação seja efetuado antes de ser executado. O XMLNuke implementa um mecanismo que, se o contexto não estiver autenticado, a execução do módulo é automaticamente desviada para um módulo de Login até que o processo seja validado. </p>
+			<p>Pode ser ilustrado conforme figura abaixo:</p>
+			<p>
+				<img src="common/imgs/docs/au-modelo.png"/>
+				<ol>
+					<li>A requisição é feita ao módulo</li>
+					<li>O contexto não está autenticado, a execução é desviada para o módulo de login.</li>
+					<li>O contexto já está autenticado e a execução prossegue normalmente para o módulo</li>
+					<li>O contexto já está autenticado, mas as suas credenciais não tem privilégios de execução é gerada uma mensagem de erro</li>
+					<li>Uma vez autenticado e validado pode efetuar normalmente requisições.</li>
+				</ol>
+			</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Os elementos de Segurança no XMLNuke</title>
+		<body>
+			<p>O XMLNuke possui os seguintes elementos de segurança:
+<ul>
+					<li>Administrador: Tem acesso a IRRESTRITO A TODOS os módulos.</li>
+					<li>Site: Um usuário pode estar associado a um ou mais sites. Algumas configurações exigem que para ter acesso o usuário deve estar associado a um site.</li>
+					<li>PAPEL: Uma definição genérica, normalmente associada ao que o usuário faz. Por exemplo: EDITOR ou DESIGNER. A configuração do módulo pode obrigar o usuário pertencer um desses papeis para ter acesso. </li></ul><img src="common/imgs/docs/au-papel.png"/></p>
+			<p>
+As configurações possíveis são:
+<ul>
+					<li>OnlyAdministrator: Apenas o Administrador pode acessar.</li>
+					<li>OnlyAuthenticated: Basta o usuário autenticar a sua senha que terá acesso ao módulo.</li>
+					<li>OnlyRole: O usuário deve ter o papel informado pelo módulo</li>
+					<li>OnlySite: O usuário deve estar associado ao site atual para ter acesso ao módulo</li>
+					<li>CurrentSiteAndRole: O usuário deve ter o papel informado pelo módulo E deve estar associado ao site atual para ter acesso ao módulo</li></ul></p>
+		</body>
+	</blockcenter>
+</page>

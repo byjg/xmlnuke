@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<anydataset>
+  <row>
+    <field name="site">_all</field>
+    <field name="role">MANAGER</field>
+    <field name="role">OPERATOR</field>
+    <field name="role">EDITOR</field>
+    <field name="role">DESIGNER</field>
+  </row>
+</anydataset>

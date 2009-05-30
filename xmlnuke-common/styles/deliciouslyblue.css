@@ -1,0 +1,210 @@
+/**************** body and tag styles ****************/
+	body {
+	  margin-top: 0px;	  
+	  margin-bottom: 30px;
+	  }
+
+	#container {
+	  width: 750px;
+	  margin: 0 auto;
+	  font-family: Verdana, Arial, Helvetica, sans-serif;
+	  font-size: 11px;
+	  line-height: 1.6em;
+	  color: #666666;
+	  background-color: #FFFFFF;
+	  }
+	  
+	#container2 {
+	  width: 746px;
+	  margin: 0 auto;
+	  font-family: Verdana, Arial, Helvetica, sans-serif;
+	  font-size: 11px;
+	  line-height: 1.6em;
+	  color: #666666;
+	  background-color: #FFFFFF;
+	  border-bottom: 2px solid #2763A5;
+	  }
+		
+	h1 {
+	  color: #666666;
+	  font-size: 16px;
+	  font-family: Arial, Helvetica, sans-serif;
+	  background-color: #FFFFFF;
+	  }
+		
+	a {
+	  color: #6DA6E2;
+	  background-color: #FFFFFF;
+	  text-decoration: none;
+	  font-weight: bold;
+	  }
+
+	a:hover {
+	  background-color: #FFFFFF;
+	  color: inherit;
+	  font-weight: bold;
+	  text-decoration: underline;
+	  }
+
+/**************** images styles ****************/		
+	a img{
+	  border: none;
+	  }
+
+	img.left,img.center,img.right {
+	  padding: 4px;
+	  border: 1px solid #a0a0a0;
+	  }
+
+	img.left {
+	  float: left;
+	  margin: 0 12px 5px 0;
+	  }
+
+	img.center {
+	  display: block;
+	  margin: 0 auto 5px auto;
+	  }
+
+	img.right {
+	  float: right;
+	  margin: 0 0 5px 12px;
+	  }
+
+/**************** form styles ****************/
+	form {
+	  float:right;
+	  font-size: 9px;
+	  }
+		
+	input {
+	  background-color: #FFFFFF;
+	  color: #999999;
+	  border: 1px solid #2763A5;
+	  font-size: 11px;
+	  padding: 3px;
+	  }
+		
+	.button {
+	  padding: 2px;
+	  background-color: #6DA6E2;
+	  color: #FFFFFF;
+	  border: 1px solid #2763A5;
+	  font-size: 11px;
+	  }
+
+/**************** header styles ****************/
+	#header {
+	  width: 750px;
+	  border: 0px;
+	  padding-bottom: 10px;
+	  padding-top: 10px;
+	  clear: both;
+	  }
+	#header p { 
+	  margin-top: -20px;
+	  margin-left: 30px;
+	  color: #999999;
+	  }
+
+/**************** menu styles ****************/
+    #tabs10 {
+      float:left;
+      width:750px;
+      font-size:93%;
+	  padding-bottom: 1px;
+	  border-bottom:4px solid #2763A5;
+      line-height:normal;
+      }
+    #tabs10 ul {
+	  margin:0;
+	  padding:10px 10px 0 50px;
+	  list-style:none;
+      }
+    #tabs10 li {
+      display:inline;
+      margin:0;
+      padding:0;
+      }
+    #tabs10 a {
+      float:left;
+      background:url("../imgs/deliciouslyblue/tableft10.gif") no-repeat left top;
+      margin:0;
+      padding:0 0 0 4px;
+      text-decoration:none;
+      }
+    #tabs10 a span {
+      float:left;
+      display:block;
+      background:url("../imgs/deliciouslyblue/tabright10.gif") no-repeat right top;
+      padding:5px 15px 4px 6px;
+      color:#FFF;
+      }
+    #tabs10 a span {
+	  float:none;
+	  }
+    #tabs10 a:hover {
+      background-position:0% -42px;
+      }
+    #tabs10 a:hover span {
+      background-position:100% -42px;
+      }
+
+/**************** content styles ****************/
+	#content {
+	  width: 520px;
+	  padding-left: 10px;
+	  padding-right: 10px;
+	  padding-top: 10px;
+	  float: left;
+	  }
+		
+	#content p {
+	  padding-bottom: 10px;
+	  }
+	  
+		
+/**************** sidebar styles ****************/
+	#sidebar {
+	  width: 175px;
+	  padding-left: 21px;
+	  padding-right: 10px;
+	  padding-top: 10px;
+	  float: right;
+	  }
+		
+	#sidebar p {
+	  padding-bottom: 10px;
+	  }
+	  
+/**************** footer styles ****************/
+	#footer {
+	  margin-top: 15px;
+	  padding-top: 0px;
+	  padding-bottom: 0px;
+	  padding-left: 2px;
+	  padding-right: 2px;
+	  clear: both;
+	  width: 742px;
+	  background-color:#2763A5;
+	  }
+		
+	#footer p {
+	  color:#FFFFFF;
+	  padding: 5px;
+	  text-align: center;
+	  }
+		
+	#footer p a {
+	  color: #FFFFFF;
+	  background-color:#2763A5;
+	  font-weight:100;
+	  border-bottom: 1px dotted #FFFFFF;
+	  }
+		
+	#footer p a:hover {
+	  color: #FFFFFF;
+	  text-decoration: none;
+	  border-top: 1px dotted #FFFFFF;
+	  border-bottom: 0px dotted #FFFFFF;
+	  }

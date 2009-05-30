@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd /usr/local/xmlnuke
+. ./create-php5-project.sh
+cd -

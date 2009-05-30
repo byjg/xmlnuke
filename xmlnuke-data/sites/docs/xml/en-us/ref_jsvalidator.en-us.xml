@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Personalized validation in JavaScript</title>
+		<abstract>How to personalize the validation form for a set of data entries.</abstract>
+		<created>Tue Nov 6 2007 1:35:09</created>
+		<modified>Wed Nov 19 2008 15:13:15</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>technicalref</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Creating your own JavaScript validation</title>
+		<body>
+			<p>XMLNuke is able to validate data entry directly in the client browser through a JavaScript code. This validation is done automatically for various types of data ? Number, Text, Date ? in addition to whether the field is required, range of values, etc. All of this is defined through the properties in the <b>XmlInputTextBox</b> object. The JavaScript generated automatically by XMLNuke runs in any browser compatible with JavaScript.</p>
+			<p>However, in some cases, it is necessary to create personalized validations that should be executed in the client's browser. For this, we should define a JavaScript:</p>
+			<p>
+				<code information="Example in CSharp"><![CDATA[
+public override IXmlnukeDocument CreatePage()
+{
+	// The XmlInputTextBox below will have a personalized JavaScript which it will run
+	// the "validacaoCustomizada" function at the moment of Submit.
+	XmlInputTextBox txt = new XmlInputTextBox("Label", "FieldName", "");
+	txt.setCustomJS("validacaoCustomizada");
+	.
+	.
+	.
+	string javascript = 
+		"
+		function validacaoCustomizada(form, obj) {
+			// form -> DOM object of the form that set off the event
+			// obj -> DOM object of the form that set off the event
+
+			return ""; // <-- If returned other than EMPTY,  
+				   //     XMLNuke understands ERROR.
+		}
+		";
+	this.defaultXmlnukeDocument.addJavaScriptSource(javascript, true);
+
+}
+]]></code>
+			</p>
+			<p>
+				<code information="Example in PHP"><![CDATA[
+public function CreatePage() 
+{
+	// The XmlInputTextBox below will have a personalized JavaScript which it will run
+	// the "validacaoCustomizada" function at the moment of Submit.
+	$txt = new XmlInputTextBox("Label", "fieldname", "");
+	$txt->setCustomJS("validacaoCustomizada");
+	.
+	.
+	.
+	$javascript = 
+		"
+		function validacaoCustomizada(form, obj) {
+			// form -> DOM object of the form that set off the event
+			// obj -> DOM object of the form that set off the event
+
+			return ""; // <-- If returned other than EMPTY,  
+				   //     XMLNuke understands ERROR.
+		}
+		";
+	$this->defaultXmlnukeDocument->addJavaScriptSource($javascript, true);
+
+}
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+</page>

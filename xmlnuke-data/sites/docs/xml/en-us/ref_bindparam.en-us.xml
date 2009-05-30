@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Automatically defining the values of Properties.</title>
+		<abstract>Automatically defining the values of Properties.</abstract>
+		<created>Tue Nov 6 2007 1:40:57</created>
+		<modified>Wed Nov 19 2008 15:29:57</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>technicalref</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Automatically defining the values of Properties</title>
+		<body>
+			<p>With XMLNuke, one or more properties of a module may be automatically attributed to values that were sent using GET or POST. This means that any box of text or parameter sent through a URL may be attributed directly to a property of the module.</p>
+			<p>The following steps must be following to do this: 
+<ol>
+<li>1Indicate in the beginning of CreatePage() or within Setup() that you want to automatically attribute the parameters with bindParameters().</li>
+<li>1Create a property within the form.</li>
+</ol></p>
+			<p>
+In the example below, the system will automatically define the value of the "Test" property if it is sent through a form or a parameter in the URL.
+</p>
+			<p>
+				<code information="Example in CSharp"><![CDATA[
+public override IXmlnukeDocument CreatePage()
+{
+	// Call this method within SETUP() or in the beginning of CREATEPAGE()
+	// If this method is not executed the events will not be set off.
+	this.bindParameters();
+	.
+	.
+	.
+}
+.
+.
+.
+/// <summary>
+/// Define a property
+/// </summary>
+protected string _test;
+
+public string Test
+{
+	get { return this._test; }
+	set { this._test = value; }
+}
+
+]]></code>
+			</p>
+			<p>
+				<code information="Example in PHP"><![CDATA[
+public function CreatePage() 
+{
+	// Call this method within SETUP() or in the beginning of CREATEPAGE()
+	// If this method is not executed the events will not be set off.
+	$this->bindParameters();
+	.
+	.
+	.
+}
+.
+.
+.
+// Define a test property.
+// The getter and setter methods must be defined.
+
+/**
+@var string $_test
+*/
+protected $_test;
+
+public function setTest($value)
+{
+	$this->_test = $value;
+}
+public function getTest()
+{
+	return $this->_test;
+}
+
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+</page>

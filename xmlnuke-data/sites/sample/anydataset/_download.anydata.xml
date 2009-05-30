@@ -1,0 +1,21 @@
+<anydataset>
+  <row>
+    <field name="TYPE">CATEGORY</field>
+    <field name="cat_id">main</field>
+    <field name="name">Main Category</field>
+    <field name="name_pt-br">Categoria Principal</field>
+    <field name="description">Description of main category. Info about programs listed in this category.</field>
+    <field name="description_pt-br">Descrição da Categoria Principal. Informações sobre os programas listados nessa categoria</field>
+  </row>
+  <row>
+    <field name="TYPE">FILE</field>
+    <field name="cat_id">main</field>
+    <field name="file_id">arq1</field>
+    <field name="name">File name</field>
+    <field name="name_pt-br">Nome do arquivo</field>
+    <field name="description">Informations about this file, contents, etc.</field>
+    <field name="description_pt-br">Informações sobre o arquivo, conteúdo, etc.</field>
+    <field name="url">http://url.com/</field>
+    <field name="seemore">engine:xmlnuke?xml=more</field>
+  </row>
+</anydataset>

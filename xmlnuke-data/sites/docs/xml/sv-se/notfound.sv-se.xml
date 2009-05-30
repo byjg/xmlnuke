@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Página não encontrada / Page Not Found / Sidan hittades inte</title>
+		<abstract>Página não encontrada / Page Not Found / Sidan hittades inte</abstract>
+		<created>01/06/02 19:24:12</created>
+		<modified>01/06/02 19:24:12</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword />
+		<keyword>xmlnuke</keyword>
+	</meta>
+	<blockcenter>
+		<title>Page Not Found</title>
+		<body>
+			<p>The Requested Page "[param:xml]" doesn't exists or doesn't have an english version</p>
+			<p>Try access this page in another language: [param:languageselector]</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Página não encontrada</title>
+		<body>
+			<p>A página "[param:xml]" solicitada não existe ou não possui uma versão para o português. </p>
+			<p>Tente acessar essa página em outra linguagem: [param:languageselector]</p>
+		</body>
+	</blockcenter>	
+	<blockcenter>
+		<title>Sidan hittades inte</title>
+		<body>
+			<p>Den efterfrågade sidan "[param:xml]" existerar inte eller har inte en svensk version </p>
+			<p>Prova att gå till sidan på ett annat språk: [param:languageselector]</p>
+		</body>
+	</blockcenter>
+</page>

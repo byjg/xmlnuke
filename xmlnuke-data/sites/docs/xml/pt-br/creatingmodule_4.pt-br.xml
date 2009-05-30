@@ -1,0 +1,251 @@
+﻿<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>XmlEditList</title>
+		<abstract>Aprenda como usar o XmlEditList</abstract>
+		<created>19/9/2005 15:43:48</created>
+		<modified>19/9/2005 16:08:05</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>createmodules</groupkeyword>
+		<revision>$Revision: 1.1 $</revision>
+	</meta>
+	<blockcenter>
+		<title>Usando o XmlEditList</title>
+		<body>
+			<p>O Editlist é um XmlObject que possibilita ao usuário montar uma lista de valores e selecionar um ou mais deles para executar alguma ação. Internamente o objeto possui paginação.
+         </p>
+			<p>
+O XmlEditList recebe um IIterator como fonte de dados. Sendo assim, praticamente qualquer repositório de dados pode ser utilizado, seja um AnyDataSet, um DBDataSet ou qualquer outro que venha a ser desenvolvido pelo usuário. 
+
+         </p>
+			<p>
+				<img src="common/imgs/docs/cm4-editlist.png" />
+			</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Criando um XmlEditList      </title>
+		<body>
+			<p>Para trabalhar com o XmlEditList é necessário fornecer a ele um dicionário de dados informando quais os campos do repositório de dados ficarão visíveis ao usuário na listagem.
+
+         </p>
+			<p>Dessa forma, um código básico para criar um XmlEditList seria:
+         </p>
+			<p>
+				<code information="CSharp"><![CDATA[
+XmlEditList editList = 
+   new XmlEditList(
+      this._context, 
+      "Livro de Visitas", 
+      "module:sample", 
+      true, true, true, true);
+]]></code>
+			</p>
+			<p>
+				<code information="PHP"><![CDATA[
+$editList = 
+   new XmlEditList(
+      $this->_context, 
+      "Livro de Visitas", 
+      "module:sample", 
+      true, true, true, true);
+]]></code>
+			</p>
+			<p>No exemplo acima: module:sample corresponde ao módulo que processará a requisição do XmlEditList. Os parâmetros seguintes indicam quais botões ficarão visíveis ao usuário na seguinte ordem: NOVO, VISUALIZAR, EDITAR e APAGAR.
+
+         </p>
+			<p>Após criar o objeto é necessário definir o dicionário de dados que o XmlEditList utilizará. É muito importante que o PRIMEIRO campo seja o campo chave. Esse campo não ficará visível na listagem, entretando, ao selecionar um registro o valor desse campo será submetido à página seguinte.
+
+         </p>
+			<p>
+				<code information="CSharp"><![CDATA[
+EditListField field;
+			
+field = new EditListField(true);
+field.fieldData = "frommail"; 
+editList.addEditListField(field);
+			
+field = new EditListField(true);
+field.fieldData = "fromname";
+field.editlistName = "Nome";
+			
+field = new EditListField(true);
+field.fieldData = "frommail";
+field.editlistName = "Email";
+editList.addEditListField(field);
+]]></code>
+			</p>
+			<p>
+				<code information="CSharp"><![CDATA[
+$field = new EditListField();
+$field->fieldData = "frommail"; 
+$editList->addEditListField($field);
+
+$field = new EditListField();
+$field->fieldData = "fromname";
+$field->editlistName = "Nome";
+$editList->addEditListField($field);
+
+$field = new EditListField();
+$field->fieldData = "frommail";
+$field->editlistName = "Email";
+$editList->addEditListField($field);
+]]></code>
+			</p>
+			<p>Também é necessário informar qual será a fonte de dados. Para isso é fundamental que um objeto do tipo IIterator seja informado. Ver: Repositório de Dados (Any ou DB). Esse repositório de dados deve possuir os campos listados no repositório. 
+
+         </p>
+			<p>
+				<code information="CSharp"><![CDATA[
+editList.setDataSource(it);
+]]></code>
+			</p>
+			<p>
+				<code information="PHP"><![CDATA[
+$editList->setDataSource($it);
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Processando as requisições</title>
+		<body>
+			<p>Uma vez que o XmlEditList foi criado e adicionado a um XmlBlockCollection ele estará funcionando e com os botões submetendo informações para a página indicada no seu construtor. 
+         </p>
+			<p>
+O XmlEditList submete apenas 2 informações para a página que irá processar:
+<ul><li>Campo ACAO que conterá a ação que foi pressiona pelo usuário. As ações padrões são: new, view, delete e edit. Para facilitar o processo, a classe BaseModule criou uma propriedade chamada _action que conterá a ação selecionada pelo usuário.</li><li>Campo VALUEID que conterá o valor do primeiro campo que foi definido no XmlEditList</li></ul></p>
+			<p>
+				<code information="CSharp"><![CDATA[
+XmlParagraphCollection para2 = new XmlParagraphCollection();
+para2.addXmlnukeObject(new XmlnukeText("Ação: ", true, false, false));
+para2.addXmlnukeObject(new XmlnukeText(this._action));
+para2.addXmlnukeObject(br);
+para2.addXmlnukeObject(new XmlnukeText("Valor: ", true, false, false));
+para2.addXmlnukeObject(new XmlnukeText(this._context.ContextValue("valueid")));
+			
+if (this._action != "")
+{
+	block.addXmlnukeObject(para2);
+}
+]]></code>
+			</p>
+			<p>
+				<code information="PHP"><![CDATA[
+$para2 = new XmlParagraphCollection();
+$para2->addXmlnukeObject(new XmlnukeText("Ação selecionada: ", true, false, false));
+$para2->addXmlnukeObject(new XmlnukeText($this->_action));
+$para2->addXmlnukeObject($br);
+$para2->addXmlnukeObject(new XmlnukeText("Valor selecionado: ", true, false, false));
+$para2->addXmlnukeObject(new XmlnukeText($this->_context->ContextValue("valueid")));
+		
+if ($this->_action != "")
+{
+	$block->addXmlnukeObject($para2);
+}
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Personalizando o XmlEditList      </title>
+		<body>
+			<p>Além das opções padrões é possível acrescentar outras opções ao XmlEditList. 
+         </p>
+			<p>
+				<b>Botões Personalizados</b>
+			</p>
+			<p>Essa opção é útil quando as opções padrões: NOVO, EDITAR, VISUALIZAR e APAGAR não atendem ao usuário. Sendo assim, é necessário criar um botão customizado.
+        </p>
+			<p>
+				<code information="PHP"><![CDATA[
+CustomButtons cb = new CustomButtons();
+cb.action = "acaocustomizada";
+cb.enabled = true;
+cb.alternateText = "Texto alternativo da ação";
+cb.url = this._context.bindModuleUrl("sample") + "&amp;op=3";
+cb.icon = "common/editlist/ic_custom.gif";
+editList.setCustomButton(0, cb);
+]]></code>
+			</p>
+			<p>
+				<code information="PHP"><![CDATA[
+$cb = new CustomButtons();
+$cb->action = "acaocustomizada";
+$cb->enabled = true;
+$cb->alternateText = "Texto alternativo da ação";
+$cb->url = $this->_context->bindModuleUrl("sample") . "&amp;op=3";
+$cb->icon = "common/editlist/ic_custom.gif";
+$editList->setCustomButton($cb);
+]]></code>
+			</p>
+			<p>
+Na última linha, o botão customizado é adicionado a posição ZERO da listagem de botões. 
+         </p>
+			<p>
+				<b>Paginação</b>
+			</p>
+			<p>O EditList também implementa nativamente a paginação dos itens listados. Para que essa opção funcione e a barra de navegação seja adicionada é necessário adicionar as seguintes linhas ao código:
+
+         </p>
+			<p>
+				<img src="common/imgs/docs/cm4-navigator.png" />
+			</p>
+			<p>
+				<code information="CShar"><![CDATA[
+editList.setPageSize(3, 0);
+editList.setEnablePage(true);
+]]></code>
+			</p>
+			<p>
+				<code information="PHP"><![CDATA[
+$editList->setPageSize(3, 0);
+$editList->setEnablePage(true);
+]]></code>
+			</p>
+			<p>
+O número ZERO na primeira linha indica que o EditList deverá gerenciar a páginação. Caso um número diferente de zero seja passado como parâmetro, o EditList irá sempre para a página indicada. 
+         </p>
+			<p>
+				<b>CheckBox</b>
+			</p>
+			<p>
+O método padrão de envio do EditList é através de RadioButtons que permite a seleção de apenas uma opção. Entretanto, quando é necessário selecionar mais de uma opção é necessário mudar a configuração para o CheckBox.
+         </p>
+			<p>
+				<code information="CSharp"><![CDATA[
+editList.setSelectRecordType(SelectType.CHECKBOX);
+]]></code>
+			</p>
+			<p>
+				<code information="PHP"><![CDATA[
+$editList->setSelectRecordType(SelectType::CHECKBOX);
+]]></code>
+			</p>
+			<p>
+O XmlEditList continuará passando apenas um argumento valueid, entretanto o seu valor será separado por “_“
+         </p>
+			<p>
+				<b>Parâmetros adicionais à requisição</b>
+			</p>
+			<p>
+Como o XmlEditList passa apenas a ação e o valueid, muitas vezes é necessário que um parâmetro seja adicionado ao EditList para que o mesmo poste esse valor juntamente com os valores padrões. 
+
+         </p>
+			<p>
+Sendo assim:
+
+         </p>
+			<p>
+				<code information="CSharp"><![CDATA[
+editList.addParameter("op", "3");
+]]></code>
+			</p>
+			<p>
+				<code information="PHP"><![CDATA[
+$editList->addParameter("op", "3");
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+</page>

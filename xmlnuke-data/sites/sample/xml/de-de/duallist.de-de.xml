@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Duale Liste</title>
+		<abstract>Gruppieren Sie Daten in einer dualen Liste.</abstract>
+		<created>24/4/2008 23:55:47</created>
+		<modified>4/25/2008 12:14:30 AM</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>all</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Duale Liste</title>
+		<body>
+			<p>Diese Liste ermöglicht die Auswahl von Objekten. Die ausgewählten Objekte befinden sich auf der rechten Seite und die nicht ausgewählten bleiben links.</p>
+			<p>
+				<code information="XML-Code"><![CDATA[
+<editform title="Beispiel zur dualen Liste">
+   <duallist>
+      <leftlist caption="Nicht ausgewählt" size="6" name="left">
+         <item id="1" text="Eins" />
+         <item id="3" text="Drei" />
+         <item id="4" text="Vier" />
+      </leftlist>
+      <rightlist caption="Ausgewählt" size="6" name="right">
+         <item id="2" text="Zwei" />
+      </rightlist>
+      <button type="text" all="true" from="left" to="right" value="Alle nach rechts" />
+      <button type="text" all="false" from="left" to="right" value="Nach rechts" />
+      <button type="text" all="false" from="right" to="left" value="Nach links" />
+      <button type="text" all="true" from="right" to="left" value="Alle nach links" />
+    </duallist>
+</editform>
+]]></code>
+			</p>
+			<p>
+				<editform title="Beispiel zur dualen Liste">
+					<duallist>
+						<leftlist caption="Nicht ausgewählt" size="6" name="left">
+							<item id="1" text="Eins" />
+							<item id="3" text="Drei" />
+							<item id="4" text="Vier" />
+						</leftlist>
+						<rightlist caption="Ausgewählt" size="6" name="right">
+							<item id="2" text="Zwei" />
+						</rightlist>
+						<button type="text" all="true" from="left" to="right" value="Alle nach rechts" />
+						<button type="text" all="false" from="left" to="right" value="Nach rechts" />
+						<button type="text" all="false" from="right" to="left" value="Nach links" />
+						<button type="text" all="true" from="right" to="left" value="Alle nach links" />
+					</duallist>
+				</editform>
+			</p>
+		</body>
+	</blockcenter>
+</page>

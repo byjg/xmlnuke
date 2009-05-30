@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Criando Usuários e Associando Papéis</title>
+		<abstract>Como criar um usuário e associar um papel a ele. Detalhes internos de como um usuário é armazenado e como customizar o seu repositório de usuários.</abstract>
+		<created>15/8/2006 15:36:03</created>
+		<modified>Wed Feb 4 2009 0:25:28</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_auth</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Como criar um usuário?</title>
+		<body>
+			<p>A maneira fácil de criar um usuário é através da ferramenta de administração do XMLNuke. Na ferramenta poderá ser escolhido quais papéis se desejam associar a um determinado usuário.No momento em que um usuário é criado ele não possui nenhum papel associado, e portanto, praticamente não terá acesso a nenhum módulo. </p>
+			<p>Os papéis que podem ser associados estão definidos no arquivo "roles.anydata.xml". Esse arquivo tem o objetivo de facilitar o processo de associação e evitar erros de digitação. </p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Um usuário por "dentro"</title>
+		<body>
+			<p>O usuários, por padrão, são armazenados no arquivo "users.anydata.xml", conforme exemplo abaixo:
+<code information="Arquivo users.anydata.xml"><![CDATA[
+ <row>
+    <field name="name">Fulano da Silva</field>
+    <field name="username">eu</field>
+    <field name="email">eu@email.com</field>
+    <field name="password">45FCB22C7BD17402852C58D54F922D85A1F57AD0</field>
+    <field name="admin" />
+    <field name="created">2006-07-09 18:21:40</field>
+    <field name="roles">EDITOR</field>
+    <field name="roles">DESIGNER</field>
+    <field name="sites">sample</field>
+  </row>
+]]></code></p>
+			<p>
+		Mas é possível, ao invés de salvar no arquivo texto (AnydataSet), salvar em um banco de dados relacional. 
+		É necessário especificar na configuração do XMLNuke: "<b>xmlnuke.USERSDATABASE</b>" qual é o BANCO DE DADOS que irá armazenar os dados dos usuários. 
+		A estrutura das tabelas deve ser a seguinte: 
+
+<code information="SQL Para definição do usuário - MySQL "><![CDATA[
+-- ------------------------------
+create table xmlnuke_users
+(
+    userid integer identity not null,
+    name varchar(50),
+    email varchar(120),
+    username varchar(15) not null,
+    password char(40) not null,
+    created datetime,
+    admin char(3), 
+    
+   	constraint pk_users primary key (userid)
+) 
+TYPE = InnoDB;
+
+-- ------------------------------
+create table xmlnuke_custom
+(
+   customid integer identity not null,
+   name varchar(20),
+   value varchar(100),
+   userid integer not null,
+   
+   constraint pk_custom primary key (customid),
+   
+   constraint fk_custom_user foreign key (userid) references xmlnuke_users (userid),
+) 
+TYPE = InnoDB;
+
+-- ------------------------------
+create table xmlnuke_roles
+(
+   roleid integer identity not null,
+   site varchar(50),
+   role varchar(100),
+   
+   constraint pk_roles primary key (roleid)
+) 
+TYPE = InnoDB;
+
+-- New user 
+-- username: admin
+-- password: pwd)
+insert into xmlnuke_users (name, email, username, password, created, admin) 
+values 
+   ('Administrator', 'your@email.com', 'admin', '37FA265330AD83EAA879EFB1E2DB6380896CF639', now(), 'yes' );
+
+]]></code></p>
+	
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Usando a própria estrutura de banco</title>
+		<body>
+			<p>O XMLNuke também possibilita que o usuário utilize a sua própria estrutura de banco de dados para armazenar os usuários e
+			senhas. É importante que essa estrutura tenha pelo menos:
+			<ul>
+				<li>Os mesmos campos que o Xmlnuke utiliza (não precisa ter os mesmos nomes)</li>
+				<li>Uma estrutura para a tabela CUSTOM e ROLES.</li>
+			</ul>
+			Após isso é necessário herdar a classe <b>UsersDBDataSet</b> e sobrescrever o método <b>configTableNames()</b>:
+			</p>
+<p>
+<code information="CSharp"><![CDATA[
+virtual protected void configTableNames()
+{
+	this._UserTable = new UserTable();	
+	this._UserTable.Table = "xmlnuke_users";
+	this._UserTable.Id = "userid";	
+	this._UserTable.Name = "name";
+	this._UserTable.Email= "email";	
+	this._UserTable.Username = "username";
+	this._UserTable.Password = "password";
+	this._UserTable.Created = "created";
+	this._UserTable.Admin = "admin";
+			
+	this._CustomTable = new CustomTable();	
+	this._CustomTable.Table = "xmlnuke_custom";	
+	this._CustomTable.Id = "customid";	
+	this._CustomTable.Name = "name";
+	this._CustomTable.Value = "value";
+	// Table "CUSTOM" must have userid Foreign Key.
+
+	this._RolesTable = new RolesTable();	
+	this._RolesTable.Table = "xmlnuke_roles";	
+	this._RolesTable.Site = "site";
+	this._RolesTable.Role = "role";
+}
+]]></code></p>
+
+<p>
+<code information="PHP"><![CDATA[
+protected function configTableNames()
+{
+	$this->_UserTable = new UserTable();	
+	$this->_UserTable->Table = "xmlnuke_users";
+	$this->_UserTable->Id = "userid";	
+	$this->_UserTable->Name = "name";
+	$this->_UserTable->Email= "email";	
+	$this->_UserTable->Username = "username";
+	$this->_UserTable->Password = "password";
+	$this->_UserTable->Created = "created";
+	$this->_UserTable->Admin = "admin";
+			
+	$this->_CustomTable = new CustomTable();	
+	$this->_CustomTable->Table = "xmlnuke_custom";	
+	$this->_CustomTable->Id = "customid";	
+	$this->_CustomTable->Name = "name";
+	$this->_CustomTable->Value = "value";
+	// Table "CUSTOM" must have userid Foreign Key.
+
+	$this->_RolesTable = new RolesTable();	
+	$this->_RolesTable->Table = "xmlnuke_roles";	
+	$this->_RolesTable->Site = "site";
+	$this->_RolesTable->Role = "role";
+}
+]]></code></p>
+		<p>Também é necessário definir a propriedade "xmlnuke.USERSCLASS" no seu arquivo de configuração para informar o namespace completo para acessar a classe. Note: Essa instância deverá implementar a interface IUsersBase e deve possuir um construtor que receba dois parâmetros: engine.Context e o string de conexão.</p>
+
+<p>
+<code information="CSharp"><![CDATA[
+	public SuaClasse(com.xmlnuke.engine.Context context, string conn)
+	{
+		//...
+	}
+]]></code></p>
+
+<p>
+<code information="PHP"><![CDATA[
+	public function __construct($context, $conn)
+	{
+		// ... 
+	}
+]]></code></p>
+
+
+		</body>
+	</blockcenter>
+</page>

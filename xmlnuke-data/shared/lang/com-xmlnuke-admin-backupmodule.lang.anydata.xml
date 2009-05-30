@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<anydataset>
+   <row>
+      <field name="LANGUAGE">en-us</field>
+      <field name="TITLE">Backup of Projects</field>
+      <field name="HELPMODULE">Use this module to create backup and install your applications. It is a useful module to create packages to distribute to other users and other XMLNuke installations. Simple and Fast.</field>
+      <field name="MENU_PROJECTS">Project List</field>
+      <field name="MENU_BACKUP">Backup List</field>
+      <field name="MENU_HOME">Main Menu</field>
+      <field name="MODULETITLE">Application Backup Module</field> 
+      <field name="EXPLAINMODULE">The Project menu defines witch files and directories will be copied into a backup file. The backup menu install or uninstall a package previously created. </field>
+      <field name="EXPLAINMODULE_SELECT">Select an option to continue.</field>
+      <field name="BLOCK_EDITPROJECT">Editing {0}</field> 
+      <field name="FORM_EDITPROJECT">Use the form below to edit the project</field>
+      <field name="INPUT_PROJECTNAME">Project: </field>
+      <field name="INPUT_DIRECTORIES">Directory List: </field>
+      <field name="INPUT_FILES">File List: </field>
+      <field name="INPUT_SETUP">Setup Options: </field>
+      <field name="PROJECT_LIST">Existing project list</field> 
+      <field name="PROJECT_NAME">Project name</field>
+      <field name="TITLE_BACKUPLIST">Available Backups</field>
+      <field name="BACKUP_COMMANDS">Actions</field>
+      <field name="BACKUP_NAME">Backup name</field>
+      <field name="BACKUP_UNINSTALL">Uninstall</field>
+      <field name="BACKUP_INSTALL">Install</field>
+      <field name="BACKUP_DOWNLOAD">Download</field>
+      <field name="UPLOADBACKUPFILE">Backup Upload</field>
+      <field name="CAPTION_FILETOUPLOAD">File to Upload: </field>
+      <field name="BTN_CONFIRMUPLOAD">Upload File</field>
+      <field name="TITLE_FINISHUPLOAD">Upload Result</field>
+      <field name="UPLOADERROR_INVALIDFILE">Invalid file type.</field>
+      <field name="UPLOADSUCCESSFULL">File {0} sucessfull uploaded!!</field>
+      <field name="TITLE_CREATEBACKUP">Create a backup file</field>
+      <field name="BACKUPNOTCREATED">Backup not created.</field>
+      <field name="BACKUPCREATED">Backup successful created.</field>
+      <field name="TITLE_BACKUPCONTENTS">Backup contents {0}</field>
+      <field name="BTN_BACKUPINSTALL">Install "{0}" now</field>
+      <field name="TITLE_BACKUPLOGCONTENTS">Files and directories installed by {0}</field>
+      <field name="BTN_BACKUPUNINSTALL">Uninstall "{0}" now</field>
+      <field name="TITLE_INSTALLBACKUP">Backup install {0}</field>
+      <field name="BACKUP_INSTALL_ERROR">Some errors occurred during the install process.</field>
+      <field name="BACKUP_INSTALL_SUCCESS">Backup successful installed!</field>
+      <field name="TITLE_UNINSTALLBACKUP">Uninstall Backup {0}</field>
+      <field name="UNINSTALL_LOG">Uninstall log report</field>
+      <field name="CREATEPROJECTHELP1">Use the text field below to define a setup file (ex. connection string)</field>
+      <field name="CREATEPROJECTHELP2">[FileNameProcessor : Name : Location : filter=value;filter=value]</field>
+      <field name="CREATEPROJECTHELP3">field = value</field>
+      <field name="BLOCKERRORCREATEPROJECT">Error on Update</field>
+      <field name="LISTERRORCREATEPROJECT">The follow errors are found. The system didn't save your data.</field>
+      <field name="ERRORDESCCREATEPROJECT">Line '{0}' has some invalid values.</field>
+      <field name="SETUPERROR">Wrong line order in setup configuration: '{0}'.</field>
+      <field name="WRONGLINEDEF">Something is wrong when setup line '{0}'. You need have an valid AnyDataSet.</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">pt-br</field>
+      <field name="HELPMODULE">Esse módulo permite que sejam feitos Backups e instalação de suas aplicações. É um módulo útil para gerar pacotes que podem ser distribuídos para outras pessoas em outras instalações do XmlNuke de forma simples e rápida.</field>
+      <field name="MENU_PROJECTS">Lista de Projetos</field>
+      <field name="MENU_BACKUP">Lista de Backups</field>
+      <field name="MENU_HOME">Menu Inicial</field>
+      <field name="MODULETITLE">Módulo de Backup de Aplicações</field> 
+      <field name="EXPLAINMODULE">Ao utilizar a opção PROJETOS, você estará definindo QUAIS arquivos e diretórios deverão ser copiados. Na opção Backup você poderá instalar ou desinstalar um pacote que foi previamente gerado na opção Projetos.</field>
+      <field name="EXPLAINMODULE_SELECT">Selecione uma das opções ao lado para continuar</field>
+      <field name="BLOCK_EDITPROJECT">Editando {0}</field> 
+      <field name="FORM_EDITPROJECT">Utilize o formulário abaixo para editar o projeto</field>
+      <field name="INPUT_PROJECTNAME">Projeto: </field>
+      <field name="INPUT_DIRECTORIES">Lista de Diretórios: </field>
+      <field name="INPUT_FILES">Lista de Arquivos: </field>
+      <field name="INPUT_SETUP">Opções de Configuração: </field>
+      <field name="PROJECT_LIST">Lista de projetos existentes</field> 
+      <field name="PROJECT_NAME">Nome do Projeto</field>
+      <field name="TITLE_BACKUPLIST">Backups Existentes no Sistema</field>
+      <field name="BACKUP_COMMANDS">Ações</field>
+      <field name="BACKUP_NAME">Nome do Backup</field>
+      <field name="BACKUP_UNINSTALL">Desinstalar</field>
+      <field name="BACKUP_INSTALL">Instalar</field>
+      <field name="BACKUP_DOWNLOAD">Download</field>
+      <field name="UPLOADBACKUPFILE">Upload de um Backup</field>
+      <field name="CAPTION_FILETOUPLOAD">Arquivo a enviar: </field>
+      <field name="BTN_CONFIRMUPLOAD">Enviar Arquivo</field>
+      <field name="TITLE_FINISHUPLOAD">Finalização do Envio</field>
+      <field name="UPLOADERROR_INVALIDFILE">Tipo de arquivo inválido</field>
+      <field name="UPLOADSUCCESSFULL">Arquivo {0} enviado com sucesso!</field>
+      <field name="TITLE_CREATEBACKUP">Gerar um arquivo de Backup</field>
+      <field name="BACKUPNOTCREATED">Backup não foi criado.</field>
+      <field name="BACKUPCREATED">Backup criado com sucesso.</field>
+      <field name="TITLE_BACKUPCONTENTS">Conteúdo do backup {0}</field>
+      <field name="BTN_BACKUPINSTALL">Instalar "{0}" agora</field>
+      <field name="TITLE_BACKUPLOGCONTENTS">Arquivos e Diretórios instalados pelo backup {0}</field>
+      <field name="BTN_BACKUPUNINSTALL">Desinstalar "{0}" agora</field>
+      <field name="TITLE_INSTALLBACKUP">Instalação do Backup {0}</field>
+      <field name="BACKUP_INSTALL_ERROR">Ocorreram erros na instalação</field>
+      <field name="BACKUP_INSTALL_SUCCESS">Backup instalado com sucesso!</field>
+      <field name="TITLE_UNINSTALLBACKUP">Desinstalação do Backup {0}</field>
+      <field name="UNINSTALL_LOG">Relatório da desinstalação</field>
+      <field name="CREATEPROJECTHELP1">Utilize a opção abaixo para definir um arquivo de configuração (por exemplo, um string de conexão)</field>
+      <field name="CREATEPROJECTHELP2">[FileNameProcessor : Nome : Localização : filtro=valor;filtro=valor]</field>
+      <field name="CREATEPROJECTHELP3">campo = valor</field>
+      <field name="BLOCKERRORCREATEPROJECT">Erro ao atualizar projeto</field>
+      <field name="LISTERRORCREATEPROJECT">Os seguintes erros foram encontrados. Os dados não foram salvos.</field>
+      <field name="ERRORDESCCREATEPROJECT">A linha '{0}' tem alguns valores inválidos.</field>
+      <field name="SETUPERROR">Definição da ordem das linhas está errada em: '{0}'.</field>
+      <field name="WRONGLINEDEF">Algo está errado na linha '{0}'. Você precisa informar um AnyDataSet válido.</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">de-de</field>
+      <field name="TITLE">Sicherung von Projekten</field>
+      <field name="HELPMODULE">Sichern Sie Ihre Projekte und installieren Ihre Anwendungen.<br/><br/>Sie können die erstellten Pakete schnell und einfach an andere Benutzer und andere XMLNuke-Installationen weitergeben.</field>
+      <field name="MENU_PROJECTS">Projekt-Liste</field>
+      <field name="MENU_BACKUP">Sicherungs-Liste</field>
+      <field name="MENU_HOME">Hauptmenü</field>
+      <field name="MODULETITLE">Applikations-Sicherung</field> 
+      <field name="EXPLAINMODULE">Mit der Projekt-Liste legen Sie fest welche Dateien und Verzeichnisse in die Sicherungs-Datei kopiert werden sollen.<br/>In der Sicherungs-Liste installieren oder deinstallieren Sie ein zuvor erstelltes Paket.</field>
+      <field name="EXPLAINMODULE_SELECT">Wählen Sie wie Sie fortfahren möchten.</field>
+      <field name="BLOCK_EDITPROJECT">Bearbeiten: '{0}'</field> 
+      <field name="FORM_EDITPROJECT">Nutzen Sie das Formular unten um das Projekt zu bearbeiten</field>
+      <field name="INPUT_PROJECTNAME">Projekt: </field>
+      <field name="INPUT_DIRECTORIES">Verzeichnis-Liste: </field>
+      <field name="INPUT_FILES">Datei-Liste: </field>
+      <field name="INPUT_SETUP">Einstellungen: </field>
+      <field name="PROJECT_LIST">Liste der existierenden Projekte</field> 
+      <field name="PROJECT_NAME">Projekt-Name</field>
+      <field name="TITLE_BACKUPLIST">Vorhandene Sicherungen</field>
+      <field name="BACKUP_COMMANDS">Aktion</field>
+      <field name="BACKUP_NAME">Sicherungs-Name</field>
+      <field name="BACKUP_UNINSTALL">Deinstallieren</field>
+      <field name="BACKUP_INSTALL">Installieren</field>
+      <field name="BACKUP_DOWNLOAD">Herunterladen</field>
+      <field name="UPLOADBACKUPFILE">Sicherung hochladen</field>
+      <field name="CAPTION_FILETOUPLOAD">Datei zum Hochladen: </field>
+      <field name="BTN_CONFIRMUPLOAD">Datei hochladen</field>
+      <field name="TITLE_FINISHUPLOAD">Ergebnis hochladen</field>
+      <field name="UPLOADERROR_INVALIDFILE">Ungültiger Datei-Typ.</field>
+      <field name="UPLOADSUCCESSFULL">Datei '{0}' wurde erfolgreich hochgeladen!</field>
+      <field name="TITLE_CREATEBACKUP">Sicherungs-Datei erstellen</field>
+      <field name="BACKUPNOTCREATED">Die Sicherung wurde nicht erstellt.</field>
+      <field name="BACKUPCREATED">Die Sicherung wurde erfolgreich erstellt.</field>
+      <field name="TITLE_BACKUPCONTENTS">Sicherungs-Inhalt '{0}'</field>
+      <field name="BTN_BACKUPINSTALL">'{0}' jetzt installieren</field>
+      <field name="TITLE_BACKUPLOGCONTENTS">Durch '{0}' installierte Dateien und Verzeichnisse</field>
+      <field name="BTN_BACKUPUNINSTALL">'{0}' jetzt deinstallieren</field>
+      <field name="TITLE_INSTALLBACKUP">Sicherung '{0}' installieren</field>
+      <field name="BACKUP_INSTALL_ERROR">Während der Installation sind Fehler aufgetreten.</field>
+      <field name="BACKUP_INSTALL_SUCCESS">Die Sicherung wurde erfolgreich installiert!</field>
+      <field name="TITLE_UNINSTALLBACKUP">Die Sicherung '{0}' deinstallieren</field>
+      <field name="UNINSTALL_LOG">Deinstallations-Protokoll</field>
+      <field name="CREATEPROJECTHELP1">Benutzen Sie das Textfeld unten um eine Installations-Datei zu definieren (z.B. Verbindungs-String)</field>
+      <field name="CREATEPROJECTHELP2">[FileNameProcessor : Name : Location : filter=value;filter=value]</field>
+      <field name="CREATEPROJECTHELP3">feld = wert</field>
+      <field name="BLOCKERRORCREATEPROJECT">Fehler bei der Aktualisierung</field>
+      <field name="LISTERRORCREATEPROJECT">Die folgenden Fehler wurden gefunden. Das System hat Ihre Daten nicht gespeichert.</field>
+      <field name="ERRORDESCCREATEPROJECT">Zeile '{0}' enthält ungültige Werte.</field>
+      <field name="SETUPERROR">Falsche Reihenfolge der Zeilen in der Konfiguration: '{0}'.</field>
+      <field name="WRONGLINEDEF">Installation der Zeile '{0}' war nicht erfolgreich. Kein gültiges AnyDataSet.</field>
+   </row>
+</anydataset>

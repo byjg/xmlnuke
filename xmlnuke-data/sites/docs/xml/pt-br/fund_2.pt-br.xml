@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>A classe Context</title>
+		<abstract>A sua utilização e importância para o XMLNuke</abstract>
+		<created>15/8/2006 13:08:24</created>
+		<modified>15/8/2006 13:46:32</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_xmlnukeconcepts</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>A Classe Context</title>
+		<body>
+			<p>A classe Context é a classe mais utilizada em todas as aplicações baseadas no Framework XMLNuke. Ela tem o objetivo de abstrair TOTALMENTE o ambiente externo do XMLnuke.</p>
+			<p>Essa classe implementa o Design Pattern Facade e oferece um leque de funções para que o programador não precise utilizar classes e/ou funções da linguagem de programação. Com isso é criada uma camada de isolamento para as aplicações XMLNuke e também favorece que a mesma aplicação rode em QUALQUER sistema operacional. Também possibilita que o programador XMLNuke que programe em PHP possa, sem muito esforço, programar em XMLNuke / CSharp já que ele sabe que a Context que fornece o que ele precisa está implementada em qualquer versão do XMLNuke.</p>
+			<p>Funções da classe Context:
+<ul>
+					<li>Obter requisições GET e POST</li>
+					<li>Manipular Cookie</li>
+					<li>Manipular Sessão</li>
+					<li>Obter o usuário autenticado</li>
+					<li>Efetuar o Logon / Logout do Sistema</li>
+					<li>Definir os parâmetros padrões SITE, XML, XSL, etc</li>
+					<li>Obter os caminhos nos quais o XMLNuke está instalado e os caminhos para o site padrão</li>
+					<li>Diversas outras funções</li></ul></p>
+			<p>É comum que a classe Context seja passada para as funções já que ela contém diversos elementos básicos ao funcionamento do XMLNuke</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Exemplos de Utilização</title>
+		<body>
+			<p>Nos módulos de usuário a classe Context é definida como uma propriedade do módulo. A função mais básica da classe Context é obter um parâmetro que foi passado através do método GET ou método POST.</p>
+			<p>Por exemplo, a seguinte requisição: http://localhost/xmlnuke.php?param=9, para obter o valor de "param" que foi passado é necessário utilizar os seguintes comandos:
+<code information="CSharp">
+string result = this._context.ContextValue("param");
+</code><code information="PHP">
+$result = $this-&gt;_context-&gt;ContextValue("param");
+</code></p>
+			<p>
+			</p>
+		</body>
+	</blockcenter>
+</page>

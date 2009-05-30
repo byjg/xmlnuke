@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>XML Nuke Sample Main Page</title>
+		<abstract>XML Nuke Sample Main Page</abstract>
+		<created>3/21/2003 3:55:37 PM</created>
+		<modified>08/06/2005 15:55:37</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword>
+		</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>XMLNuke exempelwebbplats</title>
+		<body>
+			<p>Det här är en exempel webbplats. Här kan du se XMLNuke i funktion! Välj alternativ från menyn på vänster sida.</p>
+			<p>Manualen är inte färdig ännu. Vi jobbar för fullt på att slutföra det. Så låt oss börja!</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Häng med!</title>
+		<body>
+			<p>Hitta information om vårat team som jobbar med XmlNuke på den officiella webbwebbplatsen.</p>
+		</body>
+	</blockcenter>
+</page>

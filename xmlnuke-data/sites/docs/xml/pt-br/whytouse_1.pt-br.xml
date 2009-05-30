@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>O que é XMLNuke?</title>
+		<abstract>O que é o XMLNuke e quais as suas características.</abstract>
+		<created>19/9/2005 14:43:51</created>
+		<modified>25/6/2006 23:23:40</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>whytouse_key</groupkeyword>
+		<revision>$Revision: 1.1 $</revision>
+	</meta>
+	<blockcenter>
+		<title>O que é XMLNuke?</title>
+		<body>
+			<p>O XMLNuke é um framework de desenvolvimento de aplicativos WEB e um sistema de gerenciamento de conteúdo totalmente baseado em XML.</p>
+			<p>Isso significa que o programador ao invés de se preocupar em produzir a interface gráfica de sua aplicação, produzirá APENAS documentos XML. As vantagens são inúmeras e serão detalhadas nos capítulos seguintes.</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>O XMLNuke é um Gerenciador de Conteúdo</title>
+		<body>
+			<p>
+O XMLNuke é um sistema de gerenciamento de conteúdo de site para Internet que manipula todas as informações através de documentos XML. Esses documentos, armazenados em seu formato nativo, são transformados através de instruções XSL e então exibidos para o usuário que poderá visualizar as informações em qualquer navegador WEB. Essa característica possibilita que um mesmo documento possa assumir a apresentação visual que se julgar conveniente.
+</p>
+			<p>
+Como as informações estão armazenadas no formato XML não existe a necessidade de instalar um aplicativo de banco de dados. Em outras palavras, as funcionalidades existentes no XMLNuke são executadas em sua totalidade utilizando apenas o mecanismo principal do XMLNuke e um serviço http. Essa característica diminui drasticamente os recursos necessários para instalação e configuração do Servidor. O XMLNuke também implementa em seu projeto diversas funcionalidades com o objetivo de otimizar o processamento de documentos XML. A exemplo disso existe o cache de páginas, existente em dois níveis dentro do XMLNuke. 
+</p>
+			<p>
+Pelo fato de utilizar XML, os dados são totalmente separados de tecnologia, plataforma e a forma na qual serão exibidos. 
+</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>
+O XMLNuke é um Framework de Desenvolvimento para WEB
+</title>
+		<body>
+			<p>
+Além de armazenar, processar e exibir conteúdo para sites, o XMLNuke oferece um suporte a desenvolvimento de aplicações voltadas para a WEB na qual o programador irá apenas processar informações e devolvê-las na forma de XML. Com isso, o desenvolvedor não ficará dependente do Designer (e vice-versa) possibilitando uma separação verdadeira entre Aplicação e Design da Aplicação. 
+</p>
+			<p>
+O desenvolvedor não precisa montar formalmente um documento XML. Basta utilizar o conjunto de classes de abstração do XML existentes no Framework, que o próprio XMLNuke se encarrega de montar o documento XML pronto para ser transformado.
+</p>
+			<p>
+Para auxiliar nessa tarefa o XMLNuke implementa e disponibiliza um conjunto de classes as quais o programador pode utilizar e aproveitar todo o mecanismo desenvolvido para o processamento de conteúdo do XMLNuke. 
+</p>
+			<p>
+O desenvolvimento de novas aplicações baseados em XMLNuke oferece ao programador: 
+
+	<ul><li>Cache para documentos dinâmicos</li><li>
+Segurança por perfil e através de Single-Signon integrado
+</li><li>Suporte a Internacionalização</li><li>
+Classes para persistência e consulta de dados em uma base XML (AnyDataSet)
+</li><li>Abstração do sistema de arquivos</li><li>Abstração da representação de documentos XML</li><li>Outras.</li></ul></p>
+		</body>
+	</blockcenter>
+</page>

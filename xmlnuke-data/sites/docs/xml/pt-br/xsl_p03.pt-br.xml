@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+  <meta>
+    <title>Criando Snippets de Template</title>
+    <abstract>Como criar os Snippets de Templates</abstract>
+    <created>Wed Sep 5 2007 17:32:23</created>
+    <modified>Wed Sep 5 2007 18:30:59</modified>
+    <keyword>xmlnuke</keyword>
+    <groupkeyword>key_xsl</groupkeyword>
+  </meta>
+  <blockcenter>
+    <title>Snippets de Template</title>
+    <body>
+      <p>
+Os snippets de template são passivos, ou seja, esperam ser chamados. Esse comportamento é diferente dos snippets estruturais que definem a estrutura. Normalmente os snippets só são verificados quando existe um comando "apply-template". É muito importante que as chamadas a esses snippets fiquem dentro do espaço número 3 conforme figura do primeiro capítulo da série. 
+</p>
+<p>
+Os usos mais comuns para esse tipo de snippet são:
+<ul>
+  <li>Templates para os XML Objects criados pelos usuários</li>
+  <li>Mapeamento de nós XML para HTML</li>
+</ul>
+</p>
+    </body>
+  </blockcenter>
+  <blockcenter>
+    <title>Exemplo de Criação</title>
+    <body>
+      <p>Para criar esse Snippet é importante observar que algum "apply-template" deve ser chamado. No caso do modelo padrã do XMLNuke tudo que está dentro de page/blockcenter/body é chamado. </p>
+<p>
+<code information="Estrutura padrão de um documento XML"><![CDATA[
+<page>
+
+	<!-- CABEÇALHO DA PÁGINA -->
+	<meta>
+		<title></title>
+		<abstract></abstract>
+		<created></created>
+		<modified></modified>
+		<keyword></keyword>
+		<groupkeyword></groupkeyword>
+	</meta>
+
+	<!-- AREA DE DADOS -->
+	<blockcenter>
+		<title>Snippets Estruturais</title>
+		<body>
+			<p> </p>
+			<card name="teste">Nome da ficha</card>
+		</body>
+	</blockcenter>
+
+</page>
+]]></code>
+</p>
+<p>Com base nom exemplo acima poderíamos montar os seguintes snippets de templates: </p>
+<p><code information="Snippet para mapear o nó 'p'"><![CDATA[
+<xsl:template match="p">
+	<p><xsl:apply-templates/></p>
+</xsl:template>
+]]></code></p>
+<p>Nesse exemplo, o "template" indica que estará esperando por um nó do tipo "p". Ao encontrar vai escrever o HTML "p" (note que é diferete nó XML de HTML). E após isso irá procurar por mais templates com o comando "apply-templates". </p>
+<p>
+O exemplo abaixo é um pouco diferente pois estamos criando um nó XML novo. Nesse caso o processo é muito semelhante. 
+</p>
+<p><code information="Snippet para mapear um nó definido pelo usuário"><![CDATA[
+<xsl:template match="card">
+	<div id="csscard" style="display: block">
+		<h2><xsl:value-of select="@name" /></h2>
+		<div id="cssdata">
+			<xsl:value-of select="text()" />
+		</div>
+	</div>
+</xsl:template>
+]]></code></p>
+<p>Algumas observações importantes em relação a esse exemplo. A primeira é que esse template não quer processar novos templates, logo não foi definido o "apply-templates". A segunda é que o comando "value-of" pode pegar o valor nó informando apenas o seu nome; pegar um atributo, acrescentado o sinal "@" na frente do atributo; pegar o conteúdo do nó corrente, usando a função "text()".
+</p>
+    </body>
+  </blockcenter>
+</page>

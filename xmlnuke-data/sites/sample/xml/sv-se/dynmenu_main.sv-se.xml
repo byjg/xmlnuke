@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Hur man skapar dynamiska menyer</title>
+		<abstract>Hur man skapar dynamiska menyer</abstract>
+		<created>13/05/2002 20:43:05</created>
+		<modified>08/06/2005 20:56:11</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword>grpdynmenu</groupkeyword>
+		<keyword>Your First Keyword</keyword>
+		<keyword>Your Second Keyword and so on</keyword>
+	</meta>
+	<blockcenter>
+		<title>Vad är en dynamiska meny?</title>
+		<body>
+			<p>Det är väldigt enkelt att organisera sina sidor och menyer. XMLNuke har GROUPS och GROUPKEYWORDs (dvs grupper och deras sökord) som används för att skapa dom.</p>
+			<p>När du skapar en grupp (se adminverktyget), specificerar du e KEYWORD (dvs sökord). Ursprugligt sökord är <b>all</b> (alla). Det betyder att bara grupper som innehåller sökordet "ALL" gör menyn synlig.</p>
+			<p>Om du ställer in ett annat värde som sökord så blir menyn osynlig. Bara sidor med taggen &lt;GROUPKEYWORD&gt; kan då aktivera det.</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Kan jag få se ett exempel?</title>
+		<body>
+			<p>Välj i menyn till vänster på sidan. Du kan se 'Sida ett' och 'Sida två'. Genom dem kan du sedan komma åt sidor i den gömda menyn.</p>
+		</body>
+	</blockcenter>
+</page>

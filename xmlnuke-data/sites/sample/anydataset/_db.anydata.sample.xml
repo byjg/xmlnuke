@@ -1,0 +1,57 @@
+<anydataset>
+	<!-- 
+		CSHARP connection strings
+		Use one of the samples below
+	-->
+
+	<!-- See Docs for all available dbtype. mysql, sqlserver, oracle, postgres, sqlite, firebird and so on. -->
+	<row>
+		<field name="dbname">csharp-newmodel</field>
+		<field name="dbtype">sqlserver</field>
+		<field name="dbconnectionstring">Data Source=localhost;User Id=username;Password=pass;Database=database;Pooling=false</field>
+	</row>
+
+	<!-- Use this, if your database does not exists in the previous method -->
+	<row>
+		<field name="dbname">csharp-mysql</field>
+		<field name="dbtype">dynamic</field>
+		<field name="assembly">MySql.Data</field>
+		<field name="connection">MySql.Data.MySqlClient.MySqlConnection</field>
+		<field name="dataadapter">MySql.Data.MySqlClient.MySqlDataAdapter</field>
+		<field name="dbconnectionstring">Data Source=ServerName;User Id=user;Password=password;Database=Databasename;Pooling=false</field>
+	</row>
+
+	<!-- Avoid use this methods below -->      
+	<row>
+		<field name="dbname">csharp-odbc1</field>
+		<field name="dbtype">ODBC</field>
+		<field name="dbconnectionstring">Driver={MySQL ODBC 3.51 Driver};Server=ipservidor;UID=usuario;PWD=senha;Database=nomedodb</field>
+	</row>
+	<row>
+		<field name="dbname">csharp-odbc2</field>
+		<field name="dbtype">ODBC</field>
+		<field name="dbconnectionstring">DSN=nomedodsn;</field>
+	</row>
+	<row>
+		<field name="dbname">csharp-oledb</field>
+		<field name="dbtype">OLEDB</field>
+		<field name="dbconnectionstring">Provider=Microsoft.Jet.OleDb.4.0;Data Source=c:\abc\abc.mdb;User Id=user;Password=password;</field>
+	</row>
+
+
+
+	<!-- 
+		PHP5 connection strings
+		Use one of the samples below
+	-->
+	<row>
+		<field name="dbname">php5-adodsn</field>
+		<field name="dbtype">dsn</field>
+		<field name="dbconnectionstring">adodriver://username:password@server/datasource?persist</field>
+	</row>
+	<row>
+		<field name="dbname">php5-driver</field>
+		<field name="dbtype">adodriver</field>
+		<field name="dbconnectionstring">server;username;password;datasource</field>
+	</row>
+</anydataset>

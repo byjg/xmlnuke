@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Initial Considerations</title>
+		<abstract>Creating user modules with XMLNuke - Initial considerations </abstract>
+		<created>19/9/2005 15:03:12</created>
+		<modified>Sat Sep 13 2008 19:05:39</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>createmodules</groupkeyword>
+		<revision>$Revision: 1.1 $</revision>
+	</meta>
+	<blockcenter>
+		<title>Initial considerations</title>
+		<body>
+			<p>XMLNuke has a mechanism so that user applications (or modules) run within the XMLNuke framework. So that the user module can function correctly in XMLNuke, an interface must be implemented called IModule. To facilitate the process, XMLNuke has an abstract class called BaseModule that implements the IModule interface and defines the functioning of various services.
+</p>
+			<p>
+				<img src="common/imgs/docs/cm2-estrutura.png"/>
+			</p>
+			<p>Using the analogy of programming in layers, the user module corresponds to the presentation layer, even if this is not the most adequate comparison.
+			</p>
+			<p>XMLNuke also provides programmers with an isolation layer in between the module and the web environment. To make this functionality possible, a Context class was created in which any and every interaction with the world external to XMLNuke must obligatorily be done through this class. All XMLNuke classes have a reference to the instance of this class, and it is very important that the programmer only uses the Context class to obtain and post information to the external world.
+			</p>
+			<p>In the model suggested by XMLNuke, the programmer should insert objects within Data Blocks.
+</p>
+			<p>
+				<img src="common/imgs/docs/cm2-blocos.png"/>
+			</p>
+			<p>Note that even though the blocks have names from the block to the left, the right and the center, the XSLT document does not necessarily have to obey this rule. But, for convention?s sake, we defined that our "work area" will be in one or more BlockCenter.
+         </p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>First Module</title>
+		<body>
+			<p>To develop the first module, a class must be created that is related to the BaseModule. 
+<code information="CSharp">
+using System;
+using System.Xml;
+using com.xmlnuke.classes;
+
+namespace tutorial.xmlnuke
+{
+	public class ExampleModule : BaseModule
+	{
+
+	}
+}
+</code></p>
+			<p>It's important to pay attention to the section of code above. When editing, CSharp must have the namespace, since the XMLNuke instances the user module by Reflection. To simplify, we say that the module is plug-and-play and thus the assembly simply needs to be placed in the BIN folder of XMLNuke, since it will be working without any type of additional configuration.
+
+         </p>
+			<p>However, it's important to elaborate some points:
+<ul>
+					<li>The file must be compiled as CLASS LIBRARY.</li>
+					<li>All of the classes from the same NAMESPACE must be in the same Assembly. So for the example above an assembly should be generated with the name: tutorial.xmlnuke.dll</li></ul></p>
+			<p>
+				<code information="PHP"><![CDATA[
+<?PHP 
+require_once("bin/com.xmlnuke/module.basemodule.class.php");
+
+class ExampleModule extends BaseModule
+{
+}
+?>
+]]></code>
+In the PHP version, because the script is not compiled, it should be within a folder called LIB. Because there is also no namespace in PHP, to facilitate the organization of the code, the module files are available within the subdirectories of the LIB folder. Therefore, if we want a file to be in the same NAMESPACE in the example in CSharp, the file must be saved in the folder: lib/tutorial/xmlnuke/modules.
+         </p>
+			<p>Considerations:
+<ul>
+					<li>Every module should have their extension as ".class.php"</li>
+					<li>Within the LIB folder, the last folder should always be MODULES (as shown in the example above).</li>
+					<li>In PHP, the first character should be &amp;lt;?php and the last should be ?&amp;gt;, otherwise presentation errors may occur. Do not include extra spaces before or after this tags.
+</li></ul></p>
+			<p>In either PHP or CSharp, the request for the example above would be: 
+<br/><br/>
+http://[xmlnuke]/module.aspx?module=tutorial.xmlnuke.moduloexemplo&amp;site=sample
+<br/><br/>
+or
+<br/><br/>
+http://[xmlnuke]/module.php?module=tutorial.xmlnuke.moduloexemplo&amp;site=sample
+</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Writing in CreatePage</title>
+		<body>
+			<p>All the programming of the module is concentrated on one method called CreatePage.</p>
+			<p>
+				<code information="CSharp"><![CDATA[
+override public PageXml CreatePage() 
+{
+	XmlnukeDocument xmlnukeDoc = new XmlnukeDocument("Title", "Summary");
+
+	. . .
+
+	return xmlnukeDoc.generatePage();
+}
+]]></code>
+			</p>
+			<p>
+				<code information="PHP"><![CDATA[
+public function CreatePage() 
+{
+	$xmlnukeDoc = new XmlnukeDocument("Title", "Summary");
+	. . .
+	return $xmlnukeDoc->generatePage();
+}
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Using the XMLObjects</title>
+		<body>
+			<p>Once the XMLNukeDocument is created, you can start writing the code. For example, to create a block to the center (BlockCenter) and add a paragraph, the following code can be used: 
+         </p>
+			<p>
+				<code information="PHP"><![CDATA[
+XmlBlockCollection block = new XmlBlockCollection("Title", BlockPosition.Center);
+	
+XmlParagraphCollection p = new XmlParagraphCollection();
+p.addXmlnukeObject(new XmlnukeText("Paragraph Text"));
+p.addXmlnukeObject(new XmlnukeText("Another Text"));
+
+block.addXmlnukeObject(p);
+xmlnukeDoc.addXmlnukeObject(block);
+]]></code>
+			</p>
+			<p>
+				<code information="PHP"><![CDATA[
+$block = new XmlBlockCollection("Title", BlockPosition::Center);
+				
+$p = new XmlParagraphCollection();		
+$p->addXmlnukeObject(new XmlnukeText("Paragraph Text."));
+$p->addXmlnukeObject(new XmlnukeText("Another Text"));
+
+$block->addXmlnukeObject($p);
+$xmlnukeDoc->addXmlnukeObject($block);
+]]></code>
+			</p>
+			<p>
+Note that the text is added within the collection of the Paragraph and that the Paragraph is added to the block. And lastly, the Block is added to the document. In the XML Object model, the object is processed (or rendered) ONLY if it has been added to the collection. Otherwise, the object remains inert and no result will be found.
+         </p>
+			<p>
+Also note that the program generated only XML content. How this information will be displayed on the screen is up to the layout defined by the XSLT. 
+         </p>
+		</body>
+	</blockcenter>
+</page>

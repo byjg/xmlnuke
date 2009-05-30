@@ -1,0 +1,21 @@
+﻿<?xml version="1.0"?>
+<anydataset>
+   <row>
+      <field name="LANGUAGE">en-us</field>
+      <field name="TITLE">Manage Email Aliases</field>
+      <field name="DESCRIPTION">Use this option to manage the emails used in the Send Email module. This feature is useful in hiding the real email address from Web Robots.</field>
+      <field name="DESTINATIONBOX">Destination Id:</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">pt-br</field>
+      <field name="TITLE">Configurar apelidos de email</field>
+      <field name="DESCRIPTION">Use essa opção para gerenciar os emails que serão utilizados no módulo SendEmail. Este recurso é útil para esconder o seu email verdadeiro de robôs da Web que capturam emails em sites da internet.</field>
+      <field name="DESTINATIONBOX">Apelido:</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">de-de</field>
+      <field name="TITLE">E-Mail-Pseudonyme verwalten</field>
+      <field name="DESCRIPTION">Verwalten Sie die E-Mail Adressen, die im E-Mail Sende-Modul verwendet werden.<br/><br/>Mit dieser Funktion können Sie Ihre richtige E-Mail Adresse vor Web-Robotern verstecken.</field>
+      <field name="DESTINATIONBOX">Pseudonym-ID: </field>
+   </row>
+</anydataset>

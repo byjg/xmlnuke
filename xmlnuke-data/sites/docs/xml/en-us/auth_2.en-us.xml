@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Creating Users and Associating Roles</title>
+		<abstract>How to create a user and associate a role. Internal details on how a user is stored and how to customize the user repository.</abstract>
+		<created>15/8/2006 15:36:03</created>
+		<modified>Wed Feb 4 2009 0:29:27</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_auth</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>How to create a user</title>
+		<body>
+			<p>The simplest way to create a user is through the administrative tool of XMLNuke. Using the tool, you can select which roles you want to associate to a specific user. There are no roles associated to a user when a user is created, and therefore the user will be able to access practically any modules.</p>
+			<p>The roles that can be associated are defined in the file "roles.anydata.xml". This file seeks to facilitate the process of association to avoid typing errors. </p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Inside the user</title>
+		<body>
+			<p>By default, users are stored in the file "user.anydata.xml", as shown in the example below: 
+<code information="File users.anydata.xml"><![CDATA[
+ <row>
+    <field name="name">John Doe</field>
+    <field name="username">me</field>
+    <field name="email">me@email.com</field>
+    <field name="password">45FCB22C7BD17402852C58D54F922D85A1F57AD0</field>
+    <field name="admin" />
+    <field name="created">2006-07-09 18:21:40</field>
+    <field name="roles">EDITOR</field>
+    <field name="roles">DESIGNER</field>
+    <field name="sites">sample</field>
+  </row>
+]]></code></p>
+			<p>
+But instead of saving to the text file (AnyDataSet), it is possible to save it to a relational database. This must be specified in the configuration of XMLNuke: "<b>xmlnuke.USERSDATABASE</b>" which is the DATABASE that will store the user data. The table structure must be as follows: 
+
+<code information="SQL for defining a user - MySQL"><![CDATA[
+-- ------------------------------
+create table xmlnuke_users
+(
+    userid integer identity not null,
+    name varchar(50),
+    email varchar(120),
+    username varchar(15) not null,
+    password char(40) not null,
+    created datetime,
+    admin char(3), 
+    
+   	constraint pk_users primary key (userid)
+) 
+TYPE = InnoDB;
+
+-- ------------------------------
+create table xmlnuke_custom
+(
+   customid integer identity not null,
+   name varchar(20),
+   value varchar(100),
+   userid integer not null,
+   
+   constraint pk_custom primary key (customid),
+   
+   constraint fk_custom_user foreign key (userid) references xmlnuke_users (userid),
+) 
+TYPE = InnoDB;
+
+-- ------------------------------
+create table xmlnuke_roles
+(
+   roleid integer identity not null,
+   site varchar(50),
+   role varchar(100),
+   
+   constraint pk_roles primary key (roleid)
+) 
+TYPE = InnoDB;
+
+-- New user 
+-- username: admin
+-- password: pwd)
+insert into xmlnuke_users (name, email, username, password, created, admin) 
+values 
+   ('Administrator', 'your@email.com', 'admin', '37FA265330AD83EAA879EFB1E2DB6380896CF639', now(), 'yes' );
+
+]]></code></p>
+	
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Using your own structure of the database</title>
+		<body>
+			<p>XMLNuke also permits users to use their own database structure to store usernames and passwords. It's important that this structure has at least: 
+			<ul>
+				<li>Have the same fields that XMLNuke users (which do not need to have the same names)</li>
+				<li>A structure for the CUSTOM and ROLES tables
+.</li>
+			</ul>
+			After  this, the <b>UsersDBDataSet</b> must be inherited and the <b>configTableNames()</b> method must be overwritten::
+			</p>
+<p>
+<code information="CSharp"><![CDATA[
+virtual protected void configTableNames()
+{
+	this._UserTable = new UserTable();	
+	this._UserTable.Table = "xmlnuke_users";
+	this._UserTable.Id = "userid";	
+	this._UserTable.Name = "name";
+	this._UserTable.Email= "email";	
+	this._UserTable.Username = "username";
+	this._UserTable.Password = "password";
+	this._UserTable.Created = "created";
+	this._UserTable.Admin = "admin";
+			
+	this._CustomTable = new CustomTable();	
+	this._CustomTable.Table = "xmlnuke_custom";	
+	this._CustomTable.Id = "customid";	
+	this._CustomTable.Name = "name";
+	this._CustomTable.Value = "value";
+	// Table "CUSTOM" must have userid Foreign Key.
+
+	this._RolesTable = new RolesTable();	
+	this._RolesTable.Table = "xmlnuke_roles";	
+	this._RolesTable.Site = "site";
+	this._RolesTable.Role = "role";
+}
+]]></code></p>
+
+<p>
+<code information="PHP"><![CDATA[
+protected function configTableNames()
+{
+	$this->_UserTable = new UserTable();	
+	$this->_UserTable->Table = "xmlnuke_users";
+	$this->_UserTable->Id = "userid";	
+	$this->_UserTable->Name = "name";
+	$this->_UserTable->Email= "email";	
+	$this->_UserTable->Username = "username";
+	$this->_UserTable->Password = "password";
+	$this->_UserTable->Created = "created";
+	$this->_UserTable->Admin = "admin";
+			
+	$this->_CustomTable = new CustomTable();	
+	$this->_CustomTable->Table = "xmlnuke_custom";	
+	$this->_CustomTable->Id = "customid";	
+	$this->_CustomTable->Name = "name";
+	$this->_CustomTable->Value = "value";
+	// Table "CUSTOM" must have userid Foreign Key.
+
+	$this->_RolesTable = new RolesTable();	
+	$this->_RolesTable->Table = "xmlnuke_roles";	
+	$this->_RolesTable->Site = "site";
+	$this->_RolesTable->Role = "role";
+}
+]]></code></p>
+		<p>You must also set the property "xmlnuke.USERSCLASS" in your configuration file to inform the full namespace to access the class. Note: This instance must implement the <b>IUsersBase</b> interface and must have a constructor that receives two parameters: engine.Context and connection string.</p>
+
+<p>
+<code information="CSharp"><![CDATA[
+	public YourClass(com.xmlnuke.engine.Context context, string conn)
+	{
+		//...
+	}
+]]></code></p>
+
+<p>
+<code information="PHP"><![CDATA[
+	public function __construct($context, $conn)
+	{
+		// ... 
+	}
+]]></code></p>
+
+
+		</body>
+	</blockcenter>
+</page>

@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Meine erste Seite</title>
+		<abstract>Wie Sie Ihre erste XMLNuke-Seite erstellen</abstract>
+		<created>2/7/2005 11:53:00</created>
+		<modified>7/2/2005 1:09:00 PM</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>-</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Wie Sie Ihre erste XMLNuke-Seite erstellen</title>
+		<body>
+			<p>XMLNuke teilt die Erstellung von Seiten in zwei Teile auf: in LAYOUT und DATEN.</p>
+			<p>Das Layout wird mittels XSLT erstellt und muss nur Befehle zur Benutzung von Daten enthalten und eine korrekte Ausgabe erzeugen, z.B. als XHTML, RSS, WML oder andere.</p>
+			<p>Bei den Daten handelt es sich um XML-Dokumente, die nur Ihre Informationen enthalten. Sie können (wenn Sie möchten) Ihr eigenes XML-Format entwickeln. Aber um Ihnen einen einfachen Einstieg zu ermöglichen haben wir ein spezifisches Daten-Format integriert, welches Sie nutzen können. Die Daten sind wiederum in zwei Teile aufgeteilt: 
+<ul><li>Dateikopf (header)</li><li>Daten-Block (data block)</li></ul></p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Dateikopf</title>
+		<body>
+			<p>Der Kopf enthält Informationen über das XML-Dokument wie z.B. Titel, Inhaltsangabe und Erstellungs-/Änderungs-Datum. Sie können auch Ihre eigenen Definitionen bzw. Informationen hinzufügen.</p>
+			<p>
+				<code><![CDATA[
+<page>
+  <meta>
+    <title>Fügen Sie hier den Titel ein</title>
+    <abstract>Fügen Sie hier die Inhaltsangabe ein</abstract>
+    <created>2/7/2005 11:53:00</created>
+    <modified/>
+    <keyword>xmlnuke</keyword>
+    <groupkeyword>all</groupkeyword>
+  </meta>
+</page>
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Daten-Block</title>
+		<body>
+			<p>Das Dokument wird durch die Nutzung von Daten-Blöcken erstellt. Diese Blöcke werden durch <b>blockcenter</b>, <b>blockleft</b> und <b>blockright</b> aufgerufen. Die Standard-XSLT (XSL-Transformation) platziert diese Blöcke in der Mitte, links oder rechts, aber Sie können das ändern und die Blöcke an einer anderen Stelle platzieren. Nachfolgend ein Beispiel:</p>
+			<p>
+				<code><![CDATA[
+  <blockcenter>
+    <title>Block-Titel</title>
+    <body>
+      <p>Dies ist Ihr erster Absatz.</p>
+    </body>
+  </blockcenter>
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+</page>

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Criando um aplicação XMLNuke em PHP</title>
+		<abstract>Sugestão de criação de projetos com XMLNuke utilizando a Engine PHP</abstract>
+		<created>10/8/2007 04:40:05</created>
+		<modified>Sun Aug 26 2007 16:15:44</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_analysis</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Criando um aplicação XMLNuke em PHP</title>
+		<body>
+			<p>Existem diversas maneiras de se iniciar um projeto com XMLNuke PHP5. O método recomendado é o seguinte:
+			<ol>
+				<li>Criar uma pasta com o nome do projeto dentro de LIB. Atenção: Não usar espaços. Nos exemplos abaixo, iremos referenciar o nome escolhido nesse item por [SEUMODULO]</li>
+				<li>Dentro dessa nova pasta, criar duas pastas: "classes" e "modules".</li>
+				<li>Em "classes" (ver abaixo) deve conter os componentes de acesso a banco de dados e outras classes que não são módulos visuais.</li>
+				<li>Em "modules" (ver abaixo) deve conter <b>apenas</b> os módulos de usuário.</li>
+			</ol>
+
+			</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Pasta Classes: [SEUMODULO]BaseModule</title>
+		<body>
+			<p>
+			Essa prática consiste em Herdar o módulo BaseModule do XMLNuke de forma a qualquer modificação que valha para o projeto inteiro seja feita diretamente nas nossas classes, e não no Kernel do XMLNuke. Uma boa sugestão é definir o menu, se requer autenticação ou não, qual o nível de acesso, bem como processamento que devem ser feitos por todos os módulos. Abaixo um exemplo de implementação deste método. 
+			</p>
+			<p>
+<code information="Exemplo de um [SEUMODULO]BaseModule"><![CDATA[
+<?
+require_once("bin/com.xmlnuke/module.basemodule.class.php");
+
+class SeuModuloRoles
+{
+	const MANAGER="MANAGER";
+	const USER="USER";
+}
+
+
+class SeuModuloBaseModule extends BaseModule
+{
+        /**
+         * @var LanguageCollection
+         */
+	protected $_myWords;
+
+	public function __construct()
+	{}
+
+        /*
+         * All Language Files associated with this module will be 
+         * loaded into $_myWords
+         */
+	public function WordCollection()
+	{
+		$this->_myWords = parent::WordCollection();
+	}
+
+        /*
+         * Implements you cache Logic. 
+         * Note: Do not use cache if you do not know what is this.
+         */
+	public function useCache() 
+	{
+		return false; 
+	}
+
+        /*
+         * My Module is Public or Private?
+         */
+	public function requiresAuthentication()
+	{
+		return true;
+	}
+
+        /*
+         * Only is needed if requiresAuthentication() is true
+         */
+	public function getAccessLevel()
+	{
+		return AccessLevel::OnlyRole;
+	} 
+
+        /*
+         * Custom function for create my Own customized document
+         */
+	public function createXmlnukeDocument($titulo, $resumo)
+	{
+                if ($this->_context->ContextValue("logout")!="")
+                {
+                        $this->_context->redirectUrl("module:seumodulo.home");
+                }
+
+		$this->defaultXmlnukeDocument = 
+			new XmlnukeDocument($titulo . " (Usuario: " . 
+			$this->_context->authenticatedUserId() . ")", $resumo);
+		$this->defineMenu();
+	}
+
+        /*
+         * Define the basic and generic Menu Structure.
+         * We can use the current authenticated user to create it.
+         */
+	public function defineMenu()
+	{
+		$this->defaultXmlnukeDocument->setMenuTitle("Menu");
+
+		$users = $this->getUsersDatabase();
+
+		if ($users->checkUserProperty(
+			$this->_context->authenticatedUserId(), 
+			SeuModuleRoles::MANAGER, UserProperty::Role))
+		{
+			$this->defaultXmlnukeDocument->addMenuItem(
+			"module:seumodule.dosomething", "Do Something", "");
+			// Add more menu options
+		}
+
+                $this->defaultXmlnukeDocument->addMenuItem(
+                "module:seumodule.home?logout=true", "Logout", "");
+ 	}
+}
+?>
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Pasta Classes: Componente de acesso a dados</title>
+		<body>
+			<p>
+			Ao invés de conectarmos diretamente ao banco de dados dentro dos módulos, é recomendável criar classes apenas para esse fim. Isso garante o isolamento da nossa aplicação além de manter o nosso código mais fácil de dar manutenção. Nessas classes obteremos e faremos a gravação dos dados. 
+			</p>
+			<p>
+<code information="Classe de Acesso a dados"><![CDATA[
+<?
+require_once("bin/com.xmlnuke/database.basedbaccess.class.php");
+
+class DBSomeTable extends BaseDBAccess 
+{
+	/**
+	 * Overrides de BaseDBAccess definition. 
+	 *
+	 * @return String
+	 */
+	public function getDataBaseName()
+	{
+		return "mydatabase";		
+	}
+	
+	/**
+	 * Get some data
+	 *
+	 * @param Integer $idBase
+	 * @return IIterator
+	 */
+	public function getSomeDataById($id)
+	{
+		$param = array();
+		
+		$sql = "select someid, somefield from sometable ";
+			" where id_base = [[id]] ";
+		$param["id"] = $id;
+		
+		return $this->getIterator($sql, $param);
+	}
+		
+	/**
+	 * Insert some data in some table.
+	 *
+	 * @param String $someField
+	 */
+	public function inserirBase($someField)
+	{
+		$param = array();
+
+                // Add more fields here.
+		$fields["somefield"] = array(SQLFieldType::Text, $someField);
+		
+                // Calling XMLNuke PHP SQL Helper
+		$sql = $this->getSQLHelper()->generateSQL(
+			"sometable", $fields, $param, SQLType::SQL_INSERT, "", '.');
+		
+		$this->executeSQL($sql, $param);
+	}
+}
+?>
+]]></code>
+			</p>
+			<p>
+			<b>Nota importante:</b> Cada tipo de conexão de banco de dados tem a sua própria forma de passar parâmetros para os comandos SQL. No XMLNuke passaremos os parâmetros apenas com [[PARAMETRO]] conforme exemplo acima. No XMLNuke existe uma grande variedade de bancos de dados suportados automaticamente. A lista desses bancos está <a href="engine:xmlnuke?xml=bd_1">aqui.</a>
+			</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Pasta Modules: Criando os módulos</title>
+		<body>
+			<p>
+			Uma vez que foram criadas todas classes anteriores devemos criar os módulos. Os módulos são as classes que efetivamente interagirão com o usuário, exibindo formulários, listas, etc. É importante observar que todos os parâmetros passados de um módulo para o outro estão em $context-&amp;gt;ContextValue(). É também uma boa prática criar métodos para tratar cada ação em específico. 
+			</p>
+			<p>
+			O XMLNuke possui algumas variáveis pré-definidas. Uma delas é o "action" (em BaseModule::_action). O EditList, ProcessPage, e outros utilizam por padrão esse argumento para passagem dos valores. Outra variável que é bastante utilizado é o "valuied" que corresponde ao elemento que foi selecionado em um EditList.
+			</p>
+			<p>
+<code information="Exemplo de um módulo"><![CDATA[
+<?
+require_once("lib/seumodulo/classes/seumodulebasemodule.class.php");
+
+class SomeModule extends SeuModuloBaseModule 
+{
+	public function __construct()
+	{}
+
+	public function CreatePage() 
+	{
+		$this->_myWords = $this->WordCollection();
+		$this->createXmlnukeDocument(
+		  $this->_myWords->Value("AGENDA_TITLE"),
+ 		  $this->_myWords->Value("AGENDA_ABSTRACT"));
+		
+		switch ($this->_action)
+		{
+			case "someaction":
+				$this->runSomeAction();
+				break;
+				
+			default:
+				$this->defaultAction();
+		}
+
+		return $this->defaultXmlnukeDocument;
+	}
+	
+	protected function runSomeAction()
+	{
+		// Do Something Here.Document->addXmlnukeObject($blockCenter);		
+	}
+	
+	protected function defaultAction()
+	{
+		// Do Something Here.Document->addXmlnukeObject($blockCenter);		
+	}
+}
+?>
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+</page>

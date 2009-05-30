@@ -1,0 +1,151 @@
+====================================================================
+XMLNuke
+Application Development Framework XML Based
+2006-06-18
+--------------------------------------------------------------------
+CSharp/Mono Edition
+XMLNuke Author: João Gilberto Magalhães
+Developed by: João Gilberto Magalhães
+Version: 2.0 RC3
+====================================================================
+
+
+1. INFORMATIONS
+
+This package contains assembly only files for Framework .NET 1.1. 
+All assemblies are compatible with Microsoft .NET and Mono (Linux).
+
+Current binary version is 2.0 RC1.
+
+Source files contains newer versions and are available only at SubVersion. 
+Visit Web site for more informations.
+
+XMLNuke project was created by Joao Gilberto Magalhaes.
+XMLNuke CSharp Edition is maintained by Joao Gilberto Magalhaes.
+
+Contributors for CSharp Edition and another versions are welcome.
+Please visit the site.
+
+http://www.xmlnuke.com/
+
+
+2. LICENSE
+
+XMLNuke is developed under GPL License.
+
+
+3. LINUX INSTALLATION
+
+3.1. Requirements
+
+- Any Linux Distribution
+- Mono 1.0 or above with libicu package installed
+- XSP Package or Mono Apache Module
+
+3.2. Installation using XSP
+
+Extract the contents of this package in any directory.
+If you want to use XSP Web Server just call the Shell Script
+"./startserver.sh"
+
+If you want to use Apache Module look at the manual of this module.
+
+IMPORTANT: You need assign permissions for write to directory 
+xmlnuke/data to user start XSP server. 
+
+Try access XMLNuke sample web site typing into your browser:
+http://localhost:8080/
+
+3.3. Installation using Apache 2.0
+
+You need have install and setup properly the mod_mono. I suggest you
+install using any package (.deb, .rpm or Port). After this you need add
+the follow lines to your httpd.conf file:
+
+Alias /xmlnuke-csharp "/var/www/xmlnuke-csharp"
+AddMonoApplications xmlnuke-csharp "/var/www/xmlnuke-csharp"
+MonoMaxMemory xmlnuke-csharp 67108864
+<Directory "/var/www/xmlnuke-csharp">
+        MonoSetServerAlias xmlnuke-csharp
+        SetHandler mono
+        AllowOverride None
+        Order allow,deny
+        Allow from all
+</Directory>
+
+
+
+4. WINDOWS INSTALLATION
+
+4.1. Requirements
+
+- Windows 2000, XP, NT4, Server
+- Framework .NET 1.1
+- Internet Information Services (IIS) or Apache 2.0 for Windows
+
+4.2. Installation under IIS
+
+Extract the contents of this package in any directory.
+Follow this instructions:
+- Open the Windows Explorer
+- Right button on the "xmlnuke" directory
+- Select the Properties menu
+- Select the "Web Sharing" Tab. 
+- Select "Share This Folder" Option
+- Type any alias name in text box.
+- Click OK, and OK again.
+
+Try access XMLNuke sample web site typing in your browser:
+http://localhost/<alias defined by you>
+
+4.3. Installation under Apache 2.0
+
+You need install the mod_aspdotnet for Apache under Windows. 
+After this you need add the follow lines to your httpd.conf file:
+
+LoadModule aspdotnet_module modules/mod_aspdotnet.so
+
+AddHandler asp.net asax ascx ashx asmx aspx axd config cs csproj \
+           licx rem resources resx soap vb vbproj vsdisco webinfo
+
+AliasMatch "^/(?i)aspnet_client/system_web/(\d+)_(\d+)_(\d+)_(\d+)/(.*)" \
+           "C:/Windows/Microsoft.NET/Framework/v$1.$2.$3/ASP.NETClientFiles/$4"
+
+<Directory "C:/Windows/Microsoft.NET/Framework/v*/ASP.NETClientFiles">
+    Options FollowSymlinks
+    Order allow,deny
+    Allow from all
+</Directory>
+
+And, to setup XMLNuke alias add the follow lines:
+
+AspNetMount /xmlnuke-csharp "c:/xmlnuke/xmlnuke-csharp"
+Alias /xmlnuke-csharp "c:/xmlnuke/xmlnuke-csharp"
+<Directory "c:/xmlnuke/xmlnuke-csharp">
+    Options FollowSymlinks Indexes Includes ExecCGI
+    Order allow,deny
+    Allow from all
+    DirectoryIndex default.htm default.aspx
+</Directory>
+
+
+
+5. Other Informations
+
+5.1. Admin Tool
+
+The Default user and password to access admin tool is:
+Username: admin
+Password: pwd
+
+
+6. CONTACT
+
+Contact the author or get new versions at 
+http://www.xmlnuke.com/
+
+XMLNuke was developed and is maintened by
+João Gilberto Magalhães
+http://www.byjg.com.br
+
+

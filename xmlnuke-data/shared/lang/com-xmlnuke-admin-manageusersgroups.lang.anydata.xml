@@ -1,0 +1,49 @@
+﻿<?xml version="1.0"?>
+<anydataset>
+   <row>
+      <field name="LANGUAGE">en-us</field>
+      <field name="TITLE">Manage Users Roles</field>
+      <field name="DESCRIPTION">Manage users roles from sites</field>
+      <field name="BLOCK_TITLE_NEW">New Role</field>
+      <field name="BLOCK_TITLE_EDIT">Edit Role</field>
+      <field name="BLOCK_TITLE_DELETE">Delete Role</field>
+      <field name="BLOCK_TITLE_LIST">List of the Roles</field>
+      <field name="MSG_CREATE">New Role was added.</field>
+      <field name="MSG_EDITED">Role was edited.</field>
+      <field name="MSG_ALREADYEXISTS">Already exists this Role in database.</field>
+      <field name="MSG_DELETED">Role was deleted.</field>
+      <field name="FORM_NAME">Roles</field>
+      <field name="FORM_SELECTSITE">Select a site:</field>
+      <field name="FORM_FROMSITE">Role from site: </field>
+      <field name="FORM_ALLSITES">- Any site -</field>
+      <field name="LINK_NEWROLE">Add new role</field>
+      <field name="LINK_LISTROLES">List Roles</field>
+      <field name="TEXT_ALLSITES">Role from any site</field>
+      <field name="EDITLIST_TITLE">Role list from site {0}</field>
+      <field name="EDITLIST_ROLES">Role</field>
+      <field name="EDITLIST_SITES">Site</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">pt-br</field>
+      <field name="TITLE">Gestão de Papéis para sites e usuários</field>
+      <field name="DESCRIPTION">Gestão de Papéis para sites e usuários</field>
+      <field name="BLOCK_TITLE_NEW">Novo Papel</field>
+      <field name="BLOCK_TITLE_EDIT">Editando um Papel</field>
+      <field name="BLOCK_TITLE_DELETE">Apagando um Papel</field>
+      <field name="BLOCK_TITLE_LIST">Lista de Papéis</field>
+      <field name="MSG_CREATE">Novo papel criado com sucesso.</field>
+      <field name="MSG_EDITED">Papel editado com sucesso.</field>
+      <field name="MSG_ALREADYEXISTS">Já existe este papel no banco de dados. Escolha outro nome para o papel.</field>
+      <field name="MSG_DELETED">Papel apagado com sucesso.</field>
+      <field name="FORM_NAME">Nome:</field>
+      <field name="FORM_SELECTSITE">Selecione um site:</field>
+      <field name="FORM_FROMSITE">Papéis para o site: </field>
+      <field name="FORM_ALLSITES">- Qualquer site -</field>
+      <field name="LINK_NEWROLE">Criar novo Papel</field>
+      <field name="LINK_LISTROLES">Visualizar Papéis</field>
+      <field name="TEXT_ALLSITES">Todos os sites</field>
+      <field name="EDITLIST_TITLE">Lista de papéis do site {0}</field>
+      <field name="EDITLIST_ROLES">Papel</field>
+      <field name="EDITLIST_SITES">Site</field>
+   </row>
+</anydataset>

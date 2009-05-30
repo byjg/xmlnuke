@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Page d'accueil de XMLNuke</title>
+		<abstract>XML Nuke Exemple de page d'accueil</abstract>
+		<created>16/1/2004 15:49:34</created>
+		<modified>02/01/2005 22:00:51</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword>-</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Page d'accueil de XMLNuke</title>
+		<body>
+			<p>Bienvenue sur notre site d'exemple. 
+Vous y voyez XMLNuke en action !!
+<br />
+Utilisez le menu du bloc gauche pour parcourir ce site.</p>
+			<p>Le manuel d'utilisation n'est pas encore fini, mais nous y travaillons.</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Rejoignez-nous !</title>
+		<body>
+			<p>Aujourd'hui, l'équipe se compose de :</p>
+			<p>
+				<b>Joao Gilberto Magalhaes</b> - Création, conception, design et développement du moteur ASP. <br /><b>Rejoignez-nous !</b><br /></p>
+		</body>
+	</blockcenter>
+</page>

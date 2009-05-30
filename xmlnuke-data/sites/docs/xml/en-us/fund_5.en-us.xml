@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>AnyDataSet and Data Access</title>
+		<abstract>How to use the Iterator and the variations of AnyDataSet to access various types of data</abstract>
+		<created>15/8/2006 13:12:42</created>
+		<modified>Sat Sep 13 2008 18:40:24</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_xmlnukeconcepts</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>AnyDataSet</title>
+		<body>
+			<p>AnyDataSet is a module to store a small quantity of data. The file structure of an AnyDataSet is very similar to the structure of a relational storage, but the physical persistence occurs in an XML document. However, this does not follow a rigid orientation of data definition, so that every entry can have their own field structure.</p>
+<p><code information="Example of an XML from an AnyDataSet"><![CDATA[
+<anydataset>
+  <row>
+    <field name="key1">Value 1</field>
+    <field name="key2">Value 2</field>
+    <field name="key3">Value 3</field>
+  </row>
+  <row>
+    <field name="key1">Value 1</field>
+    <field name="key2">Value 2</field>
+  </row>
+</anydataset>]]></code>
+</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Iterating an AnyDataSet - IIterator</title>
+		<body>
+<p>The AnyDataSet has a mechanism to iterate through the structure called an Iterator. This is very interesting because it establishes a standard method to iterate through the entire data structure in a singular way.</p>
+
+<p>Currently, all of the objects to access data through XMLNuke implement the same Iterator interface; in other words, it doesn?t matter if you access a database or an XML file, since the method of obtaining this data will always be the same!</p>
+
+<p>Currently, XMLNuke implements the following methods of accessing data:
+<ul>
+  <li>XML Files - AnyDataSet</li>
+  <li>Database, various sources - DBDataSet (<a href="engine:xmlnuke?xml=bd_1">see more</a>)</li>
+  <li>CSV Files, local and remote - TextFileDataSet</li>
+  <li>Array and Vectors - ArrayDataSet</li>
+  <li>DataSet .NET object - DSDataSet</li>
+</ul>
+
+All of these cases have a method which returns an Iterator type object and that makes it possible for one method to iterate through the most varied types of databases in the same way.
+</p>
+<p>For example, an <a href="engine:xmlnuke?xml=creatingmodule_4">XmlEditList</a> object can be set up by any data source, whether a database, an XML file or an array, for example.
+</p>
+
+<p>For more information on how to access the AnyDataSet, access the <a href="engine:xmlnuke?xml=technicalref_3">technical reference</a>.</p>
+		</body>
+	</blockcenter>
+</page>

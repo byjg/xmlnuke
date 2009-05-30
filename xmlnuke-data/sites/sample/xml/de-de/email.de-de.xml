@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>XMLNuke E-Mail senden</title>
+		<abstract>XMLNuke E-Mail senden</abstract>
+		<created>10/20/2002 8:13:51 PM</created>
+		<modified>08/06/2005 8:13:51 PM</modified>
+		<keyword>XMLSeite ByJG</keyword>
+		<groupkeyword>all</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>E-Mail senden</title>
+		<body>
+			<p>Diese Seite nutzt das spezifische Modul 'sendmail', das standardmäßig in XMLNuke integriert ist. Sie können eigene Masken erstellen um Daten mittels 'sendmail' zu verschicken.</p>
+			<p>
+				<editform action="module:sendemail" title="Füllen Sie die folgenden Felder aus um eine E-Mail zu senden" name="formemail" jsvalidate="true">
+					<textbox name="name" caption="Name: " value="" size="30" required="true" type="0" />
+					<textbox name="email" caption="E-Mail: " value="" size="30" required="true" type="10" />
+					<textbox name="subject" caption="Betreff: " value="" size="40" required="true" type="0" />
+					<memo name="message" caption="Nachricht: " cols="40" rows="5"></memo>
+					<hidden name="toname_id" value="DEFAULT" />
+					<imagevalidate caption="Sicherheitsabfrage: " />
+					<buttons>
+						<submit caption="Senden" />
+						<reset caption="Zurücksetzen" />
+					</buttons>
+				</editform>
+			</p>
+		</body>
+	</blockcenter>
+</page>

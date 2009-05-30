@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>XMLNuke-Beispielseite</title>
+		<abstract>XMLNuke-Beispielseite</abstract>
+		<created>3/21/2003 3:55:37 PM</created>
+		<modified>08/06/2005 15:55:37</modified>
+		<keyword>XMLSeite ByJG</keyword>
+		<groupkeyword>
+		</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>XMLNuke-Beispielseite</title>
+		<body>
+			<p>Dies ist eine Beispielseite. Hier können Sie XMLNuke in Aktion sehen! Wählen Sie aus den Optionen aus dem Menü.</p>
+			<p>Das Handbuch zu XMLNuke ist noch nicht fertiggestellt. Wir arbeiten daran.<br/>So, los geht's!</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Schließen Sie sich uns an!</title>
+		<body>
+			<p>Informationen zum XMLNuke-Team finden Sie auf der XMLNuke-Homepage.</p>
+		</body>
+	</blockcenter>
+</page>

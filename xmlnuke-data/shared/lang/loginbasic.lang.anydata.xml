@@ -1,0 +1,68 @@
+﻿<anydataset>
+  <row>
+    <field name="LANGUAGE">en-us</field>
+    <field name="TITLELOGIN">User Login</field>
+    <field name="LOGINFAIL">Username or password is invalid.</field>
+    <field name="CREATEUSERFAIL">Username or email already in database. Can't add.</field>
+    <field name="CREATEUSEROK">User created. Your password was sent to your email address.</field>
+    <field name="FORGOTUSERFAIL">Email not found.</field>
+    <field name="FORGOTUSEROK">Email found. Your new password has been mailed.</field>
+    <field name="LOGINTITLE">Type in your credentials</field>
+    <field name="LOGINFORGOTMESSAGE">I Forgot my password</field>
+    <field name="LOGINCREATEUSERMESSAGE">Create user</field>
+    <field name="CREATEUSERTITLE">Create user</field>
+    <field name="CREATEUSERPASSWORDMSG">Your password will be send to your email.</field>
+    <field name="CREATEUSERBUTTON">Create user</field>
+    <field name="FORGOTPASSTITLE">I Forgot my password</field>
+    <field name="FORGOTPASSBUTTON">Send my password to my email address.</field>
+    <field name="SUBJECTMESSAGE">{0}: Sign in confirmation</field>
+    <field name="WELCOMEMESSAGE">{0},\n\nYou requested to Sign Up at site {1}\n\nYour Login: {2}\nYour Password: {3} (Warning: this password is case-sensitive)\n\nGo to the URL address {4} to sign in and/or change your profile.</field>
+    <field name="TYPETEXTFROMIMAGE">Type Numbers below:</field>
+    <field name="OBJECTIMAGEINVALID">The numbers you types didn't match. You need to type the text correctly.</field>
+    <field name="LOGINPROBLEMSMESSAGE">Problems?</field>
+  </row>
+  <row>
+    <field name="LANGUAGE">pt-br</field>
+    <field name="TITLELOGIN">Login do usuário</field>
+    <field name="LOGINFAIL">Usuário ou Senha são inválidos</field>
+    <field name="CREATEUSERFAIL">Nome de usuário ou email existem. Não é possível incluir.</field>
+    <field name="CREATEUSEROK">Usuário criado. Sua senha será enviada para o seu email.</field>
+    <field name="FORGOTUSERFAIL">Email não encontrado.</field>
+    <field name="FORGOTUSEROK">Email encontrado. A nova senha foi enviada por email.</field>
+    <field name="LOGINTITLE">Digite suas credenciais</field>
+    <field name="LOGINFORGOTMESSAGE">Esqueci a minha senha</field>
+    <field name="LOGINCREATEUSERMESSAGE">Criar Usuário</field>
+    <field name="CREATEUSERTITLE">Criar usuário</field>
+    <field name="CREATEUSERPASSWORDMSG">A sua senha será enviada por email.</field>
+    <field name="CREATEUSERBUTTON">Criar usuário</field>
+    <field name="FORGOTPASSTITLE">Esqueci a minha senha</field>
+    <field name="FORGOTPASSBUTTON">Enviar senha para esse email</field>
+    <field name="SUBJECTMESSAGE">{0}: Confirmação de Cadastro</field>
+    <field name="WELCOMEMESSAGE">{0},\n\nVocê solicitou o seu cadastramento no site {1}\n\nSeu Login: {2}\nSua Senha: {3} (atenção: a senha é sensível a maiúscula e minúscula)\n\nAcesse o endereço {4} para efetuar o logon e/ou alterar seus dados</field>
+    <field name="TYPETEXTFROMIMAGE">Digite números ao lado: </field>
+    <field name="OBJECTIMAGEINVALID">O texto que você digitou não confere. Você precisa digitar o texto corretamente para prosseguir. </field>
+    <field name="LOGINPROBLEMSMESSAGE">Problemas?</field>
+  </row>
+  <row>
+    <field name="LANGUAGE">de-de</field>
+    <field name="TITLELOGIN">Benutzeranmeldung</field>
+    <field name="LOGINFAIL">Benutzername oder Passwort ist ungültig.</field>
+    <field name="CREATEUSERFAIL">Benutzername oder E-Mail-Adresse ist bereits vorhanden und konnte nicht hinzugefügt werden.</field>
+    <field name="CREATEUSEROK">Benutzer angelegt. Ihr Passwort wurde an Ihre E-Mail-Adresse gesendet.</field>
+    <field name="FORGOTUSERFAIL">E-Mail-Adresse nicht gefunden.</field>
+    <field name="FORGOTUSEROK">E-Mail-Adresse gefunden. Ihr neues Passwort wurde Ihnen zugeschickt.</field>
+    <field name="LOGINTITLE">Geben Sie Ihre Anmeldedaten ein</field>
+    <field name="LOGINFORGOTMESSAGE">Ich habe mein Passwort vergessen</field>
+    <field name="LOGINCREATEUSERMESSAGE">Ich möchte mich registrieren</field>
+    <field name="CREATEUSERTITLE">Einen neuen Benutzer anlegen</field>
+    <field name="CREATEUSERPASSWORDMSG">Das Passwort wird an Ihre E-Mail-Adresse gesendet.</field>
+    <field name="CREATEUSERBUTTON">Registrieren</field>
+    <field name="FORGOTPASSTITLE">Ich habe mein Passwort vergessen</field>
+    <field name="FORGOTPASSBUTTON">Passwort zusenden</field>
+    <field name="SUBJECTMESSAGE">{0}: Registrierungsbestätigung</field>
+    <field name="WELCOMEMESSAGE">{0},\n\nSie haben sich bei {1} registriert.\n\nBenutzername: {2}\nPasswort: {3} (Groß-/Kleinschreibung beachten)\n\nGehen Sie zur URL {4} um sich anzumelden und/oder Ihr Profil zu ändern.</field>
+    <field name="TYPETEXTFROMIMAGE">Sicherheitsabfrage:</field>
+    <field name="OBJECTIMAGEINVALID">Sie haben die Sicherheitsabfrage nicht oder falsch beantwortet. Bitte überprüfen Sie die Eingabe.</field>
+    <field name="LOGINPROBLEMSMESSAGE">Sonstiges:</field>
+  </row>
+</anydataset>

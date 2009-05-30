@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Visual Editor</title>
+		<abstract>Editing text and what you see is what you get.</abstract>
+		<created>24/4/2008 23:08:18</created>
+		<modified>2008-04-24 23:54:56</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>all</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Visual Editor</title>
+		<body>
+			<p>Editing text what you see is what you get with the XMLNuke.</p>
+			<p>
+				<code information="XML Code"><![CDATA[
+<editform title="Visual Editor" action="module:somemodule">
+   <memo name="sample" caption="Memo Field" visualedit="true"></memo>
+   <buttons>
+      <button caption="View XML code selection" 
+         onclick="alert(tinyMCE.activeEditor.selection.getContent());" />
+   </buttons>
+</editform>
+]]></code>
+			</p>
+			<p>
+				<editform title="Visual Editor" action="module:somemodule">
+					<memo name="sample" caption="Memo field" cols="30" rows="5" visualedit="true">
+					</memo>
+					<buttons>
+						<button caption="View XML code selection" onclick="alert(tinyMCE.activeEditor.selection.getContent());" />
+					</buttons>
+				</editform>
+			</p>
+		</body>
+	</blockcenter>
+</page>

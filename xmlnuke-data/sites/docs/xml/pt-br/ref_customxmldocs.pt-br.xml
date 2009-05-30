@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+  <meta>
+    <title>Criando seus próprios objetos XML</title>
+    <abstract>Como criar os seus próprios objetos XML</abstract>
+    <created>Tue Nov 6 2007 1:38:49</created>
+    <modified>Tue Nov 6 2007 1:40:28</modified>
+    <keyword>xmlnuke</keyword>
+    <groupkeyword>technicalref</groupkeyword>
+  </meta>
+  <blockcenter>
+    <title>Block Title</title>
+    <body>
+      <p>This is the first paragraph</p>
+    </body>
+  </blockcenter>
+</page>

@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Voir onglet</title>
+		<abstract>	
+Comment groupe de contrôles visuels dans des onglets</abstract>
+		<created>24/4/2008 22:49:59</created>
+		<modified>24/04/2008 23:04:46</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>all</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Voir onglet</title>
+		<body>
+			<p>Vous pouvez organiser vos contrôles visuels utilisant des onglets avec XMLNuke. Voir l'exemple ci-dessous:</p>
+			<p>
+				<code information="Voir onglet code XML "><![CDATA[
+<tabview>
+   <tabitem title="1">
+      <p>C'est l'onglet 1</p>
+   </tabitem>
+   <tabitem title="2">
+      <p>C'est l'onglet 2</p>
+   </tabitem>
+   <tabitem title="3">
+      <p>C'est l'onglet 3</p>
+   </tabitem>
+</tabview>
+]]></code>
+			</p>
+			<tabview>
+				<tabitem title="1">
+					<p>C'est l'onglet 1</p>
+				</tabitem>
+				<tabitem title="2">
+					<p>C'est l'onglet 2</p>
+				</tabitem>
+				<tabitem title="3">
+					<p>C'est l'onglet 3</p>
+				</tabitem>
+			</tabview>
+		</body>
+	</blockcenter>
+</page>

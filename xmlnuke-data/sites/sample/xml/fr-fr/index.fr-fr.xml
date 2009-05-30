@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<xmlindex>
+	<group>
+		<id>mainmenu</id>
+		<title>Menu principal</title>
+		<keyword>all</keyword>
+		<page>
+			<id>home</id>
+			<title>Page d'accueil</title>
+			<summary>Exemple de page d'accueil</summary>
+		</page>
+		<page>
+			<id>dynmenu_main</id>
+			<title>Menus dynamiques</title>
+			<summary>Comment créer des menus dynamiques</summary>
+		</page>
+		<page>
+			<id>forms</id>
+			<title>Les formulaires</title>
+			<summary>Les formulaires</summary>
+		</page>
+		<page>
+			<id>custommodule</id>
+			<title>La personnalisation</title>
+			<summary>Gérer les modules de personnalisation (Custom Modules)</summary>
+		</page>
+		<page>
+			<id>formsjs</id>
+			<title>Formularies avec la validation</title>
+			<summary>Démontrez comment employer des formularies avec la validation en utilisant le Javascript.</summary>
+		</page>
+		<page>
+			<id>calendar</id>
+			<title>Échantillon de calendrier</title>
+			<summary>Montrez un échantillon simple de calendrier dans XMLnuke.</summary>
+		</page>
+		<page>
+			<id>email</id>
+			<title>Envoyer un email</title>
+			<summary>XMLNuke Envoi d'email</summary>
+		</page>
+		<page>
+			<id>tabview</id>
+			<title>Voir onglet</title>
+			<summary>	
+Comment groupe de contrôles visuels dans des onglets</summary>
+		</page>
+		<page>
+			<id>visualedit</id>
+			<title>Visual Editor</title>
+			<summary>Modification de texte et ce que vous voyez est ce que vous obtenez.</summary>
+		</page>
+		<page>
+			<id>duallist</id>
+			<title>Liste double</title>
+			<summary>Afficher les données dans une liste à double composante</summary>
+		</page>
+		<page>
+			<id>treeview</id>
+			<title>Treeview</title>
+			<summary>Treeview composante.</summary>
+		</page>
+	</group>
+	<group>
+		<id>dynmenu</id>
+		<title>Dynamic Menus</title>
+		<keyword>grpdynmenu</keyword>
+		<page>
+			<id>dynmenu_page1</id>
+			<title>Page 1</title>
+			<summary>Menu dynamique de la page 1</summary>
+		</page>
+		<page>
+			<id>dynmenu_page2</id>
+			<title>Page 2</title>
+			<summary>Menu dynamique page 2</summary>
+		</page>
+	</group>
+</xmlindex>

@@ -1,0 +1,224 @@
+====================================================================
+XMLNuke
+Application Development Framework XML Based
+2006-06-18
+--------------------------------------------------------------------
+PHP5 Edition
+XMLNuke Author: João Gilberto Magalhães
+Developed by: João Gilberto Magalhães
+Acknowledgments to: Yuri Wanderley Bastos and Rafael Lima
+Version: 2.0 RC3
+====================================================================
+
+DOCUMENT CONTENTS:
+
+1. INFORMATIONS ABOUT THIS VERSION
+2. LICENCE
+3. PHP5 INSTALL UNDER LINUX
+4. PHP5 INSTALL UNDER FREEBSD
+5. PHP5 INSTALL UNDER WINDOWS
+6. POS-INSTALL
+7. XMLNUKE PHP5 INSTALL IN APACHE
+8. XMLNUKE PHP5 INSTALL IN IIS
+9. ANOTHER INFORMATIONS
+10. CONTACT
+
+
+
+
+
+
+
+
+1. INFORMATIONS ABOUT THIS VERSION
+
+
+This package contains all files necessaries to run XMLNuke PHP5 Edition
+and is fully funcional. This package is compatible with another XMLNuke
+versions under the same release and all documents produced by this 
+version or another XMLNuke versions are compatible it self.  
+
+This version are tested in Fedora Core 3  and 4, FreeBSD 5.4 and Windows XP.
+Current version is 2.0 RC1.
+
+Source files contains newer versions and are available only at CVS. 
+Visit Web site for more informations.
+
+XMLNuke project was created by Joao Gilberto Magalhaes.
+XMLNuke PHP5 Edition is maintained by Joao Gilberto Magalhaes
+Acknowledgments to Yuri Wanderley Bastos and Rafael Lima.
+
+Contributors for PHP5 Edition and another versions are welcome.
+Please visit the site.
+
+http://www.xmlnuke.com/
+
+
+
+2. LICENSE
+
+XMLNuke is developed under GPL License.
+
+
+3. PHP5 INSTALL UNDER LINUX
+
+3.1. Requirements
+
+- Any Linux Distribution. XMLNuke was tested in Fedora Core 3 and 4.
+- Apache 1.3 or Apache 2.0
+- PHP5 with XSLT enabled.
+
+3.2. PHP5 Installations using RPM
+
+You need install the follow packages (and dependencies):
+  - php-5.0.3-5.i386.rpm
+  - php-xml-5.0.3-5.i386.rpm
+  - php-gd
+
+3.3. PHP5 Installations using DEB
+
+You need install the follow packages (and dependencies):
+  - php5-xsl
+  - php5-gd
+
+
+3.4. PHP5 Installations from source code
+
+Compile the PHP5 with the follow options enabled: (more informations 
+visit http://www.php.net/manual/en/ref.xslt.php).
+
+	--enable-xslt  --with-xslt-sablot
+
+
+4. PHP5 INSTALL UNDER FREEBSD
+
+4.1. Requirements
+
+- FreeBSD
+- Ports Installed and Updated.
+
+4.2. PHP5 Install using ports
+
+Install follow packages through ports:
+  - www/mod_php5
+  - textproc/php5-xml
+  - textproc/php5-simplexml
+  - textproc/php5-xslt
+  - textproc/php5-dom
+  - www/php5-session
+  - devel/php5-pcre
+
+To install using ports, access the package directory, for example, 
+/usr/ports/www/mod_php5 and type:
+
+make install clean
+
+Repeat these procedure to all packages listed above.
+
+
+5. PHP5 INSTALL UNDER WINDOWS
+
+5.1. Requirements
+
+- Windows 2000, XP, NT4, Server
+- Internet Information Services (IIS)
+
+5.2. Install
+
+Install PHP5 follow instructions in: 
+http://www.php.net/manual/en/install.windows.php
+
+Edit the PHP.INI file. Find thew line ";extension=php_xsl.dll" and change it to
+"extension=php_xsl.dll" to support for the XSL extension in PHP5.
+
+
+6. POS-INSTALL
+
+Open the php.ini file and find line: 
+display_errors = Off 
+change to:
+display_errors = On
+
+and find also:
+error_reporting  =  E_ALL
+change to:
+error_reporting = E_ALL & ~E_NOTICE
+
+To check your install create a file called info.php in the web server 
+root folder with the follow contents: 
+
+<?php phpinfo(); ?>
+
+Open the page http://localhost/info.php and check if the follow PHP5
+extensions are present:
+- simplexml
+- dom
+- xsl
+- session
+- pcre
+- xml
+
+
+7. XMLNUKE PHP5 INSTALL IN APACHE
+
+Extract the contents of this package in any directory. For example:
+
+/data/xmlnuke
+
+IMPORTANT: You need to assign permissions for writing to directory 
+xmlnuke/data to the user who starts the XSP server. 
+
+Edit the httpd.conf file and add the follow lines:
+
+Alias /xmlnuke "/data/xmlnuke"
+<Directory "/data/xmlnuke">
+       AllowOverride none
+       Order allow,deny
+       Allow from all
+</Directory>
+
+
+
+8. XMLNUKE PHP5 INSTALL IN iis
+
+Extract the contents of this package in any directory. For example:
+
+C:\Data\XMLNuke
+
+IMPORTANT: You need to assign permissions for writing to directory 
+xmlnuke/data to the user who starts the XSP server.
+
+Follow this instructions:
+- Open the Windows Explorer
+- Right click on the "C:\Data\XMLNuke" directory
+- Select the Properties menu
+- Select the "Web Sharing" Tab. 
+- Select "Share This Folder" Option
+- Type any alias name in text box.
+- Click OK, and OK again.
+
+Try access XMLNuke sample web site typing in your browser:
+http://localhost/xmlnuke
+
+
+
+
+9. Other Informations
+
+9.1. Admin Tool
+
+The Default user and password to access admin tool is:
+Username: admin
+Password: pwd
+
+
+	
+10. CONTACT
+
+Contact the author or get new versions at 
+http://www.xmlnuke.com/
+
+XMLNuke was developed and is maintened by
+Joao Gilberto Magalhaes
+http://www.byjg.com.br/
+

@@ -1,0 +1,196 @@
+/*********************************************************************
+ * TITLE: Common Stylesheet for Tierra Verde                         * 
+ * URI  : http://www.oswd.org/design/???/tierraverde/sierraearth.css *
+ * MODIF: 2003-02-01 1904 +0800                                      *
+ *********************************************************************/
+
+
+/* ###### Body Text ###### */
+
+body {
+  font-family: verdana, tahoma, helvetica, arial, sans-serif;
+  font-size: 94%;
+  margin: 0;
+}
+
+h1, h2, h3 {
+  font-family: "trebuchet ms", verdana, tahoma, sans-serif;
+}
+
+h1 {
+  font-size: 156%;
+  font-weight: bold;
+  margin-top: 0.25em;
+}
+
+img {
+  border: none;
+}
+
+acronym {
+  border-bottom-style: dotted;
+  border-bottom-width: 1px;
+  cursor: help;
+}
+
+code {
+  font-family: "lucida console", monospace;
+  font-size: 95%;
+}
+
+dt {
+  font-weight: bold;
+}
+
+dd {
+  padding-bottom: 1.5em;
+}
+
+#bodyText {
+  text-align: justify;
+  line-height: 1.5em;
+  margin: 5mm 5mm 0 10.5em;
+  padding: 0 1em 1ex 1em;
+}
+
+#bodyText a:hover {
+  text-decoration: none;
+}
+
+#bodyText .boxedDark, #bodyText .boxedLight {
+  margin-bottom: 1em;
+  padding: 2ex 4ex;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.smallCaps {
+  font-variant: small-caps;
+}
+
+
+/* ###### Header ###### */
+
+#header {
+  height: 3em;
+  margin-bottom: 5mm;
+  padding: 0 2.5mm 0 4mm;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+}
+
+.headerTitle {
+  font-size: 205%;
+  text-decoration: none;
+  font-weight: bold;
+  font-style: italic;
+  line-height: 1.5em;
+}
+
+.headerTitle span {
+  font-weight: normal;
+}
+
+.menuBar {
+  font-size: 87%;
+  position: absolute;
+  right: 2ex;
+  top: 1.75em;
+}
+
+.menuBar * {
+  text-decoration: none;
+  font-weight: bold;
+  padding-left: 1ex;
+  padding-right: 2ex;
+}
+
+.menuBar a:hover {
+  /* See color-scheme.css */
+}
+
+
+/* ###### Side Box ###### */
+
+.sideBar {
+  font-size: 95%;
+  text-align: right;
+  width: 10em;
+  float: left;
+  clear: left;
+}
+
+.sideBarTitle {
+  font-weight: bold;
+  padding: 0.5ex 1em 0.5ex 0.5ex;
+  border-top-style: solid;
+  border-top-width: 1px;
+}
+
+.sideBar a, .sideBar a:hover, .sideBar span {
+  text-decoration: none;
+  line-height: 1.25em;
+  display: block;
+  padding: 1ex 1em 1ex 0.5ex;
+  border-top-style: solid;
+  border-top-width: 1px;
+}
+
+.sideBar a:hover {
+  /* See color-scheme.css */
+}
+
+.sideBar .sideBarText {
+  text-align: justify;
+  padding: 1ex 1.5ex;
+}
+
+.sideBar .thisPage {
+  font-weight: bold;
+}
+
+
+/* ###### Footer ###### */
+
+#footer {
+  padding: 1ex 4mm;
+  clear: left;
+}
+
+#footer div {
+  font-size: 85%;
+  text-align: right;
+  line-height: 1.25em;
+}
+
+#footer a {
+  text-decoration: none;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+}
+
+#footer a:hover {
+  /* See color-scheme.css */
+}
+
+.footerLHS {
+  float: left;
+  clear: left;
+}
+
+.subFooter {
+  font-size: 85%;
+  line-height: 1.25em;
+  padding: 1ex 4mm;
+}
+
+.subFooter a {
+  text-decoration: none;
+  margin-right: 1ex;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+}
+
+.subFooter a:hover {
+  /* See color-scheme.css */
+}

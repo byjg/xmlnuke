@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<anydataset>
+   <row>
+      <field name="LANGUAGE">en-us</field>
+      <field name="TITLE">Custom Setup</field>
+      <field name="DESCRIPTION">This option enables users to view global settings and update specific settings for the current site.</field>
+      <field name="UPDATED">Config Updated.</field>
+      <field name="FORMTITLE">XMLNuke Config Values</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">pt-br</field>
+      <field name="TITLE">Configurações Personalizadas</field>
+      <field name="DESCRIPTION">Esta opção possibilita ao usuário visualizar as configurações globais do XMLNuke e atualizar as configurações que são específicas para o site atual.</field>
+      <field name="UPDATED">Configurações Atualizadas.</field>
+      <field name="FORMTITLE">Valores de Configurações do XMLNuke</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">de-de</field>
+      <field name="TITLE">Spezifische Einstellungen</field>
+      <field name="DESCRIPTION">Sehen Sie sich globale Einstellungen an und nehmen spezifische Einstellungen für die aktuelle Seite vor.</field>
+      <field name="UPDATED">Konfiguration wurde aktualisiert.</field>
+      <field name="FORMTITLE">XMLNuke-Einstellungen</field>
+   </row>
+</anydataset>

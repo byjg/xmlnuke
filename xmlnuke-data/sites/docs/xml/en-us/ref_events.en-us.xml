@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Processing Events with the Click of a Button.</title>
+		<abstract>Processing Events with the Click of a Button.</abstract>
+		<created>Tue Nov 6 2007 1:40:57</created>
+		<modified>Wed Nov 19 2008 15:24:09</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>technicalref</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Processing Events with the Click of a Button.</title>
+		<body>
+			<p>With XMLNuke,buttons capable of setting off events when the buttons are pressed can be created. These will be processed directly to the server and automatically.</p>
+			<p>The following steps must be followed to do this: 
+<ol>
+<li>1.Indicate in the beginning of CreatePage() or within Setup() that you want to process events in the module through the processEvent() method</li>
+<li>1.Add a button to the form which will set off an event.</li>
+<li>1.Create the method that will process the event.</li>
+</ol></p>
+			<p>
+				<code information="Example in CSharp"><![CDATA[
+public override IXmlnukeDocument CreatePage()
+{
+	// Call this method within SETUP() or in the beginning of CREATEPAGE()
+	// If this method is not executed the events will not be set off.
+	this.processEvent();
+	.
+	.
+	.
+	XmlFormCollection form = new XmlFormCollection(this._context, "module:sample", "Exemplo");
+	XmlInputButtons button = new XmlInputButtons();
+	// In this example, a button will be added which will set off the Method_Event()
+	button.addClickEvent("Teste Evento", "Metodo");
+}
+.
+.
+.
+/// <summary>
+/// Method which will execute the event defined above.
+/// </summary>
+public void Metodo_Event()
+{
+	Debug.Print("Event fired");
+}
+
+]]></code>
+			</p>
+			<p>
+				<code information="Example in PHP"><![CDATA[
+public function CreatePage() 
+{
+	// Call this method within SETUP() or in the beginning of CREATEPAGE()
+	// If this method is not executed the events will not be set off.
+	$this->processEvent();
+	.
+	.
+	.
+	$form = new XmlFormCollection($this->_context, "module:sample", "Exemplo");
+	$button = new XmlInputButtons();
+	// In this example, a button will be added which will set off the Method_Event()
+	$button->addClickEvent("Teste Evento", "Metodo");
+}
+.
+.
+.
+/**
+@desc Method which will execute the event defined above.
+*/
+public function Metodo_Event()
+{
+	Debug::PrintValue("Event fired");
+}
+
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+</page>

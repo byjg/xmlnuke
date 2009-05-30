@@ -1,0 +1,32 @@
+﻿<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>XMLNuke Send e-Mail</title>
+		<abstract>XMLNuke Send e-Mail</abstract>
+		<created>16/1/2004 16:20:03</created>
+		<modified>16/01/2004 16:20:03</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword>all</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Envoyer un email</title>
+		<body>
+			<p>Cette page utilise le module de personnalisation 'sendmail' présent par défaut dans l'installation de XMLNuke. Vous pouvez créer un nouveau formulaire, qui fera le POST vers la page d'envoi de mail.
+</p>
+			<p>
+				<editform action="module:sendemail" title="Renseignez les champs ci-dessous" name="formemail" jsvalidate="true">
+					<textbox name="name" caption="Nom" value="" size="30" required="true" type="0" />
+					<textbox name="email" caption="Email" value="" size="30" required="true" type="10" />
+					<textbox name="subject" caption="Sujet" value="" size="40" required="true" type="0" />
+					<memo name="message" caption="Message" cols="40" rows="5"></memo>
+					<hidden name="toname_id" value="DEFAULT" />
+					<imagevalidate caption="Type the text bellow: " />
+					<buttons>
+						<submit caption="Envoyer" />
+						<reset caption="Reset" />
+					</buttons>
+				</editform>
+			</p>
+		</body>
+	</blockcenter>
+</page>

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<anydataset>
+   <row>
+      <field name="LANGUAGE">en-us</field>
+      <field name="TITLE">Edit Language Files</field>
+      <field name="DESCRIPTION">Use this option to edit the language files used in modules.</field>
+      <field name="LANGUAGEMENU">New Language File</field>
+      <field name="WORKINGAREA">Module Languages Available</field>
+      <field name="MESSAGEWORKING">Select the module language you want to edit.</field>
+      <field name="MESSAGEWORKINGSHARED">Shared Language Files</field>
+      <field name="EDITINGAREA">Edit Language</field>
+      <field name="SAVED">Saved.</field>
+      <field name="FORMTITLE">Editing File "{0}"</field>
+      <field name="LANGUAGEFILE">Language File:</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">pt-br</field>
+      <field name="TITLE">Editar aquivos de Linguagem</field>
+      <field name="DESCRIPTION">Utilize essa opção para editar os arquivos de linguagem utilizados nos módulos de programas.</field>
+      <field name="LANGUAGEMENU">Novo arquivo de linguagem</field>
+      <field name="WORKINGAREA">Arquivos de Linguagem Disponíveis</field>
+      <field name="MESSAGEWORKING">Selecione os arquivos de linguagem que você quer editar.</field>
+      <field name="MESSAGEWORKINGSHARED">Arquivos de linguagem compartilhados</field>
+      <field name="EDITINGAREA">Editar Arquivo de Linguagem</field>
+      <field name="SAVED">Salvo.</field>
+      <field name="FORMTITLE">Editando arquivo "{0}"</field>
+      <field name="LANGUAGEFILE">Arquivo de Linguagem: </field>
+   </row>
+   <row>
+      <field name="LANGUAGE">de-de</field>
+      <field name="TITLE">Sprach-Dateien bearbeiten</field>
+      <field name="DESCRIPTION">Bearbeiten Sie die Spach-Dateien, die von XMLNuke benutzt werden und erstellen Sie neue.</field>
+      <field name="LANGUAGEMENU">Neue Sprach-Datei</field>
+      <field name="WORKINGAREA">Sprach-Dateien</field>
+      <field name="MESSAGEWORKING">Wählen Sie die Datei, die Sie bearbeiten möchten.</field>
+      <field name="MESSAGEWORKINGSHARED">Verfügbare Dateien</field>
+      <field name="EDITINGAREA">Datei bearbeiten</field>
+      <field name="SAVED">Datei wurde gespeichert.</field>
+      <field name="FORMTITLE">{0}</field>
+      <field name="LANGUAGEFILE">Dateiname:</field>
+   </row>
+</anydataset>

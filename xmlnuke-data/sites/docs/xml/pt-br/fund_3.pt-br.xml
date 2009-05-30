@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>A classe FilenameProcessor</title>
+		<abstract>Como acessar arquivos através do XMLNuke</abstract>
+		<created>15/8/2006 13:09:30</created>
+		<modified>15/8/2006 14:04:35</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_xmlnukeconcepts</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>A Classe FilenameProcessor</title>
+		<body>
+			<p>O XMLNuke por manipular documentos XML tem que frequentemente abrir arquivos texto. Para abrir um arquivo é necessário fornecer o seu caminho completo, bem como o nome e extensão. Entretanto, como o XMLNuke é multi-sites, o caminho do arquivo irá mudar a depender do site. </p>
+			<p>A Classe FilenameProcessor oferece então TODOS os mecanismos para que o arquivo seja localizado, como por exemplo, seu caminho completo e a sua extensão. A classe também é capaz de determinar se o arquivo será localizado na pasta pública ou privada do mecanismo, fornecendo ao programado TOTAL independencia do Sistema Operacional. </p>
+			<p>A classe FilenameProcessor é abstrata. Portanto existem um conjunto de classes que herdam as suas funcionalidades e implementam detalhes específicos sobre extensão e localização no sistema de arquivos</p>
+			<p>Essa técnica é bastante interessante pois mudanças em estruturas de diretórios não implicam em mudanças na aplicação. O próprio XMLNuke ao mudar sua versão principal  de 1.0 para 2.0 sofreu extensas mudanças estruturais, porém as classes já desenvolvidas sequer foram mexidas</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Exemplo de utilização</title>
+		<body>
+			<p>
+A classe FilenameProcessor conhece apenas o SingleName de um arquivo. Um SingleName é o nome ao qual devemos referenciar este arquivo. Não deve possuir caminho nem extensão, pois é o FilenameProcessor quem deve se encarregar de fornecer esses elementos. </p>
+			<p>Para abrir um arquivo XML, por exemplo, cujo o SingleName seja HOME devemos utilizar a seguinte sequencia de comandos:
+<code information="CSharp"><![CDATA[
+// using com.xmlnuke.processor;
+
+XMLFilenameProcessor arq = new XMLFilenameProcessor("home", this._context);
+
+this._context.Debug(arq.FullQualifiedNameAndPath());
+
+]]></code><code information="PHP"><![CDATA[
+$arq = new XMLFilenameProcessor("home", $this->_context);
+
+FileUtil->Debug(arq.FullQualifiedNameAndPath());
+
+]]></code></p>
+		</body>
+	</blockcenter>
+</page>

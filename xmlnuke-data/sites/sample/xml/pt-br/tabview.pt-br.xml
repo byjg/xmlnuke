@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Visualização em Abas</title>
+		<abstract>Exemplo de agrupamento de controles visuais exibidos através de abas</abstract>
+		<created>24/4/2008 22:49:59</created>
+		<modified>25/4/2008 00:58:31</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>all</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Visualização em Abas</title>
+		<body>
+			<p>O XMLNuke permite visualizar as informações organizadas em abas. Veja o código e o exemplo abaixo:</p>
+			<p>
+				<code information="Código da visualização em abas"><![CDATA[
+<tabview>
+   <tabitem title="1">
+      <p>Esse é o dado da Aba 1</p>
+   </tabitem>
+   <tabitem title="2">
+      <p>Esse é o dado da Aba 2</p>
+   </tabitem>
+   <tabitem title="3">
+      <p>Esse é o dado da Aba 3</p>
+   </tabitem>
+</tabview>
+]]></code>
+			</p>
+			<tabview>
+				<tabitem title="1">
+					<p>Esse é o dado da Aba 1</p>
+				</tabitem>
+				<tabitem title="2">
+					<p>Esse é o dado da Aba 2</p>
+				</tabitem>
+				<tabitem title="3">
+					<p>Esse é o dado da Aba 3</p>
+				</tabitem>
+			</tabview>
+		</body>
+	</blockcenter>
+</page>

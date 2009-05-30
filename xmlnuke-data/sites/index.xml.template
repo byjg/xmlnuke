@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<xmlindex>
+	<group>
+		<id>main</id>
+		<title>Main Group / Grupo Principal</title>
+		<keyword>main_keyword</keyword>
+		<page>
+			<id>home</id>
+			<title>Put your title here</title>
+			<summary>Put page abstract informations here</summary>
+		</page>
+	</group>
+</xmlindex>

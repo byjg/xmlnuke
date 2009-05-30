@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+  <meta>
+    <title>FAQ-Beispiel</title>
+    <abstract>Diese Beispiel-Seite demonstriert wie das FAQ-Modul funktioniert.</abstract>
+    <created>Mon Oct 23 2006 1:22:16</created>
+    <modified>Mon Oct 23 2006 1:26:45</modified>
+    <keyword>xmlnuke</keyword>
+    <groupkeyword>-</groupkeyword>
+  </meta>
+  <blockcenter>
+    <title>FAQ-Beispiel</title>
+    <body>
+      <p>
+         <faq title="Dies ist ein Test">
+            <item question="Frage 1">
+              Antwort zu Frage 1
+            </item>
+            <item question="Frage 2">
+              Antwort zu Frage 2
+            </item>
+         </faq>
+      </p>
+    </body>
+  </blockcenter>
+</page>

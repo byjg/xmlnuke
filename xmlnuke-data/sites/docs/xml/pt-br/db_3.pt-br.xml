@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>A interface IIterator e os objetos de acesso a dados padronizado</title>
+		<abstract>O método padronizado de acessar qualquer fonte de dados através da interface IIterator e os objetos de acesso a dados existentes no XMLNuke</abstract>
+		<created>4/2/2008 15:54:20</created>
+		<modified>4/2/2008 16:42:26</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>bdref</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>A Interface IIterator</title>
+		<body>
+			<p>No Xmlnuke todas as estruturas de acesso a dados possuem um método idêntico para percorrer seus registros. Não importa a sua origem, se é XML, Banco de Dados, arquivos .CSV, etc, todos eles implementam a interface IIterator. A interface possui os seguintes métodos:
+<ul><li><b>hasNext()</b> - retorna true ou false e indica se ainda existem registros na estrutura que está sendo percorrida.</li><li><b>moveNext()</b> - retorna um objeto do tipo SingleRow que representa os campos e dados de um registro</li></ul></p>
+			<p>Todos os objetos do Xmlnuke que manipulam ou se utilizam de alguma fonte de dados recebem um IIterator como forma padrão para percorrer esses dados.
+</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>O objeto SingleRow</title>
+		<body>
+			<p>O objeto SingleRow representa um "registro", ou um agrupamento de dados de uma mesma instância. Cada registro percorrido com o método moveNext() da interface IIterator gera um objeto do tipo SingleRow. O objeto SingleRow tem basicamente os seguintes métodos:
+<ul><li><b>getField(name)</b> - obtém o valor de um determinado campo</li><li><b>getFieldArray(name)</b> - obtém um array com todos os dados do campo "name" para aquele registro. É importante observar que o objeto SingleRow é na verdade uma abstração para um XML e não necessariamente para um banco de dados relacional. Sendo assim, um campo, pode em alguns casos, ter mais de valor.</li><li><b>getFieldNames()</b> - Obtém todos os nomes de campos </li><li><b>getDomObject()</b> - Obtém o objeto DOM para ser manipulado</li></ul>
+Observação inportante: O objeto SingleRow possui métodos para modificar os valores, adicionar ou remover campos, porém ele sensibiliza apenas o objeto <a href="engine:xmlnuke?xml=technicalref_3">AnyDataSet</a>.</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>As classes de acesso a dados no XMLNuke</title>
+		<body>
+			<p>O Xmlnuke possui diversas classes para acessar e manipular dados. Apesar das fontes de dados existirem em diversos formatos, para o programador necessário conhecer apenas a interface IIterator e o objeto SingleRow. As fontes de dados estão listadas a seguir:
+
+<table style="font-family: verdana; font-size: 11px"><tr style="background: silver; font-weight: bold"><td>Classe</td><td>Fonte de Dados</td><td>Acesso</td><td>Xmlnuke Engine</td><td>Observações</td></tr><tr><td style="background: silver; font-weight: bold">AnyDataSet</td><td>XML Pré-Definido</td><td>Leitura/Escrita</td><td>PHP5/CSharp</td><td>Disponível em todas as versões do XMLNuke. Pode servir como um pequeno repositório de dados e não requer maiores configurações. Não serve para acesso concorrente e muitos registros.</td></tr><tr><td style="background: silver; font-weight: bold">DBDataSet</td><td>Banco de Dados Relacional</td><td>Leitura/Escrita</td><td>PHP5/CSharp</td><td>Os banco de dados e versões suportadas podem ser acessadas <a href="engine:xmlnuke?xml=bd_1">aqui</a>. O método de leitura e escrita deve ser feito através de comandos SQL. Suporta transação e parâmetros.</td></tr><tr><td style="background: silver; font-weight: bold">ArrayDataSet</td><td>Array</td><td>Leitura</td><td>PHP5/CSharp</td><td>Na versão CSharp a classe é capaz de percorrer um objeto do tipo NameValueCollection. Na versão PHP percorre qualquer array.</td></tr><tr><td style="background: silver; font-weight: bold">DSDataSet</td><td>DataSet .NET</td><td>Leitura</td><td>CSharp</td><td>É capaz de percorrer de forma padronizada um DataSet em .NET.</td></tr><tr><td style="background: silver; font-weight: bold">SocketDataSet</td><td>Stream texto em conexões Socket.</td><td>Leitura</td><td>PHP5</td><td>Conecta através do fsocketopen() e lê um stream de dados. É necessário fornecer um separador de linha e coluna para determinar os registros e colunas</td></tr><tr><td style="background: silver; font-weight: bold">TextFileDataSet</td><td>Documentos Texto Delimitados</td><td>Leitura</td><td>PHP5/CSharp</td><td>Abre um documento texto e permite percorrer ele através do IIterator. A quebra de linha é o delimitador de registro e para delimitar os campos é necessário fornecer uma expressão regular. O objeto possui por padrão a expressão regular para os documentos .CSV gerados pelo Excel.</td></tr><tr><td style="background: silver; font-weight: bold">XmlDataSet</td><td>XML</td><td>Leitura</td><td>PHP5/CSharp</td><td>Permite percorrer um documento XML de forma padronizada. Deve ser fornecido um XPATH para determinar os registros e uma coleção de XPATH (relativos ao XPATH da linha) para determinar os campos. Pode ser informado atributos ou nó textos.</td></tr></table></p>
+		</body>
+	</blockcenter>
+</page>

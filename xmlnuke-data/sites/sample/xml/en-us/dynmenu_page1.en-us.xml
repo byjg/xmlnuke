@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Dynamic Menus</title>
+		<abstract>Dynamic Menus Page One</abstract>
+		<created>13/05/2002 20:45:49</created>
+		<modified>13/05/2002 20:57:47</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword>grpdynmenu</groupkeyword>
+		<keyword>Your First Keyword</keyword>
+		<keyword>Your Second Keyword and so on</keyword>
+	</meta>
+	<blockcenter>
+		<title>This is a Page One</title>
+		<body>
+			<p>Ok. Click on 'Page Two'</p>
+		</body>
+	</blockcenter>
+</page>

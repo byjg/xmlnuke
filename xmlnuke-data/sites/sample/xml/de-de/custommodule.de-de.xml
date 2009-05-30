@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Spezifischen Module</title>
+		<abstract>Mit spezifischen Modulen arbeiten.</abstract>
+		<created>13/05/2002 21:18:26</created>
+		<modified>08/06/2005 21:22:11</modified>
+		<keyword>XMLSeite ByJG</keyword>
+		<groupkeyword />
+		<keyword>Ihr erstes Stichwort</keyword>
+		<keyword>Ihr zweites Stichwort und so weiter</keyword>
+	</meta>
+	<blockcenter>
+		<title>Mit spezifischen Modulen arbeiten</title>
+		<body>
+			<p>XMLNuke kann mit spezifischen Modulen arbeiten. Spezifische Module sind Skript-Seiten (ASP, PHP, JAVA), geschrieben in der Sprache des Engine-Kerns. Spezifische Module können Ihre Seite um weitere Fähigkeiten erweitern.</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Funktionen</title>
+		<body>
+			<p>Die XMLNuke-Engine bietet viele integrierte Funktionen um die Erstellung spezifischer Module zu erleichtern. Klassen um XML-Seiten zu abstrahieren, AnyDataSet (z.B. Gästebuch), viele Funktionen und mehr.</p>
+		</body>
+	</blockcenter>
+</page>

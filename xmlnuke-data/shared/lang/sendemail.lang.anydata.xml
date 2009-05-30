@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<anydataset>
+  <row>
+    <field name="LANGUAGE">en-us</field>
+    <field name="TITLE">XMLNuke email send from {0} - Response</field>
+    <field name="ABSTRACT">XMLNuke email send from {0}</field>
+    <field name="TITRESP">Mail send request response</field>
+    <field name="ERRORBLANK">is blank</field>
+    <field name="ERRORINVALID">is invalid</field>
+    <field name="FLDSUBJECT">Subject</field>
+    <field name="MSGERROR">The following errors were found. Please correct them</field>
+    <field name="MSGOK">Email has been sent. You will receive a copy of this mail.</field>
+    <field name="RETRYVALIDATE">In order to send am email you must enter the text showed in the box correctly. This is case sensitive.</field>
+    <field name="RETRY">Retry</field>
+  </row>
+  <row>
+    <field name="LANGUAGE">pt-br</field>
+    <field name="TITLE">XMLNuke Enviar email do site {0} - Resposta</field>
+    <field name="ABSTRACT">XMLNuke Enviar email do site {0} - Resposta</field>
+    <field name="TITRESP">Resposta à solicitação de envio de email</field>
+    <field name="ERRORBLANK">está em branco</field>
+    <field name="ERRORINVALID">é inválido</field>
+    <field name="FLDSUBJECT">Assunto</field>
+    <field name="MSGERROR">Os seguintes erros foram encontrados. Por favor conserte-os.</field>
+    <field name="MSGOK">O email foi enviado. Você estará recebendo uma cópia desse e-mail.</field>
+    <field name="RETRYVALIDATE">Para enviar um email você precisa digitar o texto correto existente na caixa de imagem abaixo. O texto é sensível a maiúsculas e minúsculas.</field>
+    <field name="RETRY">Tentar de novo.</field>
+  </row>
+  <row>
+    <field name="LANGUAGE">de-de</field>
+    <field name="TITLE">XMLNuke E-Mail gesendet von {0} - Antwort</field>
+    <field name="ABSTRACT">XMLNuke E-Mail gesendet von {0}</field>
+    <field name="TITRESP">E-Mail Antwort-Anforderung</field>
+    <field name="ERRORBLANK">ist leer</field>
+    <field name="ERRORINVALID">ist ungültig</field>
+    <field name="FLDSUBJECT">Betreff</field>
+    <field name="MSGERROR">Folgende Fehler wurden gefunden. Bitte beheben Sie diese.</field>
+    <field name="MSGOK">E-Mail wurde gesendet. Sie werden eine Kopie dieser E-Mail erhalten.</field>
+    <field name="RETRYVALIDATE">Um eine E-Mail zu senden müssen Sie den Text aus dem nebenstehenden Bild korrekt eingeben. Groß- und Kleinschreibung beachten.</field>
+    <field name="RETRY">Wiederholen</field>
+  </row>
+</anydataset>

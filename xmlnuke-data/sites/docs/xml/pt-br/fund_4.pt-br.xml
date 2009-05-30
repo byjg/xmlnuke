@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>A classe LanguageCollection</title>
+		<abstract>Utilizar um dicionário de palavras para auxiliar na internacionalização dos módulos</abstract>
+		<created>15/8/2006 13:11:09</created>
+		<modified>Sat Sep 8 2007 16:35:15</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_xmlnukeconcepts</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>A classe LanguageCollection</title>
+		<body>
+			<p>Para dar suporte à internacionalização nos módulos de usuário era necessário criar uma classe que pudesse manipular um pequeno dicionário de dados de forma eficiente. A classe LanguageCollection apenas carrega em memória as palavras do dicionário da linguagem que está selecionada.</p>
+			<p>Por exemplo, para criar manualmente um dicionário de palavras:
+<code information="CSharp"><![CDATA[
+// using com.xmlnuke.international;
+
+LanguageCollection myWords = new LanguageCollection(this._context);
+// English Words
+myWords.addText("en-us", "TITLE", "Module Download");
+myWords.addText("en-us", "ABSTRACT", "Abstract for this module {0}");
+
+// Portuguese Words
+myWords.addText("pt-br", "TITLE", "Módulo de Download");
+myWords.addText("pt-br", "ABSTRACT", "Resumo para este módulo {0}");
+]]></code><code information="PHP"><![CDATA[
+$myWords = new LanguageCollection($this->_context);
+// English Words
+$myWords->addText("en-us", "TITLE", "Module Download");
+$myWords->addText("en-us", "ABSTRACT", "Abstract for this module {0}");
+
+// Portuguese Words
+$myWords->addText("pt-br", "TITLE", "Módulo de Download");
+$myWords->addText("pt-br", "ABSTRACT", "Resumo para este módulo {0}");
+]]></code></p>
+			<p>
+Para utilizar uma palavra definida no dicionário:
+
+<code information="CSharp"><![CDATA[
+this._myWords.Value("TITLE")
+// ou
+this._myWords.Value("ABSTRACT", new string[]{"VALOR"})
+]]></code><code information="PHP"><![CDATA[
+$this->_myWords.Value("TITLE")
+// ou
+this._myWords.Value("ABSTRACT", array("VALOR"))
+]]></code></p>
+			<p>
+Nós módulos as palavras no LanguageCollection são lidas de um arquivo de configuração. Esse arquivo de configuração reside na pasta LANG dentro de Shared ou do próprio site. A prioridade é abrir os arquivos do próprio site. 
+</p>
+			<p>
+O nome do arquivo é definido como sendo o nome do módulo incluindo o seu namespace. Por exemplo: Ao executar o módulo "namespace.modulo" o nome do arquivo de linguagem deve ser: "namespace-modulo.lang.anydata.xml". Uma vez lido o arquivo pode-se utilizar normalmente, como visto anteriormente.
+
+<code information="Exemplo de Arquivo de Linguagem"><![CDATA[
+<anydataset>
+  <row>
+    <field name="LANGUAGE">en-us</field>
+    <field name="TITLE">XmlNuke - Download Area</field>
+    <field name="ABSTRACT">Download Area</field>
+    <field name="BLOCKTITLE">Download Area</field>
+    <field name="FORMTITLE">Download Informations</field>
+  </row>
+  <row>
+    <field name="LANGUAGE">pt-br</field>
+    <field name="TITLE">XmlNuke - Área de Download</field>
+    <field name="ABSTRACT">Área de Download</field>
+    <field name="BLOCKTITLE">Área de Download</field>
+    <field name="FORMTITLE">Informações para Download</field>
+  </row>
+</anydataset>
+
+]]></code></p>
+		</body>
+	</blockcenter>
+</page>

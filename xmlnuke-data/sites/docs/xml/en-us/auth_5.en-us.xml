@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>How to create your own validation mechanism</title>
+		<abstract>Describes how to create your own authentication mechanism, whether using roles or not.</abstract>
+		<created>15/8/2006 15:39:39</created>
+		<modified>Wed Feb 4 2009 0:20:53</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_auth</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>How to authenticate a user through other data sources?
+</title>
+		<body>
+			<p>With XMLNuke, it is possible to authenticate users through any source OR mechanism for accessing data. As an example, this means that it is possible to authenticate through an LDAP tree, or perform a personalized authentication that already exists through a system.</p>
+
+			<p>Some important steps must be performed to do this: 
+
+<ul><li>Find out how a user is recognized through XMLNuke. Users have a few basic characteristics (name, username, password, etc.) roles (1-N) and metadata (1-N). To find out more, read "<a href="engine:xmlnuke?xml=auth_2">Finding out more about a user</a>"</li>
+<li>Create a class that implements the IUsersBase interface. Note that all of the methods from this interface manipulate (for reading and writing) the users data, as well as their basic data, like the metadata. <b>The class must have a constructor that receives two parameters: engine.Context and connection string.</b></li>
+<li>After this class is created, your module must know that it will use this connection. set in "xmlnuke.USERSCLASS" the full namespace to locate the class created.</li>
+<li>Optionally modify xmlnuke.USERSDATABASE to inform the connection string of this class</li>
+<li>See more details <a href="engine:xmlnuke?xml=auth_2">here</a></li>
+</ul></p>
+		</body>
+	</blockcenter>
+</page>

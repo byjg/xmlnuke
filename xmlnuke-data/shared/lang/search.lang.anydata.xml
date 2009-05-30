@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<anydataset>
+  <row>
+    <field name="LANGUAGE">en-us</field>
+    <field name="TITLE">Search Site {0}</field>
+    <field name="ABSTRACT">Search for words in website</field>
+    <field name="PAGETITLE">Search for words in website</field>
+    <field name="PAGETEXT">Search for words explanation</field>
+    <field name="CAPTION">Search</field>
+    <field name="BLOCKSEARCH">Search Filter</field>
+    <field name="txtSearch">Search For: </field>
+    <field name="chkAll">Search one or more words</field>
+    <field name="BLOCKRESULT">Search Result</field>
+    <field name="NOTITLE">No Title</field>
+    <field name="VIEWXML">XML</field>
+    <field name="NOTFOUND">No documents were found.</field>
+    <field name="DOCFOUND">{0} documents were found.</field>
+    <field name="SUBMIT">Submit</field>
+  </row>
+  <row>
+    <field name="LANGUAGE">pt-br</field>
+    <field name="TITLE">Procurar no site {0}</field>
+    <field name="ABSTRACT">Procurar por palavras no site</field>
+    <field name="PAGETITLE">Palavras a pesquisar</field>
+    <field name="PAGETEXT">Você poderá pesquisar palavras existentes nos páginas do WebSite. Esse mecanismo não efetua busca nos módulos, documentos ou imagens do site.</field>
+    <field name="CAPTION">Search</field>
+    <field name="BLOCKSEARCH">Critérios de Pesquisa</field>
+    <field name="txtSearch">Procurar Por: </field>
+    <field name="chkAll">Localizar qualquer uma das palavras</field>
+    <field name="BLOCKRESULT">Resultado da pesquisa</field>
+    <field name="NOTITLE">Sem título</field>
+    <field name="VIEWXML">XML</field>
+    <field name="NOTFOUND">Nenhum documento foi localizado</field>
+    <field name="DOCFOUND">{0} documentos foram encontrados.</field>
+    <field name="SUBMIT">Buscar</field>
+  </row>
+  <row>
+    <field name="LANGUAGE">de-de</field>
+    <field name="TITLE">{0} durchsuchen</field>
+    <field name="ABSTRACT">Internetseite durchsuchen</field>
+    <field name="PAGETITLE">Internetseite durchsuchen</field>
+    <field name="PAGETEXT">Durchsuchen Sie die Seite nach einem oder mehreren Begriffen.</field>
+    <field name="CAPTION">Suche</field>
+    <field name="BLOCKSEARCH">Such-Filter</field>
+    <field name="txtSearch">Suche nach: </field>
+    <field name="chkAll">Suche irgendeines der Worte</field>
+    <field name="BLOCKRESULT">Suchergebnis(se)</field>
+    <field name="NOTITLE">Kein Titel</field>
+    <field name="VIEWXML">XML</field>
+    <field name="NOTFOUND">Es wurden keine Dokumente gefunden.</field>
+    <field name="DOCFOUND">{0} Dokument(e) gefunden.</field>
+    <field name="SUBMIT">Suche</field>
+  </row>
+</anydataset>

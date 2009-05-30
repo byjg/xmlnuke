@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<anydataset>
+   <row>
+      <field name="LANGUAGE">en-us</field>
+      <field name="WORKINGAREA">Working Area</field>
+      <field name="TXT_ADD">Add</field>
+      <field name="TXT_BACK">Go Back</field>
+      <field name="TXT_CANCEL">Cancel</field>
+      <field name="TXT_CHANGE">Change</field>
+      <field name="TXT_CONFIRM">Confirm</field>
+      <field name="TXT_CREATE">Create</field>
+      <field name="TXT_DELETE">Delete</field>
+      <field name="TXT_EDIT">Edit</field>
+      <field name="TXT_EMAIL">Email</field>
+      <field name="TXT_LOGIN">Login</field>
+      <field name="TXT_NAME">Name</field>
+      <field name="TXT_NEW">New Item</field>
+      <field name="TXT_PASSWORD">Password</field>
+      <field name="TXT_REMOVE">Remove</field>
+      <field name="TXT_SAVE">Save</field>
+      <field name="TXT_SUBMIT">Submit</field>
+      <field name="TXT_VIEW">View</field>
+      <field name="TXT_UPDATE">Update</field>
+      <field name="LABEL_CONTENT">Content: </field>
+      <field name="LABEL_EMAIL">Email: </field>
+      <field name="LABEL_LOGIN">Login: </field>
+      <field name="LABEL_MESSAGE">Message: </field>
+      <field name="LABEL_NAME">Name: </field>
+      <field name="LABEL_PASSWORD">Password: </field>
+   </row>
+   <row>
+      <field name="LANGUAGE">pt-br</field>
+      <field name="WORKINGAREA">Área de Trabalho</field>
+      <field name="TXT_ADD">Adicionar</field>
+      <field name="TXT_BACK">Voltar</field>
+      <field name="TXT_CANCEL">Cancelar</field>
+      <field name="TXT_CHANGE">Modificar</field>
+      <field name="TXT_CONFIRM">Confirmar</field>
+      <field name="TXT_CREATE">Criar</field>
+      <field name="TXT_DELETE">Apagar</field>
+      <field name="TXT_EDIT">Editar</field>
+      <field name="TXT_EMAIL">Email</field>
+      <field name="TXT_LOGIN">Login</field>
+      <field name="TXT_NAME">Nome</field>
+      <field name="TXT_NEW">Novo Item</field>
+      <field name="TXT_PASSWORD">Senha</field>
+      <field name="TXT_REMOVE">Remover</field>
+      <field name="TXT_SAVE">Salvar</field>
+      <field name="TXT_SUBMIT">Enviar Dados</field>
+      <field name="TXT_VIEW">Visualizar</field>
+      <field name="TXT_UPDATE">Atualizar</field>
+      <field name="LABEL_CONTENT">Conteúdo: </field>
+      <field name="LABEL_EMAIL">Email: </field>
+      <field name="LABEL_LOGIN">Login: </field>
+      <field name="LABEL_MESSAGE">Mensagem: </field>
+      <field name="LABEL_NAME">Nome: </field>
+      <field name="LABEL_PASSWORD">Senha: </field>
+   </row>
+   <row>
+      <field name="LANGUAGE">de-de</field>
+      <field name="WORKINGAREA">Arbeitsbereich</field>
+      <field name="TXT_ADD">Hinzufügen</field>
+      <field name="TXT_BACK">Zurück</field>
+      <field name="TXT_CANCEL">Abbrechen</field>
+      <field name="TXT_CHANGE">Ändern</field>
+      <field name="TXT_CONFIRM">Bestätigen</field>
+      <field name="TXT_CREATE">Erstellen</field>
+      <field name="TXT_DELETE">Löschen</field>
+      <field name="TXT_EDIT">Bearbeiten</field>
+      <field name="TXT_EMAIL">E-Mail</field>
+      <field name="TXT_LOGIN">Anmelden</field>
+      <field name="TXT_NAME">Name</field>
+      <field name="TXT_NEW">Neuer Eintrag</field>
+      <field name="TXT_PASSWORD">Passwort</field>
+      <field name="TXT_REMOVE">Entfernen</field>
+      <field name="TXT_SAVE">Speichern</field>
+      <field name="TXT_SUBMIT">Senden</field>
+      <field name="TXT_VIEW">Ansehen</field>
+      <field name="TXT_UPDATE">Aktualisieren</field>
+      <field name="LABEL_CONTENT">Inhalt: </field>
+      <field name="LABEL_EMAIL">E-Mail: </field>
+      <field name="LABEL_LOGIN">Login: </field>
+      <field name="LABEL_MESSAGE">Nachricht: </field>
+      <field name="LABEL_NAME">Name: </field>
+      <field name="LABEL_PASSWORD">Passwort: </field>
+   </row>
+</anydataset>

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<project name="XMLNuke CSharp Edition" default="build" basedir=".">
+
+	<description>XMLNuke</description>    
+	<property name="debug" value="true"/>
+	<property name="basedir" value="." />
+	<property name="src.dir" value="${basedir}/src" />
+	<property name="aspx.dir" value="${basedir}/aspx" />
+	<property name="web.dir" value="${basedir}/web" />
+	<property name="build.dir" value="${web.dir}/bin" />
+
+	<target name="clean" description="remove all generated files">
+	        <delete file="HelloWorld.exe" failonerror="false"/>
+	        <delete file="HelloWorld.pdb" failonerror="false"/>
+		<delete dir="${build.dir}" />
+	</target>
+	
+	<target name="init">
+		<mkdir dir="${web.dir}" />
+		<mkdir dir="${build.dir}" />
+	</target>
+
+	<target name="build" description="compiles the source code">
+		<csc target="exe" output="${build.dir}/com.xmlnuke.dll" debug="${debug}">
+	            <references>
+	                <includes name="${src.dir}/*.cs"/>
+	            </references>
+	            <sources>
+	                <includes name="${src.dir}/*.cs"/>
+	            </sources>
+		</csc>
+	</target>
+
+</project>
+

@@ -1,0 +1,134 @@
+﻿<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Características e Vantagens ao usar o XMLNuke</title>
+		<abstract>Este artigo demonstra as características e vantagens de se utilizar o XMLNuke</abstract>
+		<created>19/9/2005 14:46:18</created>
+		<modified>19/9/2005 15:02:39</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>whytouse_key</groupkeyword>
+		<revision>$Revision: 1.1 $</revision>
+	</meta>
+	<blockcenter>
+		<title></title>
+		<body>
+			<p>O XMLNuke é um Framework de desenvolvimento de aplicativos integrado a um Gerenciador de Conteúdos para sites na Internet. O grande diferencial do XMLNuke, e que o torna único dentre outros frameworks, está no fato de todo o resultado produzido pelo XMLNuke ser tratado como XML. </p>
+			<p>Atualmente, o XML vem sendo a palavra de ordem em todos os produtos de softwares do mercado. Entretanto, todos utilizam o XML como um mero arquivo de configuração ou para troca segura de informações. O XMLNuke utiliza o XML como uma fonte inesgotável para dados semi-estruturados, utilizando na prática todo o potencial que a separação de dados e apresentação pode oferecer. O XMLNuke não manipula apenas arquivos XML estáticos vinculados a um arquivo de transformação, mas oferece diversos recursos, classes e funcionalidades que possibilitam um desenvolvimento robusto e eficiente de aplicações.</p>
+			<p>Abaixo, seguem algumas vantagens em adotar o XMLNuke como ferramenta de desenvolvimento.</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Foco na manutenção de sistemas</title>
+		<body>
+			<p>A grande maioria dos frameworks existentes no mercado atualmente tem um foco direcionado para o desenvolvimento rápido de aplicativos. Normalmente, essas facilidades estão associadas a um poderoso editor de aplicativos no qual o usuário é um mero colador de componentes. Usuários com pouca experiência de programação conseguem desenvolver aplicativos rapidamente. Mas somente isso. </p>
+			<p>A manutenção do aplicativo se torna inviável se o usuário não adotar nenhuma metodologia específica. E mesmo que adote, ainda ficará preso ao layout HTML que toda aplicação WEB produz.</p>
+			<p>Com o framework XMLNuke o programador, do novato ao mais experiente, é direcionado a produzir códigos de forma padronizada. O resultado produzido será sempre o mesmo XML projetado e, portanto, não haverá diferenças entre os diversos desenvolvedores de um mesmo projeto.</p>
+			<p>O conjunto de classes e a padronização das requisições – todas voltadas ao XML – possibilitam o rápido aprendizado de novos membros à equipe, bem como a manutenção da aplicação desenvolvida de forma rápida e eficiente.
+</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Programador não precisa conhecer HTML</title>
+		<body>
+			<p>A afirmação pode parecer estranha, já que páginas da Internet são HTML. Entretanto, como o XMLNuke produz apenas documentos XML, o programador irá se ater às definições padronizadas desse documento. 
+</p>
+			<p>Na prática, o programador também não precisará conhecer nem o XML, pois o conjunto de classes é montado de tal forma que o programador estará manipulando objetos XML. 
+</p>
+			<p>Essa característica, apesar de paradoxal, também traz algumas vantagens. Por exemplo:
+</p>
+			<p>
+				<b>Mudanças de Layout do site preservam os aplicativos</b>
+			</p>
+			<p>O maior problema existente hoje nos aplicativos tradicionais está na forte integração da aplicação com o código produzido em HTML. Isso engessa a mudança da identidade visual da empresa. </p>
+			<p>
+Com o XMLNuke, a empresa poderá mudar de cara todo ano. Todos os aplicativos produzidos são preservados. </p>
+			<p>
+				<b>A mesma aplicação pode rodar em diversos clientes</b>
+			</p>
+			<p>Todos os sites que precisam ser acessados por diversos clientes, como um usuário de computador pessoal, palm ou outros dispositivos têm sempre mais de uma versão de sua aplicação para cada mídia distinta. </p>
+			<p>Com o XMLNuke, como o resultado produzido independe do formato de apresentação, uma mesma aplicação pode rodar TOTALMENTE em HTML ou WML sem quaisquer modificações.</p>
+			<p>
+				<b>A mesma aplicação pode produzir diversos formatos de apresentação</b>
+			</p>
+			<p>Uma mesma aplicação pode produzir saídas em HTML (texto), SVG ou RTF, por exemplo.
+</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>XML Objects</title>
+		<body>
+			<p>O XMLNuke introduz o conceito de XML Objects. Um XML Object é uma classe formada de tal forma, que o resultado produzido será um documento XML, que posteriormente será transformado em HTML, WML, SVG, etc. 
+        </p>
+			<p>O programador ao gerar um XML Object saberá exatamente a função que pretende executar, porém não precisa saber COMO o objeto será produzido no cliente. Por exemplo, com o XmlEditList, o programador sabe que irá gerar uma lista de edição na forma de tabela, porém não precisa conhecer os JavaScripts e comandos HTML para montá-lo.
+
+         </p>
+			<p>De fato, a apresentação do XmlEditList pode até mudar para um formato totalmente diverso ao mencionado anteriormente sem que tenha que ser modificada uma única linha da aplicação. 
+
+         </p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Framework de desenvolvimento extensível</title>
+		<body>
+			<p>Para que haja um padrão, e que possa ser utilizado o XML Object é necessário que o XML seja de um formato previamente conhecido. O XMLNuke já oferece um padrão relativamente completo para que qualquer usuário possa trabalhar e desenvolver seus aplicativos. 
+
+         </p>
+			<p>Entretanto, é possível que o usuário defina seus próprios documentos XML e incorpore em seu projeto XML Objects específicos. Por exemplo, é possível definir XML Objects personalizados para SVG, NewsML, etc.
+
+         </p>
+			<p>Como um documento XML é extensível por definição, o XMLNuke também é extensível por definição.
+
+         </p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Padronização da Equipe de desenvolvimento</title>
+		<body>
+			<p>O resultado produzido por um programador ou uma dezena deles é exatamente o mesmo. Isso garante que serviços na Intranet, por exemplo, possam ser publicados gradativamente.
+
+         </p>
+			<p>Também é ideal para fábricas de software, pois mesmo que haja mudanças na apresentação dos objetos XML, ou mudança nos documentos XML, fica transparente essa mudança ao programador pois a sua aplicação continuará produzindo o mesmo documento XML.
+
+         </p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Integração total do Framework ao CMS
+      </title>
+		<body>
+			<p>O XMLNuke pode ser a única ferramenta de desenvolvimento tanto para a publicação do conteúdo estático, como por exemplo, o institucional de uma empresa, como a oferta de serviços a clientes. Tudo no mesmo site e com a mesma aparência, o que causa conforto ao usuário final (conceito baseado na Interface Homem-Computador). 
+
+         </p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Ferramenta para produção de softwares comerciais
+      </title>
+		<body>
+			<p>Uma empresa pode produzir softwares comerciais padronizados e vendê-lo com a interface do cliente. Ou seja, um WEBMail, uma ferramenta de administração ou qualquer outro software não precisa ter um layout específico mas sim possuir a identidade visual do cliente final.          </p>
+			<p>Essa característica facilita a produção de aplicativos A.S.P. (Application Services Providers), pois o recurso multi-site é capaz de isolar os dados de cada usuário da aplicação, além de o usuário ter a satisfação de usar um aplicativo com a identidade visual de sua empresa.       </p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>O Protótipo da Aplicação FAZ PARTE DA APLICAÇÃO      </title>
+		<body>
+			<p>Na metodologia de análise de sistemas, uma das etapas consiste no desenvolvimento do protótipo. O protótipo representa uma etapa na qual alguém investe algumas horas de seu tempo para demonstrar para o usuário como ficará a interface. Ao desenvolver com outros frameworks, esse protótipo normalmente só é utilizado nessa etapa, sendo posteriormente jogado fora para ser “refeito” nos moldes do framework. E a partir daí os ajustes de layout em sistemas grandes se tornam impraticáveis.       </p>
+			<p>Com o XMLNuke o protótipo faz parte da aplicação, pois o XSLT não interfere na produção de conteúdo. Ajustes significativos posteriores à aprovação do layout visual também pode ser refeito sem prejuízo ao que já foi produzido e sem perder horas de retrabalho.         </p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Portabilidade    </title>
+		<body>
+			<p>É um requisito de projeto do XMLNuke que o framework e todos os aplicativos desenvolvidos com base nele, sejam independentes de plataforma de hardware ou sistema operacional. Sendo assim todas as edições do XMLNuke rodam tanto em Linux quanto em Windows.         </p>
+			<p>Outra característica importante é que todas as edições possuem a mesma interface. Dessa forma, é possível reaproveitar o conhecimento aprendido de uma edição para outra.        </p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>É um framework de desenvolvimento      </title>
+		<body>
+			<p>Além das vantagens acima, o XMLNuke também é um framework de desenvolvimento. Um framework traz embutido diversos serviços que facilitam o trabalho do programador e dispensam etapas no desenvolvimento de aplicativos. 
+
+         </p>
+		</body>
+	</blockcenter>
+</page>

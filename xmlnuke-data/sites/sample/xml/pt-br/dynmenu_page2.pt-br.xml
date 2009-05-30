@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Coloque seu título Aqui</title>
+		<abstract>Coloque seu título Aqui</abstract>
+		<created>14/05/2002 14:37:13</created>
+		<modified>14/05/2002 14:40:41</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword>grpdynmenu</groupkeyword>
+		<keyword>Your First Keyword</keyword>
+		<keyword>Your Second Keyword and so on</keyword>
+	</meta>
+	<blockcenter>
+		<title>Coloque seu título de bloco Aqui</title>
+		<body>
+			<p>Escreva o primeiro parágrafo aqui.</p>
+			<p>Escreva seu segundo parágrado aqui, e assim por diante</p>
+		</body>
+	</blockcenter>
+</page>

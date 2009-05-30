@@ -1,0 +1,60 @@
+﻿<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>XMLNuke Treeview</title>
+		<abstract>XMLNuke Treeview</abstract>
+		<created>20/10/2002 20:14:18</created>
+		<modified>10/20/2002 8:14:18 PM</modified>
+		<keyword>XMLSeite ByJG</keyword>
+		<groupkeyword>all</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Treeview</title>
+		<body>
+			<p>Dieses Modul dient zur Anzeige von Daten in einer Baumstruktur.
+			Die Daten können hierarchisch organisiert und die Ansicht mittels JavaScript gesteuert werden.
+			Durch die Kombination mit einer Container-Komponente ist kein erneutes laden der Seite nötig.
+			<code information="XML-Code"><![CDATA[
+<treeview title="Windows XP Explorer Treeview">
+
+  <folder title="Eigene Dateien" img="mydocuments.gif" 
+    action="document.getElementById('here').style.display='none';">
+    
+    <leaf title="Was ist los?" code="1" img="ie_link.gif" 
+      action="loadUrl('here', '?module=sample&xsl=blank');"/>
+        
+  </folder>
+  
+</treeview>			
+]]></code>
+			</p>
+			<p>
+				<treeview title="Windows XP Explorer Treeview">
+					<folder title="Eigene Dateien" img="mydocuments.gif" action="document.getElementById('here').style.display='none';">
+						<folder title="Haus" img="folder.gif">
+							<leaf title="Was ist los?" code="1" img="ie_link.gif" action="loadUrl('here', '?module=sample&op=1&xsl=blank');"/>
+							<leaf title="Na, wie geht's?" code="1" img="question.gif"  action="loadUrl('here', '?module=sample&op=2&xsl=blank');"/>
+							<leaf title="Warum Sie mich engagieren sollten?" code="1" img="question.gif" action="loadUrl('here', '?module=sample&op=3&xsl=blank');"/>
+						</folder>
+						<folder title="Meine Bilder" img="myimages.gif">
+							<leaf title="lustig" code="1" img="red_ball.gif"  action="loadUrl('here', '?module=sample&op=4&xsl=blank');"/>
+							<leaf title="ounga ounga" code="1" img="red_ball.gif"  action="loadUrl('here', '?module=sample&op=5&xsl=blank');"/>
+						</folder>
+					</folder>
+					<folder title="Arbeitsplatz" img="computer.gif" action="document.getElementById('here').style.display='none';">
+						<folder title="3½-Diskette (A:)" code="1" img="floppy.gif"/>
+						<folder title="Festplatte (C:)" code="1" img="harddrive.gif">
+							<leaf title="Linux" code="1" img="folder.gif"/>
+							<leaf title="Open source" code="1" img="folder.gif" action="loadUrl('here', '?xml=treeview&xsl=blank&rawxml=true&xpath=//blockcenter');"/>
+							<leaf title="Freedom" code="1" img="folder.gif"/>
+						</folder>
+						<leaf title="Systemsteuerung" code="1" img="config.gif"/>
+						<leaf title="Gemeinsame Dokumente" code="1" img="folder.gif"/>
+					</folder>
+					<folder title="Netzwerkumgebung" img="network.gif" action="alert('Empty!');"/>
+					<folder title="Papierkorb" img="trash.gif" action="alert('Empty!');"/>
+				</treeview>
+				<container style="display: none; width: 100%; height: 400px" id="here"/>			</p>
+		</body>
+	</blockcenter>
+</page>

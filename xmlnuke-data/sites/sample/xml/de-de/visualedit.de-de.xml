@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Visueller Editor</title>
+		<abstract>Eingabe von Text mit einem WYSIWYG-Editor (what you see is what you get).</abstract>
+		<created>24/4/2008 23:08:18</created>
+		<modified>4/24/2008 11:54:47 PM</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>all</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Visueller Editor</title>
+		<body>
+			<p>Eingabe von Text mit einem WYSIWYG-Editor (what you see is what you get).</p>
+			<p>
+				<code information="XML-Code"><![CDATA[
+<editform title="Visueller Editor" action="module:somemodule">
+   <memo name="sample" caption="Textfeld" visualedit="true"></memo>
+   <buttons>
+      <button caption="XML-Code ansehen" 
+         onclick="alert(tinyMCE.activeEditor.selection.getContent());" />
+   </buttons>
+</editform>
+]]></code>
+			</p>
+			<p>
+				<editform title="Visueller Editor" action="module:somemodule">
+					<memo name="sample" caption="Textfeld" cols="30" rows="5" visualedit="true">
+					</memo>
+					<buttons>
+						<button caption="XML-Code ansehen" onclick="alert(tinyMCE.activeEditor.selection.getContent());" />
+					</buttons>
+				</editform>
+			</p>
+		</body>
+	</blockcenter>
+</page>

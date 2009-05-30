@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmlindex>
+	<group>
+		<id>mainmenu</id>
+		<title>Main Menu</title>
+		<keyword>all</keyword>
+		<page>
+			<id>home</id>
+			<title>Main Page</title>
+			<summary>XML Nuke Sample Main Page</summary>
+		</page>
+		<page>
+			<id>firstpage</id>
+			<title>My First Page</title>
+			<summary>How to create your First XMLNuke page</summary>
+		</page>
+		<page>
+			<id>dynmenu_main</id>
+			<title>Dynamic Menus</title>
+			<summary>How to create Dynamic Menus</summary>
+		</page>
+		<page>
+			<id>forms</id>
+			<title>XMLNuke and Forms</title>
+			<summary>XMLNuke and Forms</summary>
+		</page>
+		<page>
+			<id>custommodule</id>
+			<title>Custom Modules</title>
+			<summary>Working with Custom Modules</summary>
+		</page>
+		<page>
+			<id>formsjs</id>
+			<title>Forms with validation</title>
+			<summary>Demonstration on how to use forms with validation using JavaScript.</summary>
+		</page>
+		<page>
+			<id>editlist</id>
+			<title>Edit List</title>
+			<summary>How to create specific tags - Edit List an Example</summary>
+		</page>
+		<page>
+			<id>calendar</id>
+			<title>Calendar Sample</title>
+			<summary>Show a simple calendar sample in XMLnuke.</summary>
+		</page>
+		<page>
+			<id>email</id>
+			<title>Send eMail</title>
+			<summary>XMLNuke Send e-Mail</summary>
+		</page>
+		<page>
+			<id>xmlfaq</id>
+			<title>Faq Example</title>
+			<summary>XML Faq example demonstrate how to use a FAQ</summary>
+		</page>
+		<page>
+			<id>tabview</id>
+			<title>Tab View</title>
+			<summary>How to group visual controls in Tabs</summary>
+		</page>
+		<page>
+			<id>visualedit</id>
+			<title>Visual Editor</title>
+			<summary>Editing text and what you see is what you get.</summary>
+		</page>
+		<page>
+			<id>duallist</id>
+			<title>Dual List</title>
+			<summary>View data in a dual list component.</summary>
+		</page>
+		<page>
+			<id>treeview</id>
+			<title>Treeview</title>
+			<summary>Structure data with the TreeView component.</summary>
+		</page>
+	</group>
+	<group>
+		<id>dynmenu</id>
+		<title>Dynamic Menus</title>
+		<keyword>grpdynmenu</keyword>
+		<page>
+			<id>dynmenu_page1</id>
+			<title>Page One</title>
+			<summary>Dynamic Menus Page One</summary>
+		</page>
+		<page>
+			<id>dynmenu_page2</id>
+			<title>Page Two</title>
+			<summary>Dynamic Menus Page Two</summary>
+		</page>
+	</group>
+</xmlindex>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Processando Eventos no Clique do Botão.</title>
+		<abstract>Processando Eventos no Clique do Botão.</abstract>
+		<created>Tue Nov 6 2007 1:40:57</created>
+		<modified>13/4/2008 21:34:49</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>technicalref</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Processando Eventos no Clique do Botão</title>
+		<body>
+			<p>Com o XMLNuke é possível criar botões capazes de disparar eventos quando os botões sejam pressionados. Esses serão processados diretamente servidor e de forma automática.</p>
+			<p>Para isso é necessário seguir os seguintes passos:
+<ol><li>Informar no início de CreatePage() ou dentro de Setup() que se deseja processar eventos no módulo através do método processEvent()</li><li>Adicionar no formulário um botão que dispara evento.</li><li>Criar o método que irá processar o evento.</li></ol></p>
+			<p>
+				<code information="Exemplo em CSharp"><![CDATA[
+public override IXmlnukeDocument CreatePage()
+{
+	// Chame esse método dentro de SETUP() ou no início do CREATEPAGE()
+	// Se esse método não for executado, os eventos não serão disparados.
+	this.processEvent();
+	.
+	.
+	.
+	XmlFormCollection form = new XmlFormCollection(this._context, "module:sample", "Exemplo");
+	XmlInputButtons button = new XmlInputButtons();
+	// Nesse exemplo, será adicionado um botão e este dispará o evento Metodo_Event()
+	button.addClickEvent("Teste Evento", "Metodo");
+}
+.
+.
+.
+/// <summary>
+/// Método que irá executar o evento definido acima.
+/// </summary>
+public void Metodo_Event()
+{
+	Debug.Print("Event fired");
+}
+
+]]></code>
+			</p>
+			<p>
+				<code information="Exemplo em PHP"><![CDATA[
+public function CreatePage() 
+{
+	// Chame esse método dentro de SETUP() ou no início do CREATEPAGE()
+	// Se esse método não for executado, os eventos não serão disparados.
+	$this->processEvent();
+	.
+	.
+	.
+	$form = new XmlFormCollection($this->_context, "module:sample", "Exemplo");
+	$button = new XmlInputButtons();
+	// Nesse exemplo, será adicionado um botão e este dispará o evento Metodo_Event()
+	$button->addClickEvent("Teste Evento", "Metodo");
+}
+.
+.
+.
+/**
+@desc Método que irá executar o evento definido acima.
+*/
+public function Metodo_Event()
+{
+	Debug::PrintValue("Event fired");
+}
+
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+</page>

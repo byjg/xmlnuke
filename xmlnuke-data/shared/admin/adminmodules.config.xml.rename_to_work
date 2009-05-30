@@ -1,0 +1,72 @@
+﻿<adminmodules>
+	<group name="content">
+		<module name="xmlgroup">
+			<icon>common/imgs/admin_icon/icon_xmlgroup.gif</icon>
+			<url>admin:ListXML?onlygroup=true</url>
+		</module>
+		<module name="xmldocument">
+			<icon>common/imgs/admin_icon/icon_editxml.gif</icon>
+			<url>admin:ListXML</url>
+		</module>
+		<module name="xsldocument">
+			<icon>common/imgs/admin_icon/icon_editxsl.gif</icon>
+			<url>admin:ManageXSL</url>
+		</module>
+		<module name="langfile">
+			<icon>common/imgs/admin_icon/icon_lang.gif</icon>
+			<url>admin:EditLanguage</url>
+		</module>
+		<module name="configemail">
+			<icon>common/imgs/admin_icon/icon_email.gif</icon>
+			<url>admin:ConfigEmail</url>
+		</module>
+	</group>
+	<group name="management">
+		<module name="manageusers">
+			<icon>common/imgs/admin_icon/icon_users.gif</icon>
+			<url>admin:ManageUsers</url>
+		</module>
+		<module name="managesites">
+			<icon>common/imgs/admin_icon/icon_sites.gif</icon>
+			<url>admin:ManageSites</url>
+		</module>
+		<module name="xmlindex">
+			<icon>common/imgs/admin_icon/icon_xmlnukedb.gif</icon>
+			<url>admin:ManageXMLDBIndex</url>
+		</module>
+		<module name="customconfig">
+			<icon>common/imgs/admin_icon/icon_config.gif</icon>
+			<url>admin:CustomConfig</url>
+		</module>
+		<module name="managedbconn">
+			<icon>common/imgs/admin_icon/icon_managedb.gif</icon>
+			<url>admin:ManageDBConn</url>
+		</module>
+		<module name="cache">
+			<icon>common/imgs/admin_icon/icon_cache.gif</icon>
+			<url>admin:ManageCache</url>
+		</module>
+		<module name="backup">
+			<icon>common/imgs/admin_icon/icon_backup.gif</icon>
+			<url>admin:BackupModule</url>
+		</module>
+		<module name="fileman">
+			<icon>common/imgs/admin_icon/icon_filemngmt.gif</icon>
+			<url>admin:FileManagement</url>
+		</module>
+	</group>
+	<group name="usermodules">
+		<module name="download">
+			<icon>common/imgs/admin_icon/icon_downloads.gif</icon>
+			<url>admin:Download</url>
+		</module>
+		<module name="configsearch">
+			<icon>common/imgs/admin_icon/icon_search.gif</icon>
+			<url>admin:ConfigSearch</url>
+		</module>
+		<module name="managepoll">
+			<icon>common/imgs/admin_icon/icon_poll.gif</icon>
+			<url>admin:ManagePoll</url>
+		</module>
+	</group>
+</adminmodules>

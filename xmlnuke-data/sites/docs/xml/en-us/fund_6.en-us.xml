@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>The "Util" NameSpace</title>
+		<abstract>The Useful classes of XMLNuke to manipulate files and XML</abstract>
+		<created>15/8/2006 13:14:17</created>
+		<modified>Sat Sep 13 2008 18:53:07</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_xmlnukeconcepts</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>The "Util" NameSpace</title>
+		<body>
+			<p>XMLNuke contains a set of classes that facilitate some basic work activities. They include: 
+<ul>
+  <li><b>DateUtil</b>: Permits data manipulation and converts from one format to another.</li>
+  <li><b>Debug</b>: Methods to assist application debugging.</li>
+  <li><b>XmlUtil</b>: MMethods to manipulate XML documents, add nodes and attributes.</li>
+	<li><b>FileUtil</b>:Methods to manipulate files within the system files of the machine. Works together with the FileNameProcessor.</li>
+	<li><b>MailUtil</b>: Methods to assist sending e-mail through XMLNuke.</li>
+	<li><b>Conversion</b>: Methods to assist the conversion of UTF8 characters to other formats and vice-versa (only PHP).</li>
+</ul>
+
+</p>
+		</body>
+	</blockcenter>
+</page>

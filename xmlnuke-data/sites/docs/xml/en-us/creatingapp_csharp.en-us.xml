@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Creating an XMLNuke Application in CSharp</title>
+		<abstract>Suggestion for creating projects with XMLNuke using the CSharp Engine.</abstract>
+		<created>10/8/2007 04:40:05</created>
+		<modified>Wed Nov 19 2008 16:21:53</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_analysis</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Creating an XMLNuke application in CSharp</title>
+		<body>
+			<p>There are many ways to start a project with XMLNuke CSharp. Every valid installation of XMLNuke CSharp comes with a file called "create-xmlnuke-project.vbs". This file will create a valid solution of Visual Studio 2005 with the project already configured to run with XMLNuke. If you do not have it, it can be obtained <a href="https://xmlnuke.svn.sourceforge.net/svnroot/xmlnuke/xmlnuke-csharp-sources/create-xmlnuke-project.vbs">here</a>.  This file must be in the same folder as the XMLNuke project.
+</p>
+<p>Once created, as good practice it's important to follow the steps below:
+			<ol>
+				<li>All components for accessing the database and other classes that are not visual modules should be separate from the modules. A good alternative would be to create a Classes folder and place all of the classes inside of it.</li>
+				<li>The modules should contain only the data visualization and user interaction intelligence</li>
+			</ol>
+
+			</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Generic Class: [YOURMODULE]BaseModule</title>
+		<body>
+			<p>
+			This practice consists of inheriting the BaseModule module from XMLNuke in a way that any modification that is valid for the entire project is done directly to our classes, and not to the kernel on XMLNuke. A good suggestion is to define the menu, if it requires authentication or not, the level of access, as well as the processing that should be done by all the modules. Below is an implementation example of this method.
+			</p>
+			<p>
+<code information="Example of an [YOURMODULE]BaseModule"><![CDATA[
+using System;
+using System.Xml;
+using System.Collections.Specialized;
+
+using com.xmlnuke.admin;
+using com.xmlnuke.anydataset;
+using com.xmlnuke.classes;
+using com.xmlnuke.database;
+using com.xmlnuke.processor;
+using com.xmlnuke.util;
+using com.xmlnuke.module;
+using com.xmlnuke.international;
+
+namespace YourModule.Classes
+{
+    public enum YourModuleRoles
+    {
+	MANAGER;
+	USER;
+    }
+
+    public class YourModuleBaseModule : BaseModule
+    {
+	protected LanguageCollection _myWords;
+
+	public SeuModuloBaseModule ()
+	{}
+
+        /// <summary>
+        /// All Language Files associated with this module will be 
+        /// loaded into $_myWords
+        /// </summary>
+	public override LanguageCollection WordCollection()
+	{
+		this._myWords = base.WordCollection();
+	}
+
+        /// <summary>
+        /// Implements you cache Logic. 
+        /// Note: Do not use cache if you do not know what is this.
+        /// </summary>
+	public override bool useCache() 
+	{
+		return false; 
+	}
+
+        /// <summary>
+        /// My Module is Public or Private?
+        /// </summary>
+	public override bool requiresAuthentication()
+	{
+		return true;
+	}
+
+        /// <summary>
+        /// Only is needed if requiresAuthentication() is true
+        /// </summary>
+	public override AccessLevel getAccessLevel()
+	{
+		return AccessLevel.OnlyRole;
+	} 
+
+        /// <summary>
+        /// Custom function for create my Own customized document
+        /// </summary>
+	public void createXmlnukeDocument(string title, string abstract)
+	{
+                if (this._context.ContextValue("logout")!="")
+                {
+                        this._context.redirectUrl("module:yourmodule.home");
+                }
+
+		this.defaultXmlnukeDocument = 
+			new XmlnukeDocument(title + " (User: " + 
+			this._context.authenticatedUserId() + ")", abstract);
+		this.defineMenu();
+	}
+
+        /// <summary>
+        /// Define the basic and generic Menu Structure.
+        /// We can use the current authenticated user to create it.
+        /// </summary>
+	public void defineMenu()
+	{
+		this.defaultXmlnukeDocument.setMenuTitle("Menu");
+
+		IUsersBase users = this.getUsersDatabase();
+
+		if (users.checkUserProperty(
+			this._context.authenticatedUserId(), 
+			SeuModuleRoles.MANAGER.ToString(), UserProperty.Role))
+		{
+			this.defaultXmlnukeDocument.addMenuItem(
+			  "module:yourmodule.dosomething", "Do Something", "");
+			// Add more menu options
+		}
+
+                this.defaultXmlnukeDocument.addMenuItem(
+                  "module:yourmodule.home?logout=true", "Logout", "");
+ 	}
+}
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Classes for Accessing Data</title>
+		<body>
+			<p>
+			Instead of connecting directly to the database within the modules, creating classes specifically for this purpose is recommended. This guarantees the isolation of our application and keeps our code much easier to maintain. In these classes we will obtain and store data.
+			</p>
+			<p>
+<code information="Class for Accessing Data"><![CDATA[
+using System;
+using System.Xml;
+
+using com.xmlnuke.admin;
+using com.xmlnuke.anydataset;
+using com.xmlnuke.classes;
+using com.xmlnuke.database;
+using com.xmlnuke.processor;
+using com.xmlnuke.util;
+using com.xmlnuke.module;
+using com.xmlnuke.international;
+
+namespace YourModule.Classes
+{
+    public class DBSomeTable : BaseDBAccess
+    {
+	/// <summary>
+	/// Overrides de BaseDBAccess definition. 
+	/// </summary>
+	public override string getDataBaseName()
+	{
+		return "mydatabase";		
+	}
+	
+	/// <summary>
+	/// Get some data
+	/// </summary>
+	public IIterator getSomeDataById(int id)
+	{
+		string sql = 
+			" select someid, somefield from sometable " +
+			" where id_base = [[id]] ";
+		DbParameters param = new DBParameters();
+		param.Add("id", System.Data.DbType.Int32, id);
+				
+		return this.getIterator(sql, param);
+	}
+		
+	/// <summary>
+	/// Insert some data in some table.
+	/// </summary>
+	public void insertBase(string someField)
+	{
+		SQLFieldArray sqlfields = new SQLFieldArray();
+		sqlfields.Add("somefield1", System.Data.DbType.String, "somevalue1");
+		sqlfields.Add("somefield2", System.Data.DbType.String, "somevalue2");
+		sqlfields.Add("somefield3", System.Data.DbType.String, "somevalue3");
+		
+		SQLUpdateData data = this.getSQLHelper().generateSQL("sometable", sqlfields, SQLType.SQL_INSERT);
+		this.executeSQL(data);
+	}
+}
+]]></code>
+			</p>
+			<p>
+			<b>Important note:</b> Every connector to the database has its own way of sending parameters to the SQL commands. In XMLNuke, we send the parameters only with  [[PARAMETER]], according to the example above. In XMLNuke a large variety of databases are automatically supported. The list of databases is <a href="engine:xmlnuke?xml=bd_1">here.</a>
+			</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Modules Folder: Creating the modules</title>
+		<body>
+			<p>
+			Once all the previous classes have been created, we must create the modules. Modules are the classes that effectively interact with the user, displaying forms, lists, etc. It is important to note that all of the parameters sent from one module to another are in _context.ContextValue(). This is also a good practice to create methods for treating each specific action.
+			</p>
+			<p>
+			XMLNuke has a few pre-defined variables. One of them is the "action" (in BaseModule._action). The EditList, ProcessPage, and others use this argument by default to send values. Another variable that is frequently used is the "valueid", which corresponds to the element that was selected in an EditList.
+			</p>
+			<p>
+<code information="Example of a module"><![CDATA[
+using System;
+using System.Xml;
+using System.Collections.Specialized;
+
+using com.xmlnuke.admin;
+using com.xmlnuke.anydataset;
+using com.xmlnuke.classes;
+using com.xmlnuke.database;
+using com.xmlnuke.processor;
+using com.xmlnuke.util;
+using com.xmlnuke.module;
+using com.xmlnuke.international;
+
+using YourModule.Classes;
+
+namespace YourModule
+{
+    public class SomeModule : YourModuleBaseModule 
+    {
+	public SomeModule()
+	{}
+
+	public override IXmlnukeDocument CreatePage() 
+	{
+		this._myWords = this.WordCollection();
+		this.createXmlnukeDocument(
+		  this._myWords->Value("AGENDA_TITLE"),
+ 		  this._myWords->Value("AGENDA_ABSTRACT"));
+		
+		switch (this._action)
+		{
+			case "someaction":
+				this.runSomeAction();
+				break;
+				
+			default:
+				this.defaultAction();
+				break;
+		}
+
+		return this.defaultXmlnukeDocument;
+	}
+	
+	protected void runSomeAction()
+	{
+		// Do Something Here.
+		//this.defaultXmlnukeDocument.addXmlnukeObject(blockCenter);		
+	}
+	
+	protected void defaultAction()
+	{
+		// Do Something Here.
+		//this.defaultXmlnukeDocument.addXmlnukeObject(blockCenter);		
+	}
+}
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+</page>

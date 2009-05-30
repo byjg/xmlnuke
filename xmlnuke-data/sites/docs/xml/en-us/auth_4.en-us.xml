@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Creating your own Login module</title>
+		<abstract>How to create your own login module to create personalized access validations.</abstract>
+		<created>15/8/2006 15:38:20</created>
+		<modified>Sun Sep 14 2008 12:12:15</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_auth</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Creating a Login module</title>
+		<body>
+			<p>Any module valid for XMLNuke may be a Login module as long as the following conditions are met: 
+<ul><li>The module must not require authentication</li><li>At the end it should call Context.MakeLogin()</li><li>The name of this module should be configured under the option: <b>xmlnuke.LOGINMODULE</b> so that XMLNuke understands that it will perform the login.
+</li></ul></p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Example</title>
+		<body>
+			<p>XMLNuke implements a class called LoginBase. This class has several routines for sending emails for events such as forgetting a password, generating a new password, among others. To create your Login module, your class should inherit from the LoginBase and should perform the login mechanism (ask for a username, password, etc.). After the ENTIRE validation process is complete, the lines below should be run in the final step to inform XMLNuke that the user LOGGED IN to the system. 
+
+<code information="CSharp"><![CDATA[
+// usernamevalid => USERNAME
+// userid => User Code
+
+this._context.MakeLogin(usernamevalid, userid);
+string Url = FormsAuthentication.GetRedirectUrl(usernamevalid, false);
+this._context.redirectUrl( Url );
+]]></code><code information="PHP"><![CDATA[
+// $usernamevalid => USERNAME
+// $id => User Code
+
+$urlReturn = $this->_context->ContextValue("ReturnUrl");
+
+$this->_context->MakeLogin($usernamevalid, $id);
+$url = XmlnukeManageUrl::decodeParam($urlReturn);
+$this->_context->redirectUrl($url);
+]]></code></p>
+		</body>
+	</blockcenter>
+</page>

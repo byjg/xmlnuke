@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Formulários com validação</title>
+		<abstract>Demonstração da utilização de formulários com validação javascript.</abstract>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>all</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Formulários com validação JavaScript</title>
+		<body>
+			<p>O XMLNuke implementa também a utilização de formulários com validação JavaScript. Entretanto, para utilizar esse recurso, o usuário <b>não precisa conhecer javascript</b></p>
+			<p>Por exemplo, para fazer um formulário como o listado abaixo, o usuário apenas precisa definir alguns argumentos informando que o formulário requer validação. Veja um exemplo: </p>
+			<p>
+				<code information="XML do EditForm"><![CDATA[
+<editform action="module:somemodule" 
+    title="Formulário com validação JavaScript" 
+    name="nomedoform" 
+    jsvalidate="true" 
+    decimalseparator="," 
+    dateformat="0">
+       <textbox name="a" caption="Campo Texto" value="" size="30" 
+             required="true" type="0" />
+       <textbox name="e" caption="Campo Data" value="" size="30" 
+             required="true" type="4" 
+             minvalue="01/01/2004" maxvalue="31/12/2004" />
+</editform>
+
+]]></code>
+			</p>
+			<editform action="#" title="Formulário com validação JavaScript" name="nomedoform" jsvalidate="true" decimalseparator="," dateformat="0">
+				<textbox name="a" caption="Campo Texto" value="" size="30" required="true" type="0" />
+				<textbox name="b" caption="Campo Minusculo" value="" size="30" required="true" type="1" />
+				<textbox name="c" caption="Campo Maiusculo" value="" size="30" required="true" type="2" />
+				<textbox name="d" caption="Campo Número" value="" size="30" required="true" type="3" minvalue="10" maxvalue="20" />
+				<textbox name="e" caption="Campo Data" value="" size="30" required="true" type="4" minvalue="01/01/2004" maxvalue="31/12/2004" />
+				<textbox name="f" caption="Campo Maiusculo ASCII" value="" size="30" required="true" type="9" />
+				<textbox name="g" caption="Campo Email" value="" size="30" required="true" type="10" />
+				<select name="h" caption="ComboBox" required="true">
+					<option value="" selected="yes">-- Selecione --</option>
+					<option value="1">Opção 1</option>
+					<option value="2">Opção 2</option>
+					<option value="3">Opção 3</option>
+				</select>
+				<buttons>
+					<submit caption="Enviar" />
+					<reset caption="Limpar" />
+				</buttons>
+			</editform>
+		</body>
+	</blockcenter>
+</page>

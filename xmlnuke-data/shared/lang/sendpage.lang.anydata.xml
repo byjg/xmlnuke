@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<anydataset>
+  <row>
+    <field name="LANGUAGE">en-us</field>
+    <field name="TITLE">Send this page to my friend from {0}</field>
+    <field name="ABSTRACT">Send this page to my friend from {0}</field>
+    <field name="MSGOK">Message has been sent</field>
+    <field name="MSGERROR">An error occurred</field>
+    <field name="MSGFILL">Fill in the form</field>
+    <field name="CAPTION">Send this page to a friend</field>
+    <field name="INFO">This page will send a link to page {0} to your friend. Please, fill in all information required.</field>
+    <field name="FLDNAME">Your Name</field>
+    <field name="FLDEMAIL">Your e-Mail</field>
+    <field name="FLDTONAME">Your Friend´s Name</field>
+    <field name="FLDTOEMAIL">Your Friend´s e-Mail</field>
+    <field name="ERROR">Oops... Some field data is incomplete. Fill in all fields.</field>
+    <field name="ERRORINVALID">Oops... You cannot call this page directly without a page referer.</field>
+    <field name="SENT">Your message has been sent to {0}.</field>
+    <field name="MESSAGE">ATTENTION: Message sent from web site\nTo:  {0}\nEmail: {1}\n\nThe URL Address listed above was sent to you by your friend.\n\n{2}\n\From: {3}\nCustom Message: {4}</field>
+    <field name="SUBJECT">LINK SENT</field>
+    <field name="TYPETEXTFROMIMAGE">Type Numbers below: </field>
+    <field name="OBJECTIMAGEINVALID">The numbers you types didnt match. You need to type the text correctly. </field>
+  </row>
+  <row>
+    <field name="LANGUAGE">pt-br</field>
+    <field name="TITLE">XMLNuke enviar página do site {0} para um amigo</field>
+    <field name="ABSTRACT">XMLNuke enviar página do site {0} para um amigo</field>
+    <field name="MSGOK">Mensagem foi enviada!</field>
+    <field name="MSGERROR">Ocorreu um erro</field>
+    <field name="MSGFILL">Preencha o formulário</field>
+    <field name="CAPTION">Send this page to a friend</field>
+    <field name="INFO">Esta página irá enviar por email a um amigo seu um link que apontará para a página {0}. Preencha todas as informações abaixo</field>
+    <field name="FLDNAME">Seu nome</field>
+    <field name="FLDEMAIL">Seu e-Mail</field>
+    <field name="FLDTONAME">Nome do seu amigo</field>
+    <field name="FLDTOEMAIL">Email do seu amigo</field>
+    <field name="ERROR">Ooppss... Alguns dados estão incompletos. Preencha todos os campos.</field>
+    <field name="ERRORINVALID">Ooppss... Você não pode chamar essa página diretamente sem obter uma página de referência.</field>
+    <field name="SENT">Sua mensagem foi enviada para {0}.</field>
+    <field name="MESSAGE">ATENÇÃO: Mensagem Enviada através do site\nPara:  {0}\nEmail: {1}\n\nO endereço abaixo foi enviado por seu amigo através da navegação na referida página.\n\n{2}\n\nEmissor: {3}\nMensagem Personalizada: {4}</field>
+    <field name="SUBJECT">ENVIO DE LINK</field>
+    <field name="TYPETEXTFROMIMAGE">Digite números ao lado: </field>
+    <field name="OBJECTIMAGEINVALID">O texto que você digitou não confere. Você precisa digitar o texto corretamente para prosseguir. </field>
+  </row>
+  <row>
+    <field name="LANGUAGE">de-de</field>
+    <field name="TITLE">Senden Sie die Seite '{0}' an einen Freund</field>
+    <field name="ABSTRACT">Senden Sie Seite '{0}' an einen Freund</field>
+    <field name="MSGOK">Nachricht wurde gesendet</field>
+    <field name="MSGERROR">Ein Fehler ist aufgetreten</field>
+    <field name="MSGFILL">Füllen Sie untenstehende Felder aus</field>
+    <field name="CAPTION">Senden Sie einen Link zu dieser Seite an einen Freund</field>
+    <field name="INFO">Hiermit können Sie einen Link zu dieser Seite ({0}) an einen Freund senden. Füllen Sie dazu folgende Felder aus.</field>
+    <field name="FLDNAME">Ihr Name: </field>
+    <field name="FLDEMAIL">Ihre E-Mail-Adresse: </field>
+    <field name="FLDTONAME">Der Name des Empfängers: </field>
+    <field name="FLDTOEMAIL">E-Mail-Adresse des Empfängers: </field>
+    <field name="ERROR">Ups... Die Daten sind nicht vollständig. Füllen Sie alle Felder aus.</field>
+    <field name="ERRORINVALID">Ups... Sie können diese Seite nicht direkt aufrufen.</field>
+    <field name="SENT">Ihre Nachricht wurde an '{0}' gesendet.</field>
+    <field name="MESSAGE">ACHTUNG: Diese Nachricht wurde von einer Web-Seite aus gesendet.\n\nAn: {0}\nE-Mail: {1}\n\nDie obige URL wurde Ihnen von einem Freund gesendet.\n\n{2}\n\Von: {3}\nNachricht: {4}</field>
+    <field name="SUBJECT">Link gesendet</field>
+    <field name="TYPETEXTFROMIMAGE">Sicherheitsabfrage: </field>
+    <field name="OBJECTIMAGEINVALID">Sie haben die Sicherheitsabfrage nicht oder falsch beantwortet. Bitte gehen Sie zurück und überprüfen Sie die Eingabe.</field>
+  </row>
+</anydataset>

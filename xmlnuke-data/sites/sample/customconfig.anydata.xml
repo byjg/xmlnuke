@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<anydataset>
+  <row>
+    <field name="xmlnuke.LANGUAGESAVAILABLE">en-us=English (United States)|pt-br=Português (Brasil)|de-de=Deutsch|fr-fr=Français|sv-se=Svenska (Sverige)</field>
+    <field name="xmlnuke.LOGINMODULE">Login</field>
+  </row>
+</anydataset>

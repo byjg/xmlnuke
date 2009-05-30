@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Definindo automaticamente valores de Propriedades.</title>
+		<abstract>Definindo automaticamente valores de Propriedades.</abstract>
+		<created>Tue Nov 6 2007 1:40:57</created>
+		<modified>13/4/2008 22:19:30</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>technicalref</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Definir valores de Propriedades automaticamente</title>
+		<body>
+			<p>Com o XMLNuke é possível atribuir automaticamente os valores que foram passados por GET ou POST a uma propriedade ou mais propriedades do módulo. Isso significa que qualquer caixa de texto ou parâmetro passado pela URL pode ser atribuído diretamente a uma propriedade do módulo.</p>
+			<p>Para isso é necessário seguir os seguintes passos:
+<ol><li>Informar no início de CreatePage() ou dentro de Setup() que se deseja atribuir automaticamente os parâmetros com bindParameters()</li><li>Criar a propriedade dentro do formulário.</li></ol></p>
+			<p>
+No exemplo abaixo, o sistema automaticamente irá definir o valor da propriedade "Teste" se o mesmo for passado através de um formulário ou parâmetro na URL.
+</p>
+			<p>
+				<code information="Exemplo em CSharp"><![CDATA[
+public override IXmlnukeDocument CreatePage()
+{
+	// Chame esse método dentro de SETUP() ou no início do CREATEPAGE()
+	// Se esse método não for executado, os eventos não serão disparados.
+	this.bindParameters();
+	.
+	.
+	.
+}
+.
+.
+.
+/// <summary>
+/// Definir a propriedade
+/// </summary>
+protected string _teste;
+
+public string Teste
+{
+	get { return this._teste; }
+	set { this._teste = value; }
+}
+
+]]></code>
+			</p>
+			<p>
+				<code information="Exemplo em PHP"><![CDATA[
+public function CreatePage() 
+{
+	// Chame esse método dentro de SETUP() ou no início do CREATEPAGE()
+	// Se esse método não for executado, os eventos não serão disparados.
+	$this->bindParameters();
+	.
+	.
+	.
+}
+.
+.
+.
+// Definir a propriedade Teste. 
+// É necessário definir os métodos getter e setter.
+
+/**
+@var string $_teste
+*/
+protected $_teste;
+
+public function setTeste($value)
+{
+	$this->_teste = $value;
+}
+public function getTeste()
+{
+	return $this->_teste;
+}
+
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+</page>

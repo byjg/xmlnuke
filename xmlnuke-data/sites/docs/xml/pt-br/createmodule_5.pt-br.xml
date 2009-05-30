@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>ProcessPageStateBase</title>
+		<abstract>Faça telas completas de cadastro (inclusão, alteração e exclusão) em poucos minutos.</abstract>
+		<created>20/9/2005 00:06:38</created>
+		<modified>Wed May 9 2007 23:12:25</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>createmodules</groupkeyword>
+		<revision>$Revision: 1.1 $</revision>
+	</meta>
+	<blockcenter>
+		<title>A classe ProcessPageState</title>
+		<body>
+			<p>
+O ProcessPageState é uma classe abstrata que tem a função básica de ser uma pequena máquina de estados capaz de gerenciar quando o componente deve estar em modo de visualização, edição, inclusão ou exclusão, além de efetuar as operações de persistência no repositório de dados. 
+	 </p>
+	 <p><img src="common/imgs/docs/cm5_machinestate.png" alt="Machine state example" />
+	 </p>
+			<p>
+Esse mecanismo apesar de bem conhecido, se torna viável para ser utilizado de forma irrestrita no XmlNuke, pois o produto do ProcessPageState é um XML que poderá ser listado da forma que for conveniente ao usuário. Portanto se adequa a qualquer Layout.
+         </p>
+			<p>
+Essa classe serve de base para especializações de outras classes com o objetivo de definir um mecanismo específico de persistência da informação. Logo abaixo, serão apresentadas as duas classes que deverão ser estanciadas para a chamada do ProcessPageState: 
+<ul>
+<li><b>ProcessPageStateAnydataSet</b> (Se for utilizado um repositório AnyDataSet do XmlNuke);</li>
+<li><b>ProcessPageStateDBDataSet</b> (Se for utilizado um banco relacional, como: MySql, SQL, Oracle, PostGree, entre outros). </li>
+</ul>
+         </p>
+			<p>
+Utilizando-se de qualquer uma das classes, primeiramente, é necessário que o usuário forneça um pequeno dicionário de dados que especifique qual tipo de campo será adicionado a página. A configuração desse dicionário deverá ser feita através de um objeto da classe <b>ProcessPageFields</b>, que é uma coleção de objetos da classe <b>ProcessPageField</b>. Para cada campo que se deseja acrescentar a página é necessário criar um objeto da classe <b>ProcessPageField</b> correspondente. Através dele serão informados: o tipo de dado que deverá ser digitado,  se o  campo é visível para listagem e para edição,  se o campo é obrigatório ou não,  além de outras informações pertinentes ao campo. Depois de criado,  o objeto da classe <b>ProcessPageField</b>,  que representa um determinado campo, deverá ser adicionado ao objeto da classe <b>ProcessPageFields</b>, que representa o conjunto de campos da página.
+         </p>
+			<p>
+É possível especializar as classes <b>ProcessPageStateAnydataSet</b> e  <b>ProcessPageStateDBDataSet</b> para executar determinadas funções específicas de seu módulo(isso será visto em um tópico avançado). 
+         </p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Definindo o dicionário de dados</title>
+		<body>
+			<p>
+Essa é a etapa mais importante do processo de utilização do <b>ProcessPageState</b> e é independente do mecanismo de persistência que será utilizado. Ou seja, tanto se for utilizado o <b>ProcessPageStateAnydataSet</b>, quanto se for utilizado o <b>ProcessPageStateDBDataSet</b>, essa etapa deverá ser anteriormente realizada.
+         </p>
+			<p>
+Para definir o dicionário de dados , para representar cada campo a ser exibido na página, deverão ser estanciados objetos da classe <b>ProcessPageField</b>, que posteriormente deverão  ser adicionados a um objeto da classe  <b>ProcessPageFields</b>, como mostra o exemplo abaixo. É importante ressaltar que o objedo da classe  <b>ProcessPageFields</b>, deverá ser adicioanonado a algum elemento da tela, a fim de ser exibido, como um <b>XmlParagraphCollection</b> por exemplo.
+         </p>
+			<p>
+Ao definir o dicionário de dados é importante frisar que o primeiro campo deverá ser o campo CHAVE, devendo existir apenas um campo chave.
+         </p>
+			<p>
+				<code information="CSharp"><![CDATA[
+ProcessPageField fieldPage;
+ProcessPageFields pageFields = new ProcessPageFields();
+			
+fieldPage = new ProcessPageField(true);
+fieldPage.fieldName = "code";
+fieldPage.key = true;
+fieldPage.dataType = INPUTTYPE.NUMBER;
+fieldPage.fieldCaption = "Código";
+fieldPage.fieldXmlInput = XmlInputObjectType.TEXTBOX;
+fieldPage.visibleInList = true;
+fieldPage.editable = true;
+fieldPage.required = true;
+fieldPage.rangeMin = "100";
+fieldPage.rangeMax = "10000";
+pageFields.addProcessPageField(fieldPage);
+	
+fieldPage = new ProcessPageField(true);
+fieldPage.fieldName = "name";
+fieldPage.key = false;
+fieldPage.dataType = INPUTTYPE.TEXT;
+fieldPage.fieldCaption = "Nome";
+fieldPage.fieldXmlInput = XmlInputObjectType.TEXTBOX;
+fieldPage.visibleInList = true;
+fieldPage.editable = true;
+fieldPage.required = true;
+pageFields.addProcessPageField(fieldPage);
+]]></code>
+			</p>
+			<p>
+				<code information="PHP"><![CDATA[
+$pageField = new ProcessPageFields();
+		
+$fieldPage = new ProcessPageField();
+$fieldPage->fieldName = "code";
+$fieldPage->key = true;
+$fieldPage->dataType = INPUTTYPE::NUMBER;
+$fieldPage->fieldCaption = "Código";
+$fieldPage->fieldXmlInput = XmlInputObjectType::TEXTBOX;
+$fieldPage->visibleInList = true;
+$fieldPage->editable = true;
+$fieldPage->required = true;
+$fieldPage->rangeMin = "100";
+$fieldPage->rangeMax = "10000";
+$pageField->addProcessPageField($fieldPage);
+			
+$fieldPage = new ProcessPageField();
+$fieldPage->fieldName = "name";
+$fieldPage->key = false;
+$fieldPage->dataType = INPUTTYPE::TEXT;
+$fieldPage->fieldCaption = "Nome";
+$fieldPage->fieldXmlInput = XmlInputObjectType::TEXTBOX;
+$fieldPage->visibleInList = true;
+$fieldPage->editable = true;
+$fieldPage->required = true;
+$pageField->addProcessPageField($fieldPage);
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Explicando os parâmetros do ProcessPageField</title>
+		<body>
+			<p>
+				<b>fieldname</b>
+				<br/>
+Identifica o nome do campo dentro do repositório de dados
+         </p>
+			<p>
+				<b>key</b>
+				<br/>
+Identifica que o campo é chave. Deve ser o primeiro campo e único.
+         </p>
+			<p>
+				<b>dataType</b>
+				<br/>
+Atribui um valor do tipo INPUTTYPE para determinar qual o tipo de dado deve ser esperado (número, texto, data, email)         </p>
+			<p>
+				<b>fieldCaption</b>
+				<br/>
+Define o rótulo que será exibido no momento da edição.
+         </p>
+			<p>
+				<b>fieldXmlInput</b>
+				<br/>
+Atribui um valor do tipo XmlInputObjectType para determinar qual o tipo de objeto que será utilizado para edição. Pode ser um TextBox, Memo, Password, Check, etc.
+         </p>
+			<p>
+				<b>visibleInList</b>
+				<br/>
+Define se o campo será visível na listagem ou não.
+         </p>
+			<p>
+				<b>editable</b>
+				<br/>
+Define se o campo será editável ou não.
+         </p>
+			<p>
+				<b>required</b>
+				<br/>
+Define o campo é requerido ou não.
+         </p>
+			<p>
+				<b>rangeMin</b>
+				<br/>
+Define o limite mínimo a ser digitado do campo
+         </p>
+			<p>
+				<b>rangeMax </b>
+				<br/>
+Define o limite máximo a ser digitado no campo
+         </p>
+			<p>
+				<b>size </b>
+				<br/>
+Define o espaço que o campo ocupará
+         </p>
+			<p>
+				<b>newColumn</b>
+				<br/>
+Define se o campo gerará uma nova coluna na listagem, ou se ficará na mesma coluna que o anterior. O padrão é sempre gerar uma nova coluna.
+         </p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Usando o ProcessPageStateAnydata</title>
+		<body>
+			<p>
+Uma vez definido o dicionário de dados é necessário informar ao <b>ProcessPageState</b> esse dicionário de dados. No caso da utilização de um AnyDataset do próprio XmlNuke, deverá ser utilizado um objeto da classe <b>ProcessPageStateAnydata</b>, como mostra o exemplo abaixo.
+         </p>
+			<p>
+				<code information="CSharp"><![CDATA[
+AnydatasetFilenameProcessor anyData = new AnydatasetFilenameProcessor("arquivo", this._context);
+ProcessPageStateAnydata processPage = 
+	new ProcessPageStateAnydata(
+	       this._context, 
+	       pageFields, 
+	       "Edição teste usando Banco de Dados", 
+	       "module:sample?op=4", 
+	       null, 
+		anyData);
+]]></code>
+			</p>
+			<p>
+				<code information="PHP"><![CDATA[
+$processPage = new ProcessPageStateAnydata(
+	        $this->_context, 
+	        $pageField, 
+	        "Edição teste usando Banco de Dados", 
+	        "module:sample?op=4", 
+	        null, 
+	        new AnydatasetFilenameProcessor("sample", $this->_context));
+
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+
+	<blockcenter>
+		<title>Explicando os parâmetros do ProcessPageStateAnydata</title>
+		<body>
+			<p>
+Para estanciar um objeto da classe  ProcessPageStateAnydata é necessário passar os seguintes parâmetros(context, fields, header, module, buttons, anydata): 
+   </p>
+   <p>
+<b>context</b><br/>
+Objeto do tipo  XmlNuke Context
+   </p>
+   <p>
+<b>fields</b><br/>
+Objeto do tipo ProcessPageFields, que contém o conjunto de campos representados pelos objetos ProcessPageField adicionados. 
+   </p>
+   <p>
+<b>header</b><br/>
+Define o  título do EditList onde serão listados os registros
+   </p>
+   <p>
+<b>module</b><br/>
+Define o  módulo que será processado ao se submeter a página. Geralmente é o mesmo módulo que estanciou o ProcessPageState
+   </p>
+   <p>
+<b>buttons</b><br/>
+Define uma coleção de botões customizáveis do tipo CustomButtons.
+   </p>
+   <p>
+<b>anydata</b><br/>
+Objeto do tipo AnydatasetFilenameProcessor que indica o caminho do repositório AnydataSet utilizado.
+   </p>
+          </body>
+	</blockcenter>
+
+
+
+	<blockcenter>
+		<title>Usando o ProcessPageStateDB</title>
+		<body>
+			<p>
+Caso esteja sendo utilizado um banco de dados relacional, deverá ser criada uma estância da classe ProcessPageStateDB, como mostra o exemplo abaixo.
+         </p>
+			<p>
+A classe ProcessPageStateDB tem como característica prover todas as funcionalidades necessárias para a edição de dados um uma única tabela do banco. Para utilizar mais tabelas é necessário especializar essa classe.
+         </p>
+			<p>
+				<code information="CSharp"><![CDATA[
+ProcessPageStateDB processPage = 
+   new ProcessPageStateDB(
+      this._context, 
+      pageField, 
+      "Titulo da Área de Trabalho", 
+      "module:sample", 
+      null, 
+      "TABELA", 
+      "conexao");
+processPage.setSort("campo");
+]]></code>
+			</p>
+			<p>
+				<code information="PHP"><![CDATA[
+$processPage = new ProcessPageStateDB(
+	$this->_context, 
+	$pageField, 
+	"Titulo da área de trabalho", 
+	"module:sample?op=5", 
+	null, 
+	"TABELA",
+	"conexão");
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+
+	<blockcenter>
+		<title>Explicando os parâmetros do ProcessPageStateDB</title>
+		<body>
+			<p>
+Para instanciar um objeto da classe  ProcessPageStateDB é necessário passar os seguintes parâmetros(context, fields, header, module, buttons, table, connection): 
+         </p>
+			<p>
+<b>context </b><br/>
+Objeto do tipo  XmlNuke Context
+         </p>
+			<p>
+<b>fields </b><br/>
+Objeto do tipo ProcessPageFields, que contém o conjunto de campos representados pelos objetos ProcessPageField adicionados. 
+         </p>
+			<p>
+<b>header </b><br/>
+Define o  título do EditList onde serão listados os registros
+         </p>
+			<p>
+<b>module </b><br/>
+Define o  módulo que será processado ao se submeter a página. Geralmente é o mesmo módulo que estanciou o ProcessPageState
+         </p>
+			<p>
+<b>buttons </b><br/>
+Define uma coleção de botões customizáveis do tipo CustomButtons.
+         </p>
+			<p>
+<b>table </b><br/>
+Define a tabela do banco que será utilizada
+         </p>
+			<p>
+<b>connection </b><br/>
+Define a conexão de banco de dados que será utilizada para acessara tabela. Geralmente esta conexão é configurada no arquivo _db.anydat.xml que fica na pasta /data/sites/anydataset/ .
+			</p>
+		</body>
+	</blockcenter>
+
+
+</page>

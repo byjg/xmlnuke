@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Formulaire XMLNuke</title>
+		<abstract>Formulaire XMLNuke</abstract>
+		<created>16/1/2004 15:53:10</created>
+		<modified>02/01/2005 22:05:15</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword>-</groupkeyword>
+	</meta>
+	<script src="common/js/sample.js" />
+	<blockcenter>
+		<title>Gérer les formulaires</title>
+		<body>
+			<p>Voici un exemple de script pour concevoir un formulaire :</p>
+			<editform action="#" title="Mon premier formulaire">
+				<caption>Juste un petit commentaire.</caption>
+				<textbox name="a" caption="Ecrivez votre texte" value="default" size="20" />
+				<password name="d" caption="Votre mot de passe" size="30" />
+				<caption>Ici se trouve un champ caché (hidden)</caption>
+				<hidden name="x" value="default3" />
+				<checkbox name="e" caption="Case à cocher" value="default3" />
+				<checkbox name="e" caption="Case à cocher (2)" value="default3" />
+				<checkbox name="e" caption="Case à cocher (et 3)" value="default3" />
+				<radiobox name="f" caption="Quelle option vais-je choisir ?" value="default3" />
+				<radiobox name="f" caption="Celle-ci ?" value="default3" />
+				<radiobox name="f" caption="Ou bien celle-ci ?" value="default3" />
+				<select name="h" caption="Choisissez">
+					<option value="1">Option 1</option>
+					<option value="2">Option 2</option>
+					<option value="3">Option 3</option>
+				</select>
+				<memo name="ok" caption="Champ mémo" cols="30" rows="5">Texte par défaut</memo>
+				<buttons>
+					<submit caption="Envoyer" />
+					<reset caption="Reset" />
+					<button caption="Le bouton de votre choix!" onclick="fireButton()" />
+				</buttons>
+			</editform>
+			<p>Voyez-vous cette image ? <img src="common/imgs/logo_xmlnuke.gif" alt="Nom de l'image" width="120" height="50" /></p>
+		</body>
+	</blockcenter>
+</page>

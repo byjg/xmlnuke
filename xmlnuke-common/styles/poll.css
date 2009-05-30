@@ -1,0 +1,25 @@
+#pollform
+{
+	width: 100%;
+}
+
+#pollform fieldset
+{
+	display: block;
+	margin: 0 0 1em 0;
+	border: 0 solid #FFFFFF;
+	padding: 0 1em 1em 1em;
+}
+
+#pollform DT {
+   clear:both;
+   width:6%;
+   float:left;
+   text-align:center;
+}
+
+#pollform DD {
+   float:left;
+   width:91%;
+   margin:0 0 0.5em 0.25em;
+}

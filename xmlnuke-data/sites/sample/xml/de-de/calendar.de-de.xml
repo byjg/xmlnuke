@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Kalender</title>
+		<abstract>Kalender-Beispiel für XMLNuke.</abstract>
+		<created>13/05/2002 21:18:26</created>
+		<modified>19/3/2006 12:37:06</modified>
+		<keyword>XMLSeite ByJG</keyword>
+		<groupkeyword>-</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Kalender-Beispiel</title>
+		<body>
+			<p>
+				<calendar name="cal1" month="1" year="2009" title="Januar / 2009>
+					<event day="24">Test-Ereignis #1</event>
+					<event day="25" type="5">Test-Ereignis #2</event>
+					<event day="26" type="11">Test-Ereignis #3</event>
+				</calendar>
+				<calendar name="cal2" month="3" year="2009" title="März / 2009">
+					<event day="1">Test-Ereignis #1</event>
+					<event day="21">Test-Ereignis #2</event>
+					<event day="30">Test-Ereignis #3</event>
+				</calendar>
+			</p>
+		</body>
+	</blockcenter>
+</page>

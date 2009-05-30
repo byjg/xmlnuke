@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>La personnalisation</title>
+		<abstract>Gérer les modules de personnalisation</abstract>
+		<created>16/1/2004 16:03:49</created>
+		<modified>16/01/2004 16:03:49</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword>
+		</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Gérer les modules de personnalisation</title>
+		<body>
+			<p>Vous pouvez personnaliser XMLNuke. Les modules de personnalisation, ou Custom Modules, sont des PAGES DE SCRIPT (ASP, PHP, JAVA) écrites dans le langage du moteur. Ils apporteront plus de fonctionnalités et de puissance à votre site. </p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Fonctionnalités</title>
+		<body>
+			<p>Le moteur de XMLNuke dispose de plusieurs fonctions pour rendre abstraite la création de modules de personnalisation. C'est bien pratique pour faciliter la création de templates de pages XML, de AnyDataSet (voir le livre d'or), de fonctions, etc !</p>
+		</body>
+	</blockcenter>
+</page>

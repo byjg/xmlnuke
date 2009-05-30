@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>XMLNuke Send e-Mail</title>
+		<abstract>XMLNuke Send e-Mail</abstract>
+		<created>10/20/2002 8:13:51 PM</created>
+		<modified>08/06/2005 8:13:51 PM</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword>all</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Send eMail</title>
+		<body>
+			<p>This page use a custom module 'sendmail' distributed with the default installation of XMLNuke. You can create a custom form to POST data to sendmail page. 
+</p>
+			<p>
+				<editform action="module:sendemail" title="Fill Fields Bellow to Send a email" name="formemail" jsvalidate="true">
+					<textbox name="name" caption="Name" value="" size="30" required="true" type="0" />
+					<textbox name="email" caption="eMail" value="" size="30" required="true" type="10" />
+					<textbox name="subject" caption="Subject" value="" size="40" required="true" type="0" />
+					<memo name="message" caption="Message" cols="40" rows="5"></memo>
+					<hidden name="toname_id" value="DEFAULT" />
+					<imagevalidate caption="Type the text bellow: " />
+					<buttons>
+						<submit caption="Send" />
+						<reset caption="Reset" />
+					</buttons>
+				</editform>
+			</p>
+		</body>
+	</blockcenter>
+</page>

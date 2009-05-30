@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+  <meta>
+    <title>Internacionalização com o XMLNuke.</title>
+    <abstract>Como tornar seus documentos e módulos Internacionais.</abstract>
+    <created>Tue Nov 6 2007 1:40:57</created>
+    <modified>Tue Nov 6 2007 1:42:11</modified>
+    <keyword>xmlnuke</keyword>
+    <groupkeyword>technicalref</groupkeyword>
+  </meta>
+  <blockcenter>
+    <title>Block Title</title>
+    <body>
+      <p>This is the first paragraph</p>
+    </body>
+  </blockcenter>
+</page>

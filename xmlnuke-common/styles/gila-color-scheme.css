@@ -1,0 +1,48 @@
+/***************************************************************
+ * TITLE: Color Scheme Stylesheet for Gila                     *
+ * URI  : http://www.oswd.org/design/???/gila/color-scheme.css *
+ * MODIF: 2003-02-03 1227 +0800                                *
+ ***************************************************************/
+
+
+/* ###### Text Colors ###### */
+
+h1, #bodyText a, .leftSideBar a, .leftSideBar span, .rightSideBar a
+ { color: #a68c53; }
+
+.headerTitle, .headerLinks *, .menuBar a:hover, .leftSideBar .sideBarTitle,
+.leftSideBar a:hover, .leftSideBar .thisPage, .rightSideBar .sideBarTitle, #footer a
+ { color: black; }
+
+.headerTitle span, .menuBar, .menuBar *
+ { color: white; }
+
+.headerLinks
+ { color: #b82619; }
+
+
+/* ###### Background Colors ###### */
+
+body
+ { background-color: #f3f2eb; }
+
+#bodyText, .headerLinks, .menuBar a:hover, .rightSideBar
+ { background-color: white; }
+
+#header
+ { background-color: #b82619; }
+
+.menuBar
+ { background-color: black; }
+
+.leftSideBar .sideBarTitle, .rightSideBar .sideBarTitle, #footer
+ { background-color: #e6dfcf; }
+
+
+/* ###### Border Colors ###### */
+
+h1, #bodyText, .rightSideBar
+ { border-color: #e6dfcf; }
+
+acronym
+ { border-color: #a68c53; }

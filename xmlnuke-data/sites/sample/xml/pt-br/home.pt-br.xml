@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>XML Nuke Página Principal de Demonstração</title>
+		<abstract>XML Nuke Página Principal de Demonstração</abstract>
+		<created>21/3/2003 15:54:02</created>
+		<modified>21/3/2003 15:54:02</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword>
+		</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>XML Nuke Site de Demonstração</title>
+		<body>
+			<p>Este é um site de demonstração. Nesse site você poderá ver o XMLNuke em ação!! Selecione as opções a partir do menu no canto esquerdo.</p>
+			<p>O manual do programa ainda não está finalizado! Nós estamos trabalhando duro para finalizá-lo. Então vamos começar!</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Junte-se a gente!</title>
+		<body>
+			<p>Consulte o nosso site para conhecer a equipe e entrar em contato.</p>
+		</body>
+	</blockcenter>
+</page>

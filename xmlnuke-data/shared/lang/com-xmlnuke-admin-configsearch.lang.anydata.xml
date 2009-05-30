@@ -1,0 +1,29 @@
+<anydataset>
+   <row>
+      <field name="LANGUAGE">en-us</field>
+      <field name="TITLE">Manage Search Results</field>
+      <field name="DESCRIPTION">Manage the titles and abstracts listed in Search Results, customizing for XML in any styles.</field>
+      <field name="NODETITLE">Node Title:</field>
+      <field name="NODEABSTRACT">Node Abstract:</field>
+      <field name="NODEALIAS">Node Alias:</field>
+      <field name="NOTE">There is a built-in search config defined by: Node Title = /page/meta/title, Node Abstract Value = /page/meta/abstract</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">pt-br</field>
+      <field name="TITLE">Gerênciamento de Resultado de Buscas</field>
+      <field name="DESCRIPTION">Gerencie os títulos e listas astratas no Resultado de Buscas do site, personalizados por XML em qualquer estilo.</field>
+      <field name="NODETITLE">Título do Nó:</field>
+      <field name="NODEABSTRACT">Nó Abstrato:</field>
+      <field name="NODEALIAS">Apelido do Nó</field>
+      <field name="NOTE">Existe pré-definida a seguinte opção de busca: Título do Nó = /page/meta/title, Título do nó abstrato = /page/meta/abstract</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">de-de</field>
+      <field name="TITLE">Such-Ergebnisse verwalten</field>
+      <field name="DESCRIPTION">Verwalten Sie die Titel und die Zusammenfassungen, die in den Such-Ergebnissen aufgeführt werden. Anpassbar an XML in allen Stilen.</field>
+      <field name="NODETITLE">Knoten-Titel: </field>
+      <field name="NODEABSTRACT">Zusammenfassung: </field>
+      <field name="NODEALIAS">Knoten-Pseudonym: </field>
+      <field name="NOTE">Es ist folgende Standard-Konfiguration implementiert: Knoten-Titel = /page/meta/title, Knoten-Zusammenfassung = /page/meta/abstract</field>
+   </row>
+</anydataset>

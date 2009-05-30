@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<xmlindex>
+	<group>
+		<id>main</id>
+		<title>Huvudgrupp</title>
+		<keyword>main_keyword</keyword>
+		<page>
+			<id>home</id>
+		<title>Skriv in din titel här</title>
+		<abstract>Beskriv sidan kortfattat här</abstract>
+		</page>
+	</group>
+</xmlindex>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+  <meta>
+    <title>Agrupando entrada de dados no XMLNuke</title>
+    <abstract>Como fazer uso do XmlInputGroup para melhorar a forma de entrada de dados nos seus formulários.</abstract>
+    <created>Mon Nov 5 2007 20:41:38</created>
+    <modified>Mon Nov 5 2007 21:49:11</modified>
+    <keyword>xmlnuke</keyword>
+    <groupkeyword>technicalref</groupkeyword>
+  </meta>
+  <blockcenter>
+    <title>Agrupando a entrada de dados - XmlInputGroup</title>
+    <body>
+      <p>O Xmlnuke possibilita que campos de entrada de dados possam ser agrupados. Dessa forma é possível fazer com que a apresentação desses campos possa ter o comportamento modificado, como um campo ficar ao lado do outro ao invés de um embaixo do outro, bem como ocultar os campos. </p>
+      <p><code information="Exemplo de agrupamento em PHP"><![CDATA[
+$editform = new XmlFormCollection($this->_context, "module:sample", "Formulário");
+
+$inputGroup = new XmlInputGroup($this->_context, "group", false);
+$list = new XmlEasyList(EasyListType::SELECTLIST, "name1", "Caption1", $varArray);
+$list->setRequired(true);
+$inputGroup->addXmlnukeObject($list);
+			
+$txt = new XmlInputTextBox("Caption2", "name2", "", 15);
+$txt->setMaxLength(15);
+$txt->setRequired(true);
+$inputGroup->addXmlnukeObject($txt);
+$editform->addXmlnukeObject($inputGroup);
+]]></code></p>
+      <p><code information="Exemplo de agrupamento em CSharp"><![CDATA[
+XmlFormCollection form = new XmlFormCollection(this._context, "module:sample", "Formulário");
+
+XmlInputGroup inputGroup = new XmlInputGroup(this._context, "group", false);
+XmlEasyList list = new XmlEasyList(EasyListType.SELECTLIST, "name1", "Caption1", arrValues);
+list.setRequired(true);
+inputGroup.addXmlnukeObject(list);
+
+XmlInputTextBox txt = new XmlInputTextBox("Caption2", "name2", "", 15);
+txt.setMaxLength(15);
+txt.setRequired(true);
+inputGroup.addXmlnukeObject(txt);
+form.addXmlnukeObject(inputGroup);
+]]></code></p>
+
+      <p>Note que ao invés de adicionar os objetos de entrada de dados ao XmlFormCollection, os mesmos foram adicionados ao grupo, e este foi adicionado ao objeto de formulário.</p>
+<p><b>O XmlInputGroup tem os seguintes argumentos:</b>
+<ul>
+<li>Contexto - o contexto do XMLNuke</li>
+<li>Nome - contém o nome daquele grupo. Na transformação padrão, o XMLNuke ira criar um JavaScript com o nome showHide_[NOME](true / false) que permitirá esconder ou mostrar o grupo dentro à partir de um comando JavaScript.</li>
+<li>Quebra Linha - Se TRUE um campo ficará abaixo do outro. Se FALSE um campo ficará ao lado do outro. </li>
+<li>CanHide - Se TRUE permitirá que o usuário possa esconder ou mostrar o grupo definido.</li>
+<li>Caption: Definirá um rótulo para esse grupo. Ele só é exibido com CanHide = true.</li>
+</ul>
+</p>
+    </body>
+  </blockcenter>
+  <blockcenter>
+     <title>Exemplos</title>
+     <body>
+         <editform action="#" name="nomedoform" jsvalidate="true" decimalseparator="," dateformat="0" caption="Formulário de Exemplo">
+             <inputgroup name="grp1" canhide="true" caption="Grupo 1 - CanHide habilitado">
+                 <textbox name="a" caption="Campo 1" size="8"/>
+                 <textbox name="b" caption="Campo 2" size="8"/>
+                 <textbox name="c" caption="Campo 3" size="8"/>
+             </inputgroup>
+             <inputgroup name="grp2" canhide="true" breakline="true" caption="Grupo 2 - CanHide habilitado">
+                 <textbox name="d" caption="Campo 1" size="10"/>
+                 <textbox name="e" caption="Campo 2" size="10"/>
+                 <textbox name="f" caption="Campo 3" size="10"/>
+             </inputgroup>
+             <caption value="Uso de JavaScript para mostrar/esconder os dados"/>
+		<buttons>
+			<button caption="Esconder Grp1" onclick="showHide_grp1(false);"/>
+					<button caption="Mostrar Grp1" onclick="showHide_grp1(true);"/>
+					<button caption="Esconder Grp2" onclick="showHide_grp2(false);"/>
+					<button caption="Mostrar Grp2" onclick="showHide_grp2(true);"/>
+		</buttons>
+         </editform>
+     </body>
+  </blockcenter>
+
+</page>

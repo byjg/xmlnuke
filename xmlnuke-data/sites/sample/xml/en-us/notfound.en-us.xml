@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Page Not Found</title>
+		<abstract>Page Not Found</abstract>
+		<created>01/06/02 19:24:12</created>
+		<modified>01/06/02 19:24:12</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword />
+		<keyword>xmlnuke</keyword>
+	</meta>
+	<blockcenter>
+		<title>Page Not Found</title>
+		<body>
+			<p>The Requested Page "[param:xml]" doesn't exists or doesn't have an english version</p>
+			<p>Try to access this page in another language: [param:languageselector]</p>
+		</body>
+	</blockcenter>
+</page>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Analyzing and Projecting with XMLNuke</title>
+		<abstract>Tips for analyzing and projecting applications using the XMLNuke framework </abstract>
+		<created>16/7/2007 15:25:48</created>
+		<modified>Wed Nov 19 2008 15:39:35</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_analysis</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Analyzing and Projecting with XMLNuke</title>
+		<body>
+			<p>
+				<ol>
+					<li>Don't use commands to write HTML directly for the user as an ?echo? in PHP or a ?Response.Write? in CSharp. XMLNuke modules do not produce anything directly for the user, only XML, which will be transformed by the engine by an XSL. If it is really necessary to write HTML directly, we are definitely using the wrong framework.<br/><br/></li>
+					<li>When projecting your application, keep in mind that the modules correspond to a functionality in your application, like registering clients, for example. But the modules should only have the intelligence to build the XML for the user. The rules of business and how they should access the database should be in classes specific for such purposes. The modules should only use them. 
+<br/><br/>
+Specifically relating to analysis focused on objects, we can compare the module to a Use Case. <br/><br/></li>
+					<li>Still in relation to the project, because XMLNuke works with XML we can think of our application as comprised entirely of components. For example, if we are going to create a phone book, we can create an XML definition to support the phone book, create an XML Object class that generates and manipulates that XML. And finally, we will have an XSL (Snippet) which understands this XML. This approach is particularly useful since it makes the project much easier. 
+<br/><br/>
+Some practical cases: In Jacotei (price search system), various XMLs were defined, one to list categories, one for the most popular, another for the most sold, one for product details, among others. The advantage in this case is that when creating the solution, we think of every element specifically. What should constitute the block for MOST POPULAR? What are the details? We created an XML Object that executed all of this and an XSL that transformed the result from XML. 
+<br/><br/>
+This approach makes it much easier to understand the application. The module only receives the request and instances the XML Objects in the correct order. Productivity and efficiency is also very high. 
+<br/><br/>
+It is then valid to think of the application as a set of functional objects the same way we think of a car. For example: The car has a motor, wheels, suspension. Each one of them does a specific task, has its own properties, and together "make the car move".
+<br/><br/></li>
+					<li>If your application requires authentication, study the profiles that will access it and define roles. The idea of a role is very close to the reality of work environments. We have managers, coordinators, secretaries, workers, etc., and each of these perform 	a specific task in the organization with access to specific resources. These are roles. And this same approach is used in XMLNuke. According to the role, users may or may not access the module. In XMLNuke, definition of a role is multiple: Each module may have one or more roles associated to it, and each user can have one or more associated roles. 
+<br/><br/>
+It's important to note that if a module accepts a specific role and a user has that role, XMLNuke will guarantee that user access to that module. It is up to the programmer to perform the correct validations for specific restrictions within that module.<br/><br/></li>
+				</ol>
+			</p>
+		</body>
+	</blockcenter>
+</page>

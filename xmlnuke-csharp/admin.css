@@ -1,0 +1,96 @@
+BODY
+{
+    FONT-WEIGHT: normal;
+    FONT-SIZE: 11px;
+    FONT-FAMILY: Verdana, Helvetica, sans-serif
+}
+H1
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 16px
+}
+H2
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 14px
+}
+TABLE
+{
+    FONT-SIZE: 11px
+}
+TH
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 12px;
+    BACKGROUND-COLOR: #cad7e8
+}
+INPUT
+{
+    BORDER-TOP-WIDTH: 1px;
+    FONT-WEIGHT: normal;
+    BORDER-LEFT-WIDTH: 1px;
+    FONT-SIZE: 11px;
+    BORDER-LEFT-COLOR: black;
+    BORDER-BOTTOM-WIDTH: 1px;
+    BORDER-BOTTOM-COLOR: black;
+    BORDER-TOP-COLOR: black;
+    FONT-FAMILY: Verdana, Helvetica, sans-serif;
+    BORDER-RIGHT-WIDTH: 1px;
+    BORDER-RIGHT-COLOR: black
+}
+SELECT
+{
+    BORDER-TOP-WIDTH: 1px;
+    FONT-WEIGHT: normal;
+    BORDER-LEFT-WIDTH: 1px;
+    FONT-SIZE: 11px;
+    BORDER-LEFT-COLOR: black;
+    BORDER-BOTTOM-WIDTH: 1px;
+    BORDER-BOTTOM-COLOR: black;
+    BORDER-TOP-COLOR: black;
+    FONT-FAMILY: Verdana, Helvetica, sans-serif;
+    BORDER-RIGHT-WIDTH: 1px;
+    BORDER-RIGHT-COLOR: black
+}
+TEXTAREA
+{
+    BORDER-TOP-WIDTH: 1px;
+    FONT-WEIGHT: normal;
+    BORDER-LEFT-WIDTH: 1px;
+    FONT-SIZE: 11px;
+    BORDER-LEFT-COLOR: black;
+    BORDER-BOTTOM-WIDTH: 1px;
+    BORDER-BOTTOM-COLOR: black;
+    BORDER-TOP-COLOR: black;
+    FONT-FAMILY: Verdana, Helvetica, sans-serif;
+    BORDER-RIGHT-WIDTH: 1px;
+    BORDER-RIGHT-COLOR: black
+}
+A:link
+{
+    COLOR: #3366cc;
+    FONT-FAMILY: Verdana, Helvetica, sans-serif;
+    TEXT-DECORATION: none
+}
+A:visited
+{
+    COLOR: #3366cc;
+    FONT-FAMILY: Verdana, Helvetica, sans-serif;
+    TEXT-DECORATION: none
+}
+A:active
+{
+    COLOR: #666666;
+    FONT-FAMILY: Verdana, Helvetica, sans-serif;
+    TEXT-DECORATION: none
+}
+A:hover
+{
+    COLOR: #0033cc;
+    FONT-FAMILY: Verdana, Helvetica, sans-serif;
+    TEXT-DECORATION: underline
+}
+.OPTIONS
+{
+    BACKGROUND-COLOR: #cad7e8
+}

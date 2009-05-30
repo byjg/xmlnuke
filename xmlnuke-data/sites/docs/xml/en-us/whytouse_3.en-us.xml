@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Explore the Power of XML with XMLNuke</title>
+		<abstract>See examples of how powerful XML can be when using XMLNuke for developing web applications.</abstract>
+		<created>14/8/2006 15:02:15</created>
+		<modified>Sat Sep 13 2008 18:16:26</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>whytouse_key</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Explore the power of XML with XMLNuke</title>
+		<body>
+			<p>When XMLNuke manipulates only the information without worrying about how this information will be displayed, it opens possibilities for various implementations. In the traditional programming process, HTML is used to define where and when the information will be displayed. When this is done, we embed details within our precious information that are not necessarily important to the information in itself. Thus it is at this point that information is mixed with the HTML.
+</p>
+			<p>
+For example, if we had to create a page containing a title and a succinct description about that title, we would do something more or less like this:
+<code><![CDATA[
+<style>
+   .sample: { font-family: Arial; font-size: 16px; font-weight: bold; color: blue }
+</style>
+<p>
+  <div align="center" class="sample">Main Title</div>
+  Description goes here. <br />
+  <a href="http://www.provedor.com.br/pagina.ext?noticia=530">Click here</a> for more informations.
+</p>
+]]></code></p>
+			<p>
+Note that in the code we included various pieces of information on how it will be presented. The same result and others can be obtained if we simple produce the following XML code: 
+<code><![CDATA[
+<news id="530">
+  <title>Main Title</title>
+  <abstract>Description goes here</abstract>
+</news>
+]]></code>
+	Note that the code is cleaner, and by using XSL it may be transformed into the option above as well as ANY other formatting option. 
+</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>One piece of information, several ways to present it</title>
+		<body>
+			<p>
+	
+As seen previously, there are several ways to display a piece of information even though only one way is needed to define it. To illustrate this, there is a module on XMLNuke that allows a theme to be chosen in which a certain XML document will be presented. To access this module, <a href="module:xsltheme" target="_blank">click here</a></p>
+			<p>
+It?s important to understand that it is not simply a ?change of outfit? site. Each theme selected is a COMPLETELY different way to process the same information. And note that the information is produced through an application, and not simply through a static page rewritten several times. The information on this page is produced only once, and its result is transformed various times.
+</p>
+			<p>	
+But there are more interesting ideas, for example: 
+<ul>
+					<li>Producing a page which shows a table, and this table can be displayed as an SVG graphic (which is XML!!)
+</li>
+					<li>Transforming a page that was generated in HTML into a WORD document or OPENOFFICE or to XML format
+</li>
+					<li>Exchanging information between sites without any interaction between the webmasters
+</li>
+					<li>A news site can produce an RSS feed naturally, without needing to rewrite the application 
+</li>
+					<li>The content of a site can be transformed into AJAX, for example, without changing a single line of the application.</li></ul>
+The number and possibilities of options for using XML is truly vast, since by producing only information, the information can then be treated and transformed in the manner deemed most convenient. 
+</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Processing information already produced</title>
+		<body>
+			<p>
+	
+Visible information is the result of the transformation from XML to XSL. However, it is possible to see the raw information in XML by adding the argument: rawxml=true to the end of the address. <a href="engine:xmlnuke?rawxml=true"> Click Here</a> to view the XML this page.
+</p>
+			<p>
+But XMLNuke makes it possible to go beyond this so that the XML document is filtered and only shows us what really matters. For example:
+<ul>
+					<li>
+						<a href="engine:xmlnuke?rawxml=true&amp;xpath=/page/blockcenter/title">Filter all the titles from the paragraphs</a>
+					</li>
+					<li>
+						<a href="engine:xmlnuke?rawxml=true&amp;xpath=/page/blockcenter[2]">Return only the second block of text</a>
+					</li>
+					<li>
+						<a href="engine:xmlnuke?rawxml=true&amp;xpath=/page/meta/abstract">Return only the summary of the page</a>
+					</li>
+					<li>
+						<a href="engine:xmlnuke?rawxml=true&amp;xpath=//a/@href">Return all HIPERLINKS of the page</a>
+					</li></ul>
+And much more!!! 
+</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>And there?s more?</title>
+		<body>
+XMLNuke is also prepared for users who are not completely adapted to XML. A set of XML and XSL was created that allows users to gradually assimilate the use of XMLNuke whether through nodes similar to HTML (such as paragraph, bold, italics) or through the introduction of new XML objects, such as XMLEditList and XMLFormCollection, for example. To see more details about them, check the demonstration site by <a href="engine:xmlnuke?site=sample&amp;xml=home">clicking here</a>.</body>
+	</blockcenter>
+</page>

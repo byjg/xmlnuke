@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Min första sida</title>
+		<abstract>Hur du skapar din första XMLNuke-sida</abstract>
+		<created>2/7/2005 11:53:00</created>
+		<modified>7/2/2005 1:09:00 PM</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>-</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>Hur du skapar din första XMLNuke-sida</title>
+		<body>
+			<p>XMLNuke genomför sidskapandet i två delar: LAYOUT och DATA.</p>
+			<p>Layouten gjord med XSLT och måste ha endast instruktioner för att använda data och generara ett korrekt utformat som till exempel XHTML, RSS, WML och andra.</p>
+			<p>Datan är XML-dokument och måste endast innehålla informations. Du kan (om du vill) skapa ditt eget XML-format. Men för att göra det enkelt att börja använda XMLNuke föreslår och implementerar vi ett specifikt dataformat. Datan är separerad i två delar: 
+<ul><li>Huvud</li><li>Datablock</li></ul></p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Huvud</title>
+		<body>
+			<p>Huvudet innehåller information om XML-dokumentet som tex sidans title, beskrivning och skapad/ändrat datum. Användaren kan lägga till dina definitioner.</p>
+			<p>
+				<code><![CDATA[
+<page>
+  <meta>
+    <title>Skriv din sidtitel här.</title>
+    <abstract>Skriv din sidbeskrivning här.</abstract>
+    <created>2/7/2005 11:53:00</created>
+    <modified/>
+    <keyword>xmlnuke</keyword>
+    <groupkeyword>all</groupkeyword>
+  </meta>
+</page>
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Datablock</title>
+		<body>
+			<p>Dokumentet skapas med hjälp av datablock. Dom här blocken kallas <b>blockcenter</b>, <b>blockleft</b> e <b>blockright</b>. Den ursprungliga XSLT transformerar dom blocken genom att förlägga dom centrerad, till vänster och till höger, men du kan transformera det och förlägga det till en specifik position. Se ett exempel:</p>
+			<p>
+				<code><![CDATA[
+  <blockcenter>
+    <title>Blocktitel</title>
+    <body>
+      <p>Det här är första paragrafen.</p>
+    </body>
+  </blockcenter>
+]]></code>
+			</p>
+		</body>
+	</blockcenter>
+</page>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+  <meta>
+    <title>Grouping data entries in XMLNuke</title>
+    <abstract>How to use XMLInputGroup to improve data entries in your forms.</abstract>
+    <created>Mon Nov 5 2007 20:41:38</created>
+    <modified>Wed Nov 19 2008 15:08:07</modified>
+    <keyword>xmlnuke</keyword>
+    <groupkeyword>technicalref</groupkeyword>
+  </meta>
+  <blockcenter>
+    <title>Grouping data entries - XmlInputGroup</title>
+    <body>
+      <p>XMLNuke allows data entry fields to be grouped together. This way it is possible to modify the behavior of the presentation of these fields, with a field to the side of another instead of below another, in addition to hiding fields.
+</p>
+      <p><code information="Example of grouping in PHP"><![CDATA[
+$editform = new XmlFormCollection($this->_context, "module:sample", "Formulário");
+
+$inputGroup = new XmlInputGroup($this->_context, "group", false);
+$list = new XmlEasyList(EasyListType::SELECTLIST, "name1", "Caption1", $varArray);
+$list->setRequired(true);
+$inputGroup->addXmlnukeObject($list);
+			
+$txt = new XmlInputTextBox("Caption2", "name2", "", 15);
+$txt->setMaxLength(15);
+$txt->setRequired(true);
+$inputGroup->addXmlnukeObject($txt);
+$editform->addXmlnukeObject($inputGroup);
+]]></code></p>
+      <p><code information="Example of grouping in CSharp"><![CDATA[
+XmlFormCollection form = new XmlFormCollection(this._context, "module:sample", "Formulário");
+
+XmlInputGroup inputGroup = new XmlInputGroup(this._context, "group", false);
+XmlEasyList list = new XmlEasyList(EasyListType.SELECTLIST, "name1", "Caption1", arrValues);
+list.setRequired(true);
+inputGroup.addXmlnukeObject(list);
+
+XmlInputTextBox txt = new XmlInputTextBox("Caption2", "name2", "", 15);
+txt.setMaxLength(15);
+txt.setRequired(true);
+inputGroup.addXmlnukeObject(txt);
+form.addXmlnukeObject(inputGroup);
+]]></code></p>
+
+      <p>Note that instead of adding objects for data entry to the XMLFormCollection, these were added to a group, and this group was added to the object of the form.</p>
+<p><b>XmlInputGroup has the following arguments:</b>
+<ul>
+<li>Context ? the context of XMLNuke</li>
+<li>Name ? contains the name of that group. In the default transformation, XMLNuke will create a JavaScript with the name showHide_[NAME](true/false) which will allow the group inside to be hidden or displayed based on a JavaScript command.</li>
+<li>Line Break ? If TRUE, the field will be below the other. If FALSE, the field will be to the side of the other.</li>
+<li>CanHide ? If TRUE, allows the user to hide or show the defined group.
+</li>
+<li>Caption: Defines a label for this group. it is only displayed with CanHide = true.</li>
+</ul>
+</p>
+    </body>
+  </blockcenter>
+  <blockcenter>
+     <title>Examples</title>
+     <body>
+         <editform action="#" name="nomedoform" jsvalidate="true" decimalseparator="," dateformat="0" caption="Example Form">
+             <inputgroup name="grp1" canhide="true" caption="Grupo 1 - CanHide enabled">
+                 <textbox name="a" caption="Field 1" size="8"/>
+                 <textbox name="b" caption="Field 2" size="8"/>
+                 <textbox name="c" caption="Field 3" size="8"/>
+             </inputgroup>
+             <inputgroup name="grp2" canhide="true" breakline="true" caption="Grupo 2 - CanHide enabled">
+                 <textbox name="d" caption="Field 1" size="10"/>
+                 <textbox name="e" caption="Field 2" size="10"/>
+                 <textbox name="f" caption="Field 3" size="10"/>
+             </inputgroup>
+             <caption value="Javascript to show/hide fields"/>
+		<buttons>
+			<button caption="Hide Grp1" onclick="showHide_grp1(false);"/>
+					<button caption="Show Grp1" onclick="showHide_grp1(true);"/>
+					<button caption="Hide Grp2" onclick="showHide_grp2(false);"/>
+					<button caption="Show Grp2" onclick="showHide_grp2(true);"/>
+		</buttons>
+         </editform>
+     </body>
+  </blockcenter>
+
+</page>

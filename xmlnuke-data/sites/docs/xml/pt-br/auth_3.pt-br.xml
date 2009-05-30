@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>Como configurar um módulo?</title>
+		<abstract>Como configurar um módulo para que o mesmo requeira autenticação e como definir o papel que esse módulo suporta. Técnicas para personalização da rotina de autenticação.</abstract>
+		<created>15/8/2006 15:37:17</created>
+		<modified>15/8/2006 16:41:04</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>key_auth</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>A Forma Padrão</title>
+		<body>
+			<p>Para configurar que um módulo requeira autenticação é necessário apenas sobrescrever os seguintes métodos:
+<code information="CSharp"><![CDATA[
+public override bool requiresAuthentication()
+{
+	return true; 
+}
+
+public override AccessLevel getAccessLevel()
+{
+	return AccessLevel.OnlyAdmin; // Ver a primeiro tópico para outros métodos de acesso
+}
+
+public override string getRole()
+{
+        // Especifique QUAL o papel que esse módulo suporta.
+        // APENAS se o getAccessLevel() for OnlyRole ou CurrentSiteAndRole
+	return ""; 
+}
+]]></code><code information="PHP"><![CDATA[
+public function requiresAuthentication()
+{
+	return true;
+}
+
+public function getAccessLevel()
+{
+	return AccessLevel::OnlyAdmin; // Ver a primeiro tópico para outros métodos de acesso
+}
+
+public function getRole()
+{
+        // Especifique QUAL o papel que esse módulo suporta.
+        // APENAS se o getAccessLevel() for OnlyRole ou CurrentSiteAndRole
+	return "";
+}
+]]></code></p>
+			<p>
+O XMLNuke automaticamente entende que o módulo requer autenticação e irá fazer o processo necessário para garantir que apenas os usuários que se encaixem nas configurações tenham acesso aos módulos.
+
+.</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Personalizando o método de validação do usuário</title>
+		<body>
+			<p>Em alguns casos o método de validação do usuário não se encaixa nas configurações padrões do XMLNuke, como por exemplo, utilizando LDAP, ou integrando-se a sistemas de validação já existente. Nestes casos é necessário implementar o seu próprio método de validação.</p>
+			<p>Para fazer isso, devemos sobrescrever o método <b>accessGranted()</b>. É importante que esse método retorne TRUE ou FALSE.
+</p>
+		</body>
+	</blockcenter>
+</page>

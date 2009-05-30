@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<page>
+	<meta>
+		<title>How to create Dynamic Menus</title>
+		<abstract>How to create Dynamic Menus</abstract>
+		<created>13/05/2002 20:43:05</created>
+		<modified>08/06/2005 20:56:11</modified>
+		<keyword>XMLSite ByJG</keyword>
+		<groupkeyword>grpdynmenu</groupkeyword>
+		<keyword>Your First Keyword</keyword>
+		<keyword>Your Second Keyword and so on</keyword>
+	</meta>
+	<blockcenter>
+		<title>What is a Dynamic Menu?</title>
+		<body>
+			<p>It is very easy to organize your pages and menus. XMLNuke have GROUPS and GROUPKEYWORDs that is used to create them.</p>
+			<p>When you create a group (see Admin Tool), you specify a KEYWORD. The default keyword is <b>all</b>. It means only groups containing the "ALL" keyword makes the menu visible.</p>
+			<p>If you setup another value to the keyword, the menu becomes invisible. Only pages with the tag &lt;GROUPKEYWORD&gt; can then activate it.</p>
+		</body>
+	</blockcenter>
+	<blockcenter>
+		<title>Can I see an example?</title>
+		<body>
+			<p>Select the menu on the left side. You can see 'Page one' and 'Page two'. through them you'll be able to access two pages of this hidden menu.</p>
+		</body>
+	</blockcenter>
+</page>

@@ -1,0 +1,16 @@
+<anydataset>
+  <row>
+    <field name="code">101</field>
+    <field name="name">Joao Gilberto Magalhaes</field>
+    <field name="email">notspam@byjg.com</field>
+    <field name="data">26/01/1974</field>
+    <field name="Memo">XMLNuke creator</field>
+  </row>
+  <row>
+    <field name="code">102</field>
+    <field name="name">John Doe</field>
+    <field name="email">no@email.com</field>
+    <field name="data">10/01/2001</field>
+    <field name="Memo">Nothing</field>
+  </row>
+</anydataset>

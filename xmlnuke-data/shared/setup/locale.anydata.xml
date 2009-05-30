@@ -1,0 +1,863 @@
+<?xml version="1.0" encoding="utf-8"?>
+<anydataset>
+<row>
+<field name="name">Afrikaans</field>
+<field name="shortname">af</field>
+<field name="lcid">1078</field>
+</row>
+<row>
+<field name="name">Albanian</field>
+<field name="shortname">sq</field>
+<field name="lcid">1052</field>
+</row>
+<row>
+<field name="name">Arabic - United Arab Emirates</field>
+<field name="shortname">ar-ae</field>
+<field name="lcid">14337</field>
+</row>
+<row>
+<field name="name">Arabic - Bahrain</field>
+<field name="shortname">ar-bh</field>
+<field name="lcid">15361</field>
+</row>
+<row>
+<field name="name">Arabic - Algeria</field>
+<field name="shortname">ar-dz</field>
+<field name="lcid">5121</field>
+</row>
+<row>
+<field name="name">Arabic - Egypt</field>
+<field name="shortname">ar-eg</field>
+<field name="lcid">3073</field>
+</row>
+<row>
+<field name="name">Arabic - Iraq</field>
+<field name="shortname">ar-iq</field>
+<field name="lcid">2049</field>
+</row>
+<row>
+<field name="name">Arabic - Jordan</field>
+<field name="shortname">ar-jo</field>
+<field name="lcid">11265</field>
+</row>
+<row>
+<field name="name">Arabic - Kuwait</field>
+<field name="shortname">ar-kw</field>
+<field name="lcid">13313</field>
+</row>
+<row>
+<field name="name">Arabic - Lebanon</field>
+<field name="shortname">ar-lb</field>
+<field name="lcid">12289</field>
+</row>
+<row>
+<field name="name">Arabic - Libya</field>
+<field name="shortname">ar-ly</field>
+<field name="lcid">4097</field>
+</row>
+<row>
+<field name="name">Arabic - Morocco</field>
+<field name="shortname">ar-ma</field>
+<field name="lcid">6145</field>
+</row>
+<row>
+<field name="name">Arabic - Oman</field>
+<field name="shortname">ar-om</field>
+<field name="lcid">8193</field>
+</row>
+<row>
+<field name="name">Arabic - Qatar</field>
+<field name="shortname">ar-qa</field>
+<field name="lcid">16385</field>
+</row>
+<row>
+<field name="name">Arabic - Saudi Arabia</field>
+<field name="shortname">ar-sa</field>
+<field name="lcid">1025</field>
+</row>
+<row>
+<field name="name">Arabic - Syria</field>
+<field name="shortname">ar-sy</field>
+<field name="lcid">10241</field>
+</row>
+<row>
+<field name="name">Arabic - Tunisia</field>
+<field name="shortname">ar-tn</field>
+<field name="lcid">7169</field>
+</row>
+<row>
+<field name="name">Arabic - Yemen</field>
+<field name="shortname">ar-ye</field>
+<field name="lcid">9217</field>
+</row>
+<row>
+<field name="name">Armenian</field>
+<field name="shortname">hy</field>
+<field name="lcid">1067</field>
+</row>
+<row>
+<field name="name">Azeri - Latin</field>
+<field name="shortname">az-az</field>
+<field name="lcid">1068</field>
+</row>
+<row>
+<field name="name">Azeri - Cyrillic</field>
+<field name="shortname">az-az</field>
+<field name="lcid">2092</field>
+</row>
+<row>
+<field name="name">Basque</field>
+<field name="shortname">eu</field>
+<field name="lcid">1069</field>
+</row>
+<row>
+<field name="name">Belarusian</field>
+<field name="shortname">be</field>
+<field name="lcid">1059</field>
+</row>
+<row>
+<field name="name">Bulgarian</field>
+<field name="shortname">bg</field>
+<field name="lcid">1026</field>
+</row>
+<row>
+<field name="name">Catalan</field>
+<field name="shortname">ca</field>
+<field name="lcid">1027</field>
+</row>
+<row>
+<field name="name">Chinese - China</field>
+<field name="shortname">zh-cn</field>
+<field name="lcid">2052</field>
+<field name="langstr">chinese</field>
+<field name="langstr">chinese-simplified</field>
+<field name="langstr">chinese-traditional</field>
+<field name="langstr">chs</field>
+<field name="langstr">cht</field>
+</row>
+<row>
+<field name="name">Chinese - Hong Kong SAR</field>
+<field name="shortname">zh-hk</field>
+<field name="lcid">3076</field>
+<field name="langstr">chinese</field>
+<field name="langstr">chinese-simplified</field>
+<field name="langstr">chinese-traditional</field>
+<field name="langstr">chs</field>
+<field name="langstr">cht</field>
+</row>
+<row>
+<field name="name">Chinese - Macau SAR</field>
+<field name="shortname">zh-mo</field>
+<field name="lcid">5124</field>
+<field name="langstr">chinese</field>
+<field name="langstr">chinese-simplified</field>
+<field name="langstr">chinese-traditional</field>
+<field name="langstr">chs</field>
+<field name="langstr">cht</field>
+</row>
+<row>
+<field name="name">Chinese - Singapore</field>
+<field name="shortname">zh-sg</field>
+<field name="lcid">4100</field>
+<field name="langstr">chinese</field>
+<field name="langstr">chinese-simplified</field>
+<field name="langstr">chinese-traditional</field>
+<field name="langstr">chs</field>
+<field name="langstr">cht</field>
+</row>
+<row>
+<field name="name">Chinese - Taiwan</field>
+<field name="shortname">zh-tw</field>
+<field name="lcid">1028</field>
+<field name="langstr">chinese</field>
+<field name="langstr">chinese-simplified</field>
+<field name="langstr">chinese-traditional</field>
+<field name="langstr">chs</field>
+<field name="langstr">cht</field>
+</row>
+<row>
+<field name="name">Croatian</field>
+<field name="shortname">hr</field>
+<field name="lcid">1050</field>
+</row>
+<row>
+<field name="name">Czech</field>
+<field name="shortname">cs</field>
+<field name="lcid">1029</field>
+<field name="langstr">csy</field>
+<field name="langstr">czech</field>
+</row>
+<row>
+<field name="name">Danish</field>
+<field name="shortname">da</field>
+<field name="lcid">1030</field>
+<field name="langstr">dan</field>
+<field name="langstr">danish</field>
+</row>
+<row>
+<field name="name">Dutch - The Netherlands</field>
+<field name="shortname">nl-nl</field>
+<field name="lcid">1043</field>
+<field name="langstr">dutch</field>
+<field name="langstr">nld</field>
+</row>
+<row>
+<field name="name">Dutch - Belgium</field>
+<field name="shortname">nl-be</field>
+<field name="lcid">2067</field>
+<field name="langstr">belgian</field>
+<field name="langstr">dutch-belgian</field>
+<field name="langstr">nlb</field>
+</row>
+<row>
+<field name="name">English - Australia</field>
+<field name="shortname">en-au</field>
+<field name="lcid">3081</field>
+<field name="langstr">australia</field>
+<field name="langstr">ena</field>
+<field name="langstr">english-aus</field>
+</row>
+<row>
+<field name="name">English - Belize</field>
+<field name="shortname">en-bz</field>
+<field name="lcid">10249</field>
+<field name="langstr">english</field>
+</row>
+<row>
+<field name="name">English - Canada</field>
+<field name="shortname">en-ca</field>
+<field name="lcid">4105</field>
+<field name="langstr">canadian</field>
+<field name="langstr">enc</field>
+<field name="langstr">english-canadian</field>
+</row>
+<row>
+<field name="name">English - Caribbean</field>
+<field name="shortname">en-cb</field>
+<field name="lcid">9225</field>
+<field name="langstr">english</field>
+</row>
+<row>
+<field name="name">English - Ireland</field>
+<field name="shortname">en-ie</field>
+<field name="lcid">6153</field>
+<field name="langstr">english</field>
+</row>
+<row>
+<field name="name">English - Jamaica</field>
+<field name="shortname">en-jm</field>
+<field name="lcid">8201</field>
+<field name="langstr">english</field>
+</row>
+<row>
+<field name="name">English - New Zealand</field>
+<field name="shortname">en-nz</field>
+<field name="lcid">5129</field>
+<field name="langstr">english-nz</field>
+<field name="langstr">enz</field>
+</row>
+<row>
+<field name="name">English - Phillippines</field>
+<field name="shortname">en-ph</field>
+<field name="lcid">13321</field>
+<field name="langstr">english</field>
+</row>
+<row>
+<field name="name">English - South Africa</field>
+<field name="shortname">en-za</field>
+<field name="lcid">7177</field>
+<field name="langstr">english</field>
+</row>
+<row>
+<field name="name">English - Trinidad</field>
+<field name="shortname">en-tt</field>
+<field name="lcid">11273</field>
+<field name="langstr">english</field>
+</row>
+<row>
+<field name="name">English - United Kingdom</field>
+<field name="shortname">en-gb</field>
+<field name="lcid">2057</field>
+<field name="langstr">eng</field>
+<field name="langstr">english-uk</field>
+<field name="langstr">uk</field>
+</row>
+<row>
+<field name="name">English - United States</field>
+<field name="shortname">en-us</field>
+<field name="lcid">1033</field>
+<field name="langstr">american</field>
+<field name="langstr">american english</field>
+<field name="langstr">american-english</field>
+<field name="langstr">english-american</field>
+<field name="langstr">english-us</field>
+<field name="langstr">english-usa</field>
+<field name="langstr">enu</field>
+<field name="langstr">us</field>
+<field name="langstr">usa</field>
+</row>
+<row>
+<field name="name">Estonian</field>
+<field name="shortname">et</field>
+<field name="lcid">1061</field>
+</row>
+<row>
+<field name="name">Farsi</field>
+<field name="shortname">fa</field>
+<field name="lcid">1065</field>
+</row>
+<row>
+<field name="name">Finnish</field>
+<field name="shortname">fi</field>
+<field name="lcid">1035</field>
+<field name="langstr">fin</field>
+<field name="langstr">finnish</field>
+</row>
+<row>
+<field name="name">Faroese</field>
+<field name="shortname">fo</field>
+<field name="lcid">1080</field>
+</row>
+<row>
+<field name="name">French - France</field>
+<field name="shortname">fr-fr</field>
+<field name="lcid">1036</field>
+<field name="langstr">fra</field>
+<field name="langstr">french</field>
+</row>
+<row>
+<field name="name">French - Belgium</field>
+<field name="shortname">fr-be</field>
+<field name="lcid">2060</field>
+<field name="langstr">frb</field>
+<field name="langstr">french-belgian</field>
+</row>
+<row>
+<field name="name">French - Canada</field>
+<field name="shortname">fr-ca</field>
+<field name="lcid">3084</field>
+<field name="langstr">frc</field>
+<field name="langstr">french-canadian</field>
+</row>
+<row>
+<field name="name">French - Luxembourg</field>
+<field name="shortname">fr-lu</field>
+<field name="lcid">5132</field>
+<field name="langstr">fra</field>
+<field name="langstr">french</field>
+</row>
+<row>
+<field name="name">French - Switzerland</field>
+<field name="shortname">fr-ch</field>
+<field name="lcid">4108</field>
+<field name="langstr">frs</field>
+<field name="langstr">french-swiss</field>
+</row>
+<row>
+<field name="name">Gaelic - Ireland</field>
+<field name="shortname">gd-ie</field>
+<field name="lcid">2108</field>
+</row>
+<row>
+<field name="name">Gaelic - Scotland</field>
+<field name="shortname">gd</field>
+<field name="lcid">1084</field>
+</row>
+<row>
+<field name="name">German - Germany</field>
+<field name="shortname">de-de</field>
+<field name="lcid">1031</field>
+<field name="langstr">deu</field>
+<field name="langstr">german</field>
+</row>
+<row>
+<field name="name">German - Austria</field>
+<field name="shortname">de-at</field>
+<field name="lcid">3079</field>
+<field name="langstr">dea</field>
+<field name="langstr">german-austrian</field>
+</row>
+<row>
+<field name="name">German - Liechtenstein</field>
+<field name="shortname">de-li</field>
+<field name="lcid">5127</field>
+<field name="langstr">deu</field>
+<field name="langstr">german</field>
+</row>
+<row>
+<field name="name">German - Luxembourg</field>
+<field name="shortname">de-lu</field>
+<field name="lcid">4103</field>
+<field name="langstr">deu</field>
+<field name="langstr">german</field>
+</row>
+<row>
+<field name="name">German - Switzerland</field>
+<field name="shortname">de-ch</field>
+<field name="lcid">2055</field>
+<field name="langstr">des</field>
+<field name="langstr">german-swiss</field>
+<field name="langstr">swiss</field>
+</row>
+<row>
+<field name="name">Greek</field>
+<field name="shortname">el</field>
+<field name="lcid">1032</field>
+<field name="langstr">ell</field>
+<field name="langstr">greek</field>
+</row>
+<row>
+<field name="name">Hebrew</field>
+<field name="shortname">he</field>
+<field name="lcid">1037</field>
+</row>
+<row>
+<field name="name">Hindi</field>
+<field name="shortname">hi</field>
+<field name="lcid">1081</field>
+</row>
+<row>
+<field name="name">Hungarian</field>
+<field name="shortname">hu</field>
+<field name="lcid">1038</field>
+<field name="langstr">hun</field>
+<field name="langstr">hungarian</field>
+</row>
+<row>
+<field name="name">Icelandic</field>
+<field name="shortname">is</field>
+<field name="lcid">1039</field>
+<field name="langstr">icelandic</field>
+<field name="langstr">isl</field>
+</row>
+<row>
+<field name="name">Indonesian</field>
+<field name="shortname">id</field>
+<field name="lcid">1057</field>
+<field name="langstr">ind</field>
+<field name="langstr">indonesian</field>
+</row>
+<row>
+<field name="name">Italian - Italy</field>
+<field name="shortname">it-it</field>
+<field name="lcid">1040</field>
+<field name="langstr">ita</field>
+<field name="langstr">italian</field>
+</row>
+<row>
+<field name="name">Italian - Switzerland</field>
+<field name="shortname">it-ch</field>
+<field name="lcid">2064</field>
+<field name="langstr">italian-swiss</field>
+<field name="langstr">its</field>
+</row>
+<row>
+<field name="name">Japanese</field>
+<field name="shortname">ja</field>
+<field name="lcid">1041</field>
+<field name="langstr">japanese</field>
+<field name="langstr">jpn</field>
+</row>
+<row>
+<field name="name">Korean</field>
+<field name="shortname">ko</field>
+<field name="lcid">1042</field>
+<field name="langstr">kor</field>
+<field name="langstr">korean</field>
+</row>
+<row>
+<field name="name">Latvian</field>
+<field name="shortname">lv</field>
+<field name="lcid">1062</field>
+</row>
+<row>
+<field name="name">Lithuanian</field>
+<field name="shortname">lt</field>
+<field name="lcid">1063</field>
+</row>
+<row>
+<field name="name">FYRO Macedonian</field>
+<field name="shortname">mk</field>
+<field name="lcid">1071</field>
+</row>
+<row>
+<field name="name">Malay - Malaysia</field>
+<field name="shortname">ms-my</field>
+<field name="lcid">1086</field>
+</row>
+<row>
+<field name="name">Malay – Brunei</field>
+<field name="shortname">ms-bn</field>
+<field name="lcid">2110</field>
+</row>
+<row>
+<field name="name">Maltese</field>
+<field name="shortname">mt</field>
+<field name="lcid">1082</field>
+</row>
+<row>
+<field name="name">Marathi</field>
+<field name="shortname">mr</field>
+<field name="lcid">1102</field>
+</row>
+<row>
+<field name="name">Norwegian - Bokmål</field>
+<field name="shortname">no-no</field>
+<field name="lcid">1044</field>
+<field name="langstr">nor</field>
+<field name="langstr">norwegian-bokmal</field>
+<field name="langstr">norwegian</field>
+</row>
+<row>
+<field name="name">Norwegian - Nynorsk</field>
+<field name="shortname">no-no</field>
+<field name="lcid">2068</field>
+<field name="langstr">non</field>
+<field name="langstr">norwegian-nynorsk</field>
+<field name="langstr">norwegian</field>
+</row>
+<row>
+<field name="name">Polish</field>
+<field name="shortname">pl</field>
+<field name="lcid">1045</field>
+<field name="langstr">plk</field>
+<field name="langstr">polish</field>
+</row>
+<row>
+<field name="name">Portuguese - Portugal</field>
+<field name="shortname">pt-pt</field>
+<field name="lcid">2070</field>
+<field name="langstr">portuguese</field>
+<field name="langstr">ptg</field>
+</row>
+<row>
+<field name="name">Portuguese - Brazil</field>
+<field name="shortname">pt-br</field>
+<field name="lcid">1046</field>
+<field name="langstr">portuguese-brazil</field>
+<field name="langstr">ptb</field>
+</row>
+<row>
+<field name="name">Raeto-Romance</field>
+<field name="shortname">rm</field>
+<field name="lcid">1047</field>
+</row>
+<row>
+<field name="name">Romanian - Romania</field>
+<field name="shortname">ro</field>
+<field name="lcid">1048</field>
+</row>
+<row>
+<field name="name">Romanian - Moldova</field>
+<field name="shortname">ro-mo</field>
+<field name="lcid">2072</field>
+</row>
+<row>
+<field name="name">Russian</field>
+<field name="shortname">ru</field>
+<field name="lcid">1049</field>
+<field name="langstr">rus</field>
+<field name="langstr">russian</field>
+</row>
+<row>
+<field name="name">Russian - Moldova</field>
+<field name="shortname">ru-mo</field>
+<field name="lcid">2073</field>
+<field name="langstr">rus</field>
+<field name="langstr">russian</field>
+</row>
+<row>
+<field name="name">Sanskrit</field>
+<field name="shortname">sa</field>
+<field name="lcid">1103</field>
+</row>
+<row>
+<field name="name">Serbian - Cyrillic</field>
+<field name="shortname">sr-sp</field>
+<field name="lcid">3098</field>
+</row>
+<row>
+<field name="name">Serbian - Latin</field>
+<field name="shortname">sr-sp</field>
+<field name="lcid">2074</field>
+</row>
+<row>
+<field name="name">Setsuana</field>
+<field name="shortname">tn</field>
+<field name="lcid">1074</field>
+</row>
+<row>
+<field name="name">Slovenian</field>
+<field name="shortname">sl</field>
+<field name="lcid">1060</field>
+</row>
+<row>
+<field name="name">Slovak</field>
+<field name="shortname">sk</field>
+<field name="lcid">1051</field>
+<field name="langstr">sky</field>
+<field name="langstr">slovak</field>
+</row>
+<row>
+<field name="name">Sorbian</field>
+<field name="shortname">sb</field>
+<field name="lcid">1070</field>
+</row>
+<row>
+<field name="name">Spanish - Spain</field>
+<field name="shortname">es-es</field>
+<field name="lcid">1034</field>
+<field name="langstr">esp</field>
+<field name="langstr">spanish</field>
+<field name="langstr">esn</field>
+<field name="langstr">spanish-modern</field>
+</row>
+<row>
+<field name="name">Spanish - Argentina</field>
+<field name="shortname">es-ar</field>
+<field name="lcid">11274</field>
+<field name="langstr">esp</field>
+<field name="langstr">spanish</field>
+<field name="langstr">esn</field>
+<field name="langstr">spanish-modern</field>
+</row>
+<row>
+<field name="name">Spanish - Bolivia</field>
+<field name="shortname">es-bo</field>
+<field name="lcid">16394</field>
+<field name="langstr">esp</field>
+<field name="langstr">spanish</field>
+<field name="langstr">esn</field>
+<field name="langstr">spanish-modern</field>
+</row>
+<row>
+<field name="name">Spanish - Chile</field>
+<field name="shortname">es-cl</field>
+<field name="lcid">13322</field>
+<field name="langstr">esp</field>
+<field name="langstr">spanish</field>
+<field name="langstr">esn</field>
+<field name="langstr">spanish-modern</field>
+</row>
+<row>
+<field name="name">Spanish - Colombia</field>
+<field name="shortname">es-co</field>
+<field name="lcid">9226</field>
+<field name="langstr">esp</field>
+<field name="langstr">spanish</field>
+<field name="langstr">esn</field>
+<field name="langstr">spanish-modern</field>
+</row>
+<row>
+<field name="name">Spanish - Costa Rica</field>
+<field name="shortname">es-cr</field>
+<field name="lcid">5130</field>
+<field name="langstr">esp</field>
+<field name="langstr">spanish</field>
+<field name="langstr">esn</field>
+<field name="langstr">spanish-modern</field>
+</row>
+<row>
+<field name="name">Spanish - Dominican Republic</field>
+<field name="shortname">es-do</field>
+<field name="lcid">7178</field>
+<field name="langstr">esp</field>
+<field name="langstr">spanish</field>
+<field name="langstr">esn</field>
+<field name="langstr">spanish-modern</field>
+</row>
+<row>
+<field name="name">Spanish - Ecuador</field>
+<field name="shortname">es-ec</field>
+<field name="lcid">12298</field>
+<field name="langstr">esp</field>
+<field name="langstr">spanish</field>
+<field name="langstr">esn</field>
+<field name="langstr">spanish-modern</field>
+</row>
+<row>
+<field name="name">Spanish - Guatemala</field>
+<field name="shortname">es-gt</field>
+<field name="lcid">4106</field>
+<field name="langstr">esp</field>
+<field name="langstr">spanish</field>
+<field name="langstr">esn</field>
+<field name="langstr">spanish-modern</field>
+</row>
+<row>
+<field name="name">Spanish - Honduras</field>
+<field name="shortname">es-hn</field>
+<field name="lcid">18442</field>
+<field name="langstr">esp</field>
+<field name="langstr">spanish</field>
+<field name="langstr">esn</field>
+<field name="langstr">spanish-modern</field>
+</row>
+<row>
+<field name="name">Spanish - Mexico</field>
+<field name="shortname">es-mx</field>
+<field name="lcid">2058</field>
+<field name="langstr">esm</field>
+<field name="langstr">spanish-mexican</field>
+<field name="langstr">esn</field>
+<field name="langstr">spanish-modern</field>
+</row>
+<row>
+<field name="name">Spanish - Nicaragua</field>
+<field name="shortname">es-ni</field>
+<field name="lcid">19466</field>
+<field name="langstr">esp</field>
+<field name="langstr">spanish</field>
+<field name="langstr">esn</field>
+<field name="langstr">spanish-modern</field>
+</row>
+<row>
+<field name="name">Spanish - Panama</field>
+<field name="shortname">es-pa</field>
+<field name="lcid">6154</field>
+<field name="langstr">esp</field>
+<field name="langstr">spanish</field>
+<field name="langstr">esn</field>
+<field name="langstr">spanish-modern</field>
+</row>
+<row>
+<field name="name">Spanish - Peru</field>
+<field name="shortname">es-pe</field>
+<field name="lcid">10250</field>
+<field name="langstr">esp</field>
+<field name="langstr">spanish</field>
+<field name="langstr">esn</field>
+<field name="langstr">spanish-modern</field>
+</row>
+<row>
+<field name="name">Spanish - Puerto Rico</field>
+<field name="shortname">es-pr</field>
+<field name="lcid">20490</field>
+<field name="langstr">esp</field>
+<field name="langstr">spanish</field>
+<field name="langstr">esn</field>
+<field name="langstr">spanish-modern</field>
+</row>
+<row>
+<field name="name">Spanish - Paraguay</field>
+<field name="shortname">es-py</field>
+<field name="lcid">15370</field>
+<field name="langstr">esp</field>
+<field name="langstr">spanish</field>
+<field name="langstr">esn</field>
+<field name="langstr">spanish-modern</field>
+</row>
+<row>
+<field name="name">Spanish - El Salvador</field>
+<field name="shortname">es-sv</field>
+<field name="lcid">17418</field>
+<field name="langstr">esp</field>
+<field name="langstr">spanish</field>
+<field name="langstr">esn</field>
+<field name="langstr">spanish-modern</field>
+</row>
+<row>
+<field name="name">Spanish - Uruguay</field>
+<field name="shortname">es-uy</field>
+<field name="lcid">14346</field>
+<field name="langstr">esp</field>
+<field name="langstr">spanish</field>
+<field name="langstr">esn</field>
+<field name="langstr">spanish-modern</field>
+</row>
+<row>
+<field name="name">Spanish - Venezuela</field>
+<field name="shortname">es-ve</field>
+<field name="lcid">8202</field>
+<field name="langstr">esp</field>
+<field name="langstr">spanish</field>
+<field name="langstr">esn</field>
+<field name="langstr">spanish-modern</field>
+</row>
+<row>
+<field name="name">Sutu</field>
+<field name="shortname">sx</field>
+<field name="lcid">1072</field>
+</row>
+<row>
+<field name="name">Swahili</field>
+<field name="shortname">sw</field>
+<field name="lcid">1089</field>
+</row>
+<row>
+<field name="name">Swedish - Sweden</field>
+<field name="shortname">sv-se</field>
+<field name="lcid">1053</field>
+<field name="langstr">sve</field>
+<field name="langstr">swedish</field>
+</row>
+<row>
+<field name="name">Swedish - Finland</field>
+<field name="shortname">sv-fi</field>
+<field name="lcid">2077</field>
+<field name="langstr">sve</field>
+<field name="langstr">swedish</field>
+</row>
+<row>
+<field name="name">Tamil</field>
+<field name="shortname">ta</field>
+<field name="lcid">1097</field>
+</row>
+<row>
+<field name="name">Tatar</field>
+<field name="shortname">tt</field>
+<field name="lcid">1092</field>
+</row>
+<row>
+<field name="name">Thai</field>
+<field name="shortname">th</field>
+<field name="lcid">1054</field>
+</row>
+<row>
+<field name="name">Turkish</field>
+<field name="shortname">tr</field>
+<field name="lcid">1055</field>
+<field name="langstr">trk</field>
+<field name="langstr">turkish</field>
+</row>
+<row>
+<field name="name">Tsonga</field>
+<field name="shortname">ts</field>
+<field name="lcid">1073</field>
+</row>
+<row>
+<field name="name">Ukrainian</field>
+<field name="shortname">uk</field>
+<field name="lcid">1058</field>
+</row>
+<row>
+<field name="name">Urdu</field>
+<field name="shortname">ur</field>
+<field name="lcid">1056</field>
+</row>
+<row>
+<field name="name">Uzbek - Cyrillic</field>
+<field name="shortname">uz-uz</field>
+<field name="lcid">2115</field>
+</row>
+<row>
+<field name="name">Vietnamese</field>
+<field name="shortname">vi</field>
+<field name="lcid">1066</field>
+</row>
+<row>
+<field name="name">Xhosa</field>
+<field name="shortname">xh</field>
+<field name="lcid">1076</field>
+</row>
+<row>
+<field name="name">Yiddish</field>
+<field name="shortname">yi</field>
+<field name="lcid">1085</field>
+</row>
+<row>
+<field name="name">Zulu</field>
+<field name="shortname">zu</field>
+<field name="lcid">1077</field>
+</row>
+</anydataset>

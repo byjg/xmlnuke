@@ -1,0 +1,57 @@
+﻿<?xml version="1.0"?>
+<anydataset>
+   <row>
+      <field name="LANGUAGE">en-us</field>
+      <field name="TITLE">Select the working Site</field>
+      <field name="DESCRIPTION">This options create, select and remove sites from XMLNuke repository.</field>
+      <field name="NOTIMPLEMENTED">Not implemented yet :(</field>
+      <field name="CURRENTSITE">Current Site is: [param:site].</field>
+      <field name="SELECTSITE">Select a site from Sites Available below.</field>
+      <field name="SELECTTHISSITE">Select this site</field>
+      <field name="CREATEOFFLINE">Create Offline Content</field>
+      <field name="CREATED">{0} created.</field>
+      <field name="FORM_TITLE">Create a new site</field>
+      <field name="FORM_NEWSITE">New site name: </field>
+      <field name="FORM_DEFAULTXSL">Default XSL Page: </field>
+      <field name="TEXT_REMOVED">Site deleted successful!</field>
+      <field name="TEXT_REMOVED_FAIL_FILE">Fault in delete files in directories!</field>
+      <field name="TEXT_REMOVED_FAIL_DIR">Fault in delete directories!</field>
+      <field name="SITESLIST">List of Sites</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">pt-br</field>
+      <field name="TITLE">Selecione o site para trabalhar</field>
+      <field name="DESCRIPTION">Esta opção cria, seleciona e remove sites do repositório XMLNuke.</field>
+      <field name="NOTIMPLEMENTED">Não implementado ainda :(</field>
+      <field name="CURRENTSITE">Site atual é: [param:site].</field>
+      <field name="SELECTSITE">Selecione um site dos sites disponíveis abaixo.</field>
+      <field name="SELECTTHISSITE">Selecione este site</field>
+      <field name="CREATEOFFLINE">Criar conteúdo offline</field>
+      <field name="CREATED">{0} criado.</field>
+      <field name="FORM_TITLE">Create novo site</field>
+      <field name="FORM_NEWSITE">Nome do site: </field>
+      <field name="FORM_DEFAULTXSL">Página XSL Padrão: </field>
+      <field name="TEXT_REMOVED">Site deletado com sucesso!</field>
+      <field name="TEXT_REMOVED_FAIL_FILE">Falha ao excluir os arquivos do diretório!</field>
+      <field name="TEXT_REMOVED_FAIL_DIR">Falha ao excluir diretórios!</field>
+      <field name="SITESLIST">Lista de Sites</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">de-de</field>
+      <field name="TITLE">Seiten verwalten</field>
+      <field name="DESCRIPTION">Erstellen, aktivieren oder löschen Sie Seiten.</field>
+      <field name="NOTIMPLEMENTED">Noch nicht unterstützt :(</field>
+      <field name="CURRENTSITE">Aktuelle Seite: '[param:site]'</field>
+      <field name="SELECTSITE">Wählen Sie mittels "Bearbeiten" eine Seite aus den unten verfügbaren</field>
+      <field name="SELECTTHISSITE">Diese Seite wählen</field>
+      <field name="CREATEOFFLINE">Offline-Inhalte erstellen</field>
+      <field name="CREATED">Seite '{0}' erstellt.</field>
+      <field name="FORM_TITLE">Neue Seite erstellen</field>
+      <field name="FORM_NEWSITE">Seitenname: </field>
+      <field name="FORM_DEFAULTXSL">Standard XSL-Seite: </field>
+      <field name="TEXT_REMOVED">Seite erfolgreich gelöscht.</field>
+      <field name="TEXT_REMOVED_FAIL_FILE">Beim Löschen der Dateien ist ein Fehler aufgetreten!</field>
+      <field name="TEXT_REMOVED_FAIL_DIR">Beim Löschen der Ordner ist ein Fehler aufgetreten!</field>
+      <field name="SITESLIST">Liste der Seiten</field>
+   </row>
+</anydataset>

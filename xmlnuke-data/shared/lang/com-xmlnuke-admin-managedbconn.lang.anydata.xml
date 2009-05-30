@@ -1,0 +1,66 @@
+﻿<?xml version="1.0"?>
+<anydataset>
+   <row>
+      <field name="LANGUAGE">en-us</field>
+      <field name="TITLE">Manage Connection String</field>
+      <field name="DESCRIPTION">This modules enables you view, create and edit database connection strings inside XMLNuke. This module is a wrapper for file _db.anydata.xml.</field>
+      <field name="BLOCK_TITLE">Connection String</field>
+      <field name="AVAILABLELANGUAGES">List of availables connection strings</field>
+      <field name="DBNAME">Conn Name: </field>
+      <field name="DBTYPE">Conn Type:</field>
+      <field name="DBCONNECTIONSTRING">Connection String: </field>
+      <field name="TESTALTERNATETEXT">Test your connection string</field>
+      <field name="TESTMESSAGETEXT">Test your connection string</field>
+      <field name="SEEMSOK">Your connection string seems working.</field>
+      <field name="GOTERROR">I got the error the follow error: "{0}".</field>
+      <field name="GOBACK">Go back to connection string list.</field>
+      <field name="NOTE">Note: </field>
+      <field name="PHPNOTE">For DSN connection type use the follow connection string template: "pdodriver://user:pass@server/db"<br/>for Literal you must provide the FULL pdo connection string and use have to use the follow template: "connection_string|username|password"<br/> and for the others use: "server;user;pass;db".</field>
+      <field name="CSHARPNOTE">For dynamic "dbtype" you must to fill correctly the Assembly, Connection and Data Adapter for this connection. You need install this assembly in GAC or copies into bin folder in order to work.</field>
+      <field name="CSHARPASSEMBLY">Assembly Name</field>
+      <field name="CSHARPCONNECTION">Connection Object</field>
+      <field name="CSHARPDATAADAPTER">Data Adapter Object</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">pt-br</field>
+      <field name="TITLE">Gerenciar String de Conexão</field>
+      <field name="DESCRIPTION">Este módulo permite que você veja, crie ou edite string de conexões de acesso a banco de dados. Este módulo é um wrapper para o arquivo _db.anydata.xml.</field>
+      <field name="BLOCK_TITLE">String de Connection</field>
+      <field name="AVAILABLELANGUAGES">Lista dos string de conexões disponíveis</field>
+      <field name="DBNAME">Nome Conexão:</field>
+      <field name="DBTYPE">Tipo Conexão:</field>
+      <field name="DBCONNECTIONSTRING">String de Conexão:</field>
+      <field name="TESTALTERNATETEXT">Teste seu string de conexão</field>
+      <field name="TESTMESSAGETEXT">Teste seu string de conexão</field>
+      <field name="SEEMSOK">Seu string de conexão parece estar funcionando.</field>
+      <field name="GOTERROR">Eu obtive o seguinte erro: "{0}".</field>
+      <field name="GOBACK">Voltar para a lista de string de conexão.</field>
+      <field name="NOTE">Observação: </field>
+      <field name="PHPNOTE">Para o tipo de conexão "DSN" utilize o seguinte modelo de string de conexão: "pdodriver://user:pass@server/db"<br/>para o tipo Literal você deve fornecer o string de conexão completo do PDO e precisa utilizar o seguinte modelo: "connection_string|username|password"<br/>para os outros tipos utilize: "server;user;pass;db".</field>
+      <field name="CSHARPNOTE">Para o "dbtype" dynamic você precisa preencher o Assembly, Objeto de Conexão e Objeto Data Adapter para essa conexão. Você precisa instalar o assembly no GAC or copiar para dentro da pasta bin para funcionar.</field>
+      <field name="CSHARPASSEMBLY">Nome Assembly</field>
+      <field name="CSHARPCONNECTION">Objeto Connection</field>
+      <field name="CSHARPDATAADAPTER">Objeto Data Adapter</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">de-de</field>
+      <field name="TITLE">Datenbank-Verbindungen verwalten</field>
+      <field name="DESCRIPTION">Erstellen Sie neue Datenbank-Verbindungen, sehen Sie sich vorhandene Verbindungen an, bearbeiten oder löschen sie.<br/><br/>Dieses Modul ist eine Schnittstelle zur Datei "_db.anydata.xml".</field>
+      <field name="BLOCK_TITLE">Datenbank-Verbindung(en)</field>
+      <field name="AVAILABLELANGUAGES">Liste der verfügbaren Verbindungen</field>
+      <field name="DBNAME">Verbindungs-Name: </field>
+      <field name="DBTYPE">Verbindungs-Typ:</field>
+      <field name="DBCONNECTIONSTRING">Verbindungs-String: </field>
+      <field name="TESTALTERNATETEXT">Verbindung testen</field>
+      <field name="TESTMESSAGETEXT">Verbindung testen</field>
+      <field name="SEEMSOK">Die Verbindung scheint zu funktionieren.</field>
+      <field name="GOTERROR">Folgender Fehler ist aufgetreten: "{0}".</field>
+      <field name="GOBACK">Zurück zur Verbindungs-Liste</field>
+      <field name="NOTE">Hinweis:<br/></field>
+      <field name="PHPNOTE">Für eine DSN-Verbindung benutzen Sie den folgenden Verbindungs-String: "pdodriver://user:pass@server/db".<br/>Für Literale müssen Sie den vollständigen PDO-Verbindungs-String nach folgender Vorlage verwenden: "connection_string|Benutzername|Passwort"<br/>Für die anderen Verbindungen benutzen Sie: "server;user;pass;db".</field>
+      <field name="CSHARPNOTE">For dynamic "dbtype" you must to fill correctly the Assembly, Connection and Data Adapter for this connection. You need install this assembly in GAC or copies into bin folder in order to work.</field>
+      <field name="CSHARPASSEMBLY">Assembly Name</field>
+      <field name="CSHARPCONNECTION">Connection Object</field>
+      <field name="CSHARPDATAADAPTER">Data Adapter Object</field>
+   </row>
+</anydataset>

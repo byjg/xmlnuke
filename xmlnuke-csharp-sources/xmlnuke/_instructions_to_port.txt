@@ -1,0 +1,93 @@
+O XMLNuke
+
+
+0) Preparando o XMLNuke
+
+O XMLNuke Java contem Servlets e JSP.
+- Os arquivos JSP são Ports para o ASPX
+- Os servlets são as classes CSharp.
+
+MANTER O MESMO NAMESPACE (PACKAGE) do Csharp.
+
+1) Fazer o XMLNUKEDB primeiro, já que ele não tem depencias em relacao ao
+XMLNUKE,  entretanto o XMLNUKE depende muito dele.
+
+2) com.xmlnuke.util.FileUtil.cs
+3) com.xmlnuke.util.XmlUtil.cs
+
+4) com.xmlnuke.international.LocaleFactory.cs(*)
+5) com.xmlnuke.engine.Context.cs (**)
+
+6) com.xmlnuke.processor.FilenameProcessor.cs
+7) com.xmlnuke.processor.ParamProcessor.cs
+8) com.xmlnuke.processor.SnippetProcessor.cs (***)
+
+9) com.xmlnuke.classes.PageXml.cs
+10) com.xmlnuke.module.IModule.cs
+
+11) com.xmlnuke.exception.cs
+12) com.xmlnuke.anydataset.SingleRow.cs
+13) com.xmlnuke.anydataset.IteratorFilter.cs
+14) com.xmlnuke.anydataset.Iterator.cs
+15) com.xmlnuke.anydataset.AnyDataSet.cs
+
+16) com.xmlnuke.engine.XmlNukeEngine.cs (****)
+
+17) Implementar o arquivo XMLNUKE.JSP  (tradução do arquivo XMLNUKE.ASPX)
+
+
+18) CLASSES PARA CRIAR OS MODULOS
+   - com.xmlnuke.international.LanguageCollection.cs
+   - com.xmlnuke.admin.UsersAnyDataSet.cs
+   - com.xmlnuke.module.BaseModule.cs
+   - com.xmlnuke.module.ModuleFactory.cs
+   - com.xmlnuke.module.LoadError.cs
+   - com.xmlnuke.module.NotFound.cs
+   - module.php (traducao de module.aspx)
+Depois, qualquer um desses:
+   - com.xmlnuke.module.Download.cs
+   - com.xmlnuke.module.Guestbook.cs
+   - com.xmlnuke.module.Login.cs
+   - com.xmlnuke.module.Search.cs
+   - com.xmlnuke.module.SendEmail.cs
+   - com.xmlnuke.module.SendPage.cs
+   - com.xmlnuke.module.UserProfile.cs
+   - com.xmlnuke.module.XSLTheme.cs
+
+
+19) CLASSES PARA A FERRAMENTA DE ADMINISTRAÇÂO
+   - com.xmlnuke.admin.IAdmin.cs
+   - com.xmlnuke.admin.BaseAdminModule.cs
+   - xmlnukeadmin.jsp (traducao de xmlnukeadmin.aspx)
+Depois, qualquer um desses (preferencialmente nessa ordem):
+   - com.xmlnuke.admin.ManageXML.cs
+   - com.xmlnuke.admin.ManageXSL.cs
+   - com.xmlnuke.admin.ManageGroup.cs
+   - com.xmlnuke.admin.SelectLanguage.cs
+   - com.xmlnuke.admin.ManageSites.cs
+   - com.xmlnuke.admin.ManageUsers.cs
+   - com.xmlnuke.admin.ManageXMLDBIndex.cs
+   - com.xmlnuke.admin.ManageCache.cs
+   - com.xmlnuke.admin.Download.cs
+   - com.xmlnuke.admin.ConfigEmail.cs
+   - com.xmlnuke.admin.ConfigSearch.cs
+   - com.xmlnuke.admin.CustomConfig.cs
+
+Fazer o ERROR.JSP (traducao de Error.ASPX)
+
+OBSERVACOES:
+=============
+
+
+(*) O XMLNUKE JAVA fez uma implementação desse factory. Veja  se tem alguma
+coisa interessante.
+
+(**) Note que Context utiliza uma variável chamada _CONFIG que eh do tipo
+NameValueCollection (uma coleção que recupera os itens por nome ao invés do
+indice).  Basicamente essa classe processa as configurações que estão no
+arquivo WEB.CONFIG. Veja como ficará no JAVA.
+
+(***) Atenção para esse arquivo! Ele utiliza algumas definições existentes
+só no .NET.  Talvez pudesse ser um pouco mais simplificada.
+
+(****) Nesse ponto o XMLNUKE JÁ DEVE ESTAR FUNCIONANDO!!!!
