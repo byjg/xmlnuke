@@ -1,226 +1,66 @@
 ====================================================================
 XMLNuke
 Framework de desenvolvimento de aplicativos baseado em XML
-2006-06-18
+2009-06-01
+http://www.xmlnuke.com/
 --------------------------------------------------------------------
 PHP5 Edition
-Autor do XMLNuke: João Gilberto Magalhães
-Programado por: João GIlberto Magalhães
-Agradecimentos a: Yuri Wanderley Bastos e Rafael Lima
-Versao: 2.0 RC3
+Autor : João Gilberto Magalhães
+Mantido por : João Gilberto Magalhães
+Version: 3.5
 ====================================================================
 
-Conteúdo deste documento:
-
-1. INFORMAÇÕES SOBRE A VERSÃO
-2. LICENÇA
-3. INSTALAÇÃO DO PHP5 NO LINUX
-4. INSTALAÇÃO DO PHP5 NO FREEBSD
-5. INSTALAÇÃO DO PHP5 NO WINDOWS
-6. POS-INSTALAÇÃO
-7. INSTALAÇÃO DO XMLNUKE NO APACHE
-8. INSTALAÇÃO DO XMLNUKE NO IIS
-9. OUTRAS INFORMAÇOES
-10. CONTATO
-
-
-
-
-
-
-
-
-1. INFORMAÇÕES SOBRE A VERSÃO
 
 Este pacote contém todos os arquivos necessários para rodar o XMLNuke
 PHP5 Edition e todas as suas funcionalidades. Esse pacote está compatível
-com outras versões do XMLNuke na mesma release, portanto todos os 
+com outras versões do XMLNuke na mesma release, portanto todos os
 documentos produzidos por essa versão ou outras versões do XMLNuke são
 compatíveis entre si.
 
-Essa versão foi testada no Fedora Core 3 e 4, FreeBSD 5.4 e Windows XP. 
-
-Versão deste pacote: 2.0 RC1
-
-Os arquivos fontes contém as versões mais novas e estão disponíveis
-apenas através do CVS. Visite o nosso Web site para maiores 
-informações.
-
-XMLNuke foi criado por Joao Gilberto Magalhaes.
-XMLNuke PHP5 Edition é mantido por João Gilberto Magalhães.
-Agradecimentos a Yuri Wanderley Bastos e Rafael Lima.
-
-Desenvolvedores para PHP5 Edition e outras versões são bem vindos.
-Visite o nosso site.
-
-http://www.xmlnuke.com/
-
-
-2. LICENÇA
-
 XMLNuke é desenvolvido sob a licença GPL.
 
+INSTALANDO O XMLNUKE
 
-3. INSTALAÇÃO DO PHP5 NO LINUX
+Requisitos:
+- PHP 5.x ou superior
+- Extensões do PHP: XSL, GD
+- Extensões do PHP (Opcional): PDO
 
-3.1. Requisitos
+Os últimos pacotes preparados estão disponíveis em: http://www.xmlnuke.com/
+Você precisa apenas fazer o download e extrair os arquivos em qualquer 
+pasta que você queira. Você precisa configurar o seu servidor WEB para 
+apontar para a pasta "xmlnuke-php5" 
 
-- Qualquer distribuição Linux. Foi testado apenas no Fedora Core 3 e 4.
-- Apache 1.3 ou Apache 2.0
-- PHP5 com suporte ao XSLT habilitado.
+Se você quer trabalhar com a versão mais recente você precisa fazer o 
+download diretamente do repositório Subversion. 
 
-3.2. Instalação do PHP5 usando RPM
+Faça o download de:
+svn co https://xmlnuke.svn.xmlnuke.com/svnroot/xmlnuke/trunk xmlnuke
 
-É necessário instalar os seguintes pacotes (e dependencias)
-  - php-5.0.3-5.i386.rpm
-  - php-xml-5.0.3-5.i386.rpm
-  - php-gd
+e digite:
+./rename-config-files.sh, para o Linux
 
-3.3. Instalação do PHP5 usando DEB
+ou duplo clique em:
+rename-config-files.vbs, for Windows
 
-É necessário instalar os seguintes pacotes (e dependencias)
-  - php5-xsl
-  - php5-gd
- 
+Se você fizer o download do repositório você pode começar o um novo 
+projeto em PHP apenas rodando o script:
 
-3.4. Instalação do PHP5 a partir do código Fonte
+./create-php5-project.sh
+ou
+./create-php5-project.vbs
 
-Compile o PHP5 com as seguintes opções habilitadas (maiores informaçõe: 
-ver http://br.php.net/manual/pt_BR/ref.xslt.php).
-
-	--enable-xslt  --with-xslt-sablot
-
-
-4. INSTALAÇÃO DO PHP5 NO FREEBSD
-
-4.1. Requisitos
-
-- FreeBSD
-- Ports Instalado e Atualizado.
-
-4.2. Instalação do PHP5 usando o Ports
-
-Instale os seguintes pacotes através do Ports
-  - www/mod_php5
-  - textproc/php5-simplexml
-  - textproc/php5-xslt
-  - textproc/php5-dom
-  - www/php5-session
-  - devel/php5-pcre
-  - textproc/php5-xml
-
-Para instalar através do Ports acesse o diretório da pacote a 
-ser instalado, por exemplo, /usr/ports/www/mod_php5 e digite:
-
-make install clean
-
-Repita o procedimento para todos os pacotes listados acima.
+e seguir as instruções contidas nele. 
 
 
-5. INSTALAÇÃO DO PHP5 NO WINDOWS
+Use o fórum para questões:
+http://forum.xmlnuke.com/
 
-5.1. Requisitos
+Veja a documentação do XMLNuke em:
+http://docs.xmlnuke.com/
 
-- Windows 2000, XP, NT4, Server
-- Internet Information Services (IIS)
-
-5.2. Instalação
-
-Instale o PHP5 conforme instruções em: 
-http://br.php.net/manual/pt_BR/install.windows.php
-
-Edite o arquivo PHP.INI: localize ;extension=php_xsl.dll e mude para 
-extension=php_xsl.dll
-
-
-6. POS-INSTALAÇÃO
-
-Abra o arquivo php.ini e procure pela linha : 
-display_errors = Off 
-mude para:
-display_errors = On
-
-e procure também a linha:
-error_reporting  =  E_ALL
-mude para:
-error_reporting = E_ALL & ~E_NOTICE
-
-
-Para verificar se a instalação está funcionando perfeitamente, crie um arquivo 
-denominado info.php na pasta da raiz do servidor web com o seguinte conteúdo:
-
-<?php phpinfo(); ?>
-
-Chame a página http://localhost/info.php e certifique-se que as seguintes 
-do PHP5 extensões estão habilitadas
-- simplexml
-- dom
-- xsl
-- session
-- pcre
-- xml
-
-
-7. Instalação do XMLNuke PHP5 no APACHE
-
-Extraia o conteúdo deste pacote em qualquer diretório. Por exemplo:
-
-/dados/xmlnuke
-
-IMPORTANTE: Você deve atribuir permissões de escrita ao diretório 
-xmlnuke/data para o usuário do apache. 
-
-Edite o arquivo httpd.conf e acrescente as seguintes linhas:
-
-Alias /xmlnuke "/dados/xmlnuke"
-<Directory "/dados/xmlnuke">
-       AllowOverride none
-       Order allow,deny
-       Allow from all
-</Directory>
-
-
-
-8. Instalação do XMLNuke PHP5 no IIS
-
-Extraia o conteúdo deste pacote em qualquer diretório. Por exemplo:
-
-C:\Dados\XMLNuke
-
-IMPORTANTE: Você deve atribuir permissões de escrita ao diretório 
-xmlnuke/data para o usuário do IIS. 
-
-Siga as instruções:
-- Abra o Windows Explorer
-- Pressione o botão direito no diretório "C:\Dados\XMLNuke"
-- Selecione a opção Propriedades
-- Selecione a aba "Compartilhamento Web Sharing". 
-- Selecione a opção "Compartilhar essa pasta"
-- Digite o nome "xmlnuke" na caixa de texto.
-- Clique OK, e novamente OK.
-
-Tente acessar o site de exemplo digitando em seu navegador:
-http://localhost/xmlnuke
-
-
-
-
-9. Outras Informações
-
-9.1. Admin Tool
-
-O usuário e senha padrão para a ferramenta de administração é:
-Username: admin
-Password: pwd
-
-
-
-10. CONTATO
-
-Contacte o autor ou obtenha novas versões no site: 
-http://www.xmlnuke.com/
-
-XMLNuke é desenvolvido e mantido por
-João Gilberto Magalhães
-http://www.byjg.com.br
+---
+XMLNuke é desenvolvido e mantido por:
+Joao Gilberto Magalhaes
+http://www.byjg.com.br/
 

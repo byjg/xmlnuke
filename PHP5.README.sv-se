@@ -1,218 +1,25 @@
 ====================================================================
 XMLNuke
 Utvecklingsramverk för XML Baserade Applikationer 
-2006-06-18
+2009-06-01
+http://www.xmlnuke.com/
 --------------------------------------------------------------------
 PHP5-Versionen
 XMLNuke orginator: João Gilberto Magalhães
 Utvecklad av: João Gilberto Magalhães
 Översattning till svenska (inklusive denna) av: Henrik Våglin
-Version: 2.0 RC3
+Version: 3.5
 ====================================================================
 
-DOKUMENTINNEHÅLL:
-
-1. INFORMATION OM DEN HÄR VERSIONEN
-2. LICENS
-3. PHP5 INSTALLATION UNDER LINUX
-4. PHP5 INSTALLATION UNDER FREEBSD
-5. PHP5 INSTALLATION UNDER WINDOWS
-6. POS-INSTALLATION
-7. INSTALLATION AV XMLNUKE I PHP5 UNDER APACHE
-8. INSTALLATION AV XMLNUKE I PHP5 UNDER IIS
-9. ÖVRIG INFORMATION
-10. KONTAKTINFORMATION
-
-
-
-
-
-
-
-
-1. INFORMATION OM DEN HÄR VERSIONEN
-
-
-Det här paketet innehåller alla filer nödvändiga för att köra XMLNuke PHP5-versionen och är fullt funktionell. Det här paketet är kompatibelt wsigh another XMLNuke versioner under samma utgåva och alla dokument producerade av den här 
-versionen eller another XMLNuke versioner är kompatibelt sig själv.  
-
-Den här version är testad i Fedora Core 3 och 4, FreeBSD 5.4 och Windows XP. Nuvarande version är 2.0 RC1.
-
-Källfilerna innehåller nyare versioner och är tillgänglig endast via CVS. 
-Besök vår webbsajt för mer information.
-
-XMLNuke-projektet skapades av Joao Gilberto Magalhaes.
-XMLNuke PHP5-versionen är underhållen av Joao Gilberto Magalhaes
-
-Bidrag till kodbasen av PHP5-versionen och andra versioner är välkommna.
-Vänligen besök våran sajt.
-
-http://www.xmlnuke.com/
-
-
-
-2. LICENSE
+Det här paketet innehåller alla filer nödvändiga för att köra XMLNuke PHP5-versionen 
+och är fullt funktionell. Det här paketet är kompatibelt wsigh another XMLNuke 
+versioner under samma utgåva och alla dokument producerade av den här 
 
 XMLNuke är utvecklad under GPL Licens.
 
-
-3. INSTALLATION AV PHP5 UNDER LINUX
-
-3.1. Requirements
-
-- Vilken Linux distribution som helst. XMLNuke testades under Fedora Core 3 och 4.
-- Apache 1.3 eller Apache 2.0
-- PHP5 med XSLT aktiverad.
-
-3.2. PHP5-installation genom att använda RPM
-
-Du måste installera följande paket (och dependencies):
-  - php-5.0.3-5.i386.rpm
-  - php-xml-5.0.3-5.i386.rpm
-  - php-gd
-
-3.3. PHP5-installation genom att använda DEB
-
-Du måste installera följande paket (och dependencies):
-  - php5-xsl
-  - php5-gd
-
-3.4. PHP5-installation från källkod
-
-Kompilera PHP5 med följande alternativ: (mer information 
-finns på http://www.php.net/manual/en/ref.xslt.php).
-
-	--enable-xslt  --with-xslt-sablot
-
-
-4. INSTALLATION AV PHP5 UNDER FREEBSD
-
-4.1. Mjukvarukrav
-
-- FreeBSD
-- Ports installrerad och updaterad.
-
-4.2. PHP5-installation med ports
-
-Installera följande paket med ports:
-  - www/mod_php5
-  - textproc/php5-xml
-  - textproc/php5-simplexml
-  - textproc/php5-xslt
-  - textproc/php5-dom
-  - www/php5-session
-  - devel/php5-pcre
-
-För att installera med ports, går du till paketets katalog, till exempel, 
-/usr/pellerts/www/mod_php5 och skriver:
-
-make install clean
-
-Upprepa den proceduren för att alla paket listade ovan.
-
-
-5. PHP5 INSTALLATION UNDER WINDOWS
-
-5.1. Mjukvarukrav
-
-- Windows 2000, XP, NT4, Server
-- Internet Infellermation Services (IIS)
-
-5.2. Installera
-
-Installera PHP5 genom att följa instructioner i: 
-http://www.php.net/manual/en/install.windows.php
-
-Redigera PHP.INI filen. Hitta ";extension=php_xsl.dll" och ändra till
-"extension=php_xsl.dll" (utan fnuttar) för att aktivera stöd för XSL-tillägget i PHP5.
-
-
-6. POS-INSTALL
-
-Öppna filen php.ini och hitta raden: 
-display_errors = Off 
-och ändra den till:
-display_errors = On
-
-hitta även:
-error_reporting  =  E_ALL
-och ändra den till:
-error_reporting = E_ALL & ~E_NOTICE
-
-För att kontrollera din installation skapar du en fil kallad info.php i webserverns rotkatalog med följande innehåll: 
-
-<?php phpinfo(); ?>
-
-Oppna sedan sidan på adressen http://localhost/info.php och kontrollera att följande PHP5-tillägg finns med:
-- simplexml
-- dom
-- xsl
-- session
-- pcre
-- xml
-
-
-7.  INSTALLATION AV XMLNUKE I PHP5 UNDER APACHE
-
-Extrahera innehållet av det här paketet i någon katalog. Till exempel:
-
-/data/xmlnuke
-
-OBS: Du behöver tilldela den skrivrättigheter för katalogen 
-xmlnuke/data till användaren start XSP server. 
-
-Redigera filen httpd.conf och lägg till följande rader:
-
-Alias /xmlnuke "/data/xmlnuke"
-<Directellery "/data/xmlnuke">
-       AllowOverride none
-       Order allaow,deny
-       Allow from alla
-</Directellery>
-
-
-
-8. INSTALLATION AV XMLNUKE I PHP5 UNDER IIS
-
-Extrahera innehållet av det här paketet i någon katalog. Till exempel:
-
-C:\Data\XMLNuke
-
-OBS: Du behöver tilldela den skrivrättigheter för katalogen 
-xmlnuke/data till användaren start XSP server. 
-
-Följ dom här instruktionerna:
-- Öppna Windows Utforskaren
-- Högerklicka på mappen "C:\Data\XMLNuke"
-- Välj Egenskaper i menyn som dyker upp
-- Välj fliken "Web Sharing". 
-- Välj "Dela ut den här mappen"
-- Skriv in ett alias i textfältet.
-- Klick OK, och OK ännu en gång.
-
-Försök nu nå "XMLNuke sample web" genom att skriva in följande adress i din webbläsare:
-http://localhost/xmlnuke
-
-
-
-
-9. ÖVRIG INFORMATION
-
-9.1. Adminverktyg
-
-Användarnamn och lösenord för att komma åt adminverktyget första gången och tills du byter ut det är:
-
-Användarnamn: admin
-Lösenord: pwd
-
-
-	
-10. KONTAKTINFORMATION
+KONTAKTINFORMATION
 
 Kontakta författaren eller få tag på nya versioner på 
 http://www.xmlnuke.com/
-
-XMLNuke was developed and is maintened by
-Joao Gilberto Magalhaes
-http://www.byjg.com.br
-
+http://forum.xmlnuke.com/
+http://docs.xmlnuke.com/

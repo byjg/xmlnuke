@@ -1,154 +1,63 @@
 ====================================================================
 XMLNuke
 Framework de desenvolvimento de aplicativos baseado em XML
-2006-06-18
+2009-06-01
+http://www.xmlnuke.com/
 --------------------------------------------------------------------
 CSharp/Mono Edition
-Autor do XMLNuke: João Gilberto Magalhães
-Programado por: João Gilberto Magalhães
-Versao: 2.0 RC3
+Autor : João Gilberto Magalhães
+Mantido por : João Gilberto Magalhães
+Version: 3.5
 ====================================================================
 
-1. INFORMAÇÕES
 
-Este pacote contém apenas os assemblies para o Framework .NET 1.1.
-O Assembly é compatível com o Microsoft .NET e o MONO (Linux).
-
-Versão deste pacote: 2.0 RC1 
-
-Os arquivos fontes contém as versões mais novas e estão disponíveis
-apenas através do SubVersion. Visite o nosso Web site para maiores 
-informações.
-
-XMLNuke foi criado por Joao Gilberto Magalhaes.
-XMLNuke CSharp Edition é mantido por Joao Gilberto Magalhaes.
-
-Desenvolvedores para CSharp Edition e outras versões são bem vindos.
-Visite o nosso site.
-
-http://www.xmlnuke.com/
-
-
-2. LICENÇA
+Este pacote contém todos os arquivos necessários para rodar o XMLNuke
+C# Edition e todas as suas funcionalidades. Esse pacote está compatível
+com outras versões do XMLNuke na mesma release, portanto todos os
+documentos produzidos por essa versão ou outras versões do XMLNuke são
+compatíveis entre si.
 
 XMLNuke é desenvolvido sob a licença GPL.
 
+INSTALANDO O XMLNUKE
 
-3. INSTALAÇÃO NO LINUX
+Requisitos:
+- Microsoft .NET 2.0 or 3.x
 
-3.1. Requisitos
+Os últimos pacotes preparados estão disponíveis em: http://www.xmlnuke.com/
+Você precisa apenas fazer o download e extrair os arquivos em qualquer 
+pasta que você queira. Você precisa configurar o seu servidor WEB IIS para 
+apontar para a pasta "xmlnuke-csharp" 
 
-- Qualquer distribuição Linux
-- Mono 1.0 ou superior com o pacote libicu instalado
-- Pacote XSP ou Mono Apache Module
+Se você quer trabalhar com a versão mais recente você precisa fazer o 
+download diretamente do repositório Subversion. 
 
-3.2. Instalação no XSP
+Faça o download de:
+svn co https://xmlnuke.svn.xmlnuke.com/svnroot/xmlnuke/trunk xmlnuke
 
-Extraia o conteúdo deste pacote em qualquer diretório.
-Se você utilizar o XSP Web Server execute o Shell Script
-"./startserver.sh" para iniciar o servidor.
+e digite no linux:
+./rename-config-files.sh
+./mount-relase.sh csharp
 
-Se preferir utilizar o modulo para o Apache consulte o manual
-sobre como proceder a instalação.
+ou no Windows dê um duplo-clique em 
+rename-config-files.vbs
+mount-release.vbs
 
-IMPORTANTE: Você deve atribuir permissões de escrita ao diretório 
-xmlnuke/data para o  usuário que iniciou o servidor XSP. 
+Você pode começar um novo projeto dando um duplo-clique em:
 
-Tente acessar o site de exemplo do XMLNuke digitando em seu  browser:
-http://localhost:8080/
+create-xmlnuke-project.vbs
 
-3.3. Instalação no Apache 2.0
-
-Assumindo que a instalação foi feita através de uma pacote (.deb
-ou .rpm) e que o Mono já está configurado acrescente as seguintes
-linhas ao seu arquivo httpd.conf:
-
-Alias /xmlnuke-csharp "/var/www/xmlnuke-csharp"
-AddMonoApplications xmlnuke-csharp "/var/www/xmlnuke-csharp"
-MonoMaxMemory xmlnuke-csharp 67108864
-<Directory "/var/www/xmlnuke-csharp">
-        MonoSetServerAlias xmlnuke-csharp
-        SetHandler mono
-        AllowOverride None
-        Order allow,deny
-        Allow from all
-</Directory>
+e seguir as instruções contidas nele. 
 
 
+Use o fórum para questões:
+http://forum.xmlnuke.com/
 
+Veja a documentação do XMLNuke em:
+http://docs.xmlnuke.com/
 
-4. INSTALAÇÃO NO WINDOWS
-
-4.1. Requisitos
-
-- Windows 2000, XP, NT4, Server
-- Framework .NET 1.1
-- Servidor WEB: Internet Information Services (IIS) ou Apache 2.0
-  para Windows
-
-4.2. Instalação no IIS
-
-Extraia o conteúdo deste pacote em qualquer diretório.
-Siga as instruções:
-- Abra o Windows Explorer
-- Pressione o botão direito no diretório "xmlnuke"
-- Selecione a opção Propriedades
-- Selecione a aba "Compartilhamento Web Sharing". 
-- Selecione a opção "Compartilhar essa pasta"
-- Digite qualquer nome na caixa de texto.
-- Clique OK, e novamente OK.
-
-Tente acessar o site de exemplo digitando em seu navegador:
-http://localhost/<alias defined by you>
-
-4.3. Instalação no APACHE
-
-Se você estiver usando o Apache 2.0 para Windows e o mod_aspnet, é 
-necessário adicionar as seguintes linhas ao seu arquivo httpd.cont:
-
-LoadModule aspdotnet_module modules/mod_aspdotnet.so
-
-AddHandler asp.net asax ascx ashx asmx aspx axd config cs csproj \
-           licx rem resources resx soap vb vbproj vsdisco webinfo
-
-AliasMatch "^/(?i)aspnet_client/system_web/(\d+)_(\d+)_(\d+)_(\d+)/(.*)" \
-           "C:/Windows/Microsoft.NET/Framework/v$1.$2.$3/ASP.NETClientFiles/$4"
-
-<Directory "C:/Windows/Microsoft.NET/Framework/v*/ASP.NETClientFiles">
-    Options FollowSymlinks
-    Order allow,deny
-    Allow from all
-</Directory>
-
-Para configurar o Alias do XMLNuke acrescente as seguintes linhas:
-
-AspNetMount /xmlnuke-csharp "c:/xmlnuke/xmlnuke-csharp"
-Alias /xmlnuke-csharp "c:/xmlnuke/xmlnuke-csharp"
-<Directory "c:/xmlnuke/xmlnuke-csharp">
-    Options FollowSymlinks Indexes Includes ExecCGI
-    Order allow,deny
-    Allow from all
-    DirectoryIndex default.htm default.aspx
-</Directory>
-
-
-
-5. Outras Informações
-
-5.1. Admin Tool
-
-O usuário e senha padrão para a ferramenta de administração é:
-Username: admin
-Password: pwd
-
-
-6. CONTATO
-
-Contacte o autor ou obtenha novas versões no site: 
-http://www.xmlnuke.com/
-
-XMLNuke é desenolvido e mantido por 
-João Gilberto Magalhães
-http://www.byjg.com.br
-
+---
+XMLNuke é desenvolvido e mantido por:
+Joao Gilberto Magalhaes
+http://www.byjg.com.br/
 

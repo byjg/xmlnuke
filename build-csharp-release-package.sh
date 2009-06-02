@@ -2,27 +2,32 @@
 
 echo
 echo BUILD-CSHARP-PACKAGE-RELEASE.sh
-echo May-2008
+echo Jun-2009
 echo by Joao Gilberto Magalhaes
 echo
 
-VERSION=$1
 if [ -z $1 ] ; then
 
-   svn export https://xmlnuke.svn.sourceforge.net/svnroot/xmlnuke/VERSION /tmp/VERSION
+   svn export $XMLNUKE_SVN/VERSION /tmp/VERSION
    VERSION=`cat /tmp/VERSION`
+   XMLNUKE_SVN="https://xmlnuke.svn.sourceforge.net/svnroot/xmlnuke/trunk"
+
+else
+
+   XMLNUKE_SVN="."   # USE THE CURRENT WORKAREA
+   VERSION=$1
 
 fi
 
-   svn info https://xmlnuke.svn.sourceforge.net/svnroot/xmlnuke/ --xml > /tmp/RELEASE
+   svn info $XMLNUKE_SVN/ --xml > /tmp/RELEASE
    RELEASE=`cat /tmp/RELEASE | grep revision -m 1 | sed -e 's/   revision="\(\w*\)">/\1/gi'`
 
    # DOWNLOAD OF REQUIRED FILES FOR COMPILE CSHARP EDITION
    XMLNUKEDIR=xmlnuke-csharp-v${VERSION}r${RELEASE}
    mkdir /tmp/$XMLNUKEDIR
-   svn export https://xmlnuke.svn.sourceforge.net/svnroot/xmlnuke/xmlnuke-csharp /tmp/$XMLNUKEDIR/xmlnuke-csharp
-   svn export https://xmlnuke.svn.sourceforge.net/svnroot/xmlnuke/xmlnuke-csharp-sources /tmp/$XMLNUKEDIR/xmlnuke-csharp-sources
-   svn export https://xmlnuke.svn.sourceforge.net/svnroot/xmlnuke/utils /tmp/$XMLNUKEDIR/utils
+   svn export $XMLNUKE_SVN/xmlnuke-csharp /tmp/$XMLNUKEDIR/xmlnuke-csharp
+   svn export $XMLNUKE_SVN/xmlnuke-csharp-sources /tmp/$XMLNUKEDIR/xmlnuke-csharp-sources
+   svn export $XMLNUKE_SVN/utils /tmp/$XMLNUKEDIR/utils
 
    # COMPILING
    cd /tmp/$XMLNUKEDIR/xmlnuke-csharp-sources
@@ -33,17 +38,17 @@ fi
    rm -rf /tmp/$XMLNUKEDIR/xmlnuke-csharp-sources
 
    # DOWNLOAD AND SETUP OF COMMON FILES
-   svn export https://xmlnuke.svn.sourceforge.net/svnroot/xmlnuke/xmlnuke-data /tmp/$XMLNUKEDIR/xmlnuke-csharp/data
-   svn export https://xmlnuke.svn.sourceforge.net/svnroot/xmlnuke/xmlnuke-common /tmp/$XMLNUKEDIR/xmlnuke-csharp/common
+   svn export $XMLNUKE_SVN/xmlnuke-data /tmp/$XMLNUKEDIR/xmlnuke-csharp/data
+   svn export $XMLNUKE_SVN/xmlnuke-common /tmp/$XMLNUKEDIR/xmlnuke-csharp/common
 
-   svn export https://xmlnuke.svn.sourceforge.net/svnroot/xmlnuke/COPYING /tmp/$XMLNUKEDIR/COPYING
-   svn export https://xmlnuke.svn.sourceforge.net/svnroot/xmlnuke/AUTHORS /tmp/$XMLNUKEDIR/AUTHORS
-   svn export https://xmlnuke.svn.sourceforge.net/svnroot/xmlnuke/CONTRIBUTORS /tmp/$XMLNUKEDIR/CONTRIBUTORS
-   svn export https://xmlnuke.svn.sourceforge.net/svnroot/xmlnuke/LICENSE /tmp/$XMLNUKEDIR/LICENSE
-   svn export https://xmlnuke.svn.sourceforge.net/svnroot/xmlnuke/CSharp.README /tmp/$XMLNUKEDIR/README
-   svn export https://xmlnuke.svn.sourceforge.net/svnroot/xmlnuke/CSharp.README.pt-br /tmp/$XMLNUKEDIR/README.pt-br
-   svn export https://xmlnuke.svn.sourceforge.net/svnroot/xmlnuke/xmlnuke-csharp-sources/create-xmlnuke-project.vbs /tmp/$XMLNUKEDIR/create-xmlnuke-project.vbs
-   /tmp/$XMLNUKEDIR/utils/generatelog/changelog.sh https://xmlnuke.svn.sourceforge.net/svnroot/xmlnuke/xmlnuke-csharp-sources > /tmp/$XMLNUKEDIR/CHANGELOG
+   svn export $XMLNUKE_SVN/COPYING /tmp/$XMLNUKEDIR/COPYING
+   svn export $XMLNUKE_SVN/AUTHORS /tmp/$XMLNUKEDIR/AUTHORS
+   svn export $XMLNUKE_SVN/CONTRIBUTORS /tmp/$XMLNUKEDIR/CONTRIBUTORS
+   svn export $XMLNUKE_SVN/LICENSE /tmp/$XMLNUKEDIR/LICENSE
+   svn export $XMLNUKE_SVN/CSharp.README /tmp/$XMLNUKEDIR/README
+   svn export $XMLNUKE_SVN/CSharp.README.pt-br /tmp/$XMLNUKEDIR/README.pt-br
+   svn export $XMLNUKE_SVN/xmlnuke-csharp-sources/create-xmlnuke-project.vbs /tmp/$XMLNUKEDIR/create-xmlnuke-project.vbs
+   /tmp/$XMLNUKEDIR/utils/generatelog/changelog.sh $XMLNUKE_SVN/xmlnuke-csharp-sources > /tmp/$XMLNUKEDIR/CHANGELOG
 
    rm -rf /tmp/$XMLNUKEDIR/utils
 
