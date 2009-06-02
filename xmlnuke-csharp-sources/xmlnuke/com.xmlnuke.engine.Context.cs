@@ -491,7 +491,7 @@ namespace com.xmlnuke.engine
 		public string joinUrlBase(string url)
 		{
 			string urlBase = this.UrlBase();
-			if (urlBase != "")
+			if (!String.IsNullOrEmpty(urlBase))
 			{
 				if (url[0] == '/')
 				{

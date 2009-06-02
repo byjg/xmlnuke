@@ -8,13 +8,13 @@ echo
 
 if [ -z $1 ] ; then
 
+   XMLNUKE_SVN="https://xmlnuke.svn.sourceforge.net/svnroot/xmlnuke/trunk"
    svn export $XMLNUKE_SVN/VERSION /tmp/VERSION
    VERSION=`cat /tmp/VERSION`
-   XMLNUKE_SVN="https://xmlnuke.svn.sourceforge.net/svnroot/xmlnuke/trunk"
 
 else
 
-   XMLNUKE_SVN="."   # USE THE CURRENT WORKAREA
+   XMLNUKE_SVN="${PWD}"   # USE THE CURRENT WORKAREA
    VERSION=$1
 
 fi
