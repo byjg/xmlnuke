@@ -442,7 +442,16 @@ ArrayList createConfigFile()
 		}
 		catch (Exception ex)
 		{
-			errors.Add(ex.Message);
+			string newWebConfig = DateTime.Now.ToString("yyyy-MM-dd");
+			try
+			{
+				System.IO.File.WriteAllText(Server.MapPath("~/web.config." + newWebConfig), fileContent);
+				errors.Add("I could not write to Web.Config your setup. Instead I save the file 'web.config." + newWebConfig + "'. You have to manually copy to web.config.");
+			}
+			catch (Exception ex2)
+			{
+				errors.Add("I could not write to Web.Config your setup. Please check you file permissions. Orginal error message is: " + ex2.Message);
+			}
 		}
 	}
 	
