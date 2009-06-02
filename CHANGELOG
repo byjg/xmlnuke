@@ -1,0 +1,108 @@
+
+------------------------------------------------------------------------------
+ XMLNuke 3.5 - 2/Jun/2009
+------------------------------------------------------------------------------
+
+ALL XMLNuke Editions
+- jQuery was introduced in this version. First classes: Faq, Calendar, Sortablelist, DateTimeBox. 
+- Added Autosuggest option to Textbox
+- Added XmlInputDateTime a Calendar Pick object
+- Added XmlInputSortableList a sortable list object
+- Added a INPUTDATE::DATETIME validator object.
+- Added a capability for post itens by Ajax
+- Changes in TabView object
+- Changes in ProcessPage to support multiple keys and internationalization of your objects
+- Create the LanguageFactory object to made better internationalization support
+- Added the operators StartWith and Contains into IteratorFilter Object
+- Added the property size to EasyList for List list instead Select List
+- Added the method validateDynamicRequest for cache dynamic pages
+- Fix sevaral routines in CustomSubmit data
+- Permission adjustments in Control Panel
+- Renamed config files to not impact in svn repository
+- Adusts in Edilist javascript
+- Changed behavior of XmlEasyList when used type CheckBox
+- Fixed cache function in Dynamic Modules
+- Changed Custom Submit Option
+- Added fieldDeliLeft and fieldDeliRight in ProcessPageStateDB
+- Added two functions to BaseDBAccess
+- Added new class BaseModel
+- Added the param URLBASE to the XSL processing
+- Adjusts in documentation to support download in Word format.
+- Added Manage Database Connection admin module
+- Improve cache engine
+- Change Behavior of DEBUG. Now, must be setted to TRUE and have the parameter to show it
+- Fixed customsubmit form action
+- Added the Debug capability to ProcessPageStateDBDataSet
+- Changed redirect
+- Minor Adjusts in ProcessPageStateBase, XmlInputTextBox.
+- Fixed some security issues. 
+- Increased security in XMLNuke limiting access to file system
+- Some changes in XmlChart class to fix chart url
+- Added Scripts Snippet inside Page Sample.
+- Search user in ManageUser module
+- Improved security in ProcessPageState object
+- Internal changes in ProcessPageStateDB to use SQLHelper class
+- Changes in XmlnukeFlash to support parameter
+- Changes in docs. 
+- Editlist now support sum, average and count over the columns values
+- Added Factory for XmlInputButtons
+- Added two new Formatter properties into EditListFields class
+- Changes in visual editor to support Base Href.
+- Several changes in internationalization
+- Added German Support (thanks to Michael)
+- ConfigSearch, Download and ConfigEmail admin modules migrated to new version.
+- ProcessPageStateAnydata now support iterator filter.
+- Included XmlDualList in ProcesspageState objects
+- Changed Language collection read both Shared and Private lang files instead the first one founded.
+- Updated anydataset for support import SingleRow and IIterator objects.
+- Included a ImageUtil class for manipulate images
+- Added another XSL to see the XML strutucture.
+- Added XmlnukeTreeview Component
+- Added use examples of XmlnukeTreeview component
+- Added better warn message in processpagestate 
+- Changes is XmlTableCollection
+- Changes in way XmlnukeFlash object generate the HTML (totally based on JS now)
+- Changes in XmlnukeChart object (preparing to SWF Flash version 5.0). Note: SWF Flash is buggy until now and I get no support from the maintener.
+- Added new captcha engine for XMLNuke
+- Changes in XMLNuke core to work in enviroment without write permission for cache.
+
+XMLNUKE PHP5 Specific
+- Improved DateUtil php class
+- Updated error treatment (php)
+- Added utility to join php files into a single file (draft)
+- Improvement on Check_Install routine
+- Uniform all PHP files to <?php instead <?
+- Added WritePage the Post Processing Html code
+- Added Poll system for PHP engine
+- Minor bug in DataUtil::ConvertDate 
+- Added support for SQL Relay (Database Connection Pool) in PHP5. (http://sqlrelay.sourceforge.net)
+- Change in PHP5 PDO Atrribute to improve cache hits on database
+- Changes in webservice.php to support HTTP request
+- Added param names in WebService description
+- Now PHP5 supports a real implementation for a Custom IUsersBase class. (before this support is limited to user class and not for admin class)
+- Added DateDiff method to DateUtil class
+- Important changes in how XMLNuke PHP5 works with Locale. Now, when select a language, XMLNuke changes all context.
+- Changes in PHP Engine to support External Data Sites and External Php lib dir based on Name Space.
+- Some fix in PHP5 to work better on Windows. Changes mostly applied in Culture, Mount Release (VBScript) and Check Install
+- Important changes in PHP5 to separate private projects from the public XMLNuke Kernel.
+- VBScript to Create PHP5 Project easily on Windows.
+- Added LITERAL PDO Connection String.
+- Detected and fixed problem when tries redirect page with XMLNuke running under IIS+CGI on Windows
+
+XMLNuke C# Specific
+- Change DbParameter type from structure to class
+- Fixed Language in ProcessPageStateBase
+- Fixed XmlnukeManageUrl
+- Fixed various &/&amp; problems
+- Added an Overload to Factory in ProcessPageFields
+- Deeply changes in how CSharp connects do database. Now uses DbProviderFactories to connect. 
+- Some changes in DBDataset to support generic ODBC string on Windows. 
+
+------------------------------------------------------------------------------
+ XMLNuke 3.0 - May/2008
+------------------------------------------------------------------------------
+
+- Important changes from 2.0 to 3.5
+- XMLNuke consolidate as a Web Development Framework
+
+

@@ -48,7 +48,8 @@ fi
    svn export $XMLNUKE_SVN/CSharp.README /tmp/$XMLNUKEDIR/README
    svn export $XMLNUKE_SVN/CSharp.README.pt-br /tmp/$XMLNUKEDIR/README.pt-br
    svn export $XMLNUKE_SVN/xmlnuke-csharp-sources/create-xmlnuke-project.vbs /tmp/$XMLNUKEDIR/create-xmlnuke-project.vbs
-   /tmp/$XMLNUKEDIR/utils/generatelog/changelog.sh $XMLNUKE_SVN/xmlnuke-csharp-sources > /tmp/$XMLNUKEDIR/CHANGELOG
+   #/tmp/$XMLNUKEDIR/utils/generatelog/changelog.sh $XMLNUKE_SVN/xmlnuke-csharp-sources > /tmp/$XMLNUKEDIR/CHANGELOG
+   svn export $XMLNUKE_SVN/CHANGELOG /tmp/$XMLNUKEDIR/CHANGELOG
 
    rm -rf /tmp/$XMLNUKEDIR/utils
 

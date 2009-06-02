@@ -22,7 +22,8 @@ fi
    svn info $XMLNUKE_SVN/ --xml > /tmp/RELEASE
    RELEASE=`cat /tmp/RELEASE | grep revision -m 1 | sed -e 's/   revision="\(\w*\)">/\1/gi'`
 
-   # DOWNLOAD OF REQUIRED FILES
+   # DOWNLOAD THE REQUIRED FILES
+   echo Downloading the required files
    XMLNUKEDIR=xmlnuke-php5-v${VERSION}r${RELEASE}
    mkdir /tmp/$XMLNUKEDIR
    #mkdir /tmp/$XMLNUKEDIR/xmlnuke-php5
@@ -41,8 +42,12 @@ fi
    svn export $XMLNUKE_SVN/create-php5-project.sh /tmp/$XMLNUKEDIR/create-php5-project.sh
    svn export $XMLNUKE_SVN/create-php5-project.vbs /tmp/$XMLNUKEDIR/create-php5-project.vbs
    svn export $XMLNUKE_SVN/utils /tmp/$XMLNUKEDIR/utils
-   /tmp/$XMLNUKEDIR/utils/generatelog/changelog.sh $XMLNUKE_SVN/xmlnuke-php5 > /tmp/$XMLNUKEDIR/CHANGELOG
 
+   echo Generating ChangeLog
+   #/tmp/$XMLNUKEDIR/utils/generatelog/changelog.sh $XMLNUKE_SVN/xmlnuke-php5 > /tmp/$XMLNUKEDIR/CHANGELOG
+   svn export $XMLNUKE_SVN/CHANGELOG /tmp/$XMLNUKEDIR/CHANGELOG
+
+   echo Preparing Package
    rm -rf /tmp/$XMLNUKEDIR/utils
 
    chmod -R g+rws /tmp/$XMLNUKEDIR/xmlnuke-php5/data
