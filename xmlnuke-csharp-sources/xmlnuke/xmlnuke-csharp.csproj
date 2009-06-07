@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="com.xmlnuke.engine.PluginFactory.cs" />
     <Compile Include="com.xmlnuke.thirdparty.ADSSAntiBot.cs" />
     <Compile Include="com.xmlnuke.admin.BackupModule.cs" />
     <Compile Include="com.xmlnuke.admin.FileManagement.cs" />

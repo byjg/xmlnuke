@@ -38,6 +38,8 @@ namespace xmlnuke.sample
 			Debug.Print(this._context.joinUrlBase("teste/aaaa.aspx"));
 
 			this._context.Debug();
+
+			com.xmlnuke.engine.PluginFactory.LoadPlugin("com.xmlnuke.anydataset.DBDataSet", "conexao", this._context);
 			
 			/*
 			DBDataSet ds = new DBDataSet("testesqlite", this._context);
