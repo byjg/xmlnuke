@@ -76,15 +76,10 @@ class PluginFactory
 			}
 			else
 			{
-				Debug::PrintValue("aqui", $basePath, $className);
 				include_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/$basePath.$className.class.php");
 			}
 			
 			PluginFactory::$_loaded[$key] = true;
-		}
-		else
-		{
-			Debug::PrintValue("já foi! $key");
 		}
 		
 		// Instantiate and Execute Contructor		
