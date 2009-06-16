@@ -70,16 +70,23 @@ class DBDataSet {
 			{
 				$strcnn = $this->_connectionManagement->getDriver () . ":host=" . $this->_connectionManagement->getServer () . ";dbname=" . $this->_connectionManagement->getDatabase ();
 			}
-			$attr = null;
-			if (!stristr($strcnn, "odbc:"))
+			
+			// Create Connection
+			$this->_db = new PDO ( $strcnn, $this->_connectionManagement->getUsername (), $this->_connectionManagement->getPassword () );
+			$this->_connectionManagement->setDriver($this->_db->getAttribute(PDO::ATTR_DRIVER_NAME));
+			
+			// Set Specific Attributes
+			$this->_db->setAttribute ( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+			if ($this->_connectionManagement->getDriver() == "mysql")
 			{
-				$attr = array (PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true );
+				$this->_db->setAttribute ( PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true );
+				$this->_db->setAttribute ( PDO::MYSQL_ATTR_INIT_COMMAND, "SET NAMES utf8" );
 			}
-			$this->_db = new PDO ( $strcnn, $this->_connectionManagement->getUsername (), $this->_connectionManagement->getPassword (), $attr );
-			if (!stristr($strcnn, "odbc:"))
+			if (($this->_connectionManagement->getDriver() != "dblib") && ($this->_connectionManagement->getDriver() != "odbc"))
 			{
-				$this->_db->setAttribute ( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-				$this->_db->setAttribute ( PDO::ATTR_EMULATE_PREPARES, true );
+				if ( defined( 'PDO::ATTR_EMULATE_PREPARES' ) ) {
+					$this->_db->setAttribute ( PDO::ATTR_EMULATE_PREPARES, true );
+				}
 			}
 		}
 	}
@@ -320,6 +327,26 @@ class DBDataSet {
 	public function getDBConnection() 
 	{
 		return $this->_db;
+	}
+	
+	/**
+	 * 
+	 * @var IDbFunctions
+	 */
+	protected $_dbFunction = null;
+	
+	/**
+	 * Get a IDbFunctions class to execute Database specific operations.
+	 * @return IDbFunctions
+	 */
+	public function getDbFunctions()
+	{
+		if ($this->_dbFunction == null)
+		{
+			$this->_dbFunction = PluginFactory::LoadPlugin("db" . $this->_connectionManagement->getDriver() . "functions", "database");
+		}
+		
+		return $this->_dbFunction;
 	}
 }
 

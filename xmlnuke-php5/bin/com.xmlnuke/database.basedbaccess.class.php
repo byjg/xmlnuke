@@ -69,7 +69,7 @@ abstract class BaseDBAccess
 	
 	/**
 	 * Create a instance of DBDataSet to connect database
-	 *
+	 * @return DBDataSet
 	 */
 	protected function getDBDataSet()
 	{
@@ -77,8 +77,15 @@ abstract class BaseDBAccess
 		{
 			$this->_db = new DBDataSet($this->getDataBaseName(), $this->_context);
 		}
+		
+		return $this->_db;
 	}
 	
+	/**
+	 * Execute a SQL and dont wait for a response. 
+	 * @param string $sql
+	 * @param string $param
+	 */
 	protected function executeSQL($sql, $param = null)
 	{
 		$this->getDBDataSet();
@@ -212,6 +219,15 @@ abstract class BaseDBAccess
 			$retArray[$sr->getField($key)] = $sr->getField($value);
 		}
 		return $retArray;
+	}
+	
+	/**
+	 * Get a IDbFunctions class containing specific database operations
+	 * @return IDbFunctions
+	 */
+	public function getDbFunctions()
+	{
+		return $this->getDBDataSet()->getDbFunctions();
 	}
 }
 ?>
