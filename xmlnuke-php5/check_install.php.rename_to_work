@@ -340,7 +340,8 @@ function EditConfig()
 		"tool CustomConfig", 9999, $langs);
 
 	writeInputData($configValues, "xmlnuke.SMTPSERVER", 
-		"Smtpserver. Set the proper SMTP server in PHP.INI file. Only for compatibility reasons", 1);
+		"Smtpserver. Smtp Server. You can use the format smtp://USER:PASS@SERVER:PORT for sending from an valid SMTP server;  " . 
+		"define a SERVERNAME or leave blank for use the sendmail PHP method.", 1);
 
 	writeInputData($configValues, "xmlnuke.USERSDATABASE",
 		"Where XMLNuke look up for the users. Leave empty to store in single XML, or put a value " .

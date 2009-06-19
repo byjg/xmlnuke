@@ -75,6 +75,7 @@ class CustomConfig extends NewBaseAdminModule
 		if ($action == "update")
 		{
 			$nv = array();
+			$nv["xmlnuke.SMTPSERVER"] = $this->_context->ContextValue("smtpserver");
 			$nv["xmlnuke.LANGUAGESAVAILABLE"] = $this->createLanguageString();
 			$nv["xmlnuke.SHOWCOMPLETEERRORMESSAGES"] = $this->_context->ContextValue("showcompleterrormessages");
 			$nv["xmlnuke.LOGINMODULE"] = $this->_context->ContextValue("loginmodule");		
@@ -107,7 +108,7 @@ class CustomConfig extends NewBaseAdminModule
 		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.DEFAULTSITE", $this->_context->ContextValue("xmlnuke.DEFAULTSITE")));
 		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.DEFAULTPAGE", $this->_context->ContextValue("xmlnuke.DEFAULTPAGE")));
 		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.ALWAYSUSECACHE", $this->_context->ContextValue("xmlnuke.ALWAYSUSECACHE")));
-		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.SMTPSERVER", $this->_context->ContextValue("xmlnuke.SMTPSERVER")));
+		$form->addXmlnukeObject(new XmlInputTextBox("xmlnuke.SMTPSERVER", "smtpserver", $this->_context->ContextValue("xmlnuke.SMTPSERVER"), 30));
 		$this->generateLanguageInput($form);
 		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "showcompleterrormessages", "xmlnuke.SHOWCOMPLETEERRORMESSAGES", $truefalse, $this->getStringBool($this->_context->ContextValue("xmlnuke.SHOWCOMPLETEERRORMESSAGES"))));
 		$form->addXmlnukeObject(new XmlInputTextBox("xmlnuke.LOGINMODULE", "loginmodule", $this->_context->ContextValue("xmlnuke.LOGINMODULE"), 30));

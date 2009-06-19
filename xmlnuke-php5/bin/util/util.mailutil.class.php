@@ -27,6 +27,7 @@
 *
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
+require_once(PHPXMLNUKEDIR . "bin/modules/phpmailer/class.phpmailer.php");
 
 class MailUtil
 {
@@ -45,7 +46,7 @@ class MailUtil
 	 * @param string $multparttext
 	 * @param array() $multpartfiles
 	 */
-	public static function Mail($context, $fromEmail, $toEmail, $subject, $cc, $bcc, $body, $htmlemail=false, $multparttext=null, $multpartfiles=null)
+	public static function Mail($context, $fromEmail, $toEmail, $subject, $cc, $bcc, $body, $htmlemail=false, $attachments=null, $embed=false)
 	{
 		if ($toEmail == "")
 		{
@@ -54,125 +55,128 @@ class MailUtil
 
 		if ($fromEmail == "")
 		{
-			throw new ModuleException("Source Email for was not provided");
+			throw new ModuleException("Source Email was not provided");
 		}
 
-		//Adjust for UTF8 Enconding
-		$fromEmail = utf8_decode($fromEmail);
-		$toEmail = utf8_decode($toEmail);
-		$subject = ConvertFromUTF8::ISO88591_ASCII($subject);
-		$body = utf8_decode($body);
+		$mail = new PHPMailer(true); // the true param means it will throw exceptions on errors, which we need to catch
+		$mail->Subject = ConvertFromUTF8::ISO88591_ASCII($subject);
+		$mail->CharSet = "utf-8";
+		if ($htmlemail)
+		{
+			$mail->MsgHTML($body);
+		}
+		else
+		{
+			$mail->AltBody($body);
+		}
 
-		// Write the users message to the body of the email
 		/*
-		$body .= "\n\n--------\n" .
-		"eMail sent from site " . $context->ContextValue("SERVER_NAME") . " at " . date("Y-m-d H:i:s") .
-		"\nuser " . $context->ContextValue("Remote_Host") .
-		"\nengine " . $context->XmlNukeVersion() .
-		"\nxmlnuke.com";
-		*/
+	    [0] => --IGNORE--
+	    [1] => USERNAME
+	    [2] => PASSWORD
+	    [3] => SERVER
+	    [4] => PORT
+	    
+	    smtp://[USERNAME:PASSWORD@]SERVER[:PORT]
+    	*/
 
-		$headers  = "X-Mailer: " .$context->XmlNukeVersion(). "\n";
-		$headers  .= "X-Host: " .$context->ContextValue("SERVER_NAME"). "\n";
-		$headers .= "From: ".$fromEmail."\n";
+		$smtpString = $context->ContextValue("xmlnuke.SMTPSERVER");
 
-		$sep0 = "===xml01";
-		$sep1 = "===xml02";
-		$multpart = false;
-		
-		// Send the message
-		if($htmlemail)
+		// Define if uses SMTP server or just sendemail
+		if ($smtpString != "")
 		{
-			$headers .= "MIME-Version: 1.0\n";
-			if (is_null($multparttext) && is_null($multpartfiles))
+			$pat = "/(smtp|ssl):\/\/(?:([\w\d\.\-#@!$%&]+):([\w\d\.\-#@!$%&]+)@)?(?:([\w\d\-]+(?:\.[\w\d\-]+)*))(?::([\d]+))?/";
+			$parts = preg_split ( $pat, $smtpString, - 1, PREG_SPLIT_DELIM_CAPTURE );
+			
+			if ($parts[4] != "")
 			{
-				$headers .= "Content-type: text/html; charset=iso-8859-1\n";
-			}
-			else 
-			{
-				$headers .= "Content-type: multipart/related; type=\"multipart/alternative\";\n";
-				$headers .= "              boundary=\"$sep0\"\n";
-				$multpart = true;			
-			}
-		}
+				$mail->IsSMTP(); // telling the class to use SMTP
 		
-		if ($multpart)
-		{
-			$multipartfilesmessage = "";
-			if (!is_null($multpartfiles))
-			{
-				foreach ($multpartfiles as $key=>$value)
+				$mail->Host = $parts[4];
+				$mail->Port = ($parts[5] != "" ? $parts[5] : 25);
+				
+				if ($parts[2] != "")
 				{
-					// Load Images
-					$handle = fopen($value, "rb");
-					$content = fread($handle, filesize($value));
-					fclose($handle);
-					$txtEnc = chunk_split(base64_encode($content));
-					$cid = basename($value);
-					
-					$path_parts = pathinfo(basename($value));
-					$ext = $path_parts['extension'];
-					if ($ext == "jpg")
-						$ext = "jpeg";
-
-					// Aqui o código para uma imagem.
-					// para mais imagens, copie e cole, alterando o nome "top"
-					$multipartfilesmessage.= "--$sep0\n";
-					$multipartfilesmessage.= "Content-Type: image/" . $ext . "; name=\"" . basename($value) ."\"\n";
-					$multipartfilesmessage.= "Content-Transfer-Encoding: base64\n";
-					$multipartfilesmessage.= "Content-ID: <$cid>\n";
-					$multipartfilesmessage.= "\n$txtEnc\n";
-					$multipartfilesmessage.= "\n";
-					
-					// Change CID
-					$body = str_replace($key, "cid:$cid", $body);
+					$mail->SMTPAuth = true;
+  					$mail->Username = $parts[2]; // SMTP account username
+  					$mail->Password = $parts[3];        // SMTP account password
+				}
+				if ($parts[1]=="ssl")
+				{
+					$mail->SMTPSecure = "ssl";
 				}
 			}
-
-			// Message			
-			$mensagem = "--$sep0\n";
-			$mensagem.= "Content-Type: multipart/alternative; boundary=\"$sep1\"\n";
-			$mensagem.= "\n";
-
-			if ( is_null($multparttext) || ($multparttext == "") )
-			{
-				$multparttext = "Your mail client doesn't support HTML messages.";
-			}
-			$mensagem.= "--$sep1\n";
-			$mensagem.= "Content-Type: text/plain; charset=\"iso-8859-1\"\n";
-			$mensagem.= "Content-Transfer-Encoding: 7bit\n";
-			$mensagem.= "\n$multparttext\n";
-			$mensagem.= "\n";
-			
-			$mensagem.= "--$sep1\n";
-			$mensagem.= "Content-Type: text/html; charset=\"iso-8859-1\"\n";
-			$mensagem.= "Content-Transfer-Encoding: 7bit\n";
-			$mensagem.= "\n$body\n";
-			$mensagem.= "\n";
-			
-			$mensagem.= "--$sep1--\n";
-			$mensagem.= "\n";
-			
-			// Add Multipart files
-			$mensagem .= $multipartfilesmessage;
-
-			// End of message
-			$mensagem.= "--$sep0--";
-			
-			// Define the FULL message;
-			$body = $mensagem;
 		}
 		
-
-		@mail($toEmail, $subject, $body, $headers);
-
-		if($cc != "")
+		// Define From email
+		$from = MailUtil::getEmailPair($fromEmail);
+		$mail->SetFrom($from["email"], $from["name"]);
+		$mail->AddReplyTo($from["email"], $from["name"]);
+		
+		// Add Recipients
+		if (is_array($toEmail))
 		{
-			@mail($cc, $subject, $body, $headers);
+			foreach($toEmail as $toItem)
+			{
+				$to = MailUtil::getEmailPair($toItem);
+				$mail->AddAddress($to["email"], $to["name"]);
+			}
 		}
-		if($bcc != "")
+		elseif (!empty($toEmail))
 		{
-			@mail($bcc, $subject, $body, $headers);
+			$to = MailUtil::getEmailPair($toEmail);
+			$mail->AddAddress($to["email"], $to["name"]);
+		}
+
+		// Add Carbon Copy
+		if (is_array($cc))
+		{
+			foreach($cc as $ccItem)
+			{
+				$to = MailUtil::getEmailPair($toItem);
+				$mail->AddCC($to["email"], $to["name"]);
+			}
+		}
+		elseif (!empty($cc))
+		{
+			$to = MailUtil::getEmailPair($cc);
+			$mail->AddCC($to["email"], $to["name"]);
+		}
+
+		// Add Blind Carbon Copy
+		if (is_array($bcc))
+		{
+			foreach($bcc as $toItem)
+			{
+				$to = MailUtil::getEmailPair($toItem);
+				$mail->AddBCC($to["email"], $to["name"]);
+			}
+		}
+		elseif (!empty($bcc))
+		{
+			$to = MailUtil::getEmailPair($bcc);
+			$mail->AddBCC($to["email"], $to["name"]);
+		}
+
+		// Attachments
+		if (!is_null($attachments))
+		{
+			foreach ($attachments as $key=>$value)
+			{
+				if ($embed)
+				{
+					$mail->AddEmbeddedImage($value, $key);
+				}
+				else
+				{
+					$mail->AddAttachment($value);
+				}
+			}
+		}
+		
+		if (!$mail->Send())
+		{
+			throw new Exception($mail->ErrorInfo);
 		}
 	}
 
@@ -211,7 +215,22 @@ class MailUtil
 	 */
 	public static function getFullEmailName($name, $email)
 	{
-		return "\"" . ConvertFromUTF8::ISO88591_ASCII($name) . "\" <".$email.">";
+		return "\"" . $name . "\" <".$email.">";
+	}
+	
+	public static function getEmailPair($fullEmail)
+	{
+		$pat = "/[\"']?(.*)[\"']?\s+<(.*)>/";
+		$parts = preg_split ( $pat, $fullEmail, - 1, PREG_SPLIT_DELIM_CAPTURE );
+		
+		if ($parts[2] == "")
+		{
+			return array("email"=>$fullEmail, "name"=>"");
+		}
+		else
+		{
+			return array("email"=>$parts[2], "name"=>ConvertFromUTF8::ISO88591_ASCII($parts[1]));
+		}
 	}
 }
 ?>
