@@ -105,8 +105,11 @@ class XmlListCollection extends XmlnukeCollection implements IXmlnukeDocumentObj
 	 */
 	public function generateObject($current)
 	{
-		$text = new XmlnukeText($this->_caption, true);
-		$text->generateObject($current);
+		if ($this->_caption != "")
+		{
+			$text = new XmlnukeText($this->_caption, true);
+			$text->generateObject($current);
+		}
 		if ($this->_type == XmlListType::UnorderedList)
 		{
 			$node = XmlUtil::CreateChild($current, "ul", "");
