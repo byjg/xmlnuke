@@ -50,34 +50,50 @@ if ($name == "")
 }
 else 
 {
-	$path = ModuleFactory::LibPath(dirname($name), basename($name));
-	
-	$file = basename($path);
-	$path = dirname($path);
+	// Detect the place were the WebService is located.
+	$namespace = $name;
+	$class = "";
+	$filename = "";
+	$failover = 0;
+	while ( ($namespace != ".") && ($filename == "") && ($failover++ < 10) )
+	{
+		$class = basename($namespace) . ($class != "" ? "/" . $class : "");
+		$namespace = dirname($namespace); 
+		$path = ModuleFactory::LibPath(str_replace("/", ".", $namespace), $class);
+		
+		$file = basename($path);
+		$path = dirname($path);
+		
+		if (FileUtil::Exists($path . FileUtil::Slash() . $file . ".class.php"))
+		{
+			$filename = $path . FileUtil::Slash() . $file . ".class.php";
+		}
+	}
 
+	// If not found shows an error
+	if ($filename == "")
+	{
+		$message = "The Requested webservice '<b>$name</b>' not found<br><br>";
+		$message .= "<b>Tips</b><ul>";
+		$message .= "<li>Follow the sample class</li>";
+		$message .= "</ul>";
+		print_error_message(404, "WebService Not Found", $message);
+	}
+	
+	// Execute the Webservice
 	try
 	{
-		$filename = $path . FileUtil::Slash() . $file . ".class.php";
-		if (!FileUtil::Exists($filename))
-		{
-			$message = "The Requested webservice '<b>$name</b>' not found<br><br>";
-			$message .= "<b>Tips</b><ul>";
-			$message .= "<li>The webservice '$name' must reside on $filename</li>";
-			$message .= "<li>Follow the sample class</li>";
-			$message .= "</ul>";
-			print_error_message(404, "WebService Not Found", $message);
-		}
 		include_once($filename);
 		//$class = new ReflectionClass($file);
 		//$result = $class->newInstance($context);
 	}
 	catch (Exception $e)
 	{
-		print_error_message(500, "WebService Programming Error", $e->getMessage() . "<br/><br/>" . $e->getTrace());
+		print_error_message(500, "WebService Programming Error", $e->getMessage(), $e->getTrace());
 	}
 }
 
-function print_error_message($code, $title, $message)
+function print_error_message($code, $title, $message, $trace = null)
 {
 	ob_clean();
 	header("HTTP/1.0 $code $title");
@@ -87,6 +103,16 @@ function print_error_message($code, $title, $message)
 	echo "</head><body>";
 	echo "<h1>$title</h1>";
 	echo "<p>$message<br />";
+	if ($trace != null)
+	{
+		echo "<br />";
+		foreach ($trace as $key=>$value)
+		{
+			$args = (is_array($value["args"]) ? implode(", ", $value["args"]) : "");
+			echo "File <b>" . basename($value["file"]). "</b> (line " . $value["line"] . "): " . $value["class"] . $value["type"] . $value["function"] . "( " . $args . " ) <br/>";
+		}
+		echo "<br/>";
+	}
 	echo "</p>";
 	echo "<hr>";
 	echo "<address>WebService Wrapper By XMLNuke.com</address>";
