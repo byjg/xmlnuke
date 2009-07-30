@@ -6,6 +6,11 @@ class WebRequest
 	protected $_username;
 	protected $_password;
 	
+	const POST = "POST";
+	const PUT = "PUT";
+	const GET = "GET";
+	const DELETE = "DELETE";
+	
 	public function __construct($url)
 	{
 		$this->_url = $url;
@@ -66,7 +71,7 @@ class WebRequest
 	}
 	
 	
-	protected function CurlWrapper($post=false, $fields = null, $content_type = null, $data = null)
+	protected function CurlWrapper($method, $fields = null, $content_type = null, $data = null)
 	{
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, $this->_url); 
@@ -75,6 +80,9 @@ class WebRequest
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)");		
 		//curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+		# sometimes we need this for https to work
+		//curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, false);
+		//curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, false);
 
 		// Check if pass credentials
 		if (($this->_username != "") && ($this->_password != ""))
@@ -83,7 +91,7 @@ class WebRequest
 			curl_setopt($curl, CURLOPT_USERPWD, $this->_username . ":" . $this->_password);
 		}
 
-		// Check if pass Fields
+		// Adjust parameters
 		if (is_array($fields) && (sizeof($fields) > 0))
 		{
 			$fields_string = "";
@@ -91,29 +99,43 @@ class WebRequest
 			{ 
 				$fields_string .= ($fields_string != "" ? "&" : "") . $key.'='.$value; 
 			}
-
-			if ($post)
-			{
-				curl_setopt($curl, CURLOPT_POST, count($fields));
-				curl_setopt($curl, CURLOPT_POSTFIELDS, $fields_string);
-			}
-			else
-			{
-				// Re-define
-				if ($fields_string != "")
-				{
-					curl_setopt($curl, CURLOPT_URL, $this->_url . (strpos($this->_url, "?") === false ? "&" : "?") . $query);
-				} 
-			}
 		}
 		// Check if pass file
 		elseif ($content_type != null)
 		{
-			curl_setopt($curl, CURLOPT_HTTPHEADER, Array("Content-Type: $content_type")); 
-			curl_setopt($curl, CURLOPT_POST, 1);
-			curl_setopt($curl, CURLOPT_POSTFIELDS, $data);		
+			curl_setopt($curl, CURLOPT_HTTPHEADER, Array("Content-Type: $content_type"));
+			$fields_string = $data; 
 		}
+		
+		// Set the proper method
+		switch($method)
+		{
+			case WebRequest::POST:
+				curl_setopt($curl, CURLOPT_POST, true);
+				curl_setopt($curl, CURLOPT_POSTFIELDS, $fields_string);
+				break;
+		
+			case WebRequest::PUT:
+				curl_setopt($curl, CURLOPT_PUT, true);
+				curl_setopt($curl, CURLOPT_POSTFIELDS, $fields_string);
+				break;
+		
+			case WebRequest::DELETE:
+				curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
+				if ($fields_string != "")
+				{
+					curl_setopt($curl, CURLOPT_URL, $this->_url . (strpos($this->_url, "?") === false ? "&" : "?") . $fields_string);
+				} 
+				break;
 				
+			case WebRequest::GET:
+				if ($fields_string != "")
+				{
+					curl_setopt($curl, CURLOPT_URL, $this->_url . (strpos($this->_url, "?") === false ? "&" : "?") . $fields_string);
+				} 
+				break;
+		}
+		
 		$result = curl_exec($curl);
 		if ($result === false)
 		{
@@ -128,19 +150,33 @@ class WebRequest
 	
 	public function Get($params = null)
 	{
-		return $this->CurlWrapper(false, $params); 
+		return $this->CurlWrapper(WebRequest::GET, $params); 
 	}
 
 	public function Post($params)
 	{
-		return $this->CurlWrapper(true, $params);
+		return $this->CurlWrapper(WebRequest::POST, $params);
 	}
 
-	public function PostFile($content_type, $data)
+	public function PostFile($data, $content_type = "text/plain")
 	{
-		return $this->CurlWrapper(true, null, $content_type, $data);
+		return $this->CurlWrapper(WebRequest::POST, null, $content_type, $data);
 	}
 	
+	public function Put($params)
+	{
+		return $this->CurlWrapper(WebRequest::PUT, $params);
+	}
+
+	public function PutFile($data, $content_type = "text/plain")
+	{
+		return $this->CurlWrapper(WebRequest::PUT, null, $content_type, $data);
+	}
+	
+	public function Delete($params = null)
+	{
+		return $this->CurlWrapper(WebRequest::DELETE, $params); 
+	}
 	
 }
 
