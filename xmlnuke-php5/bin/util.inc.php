@@ -8,4 +8,5 @@ require_once(PHPXMLNUKEDIR . "bin/util/util.imageutil.class.php");
 require_once(PHPXMLNUKEDIR . "bin/util/util.kernel.class.php");
 require_once(PHPXMLNUKEDIR . "bin/util/util.mailutil.class.php");
 require_once(PHPXMLNUKEDIR . "bin/util/util.xmlutil.class.php");
+require_once(PHPXMLNUKEDIR . "bin/util/util.webrequest.class.php");
 ?>
