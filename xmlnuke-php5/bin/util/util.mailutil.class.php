@@ -67,7 +67,7 @@ class MailUtil
 		}
 		else
 		{
-			$mail->AltBody($body);
+			$mail->Body = $body;
 		}
 
 		/*

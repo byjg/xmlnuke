@@ -5,6 +5,7 @@ class WebRequest
 	protected $_soapClass = null;
 	protected $_username;
 	protected $_password;
+	protected $_referer;
 	
 	const POST = "POST";
 	const PUT = "PUT";
@@ -20,6 +21,15 @@ class WebRequest
 	{
 		$this->_username = $username;
 		$this->_password = $password;
+	}
+
+	public function getReferer()
+	{
+		return $this->_referer;
+	}
+	public function setReferer($value)
+	{
+		$this->_referer = $value;
 	}
 
 	/**
@@ -83,6 +93,10 @@ class WebRequest
 		# sometimes we need this for https to work
 		//curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, false);
 		//curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, false);
+		if ($this->getReferer() != "")
+		{
+			curl_setopt($ch, CURLOPT_REFERER , $this->getReferer());
+		}
 
 		// Check if pass credentials
 		if (($this->_username != "") && ($this->_password != ""))
