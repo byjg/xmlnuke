@@ -7,6 +7,8 @@
     <field name="TITRESP">Mail send request response</field>
     <field name="ERRORBLANK">is blank</field>
     <field name="ERRORINVALID">is invalid</field>
+    <field name="FLDNAME">Name</field>
+    <field name="FLDEMAIL">e-Mail</field>
     <field name="FLDSUBJECT">Subject</field>
     <field name="MSGERROR">The following errors were found. Please correct them</field>
     <field name="MSGOK">Email has been sent. You will receive a copy of this mail.</field>
@@ -20,6 +22,8 @@
     <field name="TITRESP">Resposta à solicitação de envio de email</field>
     <field name="ERRORBLANK">está em branco</field>
     <field name="ERRORINVALID">é inválido</field>
+    <field name="FLDNAME">Nome</field>
+    <field name="FLDEMAIL">e-Mail</field>
     <field name="FLDSUBJECT">Assunto</field>
     <field name="MSGERROR">Os seguintes erros foram encontrados. Por favor conserte-os.</field>
     <field name="MSGOK">O email foi enviado. Você estará recebendo uma cópia desse e-mail.</field>
@@ -33,6 +37,8 @@
     <field name="TITRESP">E-Mail Antwort-Anforderung</field>
     <field name="ERRORBLANK">ist leer</field>
     <field name="ERRORINVALID">ist ungültig</field>
+    <field name="FLDNAME">Name</field>
+    <field name="FLDEMAIL">e-Mail</field>
     <field name="FLDSUBJECT">Betreff</field>
     <field name="MSGERROR">Folgende Fehler wurden gefunden. Bitte beheben Sie diese.</field>
     <field name="MSGOK">E-Mail wurde gesendet. Sie werden eine Kopie dieser E-Mail erhalten.</field>

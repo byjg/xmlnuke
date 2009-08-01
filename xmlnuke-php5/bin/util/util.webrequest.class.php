@@ -1,4 +1,37 @@
 <?php
+/*
+*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*  Copyright:
+*
+*  XMLNuke: A Web Development Framework based on XML.
+*
+*  Main Specification: Joao Gilberto Magalhaes, joao at byjg dot com
+*
+*  This file is part of XMLNuke project. Visit http://www.xmlnuke.com
+*  for more information.
+*
+*  This program is free software; you can redistribute it and/or
+*  modify it under the terms of the GNU General Public License
+*  as published by the Free Software Foundation; either version 2
+*  of the License, or (at your option) any later version.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program; if not, write to the Free Software
+*  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+*
+*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+*/
+
+/**
+ * Class to abstract Soap and REST calls
+ * @author jg
+ *
+ */
 class WebRequest
 {
 	protected $_url;
@@ -17,6 +50,12 @@ class WebRequest
 		$this->_url = $url;
 	}
 	
+	/**
+	 * Defines Basic credentials for access the service. 
+	 * @param $username
+	 * @param $password
+	 * @return unknown_type
+	 */
 	public function setCredentials($username, $password)
 	{
 		$this->_username = $username;
@@ -53,15 +92,29 @@ class WebRequest
 		return $this->_soapClass;
 	}
 	
-	public function Soap($method, $params)
+	/**
+	 * Call a Soap client.
+	 * 
+	 * For example:
+	 * 
+	 * $webreq = new WebRequest("http://www.byjg.com.br/webservice.php/ws/cep");
+	 * $result = $webreq->Soap("obterCep", new array("cep", "11111233"));
+	 * 
+	 * @param string $method
+	 * @param array $params
+	 * @return object
+	 */
+	public function Soap($method, $params = null)
 	{
-		$soapParams = array();
-		foreach ($params as $key=>$value)
+		if (is_array($params))
 		{
-			$soapParams[] = new SoapParam($value, $key);
+			$soapParams = array();
+			foreach ($params as $key=>$value)
+			{
+				$soapParams[] = new SoapParam($value, $key);
+			}
 		}
-		
-		if (sizeof($soapParams) == 0)
+		else
 		{
 			$soapParams = null;
 		}
@@ -162,31 +215,61 @@ class WebRequest
 	} 
 
 	
+	/**
+	 * Make a REST Get method call
+	 * @param array $params
+	 * @return string
+	 */
 	public function Get($params = null)
 	{
 		return $this->CurlWrapper(WebRequest::GET, $params); 
 	}
 
+	/**
+	 * Make a REST POST method call with parameters
+	 * @param array $params
+	 * @return string
+	 */
 	public function Post($params)
 	{
 		return $this->CurlWrapper(WebRequest::POST, $params);
 	}
 
+	/**
+	 * Make a REST POST method call sending a file
+	 * @param array $params
+	 * @return string
+	 */
 	public function PostFile($data, $content_type = "text/plain")
 	{
 		return $this->CurlWrapper(WebRequest::POST, null, $content_type, $data);
 	}
 	
+	/**
+	 * Make a REST PUT method call with parameters
+	 * @param array $params
+	 * @return string
+	 */
 	public function Put($params)
 	{
 		return $this->CurlWrapper(WebRequest::PUT, $params);
 	}
 
+	/**
+	 * Make a REST PUT method call sending a file
+	 * @param array $params
+	 * @return string
+	 */
 	public function PutFile($data, $content_type = "text/plain")
 	{
 		return $this->CurlWrapper(WebRequest::PUT, null, $content_type, $data);
 	}
 	
+	/**
+	 * Make a REST DELETE method call with parameters
+	 * @param array $params
+	 * @return string
+	 */
 	public function Delete($params = null)
 	{
 		return $this->CurlWrapper(WebRequest::DELETE, $params); 
