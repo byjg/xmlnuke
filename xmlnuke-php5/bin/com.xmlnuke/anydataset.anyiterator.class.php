@@ -32,7 +32,7 @@
 /// You need to use the getIterator method in a AnyDataSet class to create an Iterator.
 /// </summary>
 
-class AnyIterator
+class AnyIterator implements IIterator
 {
 	
 	/**
