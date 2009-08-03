@@ -39,6 +39,8 @@ class WebRequest
 	protected $_username;
 	protected $_password;
 	protected $_referer;
+	protected $_header = false;
+	protected $_followLocation = true;
 	
 	const POST = "POST";
 	const PUT = "PUT";
@@ -66,11 +68,44 @@ class WebRequest
 	{
 		return $this->_referer;
 	}
+	/**
+	 * 
+	 * @param string $value
+	 * @return unknown_type
+	 */
 	public function setReferer($value)
 	{
 		$this->_referer = $value;
 	}
-
+	
+	public function getOutputHeader()
+	{
+		return $this->_header;
+	}
+	/**
+	 * 
+	 * @param bool $value
+	 * @return unknown_type
+	 */
+	public function setOutputHeader($value)
+	{
+		$this->_header = $value;
+	}
+	
+	public function getFollowLocation()
+	{
+		return $this->_followLocation;
+	}
+	/**
+	 * 
+	 * @param bool $value
+	 * @return unknown_type
+	 */
+	public function setFollowLocation($value)
+	{
+		$this->_followLocation = $value;
+	}
+	
 	/**
 	 * 
 	 * @return SoapClient
@@ -138,11 +173,10 @@ class WebRequest
 	{
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, $this->_url); 
-		//curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-		curl_setopt($curl, CURLOPT_HEADER, true);
+		curl_setopt($curl, CURLOPT_HEADER, $this->_header);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)");		
-		//curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, $this->_followLocation);
 		# sometimes we need this for https to work
 		//curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, false);
 		//curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, false);
