@@ -220,7 +220,7 @@ class MailUtil
 	
 	public static function getEmailPair($fullEmail)
 	{
-		$pat = "/[\"']?(.*)[\"']?\s+<(.*)>/";
+		$pat = "/[\"']?([\pL\w\d\s\.&\(\)#$%]*)[\"']?\s*<(.*)>/";
 		$parts = preg_split ( $pat, $fullEmail, - 1, PREG_SPLIT_DELIM_CAPTURE );
 		
 		if ($parts[2] == "")
