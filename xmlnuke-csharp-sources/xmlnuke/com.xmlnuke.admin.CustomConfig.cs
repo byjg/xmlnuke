@@ -80,8 +80,9 @@ namespace com.xmlnuke.admin
 			if (action == "update")
 			{
 				System.Collections.Specialized.NameValueCollection nv = new System.Collections.Specialized.NameValueCollection();
-				nv.Add("xmlnuke.LANGUAGESAVAILABLE", this.createLanguageString());
-				nv.Add("xmlnuke.SHOWCOMPLETEERRORMESSAGES", this._context.ContextValue("showcompleterrormessages"));
+				nv.Add("xmlnuke.SMTPSERVER", this._context.ContextValue("smtpserver"));
+                nv.Add("xmlnuke.LANGUAGESAVAILABLE", this.createLanguageString());
+                nv.Add("xmlnuke.SHOWCOMPLETEERRORMESSAGES", this._context.ContextValue("showcompleterrormessages"));
 				nv.Add("xmlnuke.LOGINMODULE", this._context.ContextValue("loginmodule"));
 				nv.Add("xmlnuke.USERSDATABASE", this._context.ContextValue("usersdatabase"));
 				nv.Add("xmlnuke.USERSCLASS", this._context.ContextValue("usersclass"));
@@ -109,7 +110,7 @@ namespace com.xmlnuke.admin
 			form.addXmlnukeObject(new XmlInputLabelField("xmlnuke.DEFAULTSITE", this._context.ContextValue("xmlnuke.DEFAULTSITE")));
 			form.addXmlnukeObject(new XmlInputLabelField("xmlnuke.DEFAULTPAGE", this._context.ContextValue("xmlnuke.DEFAULTPAGE")));
 			form.addXmlnukeObject(new XmlInputLabelField("xmlnuke.ALWAYSUSECACHE", this._context.ContextValue("xmlnuke.ALWAYSUSECACHE")));
-			form.addXmlnukeObject(new XmlInputLabelField("xmlnuke.SMTPSERVER", this._context.ContextValue("xmlnuke.SMTPSERVER")));
+            form.addXmlnukeObject(new XmlInputTextBox("xmlnuke.SMTPSERVER", "smtpserver", this._context.ContextValue("xmlnuke.SMTPSERVER"), 30));
 			this.generateLanguageInput(form);
 			form.addXmlnukeObject(new XmlEasyList(EasyListType.SELECTLIST, "showcompleterrormessages", "xmlnuke.SHOWCOMPLETEERRORMESSAGES", truefalse, this._context.ContextValue("xmlnuke.SHOWCOMPLETEERRORMESSAGES")));
 			form.addXmlnukeObject(new XmlInputTextBox("xmlnuke.LOGINMODULE", "loginmodule", this._context.ContextValue("xmlnuke.LOGINMODULE"), 30));

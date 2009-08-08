@@ -99,9 +99,14 @@ namespace com.xmlnuke.classes
 		 */
 		public void generateObject(XmlNode current)
 		{
-			XmlNode node = current;
-			XmlnukeText text = new XmlnukeText(this._caption, true);
-			text.generateObject(current);
+			XmlNode node = null;
+
+            if (this._caption != "")
+            {
+                XmlnukeText text = new XmlnukeText(this._caption, true);
+                text.generateObject(current);
+            }
+
 			if (this._type == XmlListType.UnorderedList)
 			{
 				node = XmlUtil.CreateChild(current, "ul", "");

@@ -35,6 +35,7 @@ using System.Collections;
 using com.xmlnuke.engine;
 using com.xmlnuke.processor;
 using System.Reflection;
+using com.xmlnuke.Database;
 
 namespace com.xmlnuke.anydataset
 {
@@ -364,6 +365,23 @@ namespace com.xmlnuke.anydataset
 			db.Close();
 			return true;
 		}
+
+	    protected IDbFunctions _dbFunction = null;
+	
+        /// <summary>
+        /// Get a IDbFunctions class to execute Database specific operations.
+        /// </summary>
+        /// <returns></returns>
+        /// TODO: Test it
+	    public IDbFunctions getDbFunctions()
+	    {
+		    if (this._dbFunction == null)
+		    {
+			    this._dbFunction = (IDbFunctions)PluginFactory.LoadPlugin("com.xmluke.database.Db" + this._dbtype + "Functions");
+		    }
+    		
+		    return this._dbFunction;
+	    }
 	}
 
 	public class DbParameter
