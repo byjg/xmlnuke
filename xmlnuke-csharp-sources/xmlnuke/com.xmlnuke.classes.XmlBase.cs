@@ -157,7 +157,7 @@ namespace com.xmlnuke.classes
 			this._metaTag = new NameValueCollection();
 
 			this._menuGroup = new Dictionary<string, MenuGroup>();
-			this.addMenuGroup("Módulo", "__DEFAULT__");
+			this.addMenuGroup("MÃ³dulo", "__DEFAULT__");
 		}
 
 		/// <summary>

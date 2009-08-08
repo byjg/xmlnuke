@@ -199,7 +199,7 @@ namespace com.xmlnuke.anydataset
 
 				// Enfileira o registo
 				this._rowBuffer.Enqueue(it.moveNext());
-				// Traz novos até encher o Buffer
+				// Traz novos atÃ© encher o Buffer
 				if (this._rowBuffer.Count < RECORD_BUFFER)
 					this.hasNext();
 

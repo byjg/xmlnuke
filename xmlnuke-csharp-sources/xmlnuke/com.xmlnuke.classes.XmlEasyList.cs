@@ -172,7 +172,7 @@ namespace com.xmlnuke.classes
 		public override void generateObject(XmlNode current)
 		{
 			XmlNode nodeWorking = null;
-			// Criando o objeto que conter· a lista.
+			// Criando o objeto que conter√° a lista.
 			switch (this._easyListType)
 			{
 				case EasyListType.CHECKBOX:

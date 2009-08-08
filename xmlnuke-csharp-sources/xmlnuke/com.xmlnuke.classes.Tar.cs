@@ -2,7 +2,7 @@
 ** Authored by Timothy Gerard Endres
 ** <mailto:time@gjt.org>  <http://www.trustice.com>
 **
- * MODIFIED By Jo„o Gilberto Magalhaes
+ * MODIFIED By Jo√£o Gilberto Magalhaes
  * for Xmlnuke Project (switch from Console to a Class)
  * http://www.xmlnuke.com
  * 
@@ -589,7 +589,7 @@ namespace com.xmlnuke.classes
 		    result += "tar 2.0.6.2\n" ;
 		    result += "\n" ;
 		    result += string.Format("{0}\n", SharpZipVersion() );
-		    result += "Copyright (c) 2007 by Jo„o Gilberto Magalh„es (Xmlnuke Port)\n" ;
+		    result += "Copyright (c) 2007 by Jo√£o Gilberto Magalh√£es (Xmlnuke Port)\n" ;
 		    result += "Copyright (c) 2002 by Mike Krueger\n" ;
 		    result += "Copyright (c) 1998,1999 by Tim Endres (Java version)\n" ;
 		    result += "\n" ;
