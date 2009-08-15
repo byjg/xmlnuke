@@ -60,7 +60,7 @@ abstract class BaseModel
 				// If exists value, set it;
 				if ($sr->getField($propName) != "")
 				{
-					$method = new ReflectionMethod(get_class($this), "set" . ucfirst($propName));
+					$method = new ReflectionMethod(get_class($this), "set" . ucfirst(str_replace("_", "", $propName)));
 					$method->invokeArgs($this, array($sr->getField($propName)));
 				}
 			}

@@ -215,10 +215,16 @@ class ModuleFactory
 	{
 		if (ModuleFactory::$_phpLibDir != null)
 		{
-			$namespacePath = ModuleFactory::$_phpLibDir[$namespaceBase]; 
-			if ($namespacePath != "")
+			$auxArBase = explode(".", $namespaceBase);
+			$namespace = "";
+			while (sizeof($auxArBase) > 0)
 			{
-				$filePath = $namespacePath . FileUtil::Slash();	
+				$namespace = array_shift($auxArBase);
+				$namespacePath = ModuleFactory::$_phpLibDir[$namespace]; 
+				if ($namespacePath != "")
+				{
+					$filePath = $namespacePath . FileUtil::Slash() . implode(FileUtil::Slash(), $auxArBase) . (sizeof($auxArBase) > 0 ? FileUtil::Slash() : "");
+				}
 			}
 		}
 		

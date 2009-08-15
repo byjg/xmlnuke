@@ -55,28 +55,64 @@ class PluginFactory
 	 */
 	public static function LoadPlugin($className, $basePath = null, $param1 = null, $param2 = null, $param3 = null, $param4 = null)
 	{
-		$className = strtolower($className);
+		return PluginFactory::LoadPluginInFile($className, "", $basePath, $param1, $param2, $param3, $param4);
+	}
+	
+	/**
+	 * Load a Plugin in RunTime mode
+	 * 
+	 * Example: You want to load a class called "MyLoadedClass" in namespace "My.NameSpace" and it is inside the path "plugindir" in you namespace.
+	 * This class will be phisically stored in the file "MyFile".
+	 * 
+	 * You have to call:
+	 * 
+	 * $class = PluginFactory("My.NameSpace.MyFile", "MyLoadedClass", "plugindir");
+	 * 
+	 * The system will try load the class "MyLoadedClass" inside the file:
+	 * lib/my/namespace/plugindir/MyFile.class.php
+	 * 
+	 * an Exception will be thrown if the process fail
+	 * 
+	 * To load a XMLNuke core class you have to call a class without namespace. The NameSpace will be in $basePath 
+	 * 
+	 * @param string $phpFile
+	 * @param string $className
+	 * @param string $basePath
+	 * @param string $param1
+	 * @param string $param2
+	 * @param string $param3
+	 * @param string $param4
+	 * @return instance of class
+	 */
+	public static function LoadPluginInFile($phpFile, $className, $basePath = null, $param1 = null, $param2 = null, $param3 = null, $param4 = null)
+	{
+		$phpFile = strtolower($phpFile);
 		$namespace = "";
-		$r = strrpos($className, ".");
+		$r = strrpos($phpFile, ".");
 		if ($r !== false)
 		{
-			$namespace = substr($className, 0, $r);
-			$className = substr($className, $r+1);
+			$namespace = substr($phpFile, 0, $r);
+			$phpFile = substr($phpFile, $r+1);
+		}
+		
+		if ($className == "")
+		{
+			$className = $phpFile; 
 		}
 
-		$key = $namespace . "-" . $className . "-" . $basePath;
-		
+		$key = $namespace . "-" . $phpFile . "-" . $className . "-" . $basePath;
+
 		// Try Include if not included before
 		if (!array_key_exists($key, PluginFactory::$_loaded))
 		{
 			if (!empty($namespace))
 			{
 				$basePath .= (!empty($basePath) ? FileUtil::Slash() : "");
-				ModuleFactory::IncludePhp($namespace, $basePath . "$className.class.php");
+				ModuleFactory::IncludePhp($namespace, $basePath . "$phpFile.class.php");
 			}
 			else
 			{
-				include_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/$basePath.$className.class.php");
+				include_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/$basePath.$phpFile.class.php");
 			}
 			
 			PluginFactory::$_loaded[$key] = true;
