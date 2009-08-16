@@ -150,7 +150,7 @@ class SQLHelper
 			}
 			return $paramName;
 		}
-		elseif ($valores[1] == "") 
+		elseif (empty($valores[1]) && ($valores[1] != 0)) // Zero is Empty!?!?!?!?
 		{
 			return "null";
 		}

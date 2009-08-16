@@ -343,69 +343,7 @@ abstract class BaseModule implements IModule
 	 */
 	public function getUsersDatabase()
 	{
-		if ($this->__userdb == null)
-		{
-			$class = $this->_context->ContextValue("xmlnuke.USERSCLASS");
-			$conn = $this->_context->ContextValue("xmlnuke.USERSDATABASE");
-			if ($class != "")
-			{
-				// $class = "byjg.classes.UsersDBDataSet"
-				// Tem que fazer o include dessa class.
-				// Colcar em util desses da vida... 
-				$arr = ModuleFactory::PhpLibDir($this->_context);
-				$classToLoad = "";
-				foreach ($arr as $key=>$value) 
-				{
-					if (strpos(strtolower($class), $key . ".") !== FALSE)
-					{
-						$classToLoad = $value . FileUtil::Slash();
-						$className = str_replace($key . ".", "", strtolower($class));
-
-						$arr = explode('.',$className);
-						for ($i=0;$i<sizeof($arr); $i++)
-						{
-							$classToLoad .= $arr[$i] . ($i == sizeof($arr)-1 ? ".class.php" : FileUtil::Slash()) ;
-						}
-						
-						break;
-					}
-				}
-
-				if ($classToLoad == "")
-				{
-					$classToLoad = "lib" . FileUtil::Slash() . str_replace(".", FileUtil::Slash(), strtolower($class)) . ".class.php";
-				}
-
-				//Debug::PrintValue($classToLoad, realpath("lib/byjg/classes/provider/$pro"));
-				$found = file_exists($classToLoad);
-				if ($found)
-				{
-					require_once($classToLoad);
-					$i = strrpos($class, ".");
-					$className = ($i === false) ? $class : substr($class, $i+1);
-					$typeClass = new ReflectionClass($className);
-					$this->__userdb = $typeClass->newInstance($this->_context, $conn);
-					if (!($this->__userdb instanceof IUsersBase))
-					{
-						throw new XmlnukeException(0, "Authentication class '$class' must implement IUsersBase interface");
-					}
-				}
-				else
-				{
-					throw new XmlnukeException(0, "Authentication class '$class' not found at '$classToLoad'.");
-				}
-			}
-			elseif ($conn == "")
-			{
-				$this->__userdb = new UsersAnyDataSet($this->_context);
-			}
-			else 
-			{
-				$this->__userdb = new UsersDBDataSet($this->_context, $conn);
-			}
-		}
-		
-		return $this->__userdb;
+		return $this->_context->getUsersDatabase(); // For Compatibility Reason
 	}
 
 	/**

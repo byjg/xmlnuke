@@ -1304,6 +1304,40 @@ class Context
     {
     	return $_POST;
     }
+    
+    
+    protected $__userdb;
+    
+    /**
+     * 
+     * @return IUsersBase
+     */
+    public function getUsersDatabase()
+    {
+		if ($this->__userdb == null)
+		{
+			$class = $this->ContextValue("xmlnuke.USERSCLASS");
+			$conn = $this->ContextValue("xmlnuke.USERSDATABASE");
+			if ($class != "")
+			{
+				$this->__userdb = PluginFactory::LoadPlugin($class, "", $this, $conn);
+				if (!($this->__userdb instanceof IUsersBase))
+				{
+					throw new XmlnukeException(0, "Authentication class '$class' must implement IUsersBase interface");
+				}
+			}
+			elseif ($conn == "")
+			{
+				$this->__userdb = new UsersAnyDataSet($this);
+			}
+			else 
+			{
+				$this->__userdb = new UsersDBDataSet($this, $conn);
+			}
+		}
+		
+		return $this->__userdb;
+    }
 
 }
 ?>
