@@ -215,15 +215,30 @@ class ModuleFactory
 	{
 		if (ModuleFactory::$_phpLibDir != null)
 		{
-			$auxArBase = explode(".", $namespaceBase);
-			$namespace = "";
-			while (sizeof($auxArBase) > 0)
+			if (array_key_exists($namespaceBase, ModuleFactory::$_phpLibDir))
 			{
-				$namespace = array_shift($auxArBase);
-				$namespacePath = ModuleFactory::$_phpLibDir[$namespace]; 
-				if ($namespacePath != "")
+				$filePath = ModuleFactory::$_phpLibDir[$namespaceBase];
+				if ($filePath[strlen($filePath)-1] != FileUtil::Slash())
 				{
-					$filePath = $namespacePath . FileUtil::Slash() . implode(FileUtil::Slash(), $auxArBase) . (sizeof($auxArBase) > 0 ? FileUtil::Slash() : "");
+					$filePath .= FileUtil::Slash();
+					ModuleFactory::$_phpLibDir[$namespaceBase] = $filePath;
+				}
+			}
+			else
+			{
+				$auxArBase = explode(".", $namespaceBase);
+				$end = sizeof($auxArBase);
+				$namespace = "";
+				while($i++<$end)
+				{
+					$namespace .= ($namespace != "" ? "." : "") . array_shift($auxArBase);
+					$namespacePath = ModuleFactory::$_phpLibDir[$namespace];
+					if ($namespacePath != "")
+					{
+						$filePath = $namespacePath . FileUtil::Slash() . implode(FileUtil::Slash(), $auxArBase) . (sizeof($auxArBase) > 0 ? FileUtil::Slash() : "");
+						ModuleFactory::$_phpLibDir[$namespaceBase] = $filePath;
+						break;
+					}
 				}
 			}
 		}
@@ -231,6 +246,7 @@ class ModuleFactory
 		if ($filePath == "")
 		{
 			$filePath = "lib" . FileUtil::Slash() . str_replace(".", FileUtil::Slash(), $namespaceBase) . FileUtil::Slash();	
+			ModuleFactory::$_phpLibDir[$namespaceBase] = $filePath;
 		}
 		
 		return $filePath . $path;
