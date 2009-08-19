@@ -29,6 +29,21 @@
 
 abstract class BaseModel
 {
+
+	protected $_propertyPattern = array("/(\w*)/", "$1");
+
+
+	/**
+	 * This setter enable changes in how XMLNuke will match a property (protected) into your Getter or Setter
+	 * @param $pattern
+	 * @param $replace
+	 * @return void
+	 */
+	public function setPropertyPattern($pattern, $replace)
+	{
+		$this->_propertyPattern = array(($pattern[0]!="/" ? "/" : "") . $pattern . ($pattern[strlen($pattern)-1]!="/" ? "/" : ""), $replace);
+	}
+	
 	/**
 	 * Bind public string class parameters based on Request Get e Form
 	 *
@@ -50,6 +65,8 @@ abstract class BaseModel
 			foreach ($properties as $prop)
 			{
 				$propName = $prop->getName();
+				if ($propName == "_propertyPattern")
+					continue;
 				
 				// Remove Prefix "_" from Property Name to find a value
 				if ($propName[0] == "_")
@@ -60,7 +77,7 @@ abstract class BaseModel
 				// If exists value, set it;
 				if ($sr->getField($propName) != "")
 				{
-					$method = new ReflectionMethod(get_class($this), "set" . ucfirst(str_replace("_", "", $propName)));
+					$method = new ReflectionMethod(get_class($this), "set" . ucfirst(preg_replace($this->_propertyPattern[0], $this->_propertyPattern[1], $propName)));
 					$method->invokeArgs($this, array($sr->getField($propName)));
 				}
 			}
