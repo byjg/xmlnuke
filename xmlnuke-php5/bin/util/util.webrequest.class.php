@@ -225,14 +225,14 @@ class WebRequest
 				curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
 				if ($fields_string != "")
 				{
-					curl_setopt($curl, CURLOPT_URL, $this->_url . (strpos($this->_url, "?") === false ? "&" : "?") . $fields_string);
+					curl_setopt($curl, CURLOPT_URL, $this->_url . (strpos($this->_url, "?") === false ? "?" : "&") . $fields_string);
 				} 
 				break;
 				
 			case WebRequest::GET:
 				if ($fields_string != "")
 				{
-					curl_setopt($curl, CURLOPT_URL, $this->_url . (strpos($this->_url, "?") === false ? "&" : "?") . $fields_string);
+					curl_setopt($curl, CURLOPT_URL, $this->_url . (strpos($this->_url, "?") === false ? "?" : "&") . $fields_string);
 				} 
 				break;
 		}
