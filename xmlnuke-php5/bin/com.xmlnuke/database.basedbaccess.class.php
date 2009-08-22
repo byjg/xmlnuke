@@ -229,5 +229,22 @@ abstract class BaseDBAccess
 	{
 		return $this->getDBDataSet()->getDbFunctions();
 	}
+	
+	
+	public function beginTransaction()
+	{
+		$this->_db->beginTransaction();
+	}
+	
+	public function commitTransaction()
+	{
+		$this->_db->commitTransaction();
+	}
+	
+	public function rollbackTransaction()
+	{
+		$this->_db->rollbackTransaction();
+	}
+	
 }
 ?>

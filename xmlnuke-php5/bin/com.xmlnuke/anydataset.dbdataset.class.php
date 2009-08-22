@@ -247,6 +247,21 @@ class DBDataSet {
 		}
 	}
 	
+	public function beginTransaction()
+	{
+		$this->_db->beginTransaction();
+	}
+	
+	public function commitTransaction()
+	{
+		$this->_db->commit();
+	}
+	
+	public function rollbackTransaction()
+	{
+		$this->_db->rollBack();
+	}
+	
 	protected function execDBQuery($sql, $array = null)
 	{
 		if ($array) 
