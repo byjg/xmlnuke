@@ -37,6 +37,7 @@ class EasyListType
 	const RADIOBOX = 2;
 	const SELECTLIST = 3;
 	const UNORDEREDLIST = 4;
+	const SELECTIMAGELIST = 5;
 }
 	
 /**
@@ -88,6 +89,10 @@ class XmlEasyList extends XmlnukeDocumentObject
 	 */
 	protected $_size;
 	
+	protected $_notFoundImage = "";
+	protected $_thumbnailSize = 100;
+	protected $_noImage = "No Image";
+	
 	/**
 	 * XmlEditList constructor
 	 *
@@ -119,6 +124,42 @@ class XmlEasyList extends XmlnukeDocumentObject
 		else 
 		{
 			$this->_size = $size;
+		}
+	}
+
+	public function setNotFoundImage($img)
+	{
+		if ($this->_easyListType != EasyListType::SELECTIMAGELIST)
+		{
+			throw new Exception("NotFoundImage is valid only in SelectImageList type");
+		}
+		else 
+		{
+			$this->_notFoundImage = $img;
+		}
+	}
+
+	public function setThumbnailSize($size)
+	{
+		if ($this->_easyListType != EasyListType::SELECTIMAGELIST)
+		{
+			throw new Exception("ThumbnailSize is valid only in SelectImageList type");
+		}
+		else 
+		{
+			$this->_thumbnailSize = $size;
+		}
+	}
+
+	public function setNoImage($text)
+	{
+		if ($this->_easyListType != EasyListType::SELECTIMAGELIST)
+		{
+			throw new Exception("NoImage is valid only in SelectImageList type");
+		}
+		else 
+		{
+			$this->_noImage = $text;
 		}
 	}
 
@@ -183,18 +224,27 @@ class XmlEasyList extends XmlnukeDocumentObject
 				break;
 			}
 			case EasyListType::SELECTLIST:
+			case EasyListType::SELECTIMAGELIST:
 			{
 				if ($this->_readOnly)
 				{
-					$deliLeft = (strlen($this->_readOnlyDeli) != 0 ? $this->_readOnlyDeli[0] : "");
-					$deliRight = (strlen($this->_readOnlyDeli) != 0 ? $this->_readOnlyDeli[1] : "");
-								
-//					XmlInputHidden $xih
-//					XmlInputLabelField $xlf
-					$xlf = new XmlInputLabelField($this->_caption, $deliLeft . $this->_values[$this->_selected] . $deliRight);
-					$xih = new XmlInputHidden($this->_name, $this->_selected);
-					$xlf->generateObject($current);
-					$xih->generateObject($current);
+					if ($this->_easyListType == EasyListType::SELECTLIST)
+					{
+						$deliLeft = (strlen($this->_readOnlyDeli) != 0 ? $this->_readOnlyDeli[0] : "");
+						$deliRight = (strlen($this->_readOnlyDeli) != 0 ? $this->_readOnlyDeli[1] : "");
+									
+						//XmlInputHidden $xih
+						//XmlInputLabelField $xlf
+						$xlf = new XmlInputLabelField($this->_caption, $deliLeft . $this->_values[$this->_selected] . $deliRight);
+						$xih = new XmlInputHidden($this->_name, $this->_selected);
+						$xlf->generateObject($current);
+						$xih->generateObject($current);
+					}
+					elseif ($this->_easyListType == EasyListType::SELECTIMAGELIST)
+					{
+						$img = new XmlnukeImage($this->_values[$this->_selected]);
+						$img->generateObject($current);
+					}
 					return;
 				}
 				else
@@ -209,6 +259,14 @@ class XmlEasyList extends XmlnukeDocumentObject
 					if($this->_size > 1)
 					{
 						XmlUtil::AddAttribute($nodeWorking , "size", $this->_size);
+					}
+					
+					if ($this->_easyListType == EasyListType::SELECTIMAGELIST)
+					{
+						XmlUtil::AddAttribute($nodeWorking , "imagelist", "true");
+						XmlUtil::AddAttribute($nodeWorking , "thumbnailsize", $this->_thumbnailSize);
+						XmlUtil::AddAttribute($nodeWorking , "notfoundimage", $this->_notFoundImage);
+						XmlUtil::AddAttribute($nodeWorking , "noimage", $this->_noImage);
 					}
 				}
 				break;
@@ -248,6 +306,7 @@ class XmlEasyList extends XmlnukeDocumentObject
 					break;
 				}
 				case EasyListType::SELECTLIST:
+				case EasyListType::SELECTIMAGELIST:
 				{
 					$node = XmlUtil::CreateChild($nodeWorking, "option", "");
 					XmlUtil::AddAttribute($node, "value", $key);

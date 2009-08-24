@@ -196,9 +196,29 @@
    <link rel="stylesheet" href="common/3rdparty/treeview/treeview.css" TYPE="text/css" MEDIA="screen" />
 </xsl:if>
 
+<!-- Include specific JavaScript for Flash element -->
 <xsl:if test="//flash">
 	<script language="javascript">AC_FL_RunContent = 0;</script>
 	<script language="javascript"> DetectFlashVer = 0; </script>
 	<script src="common/js/AC_RunActiveContent.js" language="javascript"></script>
 </xsl:if>
 
+<!-- Include specific JavaScript for Select List as Image element -->
+<xsl:if test="//select[@imagelist]">
+	<style>
+		.image-select {background-color: none; padding: 1px; margin: 1px}
+		.selected {background-color: black};
+	</style>
+	<script language="javascript" src="common/3rdparty/jquery/plugin/imageselect.js"></script>
+	<script language="javascript"> 
+	<xsl:for-each select="//select[@imagelist]">
+	$(function() {
+		$('#<xsl:value-of select="@name" />').imageSelect({
+			thumbnailWidth: '<xsl:value-of select="@thumbnailwidth" />',
+			notFoundImage: '<xsl:value-of select="@notfoundimage" />',
+			emptyText: '<xsl:value-of select="@noimage" />'
+		});
+	});
+	</xsl:for-each>
+	</script>
+</xsl:if>
