@@ -87,8 +87,15 @@ class XMLNukeException extends Exception
 	 */
 	function XMLNukeException($code = 0, $message = "")
 	{
-		$this->code = $code;
-		$this->message = $message;
+		if ($message != "")
+		{
+			$this->code = $code;
+			$this->message = $message;
+		}
+		else
+		{
+			$this->message = $code;
+		}
 		$this->setExceptionClassName($this);
 		$this->backTrace = Debug::GetBackTrace();
 	}
