@@ -90,7 +90,8 @@ class LanguageCollection
 		{
 			$retword = str_replace("\\n",""."\n",$retword);
 		}
-		if($param)
+		
+		if(strlen($param)>0)
 		{
 			if (is_array($param)) {
 				return  $this->replaceValues($retword, $param);

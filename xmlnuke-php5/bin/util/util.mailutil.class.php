@@ -232,5 +232,10 @@ class MailUtil
 			return array("email"=>$parts[2], "name"=>ConvertFromUTF8::ISO88591_ASCII($parts[1]));
 		}
 	}
+
+	public static function isValidEmail($email)
+	{
+		return PHPMailer::ValidateAddress($email);
+	}
 }
 ?>
