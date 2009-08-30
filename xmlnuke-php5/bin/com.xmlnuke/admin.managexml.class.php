@@ -74,7 +74,7 @@ class ManageXML extends BaseAdminModule
 		//XmlNode 
 		$block = $this->_px->addBlockCenter($myWords->Value("WORKINGAREA"));
 
-		$this->addMenuOption($myWords->Value("GOBACK"), "admin:ListXML");
+		$this->addMenuOption($myWords->Value("TXT_BACK"), "admin:ListXML");
 		/*
 		XmlNode paragraph;
 		XmlNode form;
@@ -368,7 +368,7 @@ class ManageXML extends BaseAdminModule
 			$this->_px->addCaption($form, $myWords->Value("XMLEDITINFO"));
 			$this->_px->addMemo($form, $myWords->Value("XMLCONTENTBOX"), "contents", $contents, 80, 30, "soft");
 			$boxButton = $this->_px->addBoxButtons($form);
-			$this->_px->addSubmit($boxButton, "", $myWords->Value("SAVEBUTTON"));
+			$this->_px->addSubmit($boxButton, "", $myWords->Value("TXT_SAVE"));
 		}
 		
 		return $this->_px;

@@ -90,7 +90,7 @@ namespace com.xmlnuke.admin
 			base.CreatePage(); // Doesnt necessary get PX, because PX is protected!
 			this.setTitlePage(this.myWords.Value("TITLE"));
 			this.setHelp(this.myWords.Value("DESCRIPTION"));
-			this.addMenuOption("Create Role", this.url.getUrl());
+			this.addMenuOption(this.myWords.Value("CREATE_ROLE"), this.url.getUrl());
 			switch (this._action)
 			{
 				case UsersGroupsActions.Create:

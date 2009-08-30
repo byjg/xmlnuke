@@ -151,7 +151,7 @@
       <field name="FORMVALUE">Wert: </field>
       <field name="CUSTOMFIELDREMOVED">Spezifisches Feld wurde gelöscht.</field>
       <field name="CUSTOMFIELDUPDATED">Spezifisches Feld wurde hinzugefügt.</field>
-      <field name="ADDROLE">Funktion hinzufügen</field>
+      <field name="ADDROLE">Funktion(en) verwalten</field>
       <field name="CANNOTEDITADMIN">Sie können einen Administrator nicht bearbeiten.</field>
       <field name="TABEDITUSER">Benutzer bearbeiten</field>
       <field name="TABCHANGEPASSWD">Passwort ändern</field>
