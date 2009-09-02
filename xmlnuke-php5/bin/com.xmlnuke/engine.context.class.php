@@ -175,7 +175,7 @@ class Context
 			$lang = $_SERVER["HTTP_ACCEPT_LANGUAGE"];
 			if ($lang != null) // MONO 0.26 doesnt understand HTTP_ACCEPT_LANGUAGE
 			{
-				$langOpt = split ("[,;]", $lang);
+				$langOpt = preg_split("/[,;]/", $lang);
 				$i=0;
 				$lang = null;
 				$langOptLength = count($langOpt);
