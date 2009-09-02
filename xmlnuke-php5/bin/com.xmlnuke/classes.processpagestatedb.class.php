@@ -221,7 +221,7 @@ class ProcessPageStateDB extends ProcessPageStateBase
 			$value = DateUtil::FormatDate($timestamp, DATEFORMAT::YMD);
 			if ($dataType == INPUTTYPE::DATETIME)
 			{
-				$arcurrentValue = split(" ", $currentValue);
+				$arcurrentValue = explode(" ", $currentValue);
 				if (sizeof($arcurrentValue)>1)
 				$value .= " " . $arcurrentValue[1];
 			}

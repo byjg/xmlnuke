@@ -484,7 +484,7 @@ abstract class BaseModule implements IModule
 		{
 			$users = $this->getUsersDatabase();
 
-			$permArr = split(",", $checkPerm);
+			$permArr = explode(",", $checkPerm);
 			foreach ($permArr as $value) 
 			{
 				$ok = $ok || $users->checkUserProperty($this->_context->authenticatedUserId(), $value, UserProperty::Role);

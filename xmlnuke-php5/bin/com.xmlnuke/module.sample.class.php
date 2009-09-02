@@ -676,18 +676,17 @@ class Sample extends BaseModule
 
 		//XmlnukeBreakLine br = new XmlnukeBreakLine();
 
-
 		$para1 = new XmlParagraphCollection();
 
 		$xmlstr = $this->_context->ContextValue("xmlstr");
 		$rowNode = $this->_context->ContextValue("rownode");
-		$colNodeStr = split("\n", $this->_context->ContextValue("cols"));
+		$colNodeStr = preg_split("/\n/", $this->_context->ContextValue("cols"));
 		if ($xmlstr != "")
 		{
 			$colNode = array();
 			foreach ($colNodeStr as $key=>$value)
 			{
-				$tmp = split("=", $value);
+				$tmp = explode("=", $value);
 				$colNode[$tmp[0]] = str_replace("\r", "", $tmp[1]);
 			}
 
@@ -748,7 +747,7 @@ class Sample extends BaseModule
 
 		$txtstr = $this->_context->ContextValue("txtstr");
 		$regexp = $this->_context->ContextValue("regexp");
-		$colNodeStr = split("\n", $this->_context->ContextValue("cols"));
+		$colNodeStr = preg_split("/\n/", $this->_context->ContextValue("cols"));
 		if ($txtstr != "")
 		{
 			$processor = new AnydatasetFilenameProcessor("sample", $this->_context);

@@ -140,7 +140,7 @@ class XmlInputDateTime extends XmlnukeDocumentObject
 		XmlUtil::AddAttribute($datetimebox, "date", $this->_date);
 		if ($this->_showHour)
 		{
-			$time = split(":", $this->_time);
+			$time = explode(":", $this->_time);
 			XmlUtil::AddAttribute($datetimebox, "showhour", "true"); 
 			XmlUtil::AddAttribute($datetimebox, "hour", $this->removeLeadingZero($time[0])); // Hour without leading zeros
 			XmlUtil::AddAttribute($datetimebox, "minute", $this->removeLeadingZero($time[1]));

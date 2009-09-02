@@ -79,11 +79,11 @@ class SocketIterator implements IIterator
 		//Debug::PrintValue("Fim Leitura");
 		
 		$this->_rows = array();
-		$rowsaux = split($this->_rowsep, $linha);
+		$rowsaux = preg_split("/" . $this->_rowsep . "/", $linha);
 		sort($rowsaux);
 		foreach($rowsaux as $key=>$value)
 		{
-			$colsaux = split($this->_colsep, $value);
+			$colsaux = preg_split("/" . $this->_colsep . "/", $value);
 			if (sizeof($colsaux) == sizeof($fieldnames))
 			{
 				$this->_rows[] = $value;
@@ -120,7 +120,7 @@ class SocketIterator implements IIterator
 	*/
 	public function moveNext()
 	{
-		$cols = split($this->_colsep, $this->_rows[$this->_current]);
+		$cols = preg_split("/" . $this->_colsep . "/", $this->_rows[$this->_current]);
 		$this->_current++;
 		
 		$any = new AnyDataSet(null);

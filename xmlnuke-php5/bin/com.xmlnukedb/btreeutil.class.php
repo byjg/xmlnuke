@@ -108,7 +108,7 @@ class BTreeUtil
 		$ValidChar = self::VALID_CHAR;
 
 		$wordValue = strtolower($word);
-		$searchFor = split(" ",$wordValue);
+		$searchFor = explode(" ",$wordValue);
 
 		$resultAux = array();
 

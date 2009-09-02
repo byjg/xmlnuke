@@ -186,14 +186,14 @@ class Context
 
 					if ($lang == null)
 					{
-						$langAux = split("-",$langTmp);
+						$langAux = explode("-",$langTmp);
 						$langMajor = $langAux[0];
 
 						for($j=0, $langAvailLength = count($langAvail); ( $j<$langAvailLength && ($lang==null) ) ;$j++)
 						{
 							$langAux = array_keys($langAvail);
 							$langAux2 = $langAux[$j];
-							$langAux = split("-",$langAux2);
+							$langAux = explode("-",$langAux2);
 							if ($langMajor == $langAux[0])
 							{
 								$lang = $langAux2;
@@ -618,13 +618,13 @@ class Context
 	public function LanguagesAvailable()
 	{
 		$value = $this->ContextValue("xmlnuke.LANGUAGESAVAILABLE");
-		$pairs = split("[|]",$value);
+		$pairs = explode("|",$value);
 
 		$result = array();
 
 		foreach ($pairs as $pair)
 		{
-			$values = split('=',$pair);
+			$values = explode('=',$pair);
 			$result[$values[0]] = $values[1];
 		}
 		return $result;

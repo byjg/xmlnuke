@@ -131,7 +131,7 @@ class CultureInfo
 	public function getIsoName()
 	{
 		$systemLocale = $this->_name;
-		$arrLocale = split("-", $systemLocale);
+		$arrLocale = explode("-", $systemLocale);
 		$systemLocale = $arrLocale[0] . "_" . strtoupper($arrLocale[1]);
 		
 		return $systemLocale;

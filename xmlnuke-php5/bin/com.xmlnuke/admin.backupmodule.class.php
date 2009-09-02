@@ -591,7 +591,7 @@ class BackupModule extends NewBaseAdminModule
 		
 		foreach ($backupList as $backup) 
 		{
-			$backupProp = split("\*", $backup);
+			$backupProp = explode("*", $backup);
 			
 			$tr = new XmlTableRowCollection();
 			$table->addXmlnukeObject($tr);
@@ -1002,7 +1002,7 @@ class BackupModule extends NewBaseAdminModule
 			{
 				$anydataRfl = null;
 				$singleRowRfl = null;
-				$lines = split("\n", FileUtil::QuickFileRead($tmpFile));
+				$lines = preg_split("/\n/", FileUtil::QuickFileRead($tmpFile));
 				foreach ($lines as $line)
 				{
 					$anyDataSetLog->addField("setup", $line);
@@ -1014,7 +1014,7 @@ class BackupModule extends NewBaseAdminModule
 					}
 					elseif (preg_match(self::LINEVALUEPATTERN, $line, $arrMatch, PREG_OFFSET_CAPTURE))
 					{
-						$fieldValue = split("=", $line);
+						$fieldValue = explode("=", $line);
 						if (!is_null($singleRowRfl)) 
 						{
 							$singleRowRfl->AddField(trim($fieldValue[0]), trim($fieldValue[1]));
@@ -1065,12 +1065,12 @@ class BackupModule extends NewBaseAdminModule
 	
 	protected function getRowByReflection($anydataRfl, $strFilter)
 	{
-		$filter = split(";", $strFilter);
+		$filter = explode(";", $strFilter);
 
 		$itf = new IteratorFilter();
 		foreach ($filter as $key=>$value)
 		{
-			$filterValue = split("=", $value);
+			$filterValue = explode("=", $value);
 			$itf->addRelation(trim($filterValue[0]), Relation::Equal, trim($filterValue[1]));
 		}
 		$it = $anydataRfl->getIterator($itf);
@@ -1083,7 +1083,7 @@ class BackupModule extends NewBaseAdminModule
 			$anydataRfl->appendRow();
 			foreach ($filter as $key=>$value)
 			{
-				$filterValue = split("=", $value);
+				$filterValue = explode("=", $value);
 				$anydataRfl->addField(trim($filterValue[0]), trim($filterValue[1]));
 				$anydataRfl->Save();
 			}
@@ -1194,7 +1194,7 @@ class BackupModule extends NewBaseAdminModule
 					}
 					elseif (preg_match(self::LINEVALUEPATTERN, $line, $arrMatch, PREG_OFFSET_CAPTURE))
 					{
-						$fieldValue = split("=", $line);
+						$fieldValue = explode("=", $line);
 						$block->addXmlnukeObject(new XmlnukeText("Delete Row: " . $line));
 						if (!is_null($singleRowRfl)) 
 						{

@@ -432,7 +432,7 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 		//get all tree folder of current before folder until them
 		$slash = FileUtil::Slash();
 		if ($slash == "\\") $slash = "\\\\";  // For Windows version only.
-		$tempFolders = split($slash, $this->_currentFolder);
+		$tempFolders = explode($slash, $this->_currentFolder);
 		
 		//verify the subfolders that was found in current folder
 		$fullFolder = "";
@@ -498,7 +498,7 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 					//get the last folder
 					$slash = FileUtil::Slash();
 					if ($slash == "\\") $slash = "\\\\"; // For Windows Only.
-					$folders = split($slash, $folder);
+					$folders = explode($slash, $folder);
 					foreach ($folders as $tempFolder)
 					{}			
 					
@@ -1016,7 +1016,7 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 	{
 		$slash = FileUtil::Slash();
 		if ($slash == "\\") $slash = "\\\\"; // For Windows Only.
-		$srcs = split($slash, $src_name);
+		$srcs = explode($slash, $src_name);
 		
 		foreach ($srcs as $name)
 		{ }

@@ -128,10 +128,10 @@ class SendEmail extends BaseModule
 		$aux = $this->_context->ContextValue("extra_fields");
 		if ($aux != "")
 		{
-			$fields = split(";", $aux);
+			$fields = explode(";", $aux);
 			foreach($fields as $key=>$field)
 			{
-				$detail = split("=", $field);
+				$detail = explode("=", $field);
 				$valor = $this->_context->ContextValue($detail[0]);
 				$this->_extraMessage .= $detail[1] . ": " . $valor . "\n";
 			}

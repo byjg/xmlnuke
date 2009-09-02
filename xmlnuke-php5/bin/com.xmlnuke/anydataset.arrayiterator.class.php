@@ -97,7 +97,7 @@ class ArrayIIterator implements IIterator
 			}
 			else
 			{
-				$cols = split("||#||", $this->_rows[$this->_currentRow]);
+				$cols = explode("||#||", $this->_rows[$this->_currentRow]);
 			}
 
 			$any = new AnyDataSet();
@@ -106,7 +106,7 @@ class ArrayIIterator implements IIterator
 			$any->addField("key", $key);
 			for($i=0;$i<sizeof($cols); $i++)
 			{
-				$field = split(":=", $cols[$i]);
+				$field = explode(":=", $cols[$i]);
 				$any->addField(strtolower($field[0]), $field[1]);
 			}
 			$it = $any->getIterator(null);
