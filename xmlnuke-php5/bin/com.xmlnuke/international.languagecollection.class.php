@@ -79,7 +79,7 @@ class LanguageCollection
 	*@return string
 	*@desc Get the text from key
 	*/
-	public function Value($key, $param = null)
+	public function Value($key, $param = "")
 	{
 		$retword = @$this->_collection[$key];
 		if ($retword == null)
@@ -91,13 +91,13 @@ class LanguageCollection
 			$retword = str_replace("\\n",""."\n",$retword);
 		}
 		
-		if(strlen($param)>0)
+		if (is_array($param)) 
 		{
-			if (is_array($param)) {
-				return  $this->replaceValues($retword, $param);
-			}else {
-				return  $this->replaceValues($retword, array($param));
-			}
+			return  $this->replaceValues($retword, $param);
+		}
+		elseif (strlen($param)>0) 
+		{
+			return  $this->replaceValues($retword, array($param));
 		}
 		return $retword;
 	}
