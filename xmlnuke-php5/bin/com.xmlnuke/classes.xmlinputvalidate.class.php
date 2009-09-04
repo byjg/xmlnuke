@@ -123,6 +123,15 @@ class XmlInputValidate extends XmlnukeDocumentObject
 	}
 
 	/**
+	 * Get the DataType
+	 * @return INPUTTYPE
+	 */
+	public function getDataType()
+	{
+		return $this->_inputtype;
+	}
+	
+	/**
 	*@desc Generate page, processing yours childs.
 	*@param DOMNode $current
 	*@return void

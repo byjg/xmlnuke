@@ -27,7 +27,7 @@
 		}
 		else
 		{
-			fn_disableButton(document);
+			fn_disableButton();
 			return true;
 		}
 		
@@ -92,6 +92,16 @@
 	fn_addEvent("<xsl:value-of select="@name" />", "focus", function () { this.select(); });
 	</script>
   </xsl:for-each>
+  
+  <xsl:if test="textbox[@mask]|inputgroup/textbox[@mask]">
+    <script type="text/javascript">
+	  $(function() {
+	  <xsl:for-each select="textbox[@mask]|inputgroup/textbox[@mask]">
+		$("#<xsl:value-of select="@name" />").mask("<xsl:value-of select="@mask" />", {placeholder:" "});
+	  </xsl:for-each>
+	  });	
+	</script>
+  </xsl:if>
 
 
 </xsl:template>
@@ -161,9 +171,9 @@
 	<!-- PUT CANHIDE OBJECT -->
 	<xsl:if test="name()='inputgroup' and @name and @canhide='true'">
 		<dt style="clear:both;width:99%;float:left;text-align:left;text-weight:bold;margin:0 0 0.5em 0.25em">
-			<a><xsl:attribute name="href">javascript:void showHide_<xsl:value-of select="@name"/>('auto')</xsl:attribute>
+			<a><xsl:attribute name="href">javascript:void showHideGeneric('<xsl:value-of select="@name"/>', 'auto')</xsl:attribute>
 			<img border="0" >
-				<xsl:attribute name="src">common/imgs/<xsl:if test="@visible='false'">faqopen.gif</xsl:if><xsl:if test="@visible!='false'">faqclose.gif</xsl:if></xsl:attribute>
+				<xsl:attribute name="src">common/imgs/<xsl:if test="@visible='false'">faqopen.gif</xsl:if><xsl:if test="not(@visible='false')">faqclose.gif</xsl:if></xsl:attribute>
 				<xsl:attribute name="id">I_<xsl:value-of select="@name"/></xsl:attribute></img>
 			</a>
 			<xsl:value-of select="@caption" />
@@ -257,16 +267,7 @@
 				<input type="hidden"><xsl:attribute name="name"><xsl:value-of select="@name"/></xsl:attribute><xsl:attribute name="id"><xsl:value-of select="@name"/></xsl:attribute><xsl:attribute name="value"><xsl:value-of select="@value"/></xsl:attribute></input>				
 			</xsl:for-each>
 		</dd>
-	</xsl:if>
-	
-	<xsl:if test="name()='inputgroup' and @name">
-	<script>
-		function showHide_<xsl:value-of select="@name" />(show)
-		{
-			showHideGeneric( "<xsl:value-of select="@name" />", show );
-		}
-	</script>
-	</xsl:if>
+	</xsl:if>	
 </xsl:template>
 
 

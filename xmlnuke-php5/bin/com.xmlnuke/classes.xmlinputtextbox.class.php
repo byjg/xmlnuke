@@ -102,6 +102,12 @@ class XmlInputTextBox extends XmlInputValidate
 	protected $_context;
 	
 	/**
+	 * Only used if sets mask
+	 * @var string
+	 */
+	protected $_maskText;
+	
+	/**
 	*@desc XmlInputTextBox constructor
 	*@param string $caption
 	*@param string $name
@@ -185,6 +191,15 @@ class XmlInputTextBox extends XmlInputValidate
 		return $this->_caption;
 	}
 	
+	public function setMask($text)
+	{
+		$this->_maskText = $text;
+	}
+	public function getMask()
+	{
+		return $this->_maskText;
+	}
+	
 	/**
 	 * Enter description here...
 	 *
@@ -266,6 +281,23 @@ class XmlInputTextBox extends XmlInputValidate
 				if ($this->_autosuggestAttrId) XmlUtil::AddAttribute($nodeWorking, "autosuggestattrid", $this->_autosuggestAttrId);
 				if ($this->_autosuggestAttrInfo) XmlUtil::AddAttribute($nodeWorking, "autosuggestattrinfo", $this->_autosuggestAttrInfo);
 				if ($this->_autosuggestCallback) XmlUtil::AddAttribute($nodeWorking, "autosuggestcallback", $this->_autosuggestCallback);
+			}
+			
+			if ($this->getMask() == "")
+			{
+				if ($this->getDataType() == INPUTTYPE::DATE)
+				{
+					$this->setMask("99/99/9999");
+				}
+				elseif ($this->getDataType() == INPUTTYPE::DATETIME)
+				{
+					$this->setMask("99/99/9999 99:99:99");
+				}
+			}
+			
+			if ($this->getMask() != "")
+			{
+				XmlUtil::AddAttribute($nodeWorking, "mask", $this->_maskText);
 			}
 			
 			parent::generateObject($nodeWorking);

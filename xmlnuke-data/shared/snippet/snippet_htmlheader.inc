@@ -222,3 +222,11 @@
 	</xsl:for-each>
 	</script>
 </xsl:if>
+
+
+<!-- Include specific JavaScript for Masked Text box -->
+<xsl:if test="//textbox[@mask]">
+	<script language="javascript" src="common/3rdparty/jquery/plugin/jquery.maskedinput-1.2.2.min.js"></script>
+</xsl:if>
+
+

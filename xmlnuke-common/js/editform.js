@@ -1,20 +1,20 @@
 function showHideGeneric( oname, show )
 {
-	var tagsSearch = Array();
-	tagsSearch[0] = 'dt';
-	tagsSearch[1] = 'dd';
-	for (var count=0;count!=2;count++)
-	{
-		tags = document.getElementsByTagName(tagsSearch[count]);
-		for (var i=0; i!=tags.length; i++)
-		{
-			if (tags[i].id == oname)
+	var arr = [ "dt", "dd" ];
+	
+	for (i=0; i < arr.length; i++) 
+	{	
+		$(arr[i]).each(function(){
+			if ($(this).attr("id") == oname)
 			{
-				if (show=='auto') show = (tags[i].style.display=='none');
-				tags[i].style.display = (show?"block":"none");
+				if (show=='auto') show = (this.style.display=='none'); 
+				if (show)
+					$(this).fadeIn();
+	            else
+					$(this).fadeOut();
 			}
-		}
-	}
-	var imagem = document.getElementById('I_' + oname);
-	if (imagem) imagem.src = "common/imgs/" + (show?"faqclose.gif":"faqopen.gif");
+		});
+    }
+	
+	$('#I_' + oname).attr("src", "common/imgs/" + (show?"faqclose.gif":"faqopen.gif"));
 }
