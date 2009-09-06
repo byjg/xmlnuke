@@ -57,12 +57,6 @@
 		{
 			$module = ModuleFactory::GetModule($moduleName, $context, null);
 		}
-		catch (NotFoundException $ex)
-		{
-			$firstError = $ex;
-			$ex->moduleName = $moduleName;
-			$module = ModuleFactory::GetModule("LoadError", $context,  $ex );
-		}
 		catch (NotAuthenticatedException $ex)
 		{
 			$s = XmlnukeManageUrl::encodeParam( $_SERVER["REQUEST_URI"] );
@@ -71,127 +65,52 @@
 			// Não deixe espaços em branco no início ou fim dos módulos
 			$context->redirectUrl( $url );
 		}
-		catch (InsufficientPrivilegeException $ex)
-		{
-			$firstError = $ex;
-			$ex->moduleName = $moduleName;
-			$module = ModuleFactory::GetModule("LoadError", $context,  $ex );
-		}
-		catch (KernelException $ex)
-		{
-			$firstError = $ex;
-			$ex->moduleName = $moduleName;
-			$module = ModuleFactory::GetModule("LoadError", $context,  $ex );
-		}
 		catch (Exception $ex)
 		{
-			$firstError = $ex;
-			$ex->moduleName = $moduleName;
-			$module = ModuleFactory::GetModule("LoadError", $context,  $ex );
+			if ($debug) 
+			{
+				$kernelError = new XMLNukeErrorModule($context, $firstError, $context->getDebugInModule());
+				$kernelError->CreatePage();
+				exit();
+			}
+			else
+			{
+				$ex->moduleName = $moduleName;
+				$module = ModuleFactory::GetModule("LoadError", $context,  $ex );
+			}
 		}
-		
+
+			
 		// Try to execute modules
 		// Catch errors from execute
-		try 
+		try
 		{
-			try
-			{
-				if ($debug && ($firstError!=null)) {
-					throw $ex;
-				}
-				writePage($engine->TransformDocumentFromModule($module), $context);
-			}
-			catch (PDOException $ex)
-			{
-				$ex->errorType = ErrorType::DataBase ;
-				$ex->showStackTrace = false;
-				$ex->moduleName = $moduleName;
-				$firstError = $ex;
-				if ($debug) {
-					throw $ex;
-				}
-				$module = ModuleFactory::GetModule("LoadError", $context,  $ex );
-				writePage($engine->TransformDocumentFromModule($module), $context);
-			}
-			catch (XmlUtilException $ex)
-			{
-				$ex->moduleName = $moduleName;
-				$firstError = $ex;
-				if ($debug) {
-					throw $ex;
-				}
-				$module = ModuleFactory::GetModule("LoadError", $context,  $ex );
-				writePage($engine->TransformDocumentFromModule($module), $context);
-			}
-			catch (FileUtilException $ex)
-			{
-				$ex->moduleName = $moduleName;
-				$firstError = $ex;
-				if ($debug) {
-					throw $ex;
-				}
-				$module = ModuleFactory::GetModule("LoadError", $context,  $ex );
-				writePage($engine->TransformDocumentFromModule($module), $context);
-			}
-			catch (KernelException $ex)
-			{
-				$ex->moduleName = $moduleName;
-				$firstError = $ex;
-				if ($debug) {
-					throw $ex;
-				}
-				$module = ModuleFactory::GetModule("LoadError", $context,  $ex );
-				writePage($engine->TransformDocumentFromModule($module), $context);
-			}
-			catch (XMLNukeErrorModule $ex)
-			{
-				$ex->moduleName = $moduleName;
-				$firstError = $ex;
-				if ($debug) {
-					throw $ex;
-				}
-				$module = ModuleFactory::GetModule("loaderror", $context,  $ex );
-				writePage($engine->TransformDocumentFromModule($module), $context);
-			}
-			catch (EngineException $ex)
-			{
-				$ex->moduleName = $moduleName;
-				$firstError = $ex;
-				if ($debug) {
-					throw $ex;
-				}
-				$module = ModuleFactory::GetModule("loaderror", $context,  $ex );
-				writePage($engine->TransformDocumentFromModule($module), $context);
-			}
-			catch (Exception $ex)
-			{
-				$ex->moduleName = $moduleName;
-				$firstError = $ex;
-				if ($debug) {
-					throw $ex;
-				}
-				$module = ModuleFactory::GetModule("loaderror", $context,  $ex );
-				writePage($engine->TransformDocumentFromModule($module), $context);
-			}
-			// Include specific error treatments here.
-			// catch (ClassException $ex)
-			// {
-			// }
+			writePage($engine->TransformDocumentFromModule($module), $context);
 		}
 		catch (Exception $ex)
 		{
-			$ex->moduleName = $moduleName;
-			if(is_null($firstError))
+			if ($debug) 
 			{
-				$firstError = $ex;
+				$kernelError = new XMLNukeErrorModule($context, $ex, $context->getDebugInModule());
+				$kernelError->CreatePage();
 			}
-			$kernelError = new XMLNukeErrorModule($context, $firstError, $context->getDebugInModule());
-			$kernelError->CreatePage();
-		}
-		
-		
+			else
+			{
+				if ($ex instanceof PDOException)
+				{
+					$ex->errorType = ErrorType::DataBase ;
+					$ex->showStackTrace = false;
+				}
+				
+				$ex->moduleName = $moduleName;
+				$firstError = $ex;
+				$module = ModuleFactory::GetModule("LoadError", $context,  $ex );
+				writePage($engine->TransformDocumentFromModule($module), $context);
+			}
+		}		
 	}
-	
+
+
 	function writePage($buffer, $context)
 	{
 		@include("writepage.inc.php");

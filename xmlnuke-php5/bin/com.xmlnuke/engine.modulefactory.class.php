@@ -1,46 +1,46 @@
 <?php
 /*
-*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-*  Copyright:
-*
-*  XMLNuke: A Web Development Framework based on XML.
-*
-*  Main Specification: Joao Gilberto Magalhaes, joao at byjg dot com
-*
-*  This file is part of XMLNuke project. Visit http://www.xmlnuke.com
-*  for more information.
-*
-*  This program is free software; you can redistribute it and/or
-*  modify it under the terms of the GNU General Public License
-*  as published by the Free Software Foundation; either version 2
-*  of the License, or (at your option) any later version.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  You should have received a copy of the GNU General Public License
-*  along with this program; if not, write to the Free Software
-*  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-*
-*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-*/
+ *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ *  Copyright:
+ *
+ *  XMLNuke: A Web Development Framework based on XML.
+ *
+ *  Main Specification: Joao Gilberto Magalhaes, joao at byjg dot com
+ *
+ *  This file is part of XMLNuke project. Visit http://www.xmlnuke.com
+ *  for more information.
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU General Public License
+ *  as published by the Free Software Foundation; either version 2
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *
+ *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ */
 
 /**
-* Locate and create custom user modules. 
-* All modules must follow these rules: 
-* <ul>
-* <li>implement IModule interface or inherit from BaseModule (recommended); </li>
-* <li>Compile into XMLNuke engine or have the file name com.xmlnuke.module.[modulename]; </li>
-* <li>Have com.xmlnuke.module namespace. </li>
-* </ul>
-*/
+ * Locate and create custom user modules.
+ * All modules must follow these rules:
+ * <ul>
+ * <li>implement IModule interface or inherit from BaseModule (recommended); </li>
+ * <li>Compile into XMLNuke engine or have the file name com.xmlnuke.module.[modulename]; </li>
+ * <li>Have com.xmlnuke.module namespace. </li>
+ * </ul>
+ */
 class ModuleFactory
 {
 	/**
-	* Doesn't need constructor because all methods are statics.
-	*/
+	 * Doesn't need constructor because all methods are statics.
+	 */
 	public function ModuleFactory()
 	{}
 
@@ -64,88 +64,46 @@ class ModuleFactory
 		$modulename = strtolower($modulename);
 		$loaded = false;
 
+		$basePath = "";
+		$className = $modulename;
+
 		// ------------------------------------------------------------------------------------
 		// Try to Load a XMLNuke module
 		if ( (strpos($modulename, ".") === false) || (substr($modulename,0,6) == "admin.") )
 		{
 			if (substr($modulename,0,6) == "admin.")
 			{
-				$prefix = "admin.";
-				$module = substr($modulename,6);
+				$basePath = "admin";
+				$className = substr($modulename, 6);
 			}
 			else
 			{
-				$prefix = "module.";
-				$module = $modulename;
+				$basePath = "module";
+				$className = $modulename;
 			}
-
-			$path = PHPXMLNUKEDIR . strtolower("bin".FileUtil::Slash()."com.xmlnuke".FileUtil::Slash());
-			$loaded = ModuleFactory::tryLoadModule($path, $prefix.$module);
 		}
 		// ------------------------------------------------------------------------------------
 		// Try to Load a user generated module
 		else
 		{
-			$path = "lib" . FileUtil::Slash();
-			$arr = explode('.',$modulename);
-			$moduledir = "";
-			for ($i=0;$i<sizeof($arr)-1; $i++)
-			{
-				$moduledir .= $arr[$i] . FileUtil::Slash();
-			}
-			$path .= $moduledir."modules".FileUtil::Slash();
-			$module = $arr[sizeof($arr)-1];
-			
-			if (!ModuleFactory::tryLoadModule($path, $module))
-			{
-				// ------------------------------------------------------------------------------------
-				// Try to Load a user generated module located in PHPLIBDIR
-				$arr = ModuleFactory::PhpLibDir($context);
-				
-				foreach ($arr as $key=>$value) 
-				{
-					if (strpos($modulename, $key . ".") !== FALSE)
-					{
-						$path = $value . FileUtil::Slash();
-						$module = str_replace($key . ".", "", $modulename);
-
-						$arr = explode('.',$module);
-						$moduledir = "";
-						for ($i=0;$i<sizeof($arr)-1; $i++)
-						{
-							$moduledir .= $arr[$i] . FileUtil::Slash();
-						}
-						$path .= $moduledir."modules".FileUtil::Slash();
-						$module = $arr[sizeof($arr)-1];
-						
-						$loaded = ModuleFactory::tryLoadModule($path, $module);
-						break;
-					}
-				}
-			}
-			else 
-			{
-				$loaded = true;
-			}
+			$r = strrpos($modulename, ".");
+			$className = substr($modulename, 0, $r) . ".modules" . substr($modulename, $r);
+			$basePath = "";
 		}
 
-		if (!$loaded)
-		{
-			throw new NotFoundException("Module \"$modulename\" not found.");
-		}
 
 		try
 		{
-			$class = new ReflectionClass($module);
-			$result = $class->newInstance();
-			$xml = new XMLFilenameProcessor($modulename, $context);
-			$result->Setup($xml, $context, $o);
+			$result = PluginFactory::LoadPlugin($className, $basePath);
 		}
 		catch (Exception $e)
 		{
-			throw new NotFoundException($e->getMessage());
+			throw new NotFoundException("Module name '$modulename' not found.");
 		}
 
+		$xml = new XMLFilenameProcessor($modulename, $context);
+		$result->Setup($xml, $context, $o);
+		
 		if ($result->requiresAuthentication())
 		{
 			if (!$context->IsAuthenticated())
@@ -162,9 +120,9 @@ class ModuleFactory
 		}
 		return $result;
 	}
-	
-	
-	
+
+
+
 
 	/**
 	 * Try include module class library to load it
@@ -176,7 +134,7 @@ class ModuleFactory
 	private static function tryLoadModule($pathRoot, $module)
 	{
 		$moduleToLoad = "$pathRoot$module.class.php";
-		
+
 		$found = file_exists($moduleToLoad);
 		if ($found)
 		{
@@ -184,11 +142,36 @@ class ModuleFactory
 		}
 		return $found;
 	}
-	
+
 	private static $_phpLibDir = array();
 	
+	protected static function GetLibDir($key)
+	{
+		if (ModuleFactory::$_phpLibDir != "")
+		{
+			if (array_key_exists($key, ModuleFactory::$_phpLibDir))
+			{
+				return ModuleFactory::$_phpLibDir[$key];
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return "??";
+		}
+	}
+	
+	protected static function SetLibDir($key, $path)
+	{
+		ModuleFactory::$_phpLibDir[$key] = $path;
+		$_SESSION["SESS_XMLNUKE_PHPLIBDIR"] = ModuleFactory::$_phpLibDir;
+	}
+
 	/**
-	 * 
+	 *
 	 * @param Context $context
 	 * @return array()
 	 */
@@ -196,32 +179,41 @@ class ModuleFactory
 	{
 		if (ModuleFactory::$_phpLibDir == null)
 		{
-			$phpLibDir = $context->ContextValue("xmlnuke.PHPLIBDIR");
-			if ($phpLibDir != "")
+			if ( (empty($_SESSION["SESS_XMLNUKE_PHPLIBDIR"])) || ($context->getNoCache()) || ($context->getReset()) )
 			{
-				$phpLibDirArray = explode("|", $phpLibDir);
-				foreach ($phpLibDirArray as $phpLibItem) 
+				$phpLibDir = $context->ContextValue("xmlnuke.PHPLIBDIR");
+				if ($phpLibDir != "")
 				{
-					$phpLib = explode("=", $phpLibItem);
-					ModuleFactory::$_phpLibDir[$phpLib[0]] = $phpLib[1];
-					set_include_path(get_include_path() . PATH_SEPARATOR . $phpLib[1]);
-				}			
+					$phpLibDirArray = explode("|", $phpLibDir);
+					foreach ($phpLibDirArray as $phpLibItem)
+					{
+						$phpLib = explode("=", $phpLibItem);
+						ModuleFactory::$_phpLibDir[$phpLib[0]] = $phpLib[1];
+						//set_include_path(get_include_path() . PATH_SEPARATOR . $phpLib[1]);
+					}
+				}
+				$_SESSION["SESS_XMLNUKE_PHPLIBDIR"] = ModuleFactory::$_phpLibDir;
+			}
+			else
+			{
+				ModuleFactory::$_phpLibDir = $_SESSION["SESS_XMLNUKE_PHPLIBDIR"];
 			}
 		}
 		return ModuleFactory::$_phpLibDir;
 	}
 
+	
 	public static function LibPath($namespaceBase, $path)
 	{
 		if (ModuleFactory::$_phpLibDir != null)
 		{
-			if (array_key_exists($namespaceBase, ModuleFactory::$_phpLibDir))
+			if (ModuleFactory::GetLibDir($namespaceBase))
 			{
-				$filePath = ModuleFactory::$_phpLibDir[$namespaceBase];
+				$filePath = ModuleFactory::GetLibDir($namespaceBase);
 				if ($filePath[strlen($filePath)-1] != FileUtil::Slash())
 				{
 					$filePath .= FileUtil::Slash();
-					ModuleFactory::$_phpLibDir[$namespaceBase] = $filePath;
+					ModuleFactory::SetLibDir($namespaceBase, $filePath);
 				}
 			}
 			else
@@ -232,37 +224,37 @@ class ModuleFactory
 				while($i++<$end)
 				{
 					$namespace .= ($namespace != "" ? "." : "") . array_shift($auxArBase);
-					$namespacePath = ModuleFactory::$_phpLibDir[$namespace];
+					$namespacePath = ModuleFactory::GetLibDir($namespace);
 					if ($namespacePath != "")
 					{
 						$filePath = $namespacePath . FileUtil::Slash() . implode(FileUtil::Slash(), $auxArBase) . (sizeof($auxArBase) > 0 ? FileUtil::Slash() : "");
-						ModuleFactory::$_phpLibDir[$namespaceBase] = $filePath;
+						ModuleFactory::SetLibDir($namespaceBase, $filePath);
 						break;
 					}
 				}
 			}
 		}
-		
+
 		if ($filePath == "")
 		{
-			$filePath = "lib" . FileUtil::Slash() . str_replace(".", FileUtil::Slash(), $namespaceBase) . FileUtil::Slash();	
-			ModuleFactory::$_phpLibDir[$namespaceBase] = $filePath;
+			$filePath = "lib" . FileUtil::Slash() . str_replace(".", FileUtil::Slash(), $namespaceBase) . FileUtil::Slash();
+			ModuleFactory::SetLibDir($namespaceBase, $filePath);
 		}
-		
+
 		return $filePath . $path;
 	}
-	
+
 	public static function IncludePhp($namespaceBase, $path)
 	{
 		$filePath = ModuleFactory::LibPath($namespaceBase, $path);
-		
+
 		if (file_exists($filePath))
 		{
 			include_once($filePath);
 		}
 		else
 		{
-			throw new XMLNukeException("Include file '$filePath' does not found. Namespace: $namespaceBase. Can't continue.");			 
+			throw new NotFoundClassException("Include file '$filePath' does not found. Namespace: $namespaceBase. Can't continue.");
 		}
 	}
 }

@@ -155,6 +155,26 @@ class NotFoundException extends XMLNukeException
 	}
 }
 /**
+*This is Not Found exception type
+*@package com.xmlnuke
+*@subpackage xmlnuke.kernel
+*/
+class NotFoundClassException extends XMLNukeException 
+{
+	/**
+	 * NotFoundException constructor
+	 *
+	 * @return NotFoundException
+	 * @param string $message
+	 */
+	function NotFoundClassException($message = "")
+	{
+		parent::XMLNukeException(404, $message);
+		$this->errorType = ErrorType::NotFound;
+		$this->showStackTrace = false;
+	}
+}
+/**
 *This is Not Authenticated exception type
 *@package com.xmlnuke
 *@subpackage xmlnuke.kernel
