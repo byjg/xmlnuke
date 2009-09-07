@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <xmlindex>
 	<group>
 		<id>mainmenu</id>
@@ -60,7 +60,7 @@ Comment groupe de contrôles visuels dans des onglets</summary>
 			<title>Treeview</title>
 			<summary>Treeview composante.</summary>
 		</page>
-	</group>
+	<page><id>dialog</id><title>Fenêtre de dialogue</title><summary>Comment faire pour ouvrir la fenêtre de dialogue sur l'interface utilisateur en utilisant XML</summary></page></group>
 	<group>
 		<id>dynmenu</id>
 		<title>Dynamic Menus</title>

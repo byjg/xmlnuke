@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+  <meta>
+    <title>UI-Dialog-Fenster</title>
+    <abstract>Wie Dialogfenster auf Benutzer-Schnittstellen offen mit Hilfe von XML</abstract>
+    <created>Mon Sep 7 2009 10:04:51</created>
+    <modified>Mon Sep 7 2009 10:32:17</modified>
+    <keyword>xmlnuke</keyword>
+    <groupkeyword>-</groupkeyword>
+  </meta>
+  <blockcenter>
+    <title>Dialog-Fenster im UI (User Interface)</title>
+    <body>
+      <p>Mit XMLNuke ist möglich, ein Dialogfenster, in das XML zu öffnen. Dieser Dialog kann automatisch geöffnet werden oder durch eine Schaltfläche, einen Link oder ein Bild geschossen.</p>
+
+      <uialert type="modaldialog" name="cxdialog" title="Titel">
+      <button text="Ok">
+      window.location='http://www.byjg.com.br/';
+      </button>
+      <button text="Cancel">$(this).dialog('close');</button>      
+      <body>Sie können den Inhalt Fügen Sie hier</body>
+      </uialert>
+
+<code information="Dialog-Fenster automatisch geöffnet"><![CDATA[
+<uialert type="modaldialog" name="cxdialog" title="Titel">
+   <button text="Ok">
+      window.location='http://www.byjg.com.br/';
+   </button>
+   <button text="Cancel">$(this).dialog('close');</button>      
+   <body>Text</body>
+</uialert>
+]]></code>
+
+      <uialert type="modaldialog" name="cxdialog2" title="Ein weiteres Dialogfenster" openaction="button" openactiontext="Klicken Sie hier, um es zu öffnen">
+      <body>Dies ist ein modales Dialogfeld. Es ist möglich, einen einfachen Dialog (nicht-modal).</body>
+      </uialert>
+
+<code information="Dialog-Fenster durch Klicken auf eine Schaltfläche"><![CDATA[
+<uialert type="modaldialog" name="cxdialog2" title="Titel" 
+   openaction="button" 
+   openactiontext="Klicken Sie hier, um es zu öffnen">
+
+   <body>Text</body>
+</uialert>
+]]></code>
+
+      <uialert type="boxalert" name="cxdialog3">
+      <body>Sie können Alarm-und Warn-Show mit BOX in Ihrem Dokument mit dem Typen BoxAlert und BoxInfo</body>
+      </uialert>
+
+<code information="Alert Box"><![CDATA[
+<uialert type="boxinfo" name="cxdialog3">
+    <body>Text</body>
+</uialert>
+]]></code>
+
+    </body>
+  </blockcenter>
+</page>

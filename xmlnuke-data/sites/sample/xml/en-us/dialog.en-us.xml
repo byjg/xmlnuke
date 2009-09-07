@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+  <meta>
+    <title>UI Dialog Window</title>
+    <abstract>How to open dialog window on User Interface using XML</abstract>
+    <created>Mon Sep 7 2009 10:04:51</created>
+    <modified>Mon Sep 7 2009 10:25:49</modified>
+    <keyword>xmlnuke</keyword>
+    <groupkeyword>-</groupkeyword>
+  </meta>
+  <blockcenter>
+    <title>Dialog Windows in UI (User Interface)</title>
+    <body>
+      <p>Using XMLNuke is possible open a dialog window inside the XML. This dialog can be opened automatically or fired by a button, link or image.</p>
+
+      <uialert type="modaldialog" name="cxdialog" title="Title">
+      <button text="Ok">
+      window.location='http://www.byjg.com.br/';
+      </button>
+      <button text="Cancel">$(this).dialog('close');</button>      
+      <body>You can put the contents here</body>
+      </uialert>
+
+<code information="Dialog Window opened automatically"><![CDATA[
+<uialert type="modaldialog" name="cxdialog" title="Title">
+   <button text="Ok">
+      window.location='http://www.byjg.com.br/';
+   </button>
+   <button text="Cancel">$(this).dialog('close');</button>      
+   <body>Text</body>
+</uialert>
+]]></code>
+
+      <uialert type="modaldialog" name="cxdialog2" title="Another Dialog Window" openaction="button" openactiontext="Click here to open it">
+      <body>This is a modal dialog. It is possible create a simple dialog (non-modal).</body>
+      </uialert>
+
+<code information="Dialog window opened by a button click"><![CDATA[
+<uialert type="modaldialog" name="cxdialog2" title="Title" 
+   openaction="button" 
+   openactiontext="Click here to open it">
+
+   <body>Text</body>
+</uialert>
+]]></code>
+
+      <uialert type="boxalert" name="cxdialog3">
+      <body>You can show alert and warning using BOX inside your document using the types BoxAlert and BoxInfo</body>
+      </uialert>
+
+<code information="Alert Box"><![CDATA[
+<uialert type="boxinfo" name="cxdialog3">
+    <body>Text</body>
+</uialert>
+]]></code>
+
+    </body>
+  </blockcenter>
+</page>

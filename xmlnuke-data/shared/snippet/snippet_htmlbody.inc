@@ -10,6 +10,7 @@
 <xmlnuke-htmlbody_sortablelist />
 <xmlnuke-htmlbody_poll />
 <xmlnuke-htmlbody_treeview />
+<xmlnuke-htmlbody_uialert />
 
 <xsl:template name="i18n.jquery">
 	<xsl:choose>

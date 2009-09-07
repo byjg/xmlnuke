@@ -74,7 +74,7 @@
 			<title>Treeview</title>
 			<summary>Structure data with the TreeView component.</summary>
 		</page>
-	</group>
+	<page><id>dialog</id><title>UI Dialog Window</title><summary>How to open dialog window on User Interface using XML</summary></page></group>
 	<group>
 		<id>dynmenu</id>
 		<title>Dynamic Menus</title>

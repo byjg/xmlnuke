@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <xmlindex>
 	<group>
 		<id>mainmenu</id>
@@ -69,7 +69,7 @@
 			<title>Treeview</title>
 			<summary>TreeView komponent.</summary>
 		</page>
-	</group>
+	<page><id>dialog</id><title>UI dialogrutan</title><summary>Hur öppna dialogfönstret på användargränssnitt med hjälp av XML</summary></page></group>
 	<group>
 		<id>dynmenu</id>
 		<title>Dynamiska menyer</title>

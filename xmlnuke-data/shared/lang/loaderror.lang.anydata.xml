@@ -6,7 +6,8 @@
     <field name="MESSAGE">The requested module "{0}" caused an error. See below for more information.</field>
     <field name="ORIGINALMESSAGE">Original Error Message: {0}</field>
     <field name="FINDMESSAGE">Related Error Message: {0}</field>
-    <field name="GOBACK">Try Again</field>
+    <field name="GOBACK">Return to Previous Page</field>
+    <field name="SHOWSTACKTRACE">Show Stack Trace</field>
     <field name="404">Module not found.</field>
     <field name="200">Missing user.</field>
   </row>
@@ -17,7 +18,8 @@
     <field name="MESSAGE">O módulo solicitado "{0}" provocou um erro. Veja abaixo mais detalhes</field>
     <field name="ORIGINALMESSAGE">Mensagem de erro original: {0}</field>
     <field name="FINDMESSAGE">Messagem de erro relacionada: {0}</field>
-    <field name="GOBACK">Tentar Novamente</field>
+    <field name="GOBACK">Retornar à página anterior</field>
+    <field name="SHOWSTACKTRACE">Mostrar Pilha de Erros</field>
     <field name="404">Módulo não encontrado</field>
     <field name="200">Usuário perdido</field>
   </row>
@@ -28,7 +30,8 @@
     <field name="MESSAGE">Das angeforderte Modul '{0}' verursachte einen Fehler. Nachfolgend finden Sie weitere Informationen dazu.</field>
     <field name="ORIGINALMESSAGE">Ursprüngliche Fehler-Meldung: {0}</field>
     <field name="FINDMESSAGE">Zugehörige Fehler-Meldung: {0}</field>
-    <field name="GOBACK">Erneut versuchen</field>
+    <field name="GOBACK">Zurück zur vorherigen Seite</field>
+    <field name="SHOWSTACKTRACE">Show Stack-Trace</field>
     <field name="404">Modul wurde nicht gefunden.</field>
     <field name="200">Fehlender Benutzer.</field>
   </row>

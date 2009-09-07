@@ -74,7 +74,7 @@
 			<title>Treeview</title>
 			<summary>Strukturieren von Daten mittels der Treeview-Komponente</summary>
 		</page>
-	</group>
+	<page><id>dialog</id><title>UI-Dialog-Fenster</title><summary>Wie Dialogfenster auf Benutzer-Schnittstellen offen mit Hilfe von XML</summary></page></group>
 	<group>
 		<id>dynmenu</id>
 		<title>Dynamische Menüs</title>

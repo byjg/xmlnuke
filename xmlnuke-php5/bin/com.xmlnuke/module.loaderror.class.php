@@ -151,7 +151,7 @@ class LoadError extends BaseModule
 		//	$completeErrorInfo = $this->_errorObject->sql;
 		//}
 		
-		$paragraph = new XmlParagraphCollection();
+		$paragraph = new XmlnukeUIAlert($this->_context, UIAlert::BoxAlert);
 		$paragraph->addXmlnukeObject(new XmlnukeText($errorList->Value("MESSAGE", $this->_errorObject->moduleName)));
 		$block->addXmlnukeObject($paragraph);
 		$message = $this->_errorObject->getMessage();
@@ -159,34 +159,42 @@ class LoadError extends BaseModule
 		{
 			$message = str_replace("{", "[", $message);
 			$message = str_replace("}", "]", $message);
-			$paragraph = new XmlParagraphCollection();
+			//$paragraph = new XmlParagraphCollection();
+			$paragraph->addXmlnukeObject(new XmlnukeBreakLine());
 			$paragraph->addXmlnukeObject(new XmlnukeBreakLine());
 			$paragraph->addXmlnukeObject(new XmlnukeText($errorList->Value("TEXT_ERROR_ORIGINAL"), true));
 			$paragraph->addXmlnukeObject(new XmlnukeText(' ' . $message));
-			$block->addXmlnukeObject($paragraph);
+			//$block->addXmlnukeObject($paragraph);
 		}
 		if ($this->_errorObject->getCode() > 0) 
 		{
-			$paragraph = new XmlParagraphCollection();
+			//$paragraph = new XmlParagraphCollection();
+			$paragraph->addXmlnukeObject(new XmlnukeBreakLine());
 			$paragraph->addXmlnukeObject(new XmlnukeBreakLine());
 			$paragraph->addXmlnukeObject(new XmlnukeText($errorList->Value("TEXT_ERROR_RELATED"), true));
 			$paragraph->addXmlnukeObject(new XmlnukeText(' ' . $this->getRelatedError($errorList, $completeErrorInfo)));
-			$block->addXmlnukeObject($paragraph);
-		}
-
-		if ($this->_errorObject->showStackTrace)
-		{
-			$paragraph->addXmlnukeObject(new XmlnukeBreakLine());
-			$paragraph->addXmlnukeObject(new XmlnukeBreakLine());
-			$block->addXmlnukeObject(new XmlnukeCode($this->_errorObject->backTrace, $errorList->Value("TEXT_ERROR_STACKTRACE")));		
+			//$block->addXmlnukeObject($paragraph);
 		}
 		
 		$paragraph = new XmlParagraphCollection();
 		$href = new XmlAnchorCollection("javascript:history.go(-1)", "");
 		$href->addXmlnukeObject(new XmlnukeText($myWords->Value("GOBACK")));
 		$paragraph->addXmlnukeObject($href);
+		
+		if ($this->_errorObject->showStackTrace)
+		{
+			$paragraph->addXmlnukeObject(new XmlnukeText(" | "));
+			
+			$stack = new XmlnukeUIAlert($this->_context, UIAlert::ModalDialog, $errorList->Value("TEXT_ERROR_STACKTRACE"));
+			$stack->setDimensions("800");
+			$stack->setOpenAction(UIAlertOpenAction::URL, $myWords->Value("SHOWSTACKTRACE"));
+			$stack->addXmlnukeObject(new XmlnukeCode($this->_errorObject->backTrace, $errorList->Value("TEXT_ERROR_STACKTRACE")));
+			$paragraph->addXmlnukeObject($stack);		
+		}
+		
 		$block->addXmlnukeObject($paragraph);
 		$xmlnukeDoc->addXmlnukeObject($block);
+		
 		return $xmlnukeDoc;
 	}
 	

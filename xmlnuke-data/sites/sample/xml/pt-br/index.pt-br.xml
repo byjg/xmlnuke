@@ -74,7 +74,7 @@
 			<title>Treeview</title>
 			<summary>Componente TreeView.</summary>
 		</page>
-	</group>
+	<page><id>dialog</id><title>Diálogos UI</title><summary>XML para mostrar diálogos na Interface com o Usuário</summary></page></group>
 	<group>
 		<id>dynmenu</id>
 		<title>Menu Dinâmico</title>

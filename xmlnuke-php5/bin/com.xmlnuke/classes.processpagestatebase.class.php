@@ -708,9 +708,8 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 			$message = $this->_lang->Value("MSG_NOCHANGE");
 		}
 		
-		$container = new XmlContainerCollection();
-		$container->setClass("msgalert");
-		$container->setHideAfterTime(8000);
+		$container = new XmlnukeUIAlert($this->_context, UIAlert::BoxInfo);
+		$container->setAutoHide(8000);
 		$container->addXmlnukeObject(new XmlnukeText($message, true, true, false)); 
 		
 		return $container;

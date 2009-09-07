@@ -111,6 +111,7 @@ class Sample extends BaseModule
 		$this->_document->addMenuItem($linkModule."?op=15",$this->_myWords->Value("TREEVIEW"), $this->_myWords->Value("DESCTREEVIEW"));
 		$this->_document->addMenuItem($linkModule."?op=16",$this->_myWords->Value("SORTABLE"), $this->_myWords->Value("DESCSORTABLE"));
 		$this->_document->addMenuItem($linkModule."?op=17",$this->_myWords->Value("CALENDAR"), $this->_myWords->Value("DESCCALENDAR"));
+		$this->_document->addMenuItem($linkModule."?op=18",$this->_myWords->Value("UIALERT"), $this->_myWords->Value("DESCUIALERT"));
 		
 		$block = new XmlBlockCollection($this->_myWords->Value("MODULE"), BlockPosition::Center);
 				
@@ -209,6 +210,11 @@ class Sample extends BaseModule
 			case 17:
 				{
 					$this->Opcao17();
+					break;
+				}
+			case 18:
+				{
+					$this->Opcao18();
 					break;
 				}
 		}
@@ -1101,6 +1107,71 @@ class Sample extends BaseModule
 		$calendar->addCalendarEvent(new XmlnukeCalendarEvent(26, 2, "Teste"));
 		
 		$block->addXmlnukeObject($calendar);
+		
+		$this->_document->addXmlnukeObject($block);
+	}	
+	
+	protected function Opcao18()
+	{
+		$block = new XmlBlockCollection("Exemplo 18: UI Alert", BlockPosition::Center);
+
+		//XmlnukeBreakLine br = new XmlnukeBreakLine();
+
+
+		$para = new XmlParagraphCollection();
+		$para->addXmlnukeObject(new XmlnukeText("Esse exemplo mostra como mostrar uma mensagem de alert no cliente"));
+		$block->addXmlnukeObject($para);
+
+		if ($this->_context->ContextValue("type") != "")
+		{
+			switch ($this->_context->ContextValue("type"))
+			{
+				case 1:
+					$uialert = new XmlnukeUIAlert($this->_context, UIAlert::Dialog, "Isso é um teste");
+					break;
+				case 2:
+					$uialert = new XmlnukeUIAlert($this->_context, UIAlert::ModalDialog, "Isso é um teste");
+					$uialert->setAutoHide(10000);
+					break;
+				case 3:
+					$uialert = new XmlnukeUIAlert($this->_context, UIAlert::ModalDialog, "Isso é um teste");
+					$uialert->addRedirectButton("Ok", "module:sample");
+					$uialert->addCloseButton("Cancel");
+					break;
+				case 4:
+					$uialert = new XmlnukeUIAlert($this->_context, UIAlert::ModalDialog, "Isso é um teste");
+					$uialert->addRedirectButton("Ok, proceed!", "module:sample");
+					$uialert->addCloseButton("Cancel");
+					$uialert->setOpenAction(UIAlertOpenAction::Button, "Clique me");
+					break;
+				case 5:
+					$uialert = new XmlnukeUIAlert($this->_context, UIAlert::BoxInfo, "Isso é um teste");
+					$uialert->setAutoHide(2000);
+					break;
+				case 6:
+					$uialert = new XmlnukeUIAlert($this->_context, UIAlert::BoxAlert, "Isso é um teste");
+					break;
+			}
+			$uialert->addXmlnukeObject(new XmlnukeText("Isso é um novo teste, novo teste"));
+			$block->addXmlnukeObject($uialert);
+		}
+		
+		$list = array();
+		$list["module:sample?op=18&type=1"] = "Caixa de Diálogo"; 
+		$list["module:sample?op=18&type=2"] = "Caixa de Diálogo Modal"; 
+		$list["module:sample?op=18&type=3"] = "Caixa de Diálogo Modal com botão de fechar"; 
+		$list["module:sample?op=18&type=4"] = "Caixa de Diálogo Modal com botões de confirmação e abrir personalizado"; 
+		$list["module:sample?op=18&type=5"] = "Box de Informação com auto hide"; 
+		$list["module:sample?op=18&type=6"] = "Box de Alerta";
+
+		$listElement = new XmlListCollection(XmlListType::UnorderedList, "Opções");
+		foreach ($list as $key=>$value)
+		{
+			$href = new XmlAnchorCollection($key);
+			$href->addXmlnukeObject(new XmlnukeText($value));
+			$listElement->addXmlnukeObject($href);
+		}
+		$block->addXmlnukeObject($listElement);
 		
 		$this->_document->addXmlnukeObject($block);
 	}	

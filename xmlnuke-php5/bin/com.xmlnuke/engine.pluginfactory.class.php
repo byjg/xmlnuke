@@ -112,7 +112,7 @@ class PluginFactory
 			}
 			else
 			{
-				include_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/$basePath.$phpFile.class.php");
+				@include_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/$basePath.$phpFile.class.php");
 			}
 			
 			PluginFactory::$_loaded[$key] = true;

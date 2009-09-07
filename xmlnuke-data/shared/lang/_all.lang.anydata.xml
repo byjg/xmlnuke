@@ -84,4 +84,60 @@
       <field name="LABEL_NAME">Name: </field>
       <field name="LABEL_PASSWORD">Passwort: </field>
    </row>
+   <row>
+      <field name="LANGUAGE">fr-fr</field>
+      <field name="WORKINGAREA">Zone d'activité</field>
+      <field name="TXT_ADD">Ajouter</field>
+      <field name="TXT_BACK">Aller Retour</field>
+      <field name="TXT_CANCEL">Annuler</field>
+      <field name="TXT_CHANGE">Changer</field>
+      <field name="TXT_CONFIRM">Confirmer</field>
+      <field name="TXT_CREATE">Créer</field>
+      <field name="TXT_DELETE">Supprimer</field>
+      <field name="TXT_EDIT">Modifier</field>
+      <field name="TXT_EMAIL">Email</field>
+      <field name="TXT_LOGIN">Connexion</field>
+      <field name="TXT_NAME">Nom</field>
+      <field name="TXT_NEW">Nouveau Article</field>
+      <field name="TXT_PASSWORD">Mot de passe</field>
+      <field name="TXT_REMOVE">Supprimer</field>
+      <field name="TXT_SAVE">Sauver</field>
+      <field name="TXT_SUBMIT">Envoyer</field>
+      <field name="TXT_VIEW">Affichage</field>
+      <field name="TXT_UPDATE">Mettre à jour</field>
+      <field name="LABEL_CONTENT">Contenu: </field>
+      <field name="LABEL_EMAIL">Email: </field>
+      <field name="LABEL_LOGIN">Connexion: </field>
+      <field name="LABEL_MESSAGE">Message: </field>
+      <field name="LABEL_NAME">Nom: </field>
+      <field name="LABEL_PASSWORD">Mot de passe: </field>
+   </row>
+   <row>
+      <field name="LANGUAGE">sv-se</field>
+      <field name="WORKINGAREA">Arbetsområde</field>
+      <field name="TXT_ADD">Lägg till</field>
+      <field name="TXT_BACK">Gå tillbaka</field>
+      <field name="TXT_CANCEL">Avbryt</field>
+      <field name="TXT_CHANGE">Ändra</field>
+      <field name="TXT_CONFIRM">Bekräfta</field>
+      <field name="TXT_CREATE">Skapa</field>
+      <field name="TXT_DELETE">Ta bort</field>
+      <field name="TXT_EDIT">Redigera</field>
+      <field name="TXT_EMAIL">Email</field>
+      <field name="TXT_LOGIN">Logga in</field>
+      <field name="TXT_NAME">Namn</field>
+      <field name="TXT_NEW">Nytt objekt</field>
+      <field name="TXT_PASSWORD">Lösenord</field>
+      <field name="TXT_REMOVE">Flytta</field>
+      <field name="TXT_SAVE">Spara</field>
+      <field name="TXT_SUBMIT">Skicka in</field>
+      <field name="TXT_VIEW">Visa</field>
+      <field name="TXT_UPDATE">Uppdatera</field>
+      <field name="LABEL_CONTENT">Innehåll: </field>
+      <field name="LABEL_EMAIL">Email: </field>
+      <field name="LABEL_LOGIN">Logga in: </field>
+      <field name="LABEL_MESSAGE">Message: </field>
+      <field name="LABEL_NAME">Namn: </field>
+      <field name="LABEL_PASSWORD">Lösenord: </field>
+   </row>
 </anydataset>

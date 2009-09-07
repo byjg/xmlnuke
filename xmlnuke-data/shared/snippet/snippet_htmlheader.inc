@@ -1,10 +1,6 @@
-<style>
-.msgalert { margin: 10px 0 10px 0; padding: 5px 10px 5px 35px; border: #FC6 1px solid; background: url(../../common/imgs/oops.png) #FFC no-repeat 5px 5px; display: block;  }
-</style>
-
 <script type="text/javascript" src="common/3rdparty/jquery/js/jquery-1.3.2.min.js"></script>
-<xsl:if test="//sortablelist or //calendar or //faq or //datetimebox">
-	<style type="text/css">#ui-datepicker-div { font-size: 62.50%; } #faqaccordion { font-size: 80%; }</style>
+<xsl:if test="//sortablelist or //calendar or //faq or //datetimebox or //uialert">
+	<style type="text/css">#ui-datepicker-div { font-size: 0.8em; } #faqaccordion { font-size: 80%; }</style>
 	<link type="text/css" href="common/3rdparty/jquery/css/smoothness/jquery-ui-1.7.1.custom.css" rel="stylesheet" />	
 	<script type="text/javascript" src="common/3rdparty/jquery/js/jquery-ui-1.7.1.custom.min.js"></script>
 	<script type="text/javascript" src="common/3rdparty/jquery/js/jquery-ui-i18n.min.js"></script>
@@ -229,4 +225,45 @@
 	<script language="javascript" src="common/3rdparty/jquery/plugin/jquery.maskedinput-1.2.2.min.js"></script>
 </xsl:if>
 
+
+<!-- Include specific JavaScript for UI Alert -->
+<xsl:if test="//uialert">
+	<script type="text/javascript">
+	$(function() {
+		<xsl:for-each select="//uialert[contains(@type, 'dialog')]">
+		$("#<xsl:value-of select="@name" />_fire").click(function() { $("#<xsl:value-of select="@name" />").dialog('open'); });
+			
+		$("#<xsl:value-of select="@name" />").dialog({
+			<xsl:if test="contains(@type, 'modal')">modal: true,</xsl:if>
+			<xsl:if test="@openaction">autoOpen: false,</xsl:if>
+			<xsl:if test="button">
+			buttons: {
+				<xsl:for-each select="button">
+				'<xsl:value-of select="@text" />': function() {
+					<xsl:value-of select="text()" />
+				}<xsl:if test="position()!=last()">,</xsl:if>
+				</xsl:for-each>
+			},
+			</xsl:if>
+			<xsl:if test="@autohide">
+			open: function(event, ui) {
+				setTimeout(function() {
+				     $("#<xsl:value-of select="@name" />").dialog("close");
+				}, <xsl:value-of select="@autohide" />);
+			},			
+			</xsl:if>
+			<xsl:if test="@width">width: <xsl:value-of select="@width" />,</xsl:if>
+			<xsl:if test="@height">height: <xsl:value-of select="@height" />,</xsl:if>
+			bgiframe: <xsl:if test="not(@type='dialog')">true</xsl:if><xsl:if test="@type='dialog'">false</xsl:if>
+		});
+		</xsl:for-each>
+
+		<xsl:for-each select="//uialert[contains(@type, 'box') and @autohide]">
+		setTimeout(function() {
+		     $("#<xsl:value-of select="@name" />").hide('blind', {}, 500);
+		}, <xsl:value-of select="@autohide" />);
+		</xsl:for-each>
+	});
+	</script>
+</xsl:if>
 

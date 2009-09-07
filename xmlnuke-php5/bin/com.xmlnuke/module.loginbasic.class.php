@@ -151,9 +151,8 @@ class LoginBasic extends LoginBase
 		$user = $this->_users->validateUserName($this->_context->ContextValue("loguser"), $this->_context->ContextValue("password"));
 		if ($user == null)
 		{
-			$container = new XmlContainerCollection();
-			$container->setClass("msgalert");
-			$container->setHideAfterTime(5000);
+			$container = new XmlnukeUIAlert($this->_context, UIAlert::BoxAlert);
+			$container->setAutoHide(5000);
 			$container->addXmlnukeObject(new XmlnukeText($myWords->Value("LOGINFAIL"), true));
 			$this->_blockCenter->addXmlnukeObject($container);
 			$this->FormLogin();
@@ -245,9 +244,8 @@ class LoginBasic extends LoginBase
 	{
 		$myWords = $this->WordCollection();
 		
-		$container = new XmlContainerCollection();
-		$container->setClass("msgalert");
-		$container->setHideAfterTime(5000);
+		$container = new XmlnukeUIAlert($this->_context, UIAlert::BoxInfo);
+		$container->setAutoHide(5000);
 		$this->_blockCenter->addXmlnukeObject($container);
 		
 		$user = $this->_users->getUserEMail( $this->_context->ContextValue("email") );

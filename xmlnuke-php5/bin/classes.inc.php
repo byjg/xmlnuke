@@ -49,4 +49,5 @@ require_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/classes.xmlnuketext.class.php");
 require_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/classes.xmlparagraphcollection.class.php");
 require_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/classes.xmltablecollection.class.php");
 require_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/classes.xmlnuketreeview.class.php");
+require_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/classes.xmlnukeuialert.class.php");
 ?>

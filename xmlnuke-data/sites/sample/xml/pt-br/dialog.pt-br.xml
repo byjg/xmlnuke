@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+  <meta>
+    <title>Diálogos UI</title>
+    <abstract>XML para mostrar diálogos na Interface com o Usuário</abstract>
+    <created>Mon Sep 7 2009 10:04:51</created>
+    <modified>Mon Sep 7 2009 10:26:07</modified>
+    <keyword>xmlnuke</keyword>
+    <groupkeyword>all</groupkeyword>
+  </meta>
+  <blockcenter>
+    <title>Alertas em UI (Interface com Usuário)</title>
+    <body>
+      <p>É possível gerar uma caixa de diálogo dentro do XML, que se abre automaticamente, ou que é aberta através de um Botão, URL ou Imagem.</p>
+
+      <uialert type="modaldialog" name="cxdialog" title="Título">
+      <button text="Ok">
+      window.location='http://www.byjg.com.br/';
+      </button>
+      <button text="Cancel">$(this).dialog('close');</button>      
+      <body>Aqui entra o conteúdo</body>
+      </uialert>
+
+<code information="Box de Informação"><![CDATA[
+<uialert type="modaldialog" name="cxdialog" title="Título">
+   <button text="Ok">
+      window.location='http://www.byjg.com.br/';
+   </button>
+   <button text="Cancel">$(this).dialog('close');</button>      
+   <body>Texto</body>
+</uialert>
+]]></code>
+
+      <uialert type="modaldialog" name="cxdialog2" title="Outra Caixa de Diálogo" openaction="button" openactiontext="Clique aqui para abrir">
+      <body>Essa é uma caixa modal (ModalDialog). Também é possível criar caixa de diálogos simples (Dialog)</body>
+      </uialert>
+
+<code information="Caixa de Diálogo Aberta por um Botão"><![CDATA[
+<uialert type="modaldialog" name="cxdialog2" title="Título" 
+   openaction="button" 
+   openactiontext="Clique aqui para abrir">
+
+   <body>Texto</body>
+</uialert>
+]]></code>
+
+      <uialert type="boxalert" name="cxdialog3">
+      <body>Também é possível exibir alertas e informações no próprio texto com o tipos BoxInfo e BoxAlert.</body>
+      </uialert>
+
+<code information="Caixa de Diálogo Auto-Open"><![CDATA[
+<uialert type="boxinfo" name="cxdialog3">
+    <body>Texto</body>
+</uialert>
+]]></code>
+
+    </body>
+  </blockcenter>
+</page>
