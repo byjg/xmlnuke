@@ -117,14 +117,7 @@ class LoadError extends BaseModule
 	public function CreatePage() 
 	{		
 		$myWords = $this->WordCollection();		
-		if ($this->_errorObject->errorType == ErrorType::NotFound)
-		{
-			$this->_titlePage = $myWords->Value("TITLENOTFOUND");
-		}
-		else
-		{
-			$this->_titlePage = $myWords->Value("TITLEERRORMESSAGE");
-		}
+		$this->_titlePage = $this->getRelatedError($myWords);
 		
 		$xmlnukeDoc = new XmlnukeDocument($this->_titlePage, "");		
 		
@@ -166,15 +159,13 @@ class LoadError extends BaseModule
 			$paragraph->addXmlnukeObject(new XmlnukeText(' ' . $message));
 			//$block->addXmlnukeObject($paragraph);
 		}
-		if ($this->_errorObject->getCode() > 0) 
-		{
-			//$paragraph = new XmlParagraphCollection();
-			$paragraph->addXmlnukeObject(new XmlnukeBreakLine());
-			$paragraph->addXmlnukeObject(new XmlnukeBreakLine());
-			$paragraph->addXmlnukeObject(new XmlnukeText($errorList->Value("TEXT_ERROR_RELATED"), true));
-			$paragraph->addXmlnukeObject(new XmlnukeText(' ' . $this->getRelatedError($errorList, $completeErrorInfo)));
-			//$block->addXmlnukeObject($paragraph);
-		}
+
+		//$paragraph = new XmlParagraphCollection();
+		$paragraph->addXmlnukeObject(new XmlnukeBreakLine());
+		$paragraph->addXmlnukeObject(new XmlnukeBreakLine());
+		$paragraph->addXmlnukeObject(new XmlnukeText($errorList->Value("TEXT_ERROR_RELATED"), true));
+		$paragraph->addXmlnukeObject(new XmlnukeText(' ' . $this->_errorObject->errorType . "[" . $this->_errorObject->getCode() . "]"));
+		//$block->addXmlnukeObject($paragraph);
 		
 		$paragraph = new XmlParagraphCollection();
 		$href = new XmlAnchorCollection("javascript:history.go(-1)", "");
@@ -205,14 +196,28 @@ class LoadError extends BaseModule
 	 * @param string $customValue
 	 * @return string
 	 */
-	public function getRelatedError($wordsErros, $customValue)
+	public function getRelatedError()
 	{
+		$customValue = "";
+		$errorList = XMLNukeErrorModule::ErrorWordCollection($this->_context);
+		
 		$code = $this->_errorObject->getCode();
-		$message = $wordsErros->Value($code, $customValue);
-		if ($message == "[$code?]") {
-			$message = ' ' . $wordsErros->Value("MSG_ERROR_UNKNOW");
+		if ($code <= 0)
+		{
+			$code = $this->_errorObject->errorType;
 		}
-		return $message;
+		if (!empty($code))
+		{
+			$message = $errorList->Value($code);
+			if ($message == "[$code?]") {
+				$message = ' ' . $errorList->Value("MSG_ERROR_UNKNOW");
+			}
+			return $message;
+		}
+		else
+		{
+			return $errorList->Value("MSG_UNEXPECTED_ERROR");
+		}
 	}
 	
 }

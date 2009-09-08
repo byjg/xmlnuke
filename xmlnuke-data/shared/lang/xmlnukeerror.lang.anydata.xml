@@ -20,7 +20,23 @@
     <field name="MSG_ERROR_UNKNOW">Unknown error.</field>
     <field name="CONTACTADMIN">If this problem persists contact your XMLNuke Administrator.</field>
     <field name="GOBACK">Try Again</field>
+    
+    <field name="MSG_UNEXPECTED_ERROR">Unexpected error. See info for more details.</field>
+    <field name="ERR_NOTFOUND">Module not found</field>
+    <field name="ERR_CLASSNOTFOUND">Class not found</field>
+    <field name="ERR_INSUFFICIENTPRIVILEGE">Insufficient Privileges</field>
+    <field name="ERR_NOTAUTHENTICATED">Not Authenticated</field>
+    <field name="ERR_KERNEL">Kernel</field>
+    <field name="ERR_GENERALITY">General Errors</field>
+    <field name="ERR_DATABASE">Database Error</field>
+    <field name="ERR_ENGINE">XMLNuke main engine error</field>
+    <field name="ERR_PROCESSOR">XMLNuke param processor error</field>
+    <field name="ERR_UTIL">XMLNuke util error</field>
+    <field name="ERR_OBJECT">XMLNuke object error</field>
+    <field name="ERR_MODULE">XMLNuke module error</field>
+
     <field name="404">Module not found</field>
+    <field name="405">Class or Namespace not found</field>
     <field name="850">EditListObject does not exist.</field>
     <field name="851">Error in param type. It must be "SOFT" or "OFF".</field>
     <field name="852">Bad format of XML file header.</field>
@@ -90,7 +106,23 @@
     <field name="MSG_ERROR_UNKNOW">Erro desconhecido.</field>
     <field name="CONTACTADMIN">Se o problema persistir contate o seu administrador XMLNuke.</field>
     <field name="GOBACK">Tentar Novamente</field>
+
+    <field name="MSG_UNEXPECTED_ERROR">Erro não esperado. Veja informações para mais detalhes.</field>
+    <field name="ERR_NOTFOUND">Módulo não encontrado</field>
+    <field name="ERR_CLASSNOTFOUND">Classe não encontrada</field>
+    <field name="ERR_INSUFFICIENTPRIVILEGE">Privilégio Insuficiente</field>
+    <field name="ERR_NOTAUTHENTICATED">Não está autenticado</field>
+    <field name="ERR_KERNEL">Kernel</field>
+    <field name="ERR_GENERALITY">Erros Gerais</field>
+    <field name="ERR_DATABASE">Erro de Banco de Dados</field>
+    <field name="ERR_ENGINE">Erro no mecanismo do XMLNuke</field>
+    <field name="ERR_PROCESSOR">Erro no ParamProcessor do XMLNuke</field>
+    <field name="ERR_UTIL">Erro na classe utilitária do XMLNuke</field>
+    <field name="ERR_OBJECT">Erro de Objeto</field>
+    <field name="ERR_MODULE">Erro no módulo</field>
+
     <field name="404">Módulo não encontrado</field>
+    <field name="405">Classe ou namespace não encontrado.</field>
     <field name="850">Não foi passado nenhum EditListObject para o EditList.</field>
     <field name="851">Erro no valor do parametro para congifurar o quebra de linha. Os valores devem ser "SOFT" ou "OFF".</field>
     <field name="852">Cabeçalho do arquivo XML está mal formatado.</field>
@@ -103,8 +135,8 @@
     <field name="754">O Documento XSL não foi encontrado em nenhum repositório.</field>
     <field name="755">Falha ao tentar transformar o documento XML. O documento XSL pode conter erros ou caracteres inválidos. \n Primeiro passo: Apague o seu cache. \n Segundo passo: Verifique se seu documento XSL contém erros e sua codificação.</field>
     <field name="756">O retorno do método CreatePage em seu módulo deve ser do tipo PageXml.</field>
-    <field name="403">403 Acesso negado. Você não tem previlégios para acessar esta página.</field>
-    <field name="402">402 Não autenticado. Você precisa logar para acessar esta página.</field>
+    <field name="403">Você não tem autorização para acessar esta página.</field>
+    <field name="402">Não autenticado. Você precisa logar para acessar esta página.</field>
     <field name="600">O Document XML solicitado não existe no repositório.</field>
     <field name="601">BTree Inválida. Recrie o índice.</field>
     <field name="700">O formato da data é inválido. Verifique os padrões timestamp.</field>
@@ -160,7 +192,23 @@
     <field name="MSG_ERROR_UNKNOW">Unbekannter Fehler.</field>
     <field name="CONTACTADMIN">Falls dieses Problem weiterhin besteht kontaktieren Sie Ihren XMLNuke-Administrator.</field>
     <field name="GOBACK">Erneut versuchen</field>
+    
+    <field name="MSG_UNEXPECTED_ERROR">Unerwarteter Fehler. Siehe info for more details.</field>
+    <field name="ERR_NOTFOUND">Modul nicht gefunden</field>
+    <field name="ERR_CLASSNOTFOUND">Klasse nicht gefunden</field>
+    <field name="ERR_INSUFFICIENTPRIVILEGE">Unzureichende Rechte</field>
+    <field name="ERR_NOTAUTHENTICATED">Nicht authentifiziert</field>
+    <field name="ERR_KERNEL">Kernel</field>
+    <field name="ERR_GENERALITY">Allgemeine Fehler</field>
+    <field name="ERR_DATABASE">Datenbank Fehler</field>
+    <field name="ERR_ENGINE">XMLNuke Hauptmaschine Fehler</field>
+    <field name="ERR_PROCESSOR">XMLNuke param-Prozessor-Fehler</field>
+    <field name="ERR_UTIL">XMLNuke util Fehler</field>
+    <field name="ERR_OBJECT">XMLNuke Objektfehler</field>
+    <field name="ERR_MODULE">XMLNuke Modulfehler</field>
+
     <field name="404">Modul nicht gefunden</field>
+    <field name="405">Klasse oder Namespace nicht gefunden.</field>
     <field name="850">EditListObject existiert nicht.</field>
     <field name="851">Fehler in Parameter-Typ. Muss "SOFT" oder "OFF" sein.</field>
     <field name="852">Falsches Format des XML-Datei-Kopfes.</field>

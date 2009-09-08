@@ -29,17 +29,18 @@
 // Config database ADO exception to throw up
 class ErrorType
 {
-	const NotFound = "NotFound";
-	const InsufficientPrivilege = "InsufficientPrivilege";
-	const NotAuthenticated = "NotAuthenticated";
-	const Kernel = "Kernel";
-	const Generality = "Generality";
-	const DataBase = "DataBase";
-	const Engine = "Xmlnuke Engine";
-	const Processor = "Processor Paramiter";
-	const Util = "Xmlnuke Util Tools";
-	const Object = "Xmlnuke Objects Collections";
-	const Module = "Xmlnuke Module Erros";
+	const NotFound = "ERR_NOTFOUND";
+	const ClassNotFound = "ERR_CLASSNOTFOUND";
+	const InsufficientPrivilege = "ERR_INSUFFICIENTPRIVILEGE";
+	const NotAuthenticated = "ERR_NOTAUTHENTICATED";
+	const Kernel = "ERR_KERNEL";
+	const Generality = "ERR_GENERALITY";
+	const DataBase = "ERR_DATABASE";
+	const Engine = "ERR_ENGINE";
+	const Processor = "ERR_PROCESSOR";
+	const Util = "ERR_UTIL";
+	const Object = "ERR_OBJECT";
+	const Module = "ERR_MODULE";
 }
 /**
 *This is base engine exception
@@ -169,9 +170,9 @@ class NotFoundClassException extends XMLNukeException
 	 */
 	function NotFoundClassException($message = "")
 	{
-		parent::XMLNukeException(404, $message);
-		$this->errorType = ErrorType::NotFound;
-		$this->showStackTrace = false;
+		parent::XMLNukeException(405, $message);
+		$this->errorType = ErrorType::ClassNotFound;
+		$this->showStackTrace = true;
 	}
 }
 /**

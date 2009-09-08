@@ -91,14 +91,35 @@ class ModuleFactory
 			$basePath = "";
 		}
 
-
 		try
 		{
 			$result = PluginFactory::LoadPlugin($className, $basePath);
 		}
-		catch (Exception $e)
+		catch (ReflectionException $e)
 		{
-			throw new NotFoundException("Module name '$modulename' not found.");
+			$r = strrpos($modulename, ".");
+			$onlyModule = substr($modulename, ($r===false ? 0 : $r+1));
+			if (strpos($e->getMessage(), " $onlyModule ") === false)
+			{
+				throw $e;
+			}
+			else
+			{
+				throw new NotFoundException("Module name '$modulename' not found.");
+			}
+		}
+		catch (NotFoundClassException $e)
+		{
+			$r = strrpos($modulename, ".");
+			$onlyModule = substr($modulename, ($r===false ? 0 : $r+1));
+			if (strpos($e->getMessage(), $onlyModule . ".class.php") === false)
+			{
+				throw $e;
+			}
+			else
+			{
+				throw new NotFoundException("Module name '$modulename' not found.");
+			}
 		}
 
 		$xml = new XMLFilenameProcessor($modulename, $context);
