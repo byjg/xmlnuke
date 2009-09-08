@@ -35,4 +35,28 @@
     <field name="TYPETEXTFROMIMAGE">Sicherheitsabfrage:</field>
     <field name="OBJECTIMAGEINVALID">Sie haben die Sicherheitsabfrage nicht oder falsch beantwortet. Bitte gehen Sie zurück und überprüfen Sie die Eingabe.</field>
   </row>
+  <row>
+    <field name="LANGUAGE">fr-fr</field>
+    <field name="TITLE">Livre d'Or pour le site {0}</field>
+    <field name="ABSTRACT">Lisez des opinions et écrivez votre propre idée sur notre site {0} dans mon livre d'or.</field>
+    <field name="MYGUEST">Mon livre d'or</field>
+    <field name="SIGN">Signer mon livre d'or</field>
+    <field name="FILL">Remplir le formulaire</field>
+    <field name="ERRORTITLE">Une erreur s'est produite alors que l'ajout d'un message.</field>
+    <field name="ERRORMESSAGE">	Votre message n'a pas été ajouté parce que tous les champs obligatoires sont terminées.</field>
+    <field name="TYPETEXTFROMIMAGE">Tapez des nombres ci-dessous:</field>
+    <field name="OBJECTIMAGEINVALID">Les chiffres que vous avez tapé ne correspond pas. Vous devez saisir le texte correctement.</field>
+  </row>
+  <row>
+    <field name="LANGUAGE">sv-se</field>
+    <field name="TITLE">Livre d'Or pour le site {0}</field>
+    <field name="ABSTRACT">Lisez des åsikter et Ecrivez votre propre idée sur notre site {0} dans mon livre d'or.</field>
+    <field name="MYGUEST">Mon livre d'or</field>
+    <field name="SIGN">Undertecknaren mon livre d'or</field>
+    <field name="FILL">Remplir le formulaire</field>
+    <field name="ERRORTITLE">Une erreur s'est produite alors que l'ajout d'un message.</field>
+    <field name="ERRORMESSAGE">Votre budskap n'a pas été ajouté parce que tous les champs obligatoires sont terminées.</field>
+    <field name="TYPETEXTFROMIMAGE">Tapez des nombres ci-dessous:</field>
+    <field name="OBJECTIMAGEINVALID">Les chiffres que vous avez tejp motsvara ne pas. Vous devez saisir le texte correctement.</field>
+  </row>
 </anydataset>

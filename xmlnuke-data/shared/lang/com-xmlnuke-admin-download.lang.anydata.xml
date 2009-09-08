@@ -48,4 +48,37 @@
       <field name="FORMURL">URL: </field>
       <field name="FORMSEEMORE">Mehr dazu: </field>
    </row>
+   <row>
+      <field name="LANGUAGE">fr-fr</field>
+      <field name="TITLE">Gérer Zone de Téléchargement</field>
+      <field name="TITLE_FILE">Lister les fichiers de la catégorie '{0}'</field>
+      <field name="TITLE_CATEGORY">Classement par toutes les catégories disponibles</field>
+      <field name="DESCRIPTION">Utilisez cette option pour gérer la zone de téléchargement. Vous pouvez créer des fichiers de liste de la catégorie et pour chaque catégorie créée.</field>
+      <field name="NOTE_FILE">Vous êtes les fichiers de listes de la catégorie '{0}'. Pour voir toutes les catégories disponibles, cliquez ici.</field>
+      <field name="NOTE_CATEGORY">Pour voir tous les fichiers d'une catégorie, d'abord sélectionner une catégorie, puis cliquez sur bouton «Visualiser»</field>
+      <field name="FORMTYPE">Modification de l'inscription:</field>
+      <field name="FORMDESCRIPTION">Description: </field>
+      <field name="FORMCATEGORY">Identifiant de la catégorie: </field>
+      <field name="FORMFILE">Id du fichier: </field>
+      <field name="FORMEMAILTO">Envoyer un email à: </field>
+      <field name="FORMURL">Url: </field>
+      <field name="FORMSEEMORE">Voir d'autres: </field>
+   </row>
+   <row>
+      <field name="LANGUAGE">sv-se</field>
+      <field name="TITLE">Hantera Download Area</field>
+      <field name="TITLE_FILE">Lista filer från kategori '{0}'</field>
+      <field name="TITLE_CATEGORY">Listar alla availables kategorier</field>
+      <field name="DESCRIPTION">Använd detta alternativ för att hantera Download Area. Du kan skapa Rubrik och filer förteckning för varje kategori skapats.</field>
+      <field name="NOTE_FILE">Du lista filer från kategori '{0}'. Om du vill se alla kategorier tillgängliga klicka här.</field>
+      <field name="NOTE_CATEGORY">Att se alla filer från en kategori väljer du först en kategori och klicka på "Visa" knappen</field>
+      <field name="FORMTYPE">Redigering post:</field>
+      <field name="FORMDESCRIPTION">Beskrivning: </field>
+      <field name="FORMCATEGORY">Id Kategori: </field>
+      <field name="FORMFILE">ID-fil: </field>
+      <field name="FORMEMAILTO">Skicka e-post till: </field>
+      <field name="FORMURL">URL: </field>
+      <field name="FORMSEEMORE">Se mer: </field>
+   </row>
+   
 </anydataset>

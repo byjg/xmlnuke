@@ -27,4 +27,22 @@
       <field name="DELETEBUTTON">Kompletten Cache löschen</field>     
       <field name="HELP">Sehen Sie sich den aktuell angelegten Cache der Seiten an oder löschen ihn.</field>
    </row>
+   <row>
+      <field name="LANGUAGE">fr-fr</field>
+      <field name="TITLE">Gérer un système cache</field>
+      <field name="SELECTIONAREA">Cache la liste</field>
+      <field name="DELETED">Toutes les cache est effacé.</field>
+      <field name="CACHELIST">Cliquez ici pour afficher cache</field>
+      <field name="DELETEBUTTON">Cliquez ici pour effacer tout le cache</field>     
+      <field name="HELP">Effacer tout le cache à partir du site actuel.</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">sv-se</field>
+      <field name="TITLE">Hantera Cache System</field>
+      <field name="SELECTIONAREA">Cache lista</field>
+      <field name="DELETED">Alla cachen raderas.</field>
+      <field name="CACHELIST">Klicka här för att LIST cache</field>
+      <field name="DELETEBUTTON">Klicka här för att radera alla cache</field>     
+      <field name="HELP">Radera alla cache från nuvarande plats.</field>
+   </row>
 </anydataset>

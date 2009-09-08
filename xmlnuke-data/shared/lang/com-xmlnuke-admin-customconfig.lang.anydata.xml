@@ -21,4 +21,18 @@
       <field name="UPDATED">Konfiguration wurde aktualisiert.</field>
       <field name="FORMTITLE">XMLNuke-Einstellungen</field>
    </row>
+   <row>
+      <field name="LANGUAGE">fr-fr</field>
+      <field name="TITLE">Installation personnalisée</field>
+      <field name="DESCRIPTION">Cette option permet aux utilisateurs d'afficher les paramètres globale et l'actualisation des paramètres spécifiques pour le site actuel.</field>
+      <field name="UPDATED">Mise à jour config.</field>
+      <field name="FORMTITLE">Mise à jour config.</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">sv-se</field>
+      <field name="TITLE">Anpassad installation</field>
+      <field name="DESCRIPTION">Här alternativet kan användaren visa globala inställningar och uppdatera särskilda inställningar för den aktuella webbplatsen.</field>
+      <field name="UPDATED">Config Uppdaterad.</field>
+      <field name="FORMTITLE">XMLNuke Config Värden</field>
+   </row>
 </anydataset>

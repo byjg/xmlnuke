@@ -45,4 +45,34 @@
     <field name="RETRYVALIDATE">Um eine E-Mail zu senden müssen Sie den Text aus dem nebenstehenden Bild korrekt eingeben. Groß- und Kleinschreibung beachten.</field>
     <field name="RETRY">Wiederholen</field>
   </row>
+  <row>
+    <field name="LANGUAGE">fr-fr</field>
+    <field name="TITLE">XMLNuke email envoyer à partir de {0} - Réponse</field>
+    <field name="ABSTRACT">XMLNuke email envoyer à partir de {0}</field>
+    <field name="TITRESP">Mail envoyer la réponse demande</field>
+    <field name="ERRORBLANK">est vide</field>
+    <field name="ERRORINVALID">est invalide</field>
+    <field name="FLDNAME">Nom</field>
+    <field name="FLDEMAIL">	E-Mail</field>
+    <field name="FLDSUBJECT">Sujet</field>
+    <field name="MSGERROR">Les erreurs suivantes ont été trouvés. S'il vous plaît les corriger</field>
+    <field name="MSGOK">E-mail a été envoyé. Vous recevrez une copie de ce courrier.</field>
+    <field name="RETRYVALIDATE">Afin d'envoyer suis Email Vous devez entrer le texte dans la boîte de montre correctement. Ceci est la casse.</field>
+    <field name="RETRY">Réessayer</field>
+  </row>
+  <row>
+    <field name="LANGUAGE">sv-se</field>
+    <field name="TITLE">XMLNuke skicka e-post från {0} - Response</field>
+    <field name="ABSTRACT">XMLNuke skicka e-post från {0}</field>
+    <field name="TITRESP">Mail Skicka förfrågan svar</field>
+    <field name="ERRORBLANK">är tom</field>
+    <field name="ERRORINVALID">är ogiltig</field>
+    <field name="FLDNAME">Namn</field>
+    <field name="FLDEMAIL">e-post</field>
+    <field name="FLDSUBJECT">Ämne</field>
+    <field name="MSGERROR">Följande fel hittades. Korrigera dem</field>
+    <field name="MSGOK">-Postmeddelandet har skickats. Du kommer att få en kopia av detta mail.</field>
+    <field name="RETRYVALIDATE">För att skicka mig e-post måste du skriva in texten visade i rutan korrekt. Detta är skiftlägeskänsligt.</field>
+    <field name="RETRY">Retry</field>
+  </row>
 </anydataset>

@@ -26,4 +26,22 @@
       <field name="NODEALIAS">Knoten-Pseudonym: </field>
       <field name="NOTE">Es ist folgende Standard-Konfiguration implementiert: Knoten-Titel = /page/meta/title, Knoten-Zusammenfassung = /page/meta/abstract</field>
    </row>
+   <row>
+      <field name="LANGUAGE">fr-fr</field>
+      <field name="TITLE">Gérer Résultats de la recherche</field>
+      <field name="DESCRIPTION">À gérer les titres et les résumés figurant dans les résultats de recherche, personnalisation de XML dans tous les styles.</field>
+      <field name="NODETITLE">Noeud Titre:</field>
+      <field name="NODEABSTRACT">Noeud Résumé:</field>
+      <field name="NODEALIAS">Noeud Alias:</field>
+      <field name="NOTE">Il ya une recherche intégrée de configuration définie par: Node Title = /page/meta/title, Node Résumé Value = /page/meta/abstract</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">sv-se</field>
+      <field name="TITLE">Hantera Search Results</field>
+      <field name="DESCRIPTION">Hantera rubriker och sammanfattningar som anges i sökresultaten Anpassa för XML i alla stilar.</field>
+      <field name="NODETITLE">Nod Titel:</field>
+      <field name="NODEABSTRACT">Nod Sammanfattning:</field>
+      <field name="NODEALIAS">Nod Alias:</field>
+      <field name="NOTE">Det finns en inbyggd sökning config definieras av: Node Titel = /page/meta/title, Node Abstract Value = /page/meta/abstract</field>
+   </row>
 </anydataset>

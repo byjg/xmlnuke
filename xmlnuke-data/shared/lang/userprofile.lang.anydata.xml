@@ -53,4 +53,40 @@
       <field name="OTHERROLE">Zugehörige Funktion(en):</field>
       <field name="CUSTOMFIELDS">Spezifische Felder</field>
    </row>
+   <row>
+      <field name="LANGUAGE">fr-fr</field>
+      <field name="TITLE">Profil d'utilisateur: {0}</field>
+      <field name="UPDATEOK">Mise à jour.</field>
+      <field name="CHANGEPASSOLDPASSFAILED">Mot de passe actuel est incorrecte.</field>
+      <field name="CHANGEPASSNOTMATCH">Nouveau mot de passe ne correspondent pas.</field>
+      <field name="CHANGEPASSOK">Mot de passe mis à jour.</field>
+      <field name="UPDATETITLE">Mise à jour de mes renseignements personnels</field>
+      <field name="CHANGEPASSTITLE">Changer mot de passe</field>
+      <field name="CHANGEPASSOLDPASS">Mot de passe actuel: </field>
+      <field name="CHANGEPASSNEWPASS">Nouveau mot de passe: </field>
+      <field name="CHANGEPASSNEWPASS2">	Retype new password: </field>
+      <field name="CHANGEPASSBUTTON">Changer mot de passe</field>
+      <field name="OTHERTITLE">Autres informations</field>
+      <field name="OTHERSITE">Sites connexes: </field>
+      <field name="OTHERROLE">Rôles connexes: </field>
+      <field name="CUSTOMFIELDS">Champs personnalisés</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">sv-se</field>
+      <field name="TITLE">Användarprofil: {0}</field>
+      <field name="UPDATEOK">Uppdaterad.</field>
+      <field name="CHANGEPASSOLDPASSFAILED">Nuvarande lösenord är fel.</field>
+      <field name="CHANGEPASSNOTMATCH">Nytt lösenord matchar inte.</field>
+      <field name="CHANGEPASSOK">Lösenord uppdateras.</field>
+      <field name="UPDATETITLE">Uppdatera mina personuppgifter</field>
+      <field name="CHANGEPASSTITLE">Byt lösenord</field>
+      <field name="CHANGEPASSOLDPASS">Nuvarande lösenord: </field>
+      <field name="CHANGEPASSNEWPASS">Nytt lösenord: </field>
+      <field name="CHANGEPASSNEWPASS2">Upprepa det nya lösenordet: </field>
+      <field name="CHANGEPASSBUTTON">Byt lösenord</field>
+      <field name="OTHERTITLE">Övrig information</field>
+      <field name="OTHERSITE">Related sites: </field>
+      <field name="OTHERROLE">Roller: </field>
+      <field name="CUSTOMFIELDS">Custom Fields</field>
+   </row>
 </anydataset>

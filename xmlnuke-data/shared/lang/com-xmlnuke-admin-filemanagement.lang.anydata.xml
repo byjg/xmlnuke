@@ -18,4 +18,16 @@
       <field name="DESCRIPTION">Erstellen Sie Sicherungen von Projekten.</field>
       <field name="FILEMANAGEMENT">Dateien verwalten</field>
    </row>
+   <row>
+      <field name="LANGUAGE">fr-fr</field>
+      <field name="TITLE">Sauvegarde des projets</field>
+      <field name="DESCRIPTION">Module pour créer des sauvegardes des projets.</field>
+      <field name="FILEMANAGEMENT">Gestion de fichiers</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">sv-se</field>
+      <field name="TITLE">Backup av projekt</field>
+      <field name="DESCRIPTION">Modul för att skapa säkerhetskopior av projekt.</field>
+      <field name="FILEMANAGEMENT">Filhantering</field>
+   </row>
 </anydataset>

@@ -39,4 +39,30 @@
       <field name="FORMTITLE">{0}</field>
       <field name="LANGUAGEFILE">Dateiname:</field>
    </row>
+   <row>
+      <field name="LANGUAGE">fr-fr</field>
+      <field name="TITLE">Edit Language Files</field>
+      <field name="DESCRIPTION">Utilisez cette option pour modifier la langue de fichiers utilisés dans les modules.</field>
+      <field name="LANGUAGEMENU">New Language File</field>
+      <field name="WORKINGAREA">Module Langues disponibles</field>
+      <field name="MESSAGEWORKING">Sélectionnez le module de langue que vous souhaitez modifier.</field>
+      <field name="MESSAGEWORKINGSHARED">Shared Language Files</field>
+      <field name="EDITINGAREA">Modifier la langue</field>
+      <field name="SAVED">Sauvé.</field>
+      <field name="FORMTITLE">Editer le fichier "{0}"</field>
+      <field name="LANGUAGEFILE">Langue du fichier:</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">sv-se</field>
+      <field name="TITLE">Edit Language Files</field>
+      <field name="DESCRIPTION">Använd detta alternativ för att ändra språk filer som används i moduler.</field>
+      <field name="LANGUAGEMENU">New Språkfil</field>
+      <field name="WORKINGAREA">Modul tillgängliga språk</field>
+      <field name="MESSAGEWORKING">Välj modulen språk du vill redigera.</field>
+      <field name="MESSAGEWORKINGSHARED">Delade Language Files</field>
+      <field name="EDITINGAREA">Ändra språk</field>
+      <field name="SAVED">Sparas.</field>
+      <field name="FORMTITLE">Redigerar File "{0}"</field>
+      <field name="LANGUAGEFILE">Språkfil:</field>
+   </row>
 </anydataset>

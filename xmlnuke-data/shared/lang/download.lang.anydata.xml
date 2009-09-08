@@ -49,5 +49,39 @@
       <field name="SELECTFILE">Wählen Sie aus den folgenden Dateien</field>
       <field name="SELECTFORDOWNLOAD">Herunterladen</field>
       <field name="MOREINFO">Mehr Informationen</field>
+   </row> 
+   <row>
+      <field name="LANGUAGE">fr-fr</field>
+      <field name="TITLE">XmlNuke - Zone de Téléchargement</field>
+      <field name="ABSTRACT">Zone de Téléchargement</field>
+      <field name="BLOCKTITLE">Zone de Téléchargement</field>
+      <field name="FORMTITLE">Télécharger Informations</field>
+      <field name="FORMWARNING">Ces champs ne sont pas requis pour télécharger votre fichier.</field>
+      <field name="FORMFILE">Nom du fichier: </field>
+      <field name="FORMSUBMIT">Télécharger maintenant</field>
+      <field name="EMAILMESSAGE">{0} téléchargés. Juste un message d'information.</field>
+      <field name="EMAILSUBJECT">[Xmlnuke Télécharger] {0} Téléchargé</field>
+      <field name="FILEERROR">== Fichier non trouvé ==</field>
+      <field name="SELECTCATEGORY">Sélectionnez une catégorie ci-dessous:</field>
+      <field name="SELECTFILE">Sélectionnez un fichier ci-dessous:</field>
+      <field name="SELECTFORDOWNLOAD">Télécharger ce fichier</field>
+      <field name="MOREINFO">Plus d'informations</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">sv-se</field>
+      <field name="TITLE">XmlNuke - Download Area</field>
+      <field name="ABSTRACT">Hämtningsområdet</field>
+      <field name="BLOCKTITLE">Hämtningsområdet</field>
+      <field name="FORMTITLE">Hämta Informations</field>
+      <field name="FORMWARNING">Dessa fält behöver inte ladda ner filen.</field>
+      <field name="FORMFILE">Filnamn: </field>
+      <field name="FORMSUBMIT">Hämta nu</field>
+      <field name="EMAILMESSAGE">{0} Downloaded. Bara ett informationsmeddelande.</field>
+      <field name="EMAILSUBJECT">[Xmlnuke Download] {0} Downloaded</field>
+      <field name="FILEERROR">== File not found ==</field>
+      <field name="SELECTCATEGORY">Välj en kategori nedan:</field>
+      <field name="SELECTFILE">Välj en fil nedan:</field>
+      <field name="SELECTFORDOWNLOAD">Hämta filen</field>
+      <field name="MOREINFO">Mer information</field>
    </row>
 </anydataset>

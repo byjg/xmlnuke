@@ -51,4 +51,38 @@
     <field name="DOCFOUND">{0} Dokument(e) gefunden.</field>
     <field name="SUBMIT">Suche</field>
   </row>
+  <row>
+    <field name="LANGUAGE">fr-fr</field>
+    <field name="TITLE">Rechercher sur le site {0}</field>
+    <field name="ABSTRACT">Rechercher des mots dans le site Web</field>
+    <field name="PAGETITLE">Rechercher des mots dans le site Web</field>
+    <field name="PAGETEXT">Recherche de l'explication des mots</field>
+    <field name="CAPTION">Recherche</field>
+    <field name="BLOCKSEARCH">Filtrer la recherche</field>
+    <field name="txtSearch">Rechercher: </field>
+    <field name="chkAll">Rechercher un ou plusieurs mots</field>
+    <field name="BLOCKRESULT">Résultat de la recherche</field>
+    <field name="NOTITLE">Sans titre</field>
+    <field name="VIEWXML">XML</field>
+    <field name="NOTFOUND">Aucun document n'a été trouvé.</field>
+    <field name="DOCFOUND">{0} documents ont été trouvés.</field>
+    <field name="SUBMIT">Envoyer</field>
+  </row>
+  <row>
+    <field name="LANGUAGE">sv-se</field>
+    <field name="TITLE">Search Site{0}</field>
+    <field name="ABSTRACT">Sök efter ord på webbplatsen</field>
+    <field name="PAGETITLE">Sök efter ord på webbplatsen</field>
+    <field name="PAGETEXT">Sök efter ord förklaring</field>
+    <field name="CAPTION">Söka</field>
+    <field name="BLOCKSEARCH">Sökfilter</field>
+    <field name="txtSearch">Search For: </field>
+    <field name="chkAll">Sök ett eller flera ord</field>
+    <field name="BLOCKRESULT">Sökresultat</field>
+    <field name="NOTITLE">No Title</field>
+    <field name="VIEWXML">XML</field>
+    <field name="NOTFOUND">Inga dokument hittades.</field>
+    <field name="DOCFOUND">{0} dokument hittades.</field>
+    <field name="SUBMIT">Skicka in</field>
+  </row>
 </anydataset>

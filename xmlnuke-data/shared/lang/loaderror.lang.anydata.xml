@@ -35,4 +35,28 @@
     <field name="404">Modul wurde nicht gefunden.</field>
     <field name="200">Fehlender Benutzer.</field>
   </row>
+  <row>
+    <field name="LANGUAGE">fr-fr</field>
+    <field name="TITLENOTFOUND">Le module demandé introuvable.</field>
+    <field name="TITLEERRORMESSAGE">Module provoqué une erreur inattendue.</field>
+    <field name="MESSAGE">Le module demandé "{0}" a causé une erreur. Voir ci-dessous pour plus d'information.</field>
+    <field name="ORIGINALMESSAGE">Original Message d'erreur: {0}</field>
+    <field name="FINDMESSAGE">Relatif Message d'erreur: {0}</field>
+    <field name="GOBACK">Retour à la page précédente</field>
+    <field name="SHOWSTACKTRACE">Voir la trace de la pile</field>
+    <field name="404">Module non trouvé.</field>
+    <field name="200">Missing utilisateur.</field>
+  </row>
+  <row>
+    <field name="LANGUAGE">sv-se</field>
+    <field name="TITLENOTFOUND">Modul Requested hittades inte.</field>
+    <field name="TITLEERRORMESSAGE">Modul orsakade ett oväntat fel.</field>
+    <field name="MESSAGE">Den begärda modulen "{0}" orsakade ett fel. Se nedan för mer information.</field>
+    <field name="ORIGINALMESSAGE">Ursprungliga felmeddelandet: {0}</field>
+    <field name="FINDMESSAGE">Relaterade Felmeddelande: {0}</field>
+    <field name="GOBACK">Återgå till föregående sida</field>
+    <field name="SHOWSTACKTRACE">Visa Stackspårning</field>
+    <field name="404">Modulen hittades inte.</field>
+    <field name="200">Missing användare.</field>
+  </row>
 </anydataset>

@@ -24,4 +24,20 @@
       <field name="NEWXML">Neues XML-Dokument</field>
       <field name="NEWGROUP">Neue XML-Gruppe</field>
    </row>
+   <row>
+      <field name="LANGUAGE">fr-fr</field>
+      <field name="TITLE">Gérer des documents XML</field>
+      <field name="DESCRIPTION">Sélectionnez dans la zone de travail de l'action appropriée ayant trait aux documents XML.</field>
+      <field name="EDITALLXML">Modifier XML par défaut</field>
+      <field name="NEWXML">Nouveau document XML</field>
+      <field name="NEWGROUP">Nouveau Groupe XML</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">sv-se</field>
+      <field name="TITLE">Hantera XML-dokument</field>
+      <field name="DESCRIPTION">Välj i arbetsområdet rätt åtgärder relaterade till XML-dokument.</field>
+      <field name="EDITALLXML">Edit default XML</field>
+      <field name="NEWXML">Nya XML-dokument</field>
+      <field name="NEWGROUP">Nya XML Group</field>
+   </row>
 </anydataset>

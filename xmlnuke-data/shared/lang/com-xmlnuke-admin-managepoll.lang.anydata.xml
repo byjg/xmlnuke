@@ -102,4 +102,72 @@
       <field name="AVAILABLEANSWER">Liste der verfügbaren Antworten</field>
       <field name="CONFIGCREATED">Konfiguration erstellt!</field>
    </row>
+   <row>
+      <field name="LANGUAGE">fr-fr</field>
+      <field name="TITLE">Gérer Poll</field>
+      <field name="DESCRIPTION">Ce module vous permet de visualiser, créer et éditer des sondages à l'intérieur XMLNuke.</field>
+      <field name="MENULISTPOLLS">Disponible Sondages</field>
+      <field name="MENUMANAGEDBCONN">Gérer DB Conn</field>
+      <field name="RESULTSQL">Résultat de l'exécution SQL</field>
+      <field name="GOTERROR">J'ai obtenu l'erreur la suite d'erreur: "{0}".</field>
+      <field name="FIRSTTIMEMESSAGE">Il s'agit de votre première fois en utilisant scrutin. Vous devez définir l'emplacement de XMLNuke va stocker les données relatives aux sondages. Vous devez choisir entre AnyDataSet base de données ou des fichiers XML.</field>
+      <field name="CREATESETUP">Préciser Sondage Lieu de stockage</field>
+      <field name="NOTUSEDB">AnyDataSet stocker dans des fichiers XML</field>
+      <field name="FORMCONN">Base de données de chaîne de connexion</field>
+      <field name="TABLENAME_POLL">Nom de la table "sondage".</field>
+      <field name="TABLENAME_ANSWER">Nom de la table «Répondre».</field>
+      <field name="TABLENAME_LASTIP">Nom de la table "IP Last".</field>
+      <field name="TABLE_SUFFIX">Suffixe à ajouter à SQL</field>
+      <field name="CREATESETUPBTN">Créer le programme d'installation</field>
+      <field name="YES">Oui</field>
+      <field name="NO">Non</field>
+      <field name="POLLNAME">Sondage Nom</field>
+      <field name="POLLLANG">Sondage Langue</field>
+      <field name="POLLQUESTION">Question</field>
+      <field name="POLLMULTIPLE">Peut répondre à des multiples?</field>
+      <field name="POLLSHOWRESULTS">Peut montrer des résultats?</field>
+      <field name="POLLACTIVE">Sondage Actif?</field>
+      <field name="SHOWEDITANSWERS">Afficher / modifier Réponses</field>
+      <field name="AVAILABLEPOLLS">Disponible Sondages Liste</field>
+      <field name="ANSWERCODE">Réponse Code</field>
+      <field name="SHORTTEXT">Réponse courte (pour le graphique)</field>
+      <field name="ANSWERTEXT">Full Réponse</field>
+      <field name="ANSWERVOTES">Qté votes</field>
+      <field name="AVAILABLEANSWER">Disponible réponses Liste</field>
+      <field name="CONFIGCREATED">Configuration Créé!</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">sv-se</field>
+      <field name="TITLE">Hantera Poll</field>
+      <field name="DESCRIPTION">Detta moduler kan du visa, skapa och redigera omröstningar inne XMLNuke.</field>
+      <field name="MENULISTPOLLS">Tillgängliga Polls</field>
+      <field name="MENUMANAGEDBCONN">Hantera DB Conn</field>
+      <field name="RESULTSQL">Resultat av verkställande SQL</field>
+      <field name="GOTERROR">Jag fick felet att följa felet: "{0}".</field>
+      <field name="FIRSTTIMEMESSAGE">Detta är första gången du använder poll. Du måste ange var de XMLNuke kommer att lagra uppgifter om omröstningar. Du måste välja mellan databas eller anydataset XML-filer.</field>
+      <field name="CREATESETUP">Definiera Poll Förvaringsplats</field>
+      <field name="NOTUSEDB">Förvaras i AnyDataSet XML-filer</field>
+      <field name="FORMCONN">Database Connection String</field>
+      <field name="TABLENAME_POLL">Namn på tabellen "Poll".</field>
+      <field name="TABLENAME_ANSWER">Namn på tabellen "Svara".</field>
+      <field name="TABLENAME_LASTIP">Namn på tabellen "Last IP".</field>
+      <field name="TABLE_SUFFIX">Suffix för att lägga till SQL</field>
+      <field name="CREATESETUPBTN">Skapa Setup</field>
+      <field name="YES">Ja</field>
+      <field name="NO">Nej</field>
+      <field name="POLLNAME">Poll Namn</field>
+      <field name="POLLLANG">Poll Language</field>
+      <field name="POLLQUESTION">Fråga</field>
+      <field name="POLLMULTIPLE">Kan flera svar?</field>
+      <field name="POLLSHOWRESULTS">Kan visa resultat?</field>
+      <field name="POLLACTIVE">Poll Aktiv?</field>
+      <field name="SHOWEDITANSWERS">Visa / Ändra Answers</field>
+      <field name="AVAILABLEPOLLS">Tillgängliga Polls List</field>
+      <field name="ANSWERCODE">Svarskod</field>
+      <field name="SHORTTEXT">Kort svar (För diagram)</field>
+      <field name="ANSWERTEXT">Full Svar</field>
+      <field name="ANSWERVOTES">Antal röster</field>
+      <field name="AVAILABLEANSWER">Tillgängliga Svar List</field>
+      <field name="CONFIGCREATED">Configuration skapad!</field>
+   </row>
 </anydataset>

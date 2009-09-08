@@ -42,4 +42,32 @@
       <field name="PREVIEWPAGE">Vorschau dieser Seite</field>
       <field name="NEWPAGE">Neue Seite erstellen</field>
    </row>
+   <row>
+      <field name="LANGUAGE">fr-fr</field>
+      <field name="TITLE">Modifier XSLT Pages</field>
+      <field name="DESCRIPTION">Pages XSLT sont utilisés pour format de sortie XML.</field>
+      <field name="SAVED">XSLT document enregistré.</field>
+      <field name="CONFIRMDELETE">Cliquez ici pour confirmer supprimer '{0}' document XSLT</field>
+      <field name="DELETED">XSLT document supprimé.</field>
+      <field name="SELECTPAGE">Sélectionnez le modèle XSL vous souhaitez modifier ou créer un nouveau ci-dessous.</field>
+      <field name="EDITXSLMENU">Modifier XSLT dans {0}</field>
+      <field name="XSLBOX">Montage XSLT Nom: </field>
+      <field name="LANGUAGEBOX">Langue:</field>
+      <field name="PREVIEWPAGE">Extrait cette page</field>
+      <field name="NEWPAGE">Créer nouvelle page</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">sv-se</field>
+      <field name="TITLE">Redigera XSLT Pages</field>
+      <field name="DESCRIPTION">XSLT Pages används för att formatera XML-utdata.</field>
+      <field name="SAVED">XSLT-dokument som sparats.</field>
+      <field name="CONFIRMDELETE">Klicka här för att bekräfta bort '(0)' XSLT-dokument</field>
+      <field name="DELETED">XSLT Document utgår.</field>
+      <field name="SELECTPAGE">Markera XSL mall du vill redigera eller skapa en ny en nedan.</field>
+      <field name="EDITXSLMENU">Redigera XSLT in (0)</field>
+      <field name="XSLBOX">Redigerar XSLT Namn: </field>
+      <field name="LANGUAGEBOX">Språk:</field>
+      <field name="PREVIEWPAGE">Förhandsgranska sidan</field>
+      <field name="NEWPAGE">Skapa ny sida</field>
+   </row>
 </anydataset>

@@ -30,4 +30,24 @@
       <field name="VOTECOMPUTED">Vielen Dank für Ihre Stimme!</field>
       <field name="CANNOTSHOWRESULTS">Das Ergebnis kann nicht angezeigt werden. Bitte entschuldigen Sie!</field>
    </row>
+   <row>
+      <field name="LANGUAGE">fr-fr</field>
+      <field name="ERROR_POLLNOTSETUP">Erreur! Le sondage n'est pas configuré correctement. Contactez votre administrateur système pour résoudre ce problème.</field>
+      <field name="SENDBTN">Vote</field>
+      <field name="VIEWRESULTSBTN">Voir les résultats</field>
+      <field name="POLLENDED">Ce sondage est clos</field>
+      <field name="ERROR_POLLEMPTY">Ce sondage est vide ou n'existe pas.</field>
+      <field name="VOTECOMPUTED">Merci. Votre vote est calculé.</field>
+      <field name="CANNOTSHOWRESULTS">Désolé. Je ne peux pas montrer les résultats pour vous.</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">sv-se</field>
+      <field name="ERROR_POLLNOTSETUP">Fel! Undersökningen är inte setup ordentligt. Kontakta systemadministratören för att åtgärda detta.</field>
+      <field name="SENDBTN">Omröstning</field>
+      <field name="VIEWRESULTSBTN">Visa resultat</field>
+      <field name="POLLENDED">Denna omröstning är stängd</field>
+      <field name="ERROR_POLLEMPTY">Denna enkät är tom eller inte existerar.</field>
+      <field name="VOTECOMPUTED">Tack. Din röst beräknas.</field>
+      <field name="CANNOTSHOWRESULTS">Ledsen. Jag kan inte visa resultaten för dig.</field>
+   </row>
 </anydataset>

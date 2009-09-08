@@ -18,4 +18,16 @@
       <field name="DESCRIPTION">Verwalten Sie die E-Mail Adressen, die im E-Mail Sende-Modul verwendet werden.<br/><br/>Mit dieser Funktion können Sie Ihre richtige E-Mail Adresse vor Web-Robotern verstecken.</field>
       <field name="DESTINATIONBOX">Pseudonym-ID: </field>
    </row>
+   <row>
+      <field name="LANGUAGE">fr-fr</field>
+      <field name="TITLE">Gérer Email Aliases</field>
+      <field name="DESCRIPTION">Utilisez cette option pour gérer les emails utilisés dans le module Send Email. Cette fonctionnalité est utile à cacher la vraie adresse email de robots sur le Web.</field>
+      <field name="DESTINATIONBOX">Destination Id:</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">sv-se</field>
+      <field name="TITLE">Hantera Email Alias</field>
+      <field name="DESCRIPTION">Använd detta alternativ för att hantera e-post används i Send Email modulen. Denna funktion är användbar gömmer sig den riktiga e-postadress från Web Robots.</field>
+      <field name="DESTINATIONBOX">Destination Id:</field>
+   </row>
 </anydataset>

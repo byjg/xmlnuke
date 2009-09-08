@@ -63,4 +63,46 @@
     <field name="TYPETEXTFROMIMAGE">Sicherheitsabfrage: </field>
     <field name="OBJECTIMAGEINVALID">Sie haben die Sicherheitsabfrage nicht oder falsch beantwortet. Bitte gehen Sie zurück und überprüfen Sie die Eingabe.</field>
   </row>
+  <row>
+    <field name="LANGUAGE">fr-fr</field>
+    <field name="TITLE">Envoyer cette page à mon ami de {0}</field>
+    <field name="ABSTRACT">Envoyer cette page à mon ami de {0}</field>
+    <field name="MSGOK">Le message a été envoyé</field>
+    <field name="MSGERROR">Une erreur est survenue</field>
+    <field name="MSGFILL">Remplissez le formulaire</field>
+    <field name="CAPTION">Envoyer cette page à un ami</field>
+    <field name="INFO">Cette page vous envoyer un lien à la page {0} à votre ami. S'il vous plaît, remplissez tous les renseignements requis.</field>
+    <field name="FLDNAME">Votre nom</field>
+    <field name="FLDEMAIL">Votre adresse e-mail</field>
+    <field name="FLDTONAME">Nom de votre ami</field>
+    <field name="FLDTOEMAIL">Your Friend's E-Mail</field>
+    <field name="ERROR">Erreur ... Quelques données sur le terrain est incomplète. Remplissez tous les champs.</field>
+    <field name="ERRORINVALID">Erreur ... Vous ne pouvez pas appeler cette page directement sans referer page.</field>
+    <field name="SENT">Your message has been sent to {0}.</field>
+    <field name="MESSAGE">ATTENTION: Message envoyé à partir du site web \nPour: {0} \nEmail: {1} \n\nLe URL l'adresse indiquée ci-dessus vous a été envoyé par votre ami. \n\n{2} \n\nFrom: {3} \nMessage Custom: {4} </field>
+    <field name="SUBJECT">Lien envoyé</field>
+    <field name="TYPETEXTFROMIMAGE">Tapez des nombres ci-dessous: </field>
+    <field name="OBJECTIMAGEINVALID">Les chiffres que vous les types de ciblage na. Vous devez saisir le texte correctement. </field>
+  </row>
+  <row>
+    <field name="LANGUAGE">sv-se</field>
+    <field name="TITLE">Skicka denna sida till min vän från {0}</field>
+    <field name="ABSTRACT">Skicka denna sida till min vän från {0}</field>
+    <field name="MSGOK">Meddelande har skickats</field>
+    <field name="MSGERROR">Ett fel uppstod</field>
+    <field name="MSGFILL">Fyll i formuläret</field>
+    <field name="CAPTION">Skicka denna sida till en vän</field>
+    <field name="INFO">Denna sida kommer att skicka en länk till sida {0} till din vän. Fyll i all nödvändig information.</field>
+    <field name="FLDNAME">Your Name</field>
+    <field name="FLDEMAIL">Din e-post</field>
+    <field name="FLDTONAME">Din väns namn</field>
+    <field name="FLDTOEMAIL">Din väns e-post</field>
+    <field name="ERROR">Oops ... Vissa fält data är ofullständiga. Fyll i alla fält.</field>
+    <field name="ERRORINVALID">Oops ... Du kan inte kalla denna sida direkt utan en sida referer.</field>
+    <field name="SENT">Ditt meddelande har skickats till {0}.</field>
+    <field name="MESSAGE">OBSERVERA: Meddelande skickas från webbplatsen \nTO: {0} \nEmail:{1} \n\nDet URL-adress som anges ovan skickades till dig av din vän. \n\n {2} \n\nFrån: {3} \nCustom Meddelande: {4}</field>
+    <field name="SUBJECT">Länk sände</field>
+    <field name="TYPETEXTFROMIMAGE">Typ nedan: </field>
+    <field name="OBJECTIMAGEINVALID">Siffrorna du typer didnt match. Du måste skriva texten på rätt sätt.  </field>
+  </row>
 </anydataset>

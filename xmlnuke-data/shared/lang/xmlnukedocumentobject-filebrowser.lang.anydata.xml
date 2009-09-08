@@ -87,4 +87,62 @@
       <field name="FOLDEREDIT">Verzeichnis bearbeiten</field>
       <field name="IMAGE">Bild</field>
    </row>
+   <row>
+      <field name="LANGUAGE">fr-fr</field>
+      <field name="TITLE">Sauvegarde des projets</field>
+      <field name="DESCRIPTION">Module pour créer des sauvegardes des projets.</field>
+      <field name="FILEBROWSER">Explorateur de fichiers</field>
+      <field name="SUBFOLDERS">Sous Dossiers</field>
+      <field name="FILES">Fichiers</field>
+      <field name="FILE">fichier</field>
+      <field name="NEWDIRECTORY">Nouveau répertoire</field>
+      <field name="NEWFOLDERNOTPERMITTED">Vous n'avez pas l'autorisation de créer de nouveaux dossiers</field>
+      <field name="NEWFILENOTPERMITTED">Vous n'avez pas l'autorisation de créer de nouveaux fichiers</field>
+      <field name="UPLOADNOTPERMITTED">Vous n'avez pas la permission de télécharger des fichiers</field>
+      <field name="EXTENSIONNOTPERMITTED">Ce fichier n'est pas PERMITED</field>
+      <field name="EXTENSIONEDITNOTPERMITTED">Vous n'avez pas la permission de modifier ce fichier</field>
+      <field name="EDITFOLDERNOTPERMITTED">Vous n'avez pas la permission de modifier des dossiers</field>
+      <field name="EDITFILENOTPERMITTED">Vous n'avez pas la permission d'éditer des fichiers</field>
+      <field name="VIEWFOLDERNOTPERMITTED">Vous n'avez pas la permission d'afficher les dossiers</field>
+      <field name="VIEWFILENOTPERMITTED">Vous n'avez pas la permission d'afficher les fichiers</field>
+      <field name="DELETEFOLDERNOTPERMITTED">Vous ne disposez pas de l'autorisation de supprimer des dossiers</field>
+      <field name="DELETEFILENOTPERMITTED">Vous ne disposez pas de l'autorisation de supprimer des fichiers</field>
+      <field name="NEWFILE">Nouveau fichier</field>
+      <field name="NEWNAME">Nouveau nom</field>
+      <field name="EDITFILE">Modifier le fichier</field>
+      <field name="UPLOAD">Upload</field>
+      <field name="SEND">Envoyer</field>
+      <field name="SENDED">envoyé</field>
+      <field name="FOLDEREDIT">Modifier le dossier</field>
+      <field name="IMAGE">Image</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">sv-se</field>
+      <field name="TITLE">Backup av projekt</field>
+      <field name="DESCRIPTION">Modul för att skapa säkerhetskopior av projekt.</field>
+      <field name="FILEBROWSER">Filbläddraren</field>
+      <field name="SUBFOLDERS">Undermappar</field>
+      <field name="FILES">Filer</field>
+      <field name="FILE">fil</field>
+      <field name="NEWDIRECTORY">Ny katalog</field>
+      <field name="NEWFOLDERNOTPERMITTED">Du har inte behörighet att skapa nya mappar</field>
+      <field name="NEWFILENOTPERMITTED">Du har inte behörighet att skapa nya filer</field>
+      <field name="UPLOADNOTPERMITTED">Du har inte behörighet att ladda upp filer</field>
+      <field name="EXTENSIONNOTPERMITTED">Denna fil är inte permited</field>
+      <field name="EXTENSIONEDITNOTPERMITTED">Du har inte behörighet att redigera den här filen</field>
+      <field name="EDITFOLDERNOTPERMITTED">Du har inte behörighet att redigera mappar</field>
+      <field name="EDITFILENOTPERMITTED">Du har inte behörighet att redigera filer</field>
+      <field name="VIEWFOLDERNOTPERMITTED">Du har inte behörighet att visa mappar</field>
+      <field name="VIEWFILENOTPERMITTED">Du har inte behörighet att visa filer</field>
+      <field name="DELETEFOLDERNOTPERMITTED">Du har inte behörighet att ta bort mappar</field>
+      <field name="DELETEFILENOTPERMITTED">Du har inte behörighet att ta bort filer</field>
+      <field name="NEWFILE">Ny fil</field>
+      <field name="NEWNAME">Nytt namn</field>
+      <field name="EDITFILE">Redigera fil</field>
+      <field name="UPLOAD">Upload</field>
+      <field name="SEND">Skicka</field>
+      <field name="SENDED">skickat</field>
+      <field name="FOLDEREDIT">Edit Folder</field>
+      <field name="IMAGE">Bild</field>
+   </row>
 </anydataset>

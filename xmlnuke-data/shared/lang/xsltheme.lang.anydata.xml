@@ -20,4 +20,18 @@
     <field name="LISTPERSONAL">XSL in dieser Seite</field>
     <field name="LISTGENERIC">Allgemeine XSL-Vorlagen (alle Seiten)</field>
   </row>
+  <row>
+    <field name="LANGUAGE">fr-fr</field>
+    <field name="TITLE">XSL Theme Selector</field>
+    <field name="ABSTRACT">Choisir un thème XSL</field>
+    <field name="LISTPERSONAL">XSL dans votre site</field>
+    <field name="LISTGENERIC">Modèles génériques XSL (tous les sites)</field>
+  </row>
+  <row>
+    <field name="LANGUAGE">sv-se</field>
+    <field name="TITLE">XSL Theme Selector</field>
+    <field name="ABSTRACT">Välj en XSL tema</field>
+    <field name="LISTPERSONAL">XSL på din sida</field>
+    <field name="LISTGENERIC">Generic XSL Mallar (alla områden)</field>
+  </row>
 </anydataset>

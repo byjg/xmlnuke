@@ -54,4 +54,40 @@
       <field name="TEXT_REMOVED_FAIL_DIR">Beim Löschen der Ordner ist ein Fehler aufgetreten!</field>
       <field name="SITESLIST">Liste der Seiten</field>
    </row>
+   <row>
+      <field name="LANGUAGE">fr-fr</field>
+      <field name="TITLE">Sélectionnez le fonctionnement du site</field>
+      <field name="DESCRIPTION">Cette option de créer, sélectionner et supprimer des sites du référentiel XMLNuke.</field>
+      <field name="NOTIMPLEMENTED">Pas encore implémenté:(</field>
+      <field name="CURRENTSITE">Actuel du site est: [param: site].</field>
+      <field name="SELECTSITE">Sélectionnez un site à partir de sites disponibles ci-dessous.</field>
+      <field name="SELECTTHISSITE">Sélectionner ce site</field>
+      <field name="CREATEOFFLINE">Créer le contenu hors connexion</field>
+      <field name="CREATED">{0} créé.</field>
+      <field name="FORM_TITLE">Créer un nouveau site</field>
+      <field name="FORM_NEWSITE">Nouveau site nom: </field>
+      <field name="FORM_DEFAULTXSL">XSL par défaut Page: </field>
+      <field name="TEXT_REMOVED">Site supprimé réussie!</field>
+      <field name="TEXT_REMOVED_FAIL_FILE">Faute dans supprimer des fichiers dans des répertoires!</field>
+      <field name="TEXT_REMOVED_FAIL_DIR">Faute dans supprimer des répertoires!</field>
+      <field name="SITESLIST">Liste des sites</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">sv-se</field>
+      <field name="TITLE">Välj arbetsobjekt</field>
+      <field name="DESCRIPTION">Detta alternativ skapa, välja och ta bort webbplatser från XMLNuke slutförvaret.</field>
+      <field name="NOTIMPLEMENTED">Inte implementerats än: (</field>
+      <field name="CURRENTSITE">Nuvarande webbplats är: [param: site].</field>
+      <field name="SELECTSITE">Välj en sida från webbplatser tillgängliga nedan.</field>
+      <field name="SELECTTHISSITE">Markera webbplatsen</field>
+      <field name="CREATEOFFLINE">Skapa Offline Content</field>
+      <field name="CREATED">{0} skapas.</field>
+      <field name="FORM_TITLE">Skapa en ny webbplats</field>
+      <field name="FORM_NEWSITE">Nytt namn på webbplatsen: </field>
+      <field name="FORM_DEFAULTXSL">Standard XSL Sida: </field>
+      <field name="TEXT_REMOVED">Site utgår lyckad!</field>
+      <field name="TEXT_REMOVED_FAIL_FILE">Fel i radera filer i kataloger!</field>
+      <field name="TEXT_REMOVED_FAIL_DIR">Fel på ta bort kataloger!</field>
+      <field name="SITESLIST">List of Sites</field>
+   </row>
 </anydataset>

@@ -24,4 +24,20 @@
       <field name="INFO_USER">Benutzer: {0} ({1})</field>
       <field name="INFO_SITE">Aktive Seite: {0}</field>
    </row>
+   <row>
+      <field name="LANGUAGE">fr-fr</field>
+      <field name="CONTROLPANEL">Panneau de configuration</field>
+      <field name="CONTROLPANEL_HELP">Bienvenue au Groupe de contrôle XMLNuke.<br/><br/>Sélectionnez votre action de l'option de gauche.</field>      
+      <field name="BLOCKINFO_TITLE">Informations</field>
+      <field name="INFO_USER">User: {0} ({1})</field>
+      <field name="INFO_SITE">Sites sélectionnés: {0}</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">sv-se</field>
+      <field name="CONTROLPANEL">Kontrollpanelen</field>
+      <field name="CONTROLPANEL_HELP">Välkommen till XMLNuke Kontrollpanelen.<br/><br/>Välj din åtgärd från vänster alternativet.</field>      
+      <field name="BLOCKINFO_TITLE">Informations</field>
+      <field name="INFO_USER">User: {0} ({1})</field>
+      <field name="INFO_SITE">Valda webbplatser: {0}</field>
+   </row>
 </anydataset>

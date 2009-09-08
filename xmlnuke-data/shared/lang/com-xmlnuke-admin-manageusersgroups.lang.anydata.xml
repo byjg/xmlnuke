@@ -69,4 +69,51 @@
       <field name="EDITLIST_ROLES">Funktion</field>
       <field name="EDITLIST_SITES">Seite</field>
    </row>
+   <row>
+      <field name="LANGUAGE">fr-fr</field>
+      <field name="TITLE">Gérer les utilisateurs Rôles</field>
+      <field name="DESCRIPTION">Gérer les utilisateurs de rôles à partir de sites</field>
+      <field name="BLOCK_TITLE_NEW">Nouveau rôle</field>
+      <field name="BLOCK_TITLE_EDIT">Modifier Rôle</field>
+      <field name="BLOCK_TITLE_DELETE">Supprimer Rôle</field>
+      <field name="BLOCK_TITLE_LIST">Liste des Rôles</field>
+      <field name="CREATE_ROLE">Créer Rôle</field>
+      <field name="MSG_CREATE">Le nouveau rôle a été ajouté.</field>
+      <field name="MSG_EDITED">Rôle a été édité.</field>
+      <field name="MSG_ALREADYEXISTS">Cette fonction existe déjà dans la base de données.</field>
+      <field name="MSG_DELETED">Rôle a été supprimée.</field>
+      <field name="FORM_NAME">Rôles</field>
+      <field name="FORM_SELECTSITE">Sélectionnez un site:</field>
+      <field name="FORM_FROMSITE">Rôle à partir du site: </field>
+      <field name="FORM_ALLSITES">- Toute place --</field>
+      <field name="LINK_LISTROLES">Liste des rôles</field>
+      <field name="TEXT_ALLSITES">Rôle de n'importe quel site</field>
+      <field name="EDITLIST_TITLE">Liste Rôle à partir du site {0}</field>
+      <field name="EDITLIST_ROLES">Rôle</field>
+      <field name="EDITLIST_SITES">Site</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">sv-se</field>
+      <field name="TITLE">Hantera användare Roller</field>
+      <field name="DESCRIPTION">Hantera användare roller från webbplatser</field>
+      <field name="BLOCK_TITLE_NEW">New Role</field>
+      <field name="BLOCK_TITLE_EDIT">Edit Role</field>
+      <field name="BLOCK_TITLE_DELETE">Radera Role</field>
+      <field name="BLOCK_TITLE_LIST">Förteckning över de roller</field>
+      <field name="CREATE_ROLE">Skapa Role</field>
+      <field name="MSG_CREATE">New Role lades.</field>
+      <field name="MSG_EDITED">Roll ändrades.</field>
+      <field name="MSG_ALREADYEXISTS">Denna roll finns redan i databasen.</field>
+      <field name="MSG_DELETED">Roll raderades.</field>
+      <field name="FORM_NAME">Roller</field>
+      <field name="FORM_SELECTSITE">Välj sajt:</field>
+      <field name="FORM_FROMSITE">Roll från webbplatsen: </field>
+      <field name="FORM_ALLSITES">- Alla site --</field>
+      <field name="LINK_LISTROLES">Lista Roller</field>
+      <field name="TEXT_ALLSITES">Roll från alla platser</field>
+      <field name="EDITLIST_TITLE">Roll lista från platsen {0}</field>
+      <field name="EDITLIST_ROLES">Roll</field>
+      <field name="EDITLIST_SITES">Site</field>
+   </row>
+   
 </anydataset>

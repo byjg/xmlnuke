@@ -52,4 +52,38 @@
       <field name="TXT_AVAILABLE">{0} Verfügbar</field>
       <field name="TXT_USED">{0} Ausgewählt</field>
    </row>
+   <row>
+      <field name="LANGUAGE">fr-fr</field>
+      <field name="ERR_REQUIRED">{0} est obligatoire.</field>
+      <field name="ERR_INVALIDNUMBER">{0} est un nombre valide.</field>
+      <field name="ERR_FOUND">Le suivi des erreurs sont trouvées:</field>
+      <field name="MSG_NEW_SUCCESS">Les données ajoutées avec succès!</field>
+      <field name="MSG_EDIT_SUCCESS">Données mises à jour avec succès!</field>
+      <field name="MSG_DELETE_SUCCESS">Les données supprimées avec succès!</field>
+      <field name="MSG_NOCHANGE">Aucun changement n'a été fait!</field>
+      <field name="TITLE_NEW">{0} - NOUVEAU RECORD</field>
+      <field name="TITLE_EDIT">{0} - Modifier un enregistrement</field>
+      <field name="TITLE_DELETE">{0} - Supprimer l'enregistrement</field>
+      <field name="TITLE_VIEW">{0} - VIEW RECORD</field>
+      <field name="MSG_DONT_HAVEGRANT">Vous n'avez pas de subventions pour ce faire.</field>	  
+      <field name="TXT_AVAILABLE">{0} Disponible</field>
+      <field name="TXT_USED">{0} Sélection</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">sv-se</field>
+      <field name="ERR_REQUIRED">{0} krävs.</field>
+      <field name="ERR_INVALIDNUMBER">{0} är ett ogiltigt nummer.</field>
+      <field name="ERR_FOUND">De följer fel hittades:</field>
+      <field name="MSG_NEW_SUCCESS">Data har lagts till!</field>
+      <field name="MSG_EDIT_SUCCESS">Data uppdaterats!</field>
+      <field name="MSG_DELETE_SUCCESS">Data raderats!</field>
+      <field name="MSG_NOCHANGE">Inga ändringar har gjorts!</field>
+      <field name="TITLE_NEW">{0} - NYTT REKORD</field>
+      <field name="TITLE_EDIT">	{0} - Redigera RECORD</field>
+      <field name="TITLE_DELETE">{0} - Ta bort post</field>
+      <field name="TITLE_VIEW">{0} - Visa RECORD</field>
+      <field name="MSG_DONT_HAVEGRANT">Du behöver inte bidrag för att göra detta.</field>	  
+      <field name="TXT_AVAILABLE">{0} Ledig</field>
+      <field name="TXT_USED">{0} markerade</field>
+   </row>
 </anydataset>

@@ -65,4 +65,48 @@
     <field name="OBJECTIMAGEINVALID">Sie haben die Sicherheitsabfrage nicht oder falsch beantwortet. Bitte überprüfen Sie die Eingabe.</field>
     <field name="LOGINPROBLEMSMESSAGE">Sonstiges:</field>
   </row>
+  <row>
+    <field name="LANGUAGE">fr-fr</field>
+    <field name="TITLELOGIN">Login utilisateur</field>
+    <field name="LOGINFAIL">Nom d'utilisateur ou mot de passe est invalide</field>
+    <field name="CREATEUSERFAIL">Nom d'utilisateur ou e-mail déjà en base de données. Impossible d'ajouter.</field>
+    <field name="CREATEUSEROK">	Créés par l'utilisateur. Votre mot de passe a été envoyé à votre adresse e-mail.</field>
+    <field name="FORGOTUSERFAIL">Courrier électronique introuvable.</field>
+    <field name="FORGOTUSEROK">Email trouvé. Votre nouveau mot de passe a été envoyé par la poste.</field>
+    <field name="LOGINTITLE">Tapez vos informations d'identification</field>
+    <field name="LOGINFORGOTMESSAGE">J'ai oublié mon mot de passe</field>
+    <field name="LOGINCREATEUSERMESSAGE">Créer un utilisateur</field>
+    <field name="CREATEUSERTITLE">Créer un utilisateur</field>
+    <field name="CREATEUSERPASSWORDMSG">Votre mot de passe vous sera envoyé à votre courriel.</field>
+    <field name="CREATEUSERBUTTON">Créer un utilisateur</field>
+    <field name="FORGOTPASSTITLE">J'ai oublié mon mot de passe</field>
+    <field name="FORGOTPASSBUTTON">Envoyez mon mot de passe à mon adresse e-mail.</field>
+    <field name="SUBJECTMESSAGE">{0}: S'inscrire dans la confirmation</field>
+    <field name="WELCOMEMESSAGE">{0}, \n\nVous priées de s'inscrire sur le site de {1} \n\nVotre Login: {2} \n Password Votre: {3} (Attention: ce mot de passe est sensible à la casse) \n\nONG à l'URL address {4} pour vous connecter et / ou modifier votre profil.</field>
+    <field name="TYPETEXTFROMIMAGE">Tapez des nombres ci-dessous:</field>
+    <field name="OBJECTIMAGEINVALID">Les chiffres que vous types ne correspondent pas. Vous devez saisir le texte correctement.</field>
+    <field name="LOGINPROBLEMSMESSAGE">Problèmes?</field>
+  </row>
+  <row>
+    <field name="LANGUAGE">sv-se</field>
+    <field name="TITLELOGIN">Användarlogin</field>
+    <field name="LOGINFAIL">Användarnamn eller lösenord är ogiltigt.</field>
+    <field name="CREATEUSERFAIL">Användarnamn eller e-post redan i databasen. Kan inte lägga till.</field>
+    <field name="CREATEUSEROK">Användare skapas. Ditt lösenord har skickats till din e-postadress.</field>
+    <field name="FORGOTUSERFAIL">Email hittades inte.</field>
+    <field name="FORGOTUSEROK">Email hittades. Ditt nya lösenord har skickat.</field>
+    <field name="LOGINTITLE">Skriv in din inloggningsinformation</field>
+    <field name="LOGINFORGOTMESSAGE">Jag har glömt mitt lösenord</field>
+    <field name="LOGINCREATEUSERMESSAGE">Skapa användare</field>
+    <field name="CREATEUSERTITLE">Skapa användare</field>
+    <field name="CREATEUSERPASSWORDMSG">Ditt lösenord kommer att skickas till din e-post.</field>
+    <field name="CREATEUSERBUTTON">Skapa användare</field>
+    <field name="FORGOTPASSTITLE">Jag har glömt mitt lösenord</field>
+    <field name="FORGOTPASSBUTTON">Skicka mitt lösenord till min e-postadress.</field>
+    <field name="SUBJECTMESSAGE">{0}: Logga in bekräftelse</field>
+    <field name="WELCOMEMESSAGE">{0} \n\nDu uppmanas att registrera sig på plats {1} \n nDin Login: {2} \nDin Lösenord: {3} (Varning: Detta lösenord är skiftlägeskänsligt) \n\nGå till URL adress {4} för att logga in och / eller ändra din profil.</field>
+    <field name="TYPETEXTFROMIMAGE">Typ nedan:</field>
+    <field name="OBJECTIMAGEINVALID">Siffrorna du typer matchade inte. Du måste skriva texten på rätt sätt.</field>
+    <field name="LOGINPROBLEMSMESSAGE">Problem?</field>
+  </row>
 </anydataset>

@@ -63,4 +63,46 @@
       <field name="CSHARPCONNECTION">Connection Object</field>
       <field name="CSHARPDATAADAPTER">Data Adapter Object</field>
    </row>
+   <row>
+      <field name="LANGUAGE">fr-fr</field>
+      <field name="TITLE">Gérer la chaîne de connexion</field>
+      <field name="DESCRIPTION">Ce module vous permet de visualiser, créer et modifier des chaînes de connexion de base de données dans XMLNuke. Ce module est un wrapper pour le fichier _db.anydata.xml.</field>
+      <field name="BLOCK_TITLE">Chaîne de connexion</field>
+      <field name="AVAILABLELANGUAGES">Liste des chaînes de connexion disponibles</field>
+      <field name="DBNAME">Conn Nom: </field>
+      <field name="DBTYPE">Conn Type:</field>
+      <field name="DBCONNECTIONSTRING">Chaîne de connexion: </field>
+      <field name="TESTALTERNATETEXT">Testez votre chaîne de connexion</field>
+      <field name="TESTMESSAGETEXT">Testez votre chaîne de connexion</field>
+      <field name="SEEMSOK">Votre connexion des cordes semble de travail.</field>
+      <field name="GOTERROR">J'ai obtenu l'erreur la suite d'erreur: "{0}".</field>
+      <field name="GOBACK">Retourner à la liste de chaîne de connexion.</field>
+      <field name="NOTE">Note: </field>
+      <field name="PHPNOTE">DSN type de connexion pour utiliser le suivi de chaîne de connexion template: "pdodriver://user:pass@server/db" <br/> pour Literal vous devez fournir la connexion pdo chaîne complète et l'utilisation doivent utiliser le modèle de suivi: "connection_string | Nom d'utilisateur | Mot de passe" <br/> et pour l'utilisation d'autres le "serveur;utilisateur;laissez-passer;db".</field>
+      <field name="CSHARPNOTE">Pour dynamique "dbtype", vous devez remplir correctement l'Assemblée, de connexion et l'adaptateur de données pour cette connexion. Vous devez installer cette Assemblée en GAC ou des copies dans le dossier bin pour pouvoir travailler.</field>
+      <field name="CSHARPASSEMBLY">Nom de l'Assemblée</field>
+      <field name="CSHARPCONNECTION">Connection Object</field>
+      <field name="CSHARPDATAADAPTER">Adaptateur de données Objet</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">sv-se</field>
+      <field name="TITLE">Hantera Connection String</field>
+      <field name="DESCRIPTION">Detta moduler kan du visa, skapa och redigera stråkar databas anslutning inne XMLNuke. Denna modul är en wrapper för fil _db.anydata.xml.</field>
+      <field name="BLOCK_TITLE">Anslutningssträng</field>
+      <field name="AVAILABLELANGUAGES">Förteckning över availables samband strängar</field>
+      <field name="DBNAME">Förteckning över availables samband strängar </field>
+      <field name="DBTYPE">Conn Typ:</field>
+      <field name="DBCONNECTIONSTRING">Connection String: </field>
+      <field name="TESTALTERNATETEXT">Testa anslutningen string</field>
+      <field name="TESTMESSAGETEXT">Testa anslutningen string</field>
+      <field name="SEEMSOK">Din anslutning string verkar fungera.</field>
+      <field name="GOTERROR">Jag fick felet att följa felet: "{0}".</field>
+      <field name="GOBACK">Gå tillbaka till anslutningssträng lista.</field>
+      <field name="NOTE">Anmärkning: </field>
+      <field name="PHPNOTE">För DSN anslutningstyp använder följa anslutningssträngen mall: "pdodriver://user:pass@server/db" <br/> för Bokstavlig måste du ange fullständig strängen SUB anslutning och användning måste använda följande mall: "connection_string|username|password"<br/>och för det andra använder: "server;user;pass;db".</field>
+      <field name="CSHARPNOTE">För dynamiska "dbtype" Du måste fylla korrekt församlingen, Connection och Data-adapter för den här anslutningen. Du behöver installera denna församling i GAC eller kopior till bin mappen för att arbeta.</field>
+      <field name="CSHARPASSEMBLY">Assembly Namn</field>
+      <field name="CSHARPCONNECTION">Connection Object</field>
+      <field name="CSHARPDATAADAPTER">Data Object Adapter</field>
+   </row>
 </anydataset>

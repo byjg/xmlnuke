@@ -30,4 +30,24 @@
       <field name="SELECT">Wählen</field>
       <field name="CREATED">Erstellt.</field>
    </row>
+   <row>
+      <field name="LANGUAGE">fr-fr</field>
+      <field name="TITLE">Sélectionnez la langue de travail</field>
+      <field name="DESCRIPTION">Utilisez cette option pour sélectionner une langue qui sera l'outil Admin de travail.</field>
+      <field name="SELECTLANG">Choisir la langue de Langues disponibles ci-dessous. Langue courante: [param: lang]</field>
+      <field name="CREATEREPOSITORY">Créer un référentiel</field>
+      <field name="PREVIEWPAGE">Preview This Page</field>
+      <field name="SELECT">Sélectionnez</field>
+      <field name="CREATED">créé.</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">sv-se</field>
+      <field name="TITLE">Välj arbetsspråket</field>
+      <field name="DESCRIPTION">Använd det här alternativet för att välja ett språk som admin verktyget kommer att arbeta.</field>
+      <field name="SELECTLANG">Välj språk från tillgängliga språk nedan. Current Language: [param: lang]</field>
+      <field name="CREATEREPOSITORY">Skapa Repository</field>
+      <field name="PREVIEWPAGE">Förhandsgranska här sidan</field>
+      <field name="SELECT">Välj</field>
+      <field name="CREATED">skapas.</field>
+   </row>
 </anydataset>

@@ -36,4 +36,28 @@
       <field name="TITLEBOX">Titel: </field>
       <field name="KEYWORDBOX">Stichwort: </field>
    </row>
+   <row>
+      <field name="LANGUAGE">fr-fr</field>
+      <field name="TITLE">Gestion des groupes</field>
+      <field name="DESCRIPTION">Les groupes sont logiques séparateurs de fichiers XML. L'utilisation de groupes, vous pouvez organiser vos fichiers XML et changer l'affichage du menu.</field>
+      <field name="CONFIRMDELETE">S'il vous plaît, cliquez ici pour confirmer la suppression du groupe: {0}</field>
+      <field name="DELETED">Groupe est supprimé.</field>
+      <field name="SAVED">Group {0} sauvé.</field>
+      <field name="EDITINGID">Montage Id du groupe: {0}</field>
+      <field name="GROUPID">Group ID: </field>
+      <field name="TITLEBOX">Titre: </field>
+      <field name="KEYWORDBOX">Mot-clé: </field>
+   </row>
+   <row>
+      <field name="LANGUAGE">sv-se</field>
+      <field name="TITLE">Hantera grupper</field>
+      <field name="DESCRIPTION">Grupper är logiskt XML-fil separatorer. Använda grupper du kan organisera dina XML-filer och ändra menyvy.</field>
+      <field name="CONFIRMDELETE">Please, klicka här för att bekräfta borttagningen av gruppen: {0}</field>
+      <field name="DELETED">Gruppen bort.</field>
+      <field name="SAVED">Grupp {0} sparas.</field>
+      <field name="EDITINGID">Redigerar Group Id: {0}</field>
+      <field name="GROUPID">Grupp-ID: </field>
+      <field name="TITLEBOX">Titel: </field>
+      <field name="KEYWORDBOX">Nyckelord: </field>
+   </row>
 </anydataset>

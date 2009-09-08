@@ -21,4 +21,18 @@
       <field name="RECREATE">Index wurde erstellt.</field>
       <field name="DESCRIPTION">Mit Hilfe des XMLDB-Index kann jedes XML-Dokument nach einem beliebigen Wort durchsucht werden.<br/><br/>Warnung:<br/>Das Erstellen kann einige Minuten dauern.</field>
    </row>
+   <row>
+      <field name="LANGUAGE">fr-fr</field>
+      <field name="TITLE">Gérer XMLDB Index</field>
+      <field name="LINKRECREATE">Cliquez ici pour recréer XMLDB (0) Index</field>
+      <field name="RECREATE">Indice a été créé.</field>
+      <field name="DESCRIPTION">XMLDB Index de vous permettre de fouiller tout mot existant dans les documents XML. <br/> Avertissement: Cette opération <br/> mai prendre plusieurs minutes.</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">sv-se</field>
+      <field name="TITLE">Hantera XMLDB Index</field>
+      <field name="LINKRECREATE">Klicka här för att återskapa XMLDB (0) Index</field>
+      <field name="RECREATE">Index skapades.</field>
+      <field name="DESCRIPTION">XMLDB Index kan du söka på ord som finns i XML-dokument. <br/> <br/> Varning: <br/> Denna operation kan ta flera minuter.</field>
+   </row>
 </anydataset>

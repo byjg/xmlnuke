@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <anydataset>
-   <row>
+      <row>
       <field name="LANGUAGE">en-us</field>
       <field name="TITLE">Backup of Projects</field>
       <field name="HELPMODULE">Use this module to create backup and install your applications. It is a useful module to create packages to distribute to other users and other XMLNuke installations. Simple and Fast.</field>
@@ -151,5 +151,107 @@
       <field name="ERRORDESCCREATEPROJECT">Zeile '{0}' enthält ungültige Werte.</field>
       <field name="SETUPERROR">Falsche Reihenfolge der Zeilen in der Konfiguration: '{0}'.</field>
       <field name="WRONGLINEDEF">Installation der Zeile '{0}' war nicht erfolgreich. Kein gültiges AnyDataSet.</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">fr-fr</field>
+      <field name="TITLE">Sauvegarde des projets</field>
+      <field name="HELPMODULE">Utilisez ce module pour créer des backup et installer vos applications. Il s'agit d'un module utile pour créer des packages à distribuer aux autres utilisateurs et d'autres installations XMLNuke. Simple et rapide.</field>
+      <field name="MENU_PROJECTS">Liste de projets</field>
+      <field name="MENU_BACKUP">Liste de sauvegarde</field>
+      <field name="MENU_HOME">Menu principal</field>
+      <field name="MODULETITLE">Application de sauvegarde Module</field> 
+      <field name="EXPLAINMODULE">Le menu du projet définit les fichiers et répertoires sorcière va être copié dans un fichier de sauvegarde. Le menu de sauvegarde d'installer ou de désinstaller un package créé précédemment.</field>
+      <field name="EXPLAINMODULE_SELECT">Sélectionnez une option pour continuer.</field>
+      <field name="BLOCK_EDITPROJECT">Modification {0}</field> 
+      <field name="FORM_EDITPROJECT">Utilisez le formulaire ci-dessous pour modifier le projet</field>
+      <field name="INPUT_PROJECTNAME">Projet: </field>
+      <field name="INPUT_DIRECTORIES">Répertoire courant: </field>
+      <field name="INPUT_FILES">Liste des fichiers: </field>
+      <field name="INPUT_SETUP">Options d'installation: </field>
+      <field name="PROJECT_LIST">Liste de projets existants</field> 
+      <field name="PROJECT_NAME">Nom du projet</field>
+      <field name="TITLE_BACKUPLIST">Disponible Sauvegardes</field>
+      <field name="BACKUP_COMMANDS">Actions</field>
+      <field name="BACKUP_NAME">Nom de sauvegarde</field>
+      <field name="BACKUP_UNINSTALL">Désinstaller</field>
+      <field name="BACKUP_INSTALL">Installez</field>
+      <field name="BACKUP_DOWNLOAD">Télécharger</field>
+      <field name="UPLOADBACKUPFILE">Backup Télécharger</field>
+      <field name="CAPTION_FILETOUPLOAD">Fichier à télécharger: </field>
+      <field name="BTN_CONFIRMUPLOAD">Envoyer un fichier</field>
+      <field name="TITLE_FINISHUPLOAD">Résultat upload</field>
+      <field name="UPLOADERROR_INVALIDFILE">Type de fichier non valide.</field>
+      <field name="UPLOADSUCCESSFULL">File {0} succès téléchargés!</field>
+      <field name="TITLE_CREATEBACKUP">Créer un fichier de sauvegarde</field>
+      <field name="BACKUPNOTCREATED">Backup pas créé.</field>
+      <field name="BACKUPCREATED">Sauvegarde réussie créé.</field>
+      <field name="TITLE_BACKUPCONTENTS">Backup contenu {0}</field>
+      <field name="BTN_BACKUPINSTALL">Installer "{0}" maintenant</field>
+      <field name="TITLE_BACKUPLOGCONTENTS">Fichiers et répertoires installés par {0}</field>
+      <field name="BTN_BACKUPUNINSTALL">Désinstaller "{0}" maintenant</field>
+      <field name="TITLE_INSTALLBACKUP">Backup installer {0}</field>
+      <field name="BACKUP_INSTALL_ERROR">Des erreurs sont survenues lors de l'installation.</field>
+      <field name="BACKUP_INSTALL_SUCCESS">Sauvegarde réussie installé!</field>
+      <field name="TITLE_UNINSTALLBACKUP">Désinstaller Backup {0}</field>
+      <field name="UNINSTALL_LOG">Désinstaller journal de rapport</field>
+      <field name="CREATEPROJECTHELP1">Utilisez le champ de texte ci-dessous pour définir un fichier de configuration (ex. chaîne de connexion)</field>
+      <field name="CREATEPROJECTHELP2">[FileNameProcessor: Nom: Lieu: filter = value; filter = valeur]</field>
+      <field name="CREATEPROJECTHELP3">= champ de valeur</field>
+      <field name="BLOCKERRORCREATEPROJECT">Erreur sur Update</field>
+      <field name="LISTERRORCREATEPROJECT">Le suivi des erreurs sont constatées. Le système n'a pas enregistrer vos données.</field>
+      <field name="ERRORDESCCREATEPROJECT">Line '{0}' a des valeurs non valides.</field>
+      <field name="SETUPERROR">Ligne de commande incorrect dans la configuration d'installation: '{0}'.</field>
+      <field name="WRONGLINEDEF">Il ya un problème lorsque la configuration line '{0}'. Vous devez avoir un AnyDataSet valide.</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">sv-se</field>
+      <field name="TITLE">Backup av projekt</field>
+      <field name="HELPMODULE">Använda denna modul för att skapa backup och installera ditt program. Det är en användbar modul för att skapa paket för att distribuera till andra användare och andra XMLNuke installationer. Enkel och snabb.</field>
+      <field name="MENU_PROJECTS">Projektlista</field>
+      <field name="MENU_BACKUP">Backup List</field>
+      <field name="MENU_HOME">Huvudmenyn</field>
+      <field name="MODULETITLE">Ansökan Backup Module</field> 
+      <field name="EXPLAINMODULE">Projekt-menyn definierar häxa filer och kataloger kommer att kopieras till en säkerhetskopia. Säkerhetskopian menyn installera eller avinstallera ett paket tidigare skapat. </field>
+      <field name="EXPLAINMODULE_SELECT">Välj ett alternativ att fortsätta.</field>
+      <field name="BLOCK_EDITPROJECT">Redigerar {0}</field> 
+      <field name="FORM_EDITPROJECT">Använd formuläret nedan för att redigera projektet</field>
+      <field name="INPUT_PROJECTNAME">Projekt: </field>
+      <field name="INPUT_DIRECTORIES">Directory List: </field>
+      <field name="INPUT_FILES">File List: </field>
+      <field name="INPUT_SETUP">Inställningsalternativ: </field>
+      <field name="PROJECT_LIST">Befintliga Projektlista</field> 
+      <field name="PROJECT_NAME">Projektnamn</field>
+      <field name="TITLE_BACKUPLIST">Tillgängliga Säkerhetskopior</field>
+      <field name="BACKUP_COMMANDS">Åtgärder</field>
+      <field name="BACKUP_NAME">Backup namn</field>
+      <field name="BACKUP_UNINSTALL">Avinstallera</field>
+      <field name="BACKUP_INSTALL">Installera</field>
+      <field name="BACKUP_DOWNLOAD">Hämta</field>
+      <field name="UPLOADBACKUPFILE">Backup Upload</field>
+      <field name="CAPTION_FILETOUPLOAD">Fil att ladda upp: </field>
+      <field name="BTN_CONFIRMUPLOAD">Ladda upp fil</field>
+      <field name="TITLE_FINISHUPLOAD">Upload Resultat</field>
+      <field name="UPLOADERROR_INVALIDFILE">Ogiltig filtyp.</field>
+      <field name="UPLOADSUCCESSFULL">Fil {0} lyckad laddade!</field>
+      <field name="TITLE_CREATEBACKUP">Skapa en säkerhetskopia</field>
+      <field name="BACKUPNOTCREATED">Säkerhetskopiering inte skapas.</field>
+      <field name="BACKUPCREATED">Backup framgångsrik skapade.</field>
+      <field name="TITLE_BACKUPCONTENTS">Backup innehållet {0}</field>
+      <field name="BTN_BACKUPINSTALL">Installera "{0}" nu</field>
+      <field name="TITLE_BACKUPLOGCONTENTS">Filer och kataloger installerade av {0}</field>
+      <field name="BTN_BACKUPUNINSTALL">Uninstall "{0}" nu</field>
+      <field name="TITLE_INSTALLBACKUP">Backup installera {0}</field>
+      <field name="BACKUP_INSTALL_ERROR">Några fel inträffade under installationen.</field>
+      <field name="BACKUP_INSTALL_SUCCESS">Backup framgångsrikt installerat!</field>
+      <field name="TITLE_UNINSTALLBACKUP">Avinstallera Backup {0}</field>
+      <field name="UNINSTALL_LOG">Avinstallera loggrapport</field>
+      <field name="CREATEPROJECTHELP1">Använd textfältet nedan för att definiera en installationsfilen (ex. anslutning string)</field>
+      <field name="CREATEPROJECTHELP2">[FileNameProcessor: Namn: Ort: filter = value; filter = värde]</field>
+      <field name="CREATEPROJECTHELP3">fält = värde</field>
+      <field name="BLOCKERRORCREATEPROJECT">Fel på Uppdatera</field>
+      <field name="LISTERRORCREATEPROJECT">Uppföljningen fel upptäcks. Systemet har inte sparat dina uppgifter.</field>
+      <field name="ERRORDESCCREATEPROJECT">Line '{0} "har några ogiltiga värden.</field>
+      <field name="SETUPERROR">Fel linje ordning i setup configuration: '{0}'.</field>
+      <field name="WRONGLINEDEF">Något är fel när SETUP '{0}'. Du behöver ha ett giltigt AnyDataSet.</field>
    </row>
 </anydataset>
