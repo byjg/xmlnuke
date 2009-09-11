@@ -41,6 +41,7 @@ class XmlInputObjectType
 	const HIDDEN = 6;
 	const SELECTLIST = 7;
 	const DUALLIST = 8;
+	const HTMLTEXT = 9;
 	const CUSTOM = 100; // This $fields must be validate by user
 }
 /**
@@ -863,6 +864,16 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 			$im->setReadOnly($this->isReadOnly($field));
 			return $im;
 		}
+                else if ($field->fieldXmlInput == XmlInputObjectType::HTMLTEXT)
+                {
+//                      XmlInputMemo $im
+                        $im = new XmlInputMemo($field->fieldCaption, $field->fieldName, $curValue);
+                        //$im->setWrap("SOFT");
+                        //$im->setSize(50, 8);
+			$im->setVisualEditor(true);
+                        $im->setReadOnly($this->isReadOnly($field));
+                        return $im;
+                }
 		else if ($field->fieldXmlInput == XmlInputObjectType::HIDDEN)
 		{
 //			XmlInputHidden $ih
