@@ -235,5 +235,26 @@ class Debug
         $output .= "[0] {main}";
         return $output; 		
 	}
+	
+	
+	/**
+	 * @param string $module
+	 * @param exception $error
+	 * @return void
+	 */
+	public static function LogError($module, $error)
+	{
+		Debug::LogText(get_class($error) . ": $module: " . $error->getMessage());
+	}
+
+
+	/**
+	 * @param string $text
+	 * @return void
+	 */
+	public static function LogText($text)
+	{
+		syslog(LOG_ERR, "XMLNUKE: " . $text);
+	}
 }
 ?>

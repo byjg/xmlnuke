@@ -69,6 +69,7 @@
 		{
 			if ($debug) 
 			{
+				Debug::LogError($moduleName, $ex);
 				$kernelError = new XMLNukeErrorModule($context, $firstError, $context->getDebugInModule());
 				$kernelError->CreatePage();
 				exit();
@@ -89,6 +90,7 @@
 		}
 		catch (Exception $ex)
 		{
+			Debug::LogError($moduleName, $ex);
 			if ($debug) 
 			{
 				$kernelError = new XMLNukeErrorModule($context, $ex, $context->getDebugInModule());
