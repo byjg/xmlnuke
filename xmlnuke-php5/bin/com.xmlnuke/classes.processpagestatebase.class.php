@@ -42,7 +42,8 @@ class XmlInputObjectType
 	const SELECTLIST = 7;
 	const DUALLIST = 8;
 	const HTMLTEXT = 9;
-	const CUSTOM = 100; // This $fields must be validate by user
+	const TEXTBOX_AUTOCOMPLETE = 10;
+	const CUSTOM = 100; // This $fields need be created by the user
 }
 /**
 *@package com.xmlnuke
@@ -819,20 +820,29 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 	*/
 	public function renderField( $field, $curValue)
 	{
-		if (($field->fieldXmlInput == XmlInputObjectType::TEXTBOX) || ($field->fieldXmlInput == XmlInputObjectType::PASSWORD))
+		if (($field->fieldXmlInput == XmlInputObjectType::TEXTBOX) || ($field->fieldXmlInput == XmlInputObjectType::PASSWORD) || ($field->fieldXmlInput == XmlInputObjectType::TEXTBOX_AUTOCOMPLETE))
 		{
 //			XmlInputTextBox $itb
 			$itb = new XmlInputTextBox($field->fieldCaption, $field->fieldName, $curValue, $field->size);
 			$itb->setRequired($field->required);
 			$itb->setRange($field->rangeMin, $field->rangeMax);
 			$itb->setDescription($field->fieldCaption);
-			if ($field->fieldXmlInput == XmlInputObjectType::TEXTBOX)
+			if ($field->fieldXmlInput == XmlInputObjectType::PASSWORD)
 			{
+				$itb->setInputTextBoxType(InputTextBoxType::PASSWORD);
+			}
+			elseif ($field->fieldXmlInput == XmlInputObjectType::TEXTBOX_AUTOCOMPLETE)
+			{
+				if (!is_array($field->arraySelectLlist) || ($field->arraySelectLlist["URL"]=="") || ($field->arraySelectLlist["PARAMREQ"]==""))
+				{
+					throw new XMLNukeException("You have to pass a array to arraySelectList field parameter with the following keys: URL, PARAMREQ");
+				}
 				$itb->setInputTextBoxType(InputTextBoxType::TEXT);
+				$itb->setAutosuggest($this->_context, $field->arraySelectLlist["URL"], $field->arraySelectLlist["PARAMREQ"]=="");
 			}
 			else
 			{
-				$itb->setInputTextBoxType(InputTextBoxType::PASSWORD);
+				$itb->setInputTextBoxType(InputTextBoxType::TEXT);
 			}
 			$itb->setReadOnly($this->isReadOnly($field));
 			$itb->setMaxLength($field->maxLength);
@@ -864,16 +874,16 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 			$im->setReadOnly($this->isReadOnly($field));
 			return $im;
 		}
-                else if ($field->fieldXmlInput == XmlInputObjectType::HTMLTEXT)
-                {
-//                      XmlInputMemo $im
-                        $im = new XmlInputMemo($field->fieldCaption, $field->fieldName, $curValue);
-                        //$im->setWrap("SOFT");
-                        //$im->setSize(50, 8);
+		else if ($field->fieldXmlInput == XmlInputObjectType::HTMLTEXT)
+		{
+//			XmlInputMemo $im
+			$im = new XmlInputMemo($field->fieldCaption, $field->fieldName, $curValue);
+			//$im->setWrap("SOFT");
+			//$im->setSize(50, 8);
 			$im->setVisualEditor(true);
-                        $im->setReadOnly($this->isReadOnly($field));
-                        return $im;
-                }
+			$im->setReadOnly($this->isReadOnly($field));
+			return $im;
+		}
 		else if ($field->fieldXmlInput == XmlInputObjectType::HIDDEN)
 		{
 //			XmlInputHidden $ih
