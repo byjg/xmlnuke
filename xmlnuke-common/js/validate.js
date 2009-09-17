@@ -313,13 +313,18 @@ function fn_disableButton()
 			{
 				$(this).hide();
 			}
-		});
-		
-		if (XMLNUKE_WAITLOADING)
-		{
-			$('#lding_div').fadeIn("slow");
-		}
+		});	
 	}
+	
+	fn_waitLoading();
+}
+
+function fn_waitLoading()
+{
+	if (XMLNUKE_WAITLOADING)
+	{
+		$('#lding_div').fadeIn("slow");
+	}	
 }
 
 

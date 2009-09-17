@@ -153,6 +153,16 @@ class XmlnukeDocument extends XmlnukeCollection implements IXmlnukeDocument
 	protected $_metaTag = array();
 	
 	/**
+	 * @var bool
+	 */
+	protected $_waitLoading = false;
+	
+	/**
+	 * @var bool
+	 */
+	protected $_disableButtonsOnSubmit = true; 
+	
+	/**
 	*@desc XmlnukeDocument constructor
 	*@param string $pageTitle
 	*@param string $desc
@@ -218,7 +228,89 @@ class XmlnukeDocument extends XmlnukeCollection implements IXmlnukeDocument
 		$this->_metaTag[$name] = $value;
 	}
 
+	
+	public function setWaitLoading($value)
+	{
+		$this->_waitLoading = $value;
+	}
+	public function getWaitLoading()
+	{
+		return $this->_waitLoading;
+	}
+	
+	
+	public function setDisableButtonOnSubmit($value)
+	{
+		$this->_disableButtonsOnSubmit = $value;
+	}
+	public function getDisableButtonOnSubmit()
+	{
+		return $this->_disableButtonsOnSubmit;
+	}
+	
 
+	/**
+	 * Add a JavaScript method to a JavaScript object.
+	 * 
+	 * Some examples:
+	 * 
+	 * addJavaScriptMethod("a", "click", "alert('clicked on a hiperlink');");
+	 * addJavaScriptMethod("#myID", "blur", "alert('blur a ID object in JavaScript');");
+	 * 
+	 * @param string $jsObject
+	 * @param string $jsMethod
+	 * @param string $jsSource
+	 * @param string $jsParameters
+	 * @return void
+	 */
+	public function addJavaScriptMethod($jsObject, $jsMethod, $jsSource, $jsParameters = "")
+	{
+		$jsEventSource = 
+			"$(function() { \n" . 
+			"	$('$jsObject').$jsMethod(function($jsParameters) { \n" .
+			"		$jsSource \n" .
+			"	}); \n" .
+			"});\n\n";
+		$this->addJavaScriptSource($jsEventSource, false);
+	}
+	
+	/**
+	 * Add a JavaScript attribute to a JavaScript object.
+	 * 
+	 * Some examples:
+	 * 
+	 * addJavaScriptMethod("#myID", "someAttr", array("param"=>"'teste'"));
+	 * 
+	 * @param string $jsObject
+	 * @param string $jsAttribute
+	 * @param array $attrParam
+	 * @return void
+	 */
+	public function addJavaScriptAttribute($jsObject, $jsAttrName, $attrParam)
+	{
+		if (!is_array($attrParam))
+		{
+			$attrParam = array($attrParam);
+		}
+		
+		$jsEventSource = 
+			"$(function() { \n" . 
+			"   $('$jsObject').$jsAttrName({ \n";
+		
+		$first = true;
+		foreach ($attrParam as $key=>$value)
+		{
+			$jsEventSource .= (!$first ? ",\n" : "") . "      " . (!is_numeric($key) ? "$key: " : "" ) . $value;
+			$first = false;
+		}
+		
+		$jsEventSource .= 
+			"\n   }); \n" .
+			"});\n\n";
+		
+		$this->addJavaScriptSource($jsEventSource, false);
+	}
+	
 	/**
 	*@desc Generate page, processing yours childs using the parent.
 	*@return DOMDocument
@@ -269,6 +361,16 @@ class XmlnukeDocument extends XmlnukeCollection implements IXmlnukeDocument
 			}
 		}
 
+		// Add Custom JS
+		if (!$this->_disableButtonsOnSubmit)
+		{
+			$this->addJavaScriptSource("var XMLNUKE_DISABLEBUTTON = false;\n", false);
+		}
+		if ($this->_waitLoading)
+		{
+			$this->addJavaScriptSource("var XMLNUKE_WAITLOADING = true;\n", false);
+		}
+		
 		// Generate Scripts
 		if(!is_null($this->_scripts))
 		{
