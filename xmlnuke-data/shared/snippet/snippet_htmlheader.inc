@@ -1,9 +1,21 @@
 <script type="text/javascript" src="common/3rdparty/jquery/js/jquery-1.3.2.min.js"></script>
 <xsl:if test="//sortablelist or //calendar or //faq or //datetimebox or //uialert">
-	<style type="text/css">#ui-datepicker-div { font-size: 0.8em; } #faqaccordion { font-size: 80%; }</style>
 	<link type="text/css" href="common/3rdparty/jquery/css/smoothness/jquery-ui-1.7.1.custom.css" rel="stylesheet" />	
 	<script type="text/javascript" src="common/3rdparty/jquery/js/jquery-ui-1.7.1.custom.min.js"></script>
 	<script type="text/javascript" src="common/3rdparty/jquery/js/jquery-ui-i18n.min.js"></script>
+	<style type="text/css">
+		#ui-datepicker-div { font-size: 0.8em; } 
+		#faqaccordion { font-size: 80%; } 
+		.ui-state-error, .ui-state-highlight { 
+			margin: 0.5em;
+		}
+		.ui-state-error p, .ui-state-highlight p
+		{
+			margin: 0.8em 0 0.8em 0;
+			line-height: 1.2em;
+			padding-bottom: 0px;
+		} 
+	</style>	
 </xsl:if>
 
 <!-- Include specific JavaScript for AutoSuggest  -->
