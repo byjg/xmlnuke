@@ -1,4 +1,7 @@
 <script type="text/javascript" src="common/3rdparty/jquery/js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="common/js/xmlnuke.js"></script>
+
+<!-- UI JavaScript Object -->
 <xsl:if test="//sortablelist or //calendar or //faq or //datetimebox or //uialert">
 	<link type="text/css" href="common/3rdparty/jquery/css/smoothness/jquery-ui-1.7.1.custom.css" rel="stylesheet" />	
 	<script type="text/javascript" src="common/3rdparty/jquery/js/jquery-ui-1.7.1.custom.min.js"></script>

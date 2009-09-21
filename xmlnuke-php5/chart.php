@@ -35,10 +35,10 @@
 	//
 	//  The last form is necessary because in transformation the system didnt
 	//  reconigze the second ampersand.
-	$cnAux = explode(";", $_REQUEST["args"]);
+	$cnAux = split(";", $_REQUEST["args"]);
 	foreach ($cnAux as $key=>$value)
 	{
-		$pair = explode(":", $value);
+		$pair = split(":", $value);
 		$_REQUEST[$pair[0]] = $pair[1];
 	}
 	
