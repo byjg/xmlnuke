@@ -226,7 +226,10 @@ class Context
 		}
 
 		$this->_lang = LocaleFactory::GetLocale($lang, $this);
+		$this->_lang->setLanguage($langAvail[$this->_lang->getName()]);
 		$this->AddPairToConfig("LANGUAGE", $this->_lang->getName());
+		$this->AddPairToConfig("LANGUAGENAME", $this->_lang->getLanguage());
+
 		$langStr = "";
 		foreach (array_keys($langAvail) as $key)
 		{

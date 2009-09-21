@@ -126,7 +126,7 @@ class UsersDBDataSet extends UsersBase
 		$param = array();
 		$param[$this->_UserTable->Name] = $name;
 		$param[$this->_UserTable->Email] = strtolower($email);
-		$param[$this->_UserTable->Username] = strtolower($userName);
+		$param[$this->_UserTable->Username] = preg_replace('/(?:([\w])|([\W]))/', '\1', strtolower($userName));
 		$param[$this->_UserTable->Password] = $this->getSHAPassword($password);
 		$param[$this->_UserTable->Created] = date("Y-m-d H:i:s");
 			
