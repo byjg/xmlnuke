@@ -660,11 +660,27 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 					$field->formatter = $this->_fields[$i]->editListFormatter;
 					$field->fieldType = EditListFieldType::FORMATTER;
 				}
+				
+				$field = $this->editListFieldCustomize($field, $this->_fields[$i]);
+				
 				$editList->addEditListField($field);
 			}
 		}
 		return $editList;
 	}
+
+	
+	/**
+	 * 
+	 * @param EditListField $editListField
+	 * @param ProcessPageField $field
+	 * @return EditListField
+	 */
+	protected function editListFieldCustomize($editListField, $field)
+	{
+		return $editListField;
+	}
+	
 	
 	/**
 	*@desc 
@@ -769,19 +785,7 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 				$curValue = $sr->getField($this->_fields[$i]->fieldName);
 				if ((($this->_fields[$i]->dataType == INPUTTYPE::DATE)||($this->_fields[$i]->dataType == INPUTTYPE::DATETIME)) && ($curValue != ""))
 				{
-					try
-					{
-						$arcurValue = explode(" ", $curValue);
-						$curValue = DateUtil::ConvertDate($arcurValue[0], DATEFORMAT::YMD, $this->_dateFormat);
-						if ((sizeof($arcurValue)>1) && ($this->_fields[$i]->dataType == INPUTTYPE::DATETIME))
-						{
-							$curValue .= " " . $arcurValue[1];
-						}
-					}
-					catch (Exception $ex)
-					{
-						$curValue = "??/??/????";
-					}
+					$curValue = $this->dateFromSource($curValue, ($this->_fields[$i]->dataType == INPUTTYPE::DATETIME));
 				}
 				elseif ($this->_fields[$i]->dataType == INPUTTYPE::NUMBER)
 				{
@@ -810,6 +814,23 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 		$form->addXmlnukeObject($buttons);
 		
 		return $form;
+	}
+	
+	/**
+	 * Format a date field from Database values
+	 * @param $curValue
+	 * @return string
+	 */
+	protected function dateFromSource($curValue, $hour = false)
+	{
+		try
+		{
+			return DateUtil::ConvertDate($curValue, DATEFORMAT::YMD, $this->_dateFormat, $hour);
+		}
+		catch (Exception $ex)
+		{
+			return "??/??/????";
+		}		
 	}
 	
 	/**
@@ -1030,8 +1051,7 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 		}
 		
 	}
-	
-	
+
 	
 }
 

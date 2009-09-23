@@ -29,6 +29,7 @@
 
 class DbMySQLFunctions extends DbBaseFunctions
 {
+    private $sysTimeStamp = 'NOW()';
 
 	function Concat($s1, $s2 = null)
 	{
@@ -52,12 +53,14 @@ class DbMySQLFunctions extends DbBaseFunctions
 	 */
 	function Limit($sql, $start, $qty)
 	{
-		/*** 
-		 * 
-		 * Por favor! Verifique se o SQL já tem LIMIT e faça os ajustes!
-		 *  
-		 * */
-		return $sql .= " LIMIT $start, $qty ";
+		if (strpos($sql, ' LIMIT ') === false)
+		{
+			return $sql .= " LIMIT $start, $qty ";
+		}
+		else
+		{
+			return $sql;
+		}
 	}
 
 	/**
@@ -88,6 +91,107 @@ class DbMySQLFunctions extends DbBaseFunctions
 	{
 		return true;
 	}
+   
+    /**
+	 * Format date column in sql string given an input format that understands Y M D
+	 * @param string $fmt
+     * @param string $col
+     * @return string
+     * @example $db->getDbFunctions()->SQLDate("d/m/Y H:i", "dtcriacao")
+	 */
+    function SQLDate($fmt, $col=false)
+	{
+		if (!$col) $col = $this->sysTimeStamp;
+		$s = 'DATE_FORMAT('.$col.",'";
+		$concat = false;
+		$len = strlen($fmt);
+		for ($i=0; $i < $len; $i++) {
+			$ch = $fmt[$i];
+			switch($ch) {
+			case 'Y':
+			case 'y':
+				$s .= '%Y';
+				break;
+			case 'Q':
+			case 'q':
+				$s .= "'),Quarter($col)";
+
+				if ($len > $i+1) $s .= ",DATE_FORMAT($col,'";
+				else $s .= ",('";
+				$concat = true;
+				break;
+			case 'M':
+				$s .= '%b';
+				break;
+
+			case 'm':
+				$s .= '%m';
+				break;
+			case 'D':
+			case 'd':
+				$s .= '%d';
+				break;
+
+			case 'H':
+				$s .= '%H';
+				break;
+
+			case 'h':
+				$s .= '%I';
+				break;
+
+			case 'i':
+				$s .= '%i';
+				break;
+
+			case 's':
+				$s .= '%s';
+				break;
+
+			case 'a':
+			case 'A':
+				$s .= '%p';
+				break;
+
+			default:
+
+				if ($ch == '\\') {
+					$i++;
+					$ch = substr($fmt,$i,1);
+				}
+				$s .= $ch;
+				break;
+			}
+		}
+		$s.="')";
+		if ($concat) $s = "CONCAT($s)";
+		return $s;
+	}
+
+    /**
+	 * Format a string to database readable format.
+	 * @param string $date
+     * @param DATEFORMAT $dateFormat
+     * @return string
+     * @example $db->getDbFunctions()->toDate('26/01/1974', DATEFORMAT::DMY);
+	 */
+	function toDate($date, $dateFormat, $hour = false)
+	{
+		return parent::toDate($date, $dateFormat, $hour);
+	}
+	
+    /**
+	 * Format a string from database to a user readable format.
+	 * @param string $date
+     * @param DATEFORMAT $dateFormat
+     * @return string
+     * @example $db->getDbFunctions()->toDate('26/01/1974', DATEFORMAT::DMY);
+	 */
+	function fromDate($date, $dateFormat, $hour = false)
+	{
+		return parent::fromDate($date, $dateFormat, $hour);
+	}
+	
 	
 }
 

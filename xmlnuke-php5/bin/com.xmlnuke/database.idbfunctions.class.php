@@ -69,6 +69,33 @@ interface IDbFunctions
 	 * @return bool
 	 */
 	function hasLimit();
+
+    /**
+	 * Format date column in sql string given an input format that understands Y M D
+	 * @param string $fmt
+     * @param string $col
+     * @return string
+     * @example $db->getDbFunctions()->SQLDate("d/m/Y H:i", "dtcriacao")
+	 */
+	function SQLDate($fmt, $col=false);
+	
+    /**
+	 * Format a string to database readable format.
+	 * @param string $date
+     * @param DATEFORMAT $dateFormat
+     * @return string
+     * @example $db->getDbFunctions()->toDate('26/01/1974', DATEFORMAT::DMY);
+	 */
+	function toDate($date, $dateFormat, $hour = false);
+	
+    /**
+	 * Format a string from database to a user readable format.
+	 * @param string $date
+     * @param DATEFORMAT $dateFormat
+     * @return string
+     * @example $db->getDbFunctions()->toDate('26/01/1974', DATEFORMAT::DMY);
+	 */
+	function fromDate($date, $dateFormat, $hour = false);
 	
 }
 

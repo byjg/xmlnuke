@@ -200,12 +200,12 @@ class CultureInfo
 	 */
 	public function getDateFormat()
 	{
-		$date = str_replace("/", "-", str_replace(".", "-", strftime("%x", mktime(0, 0, 0, 1, 31, 2009)) ));
-		if ($date == "31-01-2009")
+		$date = strftime("%x", mktime(0, 0, 0, 1, 31, 2009));
+		if (preg_match("/31[- \/.]0?1[- \/.](20)?09/", $date))
 		{
 			return DATEFORMAT::DMY;
 		}
-		elseif ($date == "01-31-2009")
+		elseif (preg_match("/0?1[- \/.]31[- \/.](20)?09/", $date))
 		{
 			return DATEFORMAT::MDY;
 		}

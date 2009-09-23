@@ -101,7 +101,11 @@ class ProcessPageStateDB extends ProcessPageStateBase
 	/**
 	*@var string
 	*/
-	protected $_fieldDeliRight = "";
+	protected $_fieldDeliRight = "";	
+	/**
+	 * @var DBDataSet
+	 */
+	protected $_dbData = null;
 	
 	/**
 	*@desc Constructor
@@ -118,6 +122,7 @@ class ProcessPageStateDB extends ProcessPageStateBase
 		parent::ProcessPageStateBase($context, $fields, $header, $module, $buttons);
 		$this->_conn = $connection;
 		$this->_table = $table;
+		$this->_dbData = new DBDataSet($this->_conn, $this->_context);
 	}
 	
 	/**
@@ -217,14 +222,7 @@ class ProcessPageStateDB extends ProcessPageStateBase
 		}
 		elseif (($dataType == INPUTTYPE::DATE) || ($dataType == INPUTTYPE::DATETIME))
 		{
-			$timestamp = DateUtil::TimeStampFromStr($currentValue, $this->_dateFormat);
-			$value = DateUtil::FormatDate($timestamp, DATEFORMAT::YMD);
-			if ($dataType == INPUTTYPE::DATETIME)
-			{
-				$arcurrentValue = explode(" ", $currentValue);
-				if (sizeof($arcurrentValue)>1)
-				$value .= " " . $arcurrentValue[1];
-			}
+			$value = $this->_dbData->getDbFunctions()->toDate($currentValue, $this->_dateFormat, ($dataType == INPUTTYPE::DATETIME));
 		}
 		else
 		{
@@ -258,8 +256,6 @@ class ProcessPageStateDB extends ProcessPageStateBase
 	 */
 	protected function ExecuteSQL($sqlType)
 	{
-		$dbdata = new DBDataSet($this->_conn, $this->_context);
-		
 		$fieldList = array();
 		if ($sqlType != SQLType::SQL_DELETE)
 		{
@@ -299,11 +295,11 @@ class ProcessPageStateDB extends ProcessPageStateBase
 			$filter = "";
 		}
 		
-		$helper = new SQLHelper($dbdata);
+		$helper = new SQLHelper($this->_dbData);
 		$helper->setFieldDelimeters($this->getFieldDeliLeft(), $this->getFieldDeliRight());
 		$sql = $helper->generateSQL($this->_table, $fieldList, $param, $sqlType, $filter, $this->_decimalSeparator);		
 		$this->DebugInfo($sql, $param);
-		$dbdata->execSQL($sql, $param);
+		$this->_dbData->execSQL($sql, $param);
 	}
 	
 	/**
@@ -312,8 +308,6 @@ class ProcessPageStateDB extends ProcessPageStateBase
 	 */
 	protected function GetIterator($getAll)
 	{
-		$dbdata = new DBDataSet($this->_conn, $this->_context);
-		
 		$fields = "";
 		foreach ($this->_fields as $field) 
 		{
@@ -343,7 +337,7 @@ class ProcessPageStateDB extends ProcessPageStateBase
 		}
 		
 		$this->DebugInfo($sql, $param);
-		return $dbdata->getIterator($sql, $param);
+		return $this->_dbData->getIterator($sql, $param);
 	}
 	
 	protected function DebugInfo($sql, $param)
@@ -368,6 +362,72 @@ class ProcessPageStateDB extends ProcessPageStateBase
 			}
 		}
 	}
+	
+	/**
+	 * Format a date field from Database values
+	 * @param $curValue
+	 * @return string
+	 */
+	protected function dateFromSource($curValue, $hour = false)
+	{
+		try
+		{
+			return $this->_dbData->getDbFunctions()->fromDate($curValue, $this->_dateFormat, $hour);
+		}
+		catch (Exception $ex)
+		{
+			return "??/??/????";
+		}		
+	}
+	
+	/**
+	 * 
+	 * @param EditListField $editListField
+	 * @param ProcessPageField $field
+	 * @return EditListField
+	 */
+	protected function editListFieldCustomize($editListField, $field)
+	{
+		if ( ((($field->dataType == INPUTTYPE::DATE) || ($field->dataType == INPUTTYPE::DATETIME))) && ($field->editListFormatter == null))
+		{
+			$editListField->fieldType = EditListFieldType::FORMATTER;
+			$editListField->formatter = new ProcessPageStateDBFormatterDate($this->_dbData, $this->_dateFormat, ($field->dataType == INPUTTYPE::DATETIME));
+		}
+		return $editListField;
+	}
 }
+
+
+
+
+class ProcessPageStateDBFormatterDate implements IEditListFormatter
+{
+	/**
+	 * @var DBDataSet
+	 */
+	protected $_dbData = null;
+	protected $_hour = null;
+	protected $_dateFormat = null;
+	
+	public function __construct($dbData, $dateFormat, $hour)
+	{
+		$this->_dbData = $dbData;
+		$this->_dateFormat = $dateFormat;		
+		$this->_hour = $hour;
+	}
+	
+	public function Format($row, $fieldname, $value)
+	{
+		if ($value != "")
+		{
+			return $this->_dbData->getDbFunctions()->fromDate($value, $this->_dateFormat, $this->_hour);
+		}
+		else 
+		{
+			return "";	
+		}
+	}
+}
+
 
 ?>
