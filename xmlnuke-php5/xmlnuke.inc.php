@@ -21,7 +21,7 @@ define("SESSION_XMLNUKE_USERCONTEXT", "SESSION_XMLNUKE_USERCONTEXT");
 
 /* This main of engine */
 require_once("config.inc.php");
-if (!class_exists('config')) { header("Location: check_install.php"); exit(); } 
+if (!class_exists('config')) { header("Location: check_install.php"); exit(); }
 
 /* Base required files. The most of another required files is in module.basemodule.class.php */
 require_once(PHPXMLNUKEDIR . "bin/processor.inc.php");
@@ -63,29 +63,29 @@ function fixbadthingsinphp()
 	{
     	set_magic_quotes_runtime(0);
 	}
-	
-	if (get_magic_quotes_gpc()) 
+
+	if (get_magic_quotes_gpc())
 	{
 		// $_REQUEST have $_GET, $_POST and $_COOKIE in one variable
 		$_REQUEST = array_map("remove_magicquotes", $_REQUEST);
 	}
-	
-	if (function_exists("ini_get")) 
+
+	if (function_exists("ini_get"))
 	{
 		if(!ini_get("display_errors"))
 		{
 			ini_set("display_errors", 1);
-		}    
-		
+		}
+
 		if(ini_get("magic_quotes_sybase"))
 		{
 			ini_set("magic_quotes_sybase", 0);
-		}    
+		}
 
 		// Fixed register_globals behavior!!
-		if (ini_get("register_globals")) 
+		if (ini_get("register_globals"))
 		{
-			foreach($GLOBALS as $s_variable_name => $m_variable_value) 
+			foreach($GLOBALS as $s_variable_name => $m_variable_value)
 			{
 				if (!in_array($s_variable_name, array("GLOBALS", "argv", "argc", "_FILES", "_COOKIE", "_POST", "_GET", "_REQUEST", "_SERVER", "_ENV", "_SESSION", "s_variable_name", "m_variable_value")))
 				{
@@ -95,7 +95,7 @@ function fixbadthingsinphp()
 			unset($GLOBALS["s_variable_name"]);
 			unset($GLOBALS["m_variable_value"]);
 			echo "<br/><b>Warning</b>: I suppose you do not need enter here. Please deactivate \"register_globals\" directive<br/>";
-		}  
+		}
 	}
 	error_reporting(E_ALL ^ E_NOTICE);
 	//error_reporting(E_ALL);

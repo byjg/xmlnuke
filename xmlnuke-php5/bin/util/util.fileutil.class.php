@@ -43,7 +43,7 @@ class FileUtil
 		{
 			return file_exists($filename->FullQualifiedNameAndPath());
 		}
-		else 
+		else
 		{
 			return file_exists($filename);
 		}
@@ -332,59 +332,66 @@ class FileUtil
 	*@param string $str
 	*@return bool
 	*/
-	public static function is_utf8($str) 
-	{ 
-	   // values of -1 represent disalloweded values for the first bytes in current UTF-8 
-	   static $trailing_bytes = array ( 
-	       0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 
-	       0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 
-	       0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 
-	       0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 
-	       -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 
-	       -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 
-	       -1,-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 
-	       2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 3,3,3,3,3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 
-	   ); 
-	
-	   $ups = unpack('C*', $str); 
-	   if (!($aCnt = count($ups))) return true; // Empty string *is* valid UTF-8 
-	   for ($i = 1; $i <= $aCnt;) 
-	   { 
-	       if (!($tbytes = $trailing_bytes[($b1 = $ups[$i++])])) continue; 
-	       if ($tbytes == -1) return false; 
-	       
-	       $first = true; 
-	       while ($tbytes > 0 && $i <= $aCnt) 
-	       { 
-	           $cbyte = $ups[$i++]; 
-	           if (($cbyte & 0xC0) != 0x80) return false; 
-	           
-	           if ($first) 
-	           { 
-	               switch ($b1) 
-	               { 
-	                   case 0xE0: 
-	                       if ($cbyte < 0xA0) return false; 
-	                       break; 
-	                   case 0xED: 
-	                       if ($cbyte > 0x9F) return false; 
-	                       break; 
-	                   case 0xF0: 
-	                       if ($cbyte < 0x90) return false; 
-	                       break; 
-	                   case 0xF4: 
-	                       if ($cbyte > 0x8F) return false; 
-	                       break; 
-	                   default: 
-	                       break; 
-	               } 
-	               $first = false; 
-	           } 
-	           $tbytes--; 
-	       } 
-	       if ($tbytes) return false; // incomplete sequence at EOS 
-	   }        
-	   return true; 
+	public static function is_utf8($str)
+	{
+		if (extension_loaded('mbstring'))
+		{
+			return mb_detect_encoding($str) == "UTF-8";
+		}
+		else
+		{
+		   // values of -1 represent disalloweded values for the first bytes in current UTF-8
+		   static $trailing_bytes = array (
+		       0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		       0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		       0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		       0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		       -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+		       -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+		       -1,-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+		       2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 3,3,3,3,3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
+		   );
+
+		   $ups = unpack('C*', $str);
+		   if (!($aCnt = count($ups))) return true; // Empty string *is* valid UTF-8
+		   for ($i = 1; $i <= $aCnt;)
+		   {
+		       if (!($tbytes = $trailing_bytes[($b1 = $ups[$i++])])) continue;
+		       if ($tbytes == -1) return false;
+
+		       $first = true;
+		       while ($tbytes > 0 && $i <= $aCnt)
+		       {
+		           $cbyte = $ups[$i++];
+		           if (($cbyte & 0xC0) != 0x80) return false;
+
+		           if ($first)
+		           {
+		               switch ($b1)
+		               {
+		                   case 0xE0:
+		                       if ($cbyte < 0xA0) return false;
+		                       break;
+		                   case 0xED:
+		                       if ($cbyte > 0x9F) return false;
+		                       break;
+		                   case 0xF0:
+		                       if ($cbyte < 0x90) return false;
+		                       break;
+		                   case 0xF4:
+		                       if ($cbyte > 0x8F) return false;
+		                       break;
+		                   default:
+		                       break;
+		               }
+		               $first = false;
+		           }
+		           $tbytes--;
+		       }
+		       if ($tbytes) return false; // incomplete sequence at EOS
+		   }
+		   return true;
+		}
 	}
 
 
@@ -431,7 +438,7 @@ class FileUtil
 
 	/**
 	* Open a remote document from a specific URL
-	* @param string $url 
+	* @param string $url
 	* @return handle Handle of the document opened
 	*/
 	public static function OpenRemoteDocument($url)
@@ -462,7 +469,7 @@ class FileUtil
 
 	/**
 	* Get the full document opened from OpenRemoteDocument
-	* @param handle $handle 
+	* @param handle $handle
 	* @return string Remote document
 	*/
 	public static function ReadRemoteDocument($handle)
@@ -472,7 +479,7 @@ class FileUtil
 		$retdocument = "";
 		$xml = true;
 		$canread = true;
-		
+
 		// READ HEADER
 		while (!feof($handle))
 		{
@@ -487,7 +494,7 @@ class FileUtil
 				break;
 			}
 		}
-		
+
 		// READ CONTENT
 		while (!feof($handle))
 		{
@@ -496,14 +503,14 @@ class FileUtil
 			{
 				$buffer = "";
 			}
-			else 
+			else
 			{
 				$canread = true;
 			}
 			$retdocument = $retdocument . $buffer;
 		}
 		fclose($handle);
-		
+
 		if ($xml)
 		{
 			$lastvalid = strrpos($retdocument, ">");
@@ -515,7 +522,7 @@ class FileUtil
 
 	/**
 	* Get a remote document and transform to DomXMLDocument
-	* @param string $url 
+	* @param string $url
 	* @return handle DOMDocument
 	*/
 	public static function GetRemoteXMLDocument($url)
@@ -542,7 +549,7 @@ class FileUtil
 		                 "'&atilde;'i",
 		                 "'&ccedil;'i",
 		                 "'&#(\d+);'e");                    // evaluate as php
-		
+
 		$replace = array ("\"",
 		                  "&",
 		                  //"<",
@@ -560,16 +567,16 @@ class FileUtil
 		                  "ã",
 		                  "ç",
 		                  "chr(\\1)");
-		
+
 
 		$xmlString = preg_replace($search, $replace, $xmlString);
 		//$xmlString = tidy_parse_string($xmlString, array('output-xml' => TRUE), 'UTF8');
-		
+
 		$xmldoc = XmlUtil::CreateXmlDocumentFromStr($xmlString);
-		
+
 		return $xmldoc;
-	}	
-	
+	}
+
 	public static function ResponseCustomContent($mimeType, $content, $downloadName = "")
 	{
 		ob_clean();
@@ -589,7 +596,7 @@ class FileUtil
 			echo "<h1>404 Not Found</h1>";
 			echo "Filename " . basename($filename) . " not found!<br>";
 		}
-		else 
+		else
 		{
 			if ($downloadName == "")
 			{
@@ -603,6 +610,6 @@ class FileUtil
 		}
 		exit();
 	}
-	
+
 }
 ?>

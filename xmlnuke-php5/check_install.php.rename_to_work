@@ -40,11 +40,11 @@ if ($action == "")
 }
 elseif ($action == "check")
 {
-	CheckInstall();	
+	CheckInstall();
 }
 elseif ($action == "config")
 {
-	EditConfig();	
+	EditConfig();
 }
 
 ####
@@ -61,7 +61,7 @@ function WelcomeMessage()
 function CheckInstall()
 {
 	$failed = false;
-	
+
 	echo "<h1>Result Tests</h1>";
 	echo "<h2>PHP Version</h2>";
 	echo "<ul>";
@@ -77,25 +77,25 @@ function CheckInstall()
 	}
 	echo "</font></li>";
 	echo "</ul>";
-	
+
 	echo "<h2>Required Extensions</h2><ul>";
-	$required_ext = 
+	$required_ext =
 		array(
-			"session"=>"Core PHP", 
-			"Reflection"=>"Core PHP", 
-			"date"=>"Core PHP", 
-			"standard"=>"Core PHP", 
-			"libxml"=>"Core Xmlnuke", 
-			"dom"=>"Core Xmlnuke", 
-			"xml"=>"Core Xmlnuke", 
-			"xmlreader"=>"Core Xmlnuke", 
-			"xmlwriter"=>"Core Xmlnuke", 
-			"xsl"=>"Core Xmlnuke", 
-			"PDO"=>"Database Access (you must select one driver below)", 
+			"session"=>"Core PHP",
+			"Reflection"=>"Core PHP",
+			"date"=>"Core PHP",
+			"standard"=>"Core PHP",
+			"libxml"=>"Core Xmlnuke",
+			"dom"=>"Core Xmlnuke",
+			"xml"=>"Core Xmlnuke",
+			"xmlreader"=>"Core Xmlnuke",
+			"xmlwriter"=>"Core Xmlnuke",
+			"xsl"=>"Core Xmlnuke",
+			"PDO"=>"Database Access (you must select one driver below)",
 			"gd" => "For Captcha messages"
 		);
 
-	foreach ($required_ext as $key=>$value) 
+	foreach ($required_ext as $key=>$value)
 	{
 		echo "<li>";
 		if (extension_loaded($key))
@@ -110,14 +110,14 @@ function CheckInstall()
 		echo $key . " (" . $value . ")</font></li>";
 	}
 	echo "</ul>";
-	
+
 	echo "<h2>Uninstall Extensions</h2><ul>";
-	$required_ext = 
+	$required_ext =
 		array(
 			"domxml"=>"PHP Dom XML"
 		);
 
-	foreach ($required_ext as $key=>$value) 
+	foreach ($required_ext as $key=>$value)
 	{
 		echo "<li>";
 		if (!extension_loaded($key))
@@ -132,12 +132,13 @@ function CheckInstall()
 		echo $key . " (" . $value . ")</font></li>";
 	}
 	echo "</ul>";
-	
+
 
 	echo "<h2>Optional Extensions</h2><ul>";
-	$optional_ext = 
+	$optional_ext =
 		array(
-			"zlib" => "For backup and install modules", 
+			"mbstring" => "Improve performance in PHP. **Check it!**",
+			"zlib" => "For backup and install modules",
 			"pdo_dblib"=>"FreeTDS/Sybase/MSSQL driver for PDO",
 			"pdo_firebird "=>"Firebird/InterBase 6 driver for PDO",
 			"pdo_ibm"=>"PDO driver for IBM databases",
@@ -146,9 +147,9 @@ function CheckInstall()
 			"pdo_oci"=>"Oracle Call Interface driver for PDO",
 			"pdo_odbc"=>"ODBC v3 Interface driver for PDO",
 			"pdo_pgsql"=>"PostgreSQL driver for PDO",
-			"pdo_sqlite"=>"SQLite v3 Interface driver for PDO" 
+			"pdo_sqlite"=>"SQLite v3 Interface driver for PDO"
 		);
-	foreach ($optional_ext as $key=>$value) 
+	foreach ($optional_ext as $key=>$value)
 	{
 		echo "<li>";
 		if (extension_loaded($key))
@@ -163,7 +164,7 @@ function CheckInstall()
 		echo "$key ($value) </font></li>";
 	}
 	echo "</ul>";
-	
+
 	$phpini = array("memory_limit" => "64M");
 	echo "<h2>Required PHP.INI sets</h2><ul>";
 	$failed = (validateIniSection($phpini, true) || $failed);
@@ -173,12 +174,12 @@ function CheckInstall()
 	echo "<h2>Optional PHP.INI sets</h2><ul>";
 	validateIniSection($phpini, false);
 	echo "</ul>";
-	
+
 	if ($failed)
 	{
 		echo "<br><b><font color='red'>Your system doesn't have the minimum requirements to run the XMLNuke. Please check your setup and try again</b></font>";
 	}
-	else 
+	else
 	{
 		echo "<br><font color='green'><b>Congratulations!!</b>. Your system is ready to go with XMLNuke.</font><br><br>";
 		echo "<center><a href='check_install.php?action=config'><font color='green'><b> == Click here to create your Config File ==</b></font></a></center>";
@@ -188,7 +189,7 @@ function CheckInstall()
 function EditConfig()
 {
 	echo "<h1>Edit Configuration File</h1>";
-	
+
 	if (@$_POST["xmlnuke_ROOTDIR"] != '')
 	{
 		$errors = createConfigFile();
@@ -201,21 +202,21 @@ function EditConfig()
 			}
 			echo "</ul>";
 		}
-		else 
+		else
 		{
 			echo "<font color='green'><b>Data sucessful updated. <a href='?action=config'>Click here to reload data</a></b></font><br>";
 			echo "<a href='index.php'>Click here to go to Xmlnuke index page</a><br><br>";
 			exit;
 		}
 	}
-	
+
 	$failed = true;
 	if (class_exists("config", false))
 	{
 		$configValues = config::getValuesConfig();
 		$failed = false;
 	}
-	
+
 	if ($failed)
 	{
 		// Default Values
@@ -289,28 +290,28 @@ function EditConfig()
 		'uk-ua=Українська',
 		'zh-cn=Chinese (Simplified)',
 		'zh-tw=Chinese (Traditional)',
-	);	
-	
+	);
+
 	echo "<form method='post' action='?action=config'>";
 	echo "<table width='600'><tr><td>";
-	
-	writeInputData($configValues, "xmlnuke.ROOTDIR", 
+
+	writeInputData($configValues, "xmlnuke.ROOTDIR",
 		"Path where Snippets and sites are located (Don't add Slashs on the end). " .
 		" This Path can be VIRTUAL ou ABSOLUTE (e.g. C:\XMLNuke\Sites).  " .
 		" Set the parameter USEABSOLUTEPATHSROOTDIR to determine the behavior", 1);
 
-	writeInputData($configValues, "xmlnuke.USEABSOLUTEPATHSROOTDIR", 
-		"Defines how the property <i>xmlnuke.ROOTDIR</i> will understand the directory. " . 
+	writeInputData($configValues, "xmlnuke.USEABSOLUTEPATHSROOTDIR",
+		"Defines how the property <i>xmlnuke.ROOTDIR</i> will understand the directory. " .
 		"If false, the directory is relative from current directory. " .
 		"If true, the directory is an absolute path. ", 2);
 
-	writeInputData($configValues, "xmlnuke.URLXMLNUKEENGINE", 
+	writeInputData($configValues, "xmlnuke.URLXMLNUKEENGINE",
 		"The script name of XMLNuke front controller for run xmlnuke static pages", 1);
 
 	writeInputData($configValues, "xmlnuke.URLMODULE",
 		"The script name of XMLNuke front controller for execute modules", 1);
 
-	writeInputData($configValues, "xmlnuke.URLXMLNUKEADMIN", 
+	writeInputData($configValues, "xmlnuke.URLXMLNUKEADMIN",
 		"The script name of XMLNukeAdmin front controller", 1);
 
 	writeInputData($configValues, "xmlnuke.DEFAULTSITE",
@@ -324,73 +325,73 @@ function EditConfig()
 
 	writeInputData($configValues, "xmlnuke.URLBASE",
 		"Define the base URL of XMLNuke installation. For example: " .
-		"http://www.somesite.com/xmlnuke-php5/. " . 
+		"http://www.somesite.com/xmlnuke-php5/. " .
 		"This is optional and you can safely leave blank this parameter.", 1);
 
-	writeInputData($configValues, "xmlnuke.ALWAYSUSECACHE", 
-		"Enable/Disable the cache system on XMLNuke. Avoid set this option to false. " . 
+	writeInputData($configValues, "xmlnuke.ALWAYSUSECACHE",
+		"Enable/Disable the cache system on XMLNuke. Avoid set this option to false. " .
 		"This option is useful when you cannot change the write permissions, ".
 		"but the system will be slower", 2);
 
 	writeInputData($configValues, "xmlnuke.SHOWCOMPLETEERRORMESSAGES",
 		"Show complete and usefull information for debug. Disable this option in production environments", 2);
 
-	writeInputData($configValues, "xmlnuke.LANGUAGESAVAILABLE", 
+	writeInputData($configValues, "xmlnuke.LANGUAGESAVAILABLE",
 		"Default set of Languages XMLNuke Expected to find. This set may override at admin " .
 		"tool CustomConfig", 9999, $langs);
 
-	writeInputData($configValues, "xmlnuke.SMTPSERVER", 
-		"Smtpserver. Smtp Server. You can use the format smtp://USER:PASS@SERVER:PORT for sending from an valid SMTP server;  " . 
+	writeInputData($configValues, "xmlnuke.SMTPSERVER",
+		"Smtpserver. Smtp Server. You can use the format smtp://USER:PASS@SERVER:PORT for sending from an valid SMTP server;  " .
 		"define a SERVERNAME or leave blank for use the sendmail PHP method.", 1);
 
 	writeInputData($configValues, "xmlnuke.USERSDATABASE",
 		"Where XMLNuke look up for the users. Leave empty to store in single XML, or put a value " .
 		"for a valid connection string in XMLNuke.", 1);
-		
+
 	writeInputData($configValues, "xmlnuke.USERSCLASS",
 		"XMLNuke will use this class for access custom access users. Empty values uses the default class. ", 1);
-		
-	writeInputData($configValues, "xmlnuke.DEBUG", 
+
+	writeInputData($configValues, "xmlnuke.DEBUG",
 		"Put XMLNuke in Debug mode", 2);
 
-	writeInputData($configValues, "xmlnuke.ENABLEPARAMPROCESSOR", 
+	writeInputData($configValues, "xmlnuke.ENABLEPARAMPROCESSOR",
 		"Enable or disable the PARAMPROCESSOR diretive. ".
 		"ParamProcessor enable post processing on your XML/XSL transformed looking for [param:....]. " .
 		"This feature, if enable, uses resources from your Web Server causing low performance. ".
 		"TIP: If high performance is critical, set to false this option. ", 2);
 
-	writeInputData($configValues, "xmlnuke.USEFULLPARAMETER", 
+	writeInputData($configValues, "xmlnuke.USEFULLPARAMETER",
 		"If true, XMLNuke will complete all basic parameters (xml, xsl, site and lang). " .
 		"If false, XMLNuke will complete only the values are different from default values ", 2);
 
-	writeInputData($configValues, "xmlnuke.CHECKCONTENTTYPE", 
-		"XMLNuke can check if a XSL transformation generate a document with a specific type. " . 
+	writeInputData($configValues, "xmlnuke.CHECKCONTENTTYPE",
+		"XMLNuke can check if a XSL transformation generate a document with a specific type. " .
 		"The relation between XSL and content is located at: setup/content-type.anydata.xml ", 2);
 
-    writeInputData($configValues, "xmlnuke.CACHESTORAGEMETHOD", 
-    	"How XMLNuke will be store the cache in filesystem", 3, 
+    writeInputData($configValues, "xmlnuke.CACHESTORAGEMETHOD",
+    	"How XMLNuke will be store the cache in filesystem", 3,
     	array("PLAIN" => "Plain(Flat) directory", "HASHED" => "Hashed Directory Structure"));
 
-    writeInputData($configValues, "xmlnuke.XMLSTORAGEMETHOD", 
-    	"How XMLNuke will be store XML documents in filesystem", 3, 
+    writeInputData($configValues, "xmlnuke.XMLSTORAGEMETHOD",
+    	"How XMLNuke will be store XML documents in filesystem", 3,
     	array("PLAIN" => "Plain(Flat) directory", "HASHED" => "Hashed Directory Structure"));
-		
-    writeInputData($configValues, "xmlnuke.EXTERNALSITEDIR", 
+
+    writeInputData($configValues, "xmlnuke.EXTERNALSITEDIR",
     	"Sets the path for sites that are not stored within the structure of xmlnuke.ROOTDIR. " .
     	"You need to configure a pair of values in this option. The first value defines the name of the site,  " .
     	"and the second defines the physical path of the site. You can safely leave this option blank.", 4);
-    
-    writeInputData($configValues, "xmlnuke.PHPLIBDIR", 
+
+    writeInputData($configValues, "xmlnuke.PHPLIBDIR",
     	"Defines the search path directory for USER LIB generated projects. You need to configure a pair of values in this option. " .
     	"The first value defines the namespace prefix and the second defines the physical path of the files. " .
     	"If you are developing your own modules, you should consider to use this option", 4);
-		
-	writeInputData($configValues, "xmlnuke.PHPXMLNUKEDIR", 
+
+	writeInputData($configValues, "xmlnuke.PHPXMLNUKEDIR",
 		"Path where all XMLNuke PHP5 files live. You need set this option if are using " .
 		" XMLNuke from subversion repository", 1);
 
     echo "</td></tr></table>";
-	
+
 	echo "<input type='submit' value='Create Config File'></form>";
 
 }
@@ -403,7 +404,7 @@ function EditConfig()
 function validateIniSection($phpini, $required)
 {
 	$failed = false;
-	foreach ($phpini as $key=>$value) 
+	foreach ($phpini as $key=>$value)
 	{
 		echo "<li>";
 		$keyCmp = parseValue(ini_get($key));
@@ -412,9 +413,9 @@ function validateIniSection($phpini, $required)
 			$result = $keyCmp == $valueCmp;
 		elseif (is_numeric($valueCmp))
 			$result = intval($keyCmp) >= intval($valueCmp);
-		else 
+		else
 			$result = $keyCmp == $valueCmp;
-		
+
 		if ($result)
 		{
 			echo "<font color='green'><b>Passed! </b>";
@@ -423,19 +424,19 @@ function validateIniSection($phpini, $required)
 		{
 			if ($required)
 				echo "<font color='red'><b>Failed! </b>";
-			else 
+			else
 				echo "<font color='#FF9900'><b>Not Found! </b>";
-			
+
 			$failed = true;
 		}
-		
+
 		$iniGet = ini_get($key);
 		if (is_bool($value))
 		{
 			$value = ($value ? "On" : "Off");
 			$iniGet = ($iniGet ? "On" : "Off");
 		}
-		
+
 		echo "$key (Required: $value; Found: " . $iniGet . ") </font></li>";
 	}
 	return $failed;
@@ -445,13 +446,13 @@ function parseValue($value)
 {
 	if (is_bool($value))
 		return $value;
-		
+
 	if (strlen($value) < 2)
 		return $value;
-		
+
 	if ($value[strlen($value)-1] == "M")
 		$value = intval(substr($value, 0, strlen($value)-1)) * 1024;
-	
+
 	return $value;
 }
 
@@ -460,9 +461,9 @@ function writeInputData($configValues, $name, $desc, $type, $list = null)
 	$curValue = @$configValues[$name];
 	echo "<b>$name</b><br>";
 	echo "$desc<br>";
-	
+
 	$name = str_replace(".", "_", $name);
-	
+
 	if ($type == 1)
 	{
 		echo "<input type='text' name='$name' value='$curValue'>";
@@ -486,7 +487,7 @@ function writeInputData($configValues, $name, $desc, $type, $list = null)
 		if ($curValue != "")
 		{
 			$pairItemArray = explode("|", $curValue);
-			foreach ($pairItemArray as $pairItem) 
+			foreach ($pairItemArray as $pairItem)
 			{
 				$pair = explode("=", $pairItem);
 				echo "<input type='text' name='" . $name . $i . "_key' value='$pair[0]' size='8'>";
@@ -513,7 +514,7 @@ function writeInputData($configValues, $name, $desc, $type, $list = null)
 		}
 		echo "<select name='$name" . ++$key . "'>";
 		writeOptionList($list, '', true);
-		echo "</select><br>";	
+		echo "</select><br>";
 		echo "<select name='$name" . ++$key . "'>";
 		writeOptionList($list, '', true);
 		echo "</select><br>";
@@ -531,7 +532,7 @@ function writeOptionList($list, $default, $keyEqualValue = false)
 		{
 			echo "<option value='$value'" . ($value == $default ? "selected" : "") . ">$value</option>";
 		}
-		else 
+		else
 		{
 			echo "<option value='$key'" . ($key == $default ? "selected" : "") . ">$value</option>";
 		}
@@ -541,19 +542,19 @@ function writeOptionList($list, $default, $keyEqualValue = false)
 function createConfigFile()
 {
 	$errors = array();
-	
-	$fileContent = 
+
+	$fileContent =
 		"## CONFIG FILE AUTO-GENERATED on " . date('c') . "\n" .
 		"class config \n" .
 		"{ \n" .
 		"	public static function getValuesConfig()\n" .
 		"	{\n" .
 		"		\$values = array();\n";
-		
+
 	foreach ($_POST as $key=>$value)
 	{
 		$name =  "'" . str_replace('_', '.', $key) . "'";
-			
+
 		if ($key == 'xmlnuke_ROOTDIR')
 		{
 			if (!file_exists($value))
@@ -574,21 +575,21 @@ function createConfigFile()
 				if ($_POST[$key . $i] != "") $value .= ($value!="" ? "|" : "") . $_POST[$key . $i];
 			}
 		}
-		elseif ( ($key == 'xmlnuke_EXTERNALSITEDIR') || ($key == 'xmlnuke_PHPLIBDIR') ) 
+		elseif ( ($key == 'xmlnuke_EXTERNALSITEDIR') || ($key == 'xmlnuke_PHPLIBDIR') )
 		{
 			$qty = intval($_POST[$key]);
 			$value = "";
 			for($i=0; $i<$qty; $i++)
 			{
 				$siteName = $_POST[$key . $i . "_key"];
-				if ($siteName != "") 
+				if ($siteName != "")
 				{
 					$sitePath = $_POST[$key . $i . "_value"];
 					if (!file_exists($sitePath))
 					{
 						$errors[] =  "The config option '$key' has a hey '$siteName' which defines a directory '$sitePath' that does not exists.";
 					}
-					$value .= ($value!="" ? "|" : "") . $siteName . "=" . $sitePath;					
+					$value .= ($value!="" ? "|" : "") . $siteName . "=" . $sitePath;
 				}
 			}
 		}
@@ -599,28 +600,28 @@ function createConfigFile()
 				$errors[] = "Directory '$value' defined in 'xmlnuke.PHPXMLNUKEDIR' does not exists";
 			}
 		}
-		elseif ((strpos($key, 'xmlnuke_LANGUAGESAVAILABLE')!==false) || 
-				(strpos($key, 'xmlnuke_EXTERNALSITEDIR')!==false) || 
+		elseif ((strpos($key, 'xmlnuke_LANGUAGESAVAILABLE')!==false) ||
+				(strpos($key, 'xmlnuke_EXTERNALSITEDIR')!==false) ||
 				(strpos($key, 'xmlnuke_PHPLIBDIR')!==false) )
 		{
 			continue;
 		}
-			
+
 		if ( ($value != "false") && ($value != "true") )
 			$value = "'$value'";
 		$fileContent .= "		\$values[$name] = $value;\n";
 	}
-	
+
 	$fileContent .= "		return \$values;\n";
 	$fileContent .= "	}\n" ;
 	$fileContent .= "}\n" ;
 	$fileContent .= "define('PHPXMLNUKEDIR', '" . ($_POST["xmlnuke_PHPXMLNUKEDIR"] != "" ? $_POST["xmlnuke_PHPXMLNUKEDIR"] . "/" : "") . "');\n";
 	$fileContent .= "## END-OF-FILE\n" ;
-		
+
 	//echo "<pre>";
 	//echo $fileContent;
 	//echo "</pre>";
-	
+
 	if (sizeof($errors) == 0)
 	{
 		if (!is_writeable("config.inc.php"))
@@ -637,7 +638,7 @@ function createConfigFile()
 			}
 		}
 	}
-	
+
 	return $errors;
 }
 
