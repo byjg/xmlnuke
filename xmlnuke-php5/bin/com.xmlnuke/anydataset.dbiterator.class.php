@@ -96,10 +96,10 @@ class DBIterator implements IIterator
       			}
 				else 
 				{
-					if (!FileUtil::is_utf8($value))
-					{
+					//if (!FileUtil::is_utf8($value))
+					//{
 						$value = utf8_encode($value);
-					}
+					//}
 				
 					$any->addField($fieldName, $value);
 				}
