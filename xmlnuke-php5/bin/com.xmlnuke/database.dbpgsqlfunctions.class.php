@@ -32,7 +32,13 @@ class DbPGSqlFunctions extends DbBaseFunctions
 
 	function Concat($s1, $s2 = null)
 	{
-		//TODO:
+	 	for ($i = 0, $numArgs = func_num_args(); $i < $numArgs ; $i++)
+	 	{
+	 		$var = func_get_arg($i);
+	 		$sql .= ($i==0 ? "" : " || ") . $var;
+	 	}
+	 	
+	 	return $sql;
 	} 
 
 	/**
@@ -44,7 +50,14 @@ class DbPGSqlFunctions extends DbBaseFunctions
 	 */
 	function Limit($sql, $start, $qty)
 	{
-		//TODO:
+		if (strpos($sql, ' LIMIT ') === false)
+		{
+			return $sql .= " LIMIT $qty OFFSET $start ";
+		}
+		else
+		{
+			return $sql;
+		}
 	}
 
 	/**
@@ -55,7 +68,7 @@ class DbPGSqlFunctions extends DbBaseFunctions
 	 */
 	function Top($sql, $qty)
 	{
-		//TODO:
+		return $this->Limit($sql, 0, $qty);
 	}
 
 	/**
@@ -64,7 +77,7 @@ class DbPGSqlFunctions extends DbBaseFunctions
 	 */
 	function hasTop()
 	{
-		//TODO:
+		return true;
 	}
 
 	/**
@@ -73,7 +86,7 @@ class DbPGSqlFunctions extends DbBaseFunctions
 	 */
 	function hasLimit()
 	{
-		//TODO:
+		return true;
 	}
 
     /**

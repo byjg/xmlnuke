@@ -80,7 +80,7 @@ class XmlUtil
 	{
 		$xmldoc = self::CreateXmlDocument();
 		$xml = FileUtil::CheckUTF8Encode($xml);
-		$xml = self::justUtf8($xml);
+		$xml = self::FixXMLHeader($xml);
 		$xml = str_replace("&", "&amp;",$xml);
 		XmlUtilKernel::LoadXMLDocument($xmldoc, $xml);
 		return $xmldoc;
@@ -100,79 +100,52 @@ class XmlUtil
 	}
 
 	/**
-	* Adjust xml string to utf-8 format
+	* Adjust xml string to the proper format
 	* @param string $string - XML string document
 	* @return string - Return the string converted
 	*/
-	public static function justUtf8($string)
-	{
-		$xmlheader = '<?xml version="' . self::XML_VERSION  . '" encoding="' . self::XML_ENCODING  .'"?>';
-		$xmlfull = $string;
+	public static function FixXMLHeader($string)
+	{		
 		if(strpos($string, "<?xml") !== false)
 		{
 			$xmltagend = strpos($string, "?>");
-			$xmlheader = substr($string, 0, $xmltagend);
-			$xmlfull = substr($string, $xmltagend + 2);
-			$xmlheader = self::findXmlHeaderParamToReplace($xmlheader, "version", self::XML_VERSION );
-			$xmlheader = self::findXmlHeaderParamToReplace($xmlheader, "encoding", self::XML_ENCODING );
-		}
-		return $xmlheader.$xmlfull;
-	}
-	/**
-	* Repair xml header param
-	* @param string $xmlheader XML Header
-	* @param string $find Param to find in header
-	* @param string $replace Replace param value
-	* @return string - Return the XML Header Repaired
-	*/
-	public static function findXmlHeaderParamToReplace($xmlheader, $find, $replace)
-	{
-		$find .= "=";
-		$xmltagend = strpos($xmlheader, "?>");
-		if ($xmltagend !== false)
-		{
-			$xmlheader = substr($xmlheader, 0, $xmltagend);
-		}
-		$xmltagend = strlen($xmlheader);
-		$xmlencodingPos = strpos($xmlheader, $find);
-		if ($xmlencodingPos !== false)
-		{
-			$xmlencodingPosX = $xmlencodingPos + strlen($find)-1;
-			if ($xmlheader{$xmlencodingPosX+1} == '"')
+			if ($xmltagend !== false)
 			{
-				$xmlencodingPosX++;
+				$xmltagend += 2;
+				$xmlheader = substr($string, 0, $xmltagend);
 			}
 			else
 			{
-				throw new XmlUtilException(251, "Header bad formated.");
+				throw new XmlUtilException(251, "Header bad formatted.");
 			}
-			$replaceStr = "";
-			$replaceCounter = $xmlencodingPosX;
-			$counter = 0;
-			$headerLen = strlen($xmlheader);
-			while ($xmlheader{$replaceCounter+1} != '"')
+			
+			// Complete header elements
+			$count = 0;
+			$xmlheader = preg_replace("/version=([\"'][\w\d\-\.]+[\"'])/", "version=\"" . self::XML_VERSION . "\"", $xmlheader, 1, $count);
+			if ($count == 0)
 			{
-				$counter++;
-				$replaceCounter++;
-				$replaceStr .= $xmlheader{$replaceCounter};
-				if($replaceCounter >= $headerLen)
-				{
-					$xmlheader .= '"';
-					break;
-				}
+				$xmlheader = substr($xmlheader, 0, 6)  . "version=\"" . self::XML_VERSION . "\" " . substr($xmlheader, 6);
 			}
-			if($replaceStr == '')
+			$count = 0;
+			$xmlheader = preg_replace("/encoding=([\"'][\w\d\-\.]+[\"'])/", "encoding=\"" . self::XML_ENCODING . "\"", $xmlheader, 1, $count);
+			if ($count == 0)
 			{
-				$replaceStr = "$find\"\"";
-				$replace = "$find\"$replace\"";
+				$xmlheader = substr($xmlheader, 0, 6)  . "encoding=\"" . self::XML_ENCODING . "\" " . substr($xmlheader, 6);
 			}
-			$xmlheader = str_replace($replaceStr, $replace, $xmlheader);
+			
+			// Fix header position (first version, after encoding)
+			$xmlheader = preg_replace(
+				"/<\?([\w\W]*)\s+(encoding=([\"'][\w\d\-\.]+[\"']))\s+(version=([\"'][\w\d\-\.]+[\"']))\s*\?>/", 
+				"<?\\1 \\4 \\2?>", $xmlheader, 1, $count);
+
+			return $xmlheader . substr($string, $xmltagend);		
 		}
 		else
 		{
-			$xmlheader .= " $find\"$replace\"";
+			$xmlheader = '<?xml version="' . self::XML_VERSION  . '" encoding="' . self::XML_ENCODING  .'"?>';
+			return $xmlheader . $string;
 		}
-		return $xmlheader . "?>";
+
 	}
 
 	/**
