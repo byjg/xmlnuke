@@ -274,7 +274,7 @@ class XmlNukeEngine
 			else 
 			{
 				$nodes = XmlUtil::selectNodes($xml->documentElement, "/".$this->_extractNodes);
-				$retDocument = XmlUtil::CreateXmlDocumentFromStr("<".$this->_extractNodesRoot."/>");
+				$retDocument = XmlUtil::CreateXmlDocumentFromStr("<".$this->_extractNodesRoot."/>", false);
 				$nodeRoot = $retDocument->documentElement;
 				XmlUtil::AddAttribute($nodeRoot, "xpath", $this->_extractNodes);
 				XmlUtil::AddAttribute($nodeRoot, "site", $this->_context->getSite());

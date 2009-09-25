@@ -359,7 +359,7 @@ class XmlChart extends XmlnukeDocumentObject
 			}
 			elseif ($this->_context->ContextValue("xcrt") == "flash")
 			{
-				$doc = XmlUtil::CreateXmlDocumentFromStr("<chart/>");
+				$doc = XmlUtil::CreateXmlDocumentFromStr("<chart/>", false);
 				$root = $doc->documentElement;
 				
 				$chartLabel = XmlUtil::CreateChild($root, "chart_label");

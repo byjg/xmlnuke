@@ -76,10 +76,10 @@ class XmlUtil
 	* @param string $xml - XML string document
 	* @return DOMDocument
 	*/
-	public static function CreateXmlDocumentFromStr($xml)
+	public static function CreateXmlDocumentFromStr($xml, $checkUTF8 = true)
 	{
 		$xmldoc = self::CreateXmlDocument();
-		$xml = FileUtil::CheckUTF8Encode($xml);
+		if ($checkUTF8)	$xml = FileUtil::CheckUTF8Encode($xml);
 		$xml = self::FixXMLHeader($xml);
 		$xml = str_replace("&", "&amp;",$xml);
 		XmlUtilKernel::LoadXMLDocument($xmldoc, $xml);

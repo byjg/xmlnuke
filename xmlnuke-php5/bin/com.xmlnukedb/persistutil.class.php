@@ -164,7 +164,7 @@ class PersistUtil
 		}
 		else
 		{
-			$doc = XmlUtil::CreateXmlDocumentFromStr("< $rootNode />");
+			$doc = XmlUtil::CreateXmlDocumentFromStr("< $rootNode />", false);
 			$source = XmlUtil::CreateXmlDocumentFromFile($documentName);
 			
 			$DocXpath = new DOMXPath($source);

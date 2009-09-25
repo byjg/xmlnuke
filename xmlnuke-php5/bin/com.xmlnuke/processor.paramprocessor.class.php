@@ -281,7 +281,7 @@ class ParamProcessor
 					
 					try
 					{
-						$nodeToProc = XmlUtil::CreateXmlDocumentFromStr("<root>" . $result . "</root>")->documentElement;
+						$nodeToProc = XmlUtil::CreateXmlDocumentFromStr("<root>" . $result . "</root>", false)->documentElement;
 						if ($node->nodeType == XML_TEXT_NODE)
 						{
 							$node->nodeValue = "";

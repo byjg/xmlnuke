@@ -301,17 +301,17 @@ class FileUtil
 	*/
 	public static function CheckUTF8Encode($document)
 	{
-		if (self::is_utf8($document))
+		if (!self::is_utf8($document))
+		{
+			$document = utf8_encode($document);
+		}
+		else
 		{
 			if (ord(substr($document,0,1)) == 239)
 			{
 				$document = substr($document, 3);
 			}
-			$document = utf8_encode(utf8_decode($document));
-		}
-		else
-		{
-			$document = utf8_encode($document);
+//			$document = utf8_encode(utf8_decode($document));
 		}
 		return $document;
 	}
@@ -332,66 +332,59 @@ class FileUtil
 	*@param string $str
 	*@return bool
 	*/
-	public static function is_utf8($str)
-	{
-		if (extension_loaded('mbstring'))
-		{
-			return mb_detect_encoding($str) == "UTF-8";
-		}
-		else
-		{
-		   // values of -1 represent disalloweded values for the first bytes in current UTF-8
-		   static $trailing_bytes = array (
-		       0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		       0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		       0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		       0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		       -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-		       -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-		       -1,-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-		       2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 3,3,3,3,3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-		   );
-
-		   $ups = unpack('C*', $str);
-		   if (!($aCnt = count($ups))) return true; // Empty string *is* valid UTF-8
-		   for ($i = 1; $i <= $aCnt;)
-		   {
-		       if (!($tbytes = $trailing_bytes[($b1 = $ups[$i++])])) continue;
-		       if ($tbytes == -1) return false;
-
-		       $first = true;
-		       while ($tbytes > 0 && $i <= $aCnt)
-		       {
-		           $cbyte = $ups[$i++];
-		           if (($cbyte & 0xC0) != 0x80) return false;
-
-		           if ($first)
-		           {
-		               switch ($b1)
-		               {
-		                   case 0xE0:
-		                       if ($cbyte < 0xA0) return false;
-		                       break;
-		                   case 0xED:
-		                       if ($cbyte > 0x9F) return false;
-		                       break;
-		                   case 0xF0:
-		                       if ($cbyte < 0x90) return false;
-		                       break;
-		                   case 0xF4:
-		                       if ($cbyte > 0x8F) return false;
-		                       break;
-		                   default:
-		                       break;
-		               }
-		               $first = false;
-		           }
-		           $tbytes--;
-		       }
-		       if ($tbytes) return false; // incomplete sequence at EOS
-		   }
-		   return true;
-		}
+	public static function is_utf8($str) 
+	{ 
+	   // values of -1 represent disalloweded values for the first bytes in current UTF-8 
+	   static $trailing_bytes = array ( 
+	       0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 
+	       0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 
+	       0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 
+	       0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 
+	       -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 
+	       -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 
+	       -1,-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 
+	       2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 3,3,3,3,3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 
+	   ); 
+	
+	   $ups = unpack('C*', $str); 
+	   if (!($aCnt = count($ups))) return true; // Empty string *is* valid UTF-8 
+	   for ($i = 1; $i <= $aCnt;) 
+	   { 
+	       if (!($tbytes = $trailing_bytes[($b1 = $ups[$i++])])) continue; 
+	       if ($tbytes == -1) return false; 
+	       
+	       $first = true; 
+	       while ($tbytes > 0 && $i <= $aCnt) 
+	       { 
+	           $cbyte = $ups[$i++]; 
+	           if (($cbyte & 0xC0) != 0x80) return false; 
+	           
+	           if ($first) 
+	           { 
+	               switch ($b1) 
+	               { 
+	                   case 0xE0: 
+	                       if ($cbyte < 0xA0) return false; 
+	                       break; 
+	                   case 0xED: 
+	                       if ($cbyte > 0x9F) return false; 
+	                       break; 
+	                   case 0xF0: 
+	                       if ($cbyte < 0x90) return false; 
+	                       break; 
+	                   case 0xF4: 
+	                       if ($cbyte > 0x8F) return false; 
+	                       break; 
+	                   default: 
+	                       break; 
+	               } 
+	               $first = false; 
+	           } 
+	           $tbytes--; 
+	       } 
+	       if ($tbytes) return false; // incomplete sequence at EOS 
+	   }        
+	   return true;
 	}
 
 
@@ -610,6 +603,6 @@ class FileUtil
 		}
 		exit();
 	}
-
+	
 }
 ?>
