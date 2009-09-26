@@ -37,17 +37,17 @@ class Relation
 	*@desc = operator
 	*/
 	const Equal = 0;
-	
+
 	/**
 	*@desc < operator
 	*/
 	const LessThan = 1;
-	
+
 	/**
 	*@desc > operator
 	*/
 	const GreaterThan = 2;
-	
+
 	/**
 	*@desc <= operator
 	*/
@@ -78,44 +78,35 @@ class IteratorFilter
 {
 
 	/**
-	*@var string
-	*/
-	private $_xpathFilter;
-
-	/**
-	*@var string
-	*/
-	private $_sqlFilter;
-
-	/**
-	*@var string
-	*/
-	private $_sqlParam;
+	 * @var array
+	 */
+	private $_filters;
 
 	/**
 	*@desc IteratorFilter Constructor
 	*/
 	public function IteratorFilter()
 	{
-		$this->_xpathFilter = "";
-		$this->_sqlFilter = "";
-		$this->_sqlParam = array();
+		$this->_filters = array();
 	}
 
 	/**
-	*@param 
+	*@param
 	*@return string - XPath String
 	*@desc Get the XPATH string
 	*/
 	public function getXPath()
 	{
-		if ($this->_xpathFilter == "")
+		$xpathFilter = $this->generator(1, $param);
+		//Debug::PrintValue($xpathFilter);
+
+		if ($xpathFilter == "")
 		{
 			return "/anydataset/row";
 		}
 		else
 		{
-			return "/anydataset/row[".$this->_xpathFilter."]";
+			return "/anydataset/row[".$xpathFilter."]";
 		}
 	}
 
@@ -125,23 +116,83 @@ class IteratorFilter
 	 * @param string $tableName
 	 * @param array &$params
 	 * @param string $returnFields
-	 * @param string $paramSubstName If ended with "_" the program subst by argname; 
+	 * @param string $paramSubstName If ended with "_" the program subst by argname;
 	 * @return string
 	 */
 	public function getSql($tableName, &$params, $returnFields = "*")
 	{
 		$params = array();
-		
+
 		$sql = "select $returnFields from " . $tableName;
-		if ($this->_sqlFilter != "")
+		$sqlFilter = $this->generator(2, $params);
+		if ($sqlFilter != "")
 		{
-			$sql .= " where " . $this->_sqlFilter . " ";
-			$params = $this->_sqlParam;
+			$sql .= " where " . $sqlFilter . " ";
 		}
-				
+		//Debug::PrintValue($sql, $params);
+
 		return $sql;
 	}
-	
+
+	public function match($array)
+	{
+		$returnArray = array();
+
+		foreach ($array as $sr)
+		{
+			if ($this->evalString($sr))
+			{
+				$returnArray[] = $sr;
+			}
+		}
+
+		return $returnArray;
+	}
+
+	private function generator($type, &$param)
+	{
+		$filter = "";
+		$param = array();
+
+		$previousValue = null;
+		foreach ($this->_filters as $value)
+		{
+			if ($value[0] == "(")
+			{
+				if ($previousValue != null)
+				{
+					$filter .= " or ( ";
+				}
+				else
+				{
+					$filter .= " ( ";
+				}
+			}
+			elseif ($value[0] == ")")
+			{
+				$filter .= ")";
+			}
+			else
+			{
+				if ($previousValue != null)
+				{
+					$filter .= $value[0];
+				}
+				if ($type == 1)
+				{
+					$filter .= $this->getStrXpathRelation($value[1], $value[2], $value[3]);
+				}
+				elseif ($type == 2)
+				{
+					$filter .= $this->getStrSqlRelation($value[1], $value[2], $value[3], $param);
+				}
+			}
+			$previousValue = $value;
+		}
+
+		return $filter;
+	}
+
 	/**
 	*@param string $name - Field name
 	*@param Relation $relation - Relation enum
@@ -154,7 +205,7 @@ class IteratorFilter
 		$str = is_numeric($value)?"":"'";
 		$field = "field[@name='".$name."'] ";
 		$value = " $str$value$str ";
-		
+
 		$result = "";
 		switch ($relation)
 		{
@@ -202,19 +253,19 @@ class IteratorFilter
 		return $result;
 	}
 
-	private function getStrSqlRelation($name, $relation, $value)
+	private function getStrSqlRelation($name, $relation, $value, &$param)
 	{
 		//$str = is_numeric($value)?"":"'";
 		$value = trim($value);
 		$paramName = $name;
 		$i = 0;
-		while (array_key_exists($paramName, $this->_sqlParam))
+		while (array_key_exists($paramName, $param))
 		{
 			$paramName = $name . ($i++);
 		}
 
-		$this->_sqlParam[$paramName] = $value;
-		
+		$param[$paramName] = $value;
+
 		$result = "";
 		$field = " $name ";
 		$valueparam = " [[" . $paramName . "]] ";
@@ -252,21 +303,99 @@ class IteratorFilter
 			}
 			case Relation::StartsWith:
 			{
-				$this->_sqlParam[$paramName] = $value . "%";
+				$param[$paramName] = $value . "%";
 				$result = $field . " like " . $valueparam;
 				break;
 			}
 			case Relation::Contains:
 			{
-				$this->_sqlParam[$paramName] = "%" . $value . "%";
+				$param[$paramName] = "%" . $value . "%";
 				$result = $field . " like " . $valueparam;
 				break;
 			}
 		}
-		
+
 		return $result;
 	}
-	
+
+
+	private function evalString($array)
+	{
+		$result = array();
+		$finalResult = false;
+		$pos = 0;
+
+		$result[0] = true;
+
+		foreach ($this->_filters as $filter)
+		{
+			if ( ($filter[0] == ")") || ($filter[0] == " or "))
+			{
+				$finalResult |= $result[$pos];
+				$result[++$pos] = true;
+			}
+
+			$name = $filter[1];
+			$relation = $filter[2];
+			$value = $filter[3];
+
+			$field = $array->getField($name);
+
+			if (!is_array($field)) $field = array($field);
+
+			foreach ($field as $valueparam)
+			{
+				switch ($relation)
+				{
+					case Relation::Equal:
+					{
+						$result[$pos] &= ($valueparam == $value);
+						break;
+					}
+					case Relation::GreaterThan:
+					{
+						$result[$pos] &= ($valueparam > $value);
+						break;
+					}
+					case Relation::LessThan:
+					{
+						$result[$pos] &= ($valueparam < $value);
+						break;
+					}
+					case Relation::GreaterOrEqualThan:
+					{
+						$result[$pos] &= ($valueparam >= $value);
+						break;
+					}
+					case Relation::LessOrEqualThan:
+					{
+						$result[$pos] &= ($valueparam <= $value);
+						break;
+					}
+					case Relation::NotEqual:
+					{
+						$result[$pos] &= ($valueparam != $value);
+						break;
+					}
+					case Relation::StartsWith:
+					{
+						$result[$pos] &= (strpos($valueparam, $value) === 0);
+						break;
+					}
+					case Relation::Contains:
+					{
+						$result[$pos] &= (strpos($valueparam, $value) !== false);
+						break;
+					}
+				}
+			}
+		}
+
+		$finalResult |= $result[$pos];
+
+		return $finalResult;
+	}
+
 	/**
 	*@param string $name - Field name
 	*@param Relation $relation - Relation enum
@@ -276,31 +405,19 @@ class IteratorFilter
 	*/
 	public function addRelation($name, $relation, $value)
 	{
-		if (($this->_xpathFilter != "") && (substr($this->_xpathFilter, strlen($this->_xpathFilter)-2, 2) != "( ") )
-		{
-			$this->_xpathFilter = $this->_xpathFilter." and ";
-			$this->_sqlFilter = $this->_sqlFilter." and ";
-		}
-		$this->_xpathFilter = $this->_xpathFilter .$this->getStrXpathRelation($name, $relation, $value);
-		$this->_sqlFilter = $this->_sqlFilter . $this->getStrSqlRelation($name, $relation, $value);
+		$this->_filters[] = array(" and ", $name, $relation, $value);
 	}
 
 	/**
 	*@param string $name - Field name
 	*@param Relation $relation - Relation enum
-	*@param string $value - Field string value 
+	*@param string $value - Field string value
 	*@return void
 	*@desc Add a single string comparison to filter. This comparison use the OR operator.
 	*/
 	public function addRelationOr($name, $relation, $value)
 	{
-		if ( ($this->_xpathFilter != "")  && (substr($this->_xpathFilter, strlen($this->_xpathFilter)-2, 2) != "( ") )
-		{
-			$this->_xpathFilter = $this->_xpathFilter." or ";
-			$this->_sqlFilter = $this->_sqlFilter." or ";
-		}
-		$this->_xpathFilter = $this->_xpathFilter .$this->getStrXpathRelation($name, $relation, $value);
-		$this->_sqlFilter = $this->_sqlFilter . $this->getStrSqlRelation($name, $relation, $value);
+		$this->_filters[] = array(" or ", $name, $relation, $value);
 	}
 
 	/**
@@ -309,28 +426,16 @@ class IteratorFilter
 	 */
 	public function startGroup()
 	{
-		if (substr($this->_xpathFilter, strlen($this->_xpathFilter)-2, 2) == ") ")
-		{
-			$this->_xpathFilter = $this->_xpathFilter." or ";
-			$this->_sqlFilter = $this->_sqlFilter." or ";
-		}
-		elseif ($this->_xpathFilter != "")
-		{
-			$this->_xpathFilter = $this->_xpathFilter." and ";
-			$this->_sqlFilter = $this->_sqlFilter." and ";
-		}
-		$this->_xpathFilter = $this->_xpathFilter . " ( ";
-		$this->_sqlFilter = $this->_sqlFilter . " ( ";
+		$this->_filters[] = array("(", "", "", "");
 	}
-	
+
 	/**
 	 * Add a ")"
 	 *
 	 */
 	public function endGroup()
 	{
-		$this->_xpathFilter = $this->_xpathFilter . " ) ";
-		$this->_sqlFilter = $this->_sqlFilter . " ) ";
+		$this->_filters[] = array(")", "", "", "");
 	}
 }
 ?>

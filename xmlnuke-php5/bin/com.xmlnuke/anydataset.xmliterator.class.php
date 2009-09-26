@@ -36,14 +36,14 @@ class XmlIterator implements IIterator
 	 * @var Context
 	 */
 	private $_context = null;
-	
+
 	/**
 	 * Enter description here...
 	 *
 	 * @var DOMNodeList
 	 */
 	private $_nodeList = null;
-	
+
 	/**
 	 * String
 	 *
@@ -56,14 +56,14 @@ class XmlIterator implements IIterator
 	 * @var string[]
 	 */
 	private $_colNodes = null;
-	
+
 	/**
 	 * Enter description here...
 	 *
 	 * @var int
 	 */
 	private $_current = 0;
-	
+
 	public function XmlIterator($context, $nodeList, $colNodes)
 	{
 		if (!($nodeList instanceof DOMNodeList))
@@ -74,14 +74,14 @@ class XmlIterator implements IIterator
 		{
 			throw new Exception("XmlIterator: Wrong column node type");
 		}
-		
+
 		$this->_context = $context;
 		$this->_nodeList = $nodeList;
 		$this->_colNodes = $colNodes;
-		
+
 		$this->_current = 0;
 	}
-	
+
 	public function Count()
 	{
 		return $this->_nodeList->length;
@@ -97,7 +97,7 @@ class XmlIterator implements IIterator
 		{
 			return true;
 		}
-		else 
+		else
 		{
 			return false;
 		}
@@ -113,28 +113,25 @@ class XmlIterator implements IIterator
 		{
 			throw new Exception("No more records. Did you used hasNext() before moveNext()?");
 		}
-		
+
 		$node = $this->_nodeList->item($this->_current++);
-		
-		$any = new AnyDataSet(null);
-		$any->appendRow();
+
+		$sr = new SingleRow();
+
 		foreach ($this->_colNodes as $key=>$colxpath)
 		{
 			$nodecol = XmlUtil::selectSingleNode($node, $colxpath);
 			if (is_null($nodecol))
 			{
-				$any->addField(strtolower($key), "");
+				$sr->AddField(strtolower($key), "");
 			}
-			else 
+			else
 			{
 				//Debug::PrintValue($nodecol);
-				$any->addField(strtolower($key), $nodecol->nodeValue);
+				$sr->AddField(strtolower($key), $nodecol->nodeValue);
 			}
 		}
 
-		$it = $any->getIterator(null);
-		$sr = $it->moveNext();
-		
 		return 	$sr;
 	}
 }

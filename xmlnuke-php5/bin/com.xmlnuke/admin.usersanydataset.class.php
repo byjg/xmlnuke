@@ -32,7 +32,7 @@
  * Note that UsersAnyDataSet doesn't inherits from AnyDataSet, because some funcionalities
  * from AnyDataSet didn't used in this class.
 */
-class UsersAnyDataSet extends UsersBase 
+class UsersAnyDataSet extends UsersBase
 {
 	/**
 	 * Internal AnyDataSet structure to store the Users
@@ -56,7 +56,7 @@ class UsersAnyDataSet extends UsersBase
 		$this->_context = $context;
 		$this->_usersFile = new AnydatasetSetupFilenameProcessor("users", $context);
 		$this->_anyDataSet = new AnyDataSet($this->_usersFile);
-		$this->configTableNames();	
+		$this->configTableNames();
 		$this->_UserTable->Id = $this->_UserTable->Username;
 	}
 
@@ -67,7 +67,7 @@ class UsersAnyDataSet extends UsersBase
 	{
 		$this->_anyDataSet->Save($this->_usersFile);
 	}
-	
+
 	/**
 	 * Add new user in database
 	 *
@@ -87,7 +87,7 @@ class UsersAnyDataSet extends UsersBase
 		{
 			return false;
 		}
-		$this->_anyDataSet->appendRow();	
+		$this->_anyDataSet->appendRow();
 
 		$this->_anyDataSet->addField( $this->_UserTable->Name, $name );
 		$this->_anyDataSet->addField( $this->_UserTable->Username, strtolower($userName));
@@ -101,7 +101,7 @@ class UsersAnyDataSet extends UsersBase
 	/**
 	* Get the user based on a filter.
 	* Return SingleRow if user was found; null, otherwise
-	* 
+	*
 	* @param IteratorFilter $filter Filter to find user
 	* @return SingleRow
 	**/
@@ -121,7 +121,7 @@ class UsersAnyDataSet extends UsersBase
 	/**
 	* Get the user based on his login.
 	* Return SingleRow if user was found; null, otherwise
-	* 
+	*
 	* @param string $username
 	* @return SingleRow
 	* */
@@ -131,7 +131,7 @@ class UsersAnyDataSet extends UsersBase
 		$user = $this->getUserName( $username );
 		if  ($user != null)
 		{
-			$this->_anyDataSet->removeRow( $user->getDomObject() );
+			$this->_anyDataSet->removeRow( $user );
 			return true;
 		}
 		else
@@ -139,7 +139,7 @@ class UsersAnyDataSet extends UsersBase
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Get an Iterator based on a filter
 	 *
@@ -154,7 +154,7 @@ class UsersAnyDataSet extends UsersBase
 	/**
 	* Add a specific site to user
 	* Return True or false
-	* 
+	*
 	* @param string $userName User login
 	* @param string $propValue Property value with a site
 	* @param UserProperty $userProp Property name
@@ -181,7 +181,7 @@ class UsersAnyDataSet extends UsersBase
 	/**
 	* Remove a specific site from user
 	* Return True or false
-	* 
+	*
 	* @param string $userName User login
 	* @param string $propValue Property value with a site
 	* @param UserProperty $userProp Property name
@@ -192,14 +192,7 @@ class UsersAnyDataSet extends UsersBase
 		$user = $this->getUserName( $userName );
 		if ($user != null)
 		{
-			$nodes = $user->getFieldNodes(UserProperty::getPropertyNodeName($userProp));
-			foreach ($nodes as $node)
-			{
-				if (($propValue == $node->nodeValue) || is_null($propValue))
-				{
-					$user->removeField( $node );
-				}
-			}
+			$user->removeFieldNameValue(UserProperty::getPropertyNodeName($userProp), $propValue);
 			$this->Save();
 			return true;
 		}
@@ -212,7 +205,7 @@ class UsersAnyDataSet extends UsersBase
 	/**
 	* Remove a specific site from all users
 	* Return True or false
-	* 
+	*
 	* @param string $propValue Property value with a site
 	* @param UserProperty $userProp Property name
 	* @return bool
@@ -227,7 +220,7 @@ class UsersAnyDataSet extends UsersBase
 			$this->removePropertyValueFromUser($user->getField($this->_UserTable->Username), $propValue, $userProp);
 		}
 	}
-	
+
 	/**
 	 * Enter description here...
 	 *
@@ -239,7 +232,7 @@ class UsersAnyDataSet extends UsersBase
 		$roleDataSet = new AnyDataSet($fileRole);
 		return $roleDataSet;
 	}
-	
+
 	/**
 	 * Get all roles
 	 *
@@ -258,11 +251,11 @@ class UsersAnyDataSet extends UsersBase
 		$itf->addRelation($this->_RolesTable->Site, Relation::Equal, $site);
 		$itf->addRelationOr($this->_RolesTable->Site, Relation::Equal, "_all");
 		$itf->endGroup();
-		
+
 		$roleDataSet = $this->getRoleAnydataSet();
-		return $roleDataSet->getIterator($itf);			
+		return $roleDataSet->getIterator($itf);
 	}
-	
+
 	/**
 	 * Add a public role into a site
 	 *
@@ -272,7 +265,7 @@ class UsersAnyDataSet extends UsersBase
 	public function addRolePublic($site, $role)
 	{
 		$dataset = $this->getRoleAnydataSet();
-		$dataFilter = new IteratorFilter();		
+		$dataFilter = new IteratorFilter();
 		$dataFilter->addRelation($this->_RolesTable->Site, Relation::Equal, $site);
 		$iterator = $dataset->getIterator($dataFilter);
 		if(!$iterator->hasNext())
@@ -290,14 +283,14 @@ class UsersAnyDataSet extends UsersBase
 				$sr = $iterator->moveNext();
 				$sr->AddField($this->_RolesTable->Role, $role);
 			}
-			else 
+			else
 			{
 				throw new Exception("Role exists");
 			}
 		}
 		$dataset->Save();
 	}
-	
+
 	/**
 	 * Edit a public role into a site. If new Value == null, remove the role)
 	 *
@@ -311,7 +304,7 @@ class UsersAnyDataSet extends UsersBase
 		{
 			$this->addRolePublic($site, $newValue);
 		}
-		
+
 		$roleDataSet = $this->getRoleAnydataSet();
 		$dataFilter = new IteratorFilter();
 		$dataFilter->addRelation($this->_RolesTable->Site, Relation::Equal, $site);
@@ -319,30 +312,10 @@ class UsersAnyDataSet extends UsersBase
 		$it = $roleDataSet->getIterator($dataFilter);
 		if ($it->hasNext()) {
 			$sr = $it->moveNext();
-			$sr->removeField($this->getRoleNode($sr, $role));
+			$sr->removeFieldName($role);
 		}
 		$roleDataSet->Save();
 	}
-	
-	/**
-	 * Find a role in site
-	 *
-	 * @param SingleRow $sr
-	 * @param string $role
-	 * @return DOMNode
-	 */
-	protected function getRoleNode($sr, $role)
-	{
-		$list = $sr->getFieldNodes($this->_RolesTable->Role);
-		$count = 0;
-		while ($list->length > $count) {
-			$node = $list->item($count);
-			if ($node->nodeValue == $role) {
-				return $node;
-			}
-			$count++;
-		}
-	}
-	
+
 }
 ?>

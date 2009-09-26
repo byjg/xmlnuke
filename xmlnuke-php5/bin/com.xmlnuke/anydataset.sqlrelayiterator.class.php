@@ -33,7 +33,7 @@ class SQLRelayIterator implements IIterator
 	const RECORD_BUFFER = 50;
 	private $_rowBuffer;
 	protected $_currentRow = 0;
-	
+
 	/**
 	*@var SQLRelay Cursos
 	*/
@@ -53,7 +53,7 @@ class SQLRelayIterator implements IIterator
 	{
 		$this->_context = $context;
 		$this->_cursor = $cursor;
-		$this->_rowBuffer = array();		
+		$this->_rowBuffer = array();
 	}
 
 	/**
@@ -81,38 +81,36 @@ class SQLRelayIterator implements IIterator
 		}
 		else if ($this->_currentRow < $this->Count())
 		{
-			$any = new AnyDataSet();
-			$any->appendRow();
+			$sr = new SingleRow();
+
       		for ($col=0; $col<sqlrcur_colCount($this->_cursor); $col++)
       		{
       			$fieldName = strtolower(sqlrcur_getColumnName($this->_cursor, $col) );
       			$value = sqlrcur_getField($this->_cursor, $this->_currentRow, $col);
-      			
+
       			if (is_null($value))
       			{
-      				$any->addField($fieldName, "");
+      				$sr->AddField($fieldName, "");
       			}
       			elseif (is_object($value))
       			{
-      				$any->addField($fieldName, "[OBJECT]");
+      				$sr->AddField($fieldName, "[OBJECT]");
       			}
-				else 
+				else
 				{
 					if (!FileUtil::is_utf8($value))
 					{
 						$value = utf8_encode($value);
 					}
-				
-					$any->addField($fieldName, $value);
+
+					$sr->AddField($fieldName, $value);
 				}
 			}
 
 			$this->_currentRow++;
-			
-			$it = $any->getIterator();
-			
+
 			// Enfileira o registo
-			array_push($this->_rowBuffer, $it->moveNext());
+			array_push($this->_rowBuffer, $sr);
 			// Traz novos até encher o Buffer
 			if (count($this->_rowBuffer) < DBIterator::RECORD_BUFFER)
 			{
@@ -125,7 +123,7 @@ class SQLRelayIterator implements IIterator
 		{
 			sqlrcur_free($this->_cursor);
 			$this->_cursor = null;
-            
+
             //if (this._db != null)
             //{
             //    this._db.Close();
@@ -134,7 +132,7 @@ class SQLRelayIterator implements IIterator
 			return (count($this->_rowBuffer) > 0);
 		}
 	}
-	
+
 	public function __destruct()
 	{
 		if (!is_null($this->_cursor))

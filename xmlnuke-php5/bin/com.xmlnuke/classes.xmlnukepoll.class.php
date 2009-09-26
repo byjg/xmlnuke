@@ -6,31 +6,31 @@
  *  XMLNuke: A Web Development Framework based on XML.
  *
  *  Main Specification: Joao Gilberto Magalhaes, joao at byjg dot com
- * 
+ *
  *  This file is part of XMLNuke project. Visit http://www.xmlnuke.com
  *  for more information.
- *  
+ *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
  *  as published by the Free Software Foundation; either version 2
  *  of the License, or (at your option) any later version.
- *  
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
- *  
+ *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
- *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
+ *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 /**
 *@package com.xmlnuke
 *@subpackage xmlnukeobject
 */
-class XmlnukePoll extends XmlnukeDocumentObject 
+class XmlnukePoll extends XmlnukeDocumentObject
 {
 	/**
 	*@var Context
@@ -64,10 +64,10 @@ class XmlnukePoll extends XmlnukeDocumentObject
 	 * @var AnyDataSet
 	 */
 	private $_anyAnswer;
-	
+
 	private $_width;
 	private $_height;
-	
+
 	/* POLL CONFIG */
 	protected $_tblpoll = "";
 	protected $_tblanswer = "";
@@ -75,7 +75,7 @@ class XmlnukePoll extends XmlnukeDocumentObject
 	protected $_isdb = false;
 	protected $_connection = "";
 	protected $_error = false;
-	
+
 	/**
 	 * Initialize a poll context
 	 * Use the method processData to process data.
@@ -112,7 +112,7 @@ class XmlnukePoll extends XmlnukeDocumentObject
 	{
 		$pollfile = new AnydatasetFilenameProcessor("_poll", $this->_context);
 		$anyconfig = new AnyDataSet($pollfile);
-		
+
 		$it = $anyconfig->getIterator();
 		if ($it->hasNext())
 		{
@@ -128,7 +128,7 @@ class XmlnukePoll extends XmlnukeDocumentObject
 			$this->_error = true;
 		}
 	}
-	
+
 	/**
 	 * Get AnydataSet Poll information
 	 *
@@ -140,7 +140,7 @@ class XmlnukePoll extends XmlnukeDocumentObject
 		$fileanswer = new AnydatasetFilenameProcessor("poll_" . $this->_poll . "_" . $this->_lang, $this->_context);
 		$this->_anyAnswer = new AnyDataSet($fileanswer);
 	}
-	
+
 	/**
 	 * Process Vote. Note that the system ONLY process the vote if there is no another equal IP.
 	 *
@@ -167,22 +167,22 @@ class XmlnukePoll extends XmlnukeDocumentObject
 				{
 					$sr = $itlastip->moveNext();
 					$arr = $sr->getFieldArray("ip");
-					
+
 					// Is The maximum amount of unique IP reached?
-					// If true, I need to remove the excess. 
+					// If true, I need to remove the excess.
 					if (sizeof($arr) > 20)
 					{
 						array_shift($arr);
 
-						$anylastip->removeRow($sr->getDomObject());
+						$anylastip->removeRow(0);
 						$anylastip->appendRow();
-						foreach ($arr as $value) 
+						foreach ($arr as $value)
 						{
 							$anylastip->addField("ip", $value);
 						}
 						$anylastip->Save();
 					}
-					
+
 					// Is This a New IP?
 					if (array_search($this->_context->ContextValue("REMOTE_ADDR"), $arr) === false)
 					{
@@ -192,16 +192,16 @@ class XmlnukePoll extends XmlnukeDocumentObject
 					}
 				}
 				// OK. First time here. I need to add the IP.
-				else 
+				else
 				{
 					$ok = true;
 					$anylastip->appendRow();
 					$anylastip->addField("ip", $this->_context->ContextValue("REMOTE_ADDR"));
 					$anylastip->Save();
 				}
-				
+
 				// Is My IP Unique? If true I can process the vote.
-				// Note if the poll name, lang and code are wrong the system does not do anything. 
+				// Note if the poll name, lang and code are wrong the system does not do anything.
 				if ($ok)
 				{
 					// Get Data
@@ -220,7 +220,7 @@ class XmlnukePoll extends XmlnukeDocumentObject
 							substr($sql, $i + strlen($this->_tblanswer) + 1);
 						$dbdata->execSQL($sql, $param);
 					}
-					else 
+					else
 					{
 						$this->getAnyData();
 						$itAnswer = $this->_anyAnswer->getIterator($itf);
@@ -232,7 +232,7 @@ class XmlnukePoll extends XmlnukeDocumentObject
 						}
 					}
 				}
-				
+
 				$this->_processed = true;
 			}
 		}
@@ -243,7 +243,7 @@ class XmlnukePoll extends XmlnukeDocumentObject
 		$this->_width = $width;
 		$this->_height = $height;
 	}
-	
+
 	public function generateObject($current)
 	{
 		// Is there some error?
@@ -268,7 +268,7 @@ class XmlnukePoll extends XmlnukeDocumentObject
 				$sql = $itf->getSql($this->_tblanswer, $param);
 				$itAnswer = $dbdata->getIterator($sql, $param);
 			}
-			else 
+			else
 			{
 				$this->getAnyData();
 				$itPoll = $this->_anyPoll->getIterator($itf);
@@ -282,18 +282,18 @@ class XmlnukePoll extends XmlnukeDocumentObject
 				XmlUtil::AddAttribute($nodeWorking, "url", $this->_url);
 				XmlUtil::AddAttribute($nodeWorking, "name", $this->_poll);
 				XmlUtil::AddAttribute($nodeWorking, "lang", $this->_lang);
-				
+
 				// Show Data Only if Poll is active
 				if ($itPoll->hasNext())
 				{
 					$sr = $itPoll->moveNext();
-					
+
 					if ($sr->getField("active") == "Y")
 					{
 						XmlUtil::AddAttribute($nodeWorking, "active", "true");
 						XmlUtil::AddAttribute($nodeWorking, "sendbtn", $this->_myWords->Value("SENDBTN"));
 						XmlUtil::CreateChild($nodeWorking, "question", $sr->getField("question"));
-						
+
 						while ($itAnswer->hasNext())
 						{
 							$sr = $itAnswer->moveNext();
@@ -316,7 +316,7 @@ class XmlnukePoll extends XmlnukeDocumentObject
 			else
 			{
 				$srPoll = $itPoll->moveNext();
-				
+
 				if ($srPoll->getField("showresults")=="Y")
 				{
 					$fldGrp = array();
@@ -330,25 +330,25 @@ class XmlnukePoll extends XmlnukeDocumentObject
 						$fldGrp["qty_" . $sr->getField("code")] = $sr->getField("short");
 					}
 					$itGraphInv = $anyGraph->getIterator();
-					
+
 					$chart = new XmlChart($this->_context, "Title", $itGraphInv, ChartOutput::Flash, ChartSeriesFormat::Column);
 					$chart->setFrame($this->_width, $this->_height);
 					$chart->setLegend("data", "#444444", "#FFFFFF");
 					$chart->setAreaColor("#000000", "#ddddee");
-					foreach ($fldGrp as $key=>$value) 
+					foreach ($fldGrp as $key=>$value)
 					{
 						$chart->addSeries($key, $value, '#000000');
 					}
-					
+
 					$chart->generateObject($current);
 				}
-				else 
+				else
 				{
 					if ($srPoll->getField("active")=="Y")
 					{
 						$txt = new XmlnukeText($this->_myWords->Value("VOTECOMPUTED"), true);
 					}
-					else 
+					else
 					{
 						$txt = new XmlnukeText($this->_myWords->Value("CANNOTSHOWRESULTS"), true);
 					}

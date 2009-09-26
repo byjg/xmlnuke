@@ -32,7 +32,7 @@ class DBIterator implements IIterator
 {
 	const RECORD_BUFFER = 50;
 	private $_rowBuffer;
-	
+
 	/**
 	*@var PDOStatement
 	*/
@@ -52,7 +52,7 @@ class DBIterator implements IIterator
 	{
 		$this->_context = $context;
 		$this->_rs = $recordset;
-		$this->_rowBuffer = array();		
+		$this->_rowBuffer = array();
 	}
 
 	/**
@@ -80,35 +80,25 @@ class DBIterator implements IIterator
 		}
 		else if ($row = $this->_rs->fetch(PDO::FETCH_ASSOC))
 		{
-			$any = new AnyDataSet();
-			$any->appendRow();
-      		foreach ($row as $key=>$value)
-      		{
-      			$fieldName = strtolower($key);
-      			
+			foreach ($row as $key=>$value)
+			{
       			if (is_null($value))
       			{
-      				$any->addField($fieldName, "");
+      				$row[$key]  = "";
       			}
       			elseif (is_object($value))
       			{
-      				$any->addField($fieldName, "[OBJECT]");
+      				$row[$key] = "[OBJECT]";
       			}
-				else 
+      			elseif (!FileUtil::is_utf8($value))
 				{
-					//if (!FileUtil::is_utf8($value))
-					//{
-						$value = utf8_encode($value);
-					//}
-				
-					$any->addField($fieldName, $value);
+					$row[$key] = utf8_encode($value);
 				}
 			}
+			$sr = new SingleRow($row);
 
-			$it = $any->getIterator();
-			
 			// Enfileira o registo
-			array_push($this->_rowBuffer, $it->moveNext());
+			array_push($this->_rowBuffer, $sr);
 			// Traz novos até encher o Buffer
 			if (count($this->_rowBuffer) < DBIterator::RECORD_BUFFER)
 			{
@@ -121,7 +111,7 @@ class DBIterator implements IIterator
 		{
 			$this->_rs->closeCursor();
             $this->_rs = null;
-            
+
             //if (this._db != null)
             //{
             //    this._db.Close();

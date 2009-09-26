@@ -31,14 +31,14 @@
 class SocketIterator implements IIterator
 {
 	private $_colsep = null;
-	private $_rowsep = null; 
+	private $_rowsep = null;
 	private $_fields = null; //Array
 	private $_context = null;
 	private $_handle = null;
-	
+
 	private $_rows = null;
 	private $_current = 0;
-	
+
 	/**
 	*@access public
 	*@param mixed $recordset
@@ -77,7 +77,7 @@ class SocketIterator implements IIterator
 			$header = (trim($x) != "");
 		}
 		//Debug::PrintValue("Fim Leitura");
-		
+
 		$this->_rows = array();
 		$rowsaux = preg_split("/" . $this->_rowsep . "/", $linha);
 		sort($rowsaux);
@@ -89,10 +89,10 @@ class SocketIterator implements IIterator
 				$this->_rows[] = $value;
 			}
 		}
-		
+
 		fclose($this->_handle);
 	}
-	
+
 	public function Count()
 	{
 		return sizeof($this->_rows);
@@ -108,7 +108,7 @@ class SocketIterator implements IIterator
 		{
 			return true;
 		}
-		else 
+		else
 		{
 			return false;
 		}
@@ -122,16 +122,13 @@ class SocketIterator implements IIterator
 	{
 		$cols = preg_split("/" . $this->_colsep . "/", $this->_rows[$this->_current]);
 		$this->_current++;
-		
-		$any = new AnyDataSet(null);
-		$any->appendRow();
+
+		$sr = new SingleRow();
 		for($i=0;$i<sizeof($this->_fields); $i++)
 		{
-			$any->addField(strtolower($this->_fields[$i]), $cols[$i]);
+			$sr->AddField(strtolower($this->_fields[$i]), $cols[$i]);
 			//Debug::PrintValue(strtolower($this->_fields[$i]), $cols[$i]);
 		}
-		$it = $any->getIterator(null);
-		$sr = $it->moveNext();
 		return 	$sr;
 	}
 }

@@ -36,11 +36,11 @@ class TextFileIterator implements IIterator
 	private $_context;
 
 	protected $_fields;
-	
+
 	protected $_fieldexpression;
-	
+
 	protected $_handle;
-	
+
 	/**
 	*@access public
 	*@return IIterator
@@ -49,7 +49,7 @@ class TextFileIterator implements IIterator
 	{
 		$this->_context = $context;
 		$this->_fields = $fields;
-		$this->_fieldexpression = $fieldexpression;		
+		$this->_fieldexpression = $fieldexpression;
 		$this->_handle = $handle;
 	}
 
@@ -72,14 +72,14 @@ class TextFileIterator implements IIterator
 		{
 			return false;
 		}
-		else 
+		else
 		{
 			if (feof($this->_handle))
 			{
 				fclose($this->_handle);
 				return false;
 			}
-			else 
+			else
 			{
 				return true;
 			}
@@ -97,18 +97,17 @@ class TextFileIterator implements IIterator
 			$buffer = fgets($this->_handle, 4096);
 			$cols = preg_split($this->_fieldexpression,$buffer,-1,PREG_SPLIT_DELIM_CAPTURE);
 
-			$any = new AnyDataSet(null);
-			$any->appendRow();
+			$sr = new SingleRow();
+
 			for($i=0;($i<sizeof($this->_fields)) && ($i<sizeof($cols)); $i++)
 			{
-				$any->addField(strtolower($this->_fields[$i]), $cols[$i]);
+				$sr->AddField(strtolower($this->_fields[$i]), $cols[$i]);
 				//Debug::PrintValue(strtolower($this->_fields[$i]), $cols[$i]);
 			}
-			$it = $any->getIterator(null);
-			$sr = $it->moveNext();
+
 			return 	$sr;
 		}
-		else 
+		else
 		{
 			if ($this->_handle)
 			{

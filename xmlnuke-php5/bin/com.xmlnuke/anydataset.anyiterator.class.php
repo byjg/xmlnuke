@@ -34,14 +34,14 @@
 
 class AnyIterator implements IIterator
 {
-	
+
 	/**
 	*@desc Row Elements
 	*@access private
-	*@var DOMNodeList
+	*@var array
 	*/
-	private $_list;//DOMNodeList
-	
+	private $_list;
+
 	/**
 	*@access private
 	*@var int
@@ -68,7 +68,7 @@ class AnyIterator implements IIterator
 	*/
 	public function Count()
 	{
-		return $this->_list->length;
+		return sizeof($this->_list);
 	}
 
 	/**
@@ -94,7 +94,7 @@ class AnyIterator implements IIterator
 		}
 		else
 		{
-			return new SingleRow($this->_list->item($this->_curRow++));
+			return $this->_list[$this->_curRow++];
 		}
 	}
 

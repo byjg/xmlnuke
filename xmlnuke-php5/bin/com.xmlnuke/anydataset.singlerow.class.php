@@ -36,16 +36,26 @@ class SingleRow
 	 * DOMNode represents a SingleRow
 	 * @var DOMNode
 	 */
-	private $_node;
+	private $_node = null;
+	private $_row = null;
 
 	/**
 	* SingleRow constructor
-	* Xml Node represents a SingleRow
-	* @param DOMNode
+	* @param array()
 	*/
-	public function SingleRow($node)
+	public function SingleRow($array = null)
 	{
-		$this->_node = $node;
+		if (is_null($array))
+		{
+			$array = array();
+		}
+
+		if (!is_array($array))
+		{
+			throw new XMLNukeException("SingleRow expected an array");
+		}
+
+		$this->_row = $array;
 	}
 
 	/**
@@ -55,8 +65,19 @@ class SingleRow
 	*/
 	public function AddField($name, $value)
 	{
-		$nodeWorking = XmlUtil::CreateChild($this->_node, "field", $value);
-		XmlUtil::AddAttribute($nodeWorking, "name", $name);
+		if (!array_key_exists($name, $this->_row))
+		{
+			$this->_row[$name] = $value;
+		}
+		elseif (is_array($this->_row[$name]))
+		{
+			$this->_row[$name][] = $value;
+		}
+		else
+		{
+			$this->_row[$name] = array($this->_row[$name], $value);
+		}
+		$this->_node = null;
 	}
 	/**
 	*@param string $name - Field name
@@ -65,27 +86,17 @@ class SingleRow
 	*/
 	public function getField($name)
 	{
-		$node = XmlUtil::SelectSingleNode($this->_node,"field[@name='" . $name . "']");
-		if ($node == null)
+		$result = $this->_row[$name];
+		if (is_array($result))
 		{
-			return "";
+			return $result[0];
 		}
-		if ($node->childNodes->length > 1) 
+		else
 		{
-			return XmlUtil::innerText($node);
+			return $result;
 		}
-		return $node->nodeValue;
 	}
 
-	/**
-	* Get the NodeList from a single field. You need you when the field is repeated.
-	* @param string $name
-	* @return DOMNodeList
-	*/
-	public function getFieldNodes($name)
-	{
-		return XmlUtil::selectNodes($this->_node,"field[@name='" . $name . "']");
-	}
 	/**
 	 * Get array from a single field
 	 *
@@ -94,36 +105,24 @@ class SingleRow
 	 */
 	public function getFieldArray($name)
 	{
-		$nodes = $this->getFieldNodes($name);
-		$array = null;
-		foreach($nodes as $node)
+		$result = $this->_row[$name];
+		if (is_array($result))
 		{
-			$array[]=$node->nodeValue;
+			return $result;
 		}
-		return $array;
+		else
+		{
+			return array($result);
+		}
 	}
+
 	/**
 	* Return all Field Names from current SingleRow
 	* @return array
 	*/
 	public function getFieldNames()
 	{
-		$fields = XmlUtil::selectNodes($this->_node,"/field");
-		$array = array();
-		foreach($fields  as $field)
-		{
-			//$fieldname = XmlUtil::SelectSingleNode($field,"@name");
-			$fieldname = $field->getAttribute ("name");
-			if ($fieldname == null)
-			{
-				$array[] = "_NULL_";
-			}
-			else
-			{
-				$array[] = $fieldname;
-			}
-		}
-		return $array ;
+		return array_keys($this->_row);
 	}
 
 	/**
@@ -132,15 +131,16 @@ class SingleRow
 	* @param string $value
 	*/
 	public function setField($name, $value)
-	{	
-		$node = XmlUtil::SelectSingleNode($this->_node,"field[@name='" . $name . "']");
-		if ($node != null)
+	{
+		if (!array_key_exists($name, $this->_row))
 		{
-			$node->nodeValue  = $value;
+			$this->AddField($name, $value);
+			$this->_node = null;
 		}
 		else
 		{
-			$this->AddField($name, $value);
+			$this->_row[$name] = $value;
+			$this->_node = null;
 		}
 	}
 
@@ -149,9 +149,12 @@ class SingleRow
 	* @param string $name
 	*/
 	public function removeFieldName($name)
-	{		
-		$node = XmlUtil::SelectSingleNode($this->_node,"field[@name='" . $name .  "']");
-		$this->removeField($node);
+	{
+		if (array_key_exists($name, $this->_row))
+		{
+			unset($this->_row[$name]);
+			$this->_node = null;
+		}
 	}
 
 	/**
@@ -159,80 +162,57 @@ class SingleRow
 	* @param string $name
 	*/
 	public function removeFieldNameValue ($name, $value)
-	{		
-		$array = $this->getFieldArray($name);
-		
-		if ($array)
+	{
+		$result = $this->_row[$name];
+		if (!is_array($result))
 		{
-			foreach ($array as $numNode => $nodeValue)
+			if ($value == $result)
 			{
-				if ($nodeValue == $value)
-					break;
+				unset($this->_row[$name]);
+				$this->_node = null;
 			}
-	
-			$nodes = $this->getFieldNodes($name);
-			$cont = 0;
-			foreach ($nodes as $node)
+		}
+		else
+		{
+			for($i=sizeof($result)-1;$i>=0;$i--)
 			{
-				if ($cont == $numNode)
+				if ($result[$i] == $value)
 				{
-					$this->removeField($node);
+					unset($this->_row[$name][$i]);
+					$this->_node = null;
 				}
-				$cont++;
 			}
-		}	
-	}	
-	
+		}
+	}
+
 	/**
-	 * Update a specific field and specific value with new value 
+	 * Update a specific field and specific value with new value
 	 *
 	 * @param String $name
 	 * @param String $oldvalue
 	 * @param String $newvalue
 	 */
 	public function setFieldValue ($name, $oldvalue, $newvalue)
-	{		
-		$array = $this->getFieldArray($name);
-		
-		if ($array)
-		{
-			foreach ($array as $numNode => $nodeValue)
-			{
-				if ($nodeValue == $oldvalue)
-					break;
-			}
-	
-			$nodes = $this->getFieldNodes($name);
-			$cont = 0;
-			foreach ($nodes as $node)
-			{
-				if ($cont == $numNode)
-				{
-					if ($node != null)
-					{
-						$node->nodeValue  = $newvalue;
-					}
-					else
-					{
-						$this->AddField($name, $newvalue);
-					}
-					break;
-				}
-				$cont++;
-			}
-		}		
-	}
-	
-	/**
-	* Remove specified field node from row
-	* @param DOMNode $node
-	* @return DOMNode
-	*/
-	public function removeField($node)
 	{
-		if ($node != null)
+		$result = $this->_row[$name];
+		if (!is_array($result))
 		{
-			$this->_node->removeChild($node);
+			if ($oldvalue == $result)
+			{
+				$this->_row[$name] = $newvalue;
+				$this->_node = null;
+			}
+		}
+		else
+		{
+			for($i=sizeof($result)-1;$i>=0;$i--)
+			{
+				if ($result[$i] == $oldvalue)
+				{
+					$this->_row[$name][$i] = $newvalue;
+					$this->_node = null;
+				}
+			}
 		}
 	}
 
@@ -242,7 +222,37 @@ class SingleRow
 	*/
 	public function getDomObject()
 	{
+		if ($this->_node == null)
+		{
+			$this->_node = XmlUtil::CreateXmlDocumentFromStr("<row />");
+			$root = $this->_node->getElementsByTagName( "row" )->item ( 0 );
+			foreach($this->_row as $key=>$value)
+			{
+				if (!is_array($value))
+				{
+					$field = XmlUtil::CreateChild($root, "field", $value);
+					XmlUtil::AddAttribute($field, "name", $key);
+				}
+				else
+				{
+					foreach($value as $valueItem)
+					{
+						$field = XmlUtil::CreateChild($root, "field", $valueItem);
+						XmlUtil::AddAttribute($field, "name", $key);
+					}
+				}
+			}
+		}
 		return $this->_node;
+	}
+
+	/**
+	 *
+	 * @return array
+	 */
+	public function getRawFormat()
+	{
+		return $this->_row;
 	}
 }
 ?>

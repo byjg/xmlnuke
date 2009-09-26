@@ -35,7 +35,7 @@
  * @see "com.xmlnuke.anydataset.SingleRow"
  * @see "com.xmlnuke.anydataset.AnyIterator"
  * @see "com.xmlnuke.anydataset.IteratorFilter"
- * 
+ *
  * <example>
  * <code>
  * &lt;anydataset&gt;
@@ -61,19 +61,13 @@ class AnyDataSet {
 	private $_anyDataSet;
 	/**
 	 *@access private
-	 *@var SingleRow
+	 *@var SingleRow[]
 	 *@desc Internal structure represent the current SingleRow
 	 */
-	private $_singleRow;
+	private $_collection;
 	/**
 	 *@access private
-	 *@var DOMNode
-	 *@desc XML node represents ANYDATASET node
-	 */
-	private $_nodeRoot;
-	/**
-	 *@access private
-	 *@var DOMNode
+	 *@var int
 	 *@desc Current node anydataset works
 	 */
 	private $_currentRow;
@@ -82,118 +76,159 @@ class AnyDataSet {
 	 *@desc Path to anydataset file
 	 */
 	private $_path;
-	
+
 	/**
 	 *@access public
 	 *@return void
 	 *@param AnydatasetBaseFilenameProcessor $file
 	 *@desc AnyDataSet constructor
 	 */
-	public function AnyDataSet($file = null) {
+	public function AnyDataSet($file = null)
+	{
 		$this->_path = null;
-		if ($file == null) {
+		if ($file == null)
+		{
 			$this->CreateNew ();
-		} else {
-			if (! is_string ( $file )) {
+		} else
+		{
+			if (! is_string ( $file ))
+			{
 				$this->_path = $file->FullQualifiedNameAndPath ();
-			} else {
+			}
+			else
+			{
 				$this->_path = $file;
 			}
 			$this->CreateFrom ( $this->_path );
 		}
 	}
-	
+
 	/**
 	 *@access private
 	 *@return void
 	 *@desc Private method used to create Empty Anydataset
 	 */
-	private function CreateNew() {
-		$this->_anyDataSet = XmlUtil::CreateXmlDocumentFromStr ( "<anydataset/>" );
-		//$this->_nodeRoot = XmlUtil::selectSingleNode( $this->_anyDataSet, "anydataset" );
-		$this->_nodeRoot = $this->_anyDataSet->getElementsByTagName ( "anydataset" )->item ( 0 );
+	private function CreateNew()
+	{
+		$this->_anyDataSet = null;
+		$this->_collection = array();
+		$this->_currentRow = -1;
 	}
-	
+
 	/**
 	 *@access private
 	 *@return void
 	 *@param string $filepath - Path and Filename to be read
 	 *@desc Private method used to read and populate anydataset class from specified file
 	 */
-	private function CreateFrom($filepath) {
-		if (! FileUtil::Exists ( $filepath )) {
+	private function CreateFrom($filepath)
+	{
+		if (! FileUtil::Exists ( $filepath ))
+		{
 			$this->CreateNew ();
-		} else {
+		}
+		else
+		{
 			$this->_anyDataSet = XmlUtil::CreateXmlDocumentFromFile ( $filepath );
-			//$this->_nodeRoot = XmlUtil::selectSingleNode( $this->_anyDataSet, "anydataset" );
-			$this->_nodeRoot = $this->_anyDataSet->getElementsByTagName ( "anydataset" )->item ( 0 );
+			$this->_collection = array();
+
+			$rows = $this->_anyDataSet->getElementsByTagName ( "row" );
+			foreach ($rows as $row)
+			{
+				$sr = new SingleRow();
+				$fields =  $row->getElementsByTagName("field");
+				foreach ($fields as $field)
+				{
+					$sr->addField($field->attributes->getNamedItem("name")->nodeValue, $field->nodeValue);
+				}
+				$this->_collection[] = $sr;
+			}
+			$this->_currentRow = sizeof($this->_collection) - 1;
 		}
 	}
-	
+
 	/**
 	 *@access public
 	 *@return string - XML String
 	 *@desc Returns the AnyDataSet XML representative structure.
 	 */
-	public function XML() {
-		return $this->_anyDataSet->saveXML ();
+	public function XML()
+	{
+		return $this->getDomObject()->saveXML();
 	}
-	
+
 	/**
 	 *@access public
 	 *@return DOMDocument - XmlDocument object
 	 *@desc Returns the AnyDataSet XmlDocument representive object
 	 */
-	public function getDomObject() {
+	public function getDomObject()
+	{
+		if ($this->_anyDataSet == null)
+		{
+			$this->_anyDataSet = XmlUtil::CreateXmlDocumentFromStr ( "<anydataset/>" );
+			$nodeRoot = $this->_anyDataSet->getElementsByTagName ( "anydataset" )->item ( 0 );
+			foreach ($this->_collection as $sr)
+			{
+				$row = $sr->getDomObject();
+				$nodeRow = $row->getElementsByTagName ( "row" )->item ( 0 );
+				$newRow = XmlUtil::CreateChild($nodeRoot, "row");
+				XmlUtil::AddNodeFromNode($newRow, $nodeRow);
+			}
+		}
 		return $this->_anyDataSet;
 	}
-	
+
 	/**
 	 *@access public
 	 *@param AnydatasetBaseFilenameProcessor $file
 	 *@return void
 	 *@desc Save the AnyDataSet file to disk. All operations running in memory. You need save to disk to persist data.
 	 */
-	public function Save($file = null) {
-		if (! is_null ( $file )) {
-			if (! is_string ( $file )) {
+	public function Save($file = null)
+	{
+		if (! is_null ( $file ))
+		{
+			if (! is_string ( $file ))
+			{
 				$this->_path = $file->FullQualifiedNameAndPath ();
-			} else {
+			}
+			else
+			{
 				$this->_path = $file;
 			}
 		}
 		if (is_null ( $this->_path )) {
 			throw new DataBaseException ( 1000, "No such file path to save anydataset" );
 		}
-		XmlUtil::SaveXmlDocument ( $this->_anyDataSet, $this->_path );
+		XmlUtil::SaveXmlDocument ( $this->getDomObject(), $this->_path );
 	}
-	
+
 	/**
 	 * @access public
 	 * @param SingleRow $sr
 	 * @return void
 	 * @desc Append one row to AnyDataSet.
 	 */
-	public function appendRow($sr = null) 
+	public function appendRow($sr = null)
 	{
 		if ($sr != null)
 		{
 			if ($sr instanceof SingleRow )
 			{
-				$this->_currentRow = XmlUtil::CreateChild ( $this->_nodeRoot, "row", "" );
-				XmlUtil::AddNodeFromNode($this->_currentRow, $sr->getDomObject());
-				$this->_singleRow = new SingleRow ( $this->_currentRow );
+				$this->_collection[] = $sr;
 			}
-			else 
+			else
 			{
 				throw new Exception("You must pass a SingleRow object");
 			}
 		}
-		else 
+		else
 		{
-			$this->_currentRow = XmlUtil::CreateChild ( $this->_nodeRoot, "row", "" );
-			$this->_singleRow = new SingleRow ( $this->_currentRow );
+			$this->_collection[] = new SingleRow();
 		}
+		$this->_currentRow = sizeof($this->_collection) - 1;
+		$this->_anyDataSet = null;
 	}
 
 	/**
@@ -208,36 +243,54 @@ class AnyDataSet {
 			$sr = $it->moveNext();
 			$this->appendRow($sr);
 		}
+		$this->_anyDataSet = null;
 	}
-	
+
 	/**
 	 *@access public
-	 *@param int or DOMNode - Row number or node to be added before
-	 *@return void
+	 *@param int $rowNumber
+	 *@param SingleRow row
 	 *@desc Insert one row before specified position.
 	 */
-	public function insertRowBefore($row) {
-		if ($row instanceof DOMNode) {
-			$this->_currentRow = XmlUtil::CreateChildBeforeNode ( "row", "", $row );
-			$this->_singleRow = new SingleRow ( $this->_currentRow );
-		} elseif ($row > $this->_nodeRoot->childNodes->length - 1) {
+	public function insertRowBefore($rowNumber, $row = null)
+	{
+		if ($row >= sizeof($this->_collection))
+		{
 			$this->appendRow ();
-		} else {
-			$this->_currentRow = XmlUtil::CreateChildBefore ( $this->_nodeRoot, "row", "", $row );
-			$this->_singleRow = new SingleRow ( $this->_currentRow );
+		}
+		else
+		{
+			array_splice($this->_collection, $row, 0, (is_null($row) ? new SingleRow() : $row));
+			$this->_anyDataSet = null;
 		}
 	}
-	
+
 	/**
 	 *@access public
-	 *@param DOMNode $row - Row number (sequential)
-	 *@return 
+	 *@param int $row - Row number (sequential)
+	 *@return
 	 *@desc Remove specified row position.
 	 */
-	public function removeRow($row) {
-		$this->_nodeRoot->removeChild ( $row );
+	public function removeRow($row = null)
+	{
+		if ($row == null) $row = $this->_currentRow;
+		if ($row instanceof SingleRow)
+		{
+			$i = 0;
+			foreach($this->_collection as $sr)
+			{
+				if ($sr->getRawFormat() == $row->getRawFormat())
+				{
+					$this->removeRow($i);
+				}
+				$i++;
+			}
+		}
+
+		array_splice($this->_collection, $row, 1);
+		$this->_anyDataSet = null;
 	}
-	
+
 	/**
 	 *@access public
 	 *@param string $name - Field name
@@ -245,135 +298,91 @@ class AnyDataSet {
 	 *@return void
 	 *@desc Add a single string field to an existing row
 	 */
-	public function addField($name, $value) {
-		$this->_singleRow->AddField ( $name, $value );
+	public function addField($name, $value)
+	{
+		if ($this->_currentRow < 0)
+		{
+			$this->appendRow();
+		}
+		$this->_collection[$this->_currentRow]->AddField( $name, $value );
+		$this->_anyDataSet = null;
 	}
-	
+
 	/**
 	 *@access public
-	 *@param AnyIteratorFilter $itf
+	 *@param IteratorFilter $itf
 	 *@return IIterator
 	 *@desc Get an Iterator filtered by an IteratorFilter
 	 */
-	public function getIterator($itf = null) {
-		if ($itf == null) {
+	public function getIterator($itf = null)
+	{
+		if ($itf == null)
+		{
 			//return new AnyIterator(XmlUtil::selectNodes($this->_nodeRoot, ""));
-			return new AnyIterator ( $this->getDomObject ()->getElementsByTagname ( "row" ) );
-		} else {
-			$xpath = new DOMXPath ( $this->_anyDataSet );
-			$xnl = $xpath->query ( $itf->getXPath () );
-			return new AnyIterator ( $xnl );
+			return new AnyIterator ( $this->_collection );
+		}
+		else
+		{
+			return new AnyIterator ( $itf->match($this->_collection) );
 		}
 	}
-	
+
 	/**
 	 *@access public
 	 *@param IteratorFilter $itf
 	 *@param string $fieldName
 	 *@return array
-	 *@desc 
+	 *@desc
 	 */
-	public function getArray($itf, $fieldName) {
+	public function getArray($itf, $fieldName)
+	{
 		$it = $this->getIterator ( $itf );
 		$result = array ();
-		while ( $it->hasNext () ) {
+		while ( $it->hasNext () )
+		{
 			$sr = $it->moveNext ();
 			$result [] = $sr->getField ( $fieldName );
 		}
 		return $result;
 	}
-	
-	public function Sort($field) {
-		$array = array ();
-		
-		$anydataNode = $this->_nodeRoot;
-		
-		$row = $anydataNode->childNodes->item ( 0 );
-		
-		if (! $row) {
+
+	/**
+	 *
+	 * @param string $field
+	 * @return void
+	 */
+	public function Sort($field)
+	{
+		if (count($this->_collection) == 0)
+		{
 			return;
 		}
-		
-		while ( $anydataNode->childNodes->length > 0 ) {
-			$array [] = $anydataNode->removeChild ( $anydataNode->firstChild );
-		}
-		
-		for($i = 0; $i < $row->childNodes->length; $i ++) {
-			if ($row->childNodes->item ( $i )->getAttribute ( 'name' ) == $field) {
-				break;
-			}
-		}
-		
-		$array = $this->quicksort_exec ( $array, $field, $i );
-		
-		foreach ( $array as $row ) {
-			$anydataNode->appendChild ( $row );
-		}
-		
+
+		$this->_collection = $this->quicksort_exec ( $this->_collection, $field );
+
+		$this->_anyDataSet = null;
 		return;
 	}
-	
-	protected function quicksort_exec($seq, $field, $pos) {
+
+	protected function quicksort_exec($seq, $field )
+	{
 		if (! count ( $seq ))
 			return $seq;
-		
+
 		$k = $seq [0];
 		$x = $y = array ();
-		
-		for($i = 1; $i < count ( $seq ); $i ++) {
-			$fieldNode = $seq [$i]->childNodes->item ( $pos );
-			if ($fieldNode->nodeValue <= $k->childNodes->item ( $pos )->nodeValue) {
+
+		for($i = 1; $i < count ( $seq ); $i ++)
+		{
+			if ($seq[$i]->getField($field) <= $k->getField($field))
+			{
 				$x [] = $seq [$i];
 			} else {
 				$y [] = $seq [$i];
 			}
 		}
-		
-		return array_merge ( $this->quicksort_exec ( $x, $field, $pos ), array ($k ), $this->quicksort_exec ( $y, $field, $pos ) );
-	}
-	
-	public static function orderBy($iterator, $field, $order = "A") {
-		$result = new AnyDataSet ( );
-		
-		while ( $iterator->hasNext () ) {
-			$sr = $iterator->moveNext ();
-			
-			$itResult = $result->getIterator ();
-			
-			$nodeBefore = null;
-			$added = false;
-			while ( $itResult->hasNext () ) {
-				$srResult = $itResult->moveNext ();
-				if ($order == "A") {
-					$compare = ($srResult->getField ( $field ) < $sr->getField ( $field ));
-				} else {
-					$compare = ($srResult->getField ( $field ) > $sr->getField ( $field ));
-				}
-				if ($compare) {
-					$nodeBefore = $srResult->getDomObject ();
-				} else {
-					if (is_null ( $nodeBefore )) {
-						$result->appendRow ();
-					} else {
-						$result->insertRowBefore ( $nodeBefore );
-					}
-					$added = true;
-					break;
-				}
-			}
-			
-			if (! $added) {
-				$result->appendRow ();
-			}
-			
-			$arr = $sr->getFieldNames ();
-			foreach ( $arr as $key => $fieldname ) {
-				$result->addField ( $fieldname, $sr->getField ( $fieldname ) );
-			}
-		
-		}
-		
-		return $result;
+
+		return array_merge ( $this->quicksort_exec ( $x, $field ), array ($k ), $this->quicksort_exec ( $y, $field ) );
 	}
 
 }

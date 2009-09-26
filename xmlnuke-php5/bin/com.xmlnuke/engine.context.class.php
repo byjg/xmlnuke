@@ -6,25 +6,25 @@
  *  XMLNuke: A Web Development Framework based on XML.
  *
  *  Main Specification: Joao Gilberto Magalhaes, joao at byjg dot com
- * 
+ *
  *  This file is part of XMLNuke project. Visit http://www.xmlnuke.com
  *  for more information.
- *  
+ *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
  *  as published by the Free Software Foundation; either version 2
  *  of the License, or (at your option) any later version.
- *  
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
- *  
+ *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
- *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
+ *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
 /**
@@ -35,12 +35,12 @@ class Context
 {
 	/**
 	* @access private
-	* @var Context 
+	* @var Context
 	*/
 	private $_context = null;
 	/**
 	* @access private
-	* @var string 
+	* @var string
 	*/
 	private $_XmlNukeVersion = "XMLNuke 3.x PHP5 Edition";
 	/**
@@ -51,47 +51,47 @@ class Context
 	private $_config = array();
 	/**
 	* @access private
-	* @var string 
+	* @var string
 	*/
 	private $_xml = "";
 	/**
 	* @access private
-	* @var string 
+	* @var string
 	*/
 	private $_xsl = "";
 	/**
 	* @access private
-	* @var CultureInfo 
+	* @var CultureInfo
 	*/
 	private $_lang = null;
 	/**
 	* @access private
-	* @var string 
+	* @var string
 	*/
 	private $_site = "";
 	/**
 	* @access private
-	* @var bool 
+	* @var bool
 	*/
 	private $_reset = false;
 	/**
 	* @access private
-	* @var bool 
+	* @var bool
 	*/
 	private $_nocache = false;
 	/**
 	* @access private
-	* @var XmlNukeDB 
+	* @var XmlNukeDB
 	*/
 	private $_xmlnukedb;
 	/**
 	* @access private
-	* @var string 
+	* @var string
 	*/
 	private $_appNameInMemory;
 	/**
 	* @access private
-	* @var string 
+	* @var string
 	*/
 	private $_xmlnukepath = "";
 	/**
@@ -103,15 +103,15 @@ class Context
 //	/**
 //	*It is necessary, because the Random value was returned the same value (because uses the same seed).
 //	* @access private
-//	* @var int 
+//	* @var int
 //	*/
-//	private $_rnd; 
+//	private $_rnd;
 
 	private $_contentType = "";
 
 
 	/**
-	* Context construtor. Read data from HttpContext class and assign default values to main arguments (XML, XSL, SITE and LANG) if doesn't exists. 
+	* Context construtor. Read data from HttpContext class and assign default values to main arguments (XML, XSL, SITE and LANG) if doesn't exists.
 	* Process Config.php and put into NameValueCollection the make easy access it.
 	* @access public
 	* @return void
@@ -119,13 +119,13 @@ class Context
 	public function Context()
 	{
 		$this->AddCollectionToConfig(Config::getValuesConfig());
-		
+
 		$this->_xsl = $this->getParameter("xsl");
 		if ($this->_xsl == "")
 		{
 			$this->_xsl = $this->ContextValue("xmlnuke.DEFAULTPAGE");
 		}
-		
+
 		$this->_xml = $this->getParameter("xml");
 		if ($this->_xml == "")
 		{
@@ -164,7 +164,7 @@ class Context
 		}
 
 		ModuleFactory::PhpLibDir($this);
-		
+
 		$lang = $this->getParameter("lang");
 
 		$langAvail = $this->LanguagesAvailable();
@@ -242,32 +242,32 @@ class Context
 
 		$this->_xmlnukedb = new XmlNukeDB($this->XmlHashedDir(), $this->XmlPath(), strtolower($this->Language()->getName()));
 		//$this->_xmlnukedb->loadIndex();
-		
-		if ($this->ContextValue("logout") != "") 
-		{ 
-		       $this->MakeLogout(); 
-		} 
+
+		if ($this->ContextValue("logout") != "")
+		{
+		       $this->MakeLogout();
+		}
 	}
-	
+
 	/**
-	 * Get config debug in module 
+	 * Get config debug in module
 	 *
 	 * @return bool
 	 */
-	public function getDebugInModule() 
+	public function getDebugInModule()
 	{
 		$configDebug = $this->_debug;
 		if ($this->ContextValue("debug") == "true")
 		{
 			$requestDebug = true;
 		}
-		else 
+		else
 		{
 			$requestDebug = false;
 		}
 		return ($configDebug && $requestDebug);
 	}
-	
+
 	/**
 	 * Set debug in module with true or false
 	 *
@@ -277,19 +277,19 @@ class Context
 	{
 		$this->_debug = $debug;
 	}
-	
+
 	/**
 	* Return a randon number
 	* @access public
 	* @param int $maxValue Number maximo to range values
 	* @return int - Any number
 	*/
-	public function getRandomNumber($maxValue) 
-	{ 
-		return rand(0, $maxValue); 
-	} 
+	public function getRandomNumber($maxValue)
+	{
+		return rand(0, $maxValue);
+	}
 
-	
+
 	/**
 	* Look for a param name into the HttpContext Request already processed.
 	* @access public
@@ -316,7 +316,7 @@ class Context
 	{
 		return $this->_xml;
 	}
-		
+
 	/**
 	* @access public
 	* @param string $value Value to XML page argument
@@ -406,19 +406,19 @@ class Context
 	{
 		$this->_nocache = $value;
 	}
-	
+
 	/**
 	* @access public
 	* @return string Return the phisical directory from xmlnuke.ROOTDIR param from Config.php file.
 	*/
 	private function XmlNukePath()
-	{		
+	{
 		if ($this->ContextValue("xmlnuke.USEABSOLUTEPATHSROOTDIR"))
 		{
 			return FileUtil::AdjustSlashes($this->_xmlnukepath).FileUtil::Slash();
 		}
 		else
-		{			
+		{
 			return realpath($this->_xmlnukepath).FileUtil::Slash();
 		}
 	}
@@ -428,10 +428,10 @@ class Context
 	* @return string
 	*/
 	public function SharedRootPath()
-	{ 
-		return $this->XmlNukePath() . "shared" . FileUtil::Slash(); 
-		
-	} 
+	{
+		return $this->XmlNukePath() . "shared" . FileUtil::Slash();
+
+	}
 
 	/**
 	* @access public
@@ -455,7 +455,7 @@ class Context
 		{
 			return $externalSite.FileUtil::Slash();
 		}
-		else 
+		else
 		{
 			return $this->SiteRootPath().$this->getSite().FileUtil::Slash();
 		}
@@ -540,7 +540,7 @@ class Context
 				if (!($i === false))
 				{
 					$urlBase = substr($urlBase, 0, $i);
-				}			
+				}
 			}
 			else
 			{
@@ -550,11 +550,11 @@ class Context
 				}
 			}
 		}
-		
+
 		return $urlBase . $url;
 	}
-	
-	
+
+
 	/**
 	* @access public
 	* @param string $relativePath
@@ -598,9 +598,9 @@ class Context
 			{
 				return $value->getParameter();
 			}
-			else 
+			else
 			{
-				return $value;	
+				return $value;
 			}
 		}
 		else
@@ -608,7 +608,7 @@ class Context
 			return "";
 		}
 	}
-	
+
 	public function putContextValue($key, $value)
 	{
 		$this->AddPairToConfig($key, $value);
@@ -657,21 +657,21 @@ class Context
 			{
 				$ret[] = $value;
 			}
-			
+
 		}
-		
+
 		$externalSite = $this->getExternalSiteDir();
-		foreach ($externalSite as $key=>$value) 
+		foreach ($externalSite as $key=>$value)
 		{
 			$ret[] = $key;
 		}
-		 
-				
+
+
 		return $ret;
 	}
-	
+
 	protected $_externalSiteArray = null;
-	
+
 	/**
 	 * @return array()
 	 */
@@ -684,11 +684,11 @@ class Context
 			if ($externalSiteDir != "")
 			{
 				$externalSiteDirArray = explode("|", $externalSiteDir);
-				foreach ($externalSiteDirArray as $siteItem) 
+				foreach ($externalSiteDirArray as $siteItem)
 				{
 					$siteArray = explode("=", $siteItem);
 					$this->_externalSiteArray[$siteArray[0]] = $siteArray[1];
-				}			
+				}
 			}
 		}
 		return $this->_externalSiteArray;
@@ -701,7 +701,7 @@ class Context
 	*/
 	public function IsAuthenticated()
 	{
-		return 
+		return
 		   (
 			($this->getSession(SESSION_XMLNUKE_AUTHUSER) != "") &&
 			($this->getSession(SESSION_XMLNUKE_USERCONTEXT) == $this->ContextValue("xmlnuke.USERSDATABASE"))
@@ -724,7 +724,7 @@ class Context
 			return "";
 		}
 	}
-	
+
 	public function authenticatedUserId()
 	{
 		if ($this->IsAuthenticated())
@@ -743,22 +743,22 @@ class Context
 	* @param strgin $user
 	* @return void
 	*/
-	public function MakeLogin($user, $id) 
-	{ 
-		$this->setSession(SESSION_XMLNUKE_AUTHUSER, $user); 
-		$this->setSession(SESSION_XMLNUKE_AUTHUSERID, $id); 
+	public function MakeLogin($user, $id)
+	{
+		$this->setSession(SESSION_XMLNUKE_AUTHUSER, $user);
+		$this->setSession(SESSION_XMLNUKE_AUTHUSERID, $id);
 		$this->setSession(SESSION_XMLNUKE_USERCONTEXT, $this->ContextValue("xmlnuke.USERSDATABASE"));
-	} 
-	
+	}
+
 	/**
 	* Make logout from XMLNuke Engine
 	* @access public
 	* @return void
 	*/
-	public function MakeLogout() 
-	{ 
+	public function MakeLogout()
+	{
 		session_unset();
-	} 
+	}
 
 	/**
 	* Collection to be added
@@ -773,15 +773,15 @@ class Context
 			$this->AddPairToConfig($key, $collection[$key]);
 		}
 	}
-	
+
 	/**
 	* Collection Session to be added
 	* @access public
 	* @param array $collection Session Collection to be added
 	* @return void
 	*/
-	private function AddSessionToConfig($collection) 
-	{ 
+	private function AddSessionToConfig($collection)
+	{
 		if (!is_null($collection))
 		{
 			foreach($collection as $key => $value)
@@ -789,21 +789,21 @@ class Context
 				$this->AddPairToConfig('session.' . $key, $value);
 			}
 		}
-	} 
-	
+	}
+
 	/**
 	* Cookie Collection to be added
 	* @access public
 	* @param array $collection Cookie Collection to be added
 	* @return void
 	*/
-	private function AddCookieToConfig($collection) 
-	{ 
+	private function AddCookieToConfig($collection)
+	{
 		foreach($collection as $key => $value)
 		{
 			$this->AddPairToConfig('cookie.' . $key, $value);
 		}
-	} 
+	}
 
 	/**
 	* @access public
@@ -885,7 +885,7 @@ class Context
 		echo "</html>";
 		exit;
 	}
-	
+
 	/**
 	* @access public
 	* @param string $name
@@ -904,18 +904,18 @@ class Context
 		setcookie($name, $value, $expire, $path, $domain);
 		$this->AddPairToConfig("cookie." . $name, $value);
 	}
-	
+
 	/**
 	* @access public
 	* @param string $name
 	* @return void
 	* @desc Remove a cookie
 	*/
-	public function removeCookie($name) 
-	{ 
+	public function removeCookie($name)
+	{
 		unset($_COOKIE[$name]);
 		unset($this->_config["cookie." . $name]);
-	} 
+	}
 
 	/**
 	* @access public
@@ -927,7 +927,7 @@ class Context
 	{
 		return $this->ContextValue("cookie." . $name);
 	}
-	
+
 	/**
 	* @access public
 	* @param string $name
@@ -935,37 +935,37 @@ class Context
 	* @return String
 	* @desc Add a value in session
 	*/
-	public function setSession($name, $value) 
-	{ 
+	public function setSession($name, $value)
+	{
 		$_SESSION[strtoupper($name)] = $value;
-		$this->AddPairToConfig("session." . $name, $value); 
-	} 
-	
+		$this->AddPairToConfig("session." . $name, $value);
+	}
+
 	/**
 	* @access public
 	* @param string $name
 	* @return void
 	* @desc Remove a value in this session
 	*/
-	public function removeSession($name) 
-	{ 
+	public function removeSession($name)
+	{
 		unset($_SESSION[strtoupper($name)]);
 		session_unregister(strtoupper($name));
 		unset($this->_config["session." . strtoupper($name)]);
-	} 
-	
+	}
+
 	/**
 	* @access public
 	* @param string $name
 	* @return String
 	* @desc Return the a value in this session
 	*/
-	public function getSession($name) 
-	{ 
-		return $this->ContextValue("session." . strtoupper($name)); 
-	} 
+	public function getSession($name)
+	{
+		return $this->ContextValue("session." . strtoupper($name));
+	}
 
-	
+
 	/**
 	* This method was created in intention to substitute the outhers three similars methods.
 	* @access public
@@ -983,7 +983,7 @@ class Context
 			$queryString = "&" . substr($modulename, $queryStart+1);
 			$modulename = substr($modulename, 0, $queryStart);
 		}
-		
+
 		if (strpos($modulename, "module:") !== false)
 		{
 			$modulename = substr($modulename, 7);
@@ -992,7 +992,7 @@ class Context
 		{
 			$modulename = "admin." . substr($modulename, 6);
 		}
-		
+
 		if(empty($xsl))
 		{
 			if ($this->getXsl()=="index")
@@ -1005,13 +1005,13 @@ class Context
 				$xsl = $this->getXsl();
 			}
 		}
-		
+
 		if(empty($site))
 			$site = $this->getSite();
-		
+
 		if(empty($lang))
 			$lang = strtolower($this->Language()->getName());
-			
+
 
 		$fullLink = $this->ContextValue("xmlnuke.USEFULLPARAMETER");
 		if (!$fullLink)
@@ -1030,9 +1030,9 @@ class Context
 				$lang = "";
 			}
 		}
-		
+
 		$url = $this->UrlModule()."?module=".$modulename;
-		$url .= $queryString; 
+		$url .= $queryString;
 		if ($site != "")
 		{
 			$url .= "&site=".$site;
@@ -1047,9 +1047,9 @@ class Context
 		}
 
 		return $url;
-	}	
-	
-	
+	}
+
+
 	/**
 	* This method was created in intention to substitute the outhers three similars methods.
 	* @access public
@@ -1063,16 +1063,16 @@ class Context
 	{
 		if(empty($xsl))
 			$xsl = $this->getXsl();
-		
+
 		if(empty($site))
 			$site = $this->getSite();
-		
+
 		if(empty($lang))
 			$lang = strtolower($this->Language()->getName());
-		
+
 		return $this->UrlXmlNukeEngine()."?site=".$site."&xml=".$xml."&xsl=".$xsl."&lang=".$lang;
-	}	
-	
+	}
+
 	/**
 	* @access public
 	* @param array $options
@@ -1089,11 +1089,9 @@ class Context
 		$it = $config->getIterator();
 		if ($it->hasNext())
 		{
-			//anydataset.SingleRow
-			$sr = $it->moveNext();
-			$config->removeRow($sr->getDomObject());
+			$config->removeRow(0);
 		}
-		
+
 		$config->appendRow();
 		foreach( array_keys($options) as $key )
 		{
@@ -1137,7 +1135,7 @@ class Context
 			}
 		}
 	}
-	
+
 	/**
 	* @desc Return path to XMLNuke root directory
 	* @return string
@@ -1146,7 +1144,7 @@ class Context
 	{
 		return realpath(".") . FileUtil::Slash();
 	}
-	
+
 	public function getXmlnukeURL()
 	{
 		$protocol = ($this->ContextValue("SERVER_PORT") == 443) ? "https://" : "http://";
@@ -1157,10 +1155,10 @@ class Context
 		}
 		return $url;
 	}
-	
+
 	/**
 	 * Enable XMLNuke get parameters like:
-	 * 
+	 *
 	 * module.php/VIRTUALCOMMAND?a=1
 	 *
 	 * Virtual Command follow the SLASH and QUERY STRING follow the "?" char
@@ -1169,11 +1167,11 @@ class Context
 	{
 		$script = $this->ContextValue("PHP_SELF");
 		$name = $this->ContextValue("SCRIPT_NAME");
-		
+
 		$command = substr($script, strlen($name) + 1);
 		return $command;
 	}
-	
+
 	/**
 	 * Return the Field name and the FILENAME for Saving files
 	 *
@@ -1186,7 +1184,7 @@ class Context
 		{
 			return $_FILES;
 		}
-		else 
+		else
 		{
 			$ret = array();
 			foreach($_FILES as $file => $property)
@@ -1196,7 +1194,7 @@ class Context
 		}
 		return $ret;
 	}
-	
+
 	/**
 	 * Process a document Upload
 	 *
@@ -1233,25 +1231,25 @@ class Context
 			{
 				$uploadfile = $filenameProcessor->FullQualifiedNameAndPath();
 			}
-			else 
+			else
 			{
 				$uploadfile = $filenameProcessor->PathSuggested() . FileUtil::Slash() . $field["name"];
 			}
 			if (move_uploaded_file($field['tmp_name'], $uploadfile))
 			{
 				return $uploadfile;
-			} 
-			else 
+			}
+			else
 			{
 			    throw new Exception("Cannot upload file. Raeson: '" . $field['error'] . "'");
-			}		
+			}
 		}
-		else 
+		else
 		{
 			throw new Exception("Something is wrong with Upload file.");
 		}
     }
-	
+
 	public function getSuggestedContentType()
 	{
 		if ($this->_contentType == "")
@@ -1269,8 +1267,8 @@ class Context
 					$sr = $it->moveNext();
 					$contentType = $sr->getField("content-type");
 				}
-				else 
-				{					
+				else
+				{
 					$filename = new AnydatasetSetupFilenameProcessor("contenttype", $this);
 					$anydataset = new AnyDataSet($filename);
 					$itf = new IteratorFilter();
@@ -1287,7 +1285,7 @@ class Context
 		}
 		return ($this->_contentType);
 	}
-	
+
 	public function Debug()
 	{
 		Debug::PrintValue($this->_config);
@@ -1302,17 +1300,17 @@ class Context
     {
         return (strtoupper($this->ContextValue("xmlnuke.XMLSTORAGEMETHOD")) == "HASHED");
     }
-    
+
     public function getPostVariables()
     {
     	return $_POST;
     }
-    
-    
+
+
     protected $__userdb;
-    
+
     /**
-     * 
+     *
      * @return IUsersBase
      */
     public function getUsersDatabase()
@@ -1333,12 +1331,12 @@ class Context
 			{
 				$this->__userdb = new UsersAnyDataSet($this);
 			}
-			else 
+			else
 			{
 				$this->__userdb = new UsersDBDataSet($this, $conn);
 			}
 		}
-		
+
 		return $this->__userdb;
     }
 
