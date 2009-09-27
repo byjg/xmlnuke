@@ -28,11 +28,12 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-class SQLRelayIterator implements IIterator
+class SQLRelayIterator extends GenericIterator
 {
 	const RECORD_BUFFER = 50;
 	private $_rowBuffer;
 	protected $_currentRow = 0;
+	protected $_moveNextRow = 0;
 
 	/**
 	*@var SQLRelay Cursos
@@ -155,8 +156,14 @@ class SQLRelayIterator implements IIterator
 		else
 		{
 			$sr = array_shift($this->_rowBuffer);
+			$this->_moveNextRow++;
 			return $sr;
 		}
 	}
+
+	function key()
+ 	{
+ 		return $this->_moveNextRow;
+ 	}
 }
 ?>

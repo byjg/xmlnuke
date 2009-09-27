@@ -28,7 +28,7 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-class TextFileIterator implements IIterator
+class TextFileIterator extends GenericIterator
 {
 	/**
 	*@var Context
@@ -40,6 +40,8 @@ class TextFileIterator implements IIterator
 	protected $_fieldexpression;
 
 	protected $_handle;
+
+	protected $_current = 0;
 
 	/**
 	*@access public
@@ -105,6 +107,7 @@ class TextFileIterator implements IIterator
 				//Debug::PrintValue(strtolower($this->_fields[$i]), $cols[$i]);
 			}
 
+			$this->_current++;
 			return 	$sr;
 		}
 		else
@@ -116,5 +119,11 @@ class TextFileIterator implements IIterator
 			return null;
 		}
 	}
+
+ 	function key()
+ 	{
+ 		return $this->_current;
+ 	}
+
 }
 ?>

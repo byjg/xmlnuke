@@ -28,7 +28,7 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-class XmlIterator implements IIterator
+class XmlIterator extends GenericIterator
 {
 	/**
 	 * Enter description here...
@@ -134,5 +134,11 @@ class XmlIterator implements IIterator
 
 		return 	$sr;
 	}
+
+ 	function key()
+ 	{
+ 		return $this->_current;
+ 	}
+
 }
 ?>

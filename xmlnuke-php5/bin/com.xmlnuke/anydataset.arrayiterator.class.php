@@ -28,25 +28,25 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-class ArrayIIterator implements IIterator
+class ArrayIIterator extends GenericIterator
 {
 	/**
 	*@var array
 	*/
 	protected $_rows;
-	
+
 	/**
 	 * Enter description here...
 	 *
 	 * @var array
 	 */
 	protected $_keys;
-	
+
 	/**
 	/*@var int
 	*/
 	protected $_currentRow;
-	
+
 	/**
 	*@access public
 	*@return IIterator
@@ -114,10 +114,15 @@ class ArrayIIterator implements IIterator
 			$this->_currentRow++;
 			return $sr;
 		}
-		else 
+		else
 		{
 			return null;
 		}
 	}
+
+ 	function key()
+ 	{
+ 		return $this->_currentRow;
+ 	}
 }
 ?>

@@ -32,7 +32,7 @@
 /// You need to use the getIterator method in a AnyDataSet class to create an Iterator.
 /// </summary>
 
-class AnyIterator implements IIterator
+class AnyIterator extends GenericIterator
 {
 
 	/**
@@ -97,6 +97,11 @@ class AnyIterator implements IIterator
 			return $this->_list[$this->_curRow++];
 		}
 	}
+
+ 	function key()
+ 	{
+ 		return $this->_curRow;
+ 	}
 
 }
 ?>

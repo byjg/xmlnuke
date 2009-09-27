@@ -26,28 +26,54 @@
  *
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
-/**
-*Interface for Iterator structures. Use this for receive Iterator paramenters.
-*/
-interface IIterator
+
+abstract class GenericIterator implements IIterator, Iterator
 {
-	/**
-	*@desc Check if exists more records.
-	*@return bool Return True if is possible get one or more records.
-	*/
-	function hasNext();
+	public function hasNext()
+	{
+		throw new XMLNukeException("Implement this method");
+	}
+
+	public function moveNext()
+	{
+		throw new XMLNukeException("Implement this method");
+	}
+
+	public function Count()
+	{
+		throw new XMLNukeException("Implement this method");
+	}
+
+	function key()
+	{
+		throw new XMLNukeException("Implement this method");
+	}
+
+	/* ------------------------------------- */
+	/* PHP 5 Specific functions for Iterator */
+	/* ------------------------------------- */
 
 	/**
-	*@desc Get the next record.Return a SingleRow object
-	*@return SingleRow
-	*/
-	function moveNext();
-
-	/**
-	 * @desc Get the record count. Some implementations may have return -1.
-	 *
+	 * @return SingleRow
 	 */
-	function Count();
-}
+ 	function current()
+ 	{
+ 		return $this->moveNext();
+  	}
 
-?>
+	function rewind ()
+	{
+		// There is no necessary in XMLNuke.
+	}
+
+ 	function next ()
+	{
+		// There is no necessary in XMLNuke.
+	}
+
+	function valid()
+	{
+		return $this->hasNext();
+	}
+
+}

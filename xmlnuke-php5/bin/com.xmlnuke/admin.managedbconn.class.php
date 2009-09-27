@@ -7,25 +7,25 @@
  *
  *  Main Specification: Joao Gilberto Magalhaes, joao at byjg dot com
  *  PHP5 Implementation: Joao Gilberto Magalhaes, joao at byjg dot com
- * 
+ *
  *  This file is part of XMLNuke project. Visit http://www.xmlnuke.com
  *  for more information.
- *  
+ *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
  *  as published by the Free Software Foundation; either version 2
  *  of the License, or (at your option) any later version.
- *  
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
- *  
+ *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
- *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
+ *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
 /// <summary>
@@ -41,8 +41,8 @@ class ManageDBConn extends NewBaseAdminModule
 	{
 		return false;
 	}
-	
-	public function getAccessLevel() 
+
+	public function getAccessLevel()
 	{
 		return AccessLevel::CurrentSiteAndRole;
 	}
@@ -53,23 +53,23 @@ class ManageDBConn extends NewBaseAdminModule
 	}
 
 	//Returns: classes.PageXml
-	public function CreatePage() 
+	public function CreatePage()
 	{
 		parent::CreatePage();
-		
+
 		$this->myWords = $this->WordCollection();
 		$this->setTitlePage($this->myWords->Value("TITLE"));
 		$this->setHelp($this->myWords->Value("DESCRIPTION"));
 
 		$block = new XmlBlockCollection($this->myWords->Value("BLOCK_TITLE"), BlockPosition::Center);
-		
+
 		$anydatafile = new AnydatasetFilenameProcessor("_db", $this->_context);
-		
+
 		if ($this->_action != "test")
 		{
-			
+
 			$processfields = new ProcessPageFields();
-			
+
 			$field = new ProcessPageField();
 			$field->fieldName = "dbname";
 			$field->editable = true;
@@ -83,7 +83,7 @@ class ManageDBConn extends NewBaseAdminModule
 			$field->required = true;
 			$field->newColumn = true;
 			$processfields->addProcessPageField($field);
-			
+
 			$field = new ProcessPageField();
 			$field->fieldName = "dbtype";
 			$field->editable = true;
@@ -95,7 +95,7 @@ class ManageDBConn extends NewBaseAdminModule
 			$field->size = 15;
 			$field->maxLength = 15;
 			$field->required = true;
-			$field->arraySelectList = array("dsn"=>"dsn (use it)", 
+			$field->arraySelectList = array("dsn"=>"dsn (use it)",
 				"literal"=>"PDO Literal connection string",
 				"dblib"=>"FreeTDS / Microsoft SQL Server / Sybase",
 				"firebird"=>"Firebird/Interbase 6",
@@ -108,7 +108,7 @@ class ManageDBConn extends NewBaseAdminModule
 			$field->defaultValue = "dsn";
 			$field->newColumn = true;
 			$processfields->addProcessPageField($field);
-			
+
 			$field = new ProcessPageField();
 			$field->fieldName = "dbconnectionstring";
 			$field->editable = true;
@@ -123,7 +123,7 @@ class ManageDBConn extends NewBaseAdminModule
 			$field->defaultValue = "adodriver://username:password@server/datasource?persist";
 			$field->newColumn = true;
 			$processfields->addProcessPageField($field);
-			
+
 			$buttons = new CustomButtons();
 			$buttons->action = "test";
 			$buttons->alternateText = $this->myWords->Value("TESTALTERNATETEXT");
@@ -131,25 +131,25 @@ class ManageDBConn extends NewBaseAdminModule
 			$buttons->icon = "common/editlist/ic_selecionar.gif";
 			$buttons->message = $this->myWords->Value("TESTMESSAGETEXT");
 			$buttons->multiple = MultipleSelectType::ONLYONE;
-			
-			$processpage = 
+
+			$processpage =
 				new ProcessPageStateAnydata(
-					$this->_context, 
-					$processfields, 
-					$this->myWords->Value("AVAILABLELANGUAGES"), 
-					"module:admin.managedbconn", 
-					array($buttons), 
+					$this->_context,
+					$processfields,
+					$this->myWords->Value("AVAILABLELANGUAGES"),
+					"module:admin.managedbconn",
+					array($buttons),
 					$anydatafile
 				);
-				
+
 			$block->addXmlnukeObject($processpage);
-			
+
 			$p = new XmlParagraphCollection();
 			$p->addXmlnukeObject(new XmlnukeText($this->myWords->Value("NOTE"), true));
 			$p->addXmlnukeObject(new XmlnukeText($this->myWords->Value("PHPNOTE")));
 			$block->addXmlnukeObject($p);
 		}
-		else 
+		else
 		{
 			$p = new XmlParagraphCollection();
 			$db = $this->_context->ContextValue("valueid");
@@ -157,9 +157,9 @@ class ManageDBConn extends NewBaseAdminModule
 			{
 				$p->addXmlnukeObject(new XmlnukeText($this->myWords->Value("ERRORDBEMPTY")));
 			}
-			else 
+			else
 			{
-				try 
+				try
 				{
 					$dbdataset = new DBDataSet($db, $this->_context);
 					$dbdataset->TestConnection();

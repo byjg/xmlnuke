@@ -28,7 +28,7 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-class SocketIterator implements IIterator
+class SocketIterator extends GenericIterator
 {
 	private $_colsep = null;
 	private $_rowsep = null;
@@ -131,5 +131,10 @@ class SocketIterator implements IIterator
 		}
 		return 	$sr;
 	}
+
+ 	function key()
+ 	{
+ 		return $this->_current;
+ 	}
 }
 ?>

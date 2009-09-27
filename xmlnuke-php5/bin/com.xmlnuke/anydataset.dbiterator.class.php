@@ -28,10 +28,12 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-class DBIterator implements IIterator
+class DBIterator extends GenericIterator
 {
 	const RECORD_BUFFER = 50;
 	private $_rowBuffer;
+
+	private $_currentRow = 0;
 
 	/**
 	*@var PDOStatement
@@ -134,8 +136,14 @@ class DBIterator implements IIterator
 		else
 		{
 			$sr = array_shift($this->_rowBuffer);
+			$this->_currentRow++;
 			return $sr;
 		}
 	}
+
+ 	function key()
+ 	{
+ 		return $this->_currentRow;
+ 	}
 }
 ?>
