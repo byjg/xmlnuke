@@ -52,13 +52,8 @@
  * </code>
  */
 
-class AnyDataSet {
-	/**
-	 *@access private
-	 *@var DOMDocument
-	 *@desc Internal structure to store anydataset elements
-	 */
-	private $_anyDataSet;
+class AnyDataSet
+{
 	/**
 	 *@access private
 	 *@var SingleRow[]
@@ -85,11 +80,11 @@ class AnyDataSet {
 	 */
 	public function AnyDataSet($file = null)
 	{
+		$this->_collection = array();
+		$this->_currentRow = -1;
+
 		$this->_path = null;
-		if ($file == null)
-		{
-			$this->CreateNew ();
-		} else
+		if ($file != null)
 		{
 			if (! is_string ( $file ))
 			{
@@ -103,17 +98,6 @@ class AnyDataSet {
 		}
 	}
 
-	/**
-	 *@access private
-	 *@return void
-	 *@desc Private method used to create Empty Anydataset
-	 */
-	private function CreateNew()
-	{
-		$this->_anyDataSet = null;
-		$this->_collection = array();
-		$this->_currentRow = -1;
-	}
 
 	/**
 	 *@access private
@@ -123,16 +107,12 @@ class AnyDataSet {
 	 */
 	private function CreateFrom($filepath)
 	{
-		if (! FileUtil::Exists ( $filepath ))
+		if (FileUtil::Exists ( $filepath ))
 		{
-			$this->CreateNew ();
-		}
-		else
-		{
-			$this->_anyDataSet = XmlUtil::CreateXmlDocumentFromFile ( $filepath );
+			$anyDataSet = XmlUtil::CreateXmlDocumentFromFile ( $filepath );
 			$this->_collection = array();
 
-			$rows = $this->_anyDataSet->getElementsByTagName ( "row" );
+			$rows = $anyDataSet->getElementsByTagName ( "row" );
 			foreach ($rows as $row)
 			{
 				$sr = new SingleRow();
@@ -141,6 +121,7 @@ class AnyDataSet {
 				{
 					$sr->addField($field->attributes->getNamedItem("name")->nodeValue, $field->nodeValue);
 				}
+				$sr->acceptChanges();
 				$this->_collection[] = $sr;
 			}
 			$this->_currentRow = sizeof($this->_collection) - 1;
@@ -164,19 +145,17 @@ class AnyDataSet {
 	 */
 	public function getDomObject()
 	{
-		if ($this->_anyDataSet == null)
+		$anyDataSet = XmlUtil::CreateXmlDocumentFromStr ( "<anydataset/>" );
+		$nodeRoot = $anyDataSet->getElementsByTagName ( "anydataset" )->item ( 0 );
+		foreach ($this->_collection as $sr)
 		{
-			$this->_anyDataSet = XmlUtil::CreateXmlDocumentFromStr ( "<anydataset/>" );
-			$nodeRoot = $this->_anyDataSet->getElementsByTagName ( "anydataset" )->item ( 0 );
-			foreach ($this->_collection as $sr)
-			{
-				$row = $sr->getDomObject();
-				$nodeRow = $row->getElementsByTagName ( "row" )->item ( 0 );
-				$newRow = XmlUtil::CreateChild($nodeRoot, "row");
-				XmlUtil::AddNodeFromNode($newRow, $nodeRow);
-			}
+			$row = $sr->getDomObject();
+			$nodeRow = $row->getElementsByTagName ( "row" )->item ( 0 );
+			$newRow = XmlUtil::CreateChild($nodeRoot, "row");
+			XmlUtil::AddNodeFromNode($newRow, $nodeRow);
 		}
-		return $this->_anyDataSet;
+
+		return $anyDataSet;
 	}
 
 	/**
@@ -225,10 +204,11 @@ class AnyDataSet {
 		}
 		else
 		{
-			$this->_collection[] = new SingleRow();
+			$sr = new SingleRow();
+			$this->_collection[] = $sr;
 		}
+		$sr->acceptChanges();
 		$this->_currentRow = sizeof($this->_collection) - 1;
-		$this->_anyDataSet = null;
 	}
 
 	/**
@@ -243,7 +223,6 @@ class AnyDataSet {
 			$sr = $it->moveNext();
 			$this->appendRow($sr);
 		}
-		$this->_anyDataSet = null;
 	}
 
 	/**
@@ -260,8 +239,11 @@ class AnyDataSet {
 		}
 		else
 		{
-			array_splice($this->_collection, $row, 0, (is_null($row) ? new SingleRow() : $row));
-			$this->_anyDataSet = null;
+			if ($row == null)
+			{
+				$row = new SingleRow();
+			}
+			array_splice($this->_collection, $rowNumber, 0, $row);
 		}
 	}
 
@@ -273,7 +255,10 @@ class AnyDataSet {
 	 */
 	public function removeRow($row = null)
 	{
-		if ($row == null) $row = $this->_currentRow;
+		if (is_null($row))
+		{
+			$row = $this->_currentRow;
+		}
 		if ($row instanceof SingleRow)
 		{
 			$i = 0;
@@ -282,13 +267,21 @@ class AnyDataSet {
 				if ($sr->getRawFormat() == $row->getRawFormat())
 				{
 					$this->removeRow($i);
+					break;
 				}
 				$i++;
 			}
+			return;
 		}
 
-		array_splice($this->_collection, $row, 1);
-		$this->_anyDataSet = null;
+		if ($row == 0)
+		{
+			$this->_collection = array_slice($this->_collection, 1);
+		}
+		else
+		{
+			$this->_collection = array_slice($this->_collection, 0, $row) + array_slice($this->_collection, $row);
+		}
 	}
 
 	/**
@@ -305,7 +298,6 @@ class AnyDataSet {
 			$this->appendRow();
 		}
 		$this->_collection[$this->_currentRow]->AddField( $name, $value );
-		$this->_anyDataSet = null;
 	}
 
 	/**
@@ -360,7 +352,6 @@ class AnyDataSet {
 
 		$this->_collection = $this->quicksort_exec ( $this->_collection, $field );
 
-		$this->_anyDataSet = null;
 		return;
 	}
 

@@ -29,10 +29,10 @@
 
 /// Summary description for com.
 /// </summary>
-class ManageUsers extends NewBaseAdminModule 
+class ManageUsers extends NewBaseAdminModule
 {
 	private $url = "admin:ManageUsers";
-	
+
 	public function ManageUsers()
 	{
 	}
@@ -41,33 +41,33 @@ class ManageUsers extends NewBaseAdminModule
 	{
 		return false;
 	}
-	public function  getAccessLevel() 
-    { 
-          return AccessLevel::CurrentSiteAndRole; 
-    } 
-
-    public function getRole() 
-    { 
-           return "MANAGER"; 
+	public function  getAccessLevel()
+    {
+          return AccessLevel::CurrentSiteAndRole;
     }
-    
+
+    public function getRole()
+    {
+           return "MANAGER";
+    }
+
     protected $myWords;
-    
-	public function CreatePage() 
+
+	public function CreatePage()
 	{
 		parent::CreatePage(); // Doesnt necessary get PX, because PX is protected!
-		
+
 		$users = $this->getUsersDatabase();
 
 		//anydataset.SingleRow user;
-		
+
 		$action = strtolower($this->_action);
 		$uid = $this->_context->ContextValue("valueid");
 
 		$this->myWords = $this->WordCollection();
 		$this->setTitlePage($this->myWords->Value("TITLE"));
 		$this->setHelp($this->myWords->Value("DESCRIPTION"));
-		
+
 		$this->addMenuOption($this->myWords->Value("NEWUSER"), $this->url, null);
 		$this->addMenuOption($this->myWords->Value("ADDROLE"), "admin:manageusersgroups", null);
 
@@ -78,7 +78,7 @@ class ManageUsers extends NewBaseAdminModule
 		if ( ($action != "") && ($action != "move"))
 		{
 			$message = new XmlParagraphCollection();
-			
+
 			if ( $action == "newuser" )
 			{
 				if (!$users->addUser( $this->_context->ContextValue("name"), $this->_context->ContextValue("login"), $this->_context->ContextValue("email"), $this->_context->ContextValue("password") ) )
@@ -89,7 +89,7 @@ class ManageUsers extends NewBaseAdminModule
 				{
 					if ($this->isUserAdmin())
 					{
-						$user = $users->getUserName( $this->_context->ContextValue("login") );	
+						$user = $users->getUserName( $this->_context->ContextValue("login") );
 						$user->setField( $users->_UserTable->Admin, $this->_context->ContextValue("admin") );
 						$users->Save();
 					}
@@ -138,7 +138,7 @@ class ManageUsers extends NewBaseAdminModule
 
 			if ( $action == "addsite" )
 			{
-				
+
 				$users->addPropertyValueToUser( $uid, $this->_context->ContextValue("sites"), UserProperty::Site );
 				$users->Save();
 				$message->addXmlnukeObject(new XmlnukeText($this->myWords->Value("SITEADDED"), true ));
@@ -169,21 +169,21 @@ class ManageUsers extends NewBaseAdminModule
 				$message->addXmlnukeObject(new XmlnukeText($this->myWords->Value("ROLEREMOVED"), true ));
 				$exec = true;
 			}
-            if ( $action == "addcustomvalue" ) 
-            {                    
+            if ( $action == "addcustomvalue" )
+            {
 				$users->addPropertyValueToUser( $uid, $this->_context->ContextValue("customvalue"), $this->_context->ContextValue("customfield") );
-				$users->Save(); 
+				$users->Save();
 				$message->addXmlnukeObject(new XmlnukeText($this->myWords->Value("CUSTOMFIELDUPDATED"), true ));
 				$exec = true;
-            } 
-            if ( $action == "removecustomvalue" ) 
-        	{  
-				$users->removePropertyValueFromUser( $uid, null,  $this->_context->ContextValue("customfield"));
-				$users->Save(); 
+            }
+            if ( $action == "removecustomvalue" )
+        	{
+				$users->removePropertyValueFromUser( $uid, $this->_context->ContextValue("customvalue"),  $this->_context->ContextValue("customfield"));
+				$users->Save();
 				$message->addXmlnukeObject(new XmlnukeText($this->myWords->Value("CUSTOMFIELDREMOVED"), true ));
 				$exec = true;
-            }		
-            
+            }
+
             if ($exec)
             {
 				$block = new XmlBlockCollection($this->myWords->Value("WORKINGAREA"), BlockPosition::Center);
@@ -197,18 +197,18 @@ class ManageUsers extends NewBaseAdminModule
 		// LIST USERS
 		// --------------------------------------
 		$block = new XmlBlockCollection($this->myWords->Value("USERS"), BlockPosition::Center);
-		
+
 		$itf = new IteratorFilter();
 		if (!$this->isUserAdmin())
 		{
 			$itf->addRelation("admin", Relation::NotEqual, "yes");
 		}
-		if ($this->_context->ContextValue("pesquser") != "") 
-		{ 
+		if ($this->_context->ContextValue("pesquser") != "")
+		{
 			$itf->startGroup();
 			$itf->addRelationOr($users->_UserTable->Username, Relation::Contains, $this->_context->ContextValue("pesquser"));
-                        $itf->addRelationOr($users->_UserTable->Name, Relation::Contains, $this->_context->ContextValue("pesquser")); 
-                        $itf->addRelationOr($users->_UserTable->Email, Relation::Contains, $this->_context->ContextValue("pesquser")); 
+                        $itf->addRelationOr($users->_UserTable->Name, Relation::Contains, $this->_context->ContextValue("pesquser"));
+                        $itf->addRelationOr($users->_UserTable->Email, Relation::Contains, $this->_context->ContextValue("pesquser"));
 			$itf->endGroup();
 		}
 		$it = $users->getIterator($itf);
@@ -223,14 +223,14 @@ class ManageUsers extends NewBaseAdminModule
                 $boxButton->addSubmit($this->myWords->Value("GOSEARCH"), "");
                 $formpesq->addXmlnukeObject($boxButton);
 		$block->addXmlnukeObject($formpesq);
-		
+
 		$editlist = new XmlEditList($this->_context, $this->myWords->Value("USERS"), $this->url, true, false, true, true);
 		$editlist->setDataSource($it);
 		$editlist->setPageSize(20, 0);
 		$editlist->setEnablePage(true);
-	
+
 		$field = new EditListField();
-		$field->fieldData = $users->_UserTable->Id; 
+		$field->fieldData = $users->_UserTable->Id;
 		$editlist->addEditListField($field);
 
 		$field = new EditListField();
@@ -265,14 +265,14 @@ class ManageUsers extends NewBaseAdminModule
 		{
 			$this->NewUser();
 		}
-		else 
+		else
 		{
 			$this->EditUser($users, $uid);
 		}
-		
+
 		return $this->defaultXmlnukeDocument->generatePage();
 	}
-	
+
 	public function NewUser()
 	{
 		$block = new XmlBlockCollection($this->myWords->Value("NEWUSER"), BlockPosition::Center );
@@ -305,11 +305,11 @@ class ManageUsers extends NewBaseAdminModule
 		$check = new XmlInputCheck($this->myWords->Value("FORMADMINISTRADOR"), "admin", "yes");
 		$check->setReadOnly(!$this->isUserAdmin());
 		$form->addXmlnukeObject($check);
-		
+
 		$boxButton = new XmlInputButtons();
 		$boxButton->addSubmit($this->myWords->Value("TXT_CREATE"), "");
 		$form->addXmlnukeObject($boxButton);
-		
+
 		$block->addXmlnukeObject($form);
 		$this->defaultXmlnukeDocument->addXmlnukeObject($block);
 	}
@@ -318,7 +318,7 @@ class ManageUsers extends NewBaseAdminModule
 	{
 		$user = $users->getUserId($uid);
 		$block = new XmlBlockCollection($this->myWords->Value("EDITUSER") . $user->getField($users->_UserTable->Username), BlockPosition::Center );
-		
+
 		if  (!$this->isUserAdmin() && ($user->getField($users->_UserTable->Admin)=="yes") )
 		{
 			$p = new XmlParagraphCollection();
@@ -327,10 +327,10 @@ class ManageUsers extends NewBaseAdminModule
 	        $this->defaultXmlnukeDocument->addXmlnukeObject($block);
 	        return;
 		}
-		
+
 		$tabview = new XmlnukeTabView();
 		$block->addXmlnukeObject($tabview);
-		
+
 		// -------------------------------------------------------------------
 		// EDITAR USUÁRIO
 		$form =  new XmlFormCollection($this->_context, $this->url, "");
@@ -433,7 +433,7 @@ class ManageUsers extends NewBaseAdminModule
 		$boxButton->addSubmit($this->myWords->Value("TXT_ADD"), "");
 		$form->addXmlnukeObject($boxButton);
 		$para->addXmlnukeObject($form);
-		$tabview->addTabItem($this->myWords->Value("TABMANSITE"), $para);
+		$tabview->addTabItem($this->myWords->Value("TABMANSITE"), $para, (($this->_action == "addsite")||($this->_action == "removesite")));
 
 
 
@@ -470,7 +470,7 @@ class ManageUsers extends NewBaseAdminModule
 //		$textbox->setDataType(INPUTTYPE::TEXT);
 //		$textbox->setRequired(true);
 //		$form->addXmlnukeObject($textbox);
-		
+
 //		$form->addXmlnukeObject(new XmlInputLabelField("DEFAULT ROLES", "EDITOR"));
 //		$form->addXmlnukeObject(new XmlInputLabelField("", "DESIGNER"));
 //		$form->addXmlnukeObject(new XmlInputLabelField("", "MANAGER"));
@@ -481,64 +481,69 @@ class ManageUsers extends NewBaseAdminModule
 		$boxButton->addSubmit($this->myWords->Value("TXT_ADD"), "");
 		$form->addXmlnukeObject($boxButton);
 		$para->addXmlnukeObject($form);
-		$tabview->addTabItem($this->myWords->Value("TABMANROLE"), $para);
+		$tabview->addTabItem($this->myWords->Value("TABMANROLE"), $para, (($this->_action == "addrole")||($this->_action == "removerole")));
 
         //------------------------------------------------------------------------
         // CUSTOM FIELDS
         //------------------------------------------------------------------------
-        
-		$block2 = new XmlnukeSpanCollection(); 
-		
+
+		$block2 = new XmlnukeSpanCollection();
+
 		$table = new XmlTableCollection();
 		$row = new XmlTableRowCollection();
 
 		$col = new XmlTableColumnCollection();
-        $col->addXmlnukeObject(new XmlnukeText($this->myWords->Value("ACTION"), true)); 
-        $row->addXmlnukeObject($col);
-        
-		$col = new XmlTableColumnCollection();
-        $col->addXmlnukeObject(new XmlnukeText($this->myWords->Value("GRIDFIELD"), true)); 
+        $col->addXmlnukeObject(new XmlnukeText($this->myWords->Value("ACTION"), true));
         $row->addXmlnukeObject($col);
 
 		$col = new XmlTableColumnCollection();
-        $col->addXmlnukeObject(new XmlnukeText($this->myWords->Value("GRIDVALUE"), true)); 
+        $col->addXmlnukeObject(new XmlnukeText($this->myWords->Value("GRIDFIELD"), true));
+        $row->addXmlnukeObject($col);
+
+		$col = new XmlTableColumnCollection();
+        $col->addXmlnukeObject(new XmlnukeText($this->myWords->Value("GRIDVALUE"), true));
         $row->addXmlnukeObject($col);
         $table->addXmlnukeObject($row);
 
 		$fields = $user->getFieldNames();
 		$fieldsLength = count($fields);
 
-        foreach( $fields as $fldValue=>$fldName) 
-        {      
-			$row = new XmlTableRowCollection();
-			
-			$col = new XmlTableColumnCollection();
-			if (($fldName != $users->_UserTable->Name) && ($fldName != $users->_UserTable->Username) && ($fldName != $users->_UserTable->Email) && ($fldName != $users->_UserTable->Password) && ($fldName != $users->_UserTable->Created) && ($fldName != $users->_UserTable->Admin) && ($fldName != $users->_UserTable->Id)) 
-			{ 
-				$href = new XmlAnchorCollection("admin:ManageUsers?action=removecustomvalue&customfield=" . $fldName . "&valueid=".$uid, "");
-				$href->addXmlnukeObject(new XmlnukeText($this->myWords->Value("TXT_REMOVE")));
-				$col->addXmlnukeObject($href); 
-			} 
-			else 
-			{ 
-				$col->addXmlnukeObject(new XmlnukeText("---")); 
-			} 
-			$row->addXmlnukeObject($col);
+        foreach( $fields as $fldValue=>$fldName)
+        {
+        	$values = $user->getFieldArray($fldName);
 
-			$col = new XmlTableColumnCollection();
-			$col->addXmlnukeObject(new XmlnukeText($fldName)); 
-			$row->addXmlnukeObject($col);
+        	foreach ($values as $value)
+        	{
+				$row = new XmlTableRowCollection();
 
-			$col = new XmlTableColumnCollection();
-			$col->addXmlnukeObject(new XmlnukeText($user->getField($fldName))); 
-			$row->addXmlnukeObject($col);
-			$table->addXmlnukeObject($row);
-        }  
+				$col = new XmlTableColumnCollection();
+				if (($fldName != $users->_UserTable->Name) && ($fldName != $users->_UserTable->Username) && ($fldName != $users->_UserTable->Email) && ($fldName != $users->_UserTable->Password) && ($fldName != $users->_UserTable->Created) && ($fldName != $users->_UserTable->Admin) && ($fldName != $users->_UserTable->Id))
+				{
+					$href = new XmlAnchorCollection("admin:ManageUsers?action=removecustomvalue&customfield=" . $fldName . "&valueid=".$uid."&customvalue=" . urlencode($value), "");
+					$href->addXmlnukeObject(new XmlnukeText($this->myWords->Value("TXT_REMOVE")));
+					$col->addXmlnukeObject($href);
+				}
+				else
+				{
+					$col->addXmlnukeObject(new XmlnukeText("---"));
+				}
+				$row->addXmlnukeObject($col);
+
+				$col = new XmlTableColumnCollection();
+				$col->addXmlnukeObject(new XmlnukeText($fldName));
+				$row->addXmlnukeObject($col);
+
+				$col = new XmlTableColumnCollection();
+				$col->addXmlnukeObject(new XmlnukeText($value));
+				$row->addXmlnukeObject($col);
+				$table->addXmlnukeObject($row);
+        	}
+        }
 
 		$paragraph = new XmlParagraphCollection();
 		$paragraph->addXmlnukeObject($table);
         $block2->addXmlnukeObject($paragraph);
-        
+
 		$table = new XmlTableCollection();
 		$row = new XmlTableRowCollection();
 
@@ -563,14 +568,14 @@ class ManageUsers extends NewBaseAdminModule
 		$boxButton->addSubmit($this->myWords->Value("TXT_ADD"), "");
 		$form->addXmlnukeObject($boxButton);
 		$col->addXmlnukeObject($form);
-		
+
 		$row->addXmlnukeObject($col);
 		$table->addXmlnukeObject($row);
 		$paragraph = new XmlParagraphCollection();
 		$paragraph->addXmlnukeObject($table);
         $block2->addXmlnukeObject($paragraph);
 
-        $tabview->addTabItem($this->myWords->Value("TABCUSTOMVALUE"), $block2);
+        $tabview->addTabItem($this->myWords->Value("TABCUSTOMVALUE"), $block2, (($this->_action == "addcustomvalue")||($this->_action == "removecustomvalue")));
         $this->defaultXmlnukeDocument->addXmlnukeObject($block);
 	}
 
@@ -591,7 +596,7 @@ class ManageUsers extends NewBaseAdminModule
 			if (sizeof($dataArrayRoles) > 0) {
 				foreach ($dataArrayRoles as $roles) {
 					$dataArray[$roles] = $roles;
-				}	
+				}
 			}
 		}
 		return $dataArray;

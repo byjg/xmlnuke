@@ -37,7 +37,9 @@ class SingleRow
 	 * @var DOMNode
 	 */
 	private $_node = null;
+
 	private $_row = null;
+	private $_originalRow = null;
 
 	/**
 	* SingleRow constructor
@@ -52,10 +54,11 @@ class SingleRow
 
 		if (!is_array($array))
 		{
-			throw new XMLNukeException("SingleRow expected an array");
+			throw new XMLNukeException("SingleRow construct expects an array");
 		}
 
 		$this->_row = $array;
+		$this->acceptChanges();
 	}
 
 	/**
@@ -77,7 +80,7 @@ class SingleRow
 		{
 			$this->_row[$name] = array($this->_row[$name], $value);
 		}
-		$this->_node = null;
+		$this->informChanges();
 	}
 	/**
 	*@param string $name - Field name
@@ -135,13 +138,12 @@ class SingleRow
 		if (!array_key_exists($name, $this->_row))
 		{
 			$this->AddField($name, $value);
-			$this->_node = null;
 		}
 		else
 		{
 			$this->_row[$name] = $value;
-			$this->_node = null;
 		}
+		$this->informChanges();
 	}
 
 	/**
@@ -153,7 +155,7 @@ class SingleRow
 		if (array_key_exists($name, $this->_row))
 		{
 			unset($this->_row[$name]);
-			$this->_node = null;
+			$this->informChanges();
 		}
 	}
 
@@ -169,7 +171,7 @@ class SingleRow
 			if ($value == $result)
 			{
 				unset($this->_row[$name]);
-				$this->_node = null;
+				$this->informChanges();
 			}
 		}
 		else
@@ -179,7 +181,7 @@ class SingleRow
 				if ($result[$i] == $value)
 				{
 					unset($this->_row[$name][$i]);
-					$this->_node = null;
+					$this->informChanges();
 				}
 			}
 		}
@@ -200,7 +202,7 @@ class SingleRow
 			if ($oldvalue == $result)
 			{
 				$this->_row[$name] = $newvalue;
-				$this->_node = null;
+				$this->informChanges();
 			}
 		}
 		else
@@ -210,7 +212,7 @@ class SingleRow
 				if ($result[$i] == $oldvalue)
 				{
 					$this->_row[$name][$i] = $newvalue;
-					$this->_node = null;
+					$this->informChanges();
 				}
 			}
 		}
@@ -253,6 +255,46 @@ class SingleRow
 	public function getRawFormat()
 	{
 		return $this->_row;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getOriginalRawFormat()
+	{
+		return $this->_originalRow;
+	}
+
+	/**
+	 *
+	 * @return bool
+	 */
+	public function hasChanges()
+	{
+		return ($this->_row != $this->_originalRow);
+	}
+
+	/**
+	 *
+	 * @return bool
+	 */
+	public function acceptChanges()
+	{
+		$this->_originalRow = $this->_row;
+	}
+
+	/**
+	 *
+	 * @return bool
+	 */
+	public function rejectChanges()
+	{
+		$this->_row = $this->_originalRow;
+	}
+
+	protected function informChanges()
+	{
+		$this->_node = null;
 	}
 }
 ?>

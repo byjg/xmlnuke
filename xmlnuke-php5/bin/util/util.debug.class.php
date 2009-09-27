@@ -32,7 +32,7 @@
 * Generic functions to help you in debug process
 */
 class Debug
-{	
+{
 	/**
 	 * Assist your to debug vars. Accept n vars parameters
 	 * Included Debug on ARRAY an IIterator Object
@@ -47,7 +47,7 @@ class Debug
 		{
 			return;
 		}
-		
+
 		for ($i = 0, $numArgs = func_num_args(); $i < $numArgs ; $i++)
 		{
 			echo "<b><font color='red'>Debug</font></b>: ";
@@ -56,7 +56,17 @@ class Debug
 			{
 				foreach ($var as $key=>$value)
 				{
-					echo "[<b>$key</b>] => $value <br>";
+					echo "[<b>$key</b>] => ";
+					if (is_object($value))
+					{
+						echo "{ ";
+						Debug::PrintValue($value);
+						echo " }<br/>";
+					}
+					else
+					{
+						echo "$value <br>";
+					}
 				}
 			}
 			elseif ($var instanceof SingleRow)
@@ -94,7 +104,7 @@ class Debug
 						{
 							break;
 						}
-						
+
 						if (is_null($arr))
 						{
 							$arr = $sr->getFieldNames();
@@ -124,7 +134,7 @@ class Debug
 				$filter = substr($filter, strpos($filter, "where") + 6);
 				echo "Filter = " . $filter . "<br>";
 				Debug::PrintValue($param);
-				
+
 			}
 			elseif ($var instanceof FilenameProcessor)
 			{
@@ -172,7 +182,7 @@ class Debug
 						if (!(strpos($met->getName(), "get")===false))
 						{
 							echo " ==> ";
-							try 
+							try
 							{
 								$method = new ReflectionMethod(get_class($var), $met->getName());
 								echo $method->invokeArgs($var, array());
@@ -181,13 +191,13 @@ class Debug
 							{
 								echo "Error: " . $ex->getMessage();
 							}
-							
+
 						}
 						echo "</li>";
 					}
-					
+
 					echo "</ul>";
-					
+
 				}
 			}
 			elseif (gettype($var) == "boolean")
@@ -201,13 +211,13 @@ class Debug
 			echo "<br>";
 		}
 	}
-	
+
 	public static function GetBackTrace()
 	{
 		$raw = 	debug_backtrace();
-		
+
         $output="";
-       
+
         $i = sizeof($raw) - 1;
         foreach($raw as $entry)
         {
@@ -217,13 +227,13 @@ class Debug
 				$output.="File: ".$entry['file']." (Line: ".$entry['line'].")\n";
 				$output.="    Function: ".$entry['function']." ";
 				$args = array();
-				foreach ($entry['args'] as $arg) 
+				foreach ($entry['args'] as $arg)
 				{
 					if (is_object($arg))
 					{
 						$args[] = "object [" . get_class($arg) . "]";
 					}
-					else 
+					else
 					{
 						$args[] = "\"" . $arg . "\"";
 					}
@@ -233,10 +243,10 @@ class Debug
         }
 
         $output .= "[0] {main}";
-        return $output; 		
+        return $output;
 	}
-	
-	
+
+
 	/**
 	 * @param string $module
 	 * @param exception $error

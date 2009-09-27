@@ -41,19 +41,19 @@ class WebRequest
 	protected $_referer;
 	protected $_header = false;
 	protected $_followLocation = true;
-	
+
 	const POST = "POST";
 	const PUT = "PUT";
 	const GET = "GET";
 	const DELETE = "DELETE";
-	
+
 	public function __construct($url)
 	{
 		$this->_url = $url;
 	}
-	
+
 	/**
-	 * Defines Basic credentials for access the service. 
+	 * Defines Basic credentials for access the service.
 	 * @param $username
 	 * @param $password
 	 * @return unknown_type
@@ -69,7 +69,7 @@ class WebRequest
 		return $this->_referer;
 	}
 	/**
-	 * 
+	 *
 	 * @param string $value
 	 * @return unknown_type
 	 */
@@ -77,13 +77,13 @@ class WebRequest
 	{
 		$this->_referer = $value;
 	}
-	
+
 	public function getOutputHeader()
 	{
 		return $this->_header;
 	}
 	/**
-	 * 
+	 *
 	 * @param bool $value
 	 * @return unknown_type
 	 */
@@ -91,13 +91,13 @@ class WebRequest
 	{
 		$this->_header = $value;
 	}
-	
+
 	public function getFollowLocation()
 	{
 		return $this->_followLocation;
 	}
 	/**
-	 * 
+	 *
 	 * @param bool $value
 	 * @return unknown_type
 	 */
@@ -105,9 +105,9 @@ class WebRequest
 	{
 		$this->_followLocation = $value;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @return SoapClient
 	 */
 	protected function getSoapClient()
@@ -123,18 +123,18 @@ class WebRequest
 				)
 			);
 		}
-		
+
 		return $this->_soapClass;
 	}
-	
+
 	/**
 	 * Call a Soap client.
-	 * 
+	 *
 	 * For example:
-	 * 
+	 *
 	 * $webreq = new WebRequest("http://www.byjg.com.br/webservice.php/ws/cep");
 	 * $result = $webreq->Soap("obterCep", new array("cep", "11111233"));
-	 * 
+	 *
 	 * @param string $method
 	 * @param array $params
 	 * @return object
@@ -153,7 +153,7 @@ class WebRequest
 		{
 			$soapParams = null;
 		}
-		
+
 		// Chamando método do webservice
 		$result = $this->getSoapClient()->__call(
 			$method,
@@ -164,18 +164,18 @@ class WebRequest
             	"soapaction" => "urn:xmethods-delayed-quotes#getQuote"
         	)
 		);
-	
+
 		return $result;
 	}
-	
-	
+
+
 	protected function CurlWrapper($method, $fields = null, $content_type = null, $data = null)
 	{
 		$curl = curl_init();
-		curl_setopt($curl, CURLOPT_URL, $this->_url); 
+		curl_setopt($curl, CURLOPT_URL, $this->_url);
 		curl_setopt($curl, CURLOPT_HEADER, $this->_header);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)");		
+		curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)");
 		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, $this->_followLocation);
 		# sometimes we need this for https to work
 		//curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, false);
@@ -196,18 +196,18 @@ class WebRequest
 		if (is_array($fields) && (sizeof($fields) > 0))
 		{
 			$fields_string = "";
-			foreach($fields as $key=>$value) 
-			{ 
-				$fields_string .= ($fields_string != "" ? "&" : "") . $key.'='.$value; 
+			foreach($fields as $key=>$value)
+			{
+				$fields_string .= ($fields_string != "" ? "&" : "") . $key.'='.$value;
 			}
 		}
 		// Check if pass file
 		elseif ($content_type != null)
 		{
 			curl_setopt($curl, CURLOPT_HTTPHEADER, Array("Content-Type: $content_type"));
-			$fields_string = $data; 
+			$fields_string = $data;
 		}
-		
+
 		// Set the proper method
 		switch($method)
 		{
@@ -215,40 +215,40 @@ class WebRequest
 				curl_setopt($curl, CURLOPT_POST, true);
 				curl_setopt($curl, CURLOPT_POSTFIELDS, $fields_string);
 				break;
-		
+
 			case WebRequest::PUT:
 				curl_setopt($curl, CURLOPT_PUT, true);
 				curl_setopt($curl, CURLOPT_POSTFIELDS, $fields_string);
 				break;
-		
+
 			case WebRequest::DELETE:
 				curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
 				if ($fields_string != "")
 				{
 					curl_setopt($curl, CURLOPT_URL, $this->_url . (strpos($this->_url, "?") === false ? "?" : "&") . $fields_string);
-				} 
+				}
 				break;
-				
+
 			case WebRequest::GET:
 				if ($fields_string != "")
 				{
 					curl_setopt($curl, CURLOPT_URL, $this->_url . (strpos($this->_url, "?") === false ? "?" : "&") . $fields_string);
-				} 
+				}
 				break;
 		}
-		
+
 		$result = curl_exec($curl);
 		if ($result === false)
 		{
-			throw new Exception("CURL - " . curl_error($curl));			
+			throw new Exception("CURL - " . curl_error($curl));
 		}
 		else
 		{
 			return $result;
 		}
-	} 
+	}
 
-	
+
 	/**
 	 * Make a REST Get method call
 	 * @param array $params
@@ -256,7 +256,7 @@ class WebRequest
 	 */
 	public function Get($params = null)
 	{
-		return $this->CurlWrapper(WebRequest::GET, $params); 
+		return $this->CurlWrapper(WebRequest::GET, $params);
 	}
 
 	/**
@@ -278,7 +278,7 @@ class WebRequest
 	{
 		return $this->CurlWrapper(WebRequest::POST, null, $content_type, $data);
 	}
-	
+
 	/**
 	 * Make a REST PUT method call with parameters
 	 * @param array $params
@@ -298,7 +298,7 @@ class WebRequest
 	{
 		return $this->CurlWrapper(WebRequest::PUT, null, $content_type, $data);
 	}
-	
+
 	/**
 	 * Make a REST DELETE method call with parameters
 	 * @param array $params
@@ -306,9 +306,9 @@ class WebRequest
 	 */
 	public function Delete($params = null)
 	{
-		return $this->CurlWrapper(WebRequest::DELETE, $params); 
+		return $this->CurlWrapper(WebRequest::DELETE, $params);
 	}
-	
+
 }
 
 

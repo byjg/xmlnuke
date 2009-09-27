@@ -308,7 +308,7 @@ abstract class UsersBase implements IUsersBase
 			}
 			else
 			{
-				if (count($nodes))
+				if (count($nodes) == 0)
 				{
 					return null;
 				}

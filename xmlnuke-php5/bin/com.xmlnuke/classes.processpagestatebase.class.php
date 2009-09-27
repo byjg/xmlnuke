@@ -6,25 +6,25 @@
  *  XMLNuke: A Web Development Framework based on XML.
  *
  *  Main Specification: Joao Gilberto Magalhaes, joao at byjg dot com
- * 
+ *
  *  This file is part of XMLNuke project. Visit http://www.xmlnuke.com
  *  for more information.
- *  
+ *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
  *  as published by the Free Software Foundation; either version 2
  *  of the License, or (at your option) any later version.
- *  
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
- *  
+ *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
- *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
+ *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
 /**
@@ -123,7 +123,7 @@ class ProcessPageField
 	 * @var IEditListFormatter
 	 */
 	public $saveDatabaseFormatter;
-	
+
 	public function ProcessPageField()
 	{
 		$this->newColumn = true;
@@ -141,22 +141,22 @@ class ProcessPageFields
 	*@var Array
 	*/
 	protected $fields;
-		
+
 	public function ProcessPageFields()
 	{
 		$this->fields = array();
 	}
-		
+
 	public function addProcessPageField($p)
 	{
 		$this->fields[] = $p;
 	}
-		
+
 	public function getProcessPageFields()
 	{
 		return new ArrayObject($this->fields);
 	}
-	
+
 	/**
 	 * Factory to create ProcessPageField Objects
 	 *
@@ -184,8 +184,8 @@ class ProcessPageFields
 		$fieldPage->editable = true;
 		$fieldPage->required = $required;
 		return $fieldPage;
-	}	
-	
+	}
+
 	/**
 	 * Factory to create ProcessPageField Objects
 	 *
@@ -199,7 +199,7 @@ class ProcessPageFields
 	public static function FactoryMinimal($name, $caption, $maxLength, $visible, $required)
 	{
 		return ProcessPageFields::Factory($name, $caption, INPUTTYPE::TEXT, XmlInputObjectType::TEXTBOX, $maxLength, $maxLength, $visible, $required);
-	}	
+	}
 }
 
 
@@ -293,7 +293,7 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 	*@var array
 	*/
 	protected $_parameter;
-	
+
 	/**
 	 * @var char
 	 */
@@ -306,7 +306,7 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 	 * @var LanguageCollection
 	 */
 	protected $_lang;
-	
+
 	/**
 	*@desc Constructor
 	*@param Context $context XMLNuke context object
@@ -314,7 +314,7 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 	*@param string header Simple $header
 	*@param string module Module will be process this request-> Usually is the same $module instantiate the ProcessPageStateDB
 	*@param array $buttons Custom $buttons in View/Select mode
-	*@return 
+	*@return
 	*/
 	public function ProcessPageStateBase($context, $fields, $header, $module, $buttons)
 	{
@@ -323,14 +323,14 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 		$this->_buttons = $buttons;
 		$this->_header = $header;
 		$this->_module = $module;
-		
+
 		$this->_new = true;
 		$this->_view = true;
 		$this->_delete = true;
 		$this->_edit = true;
-		
+
 		$this->_currentAction = $this->_context->ContextValue("acao");
-		
+
 		for($i=0, $fieldsLength = sizeof($this->_fields); $i<$fieldsLength; $i++)
 		{
 			if ($this->_fields[$i]->key)
@@ -338,19 +338,19 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 				$this->_keyIndex[] = $i;
 			}
 		}
-		
+
 		$this->_parameter = array();
 		//$this->_filter = $this->_context->ContextValue("filter"); //encoded
 		//$this->_sort = $this->_context->ContextValue("sort"); // encoded
 		$this->_valueId = $this->_context->ContextValue("valueid");
 		$this->_curPage = $this->_context->ContextValue("curpage");
 		$this->_qtdRows = $this->_context->ContextValue("offset");
-		
+
 		$this->_decimalSeparator = $this->_context->Language()->getDecimalPoint();
 		$this->_dateFormat = $this->_context->Language()->getDateFormat();
 		$this->_lang = LanguageFactory::GetLanguageCollection($context, LanguageFileTypes::OBJECT, __FILE__);
 	}
-	
+
 	/**
 	*@desc set page size
 	*@param int $qtdRows
@@ -381,32 +381,32 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 		$this->_delete = $delete;
 		$this->_edit = $edit;
 	}
-	
+
 	/**
-	*@desc 
-	*@param 
+	*@desc
+	*@param
 	*@return IIterator
 	*/
 	public function getAllRecords(){}
-	
-	
+
+
 	/**
-	*@desc 
-	*@param 
+	*@desc
+	*@param
 	*@return SingleRow
 	*/
 	public function getCurrentRecord(){}
 
 
 	/**
-	*@desc 
+	*@desc
 	*@return IXmlnukeDocumentObject
 	*/
 	public function updateRecord(){}
-	
+
 
 	/**
-	*@desc 
+	*@desc
 	*@param string $filter
 	*@return void
 	*/
@@ -414,7 +414,7 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 	{
 		$this->_filter = $filter;
 	}
-	
+
 	/**
 	 * Enter description here...
 	 *
@@ -424,9 +424,9 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 	{
 		return $this->_filter;
 	}
-	
+
 	/**
-	*@desc 
+	*@desc
 	*@param string $sort
 	*@return void
 	*/
@@ -434,7 +434,7 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 	{
 		$this->_sort = $sort;
 	}
-	
+
 	/**
 	 * Enter description here...
 	 *
@@ -444,7 +444,7 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 	{
 		return $this->_sort;
 	}
-	
+
 	/**
 	 * Enter description here...
 	 *
@@ -456,10 +456,10 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 		$this->_decimalSeparator = $decimalSeparator;
 		$this->_dateFormat = $dateFormat;
 	}
-		
+
 	/**
 	 * Adds extra information to process page. This information will be persisted during the requests.
-	 * 
+	 *
 	 * @param string $name
 	 * @param string $value
 	 * @return void
@@ -468,9 +468,9 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 	{
 		$this->_parameter[$name] = $value;
 	}
-	
+
 	/**
-	*@desc 
+	*@desc
 	*@param string $action
 	*@return void
 	*/
@@ -478,9 +478,9 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 	{
 		$this->_currentAction = $action;
 	}
-	
+
 	/**
-	*@desc 
+	*@desc
 	*@param string $valueId
 	*@return void
 	*/
@@ -488,10 +488,10 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 	{
 		$this->_valueId = $valueId;
 	}
-	
+
 	/**
-	*@desc 
-	*@param 
+	*@desc
+	*@param
 	*@return IXmlnukeDocumentObject
 	*/
 	public function validateUpdate()
@@ -500,17 +500,17 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 		{
 			return null;
 		}
-		
+
 //		NameValueCollection $nvc = new NameValueCollection();
 		$nvc = array();
-		
+
 		for($i=0, $fieldLength = sizeof($this->_fields); $i<$fieldLength; $i++)
 		{
 //			ProcessPageFields $field
 			$field = $this->_fields[$i];
 			$curValue = $this->_context->ContextValue($this->_fields[$i]->fieldName);
-			
-			if ($field->editable) 
+
+			if ($field->editable)
 			{
 				if (($curValue == "") && ($field->required))
 				{
@@ -526,7 +526,7 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 				}
 			}
 		}
-		
+
 		if (sizeof($nvc)!=0)
 		{
 //			XmlParagraphCollection $p
@@ -543,10 +543,10 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 			return null;
 		}
 	}
-	
+
 	/**
-	*@desc 
-	*@param 
+	*@desc
+	*@param
 	*@return IXmlnukeDocumentObject
 	*/
 	protected function listAllRecords()
@@ -603,7 +603,7 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 			$cb->multiple = MultipleSelectType::ONLYONE;
 			$editList->setCustomButton($cb);
 		}
-		
+
 		if ($this->_buttons != null)
 		{
 			for($i=0, $buttonsLength = sizeof($this->_buttons); $i<$buttonsLength ;$i++)
@@ -632,7 +632,7 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 		$field->formatter = new ProcessPageStateBaseFormatterKey();
 		$field->fieldType = EditListFieldType::FORMATTER;
 		$editList->addEditListField($field);
-		
+
 		for($i=0, $fieldLength = sizeof($this->_fields); $i<$fieldLength; $i++, $current++)
 		{
 			if ($this->_fields[$i]->visibleInList)
@@ -660,18 +660,18 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 					$field->formatter = $this->_fields[$i]->editListFormatter;
 					$field->fieldType = EditListFieldType::FORMATTER;
 				}
-				
+
 				$field = $this->editListFieldCustomize($field, $this->_fields[$i]);
-				
+
 				$editList->addEditListField($field);
 			}
 		}
 		return $editList;
 	}
 
-	
+
 	/**
-	 * 
+	 *
 	 * @param EditListField $editListField
 	 * @param ProcessPageField $field
 	 * @return EditListField
@@ -680,10 +680,10 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 	{
 		return $editListField;
 	}
-	
-	
+
+
 	/**
-	*@desc 
+	*@desc
 	*@param ProcessPageFields $field
 	*@return bool
 	*/
@@ -694,12 +694,12 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 		{
 			$formReadOnly = false;
 		}
-		
+
 		$fieldReadOnly = (!$field->editable);
-		
+
 		return ($formReadOnly || $fieldReadOnly || ($field->key && $this->_currentAction != self::ACTION_NEW));
 	}
-	
+
 	/**
 	 * Enter description here...
 	 *
@@ -721,22 +721,22 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 		{
 			$message = $this->_lang->Value("MSG_DELETE_SUCCESS");
 		}
-		else 
+		else
 		{
 			$message = $this->_lang->Value("MSG_NOCHANGE");
 		}
-		
+
 		$container = new XmlnukeUIAlert($this->_context, UIAlert::BoxInfo);
 		$container->setAutoHide(8000);
-		$container->addXmlnukeObject(new XmlnukeText($message, true, true, false)); 
-		
+		$container->addXmlnukeObject(new XmlnukeText($message, true, true, false));
+
 		return $container;
 	}
-	
-	
+
+
 	/**
-	*@desc 
-	*@param 
+	*@desc
+	*@param
 	*@return XmlFormCollection
 	*/
 	protected function showCurrentRecord()
@@ -757,12 +757,12 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 		{
 			$title = $this->_lang->Value("TITLE_VIEW", $this->_header);
 		}
-		
+
 //		XmlFormCollection $form
 		$form = new XmlFormCollection($this->_context, $this->_module, $title);
 		$form->setDecimalSeparator($this->_decimalSeparator);
 		$form->setDateFormat($this->_dateFormat);
-		
+
 		//$form->addXmlnukeObject(new XmlInputHidden("filter", $this->_filter));
 		//$form->addXmlnukeObject(new XmlInputHidden("sort", $this->_sort));
 		$form->addXmlnukeObject(new XmlInputHidden("curpage", $this->_curPage));
@@ -773,7 +773,7 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 		{
 			$form->addXmlnukeObject(new XmlInputHidden($key, $value));
 		}
-		
+
 //		SingleRow $sr
 		$sr = $this->getCurrentRecord();
 
@@ -791,7 +791,7 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 				{
 					$curValue = str_replace(".", $this->_decimalSeparator, $curValue);
 				}
-				
+
 				if ($this->_fields[$i]->editFormatter != null)
 				{
 					$curValue = $this->_fields[$i]->editFormatter->Format($sr, $this->_fields[$i]->fieldName, $curValue);
@@ -801,7 +801,7 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 			{
 				$curValue = $this->_fields[$i]->defaultValue;
 			}
-			
+
 			$form->addXmlnukeObject($this->renderField($this->_fields[$i], $curValue));
 		}
 //		XmlInputButtons $buttons
@@ -812,10 +812,10 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 		}
 		$buttons->addButton($this->_lang->Value("TXT_BACK"), "", "document.location='" . $this->redirProcessPage(true) . "'");
 		$form->addXmlnukeObject($buttons);
-		
+
 		return $form;
 	}
-	
+
 	/**
 	 * Format a date field from Database values
 	 * @param $curValue
@@ -830,11 +830,11 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 		catch (Exception $ex)
 		{
 			return "??/??/????";
-		}		
+		}
 	}
-	
+
 	/**
-	*@desc 
+	*@desc
 	*@param ProcessPageField $field
 	*@param string $curValue
 	*@return IXmlnukeDocumentObject
@@ -929,22 +929,22 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 			{
 				$ardt = explode(",", $curValue);
 				$ardt  = array_flip($ardt);
-				foreach ($ardt as $key=>$value) 
+				foreach ($ardt as $key=>$value)
 				{
 					$ardt[$key] = $field->arraySelectList[$key];
 				}
 			}
-			else 
+			else
 			{
 				$ardt = array();
 			}
 			$ards2 = new ArrayDataSet($ardt, "value");
-			
+
 			$duallist->setDataSource($ards->getIterator(), $ards2->getIterator());
-			
+
 			$label = new XmlInputLabelObjects("=>");
 			$label->addXmlnukeObject($duallist);
-			
+
 			return $label;
 		}
 		else
@@ -954,7 +954,7 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 			return $xlf;
 		}
 	}
-	
+
 	protected function redirProcessPage($full)
 	{
 		$url = new XmlnukeManageUrl(URLTYPE::MODULE, $this->_module);
@@ -968,16 +968,16 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 		{
 			$url->addParam($key, $value);
 		}
-		if ($full)
-		{
+		//if ($full)
+		//{
 			return $url->getUrlFull($this->_context);
-		}
-		else 
-		{
-			return $url->getUrl();
-		}
+		//}
+		//else
+		//{
+		//	return $url->getUrl();
+		//}
 	}
-	
+
 	/**
 	*@desc Contains specific instructions to generate all XML informations-> This method is processed only one time-> Usually is the last method processed->
 	*@param DOMNode $current DOMNode where the XML will be created->
@@ -997,7 +997,7 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 			$p->generateObject($current);
 			return;
 		}
-		
+
 		// Checkings!
 		if ($this->_context->ContextValue(self::PARAM_CANCEL) != "")
 		{
@@ -1026,7 +1026,7 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 			{
 				$this->_context->redirectUrl($this->redirProcessPage(false));
 			}
-			else 
+			else
 			{
 				$validateResult->generateObject($current);
 				if ($this->_currentAction != ProcessPageStateBase::ACTION_NEW_CONFIRM)
@@ -1042,17 +1042,17 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 		}
 		else if (($this->_currentAction == self::ACTION_NEW) || ($this->_currentAction == self::ACTION_VIEW) || ($this->_currentAction == self::ACTION_EDIT) || ($this->_currentAction == self::ACTION_DELETE))
 		{
-			
+
 			$this->showCurrentRecord()->generateObject($current);
 		}
 		else
 		{
 			$this->listAllRecords()->generateObject($current);
 		}
-		
+
 	}
 
-	
+
 }
 
 
@@ -1074,27 +1074,27 @@ class ProcessPageStateBaseFormatterKey implements IEditListFormatter
 class ProcessPageStateBaseFormatterDualList implements IEditListFormatter
 {
 	protected $_arraySource = array();
-	 
+
 	public function __construct($arraySource)
 	{
-		$this->_arraySource = $arraySource; 
+		$this->_arraySource = $arraySource;
 	}
-	
+
 	public function Format($row, $fieldname, $value)
 	{
 		if ($value != "")
 		{
 			$ardt = explode(",", $value);
 			$arResult = array();
-			foreach ($ardt as $key=>$value) 
+			foreach ($ardt as $key=>$value)
 			{
 				$arResult[] = $this->_arraySource[$value];
 			}
 			return implode(", ", $arResult);
 		}
-		else 
+		else
 		{
-			return "-";	
+			return "-";
 		}
 	}
 }

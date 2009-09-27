@@ -134,6 +134,11 @@ class IteratorFilter
 		return $sql;
 	}
 
+	/**
+	 *
+	 * @param $array
+	 * @return unknown_type
+	 */
 	public function match($array)
 	{
 		$returnArray = array();
@@ -149,6 +154,12 @@ class IteratorFilter
 		return $returnArray;
 	}
 
+	/**
+	 *
+	 * @param $type
+	 * @param $param
+	 * @return unknown_type
+	 */
 	private function generator($type, &$param)
 	{
 		$filter = "";
@@ -253,6 +264,14 @@ class IteratorFilter
 		return $result;
 	}
 
+	/**
+	 *
+	 * @param $name
+	 * @param $relation
+	 * @param $value
+	 * @param $param
+	 * @return unknown_type
+	 */
 	private function getStrSqlRelation($name, $relation, $value, &$param)
 	{
 		//$str = is_numeric($value)?"":"'";
@@ -319,6 +338,11 @@ class IteratorFilter
 	}
 
 
+	/**
+	 *
+	 * @param $array
+	 * @return unknown_type
+	 */
 	private function evalString($array)
 	{
 		$result = array();

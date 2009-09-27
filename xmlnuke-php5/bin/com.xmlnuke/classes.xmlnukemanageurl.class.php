@@ -48,7 +48,7 @@ class XmlnukeManageUrl
 	@var string
 	*/
 	protected $_urltype;
-	
+
 	/**
 	@var string
 	*/
@@ -57,11 +57,11 @@ class XmlnukeManageUrl
 	*@var array
 	*/
 	private $_parameters = array();
-	
+
 	/**
 	*@param URLTYPE $urltype
 	*@param string $target
-	*@desc XmlnukeManageUrl Constructor 
+	*@desc XmlnukeManageUrl Constructor
 	*If URLTYPE is MODULE $target must to be the Module name target
 	*If URLTYPE is ENGINE or ADMIN $target must to be NULL
 	*If URLTYPE is HTTP $target must to be the full URL whitout "http://"
@@ -75,14 +75,14 @@ class XmlnukeManageUrl
 		if (sizeof($arr)==2)
 		{
 			$params = explode("&", $arr[1]);
-			foreach ($params as $value) 
+			foreach ($params as $value)
 			{
 				$paramPart = explode("=", $value);
 				$this->addParam($paramPart[0], $paramPart[1]);
 			}
 		}
 	}
-	
+
 	/**
 	*@desc Add a param to url
 	*@param string $param
@@ -94,7 +94,7 @@ class XmlnukeManageUrl
 		$this->_parameters[$param] = $value;
 	}
 	/**
-	*@desc Build URL link based on xmlnuke model. 
+	*@desc Build URL link based on xmlnuke model.
 	*@desc Note: target must be the follow values:
 	*@desc  - site if URLTYPE is equal to ENGINE or ADMIN
 	*@desc  - module is URLTYPE is equal to MODULE
@@ -103,11 +103,11 @@ class XmlnukeManageUrl
 	*/
 	public function getUrl()
 	{
-		if ($this->_urltype == URLTYPE::ENGINE || $this->_urltype == URLTYPE::ADMINENGINE ) 
+		if ($this->_urltype == URLTYPE::ENGINE || $this->_urltype == URLTYPE::ADMINENGINE )
 		{
 			$url = $this->_urltype;
 		}
-		else 
+		else
 		{
 			$url = $this->_target;
 			if ($this->_urltype == URLTYPE::MODULE || $this->_urltype == URLTYPE::JAVASCRIPT || $this->_urltype == URLTYPE::ADMIN)
@@ -120,11 +120,11 @@ class XmlnukeManageUrl
 		}
 
 		$separator = (strpos($this->_target, "?")===false ? '?' : "&");
-		
+
 		$count = 0;
-		foreach ($this->_parameters as $param => $value) 
+		foreach ($this->_parameters as $param => $value)
 		{
-			if ($count > 0) 
+			if ($count > 0)
 			{
 				$separator = '&';
 			}
@@ -133,7 +133,7 @@ class XmlnukeManageUrl
 		}
 		return str_replace('&', '&amp;', $url);
 	}
-	
+
 	/**
 	*@param Context $context
 	*@return string
@@ -141,72 +141,27 @@ class XmlnukeManageUrl
 	*/
 	public function getUrlFull($context)
 	{
-		$parameter = "";
-		$separator = "";
-		$xml = "";
-		$xsl = "";
-		$site = "";
-		$lang = "";
-		$count = 0;
-		
-		foreach ($this->_parameters as $param => $value) 
+		$url = $this->_target;
+		$separator = "?";
+
+		foreach ($this->_parameters as $param => $value)
 		{
-			if ($count > 0) 
+			if ($separator == "?")
 			{
-				$separator = '&';
-			}
-			switch ($param) 
-			{
-				case 'xml':
-					$xml = $value;
-					break;
-				case 'xsl':
-					$xsl = $value;
-					break;
-				case 'site':
-					$site = $value;
-					break;
-				case 'lang':
-					$lang = $value;
-					break;
-				default:
-					$parameter .= $separator . $param . '=' . self::encodeParam($value);
-					$count++;
-					break;
-			}
-		}
-		
-		$fullurl = '';
-		
-		switch ($this->_urltype)
-		{
-			case URLTYPE::ENGINE :
-				$fullurl = $context->bindXmlnukeUrl($xml, $xsl, $site, $lang);
-			break;
-			case URLTYPE::ADMINENGINE :
-				$fullurl = $context->UrlXmlNukeAdmin() . (($parameter!="")?"?":"") . $parameter;
-			break;
-			case URLTYPE::ADMIN :
-			case URLTYPE::MODULE :
-				$fullurl = $context->bindModuleUrl($this->_target.(($parameter!="")?"&":"") . $parameter , $xsl, $site, $lang);
-			break;
-			default:
-				if (strpos($this->_target, $this->_urltype) === false)
+				if (strpos($url, "?") !== false)
 				{
-					$fullurl = $this->_urltype . $context->ContextValue("HTTP_HOST") . $this->_target;
+					$separator = '&';
 				}
-				else 
-				{
-					$fullurl = $this->_target;
-				}
-				$fullurl .= (strpos($fullurl,'?')===false?"?":"&") . $parameter;
-			break;
+			}
+
+			$url .= $separator . $param . "=" . urlencode($value);
 		}
 
-		return htmlentities($fullurl);
+		$processor = new ParamProcessor($context);
 
+		return htmlentities($processor->GetFullLink($url));
 	}
-	
+
 	/**
 	*@param string $param
 	*@return string
