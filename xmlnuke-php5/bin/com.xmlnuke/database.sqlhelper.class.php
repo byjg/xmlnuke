@@ -6,25 +6,25 @@
  *  XMLNuke: A Web Development Framework based on XML.
  *
  *  Main Specification and Implementation: Joao Gilberto Magalhaes, joao at byjg dot com
- * 
+ *
  *  This file is part of XMLNuke project. Visit http://www.xmlnuke.com
  *  for more information.
- *  
+ *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
  *  as published by the Free Software Foundation; either version 2
  *  of the License, or (at your option) any later version.
- *  
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
- *  
+ *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
- *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
+ *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
 class SQLType
@@ -53,15 +53,15 @@ class SQLHelper
 	 * @var DBDataSet
 	 */
 	protected $_db;
-	
+
 	protected $_fieldDeliLeft = " ";
 	protected $_fieldDeliRight = " ";
-	
+
 	public function __construct($db)
 	{
 		if (!($db instanceof DBDataSet) )
 		{
-			throw new Exception("Constructor must be an DBDataSet object");		
+			throw new Exception("Constructor must be an DBDataSet object");
 		}
 		$this->_db = $db;
 	}
@@ -78,11 +78,16 @@ class SQLHelper
 	 */
 	public function generateSQL($table, $fields, &$param, $type = SQLType::SQL_INSERT, $filter = "", $decimalpoint = ".")
 	{
+		if ($fields instanceof SingleRow)
+		{
+			return $this->generateSQL($table, $fields->getRawFormat(), &$param, $type, $filter, $decimalpoint);
+		}
+
 		if ((is_null($param)) || (!is_array($param)))
 		{
 			$param = array();
 		}
-	
+
 		if ($type == SQLType::SQL_UPDATE)
 		{
 			$sql = "";
@@ -113,7 +118,7 @@ class SQLHelper
 			}
 			$sql = "insert into $table ($campos) values ($valores)";
 		}
-		elseif ($type == SQLType::SQL_DELETE) 
+		elseif ($type == SQLType::SQL_DELETE)
 		{
 			if ($filter == "")
 			{
@@ -123,7 +128,7 @@ class SQLHelper
 		}
 		return $sql;
 	}
-	
+
 	/**
 	 * Generic Function
 	 *
@@ -135,8 +140,9 @@ class SQLHelper
 		$paramName = "[[" . $name . "]]";
 		if (!is_array($valores))
 		{
-			throw new Exception("The pair of values must be an array of TWO elements");
+			$valores = array(SQLFieldType::Text, $valores);
 		}
+
 		//$valores[1]= str_replace("'", "''", $valores[1]);
 		if ($valores[0]== SQLFieldType::Boolean)
 		{
@@ -144,7 +150,7 @@ class SQLHelper
 			{
 				$param[$name] = 'S';
 			}
-			else 
+			else
 			{
 				$param[$name] = 'N';
 			}
@@ -168,7 +174,7 @@ class SQLHelper
 			{
 				return "TO_DATE($paramName, 'YYYY-MM-DD')";
 			}
-			else 
+			else
 			{
 				return $paramName;
 			}
@@ -185,7 +191,7 @@ class SQLHelper
 			return $valores[1];
 		}
 	}
-	
+
 	/**
 	 * Used to create a FILTER in a SQL string.
 	 *
@@ -203,8 +209,8 @@ class SQLHelper
 		}
 		$sql = " $fieldName " . $relation . " " . $this->getValue($fieldName, $value, $param, $decimalpoint);
 	}
-	
-	
+
+
 	public function setFieldDelimeters($left, $right)
 	{
 		$this->_fieldDeliLeft = $left;
