@@ -262,7 +262,7 @@ abstract class UsersBase implements IUsersBase
 			else
 			{
 				$values = $user->getFieldArray(UserProperty::getPropertyNodeName($userProp));
-				return (in_array($propValue, $values));
+				return ($values != null ? in_array($propValue, $values) : false);
 			}
 		}
 		else

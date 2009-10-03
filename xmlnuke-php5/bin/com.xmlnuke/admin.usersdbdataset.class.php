@@ -32,7 +32,7 @@
   * Note that UsersAnyDataSet doesn't inherits from AnyDataSet, because some funcionalities
   * from AnyDataSet didn't used in this class.
   */
-class UsersDBDataSet extends UsersBase 
+class UsersDBDataSet extends UsersBase
 {
 	/**
 	* @var DBDataset
@@ -42,19 +42,19 @@ class UsersDBDataSet extends UsersBase
 	protected $_cacheUserWork = array();
     protected $_cacheUserOriginal = array();
 
-	
+
 	/**
 	  * DBDataSet constructor
 	  */
 	public function UsersDBDataSet($context, $dataBase)
 	{
-		$this->_context = $context;				
+		$this->_context = $context;
 		$this->_DB = new DBDataSet($dataBase, $context);
 		$this->configTableNames();
 	}
 
 	/**
-	 * 
+	 *
 	 * Save the current UsersAnyDataSet
 	 */
 	public function Save()
@@ -63,7 +63,7 @@ class UsersDBDataSet extends UsersBase
         {
             $srOri = $this->_cacheUserOriginal[$key];
             $srMod = $this->_cacheUserWork[$key];
-            
+
             $changed = false;
             foreach ($srOri->getFieldNames() as $keyfld=>$fieldname)
             {
@@ -83,8 +83,8 @@ class UsersDBDataSet extends UsersBase
 				$sql .= ", ".$this->_UserTable->Password." = [[".$this->_UserTable->Password."]] ";
 				$sql .= ", ".$this->_UserTable->Created." = [[".$this->_UserTable->Created."]] ";
 				$sql .= ", ".$this->_UserTable->Admin." = [[".$this->_UserTable->Admin."]] ";
-				$sql .= " WHERE ".$this->_UserTable->Id." = [[".$this->_UserTable->Id . "]]";	
-		
+				$sql .= " WHERE ".$this->_UserTable->Id." = [[".$this->_UserTable->Id . "]]";
+
 				$param = array();
 				$param[$this->_UserTable->Name] = $srMod->getField($this->_UserTable->Name);
 				$param[$this->_UserTable->Email] = $srMod->getField($this->_UserTable->Email);
@@ -93,14 +93,14 @@ class UsersDBDataSet extends UsersBase
 				$param[$this->_UserTable->Created] = $srMod->getField($this->_UserTable->Created);
 				$param[$this->_UserTable->Admin] = $srMod->getField($this->_UserTable->Admin);
 				$param[$this->_UserTable->Id] = $srMod->getField($this->_UserTable->Id);
-		
+
 				$this->_DB->execSQL($sql, $param);
 			}
         }
         $this->_cacheUserOriginal = array();
         $this->_cacheUserWork = array();
 	}
-	
+
 	/**
 	 * Add new user in database
 	 *
@@ -121,23 +121,23 @@ class UsersDBDataSet extends UsersBase
 			return false;
 		}
 		$sql = " INSERT INTO ".$this->_UserTable->Table." (".$this->_UserTable->Name.", ".$this->_UserTable->Email.", ".$this->_UserTable->Username .", ".$this->_UserTable->Password .", ".$this->_UserTable->Created ." ) ";
-		$sql .=" VALUES ([[".$this->_UserTable->Name."]], [[".$this->_UserTable->Email."]], [[".$this->_UserTable->Username ."]], [[".$this->_UserTable->Password ."]], [[".$this->_UserTable->Created ."]] ) ";			
-		
+		$sql .=" VALUES ([[".$this->_UserTable->Name."]], [[".$this->_UserTable->Email."]], [[".$this->_UserTable->Username ."]], [[".$this->_UserTable->Password ."]], [[".$this->_UserTable->Created ."]] ) ";
+
 		$param = array();
 		$param[$this->_UserTable->Name] = $name;
 		$param[$this->_UserTable->Email] = strtolower($email);
 		$param[$this->_UserTable->Username] = preg_replace('/(?:([\w])|([\W]))/', '\1', strtolower($userName));
 		$param[$this->_UserTable->Password] = $this->getSHAPassword($password);
 		$param[$this->_UserTable->Created] = date("Y-m-d H:i:s");
-			
+
 		$this->_DB->execSQL($sql, $param);
-				
+
 		return true;
 	}
 
 	/**
 	* Get the users database information based on a filter.
-	* 
+	*
 	* @param IteratorFilter $filter Filter to find user
 	* @return IIterator
 	**/
@@ -162,7 +162,7 @@ class UsersDBDataSet extends UsersBase
 	/**
 	* Get the user based on a filter.
 	* Return SingleRow if user was found; null, otherwise
-	* 
+	*
 	* @param IteratorFilter $filter Filter to find user
 	* @return SingleRow
 	**/
@@ -170,11 +170,11 @@ class UsersDBDataSet extends UsersBase
 	{
 		$it = $this->getIterator($filter);
 		if ($it->hasNext())
-		{				
+		{
 			// Get the Requested User
 			$sr = $it->moveNext();
 			$this->getCustomFields($sr);
-			
+
                 // Clone the User Properties
                 $anyOri = new AnyDataSet();
                 $anyOri->appendRow();
@@ -188,17 +188,17 @@ class UsersDBDataSet extends UsersBase
                 // Store and return to the user the proper single row.
                 $this->_cacheUserOriginal[$sr->getField($this->_UserTable->Id)] = $srOri;
                 $this->_cacheUserWork[$sr->getField($this->_UserTable->Id)] = $sr;
-                return $this->_cacheUserWork[$sr->getField($this->_UserTable->Id)];		
+                return $this->_cacheUserWork[$sr->getField($this->_UserTable->Id)];
 		}
 		else
-		{			
+		{
 			return null;
 		}
 	}
-	
+
 	/**
 	* Remove the user based on his user login.
-	* 
+	*
 	* @param string $login
 	* @return bool
 	* */
@@ -212,15 +212,15 @@ class UsersDBDataSet extends UsersBase
 		$this->_DB->execSQL(" DELETE FROM ".$this->_UserTable->Table." WHERE ".$this->_UserTable->Username ." = [[login]] ", $param);
 		return true;
 	}
-	
+
 	/**
 	* Remove the user based on his user id.
-	* 
+	*
 	* @param int $userId
 	* @return bool
 	* */
 	public function removeUserById( $userId )
-	{ 	
+	{
 		$param = array("id"=>$userId);
 		if ($this->_CustomTable->Table != "")
 		{
@@ -233,13 +233,13 @@ class UsersDBDataSet extends UsersBase
 	/**
 	* Add a specific site to user
 	* Return True or false
-	* 
+	*
 	* @param int $userId User Id
 	* @param string $propValue Property value with a site
 	* @param UserProperty $userProp Property name
 	* @return bool
 	* */
-	public function addPropertyValueToUser( $userId, $propValue, $userProp )	
+	public function addPropertyValueToUser( $userId, $propValue, $userProp )
 	{
 		//anydataset.SingleRow
 		$user = $this->getUserId( $userId );
@@ -254,8 +254,8 @@ class UsersDBDataSet extends UsersBase
 				$param["id"] = $userId;
 				$param["name"] = UserProperty::getPropertyNodeName($userProp);
 				$param["value"] = $propValue;
-				
-				$this->_DB->execSQL($sql, $param);	
+
+				$this->_DB->execSQL($sql, $param);
 			}
 			return true;
 		}
@@ -268,7 +268,7 @@ class UsersDBDataSet extends UsersBase
 	/**
 	* Remove a specific site from user
 	* Return True or false
-	* 
+	*
 	* @param int $userId User Id
 	* @param string $propValue Property value with a site
 	* @param UserProperty $userProp Property name
@@ -282,15 +282,15 @@ class UsersDBDataSet extends UsersBase
 			$param = array();
 			$param["id"] = $userId;
 			$param["name"] = UserProperty::getPropertyNodeName($userProp);
-			
+
 			$sql =  " DELETE FROM ".$this->_CustomTable->Table;
 			$sql .= " WHERE ".$this->_UserTable->Id ." = [[id]] AND ".$this->_CustomTable->Name." = [[name]] ";
 			if(!is_null($propValue))
 			{
-				$sql .= " AND ".$this->_CustomTable->Value." = [[value]] ";	
+				$sql .= " AND ".$this->_CustomTable->Value." = [[value]] ";
 				$param["value"] = $propValue;
 			}
-			
+
 			$this->_DB->execSQL($sql, $param);
 			return true;
 		}
@@ -303,7 +303,7 @@ class UsersDBDataSet extends UsersBase
 	/**
 	* Remove a specific site from all users
 	* Return True or false
-	* 
+	*
 	* @param string $propValue Property value with a site
 	* @param UserProperty $userProp Property name
 	* @return bool
@@ -313,11 +313,11 @@ class UsersDBDataSet extends UsersBase
 		$param = array();
 		$param["name"] = UserProperty::getPropertyNodeName($userProp);
 		$param["value"] = $propValue;
-		
+
 		$this->_DB->execSQL(" DELETE FROM ".$this->_CustomTable->Table." WHERE ".$this->_CustomTable->Name." = [[name]] AND ".$this->_CustomTable->Value." = [[value]] ", $param);
 	}
-	
-	
+
+
 	/**
 	 * Return all custom's fields from this user
 	 *
@@ -334,7 +334,7 @@ class UsersDBDataSet extends UsersBase
 		$userId = $userRow->getField($this->_UserTable->Id);
 		$sql = "select * from ".$this->_CustomTable->Table;
 		$sql .= " where ".$this->_UserTable->Id ." = [[" . $this->_UserTable->Id . "]]";
-		
+
 		$param = array($this->_UserTable->Id => $userId);
 		$it = $this->_DB->getIterator($sql, $param);
 		while ($it->hasNext())
@@ -343,7 +343,7 @@ class UsersDBDataSet extends UsersBase
 			$userRow->AddField($sr->getField($this->_CustomTable->Name), $sr->getField($this->_CustomTable->Value));
 		}
 	}
-	
+
 	/**
 	 * Get all roles
 	 *
@@ -355,19 +355,19 @@ class UsersDBDataSet extends UsersBase
 	{
 		$param = array();
 		$param["site"] = $site;
-		
-		$sql = "select * from " . $this->_RolesTable->Table . 
+
+		$sql = "select * from " . $this->_RolesTable->Table .
 			" where (" . $this->_RolesTable->Site . " = [[site]] or " . $this->_RolesTable->Site . " = '_all' ) ";
-			
+
 		if ($role != "")
 		{
 			$sql .= " and  " . $this->_RolesTable->Role . " = [[role]] ";
 			$param["role"] = $role;
 		}
-		
+
 		return $this->_DB->getIterator($sql, $param);
 	}
-	
+
 
 	/**
 	 * Add a public role into a site
@@ -382,15 +382,15 @@ class UsersDBDataSet extends UsersBase
 		{
 			throw new Exception("Role exists.");
 		}
-		
+
 		$sql = "insert into " . $this->_RolesTable->Table . "( " . $this->_RolesTable->Site . ", " . $this->_RolesTable->Role . " ) " .
 			" values ( [[site]], [[role]] )";
-		
+
 		$param = array("site"=>$site, "role"=>$role);
-		
+
 		$this->_DB->execSQL($sql, $param);
 	}
-	
+
 	/**
 	 * Edit a public role into a site. If new Value == null, remove the role)
 	 *
@@ -404,20 +404,20 @@ class UsersDBDataSet extends UsersBase
 		{
 			$this->addRolePublic($site, $newValue);
 		}
-		
-		$sql = "DELETE FROM " . $this->_RolesTable->Table . 
+
+		$sql = "DELETE FROM " . $this->_RolesTable->Table .
 			" WHERE " . $this->_RolesTable->Site . " = [[site]] " .
 			" AND " . $this->_RolesTable->Role . " = [[role]] ";
 
 		$param = array("site"=>$site, "role"=>$role);
-		
+
 		$this->_DB->execSQL($sql, $param);
 	}
 
 	protected function configTableNames()
 	{
 		parent::configTableNames();
-	
+
 		$this->_UserTable->Table = "xmlnuke_users";
 		$this->_CustomTable->Table = "xmlnuke_custom";
 		$this->_RolesTable->Table = "xmlnuke_roles";

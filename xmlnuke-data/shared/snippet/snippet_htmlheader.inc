@@ -3,13 +3,11 @@
 
 <!-- UI JavaScript Object -->
 <xsl:if test="//sortablelist or //calendar or //faq or //datetimebox or //uialert">
-	<link type="text/css" href="common/3rdparty/jquery/css/smoothness/jquery-ui-1.7.1.custom.css" rel="stylesheet" />	
+	<link type="text/css" href="common/3rdparty/jquery/css/smoothness/jquery-ui-1.7.1.custom.css" rel="stylesheet" />
 	<script type="text/javascript" src="common/3rdparty/jquery/js/jquery-ui-1.7.1.custom.min.js"></script>
 	<script type="text/javascript" src="common/3rdparty/jquery/js/jquery-ui-i18n.min.js"></script>
 	<style type="text/css">
-		#ui-datepicker-div { font-size: 0.8em; } 
-		#faqaccordion { font-size: 80%; } 
-		.ui-state-error, .ui-state-highlight { 
+		.ui-state-error, .ui-state-highlight {
 			margin: 0.5em;
 		}
 		.ui-state-error p, .ui-state-highlight p
@@ -17,8 +15,8 @@
 			margin: 0.8em 0 0.8em 0;
 			line-height: 1.2em;
 			padding-bottom: 0px;
-		} 
-	</style>	
+		}
+	</style>
 </xsl:if>
 
 <!-- Include specific JavaScript for AutoSuggest  -->
@@ -35,12 +33,12 @@
 			placeholder: 'ui-state-highlight',
 			cancel: '.ui-state-disabled',
 			//items: 'li:not(.ui-state-disabled)',
-			update: function(event, ui) 
-			{ 
+			update: function(event, ui)
+			{
 				var result = $(this).sortable('toArray');
 				var sName = "#" + $(this).attr("id").replace("_list", "");
 				var joined = result.join("|");
-				$(sName).attr("value", joined); 
+				$(sName).attr("value", joined);
 				//alert($(sName).attr("value"));
 			}
 		}).disableSelection();
@@ -63,9 +61,9 @@
 			autoOpen: false,
 			width: 600,
 			buttons: {
-				"Ok": function() { 
-					$(this).dialog("close"); 
-				} 
+				"Ok": function() {
+					$(this).dialog("close");
+				}
 			}
 		});
 		</xsl:for-each>
@@ -77,7 +75,7 @@
 <xsl:if test="//faq">
 	<script type="text/javascript">
 		$(function(){
-			$("#faqaccordion").accordion({ header: "h5" }); 
+			$("#faqaccordion").accordion({ header: "h5" });
 		});
 	</script>
 </xsl:if>
@@ -221,7 +219,7 @@
 		.selected {background-color: black};
 	</style>
 	<script language="javascript" src="common/3rdparty/jquery/plugin/imageselect.js"></script>
-	<script language="javascript"> 
+	<script language="javascript">
 	<xsl:for-each select="//select[@imagelist]">
 	$(function() {
 		$('#<xsl:value-of select="@name" />').imageSelect({
@@ -247,7 +245,7 @@
 	$(function() {
 		<xsl:for-each select="//uialert[contains(@type, 'dialog')]">
 		$("#<xsl:value-of select="@name" />_fire").click(function() { $("#<xsl:value-of select="@name" />").dialog('open'); });
-			
+
 		$("#<xsl:value-of select="@name" />").dialog({
 			<xsl:if test="contains(@type, 'modal')">modal: true,</xsl:if>
 			<xsl:if test="@openaction">autoOpen: false,</xsl:if>
@@ -265,7 +263,7 @@
 				setTimeout(function() {
 				     $("#<xsl:value-of select="@name" />").dialog("close");
 				}, <xsl:value-of select="@autohide" />);
-			},			
+			},
 			</xsl:if>
 			<xsl:if test="@width">width: <xsl:value-of select="@width" />,</xsl:if>
 			<xsl:if test="@height">height: <xsl:value-of select="@height" />,</xsl:if>

@@ -109,7 +109,11 @@ class SingleRow
 	public function getFieldArray($name)
 	{
 		$result = $this->_row[$name];
-		if (is_array($result))
+		if (($result == null) || ($result == ""))
+		{
+			return array();
+		}
+		elseif (is_array($result))
 		{
 			return $result;
 		}
