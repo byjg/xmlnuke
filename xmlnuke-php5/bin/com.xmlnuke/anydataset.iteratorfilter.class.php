@@ -185,7 +185,7 @@ class IteratorFilter
 			}
 			else
 			{
-				if ($previousValue != null)
+				if ( ($previousValue != null) and ($previousValue[0] != "(") )
 				{
 					$filter .= $value[0];
 				}
