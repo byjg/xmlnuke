@@ -40,24 +40,24 @@ class CustomConfig extends NewBaseAdminModule
 	{
 		return false;
 	}
-	public function getAccessLevel() 
-        { 
-                return AccessLevel::CurrentSiteAndRole; 
-        } 
+	public function getAccessLevel()
+        {
+                return AccessLevel::CurrentSiteAndRole;
+        }
 
-        public function  getRole() 
-        { 
-               return "MANAGER"; 
-        } 
+        public function  getRole()
+        {
+               return "MANAGER";
+        }
 
 
-	public function CreatePage() 
+	public function CreatePage()
 	{
-		parent::CreatePage(); 
-		
-		$myWords = $this->WordCollection(); 
-    
-            $this->setHelp($myWords->Value("DESCRIPTION")); 
+		parent::CreatePage();
+
+		$myWords = $this->WordCollection();
+
+            $this->setHelp($myWords->Value("DESCRIPTION"));
 
 		//this.addMenuOption("OK", "admin:ManageGroup?action=aqui");
 		$this->setTitlePage($myWords->Value("TITLE"));
@@ -78,16 +78,18 @@ class CustomConfig extends NewBaseAdminModule
 			$nv["xmlnuke.SMTPSERVER"] = $this->_context->ContextValue("smtpserver");
 			$nv["xmlnuke.LANGUAGESAVAILABLE"] = $this->createLanguageString();
 			$nv["xmlnuke.SHOWCOMPLETEERRORMESSAGES"] = $this->_context->ContextValue("showcompleterrormessages");
-			$nv["xmlnuke.LOGINMODULE"] = $this->_context->ContextValue("loginmodule");		
+			$nv["xmlnuke.LOGINMODULE"] = $this->_context->ContextValue("loginmodule");
 			$nv["xmlnuke.USERSDATABASE"] = $this->_context->ContextValue("usersdatabase");
 			$nv["xmlnuke.USERSCLASS"] = $this->_context->ContextValue("usersclass");
 			$nv["xmlnuke.DEBUG"] = $this->_context->ContextValue("txtdebug");
+    		$nv["xmlnuke.CAPTCHACHALLENGE"] = $this->_context->ContextValue("captchachallenge");
+			$nv["xmlnuke.CAPTCHALETTERS"] = $this->_context->ContextValue("captchaletters");
 			$nv["xmlnuke.ENABLEPARAMPROCESSOR"] = $this->_context->ContextValue("enableparamprocessor");
 			$nv["xmlnuke.USEFULLPARAMETER"] = $this->_context->ContextValue("usefullparameter");
 			$nv["xmlnuke.PHPLIBDIR"] = $this->_context->ContextValue("phplibdir"); # PHP SPECIFIC
 
 			$this->_context->updateCustomConfig($nv);
-			
+
 			$paragraph = new XmlParagraphCollection();
 			$paragraph->addXmlnukeObject(new XmlnukeText($myWords->Value("UPDATED"), true));
 			$block->addXmlnukeObject($paragraph);
@@ -96,9 +98,9 @@ class CustomConfig extends NewBaseAdminModule
 		$form = new XmlFormCollection($this->_context, "admin:CustomConfig", $myWords->Value("FORMTITLE"));
 		$form->setJSValidate(true);
 		$form->setFormName("form");
-		
+
 		$truefalse = array(""=>"Use Default", "true"=>"True", "false"=>"False");
-		
+
 		$form->addXmlnukeObject(new XmlInputHidden("action", "update"));
 		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.ROOTDIR", $this->_context->ContextValue("xmlnuke.ROOTDIR")));
 		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.USEABSOLUTEPATHSROOTDIR", $this->_context->ContextValue("xmlnuke.USEABSOLUTEPATHSROOTDIR")));
@@ -115,6 +117,8 @@ class CustomConfig extends NewBaseAdminModule
 		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "usersdatabase", "xmlnuke.USERSDATABASE", $this->getStringConnectionsArray(), $this->_context->ContextValue("xmlnuke.USERSDATABASE")));
 		$form->addXmlnukeObject(new XmlInputTextBox("xmlnuke.USERSCLASS", "usersclass", $this->_context->ContextValue("xmlnuke.USERSCLASS"), 30));
 		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "txtdebug", "xmlnuke.DEBUG", $truefalse, $this->getStringBool($this->_context->ContextValue("xmlnuke.DEBUG"))));
+		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "captchachallenge", "xmlnuke.CAPTCHACHALLENGE", array("easy"=>"Easy", "hard"=>"Hard"), $this->_context->ContextValue("xmlnuke.CAPTCHACHALLENGE")));
+		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "captchaletters", "xmlnuke.CAPTCHALETTERS", array("5"=>"5", "6"=>"6", "7"=>"7", "8"=>"8", "9"=>"9", "10"=>"10"), $this->_context->ContextValue("xmlnuke.CAPTCHALETTERS")));
 		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "enableparamprocessor", "xmlnuke.ENABLEPARAMPROCESSOR", $truefalse, $this->getStringBool($this->_context->ContextValue("xmlnuke.ENABLEPARAMPROCESSOR"))));
 		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "usefullparameter", "xmlnuke.USEFULLPARAMETER", $truefalse, $this->getStringBool($this->_context->ContextValue("xmlnuke.USEFULLPARAMETER"))));
 		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.CACHESTORAGEMETHOD", $this->_context->ContextValue("xmlnuke.CACHESTORAGEMETHOD")));
@@ -125,14 +129,14 @@ class CustomConfig extends NewBaseAdminModule
 		$boxButton = new XmlInputButtons();
 		$boxButton->addSubmit($myWords->Value("TXT_SAVE"));
 		$form->addXmlnukeObject($boxButton);
-		
+
 		$block->addXmlnukeObject($form);
-		
+
 		$this->defaultXmlnukeDocument->addXmlnukeObject($block);
 
 		return $this->defaultXmlnukeDocument;
 	}
-	
+
 	protected function getLangArray()
 	{
 		return array(
@@ -174,7 +178,7 @@ class CustomConfig extends NewBaseAdminModule
 			'zh-tw=Chinese (Traditional)' => 'zh-tw=Chinese (Traditional)',
 		);
 	}
-	
+
 	/**
 	 * Write Languages Available function
 	 *
@@ -183,7 +187,7 @@ class CustomConfig extends NewBaseAdminModule
 	protected function generateLanguageInput($form)
 	{
 		$curValueArray = explode("|", $this->_context->ContextValue("xmlnuke.LANGUAGESAVAILABLE"));
-		
+
 		foreach ($curValueArray as $key=>$value)
 		{
 			$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "languagesavailable$key", "xmlnuke.LANGUAGESAVAILABLE", $this->getLangArray(), $value));
@@ -192,7 +196,7 @@ class CustomConfig extends NewBaseAdminModule
 		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "languagesavailable" . ++$key, "xmlnuke.LANGUAGESAVAILABLE", $this->getLangArray()));
 		$form->addXmlnukeObject(new XmlInputHidden("languagesavailable", $key));
 	}
-	
+
 	protected function createLanguageString()
 	{
 		$key = "languagesavailable";
@@ -204,7 +208,7 @@ class CustomConfig extends NewBaseAdminModule
 		}
 		return $value;
 	}
-	
+
 	/**
 	 * Enter description here...
 	 *
@@ -217,12 +221,12 @@ class CustomConfig extends NewBaseAdminModule
 		$it = $anydata->getIterator();
 		$ret = array();
 		$ret[''] = '-- Default UsersAnydataSet --';
-		while ($it->hasNext()) 
+		while ($it->hasNext())
 		{
 			$sr = $it->moveNext();
 			$ret[$sr->getField("dbname")] = $sr->getField("dbname");
 		}
-		
+
 		return $ret;
 	}
 
@@ -232,7 +236,7 @@ class CustomConfig extends NewBaseAdminModule
 		{
 			return ($var ? "true":"false");
 		}
-		else 
+		else
 		{
 			return $var;
 		}

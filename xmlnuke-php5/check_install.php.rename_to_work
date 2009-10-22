@@ -6,7 +6,7 @@
 
 <style type="text/css">
 body {background-color: #ffffff; color: #000000;}
-body, td, th, h1, h2 {font-family: sans-serif;}
+body, td, th, h1, h2 {font-family: arial;}
 pre {margin: 0px; font-family: monospace;}
 a:link {color: #000099; text-decoration: none; background-color: #ffffff;}
 a:hover {text-decoration: underline;}
@@ -237,6 +237,8 @@ function EditConfig()
 		$configValues["xmlnuke.USERSDATABASE"]="";
 		$configValues["xmlnuke.USERSCLASS"]="";
 		$configValues["xmlnuke.DEBUG"] = false;
+		$configValues["xmlnuke.CAPTCHACHALLENGE"] = "hard";
+		$configValues["xmlnuke.CAPTCHALETTERS"] = 5;
 		$configValues["xmlnuke.ENABLEPARAMPROCESSOR"] = true;
 		$configValues["xmlnuke.USEFULLPARAMETER"] = true;
 		$configValues["xmlnuke.CHECKCONTENTTYPE"] = true;
@@ -354,7 +356,15 @@ function EditConfig()
 	writeInputData($configValues, "xmlnuke.DEBUG",
 		"Put XMLNuke in Debug mode", 2);
 
-	writeInputData($configValues, "xmlnuke.ENABLEPARAMPROCESSOR",
+    writeInputData($configValues, "xmlnuke.CAPTCHACHALLENGE",
+    	"How will be the captcha challenge question.", 3,
+    	array("easy" => "Easy", "hard" => "Hard"));
+
+    writeInputData($configValues, "xmlnuke.CAPTCHALETTERS",
+    	"How many letters will be use to build the captcha", 3,
+    	array("5" => "5", "6" => "6", "7" => "7", "8" => "8", "9" => "9", "10" => "10"));
+
+    writeInputData($configValues, "xmlnuke.ENABLEPARAMPROCESSOR",
 		"Enable or disable the PARAMPROCESSOR diretive. ".
 		"ParamProcessor enable post processing on your XML/XSL transformed looking for [param:....]. " .
 		"This feature, if enable, uses resources from your Web Server causing low performance. ".

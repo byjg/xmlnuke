@@ -9,9 +9,9 @@ require_once(PHPXMLNUKEDIR . "bin/modules/captcha/captcha.class.php");
 
 $context = new Context();
 
-$cq = $context->ContextValue("cq")=="1";
-$c = $context->ContextValue("c");
+$cq = ($context->ContextValue("xmlnuke.CAPTCHACHALLENGE")!="easy");
+$c = intval($context->ContextValue("xmlnuke.CAPTCHALETTERS"));
 
-$captcha = new Captcha($context, $cq, $c); 
+$captcha = new Captcha($context, $cq, $c);
 $captcha->show();
 ?>
