@@ -80,7 +80,7 @@ class SQLHelper
 	{
 		if ($fields instanceof SingleRow)
 		{
-			return $this->generateSQL($table, $fields->getRawFormat(), &$param, $type, $filter, $decimalpoint);
+			return $this->generateSQL($table, $fields->getRawFormat(), $param, $type, $filter, $decimalpoint);
 		}
 
 		if ((is_null($param)) || (!is_array($param)))

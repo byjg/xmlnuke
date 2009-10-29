@@ -80,7 +80,10 @@ class DBDataSet {
 			if ($this->_connectionManagement->getDriver() == "mysql")
 			{
 				$this->_db->setAttribute ( PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true );
-				$this->_db->setAttribute ( PDO::MYSQL_ATTR_INIT_COMMAND, "SET NAMES utf8" );
+				if ((PHP_VERSION_ID < 50300) || (PHP_VERSION_ID > 50301))
+				{
+					$this->_db->setAttribute ( PDO::MYSQL_ATTR_INIT_COMMAND, "SET NAMES utf8" );
+				}
 			}
 			if (($this->_connectionManagement->getDriver() != "dblib") && ($this->_connectionManagement->getDriver() != "odbc"))
 			{
