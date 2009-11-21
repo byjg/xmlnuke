@@ -6,25 +6,25 @@
  *  XMLNuke: A Web Development Framework based on XML.
  *
  *  Main Specification and Implementation: Joao Gilberto Magalhaes, joao at byjg dot com
- * 
+ *
  *  This file is part of XMLNuke project. Visit http://www.xmlnuke.com
  *  for more information.
- *  
+ *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
  *  as published by the Free Software Foundation; either version 2
  *  of the License, or (at your option) any later version.
- *  
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
- *  
+ *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
- *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
+ *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
 abstract class BaseDBAccess
@@ -33,22 +33,22 @@ abstract class BaseDBAccess
 	* @var DBDataSet
 	*/
 	protected $_db = null;
-	
+
 	/**
 	* @var Context
 	*/
 	protected $_context = null;
-	
+
 	/**
 	 * Wrapper for SQLHelper
 	 *
 	 * @var SQLHelper
 	 */
 	protected $_sqlhelper = null;
-	
+
 	/**
 	* Base Class Constructor. Don't must be override. The Context Class is required.
-	* 
+	*
 	* @param Context $context
 	*/
 	public function __construct($context)
@@ -59,14 +59,14 @@ abstract class BaseDBAccess
 		}
 		$this->_context = $context;
 	}
-	
+
 	/**
 	 * This method must be overrided and the return must be a valid DBDataSet name.
 	 *
 	 * @return string
 	 */
 	public abstract function getDataBaseName();
-	
+
 	/**
 	 * Create a instance of DBDataSet to connect database
 	 * @return DBDataSet
@@ -77,19 +77,20 @@ abstract class BaseDBAccess
 		{
 			$this->_db = new DBDataSet($this->getDataBaseName(), $this->_context);
 		}
-		
+
 		return $this->_db;
 	}
-	
+
 	/**
-	 * Execute a SQL and dont wait for a response. 
+	 * Execute a SQL and dont wait for a response.
 	 * @param string $sql
 	 * @param string $param
+	 * @param bool getId
 	 */
-	protected function executeSQL($sql, $param = null)
+	protected function executeSQL($sql, $param = null, $getId = false)
 	{
-		$this->getDBDataSet();
-		
+		$dbfunction = $this->getDbFunctions();
+
 		$debug = $this->_context->getDebugInModule();
 		$start = 0;
 		if ($debug)
@@ -112,17 +113,27 @@ abstract class BaseDBAccess
 			}
 			$start = microtime(true);
 		}
-		
-		$this->_db->execSQL($sql, $param);
-		
+
+		if ($getId)
+		{
+			$id = $dbfunction->executeAndGetInsertedId($this->getDBDataSet(), $sql, $param);
+		}
+		else
+		{
+			$id = null;
+			$this->getDBDataSet()->execSQL($sql, $param);
+		}
+
 		if ($debug)
 		{
 			$end = microtime(true);
 			Debug::PrintValue("Execution time: " . ($end - $start) . " seconds ");
 		}
+
+		return $id;
 	}
 
-	
+
 	/**
 	 * Execulte SELECT SQL Query
 	 *
@@ -133,7 +144,7 @@ abstract class BaseDBAccess
 	protected function getIterator($sql, $param=null)
 	{
 		$this->getDBDataSet();
-		
+
 		$debug = $this->_context->getDebugInModule();
 		$start = 0;
 		if ($debug)
@@ -164,7 +175,7 @@ abstract class BaseDBAccess
 		}
 		return $it;
 	}
-	
+
 	/**
 	 * Get a SQLHelper object
 	 *
@@ -173,15 +184,15 @@ abstract class BaseDBAccess
 	public function getSQLHelper()
 	{
 		$this->getDBDataSet();
-		
+
 		if (is_null($this->_sqlhelper))
 		{
 			$this->_sqlhelper = new SQLHelper($this->_db);
 		}
-		
+
 		return $this->_sqlhelper;
 	}
-	
+
 	/**
 	 * Get an Interator from an ID. Ideal for get data from PK
 	 *
@@ -197,7 +208,7 @@ abstract class BaseDBAccess
 		$param[$key] = $value;
 		return $this->getIterator($sql, $param);
 	}
-	
+
 	/**
 	 * Get an Array from an existing Iterator
 	 *
@@ -220,7 +231,7 @@ abstract class BaseDBAccess
 		}
 		return $retArray;
 	}
-	
+
 	/**
 	 * Get a IDbFunctions class containing specific database operations
 	 * @return IDbFunctions
@@ -229,22 +240,22 @@ abstract class BaseDBAccess
 	{
 		return $this->getDBDataSet()->getDbFunctions();
 	}
-	
-	
+
+
 	public function beginTransaction()
 	{
 		$this->_db->beginTransaction();
 	}
-	
+
 	public function commitTransaction()
 	{
 		$this->_db->commitTransaction();
 	}
-	
+
 	public function rollbackTransaction()
 	{
 		$this->_db->rollbackTransaction();
 	}
-	
+
 }
 ?>

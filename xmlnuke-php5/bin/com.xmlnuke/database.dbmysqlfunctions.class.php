@@ -6,25 +6,25 @@
  *  XMLNuke: A Web Development Framework based on XML.
  *
  *  Main Specification and Implementation: Joao Gilberto Magalhaes, joao at byjg dot com
- * 
+ *
  *  This file is part of XMLNuke project. Visit http://www.xmlnuke.com
  *  for more information.
- *  
+ *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
  *  as published by the Free Software Foundation; either version 2
  *  of the License, or (at your option) any later version.
- *  
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
- *  
+ *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
- *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
+ *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
 class DbMySQLFunctions extends DbBaseFunctions
@@ -40,15 +40,15 @@ class DbMySQLFunctions extends DbBaseFunctions
 	 		$sql .= ($i==0 ? "" : ",") . $var;
 	 	}
 	 	$sql .= ")";
-	 	
+
 	 	return $sql;
-	} 
+	}
 
 	/**
 	 * Given a SQL returns it with the proper LIMIT or equivalent method included
 	 * @param string $sql
 	 * @param int $start
-	 * @param int $qty 
+	 * @param int $qty
 	 * @return string
 	 */
 	function Limit($sql, $start, $qty)
@@ -66,7 +66,7 @@ class DbMySQLFunctions extends DbBaseFunctions
 	/**
 	 * Given a SQL returns it with the proper TOP or equivalent method included
 	 * @param string $sql
-	 * @param int $qty 
+	 * @param int $qty
 	 * @return string
 	 */
 	function Top($sql, $qty)
@@ -75,7 +75,7 @@ class DbMySQLFunctions extends DbBaseFunctions
 	}
 
 	/**
-	 * Return if the database provider have a top or similar function 
+	 * Return if the database provider have a top or similar function
 	 * @return unknown_type
 	 */
 	function hasTop()
@@ -84,14 +84,14 @@ class DbMySQLFunctions extends DbBaseFunctions
 	}
 
 	/**
-	 * Return if the database provider have a limit function 
+	 * Return if the database provider have a limit function
 	 * @return bool
 	 */
 	function hasLimit()
 	{
 		return true;
 	}
-   
+
     /**
 	 * Format date column in sql string given an input format that understands Y M D
 	 * @param string $fmt
@@ -179,7 +179,7 @@ class DbMySQLFunctions extends DbBaseFunctions
 	{
 		return parent::toDate($date, $dateFormat, $hour);
 	}
-	
+
     /**
 	 * Format a string from database to a user readable format.
 	 * @param string $date
@@ -191,8 +191,27 @@ class DbMySQLFunctions extends DbBaseFunctions
 	{
 		return parent::fromDate($date, $dateFormat, $hour);
 	}
-	
-	
+
+	/**
+	 *
+	 * @param DBDataSet $dbdataset
+	 * @param string $sql
+	 * @param array $param
+	 * @return int
+	 */
+	function executeAndGetInsertedId($dbdataset, $sql, $param)
+	{
+		$id = parent::executeAndGetInsertedId($dbdataset, $sql, $param);
+		$it = $dbdataset->getIterator("select LAST_INSERT_ID() id");
+		if ($it->hasNext())
+		{
+			$sr = $it->moveNext();
+			$id = $sr->getField("id");
+		}
+
+		return $id;
+	}
+
 }
 
 ?>

@@ -6,25 +6,25 @@
  *  XMLNuke: A Web Development Framework based on XML.
  *
  *  Main Specification and Implementation: Joao Gilberto Magalhaes, joao at byjg dot com
- * 
+ *
  *  This file is part of XMLNuke project. Visit http://www.xmlnuke.com
  *  for more information.
- *  
+ *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
  *  as published by the Free Software Foundation; either version 2
  *  of the License, or (at your option) any later version.
- *  
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
- *  
+ *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
- *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
+ *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
 abstract class DbBaseFunctions implements IDbFunctions
@@ -42,13 +42,13 @@ abstract class DbBaseFunctions implements IDbFunctions
 	function Concat($s1, $s2 = null)
 	{
 		return "";
-	} 
+	}
 
 	/**
 	 * Given a SQL returns it with the proper LIMIT or equivalent method included
 	 * @param string $sql
 	 * @param int $start
-	 * @param int $qty 
+	 * @param int $qty
 	 * @return string
 	 */
 	function Limit($sql, $start, $qty)
@@ -59,7 +59,7 @@ abstract class DbBaseFunctions implements IDbFunctions
 	/**
 	 * Given a SQL returns it with the proper TOP or equivalent method included
 	 * @param string $sql
-	 * @param int $qty 
+	 * @param int $qty
 	 * @return string
 	 */
 	function Top($sql, $qty)
@@ -68,7 +68,7 @@ abstract class DbBaseFunctions implements IDbFunctions
 	}
 
 	/**
-	 * Return if the database provider have a top or similar function 
+	 * Return if the database provider have a top or similar function
 	 * @return unknown_type
 	 */
 	function hasTop()
@@ -77,7 +77,7 @@ abstract class DbBaseFunctions implements IDbFunctions
 	}
 
 	/**
-	 * Return if the database provider have a limit function 
+	 * Return if the database provider have a limit function
 	 * @return bool
 	 */
 	function hasLimit()
@@ -96,7 +96,7 @@ abstract class DbBaseFunctions implements IDbFunctions
 	{
 		return "";
 	}
-	
+
     /**
 	 * Format a string to database readable format.
 	 * @param string $date
@@ -108,7 +108,7 @@ abstract class DbBaseFunctions implements IDbFunctions
 	{
 		return DateUtil::ConvertDate($date, $dateFormat, DATEFORMAT::YMD, "-", $hour);
 	}
-	
+
     /**
 	 * Format a string from database to a user readable format.
 	 * @param string $date
@@ -120,7 +120,19 @@ abstract class DbBaseFunctions implements IDbFunctions
 	{
 		return DateUtil::ConvertDate($date, DATEFORMAT::YMD, $dateFormat, "/", $hour);
 	}
-	
+
+	/**
+	 *
+	 * @param DBDataSet $dbdataset
+	 * @param string $sql
+	 * @param array $param
+	 * @return int
+	 */
+	function executeAndGetInsertedId($dbdataset, $sql, $param)
+	{
+		$dbdataset->execSQL($sql, $param);
+		return -1;
+	}
 }
 
 

@@ -238,6 +238,7 @@ class WebRequest
 		}
 
 		$result = curl_exec($curl);
+    	$this->_header = curl_getinfo($curl);
 		if ($result === false)
 		{
 			throw new Exception("CURL - " . curl_error($curl));
