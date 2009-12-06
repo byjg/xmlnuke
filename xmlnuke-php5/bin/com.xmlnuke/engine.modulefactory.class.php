@@ -124,7 +124,7 @@ class ModuleFactory
 
 		$xml = new XMLFilenameProcessor($modulename, $context);
 		$result->Setup($xml, $context, $o);
-		
+
 		if ($result->requiresAuthentication())
 		{
 			if (!$context->IsAuthenticated())
@@ -165,7 +165,7 @@ class ModuleFactory
 	}
 
 	private static $_phpLibDir = array();
-	
+
 	protected static function GetLibDir($key)
 	{
 		if (ModuleFactory::$_phpLibDir != "")
@@ -184,7 +184,7 @@ class ModuleFactory
 			return "??";
 		}
 	}
-	
+
 	protected static function SetLibDir($key, $path)
 	{
 		ModuleFactory::$_phpLibDir[$key] = $path;
@@ -223,9 +223,19 @@ class ModuleFactory
 		return ModuleFactory::$_phpLibDir;
 	}
 
-	
-	public static function LibPath($namespaceBase, $path)
+
+	public static function LibPath($namespaceBase, $path = "")
 	{
+		if ($path == "")
+		{
+			$i = strrpos($namespaceBase, ".");
+			if ($i !== false)
+			{
+				$path = substr($namespaceBase, $i+1) . ".class.php";
+				$namespaceBase = substr($namespaceBase, 0, $i);
+			}
+		}
+
 		if (ModuleFactory::$_phpLibDir != null)
 		{
 			if (ModuleFactory::GetLibDir($namespaceBase))
@@ -265,7 +275,7 @@ class ModuleFactory
 		return $filePath . $path;
 	}
 
-	public static function IncludePhp($namespaceBase, $path)
+	public static function IncludePhp($namespaceBase, $path = "")
 	{
 		$filePath = ModuleFactory::LibPath($namespaceBase, $path);
 

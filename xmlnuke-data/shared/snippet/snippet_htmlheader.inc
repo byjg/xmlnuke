@@ -75,7 +75,7 @@
 <xsl:if test="//faq">
 	<script type="text/javascript">
 		$(function(){
-			$("#faqaccordion").accordion({ header: "h5" });
+			$(".faqaccordion").accordion({ header: "h5" });
 		});
 	</script>
 </xsl:if>

@@ -6,25 +6,25 @@
  *  XMLNuke: A Web Development Framework based on XML.
  *
  *  Main Specification: Joao Gilberto Magalhaes, joao at byjg dot com
- * 
+ *
  *  This file is part of XMLNuke project. Visit http://www.xmlnuke.com
  *  for more information.
- *  
+ *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
  *  as published by the Free Software Foundation; either version 2
  *  of the License, or (at your option) any later version.
- *  
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
- *  
+ *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
- *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
+ *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
 class Sample extends BaseModule
@@ -35,14 +35,14 @@ class Sample extends BaseModule
 	 * @var XmlnukeDocument
 	 */
 	protected $_document;
-	
+
 	/**
 	 * LanguageCollection
 	 *
 	 * @var LanguageCollection
 	 */
 	protected $_myWords;
-	
+
 	/**
 	 * Default constructor
 	 *
@@ -74,7 +74,7 @@ class Sample extends BaseModule
 	 *
 	 * @return False
 	 */
-	public function useCache() 
+	public function useCache()
 	{
 		return false;
 	}
@@ -84,16 +84,16 @@ class Sample extends BaseModule
 	 *
 	 * @return PageXml object
 	 */
-	public function CreatePage() 
+	public function CreatePage()
 	{
 		$this->_myWords = $this->WordCollection();
 
 		$this->_document = new XmlnukeDocument($this->_myWords->Value("TITLE"), $this->_myWords->Value("ABSTRACT"));
-		
+
 		$linkModule = "url://module:sample";
-		
+
 		$this->_document->setMenuTitle($this->_myWords->Value("OPTIONMODULE"));
-		
+
 		$this->_document->addMenuItem($linkModule."?op=1", $this->_myWords->Value("OBJECT"), $this->_myWords->Value("DESCOBJECT"));
 		$this->_document->addMenuItem($linkModule."?op=2", $this->_myWords->Value("FORM"), $this->_myWords->Value("DESCFORM"));
 		$this->_document->addMenuItem($linkModule."?op=3", $this->_myWords->Value("EDITLIST"), $this->_myWords->Value("DESCEDITLIST"));
@@ -112,17 +112,17 @@ class Sample extends BaseModule
 		$this->_document->addMenuItem($linkModule."?op=16",$this->_myWords->Value("SORTABLE"), $this->_myWords->Value("DESCSORTABLE"));
 		$this->_document->addMenuItem($linkModule."?op=17",$this->_myWords->Value("CALENDAR"), $this->_myWords->Value("DESCCALENDAR"));
 		$this->_document->addMenuItem($linkModule."?op=18",$this->_myWords->Value("UIALERT"), $this->_myWords->Value("DESCUIALERT"));
-		
+
 		$block = new XmlBlockCollection($this->_myWords->Value("MODULE"), BlockPosition::Center);
-				
+
 		$paragraph = new XmlParagraphCollection();
-		
+
 		$paragraph->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("DESCMODULE")));
 		$paragraph->addXmlnukeObject(new XmlnukeBreakLine());
 		$paragraph->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("SELECTOPTION")));
 		$block->addXmlnukeObject($paragraph);
 		$this->_document->addXmlnukeObject($block);
-		
+
 		$option = $this->_context->ContextValue("op");
 
 		switch ($option)
@@ -220,7 +220,7 @@ class Sample extends BaseModule
 		}
 		return $this->_document->generatePage();
 	}
-	
+
 	/**
 	 * Show the Create Object Exemple
 	 *
@@ -228,7 +228,7 @@ class Sample extends BaseModule
 	protected function actionCreateObject()
 	{
 		$blockCenter = new XmlBlockCollection($this->_myWords->Value("OBJECT"), BlockPosition::Center);
-		
+
 		$breakLine = new XmlnukeBreakLine();
 
 		$firstParagraph = new XmlParagraphCollection();
@@ -237,12 +237,12 @@ class Sample extends BaseModule
 		$firstParagraph->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("OBJECTTEXT2"), true, true, true, true));
 		$firstParagraph->addXmlnukeObject($breakLine);
 		$firstParagraph->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("OBJECTTEXT3")));
-		
+
 		$secondParagraph = new XmlParagraphCollection();
 		$secondParagraph->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("OBJECTTEXT4")));
 		$secondParagraph->addXmlnukeObject($breakLine);
 		$secondParagraph->addXmlnukeObject($breakLine);
-		
+
 		$xmlnukeImage = new XmlnukeImage("common/imgs/logo_xmlnuke.gif");
 		$link = new XmlAnchorCollection("engine:xmlnuke", "");
 		$link->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("CLICK")." -->"));
@@ -264,16 +264,16 @@ class Sample extends BaseModule
 		$blockCenter->addXmlnukeObject($firstParagraph);
 		$blockCenter->addXmlnukeObject($secondParagraph);
 		$blockCenter->addXmlnukeObject($thirdParagraph);
-	
+
 		$blockLeft = new XmlBlockCollection($this->_myWords->Value("BLOCKLEFT"), BlockPosition::Left);
 		$blockLeft->addXmlnukeObject($firstParagraph);
 
 		$blockRight = new XmlBlockCollection($this->_myWords->Value("BLOCKRIGHT"), BlockPosition::Right);
 		$blockRight->addXmlnukeObject($firstParagraph);
-		
+
 		$this->_document->addXmlnukeObject($blockCenter);
 		$this->_document->addXmlnukeObject($blockLeft);
-		$this->_document->addXmlnukeObject($blockRight);	
+		$this->_document->addXmlnukeObject($blockRight);
 	}
 
 	/**
@@ -283,48 +283,48 @@ class Sample extends BaseModule
 	protected function actionForm()
 	{
 		$blockCenter = new XmlBlockCollection($this->_myWords->Value("FORM"), BlockPosition::Center);
-		
+
 		$breakLine = new XmlnukeBreakLine();
-		
+
 		$paragraph = new XmlParagraphCollection();
 		$blockCenter->addXmlnukeObject($paragraph);
-		
+
 		$paragraph->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("FORMTEXT")));
 
 		$form = new XmlFormCollection($this->_context, "module:sample", $this->_myWords->Value("FORMEDIT"));
 		$paragraph->addXmlnukeObject($form);
-		
+
 		$form->setJSValidate(true);
 		$form->addXmlnukeObject(new XmlInputHidden("op", "2"));
 		$form->addXmlnukeObject(new XmlInputLabelField("Caption", $this->_myWords->Value("VALUE")));
-		
+
 		$text = new XmlInputTextBox($this->_myWords->Value("FIELDREQUIRED"), "field1", "");
 		$text->setRequired(true);
 		$form->addXmlnukeObject($text);
-		
+
 		$text = new XmlInputDateTime("Date Picker", "date1", DATEFORMAT::DMY, false);
 		$form->addXmlnukeObject($text);
-		
+
 		$text = new XmlInputDateTime("Date Picker", "date2", DATEFORMAT::YMD, true);
 		$form->addXmlnukeObject($text);
-		
+
 		$text = new XmlInputTextBox($this->_myWords->Value("FIELDEMAIL"), "field2", "");
 		$text->setRequired(true);
 		$text->setDataType(INPUTTYPE::EMAIL);
 		$form->addXmlnukeObject($text);
-		
+
 		$form->addXmlnukeObject(new XmlInputMemo($this->_myWords->Value("MEMO"), "field3", $this->_myWords->Value("VALUE")));
 		$form->addXmlnukeObject(new XmlInputCheck($this->_myWords->Value("CHECKBOX"), "check1", $this->_myWords->Value("VALUE")));
-		
+
 		$inputCheck = new XmlInputCheck($this->_myWords->Value("CAPTIONREADONLY"), "check2", $this->_myWords->Value("VALUE"));
 		$inputCheck->setChecked(true);
 		$inputCheck->setReadOnly(true);
 		$form->addXmlnukeObject($inputCheck);
-		
+
 		$inputTextBox = new XmlInputTextBox($this->_myWords->Value("INPUTREADONLY"), "field4", $this->_myWords->Value("VALUE"));
 		$inputTextBox->setReadOnly(true);
 		$form->addXmlnukeObject($inputTextBox);
-		
+
 		$buttons = new XmlInputButtons();
 		$buttons->addSubmit($this->_myWords->Value("SUBMIT"), "bs");
 		$buttons->addReset($this->_myWords->Value("RESET"), "br");
@@ -333,7 +333,7 @@ class Sample extends BaseModule
 
 		$this->_document->addXmlnukeObject($blockCenter);
 	}
-	
+
 	/**
 	 * EditList
 	 *
@@ -341,9 +341,9 @@ class Sample extends BaseModule
 	protected function actionEditList()
 	{
 		$blockCenter = new XmlBlockCollection($this->_myWords->Value("EDITLIST"), BlockPosition::Center);
-		
+
 		$breakLine = new XmlnukeBreakLine();
-		
+
 		$firstParagraph = new XmlParagraphCollection();
 		$firstParagraph->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("DESCEDITLISTTEXT")));
 		$firstParagraph->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("DESCEDITLISTTEXT2"), true, false, false));
@@ -352,12 +352,12 @@ class Sample extends BaseModule
 		$guestbookFile = new AnydatasetFilenameProcessor("guestbook", $this->_context);
 		$guestbook = new AnyDataSet($guestbookFile);
 		$iterator = $guestbook->getIterator();
-		
+
 		$thirdParagraph = new XmlParagraphCollection();
 		$editList = new XmlEditList($this->_context, $this->_myWords->Value("CONTENTBOOK"), "module:sample");
 		$editList->setDataSource($iterator);
 		$editList->addParameter("op", "3");
-		
+
 		$field = new EditListField();
 		$field->fieldData = "frommail";
 		$editList->addEditListField($field);
@@ -376,7 +376,7 @@ class Sample extends BaseModule
 		$field->fieldData = "message";
 		$field->editlistName = $this->_myWords->Value("MESSAGE");
 		$editList->addEditListField($field);
-		
+
 		$customButton = new CustomButtons();
 		$customButton->action = "acaocustomizada";
 		$customButton->enabled = true;
@@ -389,14 +389,14 @@ class Sample extends BaseModule
 		$editList->setPageSize(3, 0);
 		$editList->setEnablePage(true);
 		$thirdParagraph->addXmlnukeObject($editList);
-		
+
 		$secondParagraph = new XmlParagraphCollection();
 		$secondParagraph->addXmlnukeObject(new XmlnukeText("Ação selecionada: ", true, false, false));
 		$secondParagraph->addXmlnukeObject(new XmlnukeText($this->_action));
 		$secondParagraph->addXmlnukeObject($breakLine);
 		$secondParagraph->addXmlnukeObject(new XmlnukeText("Valor selecionado: ", true, false, false));
 		$secondParagraph->addXmlnukeObject(new XmlnukeText($this->_context->ContextValue("valueid")));
-		
+
 		$blockCenter->addXmlnukeObject($firstParagraph);
 		$blockCenter->addXmlnukeObject($thirdParagraph);
 
@@ -404,10 +404,10 @@ class Sample extends BaseModule
 		{
 			$blockCenter->addXmlnukeObject($secondParagraph);
 		}
-		
-		$this->_document->addXmlnukeObject($blockCenter);		
+
+		$this->_document->addXmlnukeObject($blockCenter);
 	}
-	
+
 	/**
 	 * Edit AnydataSet
 	 *
@@ -415,9 +415,9 @@ class Sample extends BaseModule
 	protected function actionEditAnydataSet()
 	{
 		$blockCenter = new XmlBlockCollection($this->_myWords->Value("ANYDATASET"), BlockPosition::Center);
-		
+
 		$breakline = new XmlnukeBreakLine();
-		
+
 		$paragraph = new XmlParagraphCollection();
 		$paragraph->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("DESCANYDATASETTEXT")));
 		$paragraph->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("DESCANYDATASETTEXT2"), true, false, false));
@@ -436,7 +436,7 @@ class Sample extends BaseModule
 		$fieldPage->rangeMin = "100";
 		$fieldPage->rangeMax = "10000";
 		$pageField->addProcessPageField($fieldPage);
-			
+
 		$fieldPage = new ProcessPageField();
 		$fieldPage->fieldName = "name";
 		$fieldPage->key = false;
@@ -483,18 +483,18 @@ class Sample extends BaseModule
 		$pageField->addProcessPageField($fieldPage);
 
 		$processPage = new ProcessPageStateAnydata(
-			        $this->_context, 
+			        $this->_context,
 			        $pageField,
-			        $this->_myWords->Value("EDITDB"), 
-			        "module:sample?op=4", 
-			        null, 
+			        $this->_myWords->Value("EDITDB"),
+			        "module:sample?op=4",
+			        null,
 			        new AnydatasetFilenameProcessor("sample", $this->_context));
 		$processPage->setPageSize(3, 0);
 		$paragraph->addXmlnukeObject($processPage);
 
 		$blockCenter->addXmlnukeObject($paragraph);
-		
-		$this->_document->addXmlnukeObject($blockCenter);		
+
+		$this->_document->addXmlnukeObject($blockCenter);
 	}
 
 	/**
@@ -504,13 +504,13 @@ class Sample extends BaseModule
 	protected function actionEditDB()
 	{
 		$blockCenter = new XmlBlockCollection($this->_myWords->Value("DATABASE"), BlockPosition::Center);
-		
+
 		$breakline = new XmlnukeBreakLine();
-		
+
 		$paragraph = new XmlParagraphCollection();
 		$paragraph->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("DATABASETEXT")));
 		$paragraph->addXmlnukeObject($breakline);
-		
+
 		$secop = $this->_context->ContextValue("secop");
 
 		// Menu
@@ -617,13 +617,13 @@ class Sample extends BaseModule
 					$fieldPage->maxLength = 20;
 					$pageFields->addProcessPageField($fieldPage);
 
-					$processPage = 
+					$processPage =
 						new ProcessPageStateDB(
-								$this->_context, 
-								$pageFields, 
-								"Edição teste usando Banco de Dados", 
-								"module:sample?op=5", null, 
-								"sample", 
+								$this->_context,
+								$pageFields,
+								"Edição teste usando Banco de Dados",
+								"module:sample?op=5", null,
+								"sample",
 								"sampledb");
 					$processPage->setPageSize(3, 0);
 					$processPage->addParameter("secop", "edit");
@@ -633,10 +633,10 @@ class Sample extends BaseModule
 		}
 
 		$blockCenter->addXmlnukeObject($paragraph);
-		
-		$this->_document->addXmlnukeObject($blockCenter);		
+
+		$this->_document->addXmlnukeObject($blockCenter);
 	}
-	
+
 	/**
 	 * Action Upload
 	 *
@@ -647,7 +647,7 @@ class Sample extends BaseModule
 		$this->_document->addXmlnukeObject($blockCenter);
 		$paragraph = new XmlParagraphCollection();
 		$blockCenter->addXmlnukeObject($paragraph);
-		
+
 		switch ($this->_action)
 		{
 			case 'add':
@@ -656,13 +656,13 @@ class Sample extends BaseModule
 				$result = $this->_context->processUpload($fileProcessor, false, 'form_file');
 				$paragraph->addXmlnukeObject(new XmlnukeText("Arquivo " . $result[0] . " enviado com sucesso ao servidor!"));
 				break;
-		
+
 			default:
 				$paragraph->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("DESCUPLOADTEXT2")));
 				$url = new XmlnukeManageUrl(URLTYPE::MODULE, 'sample');
 				$url->addParam('op', '6');
 				$url->addParam('action', 'add');
-			
+
 				$form = new XmlFormCollection($this->_context, $url->getUrl(), $this->_myWords->Value("MAKEUPLOAD"));
 				$paragraph = new XmlParagraphCollection();
 				$blockCenter->addXmlnukeObject($paragraph);
@@ -675,7 +675,7 @@ class Sample extends BaseModule
 				break;
 		}
 	}
-	
+
 	protected function Opcao7()
 	{
 		$block = new XmlBlockCollection("Exemplo 7: XmlDataSet", BlockPosition::Center);
@@ -820,10 +820,10 @@ class Sample extends BaseModule
 		$colNodeStr[] = "year";
 		$colNodeStr[] = "price";
 		$colNodeStr[] = "author";
-			
+
 		$processor = new AnydatasetFilenameProcessor("sample", $this->_context);
 		$dataset = new TextFileDataSet($this->_context, $processor->PathSuggested() . "sample.csv", $colNodeStr);
-		
+
 		//$para1->addXmlnukeObject(new XmlnukeText(""));
 		$editlist = new XmlEditList($this->_context, "Text Flat", "module:sample?op=9");
 		$editlist->setReadOnly(true);
@@ -835,7 +835,7 @@ class Sample extends BaseModule
 		$chart->addSeries("price", "Sell Price", "#000000");
 		$para1->addXmlnukeObject($chart);
 
-		$code = new XmlnukeCode("Code Sample");			
+		$code = new XmlnukeCode("Code Sample");
 		$code->AddTextLine("\$chart = new XmlChart(");
 		$code->AddTextLine("		\$this->_context,             // Xmlnuke Context");
 		$code->AddTextLine("		\"Book Store\",            // Graph Title");
@@ -868,23 +868,23 @@ class Sample extends BaseModule
 
 		$para3 = new XmlParagraphCollection();
 		$para3->addXmlnukeObject(new XmlnukeText("Parágrafo 3"));
-		
+
 		$tabview = new XmlnukeTabView();
 		$tabview->addTabItem("Aba 1", $para1);
 		$tabview->addTabItem("Aba 2", $para2);
 		$tabview->addTabItem("Aba 3", $para3);
-		
+
 		$block->addXmlnukeObject($tabview);
 
 		$this->_document->addXmlnukeObject($block);
 	}
-	
+
 	protected function Opcao11()
 	{
 		$block = new XmlBlockCollection("Exemplo 11: DualList", BlockPosition::Center);
 
 		//XmlnukeBreakLine br = new XmlnukeBreakLine();
-		
+
 		if ($this->isPostBack())
 		{
 			Debug::PrintValue(XmlDualList::Parse($this->_context, "frmdual"));
@@ -892,12 +892,12 @@ class Sample extends BaseModule
 
 
 		$form = new XmlFormCollection($this->_context, "module:sample?op=11", "Formulário com Um Dual List");
-		
+
 		// Create DualList Object
 		$duallist = new XmlDualList($this->_context, "frmdual", "Não Selecionado", "Selecionado");
 		$duallist->setDualListSize(10,10);
 		$duallist->createDefaultButtons();
-		
+
 		// Define DataSet Source
 		$arrayLeft = array("A" => "Letra A", "B" => "Letra B", "C" => "Letra C", "D" => "Letra D", "E" => "Letra E", "F" => "Letra F");
 		$arrayRight = array("B" => "Letra B", "D" => "Letra D");
@@ -907,9 +907,9 @@ class Sample extends BaseModule
 		$itRight = $arrayDBRight->getIterator();
 		$duallist->setDataSourceFieldName("key", "value");
 		$duallist->setDataSource($itLeft, $itRight);
-		
+
 		$form->addXmlnukeObject($duallist);
-		
+
 		$button = new XmlInputButtons();
 		$button->addSubmit("Enviar Dados");
 		$form->addXmlnukeObject($button);
@@ -918,7 +918,7 @@ class Sample extends BaseModule
 
 		$this->_document->addXmlnukeObject($block);
 	}
-	
+
 	protected function Opcao12()
 	{
 		$block = new XmlBlockCollection("Exemplo 12: Faq", BlockPosition::Center);
@@ -934,12 +934,12 @@ class Sample extends BaseModule
 
 		$para3 = new XmlnukeSpanCollection();
 		$para3->addXmlnukeObject(new XmlnukeText("Parágrafo 3"));
-		
+
 		$faq = new XmlnukeFaq("Lista de Perguntas");
 		$faq->addFaqItem("Pergunta 1", $para1);
 		$faq->addFaqItem("Pergunta 2", $para2);
 		$faq->addFaqItem("Pergunta 3", $para3);
-		
+
 		$block->addXmlnukeObject($faq);
 
 		$this->_document->addXmlnukeObject($block);
@@ -968,22 +968,22 @@ class Sample extends BaseModule
 		$button = new XmlInputButtons();
 		$button->addSubmit("Teste");
 		$form->addXmlnukeObject($button);
-		
+
 		$block->addXmlnukeObject($form);
-		
+
 		$para = new XmlParagraphCollection();
 		$para->addXmlnukeObject(new XmlnukeBreakLine());
 		$para->addXmlnukeObject(new XmlnukeBreakLine());
 		$para->addXmlnukeObject(new XmlnukeBreakLine());
 		$para->addXmlnukeObject(new XmlnukeBreakLine());
-		
+
 		// Second, Create a AjaxCallBack, associate it our form
 		$ajax = new XmlnukeAjaxCallback($this->_context);
 		$ajax->setCustomStyle(400, true);
 		$form->setAjaxCallback($ajax);
 		$para->addXmlnukeObject($ajax);
 		$block->addXmlnukeObject($para);
-		
+
 		$this->_document->addXmlnukeObject($block);
 	}
 
@@ -1001,29 +1001,29 @@ class Sample extends BaseModule
 		$form = new XmlFormCollection($this->_context, "", "Teste");
 
 		$form->addXmlnukeObject(new XmlInputCaption("Auto Suggest"));
-		
+
 		// First Create the the TextBox
 		$txt = new XmlInputTextBox("Teste", "Nome", "");
-		$txt->setRequired(true);		
+		$txt->setRequired(true);
 		// and then associate the AutoSuggest
 		$txt->setAutosuggest($this->_context, "module:sample?site=sample&rawxml=true&xpath=//a&","input");
 		$form->addXmlnukeObject($txt);
-		
+
 		$form->addXmlnukeObject(new XmlInputCaption("Auto Suggest com CallBack"));
-		
+
 		// First Create the the TextBox
 		$txt = new XmlInputTextBox("Teste", "Nome2", "");
-		$txt->setRequired(true);		
+		$txt->setRequired(true);
 		$txt->setAutosuggest($this->_context, "module:sample?site=sample&rawxml=true&xpath=//a&","input","nodeinfo", "nodeid", "alert(obj.id + ' - ' + obj.info + ' - ' + obj.value)");
 		$form->addXmlnukeObject($txt);
-		
-		
+
+
 		$block->addXmlnukeObject($form);
-				
+
 		$this->_document->addXmlnukeObject($block);
 	}
-	
-	
+
+
 	protected function Opcao15()
 	{
 		$block = new XmlBlockCollection("Exemplo 15: Tree View", BlockPosition::Center);
@@ -1036,10 +1036,10 @@ class Sample extends BaseModule
 		$block->addXmlnukeObject($para);
 
 		$treeview = new XmlnukeTreeview($this->_context, "Título");
-		
+
 		$folder1 = new XmlnukeTreeViewFolder($this->_context, "Folder 1", "mydocuments.gif");
 		$folder1->setAction(TreeViewActionType::ExecuteJS, "document.getElementById('here').style.display='none';");
-		
+
 		$leaf = new XmlnukeTreeViewLeaf($this->_context, "Leaf 1", "empty_doc.gif");
 		$leaf->setAction(TreeViewActionType::OpenUrl, "module:sample?op=1");
 		$folder1->addChild( $leaf );
@@ -1050,20 +1050,20 @@ class Sample extends BaseModule
 		$leaf->setAction(TreeViewActionType::OpenUrlInsideContainer, "module:sample?op=3&xsl=blank", "here");
 		$folder1->addChild( $leaf );
 		$treeview->addChild($folder1);
-		
+
 		$folder2 = new XmlnukeTreeViewFolder($this->_context, "Folder 1", "myimages.gif");
 		$folder2->addChild( new XmlnukeTreeViewLeaf($this->_context, "Leaf 1", "document.gif") );
 		$treeview->addChild($folder2);
-		
+
 		$block->addXmlnukeObject($treeview);
-		
+
 		$container = new XmlContainerCollection("here");
 		$container->setStyle("display: none; width: 100%; height: 200px");
 		$block->addXmlnukeObject($container);
-				
+
 		$this->_document->addXmlnukeObject($block);
 	}
-	
+
 	protected function Opcao16()
 	{
 		$block = new XmlBlockCollection("Exemplo 16: Sortable", BlockPosition::Center);
@@ -1083,11 +1083,11 @@ class Sample extends BaseModule
 		$sortable->addSortableItem("4", new XmlnukeText("Teste 4"), SortableListItemState::Disabled);
 		$sortable->addSortableItem("5", new XmlnukeText("Teste 5"));
 		$sortable->addSortableItem("6", new XmlnukeText("Teste 6"));
-		
+
 		$form->addXmlnukeObject($sortable);
-		
+
 		$block->addXmlnukeObject($form);
-		
+
 		$this->_document->addXmlnukeObject($block);
 	}
 
@@ -1105,12 +1105,12 @@ class Sample extends BaseModule
 		$calendar = new XmlnukeCalendar(1, 1974);
 		$calendar->addCalendarEvent(new XmlnukeCalendarEvent(15, 1, "Teste"));
 		$calendar->addCalendarEvent(new XmlnukeCalendarEvent(26, 2, "Teste"));
-		
+
 		$block->addXmlnukeObject($calendar);
-		
+
 		$this->_document->addXmlnukeObject($block);
-	}	
-	
+	}
+
 	protected function Opcao18()
 	{
 		$block = new XmlBlockCollection("Exemplo 18: UI Alert", BlockPosition::Center);
@@ -1155,13 +1155,13 @@ class Sample extends BaseModule
 			$uialert->addXmlnukeObject(new XmlnukeText("Isso é um novo teste, novo teste"));
 			$block->addXmlnukeObject($uialert);
 		}
-		
+
 		$list = array();
-		$list["module:sample?op=18&type=1"] = "Caixa de Diálogo"; 
-		$list["module:sample?op=18&type=2"] = "Caixa de Diálogo Modal"; 
-		$list["module:sample?op=18&type=3"] = "Caixa de Diálogo Modal com botão de fechar"; 
-		$list["module:sample?op=18&type=4"] = "Caixa de Diálogo Modal com botões de confirmação e abrir personalizado"; 
-		$list["module:sample?op=18&type=5"] = "Box de Informação com auto hide"; 
+		$list["module:sample?op=18&type=1"] = "Caixa de Diálogo";
+		$list["module:sample?op=18&type=2"] = "Caixa de Diálogo Modal";
+		$list["module:sample?op=18&type=3"] = "Caixa de Diálogo Modal com botão de fechar";
+		$list["module:sample?op=18&type=4"] = "Caixa de Diálogo Modal com botões de confirmação e abrir personalizado";
+		$list["module:sample?op=18&type=5"] = "Box de Informação com auto hide";
 		$list["module:sample?op=18&type=6"] = "Box de Alerta";
 
 		$listElement = new XmlListCollection(XmlListType::UnorderedList, "Opções");
@@ -1172,10 +1172,10 @@ class Sample extends BaseModule
 			$listElement->addXmlnukeObject($href);
 		}
 		$block->addXmlnukeObject($listElement);
-		
+
 		$this->_document->addXmlnukeObject($block);
-	}	
-	
+	}
+
 }
 
 ?>

@@ -4,65 +4,70 @@
       <field name="LANGUAGE">en-us</field>
       <field name="TITLE">Edit Language Files</field>
       <field name="DESCRIPTION">Use this option to edit the language files used in modules.</field>
-      <field name="LANGUAGEMENU">New Language File</field>
+      <field name="NEWLANGUAGEFILE">New Language File</field>
+      <field name="VIEWSHAREDFILES">View public files</field>
+      <field name="VIEWPRIVATEFILES">View private files</field>
       <field name="WORKINGAREA">Module Languages Available</field>
-      <field name="MESSAGEWORKING">Select the module language you want to edit.</field>
-      <field name="MESSAGEWORKINGSHARED">Shared Language Files</field>
-      <field name="EDITINGAREA">Edit Language</field>
-      <field name="SAVED">Saved.</field>
-      <field name="FORMTITLE">Editing File "{0}"</field>
-      <field name="LANGUAGEFILE">Language File:</field>
+      <field name="EDITLANGUAGE">Editing file "{0}"</field>
+      <field name="NEWFILE">File name</field>
+      <field name="FIELDS">Field listing</field>
+      <field name="FILELIST">Private file listing</field>
+      <field name="FILELIST1">Shared file listing</field>
    </row>
    <row>
       <field name="LANGUAGE">pt-br</field>
       <field name="TITLE">Editar aquivos de Linguagem</field>
       <field name="DESCRIPTION">Utilize essa opção para editar os arquivos de linguagem utilizados nos módulos de programas.</field>
-      <field name="LANGUAGEMENU">Novo arquivo de linguagem</field>
-      <field name="WORKINGAREA">Arquivos de Linguagem Disponíveis</field>
-      <field name="MESSAGEWORKING">Selecione os arquivos de linguagem que você quer editar.</field>
-      <field name="MESSAGEWORKINGSHARED">Arquivos de linguagem compartilhados</field>
-      <field name="EDITINGAREA">Editar Arquivo de Linguagem</field>
-      <field name="SAVED">Salvo.</field>
-      <field name="FORMTITLE">Editando arquivo "{0}"</field>
-      <field name="LANGUAGEFILE">Arquivo de Linguagem: </field>
+      <field name="NEWLANGUAGEFILE">Novo arquivo de linguagem</field>
+      <field name="VIEWSHAREDFILES">Ver arquivos públicos</field>
+      <field name="VIEWPRIVATEFILES">Ver arquivos privativos</field>
+      <field name="WORKINGAREA">Gerenciar arquivos de linguagem / internacionalização</field>
+      <field name="EDITLANGUAGE">Editando arquivo "{0}"</field>
+      <field name="NEWFILE">Nome do arquivo</field>
+      <field name="FIELDS">Lista de campos</field>
+      <field name="FILELIST">Lista de arquivos de linguagem privativos</field>
+      <field name="FILELIST1">Lista de arquivos de linguagem públicos</field>
    </row>
    <row>
       <field name="LANGUAGE">de-de</field>
       <field name="TITLE">Sprach-Dateien bearbeiten</field>
       <field name="DESCRIPTION">Bearbeiten Sie die Spach-Dateien, die von XMLNuke benutzt werden und erstellen Sie neue.</field>
-      <field name="LANGUAGEMENU">Neue Sprach-Datei</field>
+      <field name="NEWLANGUAGEFILE">Neue Sprach-Datei</field>
+      <field name="VIEWSHAREDFILES">View Public Files</field>
+      <field name="VIEWPRIVATEFILES">Profil private Dateien</field>
       <field name="WORKINGAREA">Sprach-Dateien</field>
-      <field name="MESSAGEWORKING">Wählen Sie die Datei, die Sie bearbeiten möchten.</field>
-      <field name="MESSAGEWORKINGSHARED">Verfügbare Dateien</field>
-      <field name="EDITINGAREA">Datei bearbeiten</field>
-      <field name="SAVED">Datei wurde gespeichert.</field>
-      <field name="FORMTITLE">{0}</field>
-      <field name="LANGUAGEFILE">Dateiname:</field>
+      <field name="EDITLANGUAGE">Bearbeiten von Datei "{0}"</field>
+      <field name="NEWFILE">Dateiname</field>
+      <field name="FIELDS">Feldliste</field>
+      <field name="FILELIST">Liste Private Sprachdateien</field>
+      <field name="FILELIST1">Liste der Sprach-Dateien öffentlichen</field>
    </row>
    <row>
       <field name="LANGUAGE">fr-fr</field>
       <field name="TITLE">Edit Language Files</field>
       <field name="DESCRIPTION">Utilisez cette option pour modifier la langue de fichiers utilisés dans les modules.</field>
-      <field name="LANGUAGEMENU">New Language File</field>
+      <field name="NEWLANGUAGEFILE">New Language File</field>
+      <field name="VIEWSHAREDFILES">Visualiser les fichiers publics</field>
+      <field name="VIEWPRIVATEFILES">Visualiser les fichiers privés</field>
       <field name="WORKINGAREA">Module Langues disponibles</field>
-      <field name="MESSAGEWORKING">Sélectionnez le module de langue que vous souhaitez modifier.</field>
-      <field name="MESSAGEWORKINGSHARED">Shared Language Files</field>
-      <field name="EDITINGAREA">Modifier la langue</field>
-      <field name="SAVED">Sauvé.</field>
-      <field name="FORMTITLE">Editer le fichier "{0}"</field>
-      <field name="LANGUAGEFILE">Langue du fichier:</field>
+      <field name="EDITLANGUAGE">Editer le fichier de "{0}"</field>
+      <field name="NEWFILE">Nom du fichier</field>
+      <field name="FIELDS">Liste des champs</field>
+      <field name="FILELIST">Langue de la liste Fichiers privés</field>
+      <field name="FILELIST1">Liste des fichiers publics de langue</field>
    </row>
    <row>
       <field name="LANGUAGE">sv-se</field>
       <field name="TITLE">Edit Language Files</field>
       <field name="DESCRIPTION">Använd detta alternativ för att ändra språk filer som används i moduler.</field>
-      <field name="LANGUAGEMENU">New Språkfil</field>
+      <field name="NEWLANGUAGEFILE">New Språkfil</field>
+      <field name="VIEWSHAREDFILES">Visa privata filer</field>
+      <field name="VIEWPRIVATEFILES">Visa allmän filer</field>
       <field name="WORKINGAREA">Modul tillgängliga språk</field>
-      <field name="MESSAGEWORKING">Välj modulen språk du vill redigera.</field>
-      <field name="MESSAGEWORKINGSHARED">Delade Language Files</field>
-      <field name="EDITINGAREA">Ändra språk</field>
-      <field name="SAVED">Sparas.</field>
-      <field name="FORMTITLE">Redigerar File "{0}"</field>
-      <field name="LANGUAGEFILE">Språkfil:</field>
+      <field name="EDITLANGUAGE">Redigering fil "{0}"</field>
+      <field name="NEWFILE">Filnamn</field>
+      <field name="FIELDS">Fältlistan</field>
+      <field name="FILELIST">Förteckning Private språkfiler</field>
+      <field name="FILELIST1">Lista över språkfiler offentliga</field>
    </row>
 </anydataset>

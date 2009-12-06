@@ -116,12 +116,17 @@ class WebRequest
 		{
 			$this->_soapClass = new SoapClient(NULL,
 			array(
-				"location" => $url,
+				"location" => $this->_url,
 				"uri"      => "urn:xmethods-delayed-quotes",
 				"style"    => SOAP_RPC,
 				"use"      => SOAP_ENCODED
 				)
 			);
+
+			if (($this->_username != "") && ($this->_password != ""))
+			{
+				//$this->_soapClass-> setCredentials($this->_username, $this->_password);
+			}
 		}
 
 		return $this->_soapClass;
@@ -178,8 +183,8 @@ class WebRequest
 		curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)");
 		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, $this->_followLocation);
 		# sometimes we need this for https to work
-		//curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, false);
-		//curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 		if ($this->getReferer() != "")
 		{
 			curl_setopt($ch, CURLOPT_REFERER , $this->getReferer());

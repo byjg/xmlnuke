@@ -30,21 +30,21 @@
 /**
  * Login is a default module descendant from BaseModule class.
  * This class shows/edit the profile from the current user.
- * 
+ *
  * @see module.IModule.class.php
  * @see module.BaseModule.class.php
  * @subpackage xmlnuke.modules
  */
 abstract class LoginBase extends BaseModule
 {
-	
+
 	/**
 	 * Store return url
 	 *
 	 * @var String
 	 */
 	protected $_urlReturn;
-	
+
 	/**
 	 * Default constructor
 	 *
@@ -78,7 +78,7 @@ abstract class LoginBase extends BaseModule
 			$myWords->addText("en-us", "TITLE", "Module Login");
 
 			// Portuguese Words
-			$myWords->addText("pt-br", "TITLE", "M�dulo de Login");
+			$myWords->addText("pt-br", "TITLE", "Módulo de Login");
 		}
 
 		return $myWords;
@@ -96,7 +96,7 @@ abstract class LoginBase extends BaseModule
 		$url = XmlnukeManageUrl::decodeParam($this->_urlReturn);
 		$this->_context->redirectUrl($url);
 	}
-	
+
 	/**
 	 * Make a random password
 	 *
@@ -113,19 +113,19 @@ abstract class LoginBase extends BaseModule
 			$number = rand(0,25);
 			if ($type == 1)
 			{
-				$password = $password . chr(48 + ($number%10));		
+				$password = $password . chr(48 + ($number%10));
 			}
 			else
 			{
 				if ($type == 2)
 				{
 					$password = $password  . chr(65 + $number);
-					
+
 				}
 				else
 				{
 					$password  = $password . chr(97 + $number);
-					
+
 				}
 			}
 		}
@@ -147,7 +147,7 @@ abstract class LoginBase extends BaseModule
 		$path = substr($path,0,strrpos($path,"/")+1);
 		$url = $this->_context->ContextValue("SERVER_NAME").$path;
 		$body = $myWords->ValueArgs("WELCOMEMESSAGE", array($name, $this->_context->ContextValue("SERVER_NAME"), $user, $password, $url.$this->_context->bindModuleUrl("UserProfile")));
-		
+
 		MailUtil::Mail($this->_context,
 			MailUtil::getEmailFromID($this->_context, "DEFAULT"),
 			MailUtil::getFullEmailName($name, $email),

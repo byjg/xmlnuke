@@ -196,7 +196,12 @@ class ProcessPageStateAnydata extends ProcessPageStateBase
 			$data->appendRow();
 			for($i=0, $fieldLength = sizeof($this->_fields); $i<$fieldLength; $i++)
 			{
-				$data->addField($this->_fields[$i]->fieldName, $this->_context->ContextValue($this->_fields[$i]->fieldName));
+				$value = $this->_context->ContextValue($this->_fields[$i]->fieldName);
+				if ($this->_fields[$i]->saveDatabaseFormatter != null)
+				{
+					$value = $this->_fields[$i]->saveDatabaseFormatter->Format($srCurInfo, $this->_fields[$i]->fieldName, $value);
+				}
+				$data->addField($this->_fields[$i]->fieldName, $value);
 			}
 		}
 		else
@@ -212,7 +217,12 @@ class ProcessPageStateAnydata extends ProcessPageStateBase
 				{
 					for($i=0, $fieldsLength = sizeof($this->_fields); $i<$fieldsLength; $i++)
 					{
-						$sr->setField($this->_fields[$i]->fieldName, $this->_context->ContextValue($this->_fields[$i]->fieldName));
+						$value = $this->_context->ContextValue($this->_fields[$i]->fieldName);
+						if ($this->_fields[$i]->saveDatabaseFormatter != null)
+						{
+							$value = $this->_fields[$i]->saveDatabaseFormatter->Format($srCurInfo, $this->_fields[$i]->fieldName, $value);
+						}
+						$sr->setField($this->_fields[$i]->fieldName, $value);
 					}
 				}
 				else if ($this->_currentAction == self::ACTION_DELETE_CONFIRM)
@@ -238,6 +248,7 @@ class ProcessPageStateAnydata extends ProcessPageStateBase
 
 		return null;
 	}
+
 }
 
 ?>

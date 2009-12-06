@@ -43,7 +43,7 @@ class Debug
 	 */
 	public static function PrintValue($arg1, $arg2 = null)
 	{
-		if ($_REQUEST["rawxml"] == "true")
+		if (array_key_exists("rawxml", $_REQUEST) && ($_REQUEST["rawxml"] == "true"))
 		{
 			return;
 		}

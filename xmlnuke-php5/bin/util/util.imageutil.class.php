@@ -238,6 +238,8 @@ class ImageUtil
 		$this->image = $imw;
 		$this->width = $x;
 		$this->height = $y;
+
+		return $this;
 	}
 
 	/**
