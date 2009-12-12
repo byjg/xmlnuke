@@ -11,6 +11,7 @@
 <xmlnuke-htmlbody_poll />
 <xmlnuke-htmlbody_treeview />
 <xmlnuke-htmlbody_uialert />
+<xmlnuke-htmlbody_mediagallery />
 
 <xsl:template name="i18n.jquery">
 	<xsl:choose>

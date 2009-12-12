@@ -50,4 +50,5 @@ require_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/classes.xmlparagraphcollection.cla
 require_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/classes.xmltablecollection.class.php");
 require_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/classes.xmlnuketreeview.class.php");
 require_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/classes.xmlnukeuialert.class.php");
+require_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/classes.xmlnukemediagallery.class.php");
 ?>

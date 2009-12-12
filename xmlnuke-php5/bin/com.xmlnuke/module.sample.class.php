@@ -112,6 +112,7 @@ class Sample extends BaseModule
 		$this->_document->addMenuItem($linkModule."?op=16",$this->_myWords->Value("SORTABLE"), $this->_myWords->Value("DESCSORTABLE"));
 		$this->_document->addMenuItem($linkModule."?op=17",$this->_myWords->Value("CALENDAR"), $this->_myWords->Value("DESCCALENDAR"));
 		$this->_document->addMenuItem($linkModule."?op=18",$this->_myWords->Value("UIALERT"), $this->_myWords->Value("DESCUIALERT"));
+		$this->_document->addMenuItem($linkModule."?op=19",$this->_myWords->Value("MEDIAGALLERY"), $this->_myWords->Value("DESCMEDIAGALLERY"));
 
 		$block = new XmlBlockCollection($this->_myWords->Value("MODULE"), BlockPosition::Center);
 
@@ -215,6 +216,11 @@ class Sample extends BaseModule
 			case 18:
 				{
 					$this->Opcao18();
+					break;
+				}
+			case 19:
+				{
+					$this->Opcao19();
 					break;
 				}
 		}
@@ -1172,6 +1178,57 @@ class Sample extends BaseModule
 			$listElement->addXmlnukeObject($href);
 		}
 		$block->addXmlnukeObject($listElement);
+
+		$this->_document->addXmlnukeObject($block);
+	}
+
+	protected function Opcao19()
+	{
+		$block = new XmlBlockCollection("Exemplo 19: Media Gallery", BlockPosition::Center);
+
+		//XmlnukeBreakLine br = new XmlnukeBreakLine();
+
+		$para = new XmlParagraphCollection();
+		$para->addXmlnukeObject(new XmlnukeText("Galeria de Imagens (album de Fotos)"));
+
+		$gallery = new XmlnukeMediaGallery($this->_context, "Galeria1");
+		$gallery->addImage("common/imgs/albumsample/1.jpg", "common/imgs/albumsample/t_1.jpg", "Titulo Imagem 1", "Você pode colocar um caption aqui", 60, 60);
+		$gallery->addImage("common/imgs/albumsample/2.jpg", "common/imgs/albumsample/t_2.jpg", "Titulo Imagem 2", "Você pode colocar um caption aqui", 60, 60);
+		$gallery->addImage("common/imgs/albumsample/3.jpg", "common/imgs/albumsample/t_3.jpg", "Titulo Imagem 3", "Você pode colocar um caption aqui", 60, 60);
+		$para->addXmlnukeObject($gallery);
+		$block->addXmlnukeObject($para);
+
+		$para = new XmlParagraphCollection();
+		$para->addXmlnukeObject(new XmlnukeText("Flash, Youtube e Quicktime"));
+
+		$gallery = new XmlnukeMediaGallery($this->_context);
+		$gallery->addEmbed("http://www.adobe.com/products/flashplayer/include/marquee/design.swf", 792, 294, "http://images.apple.com/trailers/wb/images/terminatorsalvation_200903131052.jpg", "Titulo Flash", "Aqui vc está vendo um Flash");
+		$gallery->addEmbed("http://movies.apple.com/movies/wb/terminatorsalvation/terminatorsalvation-tlr3_h.480.mov", 480, 204, "http://images.apple.com/trailers/wb/images/terminatorsalvation_200903131052.jpg", "Titulo Quicktime", "Aqui vc está vendo um Quicktime Movie");
+		$gallery->addEmbed("http://www.youtube.com/watch?v=4m48GqaOz90", "", "", "http://i1.ytimg.com/vi/4m48GqaOz90/default.jpg", "Titulo Youtube", "Aqui vc está vendo um Vídeo do Youtube");
+		$para->addXmlnukeObject($gallery);
+		$block->addXmlnukeObject($para);
+
+		$para = new XmlParagraphCollection();
+		$para->addXmlnukeObject(new XmlnukeText("IFrame"));
+
+		$gallery = new XmlnukeMediaGallery($this->_context);
+		$gallery->addIFrame("module:sample", 480, 204, "", "IFrame");
+		$para->addXmlnukeObject($gallery);
+		$block->addXmlnukeObject($para);
+
+		$gallery = new XmlnukeMediaGallery($this->_context, "Galeria2");
+		$gallery->setApi(true);
+		$gallery->setVisible(false);
+		$gallery->addImage("common/imgs/albumsample/4.jpg", "", "Titulo Imagem 1", "Você pode colocar um caption aqui");
+		$gallery->addImage("common/imgs/albumsample/5.jpg", "", "Titulo Imagem 2", "Você pode colocar um caption aqui");
+		$gallery->addImage("common/imgs/albumsample/1.jpg", "", "Titulo Imagem 3", "Você pode colocar um caption aqui");
+		$block->addXmlnukeObject($gallery);
+
+		$form = new XmlFormCollection($this->_context, "", "Abrir por JavaScript");
+		$button = new XmlInputButtons();
+		$button->addButton("Clique para abrir a Galeria", "kk", "open_Galeria2()");
+		$form->addXmlnukeObject($button);
+		$block->addXmlnukeObject($form);
 
 		$this->_document->addXmlnukeObject($block);
 	}

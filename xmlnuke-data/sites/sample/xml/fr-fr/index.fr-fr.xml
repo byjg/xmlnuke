@@ -60,7 +60,17 @@ Comment groupe de contrôles visuels dans des onglets</summary>
 			<title>Treeview</title>
 			<summary>Treeview composante.</summary>
 		</page>
-	<page><id>dialog</id><title>Fenêtre de dialogue</title><summary>Comment faire pour ouvrir la fenêtre de dialogue sur l'interface utilisateur en utilisant XML</summary></page></group>
+		<page>
+			<id>dialog</id>
+			<title>Fenêtre de dialogue</title>
+			<summary>Comment faire pour ouvrir la fenêtre de dialogue sur l'interface utilisateur en utilisant XML</summary>
+		</page>
+		<page>
+			<id>mediagallery</id>
+			<title>Album photo &amp; Media</title>
+			<summary>XML pour montrer comment l'album et les médias</summary>
+		</page>
+	</group>
 	<group>
 		<id>dynmenu</id>
 		<title>Dynamic Menus</title>

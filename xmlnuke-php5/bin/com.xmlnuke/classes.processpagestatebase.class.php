@@ -43,6 +43,8 @@ class XmlInputObjectType
 	const DUALLIST = 8;
 	const HTMLTEXT = 9;
 	const TEXTBOX_AUTOCOMPLETE = 10;
+	const DATE = 11;
+	const DATETIME = 12;
 	const CUSTOM = 100; // This $fields need be created by the user
 }
 /**
@@ -946,6 +948,12 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 			$label->addXmlnukeObject($duallist);
 
 			return $label;
+		}
+		else if (($field->fieldXmlInput == XmlInputObjectType::DATE) || ($field->fieldXmlInput == XmlInputObjectType::DATETIME))
+		{
+			$cur = explode(" ", $curValue);
+			$idt = new XmlInputDateTime($field->fieldCaption, $field->fieldName, $this->_dateFormat, ($field->fieldXmlInput == XmlInputObjectType::DATETIME), $cur[0], $cur[1]);
+			return $idt;
 		}
 		else
 		{

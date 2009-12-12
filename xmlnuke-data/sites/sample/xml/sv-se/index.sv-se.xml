@@ -69,7 +69,17 @@
 			<title>Treeview</title>
 			<summary>TreeView komponent.</summary>
 		</page>
-	<page><id>dialog</id><title>UI dialogrutan</title><summary>Hur öppna dialogfönstret på användargränssnitt med hjälp av XML</summary></page></group>
+		<page>
+			<id>dialog</id>
+			<title>UI dialogrutan</title>
+			<summary>Hur öppna dialogfönstret på användargränssnitt med hjälp av XML</summary>
+		</page>
+		<page>
+			<id>mediagallery</id>
+			<title>Fotoalbum &amp; Media</title>
+			<summary>XML för att visa hur albumet och media</summary>
+		</page>
+	</group>
 	<group>
 		<id>dynmenu</id>
 		<title>Dynamiska menyer</title>

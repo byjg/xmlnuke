@@ -1,11 +1,43 @@
-<script type="text/javascript" src="common/3rdparty/jquery/js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+	google.load("jquery", "1.3.2");
+</script>
 <script type="text/javascript" src="common/js/xmlnuke.js"></script>
 
 <!-- UI JavaScript Object -->
-<xsl:if test="//sortablelist or //calendar or //faq or //datetimebox or //uialert">
-	<link type="text/css" href="common/3rdparty/jquery/css/smoothness/jquery-ui-1.7.1.custom.css" rel="stylesheet" />
-	<script type="text/javascript" src="common/3rdparty/jquery/js/jquery-ui-1.7.1.custom.min.js"></script>
-	<script type="text/javascript" src="common/3rdparty/jquery/js/jquery-ui-i18n.min.js"></script>
+<xsl:if test="//sortablelist or //calendar or //faq or //datetimebox or //uialert or //mediagallery">
+
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+	<!--
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/black-tie/jquery-ui.css" rel="stylesheet" />
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/blitzer/jquery-ui.css" rel="stylesheet" />
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/cupertino/jquery-ui.css" rel="stylesheet" />
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/dark-hive/jquery-ui.css" rel="stylesheet" />
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/dot-luv/jquery-ui.css" rel="stylesheet" />
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/eggplant/jquery-ui.css" rel="stylesheet" />
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/excite-bike/jquery-ui.css" rel="stylesheet" />
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/flick/jquery-ui.css" rel="stylesheet" />
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/hot-sneaks/jquery-ui.css" rel="stylesheet" />
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/humanity/jquery-ui.css" rel="stylesheet" />
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/le-frog/jquery-ui.css" rel="stylesheet" />
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/mint-choc/jquery-ui.css" rel="stylesheet" />
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/overcast/jquery-ui.css" rel="stylesheet" />
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/pepper-grinder/jquery-ui.css" rel="stylesheet" />
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/redmond/jquery-ui.css" rel="stylesheet" />
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/south-street/jquery-ui.css" rel="stylesheet" />
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/start/jquery-ui.css" rel="stylesheet" />
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/sunny/jquery-ui.css" rel="stylesheet" />
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/swanky-purse/jquery-ui.css" rel="stylesheet" />
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/trontastic/jquery-ui.css" rel="stylesheet" />
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/ui-darkness/jquery-ui.css" rel="stylesheet" />
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
+	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/vader/jquery-ui.css" rel="stylesheet" />
+	-->
+	<script type="text/javascript">
+		google.load("jqueryui", "1.7.2");
+	</script>
+	<script type="text/javascript" src="common/3rdparty/jquery/jquery-ui-i18n.min.js" />
 	<style type="text/css">
 		.ui-state-error, .ui-state-highlight {
 			margin: 0.5em;
@@ -277,6 +309,36 @@
 		}, <xsl:value-of select="@autohide" />);
 		</xsl:for-each>
 	});
+	</script>
+</xsl:if>
+
+<!-- Include specific JavaScript for pretty Photo -->
+<xsl:if test="//mediagallery">
+	<link rel="stylesheet" href="common/3rdparty/jquery/prettyphoto/prettyPhoto.css" type="text/css" media="screen" title="prettyPhoto main stylesheet" charset="utf-8" />
+	<script src="common/3rdparty/jquery/prettyphoto/jquery.prettyPhoto.js" type="text/javascript" charset="utf-8"></script>
+	<style>
+		.mediagallerygallery, .pp_details, .pp_description, .pp_nav
+		{
+			font: 90% Arial, Verdana, Sans-Serif;
+			margin: 0; padding: 0;
+		}
+
+		.mediagallerygallery li { display: inline; margin: 0; padding: 0; }
+	</style>
+	<script type="text/javascript" charset="utf-8">
+	$(document).ready(function(){
+		$(".mediagallerygallery a[rel^='prettyPhoto']").prettyPhoto({theme:'dark_rounded'});
+	});
+
+	<xsl:for-each select="//mediagallery[@api='true' and @name]">
+	function open_<xsl:value-of select="@name" />()
+	{
+		images = [<xsl:for-each select="mediaitem">'<xsl:value-of select="@src" />'<xsl:if test="position()!=last()">,</xsl:if></xsl:for-each>];
+		titles = [<xsl:for-each select="mediaitem">'<xsl:value-of select="@title" />'<xsl:if test="position()!=last()">,</xsl:if></xsl:for-each>];
+		descriptions = [<xsl:for-each select="mediaitem">'<xsl:value-of select="@caption" />'<xsl:if test="position()!=last()">,</xsl:if></xsl:for-each>];
+		$.prettyPhoto.open(images,titles,descriptions);
+	}
+	</xsl:for-each>
 	</script>
 </xsl:if>
 
