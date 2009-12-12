@@ -218,6 +218,14 @@ class ProcessPageStateAnydata extends ProcessPageStateBase
 					for($i=0, $fieldsLength = sizeof($this->_fields); $i<$fieldsLength; $i++)
 					{
 						$value = $this->_context->ContextValue($this->_fields[$i]->fieldName);
+
+						if ($this->_fields[$i]->fieldXmlInput == XmlInputObjectType::FILEUPLOAD)
+						{
+							$files = $this->_context->getUploadFileNames();
+							if ($files[$this->_fields[$i]->fieldName] == "")
+								continue; // Do nothing if none files are uploaded.
+						}
+
 						if ($this->_fields[$i]->saveDatabaseFormatter != null)
 						{
 							$value = $this->_fields[$i]->saveDatabaseFormatter->Format($srCurInfo, $this->_fields[$i]->fieldName, $value);

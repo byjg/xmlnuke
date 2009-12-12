@@ -6,25 +6,25 @@
  *  XMLNuke: A Web Development Framework based on XML.
  *
  *  Main Specification: Joao Gilberto Magalhaes, joao at byjg dot com
- * 
+ *
  *  This file is part of XMLNuke project. Visit http://www.xmlnuke.com
  *  for more information.
- *  
+ *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
  *  as published by the Free Software Foundation; either version 2
  *  of the License, or (at your option) any later version.
- *  
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
- *  
+ *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
- *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
+ *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
 /**
@@ -41,7 +41,7 @@
 * fieldPage[0]->visibleInList = true;   ** This field must be visible and in the FIRST position
 * fieldPage[0]->editable = true;        ** If the Key field is AutoIncrement set $this property to false->
 * fieldPage[0]->required = true;
-* 
+*
 * fieldPage[1]->fieldName = "field2";
 * fieldPage[1]->key = false;
 * fieldPage[1]->dataType = INPUTTYPE::TEXT;
@@ -50,7 +50,7 @@
 * fieldPage[1]->visibleInList = true;
 * fieldPage[1]->editable = true;
 * fieldPage[1]->required = true;
-* 
+*
 * fieldPage[2]->fieldName = "field3";
 * fieldPage[2]->key = false;
 * fieldPage[2]->dataType = INPUTTYPE::DATE;
@@ -62,20 +62,20 @@
 * </code>
 * After defined $all the $fields the user must create the class, like $this:
 * <code>
-* ** Create a Block-> 
+* ** Create a Block->
 * XmlBlockCollection block = new XmlBlockCollection("ProcessPageStateDB Example", BlockPosition->Center);
-* 
+*
 * ** Create the class passing $all relevant paramenters->
 * ProcessPageStateDB processPage = new ProcessPageStateDB(
-*                   $this->_context, 
-*                   fieldPage, 
-*                   "Editing Table 'mytable'", 
-*                   "$module:sample", 
-*                   null, 
-*                   "mytable", 
+*                   $this->_context,
+*                   fieldPage,
+*                   "Editing Table 'mytable'",
+*                   "$module:sample",
+*                   null,
+*                   "mytable",
 *                   "myconnection");
 * block1->addXmlnukeObject(processPage);
-* 
+*
 * ** Create a XmlnukeDocument and generate XML in the CreatePage method->
 * XmlnukeDocument xmlnukeDoc = new XmlnukeDocument("Titulo da Pagina", "Abstract Dessa Pagina");
 * xmlnukeDoc->addXmlnukeObject(block1);
@@ -101,12 +101,12 @@ class ProcessPageStateDB extends ProcessPageStateBase
 	/**
 	*@var string
 	*/
-	protected $_fieldDeliRight = "";	
+	protected $_fieldDeliRight = "";
 	/**
 	 * @var DBDataSet
 	 */
 	protected $_dbData = null;
-	
+
 	/**
 	*@desc Constructor
 	*@param Context $context XMLNuke context object
@@ -124,20 +124,20 @@ class ProcessPageStateDB extends ProcessPageStateBase
 		$this->_table = $table;
 		$this->_dbData = new DBDataSet($this->_conn, $this->_context);
 	}
-	
+
 	/**
 	*@desc Returns an IIterator with all records in table
-	*@param 
+	*@param
 	*@return IIterator
 	*/
 	public function getAllRecords()
 	{
 		return $this->GetIterator(true);
 	}
-	
+
 	/**
 	*@desc Return a SingleRow with the selection of the user
-	*@param 
+	*@param
 	*@return SingleRow
 	*/
 	public function getCurrentRecord()
@@ -145,7 +145,7 @@ class ProcessPageStateDB extends ProcessPageStateBase
 		if ($this->_currentAction != self::ACTION_NEW)
 		{
 			$it = $this->GetIterator(false);
-			
+
 			if ($it->hasNext())
 			{
 				return $it->moveNext();
@@ -153,23 +153,23 @@ class ProcessPageStateDB extends ProcessPageStateBase
 		}
 		return null;
 	}
-	
+
 	protected function getWhereClause(&$param)
 	{
 		$arValueId = explode("|", $this->_valueId);
 		$where = "";
 		$i = 0;
-		foreach ($this->_keyIndex as $keyIndex) 
+		foreach ($this->_keyIndex as $keyIndex)
 		{
 			$where .= (($where!="")? " and " : "") . $this->_fields[$keyIndex]->fieldName . " = [[valueid" . $keyIndex. "]] ";
 			$param["valueid" . $keyIndex] = $arValueId[$i++];
 		}
 		return $where;
 	}
-	
+
 	/**
 	*@desc Execute the proper action to insert, update and delete data from database
-	*@param 
+	*@param
 	*@return IXmlnukeDocumentObject - it contains all necessary XML to inform the user the operation result
 	*/
 	public function updateRecord()
@@ -208,7 +208,7 @@ class ProcessPageStateDB extends ProcessPageStateBase
 
 		return null;
 	}
-	
+
 	protected function preProcessValue($fieldName, $dataType, $currentValue)
 	{
 		$value = null;
@@ -228,7 +228,7 @@ class ProcessPageStateDB extends ProcessPageStateBase
 		{
 			$value = $currentValue;
 		}
-		
+
 		return $value;
 	}
 
@@ -243,14 +243,14 @@ class ProcessPageStateDB extends ProcessPageStateBase
 
 	public function getFieldDeliRight()
 	{
-		return $this->_fieldDeliRight; 
+		return $this->_fieldDeliRight;
 	}
 	public function setFieldDeliRight($value)
 	{
 		$this->_fieldDeliRight = $value;
 	}
-	
-	
+
+
 	/**
 	 * @param SQLType $sqlType
 	 */
@@ -262,7 +262,7 @@ class ProcessPageStateDB extends ProcessPageStateBase
 			// Get a SingleRow with all field values
 			$anyCurInfo = new AnyDataSet();
 			$anyCurInfo->appendRow();
-			foreach ($this->_fields as $field) 
+			foreach ($this->_fields as $field)
 			{
 				$anyCurInfo->addField($field->fieldName, $this->_context->ContextValue($field->fieldName));
 			}
@@ -270,21 +270,28 @@ class ProcessPageStateDB extends ProcessPageStateBase
 			$srCurInfo = $itCurInfo->moveNext();
 
 			// Format and Adjust all field values
-			foreach ($this->_fields as $field) 
+			foreach ($this->_fields as $field)
 			{
 				if ($field->editable)
 				{
 					$value = $this->preProcessValue($field->fieldName, $field->dataType, $this->_context->ContextValue($field->fieldName));
+					if ($field->fieldXmlInput == XmlInputObjectType::FILEUPLOAD)
+					{
+						$files = $this->_context->getUploadFileNames();
+						if ($files[$field->fieldName] == "")
+							continue; // Do nothing if none files are uploaded.
+					}
+
 					if ($field->saveDatabaseFormatter != null)
 					{
 						$value = $field->saveDatabaseFormatter->Format($srCurInfo, $field->fieldName, $value);
-					}				
-					
+					}
+
 					$fieldList[$field->fieldName] = array(SQLFieldType::Text, $value);
 				}
 			}
 		}
-		
+
 		$param = array();
 		if ($sqlType != SQLType::SQL_INSERT)
 		{
@@ -294,14 +301,14 @@ class ProcessPageStateDB extends ProcessPageStateBase
 		{
 			$filter = "";
 		}
-		
+
 		$helper = new SQLHelper($this->_dbData);
 		$helper->setFieldDelimeters($this->getFieldDeliLeft(), $this->getFieldDeliRight());
-		$sql = $helper->generateSQL($this->_table, $fieldList, $param, $sqlType, $filter, $this->_decimalSeparator);		
+		$sql = $helper->generateSQL($this->_table, $fieldList, $param, $sqlType, $filter, $this->_decimalSeparator);
 		$this->DebugInfo($sql, $param);
 		$this->_dbData->execSQL($sql, $param);
 	}
-	
+
 	/**
 	 * @param bool $getAll
 	 * @return IIterator
@@ -309,17 +316,17 @@ class ProcessPageStateDB extends ProcessPageStateBase
 	protected function GetIterator($getAll)
 	{
 		$fields = "";
-		foreach ($this->_fields as $field) 
+		foreach ($this->_fields as $field)
 		{
 			if ($field->visibleInList || $field->key || !$getAll)
 			{
 				if ($fields != "") $fields .= ",";
 				$fields .= $this->getFieldDeliLeft() . $field->fieldName . $this->getFieldDeliRight();
 			}
-		}		
+		}
 
-		$sql = 
-			"select " . $fields . " " . 
+		$sql =
+			"select " . $fields . " " .
 			"from " . $this->_table . " ";
 
 		$param = array();
@@ -335,11 +342,11 @@ class ProcessPageStateDB extends ProcessPageStateBase
 		{
 			$sql .= " order by " . $this->getSort();
 		}
-		
+
 		$this->DebugInfo($sql, $param);
 		return $this->_dbData->getIterator($sql, $param);
 	}
-	
+
 	protected function DebugInfo($sql, $param)
 	{
 		if ($this->_context->getDebugInModule())
@@ -362,7 +369,7 @@ class ProcessPageStateDB extends ProcessPageStateBase
 			}
 		}
 	}
-	
+
 	/**
 	 * Format a date field from Database values
 	 * @param $curValue
@@ -377,11 +384,11 @@ class ProcessPageStateDB extends ProcessPageStateBase
 		catch (Exception $ex)
 		{
 			return "??/??/????";
-		}		
+		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param EditListField $editListField
 	 * @param ProcessPageField $field
 	 * @return EditListField
@@ -408,23 +415,23 @@ class ProcessPageStateDBFormatterDate implements IEditListFormatter
 	protected $_dbData = null;
 	protected $_hour = null;
 	protected $_dateFormat = null;
-	
+
 	public function __construct($dbData, $dateFormat, $hour)
 	{
 		$this->_dbData = $dbData;
-		$this->_dateFormat = $dateFormat;		
+		$this->_dateFormat = $dateFormat;
 		$this->_hour = $hour;
 	}
-	
+
 	public function Format($row, $fieldname, $value)
 	{
 		if ($value != "")
 		{
 			return $this->_dbData->getDbFunctions()->fromDate($value, $this->_dateFormat, $this->_hour);
 		}
-		else 
+		else
 		{
-			return "";	
+			return "";
 		}
 	}
 }

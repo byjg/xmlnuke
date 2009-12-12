@@ -45,6 +45,7 @@ class XmlInputObjectType
 	const TEXTBOX_AUTOCOMPLETE = 10;
 	const DATE = 11;
 	const DATETIME = 12;
+	const FILEUPLOAD = 13;
 	const CUSTOM = 100; // This $fields need be created by the user
 }
 /**
@@ -514,7 +515,11 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 
 			if ($field->editable)
 			{
-				if (($curValue == "") && ($field->required))
+				if ($this->_fields[$i]->fieldXmlInput == XmlInputObjectType::FILEUPLOAD)
+				{
+					continue; // Do not validate Upload Fields
+				}
+				else if (($curValue == "") && ($field->required))
 				{
 					$nvc["err" . $i] = $this->_lang->Value("ERR_REQUIRED", $field->fieldCaption);
 				}
@@ -955,6 +960,11 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 			$idt = new XmlInputDateTime($field->fieldCaption, $field->fieldName, $this->_dateFormat, ($field->fieldXmlInput == XmlInputObjectType::DATETIME), $cur[0], $cur[1]);
 			return $idt;
 		}
+		else if ($field->fieldXmlInput == XmlInputObjectType::FILEUPLOAD)
+		{
+			$file = new XmlInputFile($field->fieldCaption, $field->fieldName);
+			return $file;
+		}
 		else
 		{
 //			XmlInputLabelField xlf
@@ -1107,5 +1117,41 @@ class ProcessPageStateBaseFormatterDualList implements IEditListFormatter
 	}
 }
 
+
+class ProcessPageStateBaseSaveFormatterFileUpload implements IEditListFormatter
+{
+	/**
+	 * @var Context
+	 */
+	protected $_context = "";
+	protected $_path = "";
+	protected $_saveAs = "";
+
+	public function __construct($context, $path, $saveAs = "*")
+	{
+		$this->_context = $context;
+		$this->_path = $path;
+		$this->_saveAs = $saveAs;
+	}
+
+	public function Format($row, $fieldname, $value)
+	{
+		$files = $this->_context->getUploadFileNames();
+
+		if ($files[$fieldname] != "")
+		{
+			$fileProcessor = new UploadFilenameProcessor($this->_saveAs, $this->_context);
+			$fileProcessor->setFilenameLocation(ForceFilenameLocation::DefinePath, $this->_path);
+
+			// Salva os arquivos do formulário
+			$result = $this->_context->processUpload($fileProcessor, ($this->_saveAs != "*"), $fieldname);
+			return $result[0];
+		}
+		else
+		{
+			return $row->getField($fieldname);
+		}
+	}
+}
 
 ?>

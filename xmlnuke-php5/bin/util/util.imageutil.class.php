@@ -68,6 +68,17 @@ class ImageUtil
 		$this->image = $this->org_image = $image;
 	}
 
+	public function getWidth()
+	{
+		return imagesx($this->image);
+	}
+
+	public function getHeight()
+	{
+		return imagesy($this->image);
+	}
+
+
 	/**
 	 * Enter description here...
 	 *
