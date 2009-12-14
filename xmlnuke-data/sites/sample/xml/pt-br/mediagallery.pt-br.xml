@@ -24,11 +24,11 @@
 				
 			<p>Album de Fotos
 			<mediagallery name="testing">
-				<mediaitem src="common/imgs/albumsample/1.jpg" thumb="common/imgs/albumsample/1.jpg" caption="You can add a caption to this photo" title="Image 1" width="60" height="60" />
-				<mediaitem src="common/imgs/albumsample/2.jpg" thumb="common/imgs/albumsample/2.jpg" caption="You can add a caption to this photo" title="Image 2" width="60" height="60" />
-				<mediaitem src="common/imgs/albumsample/3.jpg" thumb="common/imgs/albumsample/3.jpg" caption="You can add a caption to this photo" title="Image 3" width="60" height="60" />
-				<mediaitem src="common/imgs/albumsample/4.jpg" thumb="common/imgs/albumsample/4.jpg" caption="You can add a caption to this photo" title="Image 4" width="60" height="60" />
-				<mediaitem src="common/imgs/albumsample/5.jpg" thumb="common/imgs/albumsample/5.jpg" caption="You can add a caption to this photo" title="Image 5" width="60" height="60" />
+				<mediaitem src="common/imgs/albumsample/1.jpg" thumb="common/imgs/albumsample/t_1.jpg" caption="You can add a caption to this photo" title="Image 1" width="60" height="60" />
+				<mediaitem src="common/imgs/albumsample/2.jpg" thumb="common/imgs/albumsample/t_2.jpg" caption="You can add a caption to this photo" title="Image 2" width="60" height="60" />
+				<mediaitem src="common/imgs/albumsample/3.jpg" thumb="common/imgs/albumsample/t_3.jpg" caption="You can add a caption to this photo" title="Image 3" width="60" height="60" />
+				<mediaitem src="common/imgs/albumsample/4.jpg" thumb="common/imgs/albumsample/t_4.jpg" caption="You can add a caption to this photo" title="Image 4" width="60" height="60" />
+				<mediaitem src="common/imgs/albumsample/5.jpg" thumb="common/imgs/albumsample/t_5.jpg" caption="You can add a caption to this photo" title="Image 5" width="60" height="60" />
 			</mediagallery>
 			</p>
 
