@@ -317,17 +317,17 @@
 	<link rel="stylesheet" href="common/3rdparty/jquery/prettyphoto/prettyPhoto.css" type="text/css" media="screen" title="prettyPhoto main stylesheet" charset="utf-8" />
 	<script src="common/3rdparty/jquery/prettyphoto/jquery.prettyPhoto.js" type="text/javascript" charset="utf-8"></script>
 	<style>
-		.mediagallerygallery, .pp_details, .pp_description, .pp_nav
+		.mediagallery, .pp_details, .pp_description, .pp_nav
 		{
 			font: 90% Arial, Verdana, Sans-Serif;
 			margin: 0; padding: 0;
 		}
 
-		.mediagallerygallery li { display: inline; margin: 0; padding: 0; }
+		.mediagallery li { display: block; float: left; margin: 0; padding: 0; }
 	</style>
 	<script type="text/javascript" charset="utf-8">
 	$(document).ready(function(){
-		$(".mediagallerygallery a[rel^='prettyPhoto']").prettyPhoto({theme:'dark_rounded'});
+		$(".mediagallery a[rel^='prettyPhoto']").prettyPhoto({theme:'dark_rounded'});
 	});
 
 	<xsl:for-each select="//mediagallery[@api='true' and @name]">

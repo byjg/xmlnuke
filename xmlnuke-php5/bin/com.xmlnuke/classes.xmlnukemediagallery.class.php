@@ -43,6 +43,7 @@ class XmlnukeMediaGallery extends XmlnukeCollection implements IXmlnukeDocumentO
 	protected $_name = "";
 	protected $_api = false;
 	protected $_visible = true;
+	protected $_showCaptionOnThumb = false;
 
 	/**
 	*@desc Generate page, processing yours childs.
@@ -84,6 +85,15 @@ class XmlnukeMediaGallery extends XmlnukeCollection implements IXmlnukeDocumentO
 	public function setVisible($value)
 	{
 		$this->_visible = $value;
+	}
+
+	public function getShowCaptionOnThumb()
+	{
+		return $this->_showCaptionOnThumb;
+	}
+	public function setShowCaptionOnThumb($value)
+	{
+		$this->_showCaptionOnThumb = $value;
 	}
 
 	public function addXmlnukeObject($object)
@@ -153,6 +163,7 @@ class XmlnukeMediaGallery extends XmlnukeCollection implements IXmlnukeDocumentO
 		XmlUtil::AddAttribute($mediaGallery, "name", $this->_name);
 		XmlUtil::AddAttribute($mediaGallery, "api", ($this->_api ? "true" : "false"));
 		XmlUtil::AddAttribute($mediaGallery, "visible", ($this->_visible ? "true" : "false"));
+		XmlUtil::AddAttribute($mediaGallery, "showthumbcaption", ($this->_showCaptionOnThumb ? "true" : "false"));
 		$this->generatePage($mediaGallery);
 	}
 

@@ -15,14 +15,18 @@
 <xsl:template match="mediagallery[@visible='true' or not(@visible)]">
 
 	<xsl:variable name="mediagallery"><xsl:value-of select="@name" /></xsl:variable>
+	<xsl:variable name="showthumbcaption"><xsl:value-of select="@showthumbcaption" /></xsl:variable>
 
-	<ul class="mediagallerygallery clearfix">
+	<ul class="mediagallery clearfix">
 		<xsl:for-each select="mediaitem" >
 			<li>
 				<a href="{@src}" rel="prettyPhoto[{$mediagallery}]" title="{@caption}">
-					<xsl:if test="@thumb"><img src="{@thumb}" width="{@width}" height="{@height}" alt="{@title}" /></xsl:if>
+					<xsl:if test="@thumb"><img src="{@thumb}" width="{@width}" height="{@height}" alt="{@title}" title="{@title}" /></xsl:if>
 					<xsl:if test="not(@thumb)"><xsl:value-of select="@title" /></xsl:if>
 				</a>
+				<xsl:if test="$showthumbcaption='true'">
+					<br/><xsl:value-of select="@title" />
+				</xsl:if>
 			</li>
 		</xsl:for-each>
 	</ul>
