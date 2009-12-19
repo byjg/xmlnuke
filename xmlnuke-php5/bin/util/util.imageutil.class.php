@@ -207,27 +207,38 @@ class ImageUtil
 	 */
 	function resizeSquare($new_size, $fillRed = 255, $fillGreen = 255, $fillBlue = 255)
 	{
+		return $this->resizeAspectRatio($new_size, $new_size, $fillRed, $fillGreen, $fillBlue);
+	}
+
+	/**
+	 * Enter description here...
+	 *
+	 * @param int $new_size
+	 * @return ImageUtil
+	 */
+	function resizeAspectRatio($newX, $newY, $fillRed = 255, $fillGreen = 255, $fillBlue = 255)
+	{
 		if (! $this->image)
 			return false;
-		if (! $new_size)
+		if (! $newX || ! $newY)
 			return false;
 
 		$im = $this->image;
 
-		if (imagesy ( $im ) >= $new_size || imagesx ( $im ) >= $new_size)
+		if (imagesy ( $im ) >= $newY || imagesx ( $im ) >= $newX)
 		{
 			if (imagesx ( $im ) >= imagesy ( $im ))
 			{
-				$x = $new_size;
+				$x = $newX;
 				$y = ($x * imagesy ( $im )) / imagesx ( $im );
-				$yyy = - ($y - $x) / 2;
+				$yyy = - ($y - $newY) / 2;
 				$xxx = 0;
 			}
 			else
 			{
-				$y = $new_size;
+				$y = $newY;
 				$x = ($y * imagesx ( $im )) / imagesy ( $im );
-				$xxx = - ($x - $y) / 2;
+				$xxx = - ($x - $newX) / 2;
 				$yyy = 0;
 			}
 		}
@@ -239,7 +250,7 @@ class ImageUtil
 			$xxx = 0;
 		}
 
-		$imw = imagecreatetruecolor ( $new_size, $new_size );
+		$imw = imagecreatetruecolor ( $newX, $newY );
 		$color = imagecolorallocate ( $imw, $fillRed, $fillGreen, $fillBlue );
 		imagefill ( $imw, 0, 0, $color );
 		imagealphablending ( $imw, false );
