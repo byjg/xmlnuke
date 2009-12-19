@@ -913,6 +913,7 @@ class Context
 	*/
 	public function removeCookie($name)
 	{
+		setcookie ($name, "", time() - 3600);
 		unset($_COOKIE[$name]);
 		unset($this->_config["cookie." . $name]);
 	}
