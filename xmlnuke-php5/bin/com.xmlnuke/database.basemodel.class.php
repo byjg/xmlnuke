@@ -32,6 +32,23 @@ abstract class BaseModel
 
 	protected $_propertyPattern = array("/(\w*)/", "$1");
 
+	/**
+	 *
+	 * @param SingleRow $object
+	 * @return void
+	 */
+	public function __constructor($object)
+	{
+		if ($object instanceof SingleRow)
+		{
+			$this->bindSingleRow($object);
+		}
+		elseif ($object instanceof IIterator)
+		{
+			$this->bindIterator($object);
+		}
+	}
+
 
 	/**
 	 * This setter enable changes in how XMLNuke will match a property (protected) into your Getter or Setter
