@@ -45,12 +45,10 @@ function trace($msg) {
   flush();
 }
 
-if (phpversion() >= '4') {
-    function PHPUnit_error_handler($errno, $errstr, $errfile, $errline) {
+function PHPUnit_error_handler($errno, $errstr, $errfile, $errline) {
 	global $PHPUnit_testRunning;
 	if (error_reporting())
 	    $PHPUnit_testRunning[0]->fail("<B>PHP ERROR:</B> ".$errstr." <B>in</B> ".$errfile." <B>at line</B> ".$errline);
-    }
 }
 
 class PHPUNITException extends Exception {
@@ -77,34 +75,33 @@ class Assert {
 	  $this->failNotEquals($expected, $actual, "expected", $message);
 	  return;
       }
-      if (phpversion() < '4') {
-	  if (is_object($expected) or is_object($actual)
+
+      if (is_object($expected) or is_object($actual)
 	      or is_array($expected) or is_array($actual)) {
 	      $this->error("INVALID TEST: cannot compare arrays or objects in PHP3");
 	      return;
 	  }
-      }
-      if (phpversion() >= '4' && is_object($expected)) {
-	  if (get_class($expected) != get_class($actual)) {
-	      $this->failNotEquals($expected, $actual, "expected", $message);
-	      return;
-	  }
-	  if (method_exists($expected, "equals")) {
-	      if (! $expected->equals($actual)) {
-		  $this->failNotEquals($expected, $actual, "expected", $message);
-	      }
-	      return;		// no further tests after equals()
 
-	  }
+      if (is_object($expected)) {
+		  if (get_class($expected) != get_class($actual)) {
+		      $this->failNotEquals($expected, $actual, "expected", $message);
+		      return;
+		  }
+		  if (method_exists($expected, "equals")) {
+		      if (! $expected->equals($actual)) {
+			  $this->failNotEquals($expected, $actual, "expected", $message);
+		      }
+		      return;		// no further tests after equals()
+
+		  }
       }
-      if (phpversion() >= '4.0.4') {
+
 	  if (is_null($expected) != is_null($actual)) {
 	      $this->failNotEquals($expected, $actual, "expected", $message);
 	      return;
 	  }
-      }
       if ($expected != $actual) {
-	  $this->failNotEquals($expected, $actual, "expected", $message);
+		  $this->failNotEquals($expected, $actual, "expected", $message);
       }
   }
 
@@ -125,39 +122,39 @@ class Assert {
     for($i=0; $i< sizeof($lines0); $i++) {
       $this->assertEquals(trim($lines0[$i]),
                           trim($lines1[$i]),
-                          "line ".($i+1)." of multiline strings differ. ".$message); 
+                          "line ".($i+1)." of multiline strings differ. ".$message);
     }
   }
 
   function _formatValue($value, $class="") {
       $translateValue = $value;
-      if (phpversion() >= '4.0.0') {
-	  if (is_object($value)) {
+
+      if (is_object($value)) {
 	      if (method_exists($value, "toString") ) {
-		  $translateValue = $value->toString();
+			  $translateValue = $value->toString();
 	      }
 	      else {
-		  $translateValue = serialize($value);
+			  $translateValue = serialize($value);
 	      }
 	  }
 	  else if (is_array($value)) {
 	      $translateValue = serialize($value);
 	  }
-      }
+
       $htmlValue = "<code class=\"$class\">"
 	   . htmlspecialchars($translateValue) . "</code>";
-      if (phpversion() >= '4.0.0') {
+
 	  if (is_bool($value)) {
 	      $htmlValue = $value ? "<i>true</i>" : "<i>false</i>";
 	  }
-	  elseif (phpversion() >= '4.0.4' && is_null($value)) {
+	  elseif (is_null($value)) {
 	      $htmlValue = "<i>null</i>";
 	  }
 	  $htmlValue .= "&nbsp;&nbsp;&nbsp;<span class=\"typeinfo\">";
 	  $htmlValue .= "type:" . gettype($value);
 	  $htmlValue .= is_object($value) ? ", class:" . get_class($value) : "";
 	  $htmlValue .= "</span>";
-      }
+
       return $htmlValue;
   }
 
@@ -183,9 +180,16 @@ class TestCase extends Assert /* implements Test */ {
   var $fClassName;
   var $fResult;
   var $fPHPUNITExceptions = array();
+  protected $_context;
 
-  function TestCase($name) {
+  function __construct($name = "") {
+    if ($name == "")
+	{
+		$name = get_class($this);
+	}
     $this->fName = $name;
+	global $context;
+	$this->_context = $context;
   }
 
   function run(&$testResult) {
@@ -204,7 +208,7 @@ class TestCase extends Assert /* implements Test */ {
     $this->fResult = 0;
     return $testResult;
   }
-  
+
   function classname() {
 	  if (isset($this->fClassName)) {
 		return $this->fClassName;
@@ -217,8 +221,8 @@ class TestCase extends Assert /* implements Test */ {
     return 1;
   }
 
-  function runTest() {
-    if (phpversion() >= '4') {
+  function runTest()
+  {
 	global $PHPUnit_testRunning;
 	eval('$PHPUnit_testRunning[0] = & $this;');
 	// Saved ref to current TestCase, so that the error handler
@@ -227,20 +231,22 @@ class TestCase extends Assert /* implements Test */ {
 
 	$old_handler = set_error_handler("PHPUnit_error_handler");
 	// errors will now be handled by our error handler
-      }
 
-      $name = $this->name();
-      if (phpversion() >= '4' && ! method_exists($this, $name)) {
-          $this->error("Method '$name' does not exist");
-      }
-      else
-          $this->$name();
+    $name = $this->name();
 
-      if (phpversion() >= '4') {
-          if ($old_handler)
-	      set_error_handler($old_handler); // revert to prior error handler
-	  $PHPUnit_testRunning = null;
-      }
+    if (! method_exists($this, $name))
+    {
+    	$this->error("Method '$name' does not exist");
+    }
+    else
+    {
+   		$this->$name();
+    }
+
+    if ($old_handler)
+		set_error_handler($old_handler); // revert to prior error handler
+
+	$PHPUnit_testRunning = null;
   }
 
   function setUp() /* expect override */ {
@@ -326,9 +332,6 @@ class TestSuite /* implements Test */ {
       return;
     $this->fClassname = $classname;
 
-    if (floor(phpversion()) >= 4) {
-      // PHP4 introspection, submitted by Dylan Kuhn
-
       $names = get_class_methods($classname);
       while (list($key, $method) = each($names)) {
         if (preg_match('/^test/', $method)) {
@@ -346,18 +349,6 @@ class TestSuite /* implements Test */ {
           }
         }
       }
-    }
-    else {  // PHP3
-      $dummy = new $classname("dummy");
-      $names = (array) $dummy;
-      while (list($key, $value) = each($names)) {
-        $type = gettype($value);
-        if ($type == "user function" && preg_match('/^test/', $key)
-        && $key != "testcase") {  
-          $this->addTest(new $classname($key));
-        }
-      }
-    }
   }
 
   function addTest($test) {
@@ -426,15 +417,15 @@ class TestResult {
   function TestResult() { }
 
   function setSuite(&$testSuite) {
-  	
+
   	$this->suite = $testSuite;
-  		
-  }	
+
+  }
 
   function countAllTestsInSuite() {
-  	
+
   	return $this->suite->countTestCases();
-  		
+
   }
 
   function _endTest($test) /* protected */ {
@@ -505,7 +496,7 @@ class TextTestResult extends TestResult {
   function TextTestResult() {
     $this->TestResult();  // call superclass constructor
   }
-  
+
   function report() {
     /* report result of test run */
     $nRun = $this->countTests();
@@ -551,11 +542,7 @@ class TextTestResult extends TestResult {
   }
 
   function _startTest($test) {
-      if (phpversion() > '4') {
-	  printf("%s - %s ", get_class($test), $test->name());
-      } else {
-	  printf("%s ", $test->name());
-      }
+     printf("%s - %s ", get_class($test), $test->name());
     flush();
   }
 
@@ -593,7 +580,7 @@ class PrettyTestResult extends TestResult {
 			 '<tr><th>Class</th><th>Function</th><th>Success?</th></tr>'."\n";
 	}
 	// }}}
-  
+
   function report() {
 	echo "</TABLE>";
     /* report result of test run */
