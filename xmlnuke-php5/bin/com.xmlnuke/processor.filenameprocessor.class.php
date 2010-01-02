@@ -321,12 +321,13 @@ abstract class FilenameProcessor
 
 	/**
 	 *@param
-	 *@return string
+	 *@return bool
 	 *@desc
 	 */
 	public function UseFileFromAnyLanguage()
 	{
 		$langAvail = $this->_context->LanguagesAvailable();
+		$langAvail["en-us"] = "English (Default)";
 		if (!$this->exists())
 		{
 			foreach(array_keys($langAvail) as $key)

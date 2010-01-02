@@ -782,6 +782,7 @@ class Sample extends BaseModule
 			$colNodeStr[] = "titlelang";
 			$colNodeStr[] = "year";
 			$colNodeStr[] = "price";
+			$colNodeStr[] = "buyprice";
 			$colNodeStr[] = "author";
 		}
 
@@ -825,6 +826,7 @@ class Sample extends BaseModule
 		$colNodeStr[] = "titlelang";
 		$colNodeStr[] = "year";
 		$colNodeStr[] = "price";
+		$colNodeStr[] = "buyprice";
 		$colNodeStr[] = "author";
 
 		$processor = new AnydatasetFilenameProcessor("sample", $this->_context);
@@ -839,6 +841,7 @@ class Sample extends BaseModule
 		$chart = new XmlChart($this->_context, "Book Store", $dataset->getIterator(), ChartOutput::Flash, ChartSeriesFormat::Column);
 		$chart->setLegend("category", "#000000", "#C0C0C0");
 		$chart->addSeries("price", "Sell Price", "#000000");
+		$chart->addSeries("buyprice", "Buy Price", "#000000");
 		$para1->addXmlnukeObject($chart);
 
 		$code = new XmlnukeCode("Code Sample");

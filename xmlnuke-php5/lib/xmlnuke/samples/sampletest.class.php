@@ -7,13 +7,6 @@ class SampleTest extends TestCase
 	protected $_sample;
 	protected $_context;
 
-	function SampleTest( $name = "SampleTest" ) 
-	{
-		$this->TestCase( $name );
-		global $context;
-		$this->_context = $context;
-	}
-
 	function setUp() 
 	{
 		$this->_sample = new Sample($this->_context);
@@ -45,6 +38,4 @@ class SampleTest extends TestCase
 	}
 }
 	
-// The line below is very, very important		
-$mainTestSuite->addTest(new TestSuite( "SampleTest" ));	
 ?>

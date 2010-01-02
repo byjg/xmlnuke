@@ -1,18 +1,17 @@
 <?php
-// url: unittest.php?list=unitlist
+// url: unittest.php?list=xmlnuke.samples.unitlist
 class UnitList
 {
 	protected $_context;
-	
+
 	public function __construct($context)
 	{
 		$this->_context = $context;
 	}
-	
+
 	public function getList()
-	{	
-		$path = "lib/xmlnuke/samples/";
-		$arr[] = $path."sampletest.class.php";
+	{
+		$arr[] = "xmlnuke.samples.sampletest";
 		return $arr;
 	}
 }
