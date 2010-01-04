@@ -137,7 +137,9 @@ function CheckInstall()
 	echo "<h2>Optional Extensions</h2><ul>";
 	$optional_ext =
 		array(
-			"mbstring" => "Improve performance in PHP. **Check it!**",
+			"mbstring" => "Charset related. ",
+			"curl" => "Required for RESTFul and HTTP Requests. ",
+			"soap" => "Required for SOAP Requests and SOAP Server ",
 			"zlib" => "For backup and install modules",
 			"pdo_dblib"=>"FreeTDS/Sybase/MSSQL driver for PDO",
 			"pdo_firebird "=>"Firebird/InterBase 6 driver for PDO",
