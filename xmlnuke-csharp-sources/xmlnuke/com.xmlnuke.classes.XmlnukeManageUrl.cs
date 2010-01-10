@@ -31,6 +31,7 @@ using System;
 using System.Collections.Specialized;
 using com.xmlnuke;
 using com.xmlnuke.engine;
+using com.xmlnuke.processor;
 
 
 namespace com.xmlnuke.classes
@@ -171,83 +172,22 @@ namespace com.xmlnuke.classes
 		*/
 		public string getUrlFull(Context context)
 		{
-			string parameter = "";
-			string separator = "";
-			string xml = "";
-			string xsl = "";
-			string site = "";
-			string lang = "";
+            string url = this._target;
+            string separator = "?";
 
-			int count = 0;
-
-			foreach (string param in this._parameters)
+            foreach (string param in this._parameters)
 			{
-				if (count > 0)
+                if ((separator == "?") && (url.Contains("?")))
 				{
 					separator = "&";
 				}
-				string value = this._parameters[param];
 
-				if (param == "xml")
-				{
-					xml = value;
-				}
-				else if (param == "xsl")
-				{
-					xsl = value;
-				}
-				else if (param == "site")
-				{
-					site = value;
-				}
-				else if (param == "lang")
-				{
-					lang = value;
-				}
-				else
-				{
-					parameter += separator + param + '=' + XmlnukeManageUrl.encodeParam(value);
-					count++;
-				}
+                string value = this._parameters[param];
+				url += separator + param + '=' + XmlnukeManageUrl.encodeParam(value);
 			}
 
-			string fullurl = "";
-
-			switch (this._urltype)
-			{
-				case URLTYPE.ENGINE:
-					{
-						fullurl = context.bindXmlnukeUrl(site, xml, xsl, lang);
-						break;
-					}
-				case URLTYPE.ADMINENGINE:
-					{
-						fullurl = context.UrlXmlNukeAdmin + ((parameter != "") ? "?" : "") + parameter;
-						break;
-					}
-				case URLTYPE.ADMIN:
-				case URLTYPE.MODULE:
-					{
-						fullurl = context.bindModuleUrl(this._target + ((parameter != "") ? "?" : "") + parameter, site, xsl, lang);
-						break;
-					}
-				default:
-					{
-						if (!this._target.Contains(this.getUrlPrefix(this._urltype)))
-						{
-							fullurl = this.getUrlPrefix(this._urltype) + context.ContextValue("HTTP_HOST") + this._target;
-						}
-						else
-						{
-							fullurl = this._target;
-						}
-						fullurl += (fullurl.Contains("?") ? "&" : "?") + parameter;
-						break;
-					}
-			}
-
-			return fullurl;
-
+            ParamProcessor processor = new ParamProcessor(context);
+            return processor.GetFullLink(url);
 		}
 		/**
 		*@param string param

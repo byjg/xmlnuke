@@ -111,5 +111,14 @@ namespace com.xmlnuke.anydataset
 				return null;
 			}
 		}
-	}
+
+        #region IEnumerable Members
+
+        public IEnumerator GetEnumerator()
+        {
+            return new IteratorEnumerable(this);
+        }
+
+        #endregion
+    }
 }

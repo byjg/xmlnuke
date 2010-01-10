@@ -96,12 +96,22 @@ namespace com.xmlnuke.util
 
 		public static string ConvertDate(string source, DATEFORMAT sourceFormat, DATEFORMAT targetFormat)
 		{
-			return ConvertToString(ConvertDate(source, sourceFormat), targetFormat);
+            return DateUtil.ConvertDate(source, sourceFormat, targetFormat, false);
 		}
 
-		public static string ConvertToString(DateTime source, DATEFORMAT targetFormat)
+        public static string ConvertDate(string source, DATEFORMAT sourceFormat, DATEFORMAT targetFormat, bool hour)
+        {
+            return ConvertToString(ConvertDate(source, sourceFormat), targetFormat, hour);
+        }
+
+        public static string ConvertToString(DateTime source, DATEFORMAT targetFormat)
+        {
+            return DateUtil.ConvertToString(source, targetFormat, false);
+        }
+
+		public static string ConvertToString(DateTime source, DATEFORMAT targetFormat, bool hour)
 		{
-			return source.ToString(DateUtil.getDateTimeMask(targetFormat));
+			return source.ToString(DateUtil.getDateTimeMask(targetFormat, hour));
 		}
 
 		public static string Today(DATEFORMAT targetFormat)
@@ -109,7 +119,12 @@ namespace com.xmlnuke.util
 			return DateUtil.ConvertToString(System.DateTime.Now, targetFormat);
 		}
 
-		public static string getDateTimeMask(DATEFORMAT format)
+        public static string getDateTimeMask(DATEFORMAT format)
+        {
+            return DateUtil.getDateTimeMask(format, false);
+        }
+
+		public static string getDateTimeMask(DATEFORMAT format, bool hour)
 		{
 			string result;
 			if (format == DATEFORMAT.DMY)
@@ -124,6 +139,11 @@ namespace com.xmlnuke.util
 			{
 				result = "yyyy/MM/dd";
 			}
+
+            if (hour)
+            {
+                result += " HH:mm:ss";
+            }
 			return result;
 		}
 	}

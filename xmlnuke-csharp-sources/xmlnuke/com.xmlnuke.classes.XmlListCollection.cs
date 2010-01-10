@@ -115,6 +115,10 @@ namespace com.xmlnuke.classes
 			{
 				node = XmlUtil.CreateChild(current, "ol", "");
 			}
+		    if (this._name != "")
+		    {
+			    XmlUtil.AddAttribute(node, "name", this._name);
+		    }
 			this.generatePage(node);
 		}
 	}

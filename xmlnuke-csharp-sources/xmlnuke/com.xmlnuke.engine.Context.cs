@@ -34,6 +34,8 @@ using System.Globalization;
 using System.Collections;
 using System.Collections.Specialized;
 using com.xmlnuke.anydataset;
+using com.xmlnuke.admin;
+using System.Reflection;
 
 namespace com.xmlnuke.engine
 {
@@ -215,7 +217,9 @@ namespace com.xmlnuke.engine
 			//context.Session["lang"] = _lang.Name.ToLower();
 
 			this.AddPairToConfig("LANGUAGE", _lang.Name.ToLower());
-			string langStr = "";
+            this.AddPairToConfig("LANGUAGENAME", this._lang.DisplayName);
+            
+            string langStr = "";
 			foreach (string key in langAvail)
 			{
 				langStr += "<a href='" + bindXmlnukeUrl(this.Site, this.Xml, this.Xsl, key) + "'>" + langAvail[key] + "</a> | ";
@@ -957,7 +961,7 @@ namespace com.xmlnuke.engine
 			if (it.hasNext())
 			{
 				anydataset.SingleRow sr = it.moveNext();
-				config.removeRow(sr.getDomObject());
+				config.removeRow(sr);
 			}
 
 			config.appendRow();
@@ -1024,7 +1028,12 @@ namespace com.xmlnuke.engine
 			return rnd.Next(maxValue);
 		}
 
-		public ArrayList getRequestedParams()
+        public int getRandomNumber(int minValue, int maxValue)
+        {
+            return rnd.Next(maxValue-minValue) + minValue;
+        }
+        
+        public ArrayList getRequestedParams()
 		{
 			return this._requestedParams;
 		}
@@ -1232,5 +1241,43 @@ namespace com.xmlnuke.engine
 		{
 			return HttpContext.Current.Request.Form.AllKeys;
 		}
-	}
+
+        protected IUsersBase __userdb;
+
+        /// <summary>
+        /// </summary>
+        public virtual IUsersBase getUsersDatabase()
+        {
+            if (this.__userdb == null)
+            {
+                string classUser = this.ContextValue("xmlnuke.USERSCLASS");
+                string conn = this.ContextValue("xmlnuke.USERSDATABASE");
+
+                if (classUser != "")
+                {
+                    string moduleToLoad = classUser.Substring(0, classUser.LastIndexOf("."));
+                    Assembly asm = Assembly.Load(moduleToLoad);
+                    Type classType = asm.GetType(classUser);
+                    if (classType != null)
+                    {
+                        this.__userdb = (IUsersBase)Activator.CreateInstance(classType, this._context, conn);
+                    }
+
+                    if (this.__userdb == null)
+                    {
+                        throw new Exception("Authentication class '" + classUser + "' not found at module assembly");
+                    }
+                }
+                else if (conn == "")
+                {
+                    this.__userdb = new UsersAnyDataSet(this);
+                }
+                else
+                {
+                    this.__userdb = new UsersDBDataSet(this, conn);
+                }
+            }
+            return this.__userdb;
+        }
+    }
 }

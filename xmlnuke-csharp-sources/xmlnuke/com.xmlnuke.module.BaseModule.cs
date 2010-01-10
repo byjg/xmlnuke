@@ -79,9 +79,6 @@ namespace com.xmlnuke.module
 
 		protected international.LanguageCollection _myWords;
 
-		/// <summary>Object to access the user db</summary>
-		protected IUsersBase __userdb = null;
-
 		/// <summary>Internal state. If true, ignore USECACHE inside hasInCache</summary>
 		protected bool _ignoreCache = false;
 
@@ -298,37 +295,9 @@ namespace com.xmlnuke.module
 		/// </summary>
 		public virtual IUsersBase getUsersDatabase()
 		{
-			if (this.__userdb == null)
-			{
-				string classUser = this._context.ContextValue("xmlnuke.USERSCLASS");
-				string conn = this._context.ContextValue("xmlnuke.USERSDATABASE");
-
-				if (classUser != "")
-				{
-					string moduleToLoad = classUser.Substring(0, classUser.LastIndexOf("."));
-					Assembly asm = Assembly.Load(moduleToLoad);
-					Type classType = asm.GetType(classUser);
-					if (classType != null)
-					{
-						this.__userdb = (IUsersBase)Activator.CreateInstance(classType, this._context, conn);
-					}
-
-					if (this.__userdb == null)
-					{
-						throw new Exception("Authentication class '" + classUser + "' not found at module assembly");
-					}
-				}
-				else if (conn == "")
-				{
-					this.__userdb = new UsersAnyDataSet(this._context);
-				}
-				else
-				{
-					this.__userdb = new UsersDBDataSet(this._context, conn);
-				}
-			}
-			return this.__userdb;
+            return this._context.getUsersDatabase(); // For Compatibility Reason
 		}
+
 		/// <summary>
 		/// Base module have some basic tests, like check if user is admin or if user is from current site and have specific role. This method can be overrided to implement another validations.
 		/// </summary>

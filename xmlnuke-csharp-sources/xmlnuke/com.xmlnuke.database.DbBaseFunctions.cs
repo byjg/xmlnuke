@@ -27,6 +27,8 @@
  */
 
 using System;
+using com.xmlnuke.util;
+using com.xmlnuke.classes;
 
 namespace com.xmlnuke.Database
 {
@@ -97,6 +99,52 @@ namespace com.xmlnuke.Database
         {
             return false;
         }
+
+        /// <summary>
+	    /// Format date column in sql string given an input format that understands Y M D
+        /// example $db->getDbFunctions()->SQLDate("d/m/Y H:i", "dtcriacao")
+        /// </summary>
+        /// <param name="fmt"></param>
+        /// <param name="col"></param>
+        /// <returns></returns>
+	    public string SQLDate(string fmt, string col)
+	    {
+		    return "";
+	    }
+
+        public string toDate(string date, DATEFORMAT dateFormat)
+        {
+            return this.toDate(date, dateFormat, false);
+        }
+
+        /// <summary>
+        /// Format a string to database readable format.
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="dateFormat"></param>
+        /// <param name="hour"></param>
+        /// <returns></returns>
+	    public virtual string toDate(string date, DATEFORMAT dateFormat, bool hour)
+	    {
+		    return DateUtil.ConvertDate(date, dateFormat, DATEFORMAT.YMD, hour);
+	    }
+
+	    public string fromDate(string date, DATEFORMAT dateFormat)
+        {
+            return this.fromDate(date, dateFormat, false);
+        }
+
+    	/// <summary>
+    	/// Format a string from database to a user readable format.
+    	/// </summary>
+    	/// <param name="date"></param>
+    	/// <param name="dateFormat"></param>
+    	/// <param name="hour"></param>
+    	/// <returns></returns>
+	    public virtual string fromDate(string date, DATEFORMAT dateFormat, bool hour)
+	    {
+		    return DateUtil.ConvertDate(date, DATEFORMAT.YMD, dateFormat, hour);
+	    }
     }
 
 }

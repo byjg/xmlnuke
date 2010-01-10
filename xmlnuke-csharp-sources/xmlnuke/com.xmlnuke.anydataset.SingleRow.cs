@@ -29,6 +29,7 @@
 
 using System;
 using System.Xml;
+using System.Collections.Generic;
 
 namespace com.xmlnuke.anydataset
 {
@@ -40,24 +41,36 @@ namespace com.xmlnuke.anydataset
 		/// <summary>XmlNode represents a SingleRow</summary>
 		private XmlNode _node;
 
+        private Dictionary<string, List<string>> _row;
+        private Dictionary<string, List<string>> _originalRow;
+
+
 		/// <summary>
 		/// SingleRow constructor
 		/// </summary>
 		/// <param name="node">XmlNode represents a SingleRow</param>
-		public SingleRow(XmlNode node)
+		public SingleRow()
 		{
-			_node = node;
+            _row = new Dictionary<string, List<string>>();
 		}
 
-		/// <summary>
+        public SingleRow(Dictionary<string, List<string>> row)
+        {
+            _row = row;
+        }
+
+        /// <summary>
 		/// Add a string field to row
 		/// </summary>
 		/// <param name="name">Field name</param>
 		/// <param name="value">String Value</param>
 		public void AddField(string name, string value)
 		{
-			XmlNode nodeWorking = util.XmlUtil.CreateChild(_node, "field", value);
-			util.XmlUtil.AddAttribute(nodeWorking, "name", name);
+            if (!_row.ContainsKey(name))
+            {
+                _row.Add(name, new List<string>());
+            }
+            _row[name].Add(value);
 		}
 
 		/// <summary>
@@ -67,8 +80,7 @@ namespace com.xmlnuke.anydataset
 		/// <param name="value">DateTime Value</param>
 		public void AddField(string name, DateTime value)
 		{
-			XmlNode nodeWorking = util.XmlUtil.CreateChild(_node, "field", value.ToString("yyyy/MM/dd HH:mm:ss"));
-			util.XmlUtil.AddAttribute(nodeWorking, "name", name);
+            this.AddField(name, value.ToString("yyyy/MM/dd HH:mm:ss"));
 		}
 
 		/// <summary>
@@ -77,35 +89,33 @@ namespace com.xmlnuke.anydataset
 		/// <param name="name">Field name</param>
 		public string getField(string name)
 		{
-			XmlNode node = this._node.SelectSingleNode("field[@name='" + name + "']");
-			if (node == null)
-			{
-				return "";
-			}
-			else
-			{
-				return node.InnerText;
-			}
-		}
-
-		/// <summary>
-		/// Get the NodeList from a single field. You need you when the field is repeated.
-		/// </summary>
-		/// <param name="name">Field name</param>
-		public XmlNodeList getFieldNodes(string name)
-		{
-			return this._node.SelectNodes("field[@name='" + name + "']");
+            if (!_row.ContainsKey(name))
+            {
+                return "";
+            }
+            else
+            {
+                if (_row[name].Count == 0)
+                {
+                    return "";
+                }
+                else
+                {
+                    return _row[name][0];
+                }
+            }
 		}
 
 		public string[] getFieldArray(string name)
 		{
-			XmlNodeList nodes = this.getFieldNodes(name);
-			string[] array = new string[nodes.Count];
-			for (int i = 0; i < nodes.Count; i++)
-			{
-				array[i] = nodes[i].InnerXml;
-			}
-			return array;
+            if (!_row.ContainsKey(name))
+            {
+                return new string[]{};
+            }
+            else
+            {
+                return _row[name].ToArray();
+            }
 		}
 
 		/// <summary>
@@ -114,50 +124,16 @@ namespace com.xmlnuke.anydataset
 		/// <returns></returns>
 		public string[] getFieldNames()
 		{
-			XmlNodeList fields = this._node.SelectNodes("field");
-			string[] array = new string[fields.Count];
-			for (int i = 0; i < fields.Count; i++)
-			{
-				XmlNode fieldname = fields[i].SelectSingleNode("@name");
-				if (fieldname == null)
-				{
-					array[i] = "_NULL_";
-				}
-				else
-				{
-					array[i] = fieldname.InnerXml;
-				}
-			}
-			return array;
+            string[] result = new string[_row.Keys.Count];
+            int i=0;
+            foreach(string s in _row.Keys)
+            {
+                result[i++] = s;
+            }
+			return result;
 		}
 
 
-		/// <summary>
-		/// Remove specified field name with specified value name from row.
-		/// </summary>
-		/// <param name="name">string</param>
-		/// <param name="value">string</param>
-		public void removeFieldNameValue(string name, string value)
-		{
-			string[] array = this.getFieldArray(name);
-
-			int numNode = -1;
-
-			for (int i = 0; i < array.Length; i++)
-			{
-				if (array[i] == value)
-				{
-					numNode = i;
-					break;
-				}
-			}
-
-			if (numNode != -1)
-			{
-				XmlNodeList nodes = this.getFieldNodes(name);
-				this.removeField(nodes[numNode]);
-			}
-		}
 
 		/// <summary>
 		/// Update a specific field and specific value with new value 
@@ -167,28 +143,22 @@ namespace com.xmlnuke.anydataset
 		/// <param name="newvalue">string</param>
 		public void setFieldValue(string name, string oldvalue, string newvalue)
 		{
-			string[] array = this.getFieldArray(name);
-
-			int numNode = -1;
-
-			for (int i = 0; i < array.Length; i++)
-			{
-				if (array[i] == oldvalue)
-				{
-					numNode = i;
-					break;
-				}
-			}
-
-			if (numNode != -1)
-			{
-				XmlNodeList nodes = this.getFieldNodes(name);
-				nodes[numNode].Value = newvalue;
-			}
-			else
-			{
-				this.AddField(name, newvalue);
-			}
+            if (!_row.ContainsKey(name))
+            {
+                this.AddField(name, newvalue);
+            }
+            else
+            {
+                int olditem = _row[name].IndexOf(oldvalue);
+                if (olditem == -1)
+                {
+                    this.AddField(name, newvalue);
+                }
+                else
+                {
+                    _row[name][olditem] = newvalue;
+                }
+            }
 		}
 
 		/// <summary>
@@ -198,37 +168,42 @@ namespace com.xmlnuke.anydataset
 		/// <param name="value">Field value</param>
 		public void setField(string name, string value)
 		{
-			XmlNode node = this._node.SelectSingleNode("field[@name='" + name + "']");
-			if (node != null)
-			{
-				node.InnerText = value;
-			}
-			else
-			{
-				this.AddField(name, value);
-			}
+            if (!_row.ContainsKey(name))
+            {
+                this.AddField(name, value);
+            }
+            else
+            {
+                List<string> list = new List<string>();
+                list.Add(value);
+                _row[name] = list;
+            }
 		}
 
-		/// <summary>
+        /// <summary>
+        /// Remove specified field name with specified value name from row.
+        /// </summary>
+        /// <param name="name">string</param>
+        /// <param name="value">string</param>
+        public void removeFieldNameValue(string name, string value)
+        {
+            if (_row.ContainsKey(name))
+            {
+                _row[name].Remove(value);
+                if (_row[name].Count == 0)
+                {
+                    this.removeField(name);
+                }
+            }
+        }
+        
+        /// <summary>
 		/// Remove specified field name from row.
 		/// </summary>
 		/// <param name="name">Field name</param>
 		public void removeField(string name)
 		{
-			XmlNode node = this._node.SelectSingleNode("field[@name='" + name + "']");
-			this.removeField(node);
-		}
-
-		/// <summary>
-		/// Remove specified field node from row
-		/// </summary>
-		/// <param name="node">Field node</param>
-		public void removeField(XmlNode node)
-		{
-			if (node != null)
-			{
-				this._node.RemoveChild(node);
-			}
+            _row.Remove(name);
 		}
 
 		/// <summary>
@@ -237,8 +212,39 @@ namespace com.xmlnuke.anydataset
 		/// <returns>XmlNode</returns>
 		public XmlNode getDomObject()
 		{
-			return this._node;
+			XmlDocument row = util.XmlUtil.CreateXmlDocumentFromStr("<row />");
+			XmlNode root = row.DocumentElement;
+			foreach(string key in this._row.Keys)
+			{
+				foreach(string value in this._row[key])
+				{
+					XmlNode field = util.XmlUtil.CreateChild(root, "field", value);
+					util.XmlUtil.AddAttribute(field, "name", key);
+				}
+			}
+
+            return root;
 		}
 
-	}
+        public Dictionary<string, List<string>> getRawFormat()
+        {
+            return this._row;
+        }
+
+	    public bool hasChanges()
+	    {
+		    return (!this._row.Equals(this._originalRow));
+	    }
+
+	    public void acceptChanges()
+	    {
+		    this._originalRow = this._row;
+	    }
+
+	    public void rejectChanges()
+	    {
+		    this._row = this._originalRow;
+	    }
+
+    }
 }

@@ -27,6 +27,7 @@
  */
 
 using System;
+using com.xmlnuke.classes;
 
 namespace com.xmlnuke.Database
 {
@@ -77,6 +78,28 @@ namespace com.xmlnuke.Database
         /// </summary>
         /// <returns></returns>
         bool hasLimit();
+
+	    string toDate(string date, DATEFORMAT dateFormat);
+
+        /// <summary>
+        /// Format a string to database readable format.
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="dateFormat"></param>
+        /// <param name="hour"></param>
+        /// <returns></returns>
+        string toDate(string date, DATEFORMAT dateFormat, bool hour);
+
+	    string fromDate(string date, DATEFORMAT dateFormat);
+
+    	/// <summary>
+    	/// Format a string from database to a user readable format.
+    	/// </summary>
+    	/// <param name="date"></param>
+    	/// <param name="dateFormat"></param>
+    	/// <param name="hour"></param>
+    	/// <returns></returns>
+	    string fromDate(string date, DATEFORMAT dateFormat, bool hour);
     }
 
 }

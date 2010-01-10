@@ -29,6 +29,8 @@
 
 using System;
 using System.Xml;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace com.xmlnuke.anydataset
 {
@@ -39,7 +41,7 @@ namespace com.xmlnuke.anydataset
 	public class Iterator : IIterator
 	{
 		/// <summary>Rows elements</summary>
-		private XmlNodeList _list;
+		private List<SingleRow> _list;
 		/// <summary>Current row number</summary>
 		private int curRow;
 
@@ -47,10 +49,17 @@ namespace com.xmlnuke.anydataset
 		/// Iterator constructor
 		/// </summary>
 		/// <param name="list">XmlNodeList</param>
-		public Iterator(XmlNodeList list)
+		public Iterator(List<SingleRow> list)
 		{
 			curRow = 0;
-			_list = list;
+            if (list != null)
+            {
+                _list = list;
+            }
+            else
+            {
+                _list = new List<SingleRow>();
+            }
 		}
 
 		/// <summary>
@@ -82,9 +91,17 @@ namespace com.xmlnuke.anydataset
 			}
 			else
 			{
-				return new SingleRow(_list[curRow++]);
+				return _list[curRow++];
 			}
 		}
 
-	}
+        #region IEnumerable Members
+
+        public IEnumerator GetEnumerator()
+        {
+            return new IteratorEnumerable(this);
+        }
+
+        #endregion
+    }
 }

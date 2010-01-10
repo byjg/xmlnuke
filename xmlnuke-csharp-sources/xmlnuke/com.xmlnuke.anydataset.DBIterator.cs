@@ -33,6 +33,7 @@ using System.Data;
 using System.Data.Odbc;
 using com.xmlnuke.engine;
 using com.xmlnuke.classes;
+using System.Collections;
 
 namespace com.xmlnuke.anydataset
 {
@@ -237,6 +238,15 @@ namespace com.xmlnuke.anydataset
 				return (SingleRow)this._rowBuffer.Dequeue();
 			}
 		}
-	}
+
+        #region IEnumerable Members
+
+        public IEnumerator GetEnumerator()
+        {
+            return new IteratorEnumerable(this);
+        }
+
+        #endregion
+    }
 
 }

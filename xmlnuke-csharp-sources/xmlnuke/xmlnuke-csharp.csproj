@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{CFE065DD-A2C7-48C7-88A2-CD7B2FD351CA}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -57,6 +57,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="com.xmlnuke.anydataset.IteratorEnumerable.cs" />
+    <Compile Include="com.xmlnuke.classes.XmlnukeUIAlert.cs" />
     <Compile Include="com.xmlnuke.database.DbBaseFunctions.cs" />
     <Compile Include="com.xmlnuke.database.DbMySQLFunctions.cs" />
     <Compile Include="com.xmlnuke.database.DbPgSQLFunctions.cs" />
@@ -83,6 +85,7 @@
     <Compile Include="com.xmlnuke.util.Debug.cs" />
     <Compile Include="com.xmlnuke.util.ImageUtil.cs" />
     <Compile Include="com.xmlnuke.util.MailUtil.cs" />
+    <Compile Include="com.xmlnuke.util.Number.cs" />
     <Compile Include="com.xmlnuke.util.XmlUtil.cs" />
     <Compile Include="com.xmlnuke.admin.BaseAdminModule.cs" />
     <Compile Include="com.xmlnuke.admin.ConfigEmail.cs" />

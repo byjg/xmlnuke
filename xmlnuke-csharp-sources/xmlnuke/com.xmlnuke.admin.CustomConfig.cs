@@ -87,6 +87,8 @@ namespace com.xmlnuke.admin
 				nv.Add("xmlnuke.USERSDATABASE", this._context.ContextValue("usersdatabase"));
 				nv.Add("xmlnuke.USERSCLASS", this._context.ContextValue("usersclass"));
 				nv.Add("xmlnuke.DEBUG", this._context.ContextValue("txtdebug"));
+        		nv.Add("xmlnuke.CAPTCHACHALLENGE", this._context.ContextValue("captchachallenge"));
+	    		nv.Add("xmlnuke.CAPTCHALETTERS", this._context.ContextValue("captchaletters"));
 				nv.Add("xmlnuke.ENABLEPARAMPROCESSOR", this._context.ContextValue("enableparamprocessor"));
 				nv.Add("xmlnuke.USEFULLPARAMETER", this._context.ContextValue("usefullparameter"));
 				this._context.updateCustomConfig(nv);
@@ -99,6 +101,18 @@ namespace com.xmlnuke.admin
 			truefalse.Add("", "Use Default");
 			truefalse.Add("true", "True");
 			truefalse.Add("false", "False");
+
+			NameValueCollection easyhard = new NameValueCollection();
+            easyhard.Add("easy", "Easy");
+            easyhard.Add("hard", "Hard");
+
+			NameValueCollection nletters = new NameValueCollection();
+            nletters.Add("5", "5"); 
+            nletters.Add("6", "6"); 
+            nletters.Add("7", "7"); 
+            nletters.Add("8", "8"); 
+            nletters.Add("9", "9");
+            nletters.Add("10", "10");
 
 			XmlFormCollection form = new XmlFormCollection(this._context, "admin:CustomConfig", myWords.Value("FORMTITLE"));
 			form.addXmlnukeObject(new XmlInputHidden("action", "update"));
@@ -117,6 +131,8 @@ namespace com.xmlnuke.admin
 			form.addXmlnukeObject(new XmlEasyList(EasyListType.SELECTLIST, "usersdatabase", "xmlnuke.USERSDATABASE", this.getStringConnectionsArray(), this._context.ContextValue("xmlnuke.USERSDATABASE")));
 			form.addXmlnukeObject(new XmlInputTextBox("xmlnuke.USERSCLASS", "usersclass", this._context.ContextValue("xmlnuke.USERSCLASS"), 30));
 			form.addXmlnukeObject(new XmlEasyList(EasyListType.SELECTLIST, "txtdebug", "xmlnuke.DEBUG", truefalse, this._context.ContextValue("xmlnuke.DEBUG")));
+    		form.addXmlnukeObject(new XmlEasyList(EasyListType.SELECTLIST, "captchachallenge", "xmlnuke.CAPTCHACHALLENGE", easyhard, this._context.ContextValue("xmlnuke.CAPTCHACHALLENGE")));
+	    	form.addXmlnukeObject(new XmlEasyList(EasyListType.SELECTLIST, "captchaletters", "xmlnuke.CAPTCHALETTERS", nletters, this._context.ContextValue("xmlnuke.CAPTCHALETTERS")));
 			form.addXmlnukeObject(new XmlEasyList(EasyListType.SELECTLIST, "enableparamprocessor", "xmlnuke.ENABLEPARAMPROCESSOR", truefalse, this._context.ContextValue("xmlnuke.ENABLEPARAMPROCESSOR")));
 			form.addXmlnukeObject(new XmlEasyList(EasyListType.SELECTLIST, "usefullparameter", "xmlnuke.USEFULLPARAMETER", truefalse, this._context.ContextValue("xmlnuke.USEFULLPARAMETER")));
             form.addXmlnukeObject(new XmlInputLabelField("xmlnuke.EXTERNALSITEDIR", this._context.ContextValue("xmlnuke.EXTERNALSITEDIR")));

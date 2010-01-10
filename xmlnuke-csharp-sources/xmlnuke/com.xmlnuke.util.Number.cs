@@ -1,4 +1,4 @@
-/*
+﻿/*
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  *  Copyright:
  *
@@ -28,31 +28,27 @@
  */
 
 using System;
-using System.Collections;
+using com.xmlnuke.classes;
 
-namespace com.xmlnuke.anydataset
+namespace com.xmlnuke.util
 {
-	/// <summary>
-	/// Interface for Iterator structures. Use this for receive Iterator paramenters.
-	/// </summary>
-	public interface IIterator : IEnumerable
-	{
-		/// <summary>
-		/// Check if exists more records.
-		/// </summary>
-		/// <returns>Return True if is possible get one or more records.</returns>
-		bool hasNext();
+    /// <summary>
+    /// Description of comxmlnukeutilDateUtil.
+    /// </summary>
+    public class Number
+    {
+        public static bool IsNumeric(string InputValue)
+        {
+            double Dummy = new double();
+            bool Numeric = double.TryParse(InputValue, System.Globalization.NumberStyles.Any, null, out Dummy);
+            return Numeric;
+        }
 
-		/// <summary>
-		/// Get the next record.
-		/// </summary>
-		/// <returns>Return a SingleRow object</returns>
-		SingleRow moveNext();
-
-		/// <summary>
-		/// Get the number of rows. -1 this feature is disabled.
-		/// </summary>
-		/// <returns></returns>
-		int Count();
-	}
+        public static bool IsInteger(string InputValue)
+        {
+            int Dummy = new int();
+            bool Numeric = int.TryParse(InputValue, System.Globalization.NumberStyles.Any, null, out Dummy);
+            return Numeric;
+        }
+    }
 }

@@ -34,6 +34,7 @@ using com.xmlnuke.engine;
 using com.xmlnuke.classes;
 using com.xmlnuke.anydataset;
 using com.xmlnuke.util;
+using System.Text.RegularExpressions;
 
 namespace com.xmlnuke.database
 {
@@ -43,7 +44,13 @@ namespace com.xmlnuke.database
 	/// </summary>
 	public abstract class BaseModel
 	{
-		
+		protected string[] _propertyPattern = new string[]{@"(\w*)", "$1"};
+
+	    public void setPropertyPattern(string pattern, string replace)
+	    {
+		    this._propertyPattern = new string[]{pattern, replace};
+	    }
+
 		public void bindSingleRow(SingleRow sr)
 		{
 			Type t = this.GetType();
@@ -52,7 +59,9 @@ namespace com.xmlnuke.database
 
 			foreach (String field in fields)
 			{
-				PropertyInfo prop = t.GetProperty(field);
+                PropertyInfo prop = t.GetProperty(Regex.Replace(field, this._propertyPattern[0], this._propertyPattern[1]));
+                if (prop.Name == "_propertyPattern")
+                    continue;
 				
 				if (prop.CanWrite && (prop.PropertyType.FullName == "System.String"))
 				{

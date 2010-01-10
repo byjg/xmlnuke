@@ -198,10 +198,10 @@ namespace com.xmlnuke.admin
 				}
 				else
 				{
-					XmlNodeList nodes = user.getFieldNodes(UsersBase.getPropertyNodeName(userProp));
-					foreach (XmlNode node in nodes)
+                    string[] values = user.getFieldArray(UsersBase.getPropertyNodeName(userProp));
+					foreach (string value in values)
 					{
-						if (propValue == node.InnerXml)
+						if (propValue == value)
 						{
 							return true;
 						}
@@ -225,7 +225,7 @@ namespace com.xmlnuke.admin
 			anydataset.SingleRow user = getUserId(userId);
 			if (user != null)
 			{
-				XmlNodeList nodes = user.getFieldNodes(getPropertyNodeName(userProp));
+				string[] values = user.getFieldArray(getPropertyNodeName(userProp));
 				if (user.getField(this._UserTable.Admin) == "yes")
 				{
 					if (userProp == UserProperty.Site)
@@ -244,18 +244,13 @@ namespace com.xmlnuke.admin
 				}
 				else
 				{
-					if (nodes.Count == 0)
+					if (values.Length == 0)
 					{
 						return null;
 					}
 					else
 					{
-						string[] result = new string[nodes.Count];
-						for (int i = 0; i < nodes.Count; i++)
-						{
-							result[i] = nodes[i].InnerXml;
-						}
-						return result;
+						return values;
 					}
 				}
 

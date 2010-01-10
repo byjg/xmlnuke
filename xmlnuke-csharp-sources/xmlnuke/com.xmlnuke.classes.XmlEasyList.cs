@@ -40,7 +40,8 @@ namespace com.xmlnuke.classes
 		CHECKBOX,
 		RADIOBOX,
 		SELECTLIST,
-		UNORDEREDLIST
+		UNORDEREDLIST,
+        SELECTIMAGELIST
 	}
 
 	/// <summary>
@@ -94,6 +95,9 @@ namespace com.xmlnuke.classes
 		protected bool _required;
 		protected string _readOnlyDeli = "[]";
 		protected int _size = 1;
+	    protected string _notFoundImage = "";
+	    protected int _thumbnailSize = 100;
+	    protected string _noImage = "No Image";
 
 		public XmlEasyList(EasyListType listType, string name, string caption, NameValueCollection values, string selected)
 			: base()
@@ -142,6 +146,41 @@ namespace com.xmlnuke.classes
 			}
 		}
 
+	    public void setNotFoundImage(string img)
+	    {
+		    if (this._easyListType != EasyListType.SELECTIMAGELIST)
+		    {
+			    throw new Exception("NotFoundImage is valid only in SelectImageList type");
+		    }
+		    else 
+		    {
+			    this._notFoundImage = img;
+		    }
+	    }
+
+	    public void setThumbnailSize(int size)
+	    {
+		    if (this._easyListType != EasyListType.SELECTIMAGELIST)
+		    {
+			    throw new Exception("ThumbnailSize is valid only in SelectImageList type");
+		    }
+		    else 
+		    {
+			    this._thumbnailSize = size;
+		    }
+	    }
+
+	    public void setNoImage(string text)
+	    {
+		    if (this._easyListType != EasyListType.SELECTIMAGELIST)
+		    {
+			    throw new Exception("NoImage is valid only in SelectImageList type");
+		    }
+		    else 
+		    {
+			    this._noImage = text;
+		    }
+	    }
 		public void setReadOnly(bool value)
 		{
 			this._readOnly = value;
@@ -190,32 +229,48 @@ namespace com.xmlnuke.classes
 						break;
 					}
 				case EasyListType.SELECTLIST:
+                case EasyListType.SELECTIMAGELIST:
 					{
-						if (this._readOnly)
-						{
-							string deliLeft = (String.IsNullOrEmpty(this._readOnlyDeli) ? this._readOnlyDeli[0].ToString() : "");
-							string deliRight = (String.IsNullOrEmpty(this._readOnlyDeli) ? this._readOnlyDeli[1].ToString() : "");
+                        if (this._readOnly)
+                        {
+                            if (this._easyListType == EasyListType.SELECTLIST)
+                            {
+                                string deliLeft = (String.IsNullOrEmpty(this._readOnlyDeli) ? this._readOnlyDeli[0].ToString() : "");
+                                string deliRight = (String.IsNullOrEmpty(this._readOnlyDeli) ? this._readOnlyDeli[1].ToString() : "");
 
-							XmlInputLabelField xlf = new XmlInputLabelField(this._caption, deliLeft + this._values[this._selected] + deliRight);
-							XmlInputHidden xih = new XmlInputHidden(this._name, this._selected);
-							xlf.generateObject(current);
-							xih.generateObject(current);
-							return;
-						}
-						else
-						{
-							nodeWorking = util.XmlUtil.CreateChild(current, "select", "");
-							util.XmlUtil.AddAttribute(nodeWorking, "caption", this._caption);
-							util.XmlUtil.AddAttribute(nodeWorking, "name", this._name);
-							if (this._required)
-							{
-								util.XmlUtil.AddAttribute(nodeWorking, "required", "true");
-							}
-							if (this._size > 1)
-							{
-								util.XmlUtil.AddAttribute(nodeWorking, "size", this._size);
-							}
-						}
+                                XmlInputLabelField xlf = new XmlInputLabelField(this._caption, deliLeft + this._values[this._selected] + deliRight);
+                                XmlInputHidden xih = new XmlInputHidden(this._name, this._selected);
+                                xlf.generateObject(current);
+                                xih.generateObject(current);
+                                return;
+                            }
+                            else if (this._easyListType == EasyListType.SELECTIMAGELIST)
+                            {
+                                XmlnukeImage img = new XmlnukeImage(this._values[this._selected]);
+                                img.generateObject(current);
+                            }
+                        }
+                        else
+                        {
+                            nodeWorking = util.XmlUtil.CreateChild(current, "select", "");
+                            util.XmlUtil.AddAttribute(nodeWorking, "caption", this._caption);
+                            util.XmlUtil.AddAttribute(nodeWorking, "name", this._name);
+                            if (this._required)
+                            {
+                                util.XmlUtil.AddAttribute(nodeWorking, "required", "true");
+                            }
+                            if (this._size > 1)
+                            {
+                                util.XmlUtil.AddAttribute(nodeWorking, "size", this._size);
+                            }
+                            if (this._easyListType == EasyListType.SELECTIMAGELIST)
+                            {
+                                util.XmlUtil.AddAttribute(nodeWorking, "imagelist", "true");
+                                util.XmlUtil.AddAttribute(nodeWorking, "thumbnailsize", this._thumbnailSize);
+                                util.XmlUtil.AddAttribute(nodeWorking, "notfoundimage", this._notFoundImage);
+                                util.XmlUtil.AddAttribute(nodeWorking, "noimage", this._noImage);
+                            }
+                        }
 						break;
 					}
 				case EasyListType.UNORDEREDLIST:

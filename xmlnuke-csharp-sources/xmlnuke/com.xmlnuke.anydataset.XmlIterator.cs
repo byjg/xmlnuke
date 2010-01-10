@@ -30,6 +30,7 @@
 using System;
 using System.Xml;
 using System.Collections.Specialized;
+using System.Collections;
 
 namespace com.xmlnuke.anydataset
 {
@@ -99,5 +100,14 @@ namespace com.xmlnuke.anydataset
 
 			return sr;
 		}
-	}
+
+        #region IEnumerable Members
+
+        public IEnumerator GetEnumerator()
+        {
+            return new IteratorEnumerable(this);
+        }
+
+        #endregion
+    }
 }

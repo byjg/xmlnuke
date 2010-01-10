@@ -134,6 +134,7 @@ namespace com.xmlnuke.anydataset
 		/// <returns>Iterator</returns>
 		public IIterator getIterator(string tableName, IteratorFilter itf)
 		{
+
 			DataView dv = this._ds.Tables[tableName].DefaultView;
 			if (itf != null)
 			{

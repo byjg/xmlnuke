@@ -28,6 +28,8 @@
  */
 
 using System;
+using System.Collections.Generic;
+using com.xmlnuke.util;
 
 namespace com.xmlnuke.anydataset
 {
@@ -55,330 +57,437 @@ namespace com.xmlnuke.anydataset
 		Contains = 7
 	}
 
+    class IteratorFilterStruct
+    {
+        public const string CMD_AND = " and ";
+        public const string CMD_OR = " or ";
+        public const string CMD_STGRP = " ( ";
+        public const string CMD_ENGRP = " ) ";
+
+        public string Command { get; set; }
+        public string Name { get; set; }
+        public Relation Relation { get; set; }
+        public string Value { get; set; }
+    }
+
 	/// <summary>
 	/// IteratorFilter class abstract XPATH commands to filter an AnyDataSet XML. Used on getIterator method.
 	/// </summary>
 	public class IteratorFilter
 	{
-		/// <summary>Representative XPATH string</summary>
-		private string _xpathFilter;
+	    /**
+	     * @var array
+	     */
+	    private List<IteratorFilterStruct> _filters;
 
-		/// <summary>Representative WHERE clause</summary>
-		private string _sqlFilter;
-		private System.Collections.Specialized.NameValueCollection _sqlParam;
+	    /**
+	    *@desc IteratorFilter Constructor
+	    */
+	    public IteratorFilter()
+	    {
+		    this._filters = new List<IteratorFilterStruct>();
+	    }
 
-		/// <summary>
-		/// IteratorFilter Constructor
-		/// </summary>
-		public IteratorFilter()
-		{
-			this._xpathFilter = "";
-			this._sqlFilter = "";
-			this._sqlParam = new System.Collections.Specialized.NameValueCollection();
-		}
+	    /**
+	    *@param
+	    *@return string - XPath String
+	    *@desc Get the XPATH string
+	    */
+	    public string getXPath()
+	    {
+            DbParameters param;
 
-		/// <summary>
-		/// Get the XPATH string
-		/// </summary>
-		/// <returns>XPath String</returns>
-		public string getXPath()
-		{
-			if (this._xpathFilter == "")
+		    string xpathFilter = this.generator(1, out param);
+		    //Debug.PrintValue(xpathFilter);
+
+		    if (xpathFilter == "")
+		    {
+			    return "/anydataset/row";
+		    }
+		    else
+		    {
+			    return "/anydataset/row[" + xpathFilter + "]";
+		    }
+	    }
+
+	    public string getSql(string tableName, out DbParameters param)
+        {
+            return this.getSql(tableName, out param, "*");
+        }
+
+        public string getSql(string tableName, out DbParameters param, string returnFields)
+	    {
+		    param = new DbParameters();
+
+		    string sql = "select " + returnFields + " from " + tableName;
+		    string sqlFilter = this.generator(2, out param);
+		    if (sqlFilter != "")
+		    {
+			    sql += " where " + sqlFilter + " ";
+		    }
+		    //Debug.PrintValue(sql, params);
+
+		    return sql;
+	    }
+
+	    /**
+	     *
+	     * @param array
+	     * @return unknown_type
+	     */
+	    public List<SingleRow> match(List<SingleRow> array)
+	    {
+		    List<SingleRow> returnArray = new List<SingleRow>();
+
+		    foreach (SingleRow sr in array)
+		    {
+			    if (this.evalString(sr))
+			    {
+				    returnArray.Add(sr);
+			    }
+		    }
+
+		    return returnArray;
+	    }
+
+	    /**
+	     *
+	     * @param type
+	     * @param param
+	     * @return unknown_type
+	     */
+	    private string generator(int type, out DbParameters param)
+	    {
+		    string filter = "";
+		    param = new DbParameters();
+
+		    IteratorFilterStruct previousValue = null;
+		    foreach (IteratorFilterStruct value in this._filters)
+		    {
+			    if (value.Command == IteratorFilterStruct.CMD_STGRP)
+			    {
+				    if (previousValue != null)
+				    {
+					    filter += " or ( ";
+				    }
+				    else
+				    {
+					    filter += " ( ";
+				    }
+			    }
+			    else if (value.Command == IteratorFilterStruct.CMD_ENGRP)
+			    {
+				    filter += ")";
+			    }
+			    else
+			    {
+				    if ( (previousValue != null) && (previousValue.Command != IteratorFilterStruct.CMD_STGRP) )
+				    {
+					    filter += value.Name;
+				    }
+				    if (type == 1)
+				    {
+					    filter += this.getStrXpathRelation(value.Name, value.Relation, value.Value);
+				    }
+				    else if (type == 2)
+				    {
+					    filter += this.getStrSqlRelation(value.Name, value.Relation, value.Value, ref param);
+				    }
+			    }
+			    previousValue = value;
+		    }
+
+		    return filter;
+	    }
+
+	    /**
+	    *@param string name - Field name
+	    *@param Relation relation - Relation enum
+	    *@param string value - Field string value
+	    *@return string - Xpath String
+	    *@desc Private method to get a Xpath string to a single string comparison
+	    */
+	    private string getStrXpathRelation(string name, Relation relation, string value)
+	    {
+		    string str = (Number.IsNumeric(value)?"":"'");
+		    string field = "field[@name='" + name + "'] ";
+		    value = " " + str + value + str + " ";
+
+		    string result = "";
+		    switch (relation)
+		    {
+			    case Relation.Equal:
+			    {
+				    result = field + "=" + value;
+				    break;
+			    }
+			    case Relation.GreaterThan:
+			    {
+				    result = field + ">" + value;
+				    break;
+			    }
+			    case Relation.LessThan:
+			    {
+				    result = field + "<" + value;
+				    break;
+			    }
+			    case Relation.GreaterOrEqualThan:
+			    {
+				    result = field + ">=" + value;
+				    break;
+			    }
+			    case Relation.LessOrEqualThan:
+			    {
+				    result = field + "<=" + value;
+				    break;
+			    }
+			    case Relation.NotEqual:
+			    {
+				    result = field + "!=" + value;
+				    break;
+			    }
+			    case Relation.StartsWith:
+			    {
+				    result = " starts-with(" + field + ", " + value + ") ";
+				    break;
+			    }
+			    case Relation.Contains:
+			    {
+				    result = " contains(" + field + ", " + value + ") ";
+				    break;
+			    }
+		    }
+		    return result;
+	    }
+
+	    /**
+	     *
+	     * @param name
+	     * @param relation
+	     * @param value
+	     * @param param
+	     * @return unknown_type
+	     */
+	    private string getStrSqlRelation(string name, Relation relation, string value, ref DbParameters param)
+	    {
+		    //str = is_numeric(value)?"":"'";
+		    value = value.Trim();
+		    string paramName = name;
+		    int i = 0;
+
+			foreach (DbParameter p in param)
 			{
-				return "anydataset/row";
-			}
-			else
-			{
-				return "anydataset/row[" + this._xpathFilter + "]";
-			}
-		}
-
-		/// <summary>
-		/// Get the SQL string
-		/// </summary>
-		/// <returns>SQL String</returns>
-		public string getSql(string tableName, out DbParameters param)
-		{
-			string sql = "select * from " + tableName;
-			string filtro = this.getFilter(out param);
-			if (filtro != "")
-			{
-				sql += " where " + filtro;
-			}
-
-			return sql;
-		}
-
-		public string getFilter()
-		{
-			DbParameters param;
-			string filtro = this.getFilter(out param);
-			return XmlnukeProviderFactory.ParseSQLWithoutParam(filtro, param);
-		}
-
-		public string getFilter(out DbParameters param)
-		{
-			param = new DbParameters();
-
-			foreach (string key in this._sqlParam.Keys)
-			{
-				DbParameter paramItem = new DbParameter();
-				paramItem.Name = key;
-				paramItem.Value = this._sqlParam[key];
-				param.Add(paramItem);
-			}
-
-			return this._sqlFilter;
-		}
-
-		/// <summary>
-		/// Private method to get a Xpath string to a single string comparison
-		/// </summary>
-		/// <param name="name">Field name</param>
-		/// <param name="relation">Relation enum</param>
-		/// <param name="value">Field string value</param>
-		/// <returns>Xpath String</returns>
-		private string getStrXpathRelation(string name, Relation relation, string value)
-		{
-			double OutValue;
-			bool is_numeric = false;
-
-			if (String.IsNullOrEmpty(value))
-			{
-				is_numeric = double.TryParse(value.ToString().Trim(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.CurrentCulture, out OutValue);
-			}
-
-			char str = is_numeric ? ' ' : '\'';
-			string field = "field[@name='" + name + "'] ";
-			value = " " + str + value + str + " ";
-
-			string result = "";
-			switch (relation)
-			{
-				case Relation.Equal:
-					{
-						result = field + "=" + value;
-						break;
-					}
-				case Relation.GreaterThan:
-					{
-						result = field + ">" + value;
-						break;
-					}
-				case Relation.LessThan:
-					{
-						result = field + "<" + value;
-						break;
-					}
-				case Relation.GreaterOrEqualThan:
-					{
-						result = field + ">=" + value;
-						break;
-					}
-				case Relation.LessOrEqualThan:
-					{
-						result = field + "<=" + value;
-						break;
-					}
-				case Relation.NotEqual:
-					{
-						result = field + "!=" + value;
-						break;
-					}
-				case Relation.StartsWith:
-					{
-						result = " starts-with(" + field + ", " + value + ") ";
-						break;
-					}
-				case Relation.Contains:
-					{
-						result = " contains(" + field + ", " + value + ") ";
-						break;
-					}
-			}
-			return result;
-		}
-
-		/// <summary>
-		/// Private method to get a Xpath string to a single integer comparison
-		/// </summary>
-		/// <param name="name">Field name</param>
-		/// <param name="relation">Relation enum</param>
-		/// <param name="value">Field integer value</param>
-		/// <returns>Xpath String</returns>
-		private string getStrXpathRelation(string name, Relation relation, int value)
-		{
-			return this.getStrXpathRelation(name, relation, value.ToString());
-		}
-
-		/// <summary>
-		/// Private method to get a Xpath string to a single string comparison
-		/// </summary>
-		/// <param name="name">Field name</param>
-		/// <param name="relation">Relation enum</param>
-		/// <param name="value">Field string value</param>
-		/// <returns>Xpath String</returns>
-		private string getStrSqlRelation(string name, Relation relation, string value)
-		{
-			value = value.Trim();
-			string paramName = name;
-			int i = 0;
-			while (this._sqlParam[paramName] != null)
-			{
-				paramName = name + (i++).ToString();
-			}
-
-			this._sqlParam[paramName] = value;
-
-			string result = "";
-			string field = " " + name + " ";
-			string valueparam = " [[" + paramName + "]] ";
-			switch (relation)
-			{
-				case Relation.Equal:
-					{
-						result = field + "=" + valueparam;
-						break;
-					}
-				case Relation.GreaterThan:
-					{
-						result = field + ">" + valueparam;
-						break;
-					}
-				case Relation.LessThan:
-					{
-						result = field + "<" + valueparam;
-						break;
-					}
-				case Relation.GreaterOrEqualThan:
-					{
-						result = field + ">=" + valueparam;
-						break;
-					}
-				case Relation.LessOrEqualThan:
-					{
-						result = field + "<=" + valueparam;
-						break;
-					}
-				case Relation.NotEqual:
-					{
-						result = field + "!=" + valueparam;
-						break;
-					}
-				case Relation.StartsWith:
-					{
-						this._sqlParam[paramName] = value + "%";
-						result = field + " like " + valueparam;
-						break;
-					}
-				case Relation.Contains:
-					{
-						this._sqlParam[paramName] = "%" + value + "%";
-						result = field + " like " + valueparam;
-						break;
-					}
+                if (p.Name == name)
+                {
+				    paramName = name + (i++).ToString();
+                }
 			}
 
-			return result;
+            DbParameter par = new DbParameter();
 
-		}
+		    par.Name = paramName;
+            par.Value = value;
 
-		/// <summary>
-		/// Private method to get a Xpath string to a single integer comparison
-		/// </summary>
-		/// <param name="name">Field name</param>
-		/// <param name="relation">Relation enum</param>
-		/// <param name="value">Field integer value</param>
-		/// <returns>Xpath String</returns>
-		private string getStrSqlRelation(string name, Relation relation, int value)
-		{
-			return this.getStrSqlRelation(name, relation, value.ToString());
-		}
+		    string result = "";
+		    string field = " " + name + " ";
+		    string valueparam = " [[" + paramName + "]] ";
+		    switch (relation)
+		    {
+			    case Relation.Equal:
+			    {
+				    result = field + "=" + valueparam;
+				    break;
+			    }
+			    case Relation.GreaterThan:
+			    {
+				    result = field + ">" + valueparam;
+				    break;
+			    }
+			    case Relation.LessThan:
+			    {
+				    result = field + "<" + valueparam;
+				    break;
+			    }
+			    case Relation.GreaterOrEqualThan:
+			    {
+				    result = field + ">=" + valueparam;
+				    break;
+			    }
+			    case Relation.LessOrEqualThan:
+			    {
+				    result = field + "<=" + valueparam;
+				    break;
+			    }
+			    case Relation.NotEqual:
+			    {
+				    result = field + "!=" + valueparam;
+				    break;
+			    }
+			    case Relation.StartsWith:
+			    {
+				    par.Value = value + "%";
+				    result = field + " like " + valueparam;
+				    break;
+			    }
+			    case Relation.Contains:
+			    {
+				    par.Value = "%" + value + "%";
+				    result = field + " like " + valueparam;
+				    break;
+			    }
+		    }
 
-		protected void addRelationInternal(string name, Relation relation, string value, bool useAnd)
-		{
-			if ((_xpathFilter != "") && (_xpathFilter.Substring(_xpathFilter.Length - 2, 2) != "( "))
-			{
-				_xpathFilter += ((useAnd) ? " and " : " or ");
-				_sqlFilter += ((useAnd) ? " and " : " or ");
-			}
-			_xpathFilter += getStrXpathRelation(name, relation, value);
-		}
+		    return result;
+	    }
 
-		/// <summary>
-		/// Add a single string comparison to filter.
-		/// </summary>
-		/// <param name="name">Field name</param>
-		/// <param name="relation">Relation enum</param>
-		/// <param name="value">String value</param>
-		public void addRelation(string name, Relation relation, string value)
-		{
-			this.addRelationInternal(name, relation, value, true);
-			_sqlFilter += getStrSqlRelation(name, relation, value);
-		}
 
-		/// <summary>
-		/// Add a single integer comparison to filter.
-		/// </summary>
-		/// <param name="name">Field name</param>
-		/// <param name="relation">Relation enum</param>
-		/// <param name="value">Integer value</param>
-		public void addRelation(string name, Relation relation, int value)
-		{
-			this.addRelationInternal(name, relation, value.ToString(), true);
-			_sqlFilter += getStrSqlRelation(name, relation, value);
-		}
+	    /**
+	     *
+	     * @param array
+	     * @return unknown_type
+	     */
+	    private bool evalString(SingleRow sr)
+	    {
+		    List<bool> result = new List<bool>();
+		    bool finalResult = false;
+		    int pos = 0;
 
-		/// <summary>
-		/// Add a single string comparison to filter. This comparison use the OR operator.
-		/// </summary>
-		/// <param name="name">Field name</param>
-		/// <param name="relation">Relation enum</param>
-		/// <param name="value">String value</param>
-		public void addRelationOr(string name, Relation relation, string value)
-		{
-			this.addRelationInternal(name, relation, value, false);
-			_sqlFilter += getStrSqlRelation(name, relation, value);
-		}
+		    result.Add(true); // Zero!
 
-		/// <summary>
-		/// Add a single integer comparison to filter. This comparison use the OR operator.
-		/// </summary>
-		/// <param name="name">Field name</param>
-		/// <param name="relation">Relation enum</param>
-		/// <param name="value">Integer value</param>
-		public void addRelationOr(string name, Relation relation, int value)
-		{
-			this.addRelationInternal(name, relation, value.ToString(), false);
-			_sqlFilter += getStrSqlRelation(name, relation, value);
-		}
+		    foreach (IteratorFilterStruct filter in this._filters)
+		    {
+			    if ( (filter.Command == IteratorFilterStruct.CMD_ENGRP) || (filter.Command == IteratorFilterStruct.CMD_OR))
+			    {
+				    finalResult |= result[pos++];
+				    result.Add(true);
+			    }
 
-		/// <summary>
-		/// Add a "("
-		/// </summary>
-		public void startGroup()
-		{
-			if ((this._xpathFilter != "") && (_xpathFilter.Substring(_xpathFilter.Length - 2, 2) == ") "))
-			{
-				this._xpathFilter = this._xpathFilter + " or ";
-				this._sqlFilter = this._sqlFilter + " or ";
-			}
-			else if (this._xpathFilter != "")
-			{
-				this._xpathFilter = this._xpathFilter + " and ";
-				this._sqlFilter = this._sqlFilter + " and ";
-			}
-			this._xpathFilter = this._xpathFilter + " ( ";
-			this._sqlFilter = this._sqlFilter + " ( ";
-		}
+                if (filter.Command == IteratorFilterStruct.CMD_STGRP)
+                {
+                    finalResult |= result[pos++];
+                    result.Add(true);
+                    continue;
+                }
 
-		/// <summary>
-		/// Add a ")"
-		/// </summary>
-		public void endGroup()
-		{
-			this._xpathFilter = this._xpathFilter + " ) ";
-			this._sqlFilter = this._sqlFilter + " ) ";
-		}
-	}
+                if (filter.Name == null)
+                    continue;
+
+                string[] field = sr.getFieldArray(filter.Name);
+
+                foreach (string valueparam in field)
+			    {
+				    switch (filter.Relation)
+				    {
+					    case Relation.Equal:
+					    {
+						    result[pos] &= (valueparam == filter.Value);
+						    break;
+					    }
+					    case Relation.GreaterThan:
+					    {
+						    result[pos] &= (valueparam.CompareTo(filter.Value) > 0);
+						    break;
+					    }
+					    case Relation.LessThan:
+					    {
+						    result[pos] &= (valueparam.CompareTo(filter.Value) < 0);
+						    break;
+					    }
+					    case Relation.GreaterOrEqualThan:
+					    {
+						    result[pos] &= (valueparam.CompareTo(filter.Value) >= 0);
+						    break;
+					    }
+					    case Relation.LessOrEqualThan:
+					    {
+						    result[pos] &= (valueparam.CompareTo(filter.Value) <= 0);
+						    break;
+					    }
+					    case Relation.NotEqual:
+					    {
+						    result[pos] &= (valueparam != filter.Value);
+						    break;
+					    }
+					    case Relation.StartsWith:
+					    {
+						    result[pos] &= (valueparam.StartsWith(filter.Value));
+						    break;
+					    }
+					    case Relation.Contains:
+					    {
+						    result[pos] &= (valueparam.Contains(filter.Value));
+						    break;
+					    }
+				    }
+			    }
+		    }
+
+		    finalResult |= result[pos];
+
+		    return finalResult;
+	    }
+
+	    /**
+	    *@param string name - Field name
+	    *@param Relation relation - Relation enum
+	    *@param string value - Field string value
+	    *@return void
+	    *@desc Add a single string comparison to filter.
+	    */
+	    public void addRelation(string name, Relation relation, string value)
+	    {
+            IteratorFilterStruct filter = new IteratorFilterStruct();
+            filter.Command = IteratorFilterStruct.CMD_AND;
+            filter.Name = name;
+            filter.Relation = relation;
+            filter.Value = value;
+		    this._filters.Add(filter);
+	    }
+
+	    /**
+	    *@param string name - Field name
+	    *@param Relation relation - Relation enum
+	    *@param string value - Field string value
+	    *@return void
+	    *@desc Add a single string comparison to filter. This comparison use the OR operator.
+	    */
+	    public void addRelationOr(string name, Relation relation, string value)
+	    {
+            IteratorFilterStruct filter = new IteratorFilterStruct();
+            filter.Command = IteratorFilterStruct.CMD_OR;
+            filter.Name = name;
+            filter.Relation = relation;
+            filter.Value = value;
+		    this._filters.Add(filter);
+	    }
+
+	    /**
+	     * Add a "("
+	     *
+	     */
+	    public void startGroup()
+	    {
+            IteratorFilterStruct filter = new IteratorFilterStruct();
+            filter.Command = IteratorFilterStruct.CMD_STGRP;
+		    this._filters.Add(filter);
+	    }
+
+	    /**
+	     * Add a ")"
+	     *
+	     */
+	    public void endGroup()
+	    {
+            IteratorFilterStruct filter = new IteratorFilterStruct();
+            filter.Command = IteratorFilterStruct.CMD_ENGRP;
+            this._filters.Add(filter);
+        }
+
+        public string getFilter()
+        {
+            DbParameters param;
+            return this.generator(2, out param);
+        }
+    }
+
 }

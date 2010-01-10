@@ -33,6 +33,7 @@ using System.Text.RegularExpressions;
 using com.xmlnuke.engine;
 using com.xmlnuke.processor;
 using com.xmlnuke.util;
+using System.Collections;
 
 namespace com.xmlnuke.anydataset
 {
@@ -125,5 +126,14 @@ namespace com.xmlnuke.anydataset
 				return sr;
 			}
 		}
-	}
+
+        #region IEnumerable Members
+
+        public IEnumerator GetEnumerator()
+        {
+            return new IteratorEnumerable(this);
+        }
+
+        #endregion
+    }
 }

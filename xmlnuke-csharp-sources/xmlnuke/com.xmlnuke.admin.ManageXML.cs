@@ -78,7 +78,10 @@ namespace com.xmlnuke.admin
 			this.setHelp(myWords.Value("DESCRIPTION"));
 
 			XmlNode block = px.addBlockCenter(myWords.Value("WORKINGAREA"));
-			XmlNode paragraph;
+
+            this.addMenuOption(myWords.Value("TXT_BACK"), "admin:ListXML");
+            
+            XmlNode paragraph;
 			XmlNode form;
 			XmlNode boxButton;
 			XmlNode editNode; // (For Index)
@@ -324,7 +327,7 @@ namespace com.xmlnuke.admin
 				px.addCaption(form, myWords.Value("XMLEDITINFO"));
 				px.addMemo(form, myWords.Value("XMLCONTENTBOX"), "contents", contents, 80, 30, "soft");
 				boxButton = px.addBoxButtons(form);
-				px.addSubmit(boxButton, "", myWords.Value("SAVEBUTTON"));
+				px.addSubmit(boxButton, "", myWords.Value("TXT_SAVE"));
 			}
 
 			return px;

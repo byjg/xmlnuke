@@ -167,7 +167,7 @@ namespace com.xmlnuke.util
 			int sourceWidth = this._image.Width;
 			int sourceHeight = this._image.Height;
 
-			float nPercent = 0;
+			//float nPercent = 0;
 			float nPercentW = 0;
 			float nPercentH = 0;
 
@@ -434,7 +434,6 @@ namespace com.xmlnuke.util
 					default:
 						{
 							throw new Exception("Something is really bad!");
-							break;
 						}
 				}
 

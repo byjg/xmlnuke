@@ -36,6 +36,7 @@ using com.xmlnuke.admin;
 using com.xmlnuke.classes;
 using com.xmlnuke.anydataset;
 using com.xmlnuke.processor;
+using System.Web;
 
 namespace com.xmlnuke.admin
 {
@@ -192,7 +193,7 @@ namespace com.xmlnuke.admin
 				}
 				if (action == "removecustomvalue")
 				{
-					users.removePropertyValueFromUser(uid, null, this._context.ContextValue("customfield"));
+                    users.removePropertyValueFromUser(uid, this._context.ContextValue("customvalue"), this._context.ContextValue("customfield"));
 					users.Save();
 					message.addXmlnukeObject(new XmlnukeText(this.myWords.Value("CUSTOMFIELDREMOVED"), true, false, false));
 					exec = true;
@@ -448,7 +449,7 @@ namespace com.xmlnuke.admin
 			boxButton.addSubmit(this.myWords.Value("TXT_ADD"), "");
 			form.addXmlnukeObject(boxButton);
 			para.addXmlnukeObject(form);
-			tabview.addTabItem(this.myWords.Value("TABMANSITE"), para);
+			tabview.addTabItem(this.myWords.Value("TABMANSITE"), para, ((this._action == "addsite")||(this._action == "removesite")));
 
 
 
@@ -491,7 +492,7 @@ namespace com.xmlnuke.admin
 			boxButton.addSubmit(this.myWords.Value("TXT_ADD"), "");
 			form.addXmlnukeObject(boxButton);
 			para.addXmlnukeObject(form);
-			tabview.addTabItem(this.myWords.Value("TABMANROLE"), para);
+            tabview.addTabItem(this.myWords.Value("TABMANROLE"), para, ((this._action == "addrole") || (this._action == "removerole")));
 
 			//------------------------------------------------------------------------
 			// CUSTOM FIELDS
@@ -519,29 +520,34 @@ namespace com.xmlnuke.admin
 
 			foreach (string fldName in fields)
 			{
-				row = new XmlTableRowCollection();
+                string[] values = user.getFieldArray(fldName);
 
-				col = new XmlTableColumnCollection();
-				if ((fldName != users.getUserTable().Name) && (fldName != users.getUserTable().Username) && (fldName != users.getUserTable().Email) && (fldName != users.getUserTable().Password) && (fldName != users.getUserTable().Created) && (fldName != users.getUserTable().Admin) && (fldName != users.getUserTable().Id))
-				{
-					XmlAnchorCollection href = new XmlAnchorCollection("admin:ManageUsers?action=removecustomvalue&customfield=" + fldName + "&valueid=" + uid, "");
-					href.addXmlnukeObject(new XmlnukeText(this.myWords.Value("TXT_REMOVE")));
-					col.addXmlnukeObject(href);
-				}
-				else
-				{
-					col.addXmlnukeObject(new XmlnukeText("---"));
-				}
-				row.addXmlnukeObject(col);
+                foreach (string value in values)
+                {
+                    row = new XmlTableRowCollection();
 
-				col = new XmlTableColumnCollection();
-				col.addXmlnukeObject(new XmlnukeText(fldName));
-				row.addXmlnukeObject(col);
+                    col = new XmlTableColumnCollection();
+                    if ((fldName != users.getUserTable().Name) && (fldName != users.getUserTable().Username) && (fldName != users.getUserTable().Email) && (fldName != users.getUserTable().Password) && (fldName != users.getUserTable().Created) && (fldName != users.getUserTable().Admin) && (fldName != users.getUserTable().Id))
+                    {
+                        XmlAnchorCollection href = new XmlAnchorCollection("admin:ManageUsers?action=removecustomvalue&customfield=" + fldName + "&valueid=" + uid + "&customvalue=" + HttpUtility.UrlEncode(value), "");
+                        href.addXmlnukeObject(new XmlnukeText(this.myWords.Value("TXT_REMOVE")));
+                        col.addXmlnukeObject(href);
+                    }
+                    else
+                    {
+                        col.addXmlnukeObject(new XmlnukeText("---"));
+                    }
+                    row.addXmlnukeObject(col);
 
-				col = new XmlTableColumnCollection();
-				col.addXmlnukeObject(new XmlnukeText(user.getField(fldName)));
-				row.addXmlnukeObject(col);
-				table.addXmlnukeObject(row);
+                    col = new XmlTableColumnCollection();
+                    col.addXmlnukeObject(new XmlnukeText(fldName));
+                    row.addXmlnukeObject(col);
+
+                    col = new XmlTableColumnCollection();
+                    col.addXmlnukeObject(new XmlnukeText(value));
+                    row.addXmlnukeObject(col);
+                    table.addXmlnukeObject(row);
+                }
 			}
 
 			XmlParagraphCollection paragraph = new XmlParagraphCollection();
@@ -578,7 +584,7 @@ namespace com.xmlnuke.admin
 			paragraph = new XmlParagraphCollection();
 			paragraph.addXmlnukeObject(table);
 			block2.addXmlnukeObject(paragraph);
-			tabview.addTabItem(this.myWords.Value("TABCUSTOMVALUE"), block2);
+			tabview.addTabItem(this.myWords.Value("TABCUSTOMVALUE"), block2, ((this._action == "addcustomvalue")||(this._action == "removecustomvalue")));
 
 			this.defaultXmlnukeDocument.addXmlnukeObject(block);
 		}

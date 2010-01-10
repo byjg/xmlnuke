@@ -205,5 +205,20 @@ namespace com.xmlnuke.database
             return this.getDBDataSet().getDbFunctions();
         }
 
+ 	    public void beginTransaction()
+	    {
+		    this._db.StartTransaction();
+	    }
+    	
+	    public void commitTransaction()
+	    {
+		    this._db.CommitTransaction();
+	    }
+    	
+	    public void rollbackTransaction()
+	    {
+		    this._db.RollBackTransaction();
+	    }
+    
     }
 }

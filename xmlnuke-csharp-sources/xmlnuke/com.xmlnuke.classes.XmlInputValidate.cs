@@ -79,6 +79,12 @@ namespace com.xmlnuke.classes
 			this._inputtype = itype;
 		}
 
+        public INPUTTYPE getDataType()
+	    {
+            return this._inputtype;
+	    }
+	
+
 		/// <summary>
 		/// Contains specific instructions to generate all XML informations. This method is processed only one time. Usually is the last method processed.
 		/// </summary>

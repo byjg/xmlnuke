@@ -265,7 +265,7 @@ namespace com.xmlnuke.classes
 					}
 					else if (this._currentAction == ACTION_DELETE_CONFIRM)
 					{
-						data.removeRow(sr.getDomObject());
+						data.removeRow(sr);
 					}
 				}
 			}

@@ -105,9 +105,8 @@ namespace com.xmlnuke.module
 			SingleRow user = this._users.validateUserName(this._context.ContextValue("loguser"), this._context.ContextValue("password"));
 			if (user == null)
 			{
-				XmlContainerCollection container = new XmlContainerCollection();
-				container.setClass("msgalert");
-				container.setHideAfterTime(5000);
+			    XmlnukeUIAlert container = new XmlnukeUIAlert(this._context, UIAlert.BoxAlert);
+                container.setAutoHide(5000);
 				container.addXmlnukeObject(new XmlnukeText(myWords.Value("LOGINFAIL"), true));
 				block.addXmlnukeObject(container);
 
@@ -197,10 +196,9 @@ namespace com.xmlnuke.module
 		protected void ForgotPasswordConfirm(XmlBlockCollection block)
 		{
 			LanguageCollection myWords = this.WordCollection();
-	
-			XmlContainerCollection container = new XmlContainerCollection();
-			container.setClass("msgalert");
-			container.setHideAfterTime(5000);
+
+            XmlnukeUIAlert container = new XmlnukeUIAlert(this._context, UIAlert.BoxInfo);
+            container.setAutoHide(5000);
 			block.addXmlnukeObject(container);
 
 			SingleRow user = this._users.getUserEMail(this._context.ContextValue("email"));
@@ -268,10 +266,9 @@ namespace com.xmlnuke.module
 		{
 			LanguageCollection myWords = this.WordCollection();
 
-			XmlContainerCollection container = new XmlContainerCollection();
-			container.setClass("msgalert");
-			container.setHideAfterTime(5000);
-			block.addXmlnukeObject(container);
+            XmlnukeUIAlert container = new XmlnukeUIAlert(this._context, UIAlert.BoxAlert);
+            container.setAutoHide(5000);
+            block.addXmlnukeObject(container);
 
 			string newpassword = this.getRandomPassword();
 
@@ -292,6 +289,7 @@ namespace com.xmlnuke.module
 					this.sendWelcomeMessage(myWords, this._context.ContextValue("name"), this._context.ContextValue("loguser"), this._context.ContextValue("email"), newpassword);
 					this._users.Save();
 					container.addXmlnukeObject(new XmlnukeText(myWords.Value("CREATEUSEROK"), true, false, false));
+                    container.setUIAlertType(UIAlert.BoxInfo);
 					this.FormLogin(block);
 				}
 			}

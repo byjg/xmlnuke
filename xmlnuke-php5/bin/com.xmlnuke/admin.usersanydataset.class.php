@@ -90,8 +90,8 @@ class UsersAnyDataSet extends UsersBase
 		$this->_anyDataSet->appendRow();
 
 		$this->_anyDataSet->addField( $this->_UserTable->Name, $name );
-		$this->_anyDataSet->addField( $this->_UserTable->Username, strtolower($userName));
-		$this->_anyDataSet->addField( $this->_UserTable->Email, preg_replace('/(?:([\w])|([\W]))/', '\1', strtolower($userName)));
+		$this->_anyDataSet->addField( $this->_UserTable->Username, preg_replace('/(?:([\w])|([\W]))/', '\1', strtolower($userName)));
+		$this->_anyDataSet->addField( $this->_UserTable->Email, strtolower($email));
 		$this->_anyDataSet->addField( $this->_UserTable->Password, $this->getSHAPassword($password) );
 		$this->_anyDataSet->addField( $this->_UserTable->Admin, "" );
 		$this->_anyDataSet->addField( $this->_UserTable->Created, date("Y-m-d H:i:s") );

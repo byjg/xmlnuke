@@ -34,6 +34,7 @@ using System.Xml;
 using com.xmlnuke.engine;
 using com.xmlnuke.anydataset;
 using com.xmlnuke.international;
+using com.xmlnuke.util;
 
 namespace com.xmlnuke.classes
 {
@@ -52,6 +53,8 @@ namespace com.xmlnuke.classes
 		FILE,
 		SELECTLIST,   
 		DUALLIST,
+        HTMLTEXT,
+        TEXTBOX_AUTOCOMPLETE,
 		CUSTOM        // This fields must be validate by user
 	}
 
@@ -598,13 +601,27 @@ namespace com.xmlnuke.classes
 						field.formatter = this._fields[i].editListFormatter;
 						field.fieldType = EditListFieldType.FORMATTER;
 					}
+
+                    field = this.editListFieldCustomize(field, this._fields[i]);
+
 					editList.addEditListField(field);
 				}
 			}
 			return editList;
 		}
 
-		/// <summary>
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="editListField"></param>
+        /// <param name="field"></param>
+        /// <returns></returns>
+        protected virtual EditListField editListFieldCustomize(EditListField editListField, ProcessPageField field)
+        {
+            return editListField;
+        }
+
+        /// <summary>
 		/// Internal method. Check if the field is read-only or not. 
 		/// </summary>
 		/// <param name="field">The field will be checked.</param>
@@ -644,9 +661,8 @@ namespace com.xmlnuke.classes
 				message = this._lang.Value("MSG_NOCHANGE");
 			}
 
-			XmlContainerCollection container = new XmlContainerCollection();
-			container.setClass("msgalert");
-			container.setHideAfterTime(8000);
+		    XmlnukeUIAlert container = new XmlnukeUIAlert(this._context, UIAlert.BoxInfo);
+            container.setAutoHide(8000);
 			container.addXmlnukeObject(new XmlnukeText(message, true, true, false));
 
 			return container;
@@ -710,19 +726,7 @@ namespace com.xmlnuke.classes
 					curValue = sr.getField(this._fields[i].fieldName);
 					if (((this._fields[i].dataType == INPUTTYPE.DATE) || (this._fields[i].dataType == INPUTTYPE.DATETIME)) && (curValue != ""))
 					{
-						string[] arCurValue = curValue.Split(' ');
-						try
-						{
-							curValue = util.DateUtil.ConvertDate(arCurValue[0], DATEFORMAT.YMD, this._dateFormat);
-							if ((arCurValue.Length > 1) && (this._fields[i].dataType == INPUTTYPE.DATETIME))
-							{
-								curValue += " " + arCurValue[1];
-							}
-						}
-						catch
-						{
-							curValue = "??/??/????";
-						}
+                        curValue = this.dateFromSource(curValue, (this._fields[i].dataType == INPUTTYPE.DATETIME));
 					}
 					else if (this._fields[i].dataType == INPUTTYPE.NUMBER)
 					{
@@ -754,7 +758,30 @@ namespace com.xmlnuke.classes
 		}
 
 
-		/// <summary>
+        protected string dateFromSource(string curValue)
+        {
+            return this.dateFromSource(curValue, false);
+        }
+
+        /// <summary>
+        /// Format a date field from Database values
+        /// </summary>
+        /// <param name="curValue"></param>
+        /// <param name="hour"></param>
+        /// <returns></returns>
+        protected virtual string dateFromSource(string curValue, bool hour)
+        {
+            try
+            {
+                return DateUtil.ConvertDate(curValue, DATEFORMAT.YMD, this._dateFormat, hour);
+            }
+            catch 
+            {
+                return "??/??/????";
+            }
+        }
+
+        /// <summary>
 		/// Define how ProcessPageStateBase will be render a single field.
 		/// </summary>
 		/// <remarks>
@@ -765,19 +792,28 @@ namespace com.xmlnuke.classes
 		/// <returns>Return a XmlInput Object it contains the field.</returns>
 		public virtual IXmlnukeDocumentObject renderField(ProcessPageField field, string curValue)
 		{
-			if ((field.fieldXmlInput == XmlInputObjectType.TEXTBOX) || (field.fieldXmlInput == XmlInputObjectType.PASSWORD))
+			if ((field.fieldXmlInput == XmlInputObjectType.TEXTBOX) || (field.fieldXmlInput == XmlInputObjectType.PASSWORD)  || (field.fieldXmlInput == XmlInputObjectType.TEXTBOX_AUTOCOMPLETE))
 			{
 				XmlInputTextBox itb = new XmlInputTextBox(field.fieldCaption, field.fieldName, curValue, field.size);
 				itb.setRequired(field.required);
 				itb.setRange(field.rangeMin, field.rangeMax);
 				itb.setDescription(field.fieldCaption);
-				if (field.fieldXmlInput == XmlInputObjectType.TEXTBOX)
+				if (field.fieldXmlInput == XmlInputObjectType.PASSWORD)
 				{
-					itb.setInputTextBoxType(InputTextBoxType.TEXT);
+					itb.setInputTextBoxType(InputTextBoxType.PASSWORD);
+				}
+				else if (field.fieldXmlInput == XmlInputObjectType.TEXTBOX_AUTOCOMPLETE)
+				{
+				    if ((field.arraySelectList != null) || (String.IsNullOrEmpty(field.arraySelectList["URL"])) || (String.IsNullOrEmpty(field.arraySelectList["PARAMREQ"])))
+				    {
+					    throw new Exception("You have to pass a array to arraySelectList field parameter with the following keys: URL, PARAMREQ");
+				    }
+				    itb.setInputTextBoxType(InputTextBoxType.TEXT);
+				    itb.setAutosuggest(this._context, field.arraySelectList["URL"], field.arraySelectList["PARAMREQ"]);
 				}
 				else
 				{
-					itb.setInputTextBoxType(InputTextBoxType.PASSWORD);
+					itb.setInputTextBoxType(InputTextBoxType.TEXT);
 				}
 				itb.setMaxLength(field.maxLength);
 				itb.setReadOnly(this.isReadOnly(field));
@@ -807,6 +843,13 @@ namespace com.xmlnuke.classes
 				im.setReadOnly(this.isReadOnly(field));
 				return im;
 			}
+		    else if (field.fieldXmlInput == XmlInputObjectType.HTMLTEXT)
+		    {
+			    XmlInputMemo im = new XmlInputMemo(field.fieldCaption, field.fieldName, curValue);
+			    im.setVisualEditor(true);
+			    im.setReadOnly(this.isReadOnly(field));
+			    return im;
+		    }
 			else if (field.fieldXmlInput == XmlInputObjectType.HIDDEN)
 			{
 				XmlInputHidden ih = new XmlInputHidden(field.fieldName, curValue);
@@ -868,14 +911,14 @@ namespace com.xmlnuke.classes
 			{
 				url.addParam(key, this._parameter[key]);
 			}
-			if (full)
-			{
+			//if (full)
+			//{
 				return url.getUrlFull(this._context);
-			}
-			else
-			{
-				return url.getUrl();
-			}
+			//}
+			//else
+			//{
+			//	return url.getUrl();
+			//}
 		}
 
 

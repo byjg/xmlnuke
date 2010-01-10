@@ -69,7 +69,7 @@ namespace com.xmlnuke.processor
 				{
 					this._fileCacheStream = new System.IO.FileStream(this._fileCacheName, System.IO.FileMode.Create);
 				}
-				catch (Exception ex)
+				catch
 				{
 					System.Web.HttpContext.Current.Response.Write("<br/><b>Warning:</b> I could not write to cache on file '" + this._fileCacheName + "'. Switching to nocache=true. <br/>");
 					this._context.NoCache = true;

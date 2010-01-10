@@ -32,6 +32,7 @@ using System.Xml;
 using System.Data;
 using com.xmlnuke.engine;
 using com.xmlnuke.classes;
+using System.Collections;
 
 namespace com.xmlnuke.anydataset
 {
@@ -115,7 +116,18 @@ namespace com.xmlnuke.anydataset
 			{
 				return null;
 			}
+
 		}
-	}
+
+        #region IEnumerable Members
+
+        public IEnumerator GetEnumerator()
+        {
+            return new IteratorEnumerable(this);
+        }
+
+        #endregion
+
+    }
 
 }

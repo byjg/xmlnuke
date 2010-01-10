@@ -29,6 +29,8 @@
 
 using System;
 using System.Xml;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace com.xmlnuke.anydataset
 {
@@ -76,57 +78,41 @@ namespace com.xmlnuke.anydataset
 	public class AnyDataSet
 	{
 		/// <summary>Internal structure to store anydataset elements</summary>
-		private XmlDocument _anyDataSet;
-		/// <summary>Internal structure represent the current SingleRow</summary>
-		private SingleRow _singleRow;
-		/// <summary>XML node represents ANYDATASET node</summary>
-		private XmlNode _nodeRoot;
-		/// <summary>Current node anydataset works</summary>
-		private XmlNode _currentRow;
+        private List<SingleRow> _collection;
+        /// <summary>Current node anydataset works</summary>
+		private int _currentRow;
 
 		private string _path;
-
-		protected void defineNodeRoot()
-		{
-			_nodeRoot = _anyDataSet.SelectSingleNode("anydataset");
-			if (_nodeRoot == null)
-				throw new Exception("XML isnt a valid AnydataSet document");
-		}
 
 		/// <summary>
 		/// Private method used to create Empty Anydataset
 		/// </summary>
-		protected void CreateNew()
+        protected void Create(string filepath)
 		{
-			_anyDataSet = util.XmlUtil.CreateXmlDocument();
-			_anyDataSet.LoadXml("<anydataset/>");
-			this.defineNodeRoot();
+            this._collection = new List<SingleRow>();
+            this._currentRow = -1;
+            this._path = filepath;
+
+            if (filepath != null && util.FileUtil.Exists(filepath))
+            {
+			    XmlDocument anyDataSet = util.XmlUtil.CreateXmlDocument(filepath);
+
+    			XmlNodeList rows = anyDataSet.GetElementsByTagName( "row" );
+			    foreach (XmlNode row in rows)
+			    {
+				    SingleRow sr = new SingleRow();
+				    XmlNodeList fields =  row.SelectNodes("field");
+				    foreach (XmlNode field in fields)
+				    {
+					    sr.AddField(field.Attributes["name"].Value, field.InnerXml);
+				    }
+				    sr.acceptChanges();
+				    this._collection.Add(sr);
+			    }
+			    this._currentRow = this._collection.Count-1;
+            }
 		}
 
-		/// <summary>
-		/// Private method used to read and populate anydataset class from specified file
-		/// </summary>
-		/// <param name="filepath">Path and Filename to be read</param>
-		protected void CreateFrom(string filepath)
-		{
-			if (!util.FileUtil.Exists(filepath))
-			{
-				this.CreateNew();
-			}
-			else
-			{
-				_anyDataSet = util.XmlUtil.CreateXmlDocument(filepath);
-				this.defineNodeRoot();
-			}
-			_path = filepath;
-		}
-
-		public void CreateFromXml(string xml)
-		{
-			_anyDataSet = util.XmlUtil.CreateXmlDocument();
-			_anyDataSet.LoadXml(xml);
-			this.defineNodeRoot();
-		}
 
 		/// <summary>
 		/// AnyDataSet constructor. Create an empty anydata struture.
@@ -138,8 +124,7 @@ namespace com.xmlnuke.anydataset
 		/// </example>
 		public AnyDataSet()
 		{
-			this._path = null;
-			this.CreateNew();
+			this.Create(null);
 		}
 
 		/// <summary>
@@ -154,7 +139,7 @@ namespace com.xmlnuke.anydataset
 		/// </example>
 		public AnyDataSet(processor.AnydatasetBaseFilenameProcessor file)
 		{
-			this.CreateFrom(file.FullQualifiedNameAndPath());
+			this.Create(file.FullQualifiedNameAndPath());
 		}
 
 		/// <summary>
@@ -163,7 +148,7 @@ namespace com.xmlnuke.anydataset
 		/// <param name="filepath">Path and Filename to be read</param>
 		public AnyDataSet(string filepath)
 		{
-			this.CreateFrom(filepath);
+			this.Create(filepath);
 		}
 
 		/// <summary>
@@ -172,7 +157,7 @@ namespace com.xmlnuke.anydataset
 		/// <returns>XML String</returns>
 		public string XML()
 		{
-			return _anyDataSet.OuterXml;
+			return this.getDomObject().OuterXml;
 		}
 
 		/// <summary>
@@ -181,7 +166,18 @@ namespace com.xmlnuke.anydataset
 		/// <returns>XmlDocument object</returns>
 		public XmlDocument getDomObject()
 		{
-			return this._anyDataSet;
+		    XmlDocument anyDataSet = util.XmlUtil.CreateXmlDocumentFromStr( "<anydataset/>" );
+            XmlNodeList temp = anyDataSet.GetElementsByTagName("anydataset");
+		    XmlNode nodeRoot = temp[0];
+		    foreach (SingleRow sr in this._collection)
+		    {
+			    XmlNode row = sr.getDomObject();
+                //XmlNode nodeRow = row.SelectSingleNode("row");
+			    XmlNode newRow = util.XmlUtil.CreateChild(nodeRoot, "row");
+			    util.XmlUtil.AddNodeFromNode(newRow, row);
+		    }
+
+		    return anyDataSet;
 		}
 
 		/// <summary>
@@ -190,8 +186,7 @@ namespace com.xmlnuke.anydataset
 		/// <param name="file">AnydatasetBaseFilenamePrcessor</param>
 		public void Save(processor.AnydatasetBaseFilenameProcessor file)
 		{
-			_path = file.FullQualifiedNameAndPath();
-			_anyDataSet.Save(_path);
+            this.Save(file.FullQualifiedNameAndPath());
 		}
 
 		/// <summary>
@@ -201,12 +196,16 @@ namespace com.xmlnuke.anydataset
 		public void Save(string filepath)
 		{
 			_path = filepath;
-			_anyDataSet.Save(_path);
+            if (_path == null)
+            {
+                throw new Exception("No such file path to save anydataset");
+            }
+            this.getDomObject().Save(_path);
 		}
 
 		public void Save()
 		{
-			_anyDataSet.Save(_path);
+			this.Save(_path);
 		}
 
 		/// <summary>
@@ -214,8 +213,7 @@ namespace com.xmlnuke.anydataset
 		/// </summary>
 		public void appendRow()
 		{
-			_currentRow = util.XmlUtil.CreateChild(_nodeRoot, "row", "");
-			_singleRow = new SingleRow(_currentRow);
+            this.appendRow(null);
 		}
 
 
@@ -225,9 +223,13 @@ namespace com.xmlnuke.anydataset
 		/// <param name="sr">SingleRow object</param>
 		public void appendRow(SingleRow sr)
 		{
-			this._currentRow = util.XmlUtil.CreateChild(this._nodeRoot, "row");
-			util.XmlUtil.AddNodeFromNode(this._currentRow, sr.getDomObject());
-			this._singleRow = new SingleRow(this._currentRow);
+            if (sr == null)
+            {
+                sr = new SingleRow();
+            }
+            this._collection.Add(sr);
+            sr.acceptChanges();
+			this._currentRow = this._collection.Count - 1;
 		}
 
 		public void import(IIterator it)
@@ -245,40 +247,54 @@ namespace com.xmlnuke.anydataset
 		/// <param name="row">Row number (sequential)</param>
 		public void insertRowBefore(int row)
 		{
-			if (row > _nodeRoot.ChildNodes.Count - 1)
-			{
-				this.appendRow();
-			}
-			else
-			{
-				_currentRow = util.XmlUtil.CreateChildBefore(_nodeRoot, "row", "", row);
-				_singleRow = new SingleRow(_currentRow);
-			}
+            this.insertRowBefore(row, null);
 		}
 
-		public void insertRowBefore(XmlNode nodeRow)
+		public void insertRowBefore(int row, SingleRow sr)
 		{
-			_currentRow = util.XmlUtil.CreateChildBefore("row", "", nodeRow);
-			_singleRow = new SingleRow(_currentRow);
-		}
+            if (row > this._collection.Count - 1)
+            {
+                this.appendRow(sr);
+            }
+            else
+            {
+                this._collection.Insert(row, (sr == null ? new SingleRow() : sr));
+                _currentRow = row;
+            }
+        }
 
 		/// <summary>
 		/// Remove specified row position.
 		/// </summary>
 		/// <param name="row">Row number (sequential)</param>
-		public void removeRow(XmlNode row)
+		public void removeRow(SingleRow row)
 		{
-			_nodeRoot.RemoveChild(row);
+            this._collection.Remove(row);
 		}
 
-		/// <summary>
+        public void removeRow(int row)
+        {
+            this._collection.RemoveAt(row);
+            this._currentRow = this._collection.Count - 1;
+        }
+
+        public void removeRow()
+        {
+            this.removeRow(this._currentRow);
+        }
+
+        /// <summary>
 		/// Add a single string field to an existing row
 		/// </summary>
 		/// <param name="name">Field name</param>
 		/// <param name="value">Field value</param>
 		public void addField(string name, string value)
 		{
-			_singleRow.AddField(name, value);
+            if (this._currentRow < 0)
+            {
+                this.appendRow();
+            }
+			this._collection[this._currentRow].AddField(name, value);
 		}
 
 		/// <summary>
@@ -288,8 +304,12 @@ namespace com.xmlnuke.anydataset
 		/// <param name="value">Field value</param>
 		public void addField(string name, DateTime value)
 		{
-			_singleRow.AddField(name, value);
-		}
+            if (this._currentRow < 0)
+            {
+                this.appendRow();
+            }
+            this._collection[this._currentRow].AddField(name, value);
+        }
 
 		/// <summary>
 		/// Get an Iterator with all anydataset rows.
@@ -309,12 +329,11 @@ namespace com.xmlnuke.anydataset
 		{
 			if (itf == null)
 			{
-				return new Iterator(_nodeRoot.ChildNodes);
+				return new Iterator(this._collection);
 			}
 			else
 			{
-				XmlNodeList xnl = _anyDataSet.SelectNodes(itf.getXPath());
-				return new Iterator(xnl);
+				return new Iterator(itf.match(this._collection));
 			}
 		}
 
@@ -336,193 +355,66 @@ namespace com.xmlnuke.anydataset
 			return result;
 		}
 
-		public void Sort(string fieldName, ISortCompare sc)
+		public void Sort(IComparer<SingleRow> sc)
 		{
-			XmlNodeList list = this._nodeRoot.ChildNodes;
-
-			// Extract element to be sorted
-			SortStructure[] Array = new SortStructure[list.Count];
-			int i = 0;
-			try
-			{
-				foreach (XmlElement node in list)
-				{
-					Array[i].index = i;
-					Array[i++].value = node.SelectSingleNode("field[@name='" + fieldName + "']").InnerText;
-				}
-			}
-			catch (Exception ex)
-			{
-				throw new Exception("Sort Error: '" + fieldName + "' doesnt exist! " + ex.Message);
-			}
-
-			// Sort Array
-			this.Sort(Array, 0, Array.Length - 1, sc);
-
-			// Create new Anydataset
-			XmlDocument anydata = new XmlDocument();
-			anydata.LoadXml("<anydataset/>");
-			XmlNode root = anydata.DocumentElement;
-			foreach (SortStructure item in Array)
-			{
-				XmlNode row = util.XmlUtil.CreateChild(root, "row");
-				util.XmlUtil.AddNodeFromNode(row, list[item.index]);
-			}
-
-			// Setup new Data
-			this._anyDataSet = anydata;
-			this.defineNodeRoot();
-			this._currentRow = null;
+            this._collection.Sort(sc);
 		}
-
-		protected struct SortStructure
-		{
-			public object value;
-			public int index;
-		}
-		private void swap(SortStructure[] Array, int Left, int Right)
-		{
-			SortStructure temp = Array[Left];
-			Array[Left] = Array[Right];
-			Array[Right] = temp;
-		}
-		private void Sort(SortStructure[] Array, int Left, int Right, ISortCompare sc)
-		{
-			int LHold = Left;
-			int RHold = Right;
-			Random ObjRan = new Random();
-			int Pivot = ObjRan.Next(Left, Right);
-			swap(Array, Pivot, Left);
-			Pivot = Left;
-			Left++;
-
-			while (Right >= Left)
-			{
-				if (sc.Compare(Array[Left].value, Array[Pivot].value) >= 0 && sc.Compare(Array[Right].value, Array[Pivot].value) < 0)
-					swap(Array, Left, Right);
-				else if (sc.Compare(Array[Left].value, Array[Pivot].value) >= 0)
-					Right--;
-				else if (sc.Compare(Array[Right].value, Array[Pivot].value) < 0)
-					Left++;
-				else
-				{
-					Right--;
-					Left++;
-				}
-			}
-			swap(Array, Pivot, Right);
-			Pivot = Right;
-			if (Pivot > LHold)
-				this.Sort(Array, LHold, Pivot, sc);
-			if (RHold > Pivot + 1)
-				this.Sort(Array, Pivot + 1, RHold, sc);
-		}
-
-
-		/*
-		public static AnyDataSet orderBy(IIterator iterator, string field)
-		{
-			return AnyDataSet.orderBy(iterator, field, 'A');
-		}
-	    
-		public static AnyDataSet orderBy(IIterator iterator, string field, char order)
-		{
-			AnyDataSet result = new AnyDataSet();
-	    	
-			while (iterator.hasNext())
-			{
-				SingleRow sr = iterator.moveNext();
-	
-				IIterator itResult = result.getIterator();
-			
-				XmlNode nodeBefore = null;
-				bool added = false;
-				while (itResult.hasNext())
-				{
-					SingleRow srResult = itResult.moveNext();
-					bool compare;
-					if (order == 'A')
-					{
-						compare = (srResult.getField(field).CompareTo(sr.getField(field)) < 0);
-					}
-					else 
-					{
-						compare = (srResult.getField(field).CompareTo(sr.getField(field)) > 0);
-					}
-					if (compare)
-					{
-						nodeBefore = srResult.getDomObject();
-					}
-					else 
-					{
-						if (nodeBefore == null)
-						{
-							result.appendRow();
-						}
-						else
-						{
-							result.insertRowBefore(nodeBefore);
-						}
-						added = true;
-						break;
-					}
-				}
-	
-				if (!added)
-				{
-					result.appendRow();
-				}
-	    		
-				string[] arr = sr.getFieldNames();
-				foreach (string fieldname in arr)
-				{
-					result.addField(fieldname, sr.getField(fieldname));
-				}
-	    		
-			}
-	
-			return result;   	
-		}
-		*/
 
 	}
 
-	public interface ISortCompare
-	{
-		int Compare(object o1, object o2);
-	}
 
-	public class SortCompareNumber : ISortCompare
+
+
+
+    public abstract class SortCompare : IComparer<SingleRow>
+    {
+        protected string _fieldname;
+        public SortCompare(string fieldname)
+        {
+            this._fieldname = fieldname;
+        }
+
+        public virtual int Compare(SingleRow o1, SingleRow o2)
+        {
+            return 0;
+        }
+    }
+
+	public class SortCompareNumber : SortCompare
 	{
-		public int Compare(object o1, object o2)
-		{
+        public SortCompareNumber(string fieldname) : base(fieldname)
+        {
+        }
+
+        public override int Compare(SingleRow o1, SingleRow o2)
+        {
 			Double i1 = 0, i2 = 0;
-			Double.TryParse(o1.ToString(), out i1);
-			Double.TryParse(o2.ToString(), out i2);
+			Double.TryParse(o1.getField(this._fieldname), out i1);
+            Double.TryParse(o2.getField(this._fieldname), out i2);
 			return ((i1 == i2) ? 0 : ((i1 < i2) ? -1 : 1));
 		}
 	}
 
-	public class SortCompareString : ISortCompare
+    public class SortCompareString : SortCompare
 	{
-		public int Compare(object o1, object o2)
-		{
-			string s1 = "", s2 = "";
-			if (o1 != null)
-			{
-				s1 = o1.ToString();
-			}
-			if (o2 != null)
-			{
-				s2 = o2.ToString();
-			}
+        public SortCompareString(string fieldname) : base(fieldname)
+        {
+        }
+        public override int Compare(SingleRow o1, SingleRow o2)
+        {
+			string s1 = o1.getField(this._fieldname);
+			string s2 = o2.getField(this._fieldname);
 			return (s1.CompareTo(s2));
 		}
 	}
 
-	public class SortCompareDate : ISortCompare
+    public class SortCompareDate : SortCompare
 	{
 		protected com.xmlnuke.classes.DATEFORMAT dateFormat = com.xmlnuke.classes.DATEFORMAT.YMD;
+
+        public SortCompareDate(string fieldname) : base(fieldname)
+        {
+        }
 
 		public com.xmlnuke.classes.DATEFORMAT DateFormat
 		{
@@ -530,12 +422,12 @@ namespace com.xmlnuke.anydataset
 			set { this.dateFormat = value; }
 		}
 
-		public int Compare(object o1, object o2)
-		{
+        public override int Compare(SingleRow o1, SingleRow o2)
+        {
 			DateTime d1, d2;
 			try
 			{
-				d1 = util.DateUtil.ConvertDate(o1.ToString(), this.dateFormat);
+				d1 = util.DateUtil.ConvertDate(o1.getField(this._fieldname), this.dateFormat);
 			}
 			catch
 			{
@@ -544,7 +436,7 @@ namespace com.xmlnuke.anydataset
 
 			try
 			{
-				d2 = util.DateUtil.ConvertDate(o2.ToString(), this.dateFormat);
+				d2 = util.DateUtil.ConvertDate(o2.getField(this._fieldname), this.dateFormat);
 			}
 			catch
 			{

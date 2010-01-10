@@ -137,7 +137,7 @@ namespace com.xmlnuke.anydataset
 			else
 			{
 				System.IO.FileStream file = System.IO.File.OpenRead(this._source);
-				if (file.Handle.Equals(null))
+				if (file.SafeFileHandle.Equals(null))
 				{
 					throw new Exception("TextFileDataSet File open error");
 				}

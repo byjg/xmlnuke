@@ -99,11 +99,9 @@ namespace com.xmlnuke.module
 			SingleRow user = this._users.validateUserName(this._context.ContextValue("loguser"), this._context.ContextValue("password"));
 			if (user == null)
 			{
-				XmlContainerCollection container = new XmlContainerCollection();
-				container.setClass("msgalert");
+                XmlnukeUIAlert container = new XmlnukeUIAlert(this._context, UIAlert.BoxAlert);
+                container.setAutoHide(5000);
 				container.addXmlnukeObject(new XmlnukeText(myWords.Value("LOGINFAIL"), true, false, false));
-				container.setHideAfterTime(5000);
-				block.addXmlnukeObject(container);
 				this.FormLogin(block);
 			}
 			else
@@ -184,10 +182,9 @@ namespace com.xmlnuke.module
 		{
 			LanguageCollection myWords = this.WordCollection();
 
-			XmlContainerCollection container = new XmlContainerCollection();
-			container.setClass("msgalert");
-			container.setHideAfterTime(5000);
-			block.addXmlnukeObject(container);
+            XmlnukeUIAlert container = new XmlnukeUIAlert(this._context, UIAlert.BoxAlert);
+            container.setAutoHide(5000);
+            block.addXmlnukeObject(container);
 
 			SingleRow user = this._users.getUserEMail(this._context.ContextValue("email"));
 
@@ -203,6 +200,7 @@ namespace com.xmlnuke.module
 				this.sendWelcomeMessage(myWords, user.getField(this._users.getUserTable().Name), user.getField(this._users.getUserTable().Username), user.getField(this._users.getUserTable().Email), newpassword);
 				this._users.Save();
 				container.addXmlnukeObject(new XmlnukeText(myWords.Value("FORGOTUSEROK"), true, false, false));
+                container.setUIAlertType(UIAlert.BoxInfo);
 				this.FormLogin(block);
 			}
 		}

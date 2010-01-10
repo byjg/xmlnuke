@@ -165,7 +165,7 @@ namespace com.xmlnuke.classes
 
 						// Is The maximum amount of unique IP reached?
 						// If true, I need to remove the excess. 
-						anylastip.removeRow(sr.getDomObject());
+						anylastip.removeRow(sr);
 						anylastip.appendRow();
 						bool found = false;
 						for (int i = 0; i < arr.Length - 1; i++) // I want to remove the last from this list.

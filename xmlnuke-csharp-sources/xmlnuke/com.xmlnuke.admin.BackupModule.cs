@@ -1180,7 +1180,7 @@ namespace com.xmlnuke.admin
 					SingleRow row = it.moveNext();
 					if (row.getField("project") == projectName)
 					{
-						anyDataSet.removeRow(row.getDomObject());
+						anyDataSet.removeRow(row);
 						anyDataSet.Save();
 					}
 				}

@@ -32,6 +32,7 @@ using System.Xml;
 using com.xmlnuke;
 using com.xmlnuke.anydataset;
 using com.xmlnuke.processor;
+using System.Text.RegularExpressions;
 
 namespace com.xmlnuke.admin
 {
@@ -81,8 +82,8 @@ namespace com.xmlnuke.admin
 			}
 			_anyDataSet.appendRow();
 			_anyDataSet.addField(this._UserTable.Name, name);
-			_anyDataSet.addField(this._UserTable.Username, userName.ToLower());
-			_anyDataSet.addField(this._UserTable.Email, email.ToLower());
+			_anyDataSet.addField(this._UserTable.Username, Regex.Replace(userName.ToLower(), @"(?:([\w])|([\W]))", "$1"));
+            _anyDataSet.addField(this._UserTable.Email, email.ToLower());
 			_anyDataSet.addField(this._UserTable.Password, getSHAPassword(password));
 			_anyDataSet.addField(this._UserTable.Admin, "");
 			_anyDataSet.addField(this._UserTable.Created, DateTime.Now);
@@ -117,7 +118,7 @@ namespace com.xmlnuke.admin
 			SingleRow user = getUserName(username);
 			if (user != null)
 			{
-				_anyDataSet.removeRow(user.getDomObject());
+				_anyDataSet.removeRow(user);
 				return true;
 			}
 			else
@@ -196,14 +197,7 @@ namespace com.xmlnuke.admin
 			SingleRow user = getUserName(userName);
 			if (user != null)
 			{
-				XmlNodeList nodes = user.getFieldNodes(userProp);
-				foreach (XmlNode node in nodes)
-				{
-					if ((propValue == null) || (propValue == node.InnerXml))
-					{
-						user.removeField(node);
-					}
-				}
+                user.removeFieldNameValue(userProp, propValue);
 				return true;
 			}
 			else
@@ -318,7 +312,7 @@ namespace com.xmlnuke.admin
 			if (it.hasNext())
 			{
 				SingleRow sr = it.moveNext();
-				sr.removeField(this.getRoleNode(sr, role));
+				sr.removeField(role);
 			}
 			roleDataSet.Save();
 		}
@@ -327,28 +321,6 @@ namespace com.xmlnuke.admin
 			this.editRolePublic(site, role, null);
 		}
 
-		/// <summary>
-		/// Find a role in site
-		/// </summary>
-		/// <param name="sr"></param>
-		/// <param name="role"></param>
-		/// <returns></returns>
-		protected XmlNode getRoleNode(SingleRow sr, string role)
-		{
-			XmlNodeList list = sr.getFieldNodes(this._RolesTable.Role);
-			int count = 0;
-			while (list.Count > count)
-			{
-				XmlNode node = list[count];
-				if (node.Value == role)
-				{
-					return node;
-				}
-				count++;
-			}
-
-			return null;
-		}
 	}
 
 }

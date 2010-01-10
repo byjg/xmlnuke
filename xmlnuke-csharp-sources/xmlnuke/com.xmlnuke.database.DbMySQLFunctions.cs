@@ -42,7 +42,7 @@ namespace com.xmlnuke.Database
         public override string Concat(string[] param)
         {
             string sql = "concat(";
-            for (int i = 0; i<param.Length; i++)
+            for (int i = 0; i < param.Length; i++)
             {
                 string var = param[i];
                 sql += (i == 0 ? "" : ",") + var;
@@ -61,7 +61,14 @@ namespace com.xmlnuke.Database
         /// <returns></returns>
         public override string Limit(string sql, int start, int qty)
         {
-    		return sql += " LIMIT " + start.ToString() + "," + qty.ToString() + " ";
+            if (!sql.Contains(" LIMIT "))
+            {
+                return sql += " LIMIT " + start.ToString() + "," + qty.ToString() + " ";
+            }
+            else
+            {
+                return sql;
+            }
         }
 
         /// <summary>
@@ -91,6 +98,85 @@ namespace com.xmlnuke.Database
         public override bool hasLimit()
         {
             return true;
+        }
+
+        /**
+         * Format date column in sql string given an input format that understands Y M D
+         * @param string fmt
+         * @param string col
+         * @return string
+         * @example db.getDbFunctions().SQLDate("d/m/Y H:i", "dtcriacao")
+         */
+        public string SQLDate(string fmt, string col)
+        {
+            if (String.IsNullOrEmpty(col)) col = "NOW()";
+            string s = "DATE_FORMAT(" + col + ",'";
+            bool concat = false;
+            int len = fmt.Length;
+            for (int i = 0; i < len; i++)
+            {
+                char ch = fmt[i];
+                switch (ch)
+                {
+                    case 'Y':
+                    case 'y':
+                        s += "%Y";
+                        break;
+                    case 'Q':
+                    case 'q':
+                        s += "'),Quarter(" + col + ")";
+
+                        if (len > i + 1) s += ",DATE_FORMAT(" + col + ",'";
+                        else s += ",('";
+                        concat = true;
+                        break;
+                    case 'M':
+                        s += "%b";
+                        break;
+
+                    case 'm':
+                        s += "%m";
+                        break;
+                    case 'D':
+                    case 'd':
+                        s += "%d";
+                        break;
+
+                    case 'H':
+                        s += "%H";
+                        break;
+
+                    case 'h':
+                        s += "%I";
+                        break;
+
+                    case 'i':
+                        s += "%i";
+                        break;
+
+                    case 's':
+                        s += "%s";
+                        break;
+
+                    case 'a':
+                    case 'A':
+                        s += "%p";
+                        break;
+
+                    default:
+
+                        if (ch == '\\')
+                        {
+                            i++;
+                            ch = fmt[i];
+                        }
+                        s += ch;
+                        break;
+                }
+            }
+            s += "')";
+            if (concat) s = "CONCAT(" + s + ")";
+            return s;
         }
     }
 

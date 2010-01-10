@@ -32,6 +32,7 @@ using System.Xml;
 using com.xmlnuke;
 using com.xmlnuke.anydataset;
 using com.xmlnuke.engine;
+using System.Text.RegularExpressions;
 
 namespace com.xmlnuke.admin
 {
@@ -123,7 +124,7 @@ namespace com.xmlnuke.admin
 			DbParameters param = new DbParameters();
 			param.Add(this._UserTable.Name, System.Data.DbType.String, name);
 			param.Add(this._UserTable.Email, System.Data.DbType.String, email.ToLower());
-			param.Add(this._UserTable.Username, System.Data.DbType.String, userName.ToLower());
+            param.Add(this._UserTable.Username, System.Data.DbType.String, Regex.Replace(userName.ToLower(), @"(?:([\w])|([\W]))", "$1"));
 			param.Add(this._UserTable.Password, System.Data.DbType.String, this.getSHAPassword(password));
 			param.Add(this._UserTable.Created, System.Data.DbType.DateTime, DateTime.Now);
 

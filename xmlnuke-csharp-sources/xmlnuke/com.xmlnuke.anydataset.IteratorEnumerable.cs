@@ -1,4 +1,4 @@
-/*
+﻿/*
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  *  Copyright:
  *
@@ -32,27 +32,44 @@ using System.Collections;
 
 namespace com.xmlnuke.anydataset
 {
-	/// <summary>
-	/// Interface for Iterator structures. Use this for receive Iterator paramenters.
-	/// </summary>
-	public interface IIterator : IEnumerable
-	{
-		/// <summary>
-		/// Check if exists more records.
-		/// </summary>
-		/// <returns>Return True if is possible get one or more records.</returns>
-		bool hasNext();
+    public class IteratorEnumerable : IEnumerator
+    {
+        protected IIterator _iterator;
 
-		/// <summary>
-		/// Get the next record.
-		/// </summary>
-		/// <returns>Return a SingleRow object</returns>
-		SingleRow moveNext();
+        public IteratorEnumerable(IIterator it)
+        {
+            this._iterator = it;
+        }
 
-		/// <summary>
-		/// Get the number of rows. -1 this feature is disabled.
-		/// </summary>
-		/// <returns></returns>
-		int Count();
-	}
+        #region IEnumerator Members
+
+        public SingleRow Current
+        {
+            get
+            {
+                return this._iterator.moveNext();
+            }
+        }
+
+        public bool MoveNext()
+        {
+            return this._iterator.hasNext();
+        }
+
+        public void Reset()
+        {
+            // This is no necessary in XMLNuke. 
+        }
+
+        // The current property on the IEnumerator interface:
+        object IEnumerator.Current
+        {
+            get
+            {
+                return (Current);
+            }
+        }
+
+        #endregion
+    }
 }
