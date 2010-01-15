@@ -37,7 +37,7 @@ abstract class BaseModel
 	 * @param SingleRow $object
 	 * @return void
 	 */
-	public function __constructor($object)
+	public function __construct($object)
 	{
 		if ($object instanceof SingleRow)
 		{
@@ -60,6 +60,10 @@ abstract class BaseModel
 	{
 		$this->_propertyPattern = array(($pattern[0]!="/" ? "/" : "") . $pattern . ($pattern[strlen($pattern)-1]!="/" ? "/" : ""), $replace);
 	}
+	public function getPropertyPattern()
+	{
+		return $this->_propertyPattern;
+	}
 
 	/**
 	 * Bind public string class parameters based on Request Get e Form
@@ -72,7 +76,50 @@ abstract class BaseModel
 		{
 			return;
 		}
+		elseif (!($sr instanceof SingleRow))
+		{
+			throw new Exception("I expected a SingleRow object");
+		}
 
+		$this->bindObject($sr);
+	}
+
+	/**
+	 * Enter description here...
+	 *
+	 * @param IIterator $it
+	 */
+	public function bindIterator($it)
+	{
+		if ($it->hasNext())
+		{
+			$sr = $it->moveNext();
+			$this->bindSingleRow($sr);
+		}
+	}
+
+
+	/**
+	 * Bind public string class parameters based on Request Get e Form
+	 *
+	 * @param SingleRow $sr
+	 */
+	public function bindFromContext($context)
+	{
+		if ($context == null)
+		{
+			return;
+		}
+		elseif (!($context instanceof Context))
+		{
+			throw new Exception("I expected a Context object");
+		}
+
+		$this->bindObject($context);
+	}
+
+	protected function bindObject($object)
+	{
 		$class = new ReflectionClass(get_class($this));
 
 		$properties = $class->getProperties( ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PRIVATE | ReflectionProperty::IS_PUBLIC );
@@ -91,30 +138,27 @@ abstract class BaseModel
 					$propName = substr($propName, 1);
 				}
 
+				if ($object instanceof SingleRow)
+				{
+					$propValue = $object->getField($propName);
+				}
+				elseif ($object instanceof Context)
+				{
+					$propValue = $object->ContextValue($propName);
+				}
+				else
+				{
+					$propValue = "";
+				}
+
 				// If exists value, set it;
-				if ($sr->getField($propName) != "")
+				if ($propValue != "")
 				{
 					$method = new ReflectionMethod(get_class($this), "set" . ucfirst(preg_replace($this->_propertyPattern[0], $this->_propertyPattern[1], $propName)));
-					$method->invokeArgs($this, array($sr->getField($propName)));
+					$method->invokeArgs($this, array($propValue));
 				}
 			}
 		}
 	}
-
-
-	/**
-	 * Enter description here...
-	 *
-	 * @param IIterator $it
-	 */
-	public function bindIterator($it)
-	{
-		if ($it->hasNext())
-		{
-			$sr = $it->moveNext();
-			$this->bindSingleRow($sr);
-		}
-	}
-
 }
 ?>

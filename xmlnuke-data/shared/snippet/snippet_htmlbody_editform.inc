@@ -7,7 +7,7 @@
 	<script language='JavaScript'>
 	function <xsl:value-of select="@name"/>_checksubmit(){
 		errorslist = document.getElementById("<xsl:value-of select="@name"/>_errorslist");
-		errorslist.style.display = "none"; 
+		errorslist.style.display = "none";
 		SEPARADORDECIMAL = '<xsl:choose><xsl:when test="@decimalseparator"><xsl:value-of select="@decimalseparator"/></xsl:when><xsl:otherwise>.</xsl:otherwise></xsl:choose>';
 		FORMATODATA = <xsl:choose><xsl:when test="@dateformat"><xsl:value-of select="@dateformat"/></xsl:when><xsl:otherwise>0</xsl:otherwise></xsl:choose>;
 		objForm = document.<xsl:value-of select="@name"/>;
@@ -20,17 +20,17 @@
 		</xsl:for-each>
 
 		if (msgerror.length)
-		{ 
+		{
 			errorslist.innerHTML = fn_mountmessage(msgerror);
-			errorslist.style.display = "block"; 
-			return false; 
+			errorslist.style.display = "block";
+			return false;
 		}
 		else
 		{
 			fn_disableButton();
 			return true;
 		}
-		
+
 	}
 	</script>
   </xsl:if>
@@ -53,12 +53,12 @@
 	<xsl:if test="not(@customsubmit)">
 		<xsl:attribute name="onsubmit">return <xsl:value-of select="@name"/>_checksubmit()</xsl:attribute>
 	</xsl:if>
-	
+
 	<input type="hidden" name="__postback" value="true" />
 
 	<fieldset>
 		<legend><xsl:value-of select="@title"/></legend>
-	
+
 		<div class="errorslist">
 			<xsl:if test="@name">
 				<xsl:attribute name="id"><xsl:value-of select="@name"/>_errorslist</xsl:attribute>
@@ -92,14 +92,14 @@
 	fn_addEvent("<xsl:value-of select="@name" />", "focus", function () { this.select(); });
 	</script>
   </xsl:for-each>
-  
+
   <xsl:if test="textbox[@mask]|inputgroup/textbox[@mask]">
     <script type="text/javascript">
 	  $(function() {
 	  <xsl:for-each select="textbox[@mask]|inputgroup/textbox[@mask]">
 		$("#<xsl:value-of select="@name" />").mask("<xsl:value-of select="@mask" />", {placeholder:" "});
 	  </xsl:for-each>
-	  });	
+	  });
 	</script>
   </xsl:if>
 
@@ -111,7 +111,7 @@
 	<xsl:param name="caption"/>
 	<xsl:param name="name"/>
 	<xsl:param name="required"/>
-	
+
 	<label>
 		<xsl:if test="$name and $name!=''"><xsl:attribute name="for"><xsl:value-of select="$name"/></xsl:attribute></xsl:if>
 		<xsl:value-of select="$caption"/><xsl:if test="$required='true'">*</xsl:if>
@@ -125,7 +125,7 @@
 	<xsl:param name="size"/>
 	<xsl:param name="maxlength"/>
 	<xsl:param name="selected"/>
-	
+
 	<xsl:if test="$type='label'">
 		<span id="form_label">
 			<xsl:apply-templates/>
@@ -149,7 +149,7 @@
 		<xsl:attribute name="name"><xsl:value-of select="$name"/></xsl:attribute>
 		<xsl:attribute name="id"><xsl:value-of select="$name"/></xsl:attribute>
 		<xsl:attribute name="value"><xsl:value-of select="$value"/></xsl:attribute>
-		
+
 		<xsl:if test="$size and $size!=''"><xsl:attribute name="size"><xsl:value-of select="$size"/></xsl:attribute></xsl:if>
 		<xsl:if test="$maxlength and $maxlength!=''"><xsl:attribute name="maxlength"><xsl:value-of select="$maxlength"/></xsl:attribute></xsl:if>
 	</input>
@@ -160,7 +160,7 @@
 <xsl:template match="hidden"><input type="hidden"><xsl:attribute name="name"><xsl:value-of select="@name"/></xsl:attribute><xsl:attribute name="id"><xsl:value-of select="@name"/></xsl:attribute><xsl:attribute name="value"><xsl:value-of select="@value"/></xsl:attribute></input></xsl:template>
 
 <xsl:template match="caption">
-	<dt style="clear:both;width:99%;float:left;text-align:center;text-weight:bold;margin:0 0 0.5em 0.25em;background-color: #EFEFEF">
+	<dt class="caption" >
 		<b><xsl:value-of select="text()"/></b>
 	</dt>
 </xsl:template>
@@ -170,7 +170,7 @@
 
 	<!-- PUT CANHIDE OBJECT -->
 	<xsl:if test="name()='inputgroup' and @name and @canhide='true'">
-		<dt style="clear:both;width:99%;float:left;text-align:left;text-weight:bold;margin:0 0 0.5em 0.25em">
+		<dt class="group" >
 			<a><xsl:attribute name="href">javascript:void showHideGeneric('<xsl:value-of select="@name"/>', 'auto')</xsl:attribute>
 			<img border="0" >
 				<xsl:attribute name="src">common/imgs/<xsl:if test="@visible='false'">faqopen.gif</xsl:if><xsl:if test="not(@visible='false')">faqclose.gif</xsl:if></xsl:attribute>
@@ -184,7 +184,7 @@
 	<xsl:if test="name()='inputgroup' and @breakline='true'">
 		<xsl:apply-templates />
 	</xsl:if>
-	
+
 	<!-- INPUT OBJECTS -->
 	<xsl:if test="name()!='inputgroup'">
 		<xsl:if test="name()='checkbox' or name()='radiobox'">
@@ -232,7 +232,7 @@
 			</dd>
 		</xsl:if>
 	</xsl:if>
-	
+
 	<!-- Dont breakline!! -->
 	<xsl:if test="name()='inputgroup' and (@breakline!='true' or not(@breakline))">
 		<dt>
@@ -264,10 +264,10 @@
 				<xsl:if test="position()!=last()"><img src="common/spacer.gif" width="5" height="1" /></xsl:if>
 			</xsl:for-each>
 			<xsl:for-each select="hidden">
-				<input type="hidden"><xsl:attribute name="name"><xsl:value-of select="@name"/></xsl:attribute><xsl:attribute name="id"><xsl:value-of select="@name"/></xsl:attribute><xsl:attribute name="value"><xsl:value-of select="@value"/></xsl:attribute></input>				
+				<input type="hidden"><xsl:attribute name="name"><xsl:value-of select="@name"/></xsl:attribute><xsl:attribute name="id"><xsl:value-of select="@name"/></xsl:attribute><xsl:attribute name="value"><xsl:value-of select="@value"/></xsl:attribute></input>
 			</xsl:for-each>
 		</dd>
-	</xsl:if>	
+	</xsl:if>
 </xsl:template>
 
 
@@ -384,4 +384,4 @@
 			</xsl:with-param>
 		</xsl:call-template>
 	</xsl:if>
-</xsl:template>				
+</xsl:template>

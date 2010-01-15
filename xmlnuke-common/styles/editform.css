@@ -17,24 +17,45 @@
 	font-size: 14px;
 	font-weight: bold;
 	margin: 0pt 0pt 0.5em 0.25em;
-	padding: 3px 3px 3px 0.5em; 
-	display: block; 
-	width: 97%; 
-	text-align: left; 
+	padding: 3px 3px 3px 0.5em;
+	display: block;
+	width: 97%;
+	text-align: left;
 	/*background-color: rgb(200, 200, 200);*/
 }
 
-#editform DT {
+#editform dt {
    clear:both;
    width:30%;
    float:left;
    text-align:right;
 }
 
-#editform DD {
+#editform dd {
    float:left;
    width:65%;
    margin:0 0 0.5em 0.25em;
+}
+
+#editform .caption
+{
+	clear:both;
+	width:99%;
+	float:left;
+	text-align:center;
+	font-weight:bold;
+	margin:0 0 0.5em 0.25em;
+	background-color: #EFEFEF
+}
+
+#editform .group
+{
+	clear:both;
+	width:99%;
+	float:left;
+	text-align:left;
+	text-weight:bold;
+	margin:0 0 0.5em 0.25em
 }
 
 .errorslist {
