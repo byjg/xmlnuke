@@ -37,7 +37,7 @@ abstract class BaseModel
 	 * @param SingleRow $object
 	 * @return void
 	 */
-	public function __construct($object)
+	public function __construct($object=null)
 	{
 		if ($object instanceof SingleRow)
 		{
