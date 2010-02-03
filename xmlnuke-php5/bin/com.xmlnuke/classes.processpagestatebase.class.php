@@ -150,8 +150,17 @@ class ProcessPageFields
 		$this->fields = array();
 	}
 
+	/**
+	 *
+	 * @param ProcessPageField $p
+	 * @return void
+	 */
 	public function addProcessPageField($p)
 	{
+		if ( ($p->fieldXmlInput == XmlInputObjectType::FILEUPLOAD) && ($p->saveDatabaseFormatter == null) )
+		{
+			throw new Exception("ProcessPageField FileUpload need be defined saveDatabaseFormatter. Did you try to use 'ProcessPageStateBaseSaveFormatterFileUpload' class?");
+		}
 		$this->fields[] = $p;
 	}
 
@@ -1127,11 +1136,20 @@ class ProcessPageStateBaseSaveFormatterFileUpload implements IEditListFormatter
 	protected $_path = "";
 	protected $_saveAs = "";
 
+	protected $_width = 0;
+	protected $_height = 0;
+
 	public function __construct($context, $path, $saveAs = "*")
 	{
 		$this->_context = $context;
 		$this->_path = $path;
 		$this->_saveAs = $saveAs;
+	}
+
+	public function resizeImageTo($width, $height)
+	{
+		$this->_width = $width;
+		$this->_height = $height;
 	}
 
 	public function Format($row, $fieldname, $value)
@@ -1144,8 +1162,35 @@ class ProcessPageStateBaseSaveFormatterFileUpload implements IEditListFormatter
 			$fileProcessor->setFilenameLocation(ForceFilenameLocation::DefinePath, $this->_path);
 
 			// Salva os arquivos do formulário
-			$result = $this->_context->processUpload($fileProcessor, ($this->_saveAs != "*"), $fieldname);
-			return $result[0];
+			$result = $this->_context->processUpload($fileProcessor, false, $fieldname);
+			if ($this->_saveAs != "*")
+			{
+				$fileinfo = pathinfo($result[0]);
+				$path_parts = pathinfo($this->_saveAs);
+				$newName = $this->_path . FileUtil::Slash() .  $path_parts['filename'] . "." . $fileinfo["extension"];
+
+				if (strpos(".jpg.gif.jpeg.png", ".".$fileinfo["extension"])===false)
+				{
+					rename( $result[0]  , $newName  );
+				}
+				else
+				{
+					if (($this->_width > 0) || ($this->_height > 0))
+					{
+						$image = new ImageUtil($result[0]);
+						$image->resizeAspectRatio($this->_width, $this->_height, 255, 255, 255)->save($newName);
+					}
+					else
+					{
+						rename( $result[0]  , $newName  );
+					}
+				}
+				return $newName;
+			}
+			else
+			{
+				return $result[0];
+			}
 		}
 		else
 		{

@@ -21,7 +21,12 @@
 		<xsl:for-each select="mediaitem" >
 			<li>
 				<a href="{@src}" rel="prettyPhoto[{$mediagallery}]" title="{@caption}">
-					<xsl:if test="@thumb"><img src="{@thumb}" width="{@width}" height="{@height}" alt="{@title}" title="{@title}" /></xsl:if>
+					<xsl:if test="@thumb">
+						<img src="{@thumb}" alt="{@title}" title="{@title}">
+							<xsl:if test="@width and not(@width='')"><xsl:attribute name="width"><xsl:value-of select="@width" /></xsl:attribute></xsl:if>
+							<xsl:if test="@height and not(@height='')"><xsl:attribute name="height"><xsl:value-of select="@height" /></xsl:attribute></xsl:if>
+						</img>
+					</xsl:if>
 					<xsl:if test="not(@thumb)"><xsl:value-of select="@title" /></xsl:if>
 				</a>
 				<xsl:if test="$showthumbcaption='true'">
@@ -39,7 +44,12 @@
 <xsl:template match="mediaitem">
 
 	<a href="#" onclick="$.prettyPhoto.open('{@src}');" title="{@caption}">
-		<xsl:if test="@thumb"><img src="{@thumb}" width="{@width}" height="{@height}" alt="{@title}" /></xsl:if>
+		<xsl:if test="@thumb">
+			<img src="{@thumb}" alt="{@title}" title="{@title}">
+				<xsl:if test="@width and not(@width='')"><xsl:attribute name="width"><xsl:value-of select="@width" /></xsl:attribute></xsl:if>
+				<xsl:if test="@height and not(@height='')"><xsl:attribute name="height"><xsl:value-of select="@height" /></xsl:attribute></xsl:if>
+			</img>
+		</xsl:if>
 		<xsl:if test="not(@thumb)"><xsl:value-of select="@title" /></xsl:if>
 	</a>
 
