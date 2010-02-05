@@ -1159,38 +1159,41 @@ class ProcessPageStateBaseSaveFormatterFileUpload implements IEditListFormatter
 		if ($files[$fieldname] != "")
 		{
 			$fileProcessor = new UploadFilenameProcessor($this->_saveAs, $this->_context);
-			$fileProcessor->setFilenameLocation(ForceFilenameLocation::DefinePath, $this->_path);
+			$fileProcessor->setFilenameLocation(ForceFilenameLocation::DefinePath, FileUtil::GetTempDir());
 
-			// Salva os arquivos do formulário
+			// Save the files in a temporary directory
 			$result = $this->_context->processUpload($fileProcessor, false, $fieldname);
+
+			// Get a way to rename the files
+			$fileinfo = pathinfo($result[0]);
 			if ($this->_saveAs != "*")
 			{
-				$fileinfo = pathinfo($result[0]);
 				$path_parts = pathinfo($this->_saveAs);
-				$newName = $this->_path . FileUtil::Slash() .  $path_parts['filename'] . "." . $fileinfo["extension"];
-
-				if (strpos(".jpg.gif.jpeg.png", ".".$fileinfo["extension"])===false)
-				{
-					rename( $result[0]  , $newName  );
-				}
-				else
-				{
-					if (($this->_width > 0) || ($this->_height > 0))
-					{
-						$image = new ImageUtil($result[0]);
-						$image->resizeAspectRatio($this->_width, $this->_height, 255, 255, 255)->save($newName);
-					}
-					else
-					{
-						rename( $result[0]  , $newName  );
-					}
-				}
-				return $newName;
 			}
 			else
 			{
-				return $result[0];
+				$path_parts = pathinfo($result[0]);
 			}
+			$newName = $this->_path . FileUtil::Slash() .  $path_parts['filename'] . "." . $fileinfo["extension"];
+
+			// Put the image in the right place
+			if (strpos(".jpg.gif.jpeg.png", ".".$fileinfo["extension"])===false)
+			{
+				rename( $result[0]  , $newName  );
+			}
+			else
+			{
+				if (($this->_width > 0) || ($this->_height > 0))
+				{
+					$image = new ImageUtil($result[0]);
+					$image->resizeAspectRatio($this->_width, $this->_height, 255, 255, 255)->save($newName);
+				}
+				else
+				{
+					rename( $result[0]  , $newName  );
+				}
+			}
+			return $newName;
 		}
 		else
 		{
