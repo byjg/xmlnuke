@@ -872,10 +872,11 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 			{
 				if (!is_array($field->arraySelectList) || ($field->arraySelectList["URL"]=="") || ($field->arraySelectList["PARAMREQ"]==""))
 				{
-					throw new XMLNukeException("You have to pass a array to arraySelectList field parameter with the following keys: URL, PARAMREQ");
+					throw new XMLNukeException(
+						"You have to pass a array to arraySelectList field parameter with the following keys: URL, PARAMREQ. Optional: ATTRINFO, ATTRID, JSCALLBACK");
 				}
 				$itb->setInputTextBoxType(InputTextBoxType::TEXT);
-				$itb->setAutosuggest($this->_context, $field->arraySelectList["URL"], $field->arraySelectList["PARAMREQ"]);
+				$itb->setAutosuggest($this->_context, $field->arraySelectList["URL"], $field->arraySelectList["PARAMREQ"], $field->arraySelectList["ATTRINFO"], $field->arraySelectList["ATTRID"], $field->arraySelectList["JSCALLBACK"]);
 			}
 			else
 			{
