@@ -99,6 +99,18 @@ abstract class BaseModule implements IModule
 	protected $_url;
 
 	/**
+	 * Full module name (including namespace)
+	 * @var string
+	 */
+	protected $_moduleName;
+
+	/**
+	 *
+	 * @var LanguageCollection
+	 */
+	protected $_words = null;
+
+	/**
 	 * Measure the time
 	 *
 	 * @var int
@@ -153,6 +165,7 @@ abstract class BaseModule implements IModule
 		$this->CustomSetup($customArgs);
 		$this->defaultXmlnukeDocument = new XmlnukeDocument();
 		$this->_url = new XmlnukeManageUrl(URLTYPE::MODULE , $this->_xmlModuleName->ToString());
+		$this->_moduleName = $this->_xmlModuleName->ToString();
 	}
 
 	/**
@@ -169,8 +182,11 @@ abstract class BaseModule implements IModule
 	*/
 	public function WordCollection()
 	{
-		$lang = LanguageFactory::GetLanguageCollection($this->_context, LanguageFileTypes::MODULE, $this->_xmlModuleName->ToString());
-		return $lang;
+		if ($this->_words == null)
+		{
+			$this->_words = LanguageFactory::GetLanguageCollection($this->_context, LanguageFileTypes::MODULE, $this->_xmlModuleName->ToString());
+		}
+		return $this->_words;
 	}
 
 	/**

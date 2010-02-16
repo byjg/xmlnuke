@@ -258,7 +258,7 @@ class XmlEditList extends XmlnukeDocumentObject
 	*@param bool $edit
 	*@param bool $delete
 	*/
-	public function XmlEditList($context, $title, $module, $newButton = true, $view = true, $edit = true, $delete = true)
+	public function  __construct($context, $title, $module, $newButton = true, $view = true, $edit = true, $delete = true)
 	{
 		$this->_context = $context;
 		$this->_module = $module;
