@@ -264,7 +264,59 @@ class XmlNukeEngine
 	*@return string - The transformation string
 	*/
 	public function TransformDocument($xml, $xslFile)
-	{		
+	{
+		// Add a custom XML based on attribute xmlobjet inside root
+		// Example:
+		// <page include="base.namespace, file.php" xmlobject="plugin.name[param1, param2]">
+		$pattern = "/(?<plugin>((\w+)\.)+\w+)\[(?<param>([#']?[\w]+[#']?\s*,?\s*)+)\]/";
+		$xmlRoot = $xml->documentElement;
+		$xmlRootAttributes = $xmlRoot->attributes;
+		foreach ($xmlRootAttributes as $attr)
+		{
+			if ($attr->nodeName == "include")
+			{
+				$param = explode(",", $attr->nodeValue);
+				if (count($param) == 1)
+				{
+					ModuleFactory::IncludePhp(trim($param[0]));
+				}
+				else
+				{
+					ModuleFactory::IncludePhp(trim($param[0]), trim($param[1]));
+				}
+			}
+			elseif ($attr->nodeName == "xmlobject")
+			{
+				$match = preg_match($pattern, $attr->value, $matches);
+				if ($match)
+				{
+					$param = explode(",", $matches["param"]);
+					for ($i=0;$i<=3;$i++)
+					{
+						if (count($param) < $i+1)
+						{
+							$param[] = null;
+						}
+						elseif ($param[$i] == "#CONTEXT#")
+						{
+							$param[$i] = $this->_context;
+						}
+						else
+						{
+							$param[$i] = trim($param[$i]);
+						}
+					}
+					$plugin = PluginFactory::LoadPlugin($matches["plugin"], "", $param[0], $param[1], $param[2], $param[3]);
+					if (!($plugin instanceof IXmlnukeDocumentObject))
+					{
+						throw new Exception("The attribute in XMLNuke need to implement IXmlnukeDocumentObject interface");
+					}
+					$plugin->generateObject($xmlRoot);
+				}
+			}
+		}
+
+		// Check if there is no XSL template
 		if (!$this->_applyXslTemplate)
 		{
 			if ($this->_extractNodes == "")
@@ -298,7 +350,8 @@ class XmlNukeEngine
 		$xslTran = new XSLTProcessor();
 		$snippetProcessor = new SnippetProcessor($this->_context, $xslFile);
 		//Uri
-		try {
+		try
+		{
 			$uri = $snippetProcessor->getUriFromXsl($xslFile, $this->_context);
 		}
 		catch (XMLNukeException $ex)
