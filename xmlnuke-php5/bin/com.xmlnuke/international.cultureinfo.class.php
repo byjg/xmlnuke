@@ -31,7 +31,7 @@
  * IMPORTANT NOTE:
  *
  * This class is Operational System dependant. Your OS must support the desired language to get work
- * specific regional settings. 
+ * specific regional settings.
  *
  * On Debian machines:
  *   uncomment or add the desired language in file /etc/locale.gen (examples: pt_BR, en_CA, de_DE, etc)
@@ -48,7 +48,7 @@ class CultureInfo
 	private $_Language;
 	private $_CharSet;
 	private $_cultureActive;
-	
+
 	private $_localeConv;
 
 	/**
@@ -60,11 +60,11 @@ class CultureInfo
 	{
 		return $this->_name;
 	}
-	
+
 	/**
 	*@param
 	*@return string
-	*@desc 
+	*@desc
 	*/
 	public function getLanguage()
 	{
@@ -73,18 +73,18 @@ class CultureInfo
 	/**
 	*@param string $lang
 	*@return void
-	*@desc 
+	*@desc
 	*/
 	public function setLanguage($lang)
 	{
 		$this->_Language = $lang;
 	}
 
-	
+
 	/**
 	*@param
 	*@return string
-	*@desc 
+	*@desc
 	*/
 	public function getCharSet()
 	{
@@ -93,14 +93,14 @@ class CultureInfo
 	/**
 	*@param string $CharSet
 	*@return void
-	*@desc 
+	*@desc
 	*/
 	public function setCharSet($CharSet)
 	{
 		$this->_CharSet = $CharSet;
 	}
-	
-	
+
+
 	public function __construct($language, $langstr = null)
 	{
 		if ($langstr == null)
@@ -127,21 +127,21 @@ class CultureInfo
 
 		#Debug::PrintValue($this->_localeConv, $langstr, $this->getRegionalMonthNames());
 	}
-	
+
 	public function getIsoName()
 	{
 		$systemLocale = $this->_name;
 		$arrLocale = explode("-", $systemLocale);
 		$systemLocale = $arrLocale[0] . "_" . strtoupper($arrLocale[1]);
-		
+
 		return $systemLocale;
 	}
-		
+
 	public function getIntlCurrencySymbol()
 	{
 		return $this->_localeConv["int_curr_symbol"];
 	}
-	
+
 	public function getCurrencySymbol()
 	{
 		return $this->_localeConv["currency_symbol"];
@@ -150,13 +150,13 @@ class CultureInfo
 	{
 		return $this->_localeConv["decimal_point"];
 	}
-	
-	
+
+
 	public function getCultureActive()
 	{
 		return $this->_cultureActive;
 	}
-	
+
 	public function getRegionalMonthNames()
 	{
 		$monthArray = array();
@@ -168,31 +168,37 @@ class CultureInfo
 				$monthArray[$i] = utf8_encode($monthArray[$i]);
 			}
 		}
-		return $monthArray;		
+		return $monthArray;
 	}
-	
-	public function formatMoney($number, $intlSymbol = false)
+
+	public function formatMoney($number, $intlSymbol = false, $truncate = false)
 	{
+		$number = str_replace($this->_localeConv["decimal_point"], ".", $number);
+		if ($truncate)
+		{
+			$factor = pow(10, intval($this->_localeConv["frac_digits"]));
+			$number = intval($number * $factor) / $factor;
+		}
 		if (!$intlSymbol)
 		{
 			$format = "%01." . $this->_localeConv["frac_digits"] . "f";
 			$retorno = sprintf($format, $number);
-			
+
 			$moneySymbol = $this->getCurrencySymbol();
 			if ($this->_localeConv["p_sep_by_space"]) $space = ' '; else $space = '';
 			$retorno = ($this->_localeConv["p_cs_precedes"] ? "$moneySymbol$space$retorno" : "$retorno$space$moneySymbol");
 		}
-		else 
+		else
 		{
 			$format = "%01." . $this->_localeConv["frac_digits"] . "F";
 			$retorno = sprintf($format, $number);
-			
+
 			$retorno = $retorno . " " . $this->getIntlCurrencySymbol();
 		}
 
-		return $retorno; 
+		return $retorno;
 	}
-	
+
 	/**
 	 * Enter description here...
 	 *
@@ -214,7 +220,7 @@ class CultureInfo
 			return DATEFORMAT::YMD;
 		}
 	}
-	
+
 	public function getDoubleVal($value)
 	{
 		return doubleval(str_replace($this->getDecimalPoint(), ".", $value));

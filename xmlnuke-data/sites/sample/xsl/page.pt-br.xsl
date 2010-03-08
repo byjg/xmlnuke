@@ -1,6 +1,11 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-   <xsl:output method="xml" /><!-- indent="yes" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN"/>-->
+   <xsl:output method="xml"
+		omit-xml-declaration="yes"
+		doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN"
+		doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
+		indent="yes"/>
+
    <xsl:template match="/">
       <html>
          <head>

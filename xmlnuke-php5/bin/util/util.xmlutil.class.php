@@ -320,9 +320,10 @@ class XmlUtil
 	 *
 	 * @param node $pNode
 	 * @param string $xPath
+	 * @param array $arNamespace
 	 * @return DOMNodeList
 	 */
-	public static function selectNodes($pNode, $xPath) // <- Retorna N&#65533;!
+	public static function selectNodes($pNode, $xPath, $arNamespace = null) // <- Retorna N&#65533;!
 	{
 		if (substr($xPath, 0, 1) == "/")
 		{
@@ -330,8 +331,9 @@ class XmlUtil
 		}
 
 		$owner = XmlUtilKernel::getOwnerDocument($pNode);
-		$domXPath = new DOMXPath($owner);
-		$rNodeList = $domXPath->query($xPath, $pNode);
+		$xp = new DOMXPath($owner);
+		XmlUtil::registerNamespace($xp, $arNamespace);
+		$rNodeList = $xp->query($xPath, $pNode);
 
 		return $rNodeList;
 	}
@@ -341,9 +343,10 @@ class XmlUtil
 	 * 
 	 * @param DOMElement $pNode
 	 * @param string $xPath - xPath string format
+	 * @param array $arNamespace
 	 * @return DOMElement
 	 */
-	public static function selectSingleNode($pNode, $xPath) // <- Retorna
+	public static function selectSingleNode($pNode, $xPath, $arNamespace = null) // <- Retorna
 	{
 		while ($xPath[0] == "/") {
 			$xPath = substr($xPath, 1);
@@ -352,18 +355,36 @@ class XmlUtil
 		if($pNode->nodeType != XML_DOCUMENT_NODE)
 		{
 			$owner = XmlUtilKernel::getOwnerDocument($pNode);
-			$domXPath = new DOMXPath($owner);
-			$rNodeList = $domXPath->query("$xPath", $pNode);
+			$xp = new DOMXPath($owner);
+			XmlUtil::registerNamespace($xp, $arNamespace);
+			$rNodeList = $xp->query("$xPath", $pNode);
 		}
 		else
 		{
-			$domXPath = new DOMXPath($pNode);
-			$rNodeList = $domXPath->query("//$xPath");
+			$xp = new DOMXPath($pNode);
+			XmlUtil::registerNamespace($xp, $arNamespace);
+			$rNodeList = $xp->query("//$xPath");
 		}
 		$rNode = $rNodeList->item(0);
 		return $rNode;
 	}
 	
+	/**
+	 *
+	 * @param DOMXPath $xpath
+	 * @param array $arNamespace 
+	 */
+	public static function registerNamespace($xpath, $arNamespace)
+	{
+		if (($arNamespace != null) && (is_array($arNamespace)))
+		{
+			foreach ($arNamespace as $prefix=>$uri)
+			{
+				$xpath->registerNamespace($prefix, $uri);
+			}
+		}
+	}
+
 	/**
 	* Concat a xml string in the node
 	* @param DOMNode $node

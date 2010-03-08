@@ -60,8 +60,9 @@ class ParamProcessor
 	public function AdjustToFullLink($xmlDom,$tagName,$attribute)
 	{
 		$xpath = new DOMXPath($xmlDom);
-		$nodeList = $xpath->query("//".strtolower($tagName)." | //".strtoupper($tagName));
-	
+		XmlUtil::registerNamespace($xpath, array('x' => 'http://www.w3.org/1999/xhtml'));
+		$nodeList = $xpath->query("//".strtolower($tagName)." | //".strtoupper($tagName) . " | //x:".strtolower($tagName)." | //x:".strtoupper($tagName));
+
 		foreach ($nodeList as $node)
 		{
 			$strAtributeUp = strtoupper($attribute);
