@@ -1222,6 +1222,11 @@ namespace com.xmlnuke.engine
 			return this._context.Request.Form.AllKeys;
 		}
 
+        public string[] getAllQueryKeys()
+        {
+            return this._context.Request.QueryString.AllKeys ;
+        }
+
 		public void Debug()
 		{
 			util.Debug.Print(this._config);

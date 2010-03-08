@@ -171,7 +171,7 @@ namespace com.xmlnuke.util
 			return this.resize(new Size(maxSize, maxSize), true);
 		}
 
-		protected ImageUtil resize(Size size, bool maintainAspectRatio)
+		public ImageUtil resize(Size size, bool maintainAspectRatio)
 		{
 			int sourceWidth = this._image.Width;
 			int sourceHeight = this._image.Height;

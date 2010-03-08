@@ -36,6 +36,7 @@ using com.xmlnuke.anydataset;
 using com.xmlnuke.international;
 using com.xmlnuke.util;
 using com.xmlnuke.processor;
+using System.IO;
 
 namespace com.xmlnuke.classes
 {
@@ -123,6 +124,10 @@ namespace com.xmlnuke.classes
 
         public void addProcessPageField(ProcessPageField p)
         {
+            if ( (p.fieldXmlInput == XmlInputObjectType.FILEUPLOAD) && (p.saveDatabaseFormatter == null) )
+		    {
+			    throw new Exception("ProcessPageField FileUpload need be defined saveDatabaseFormatter. Did you try to use 'ProcessPageStateBaseSaveFormatterFileUpload' class?");
+		    }
             this.fields.Add(p);
         }
 
@@ -815,10 +820,10 @@ namespace com.xmlnuke.classes
                 {
                     if ((field.arraySelectList != null) || (String.IsNullOrEmpty(field.arraySelectList["URL"])) || (String.IsNullOrEmpty(field.arraySelectList["PARAMREQ"])))
                     {
-                        throw new Exception("You have to pass a array to arraySelectList field parameter with the following keys: URL, PARAMREQ");
+                        throw new Exception("You have to pass a array to arraySelectList field parameter with the following keys: URL, PARAMREQ. Optional: ATTRINFO, ATTRID, JSCALLBACK");
                     }
                     itb.setInputTextBoxType(InputTextBoxType.TEXT);
-                    itb.setAutosuggest(this._context, field.arraySelectList["URL"], field.arraySelectList["PARAMREQ"]);
+                    itb.setAutosuggest(this._context, field.arraySelectList["URL"], field.arraySelectList["PARAMREQ"], field.arraySelectList["ATTRINFO"], field.arraySelectList["ATTRID"], field.arraySelectList["JSCALLBACK"]);
                 }
                 else
                 {
@@ -1068,6 +1073,8 @@ namespace com.xmlnuke.classes
         protected Context _context;
         protected string _path = "";
         protected string _saveAs = "";
+    	protected int _width = 0;
+	    protected int _height = 0;
 
         public ProcessPageStateBaseSaveFormatterFileUpload(Context context, string path)
             : this(context, path, "*")
@@ -1080,19 +1087,46 @@ namespace com.xmlnuke.classes
             this._saveAs = saveAs;
         }
 
+        public void resizeImageTo(int width, int height)
+	    {
+		    this._width = width;
+		    this._height = height;
+	    }
+
         public string Format(SingleRow row, string fieldname, string value)
         {
             ArrayList files = this._context.getUploadFileNames();
 
             if (files.Contains(fieldname))
             {
+                // Define a TempDir
                 UploadFilenameProcessor fileProcessor = new UploadFilenameProcessor(this._saveAs, this._context);
                 fileProcessor.FilenameLocation = ForceFilenameLocation.DefinePath;
-                fileProcessor.PathForced = this._path;
+                fileProcessor.PathForced = Path.GetTempPath();
 
                 // Salva os arquivos do formulário
-                ArrayList result = this._context.processUpload(fileProcessor, (this._saveAs != "*"), fieldname);
-                return (string)result[0];
+                ArrayList result = this._context.processUpload(fileProcessor, false, fieldname);
+
+                string fullPath = (this._saveAs != "*" ? this._saveAs : (string)result[0]);
+                string newName = this._path + FileUtil.Slash() + Path.GetFileName(fullPath);
+
+                if (!(".jpg.gif.jpeg.png").Contains(Path.GetExtension(fullPath)))
+                {
+                    File.Move((string)result[0], newName);
+                }
+                else
+                {
+                    if ((this._width > 0) || (this._height > 0))
+				    {
+					    ImageUtil image = new ImageUtil((string)result[0]);
+					    image.resize(new System.Drawing.Size(this._width, this._height), true).Save(newName);
+				    }
+				    else
+				    {
+                        File.Move((string)result[0], newName);
+                    }
+                }
+                return newName;
             }
             else
             {

@@ -32,6 +32,8 @@ using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Xsl;
 using com.xmlnuke.admin;
+using System.Text.RegularExpressions;
+using com.xmlnuke.classes;
 
 namespace com.xmlnuke.engine
 {
@@ -195,6 +197,61 @@ namespace com.xmlnuke.engine
 		/// <returns>The transformation string</returns>
 		public string TransformDocument(XmlDocument xml, processor.XSLFilenameProcessor xslFile)
 		{
+		    // Add a custom XML based on attribute xmlobjet inside root
+		    // Example:
+		    // <page include="base.namespace, file.php" xmlobject="plugin.name[param1, param2]">
+		    string pattern = @"/(?<plugin>((\w+)\.)+\w+)\[(?<param>([#']?[\w]+[#']?\s*,?\s*)+)\]/";
+		    XmlElement xmlRoot = xml.DocumentElement;
+		    XmlAttributeCollection xmlRootAttributes = xmlRoot.Attributes;
+            foreach (XmlAttribute attr in xmlRootAttributes)
+            {
+                /*
+			    if (attr.Name == "include")
+			    {
+				    $param = explode(",", $attr->nodeValue);
+				    if (count($param) == 1)
+				    {
+					    ModuleFactory::IncludePhp(trim($param[0]));
+				    }
+				    else
+				    {
+					    ModuleFactory::IncludePhp(trim($param[0]), trim($param[1]));
+				    }
+			    }
+                 */
+                if (attr.Name == "xmlobject")
+                {
+                    Match m = Regex.Match(attr.Value, pattern);
+                    object[] paramValue = new object[] { null, null, null, null };
+
+                    if (m.Success)
+                    {
+                        if (m.Groups["param"].Success)
+                        {
+                            string[] param = m.Groups["param"].Value.Split(',');
+                            for (int i = 0; i < param.Length; i++)
+                            {
+                                if (param[i] == "#CONTEXT#")
+                                {
+                                    paramValue[i] = this._context;
+                                }
+                                else
+                                {
+                                    paramValue[i] = param[i].Trim();
+                                }
+                            }
+                            object plugin = PluginFactory.LoadPlugin(m.Groups["plugin"].Value, paramValue[0], paramValue[1], paramValue[2], paramValue[3]);
+                            if (!(plugin is IXmlnukeDocumentObject))
+                            {
+                                throw new Exception("The attribute in XMLNuke need to implement IXmlnukeDocumentObject interface");
+                            }
+                            ((IXmlnukeDocumentObject)plugin).generateObject(xmlRoot);
+                        }
+                    }
+                }
+            }
+
+		    // Check if there is no XSL template
 			if (!this._applyXslTemplate)
 			{
 				if (this._extractNodes == "")

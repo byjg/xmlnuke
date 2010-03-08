@@ -34,6 +34,7 @@ using com.xmlnuke.classes;
 using com.xmlnuke.util;
 using System.Collections;
 using System.Collections.Specialized;
+using com.xmlnuke.international;
 
 namespace com.xmlnuke.module
 {
@@ -84,6 +85,11 @@ namespace com.xmlnuke.module
 
 		public XmlnukeDocument defaultXmlnukeDocument;
 
+        /// <summary>Full module name (including namespace)</summary>
+        protected string _moduleName;
+
+    	protected LanguageCollection _words = null;
+
 		/// <summary>
 		/// BaseModule constructor
 		/// </summary>
@@ -106,6 +112,7 @@ namespace com.xmlnuke.module
 			object[] args = new object[] { customArgs };
 			this.GetType().InvokeMember("CustomSetup", BindingFlags.InvokeMethod, null, this, args);
 			this.defaultXmlnukeDocument = new XmlnukeDocument();
+            this._moduleName = this._xmlModuleName.ToString();
 		}
 
 		/// <summary>
@@ -121,10 +128,11 @@ namespace com.xmlnuke.module
 		/// <returns></returns>
 		public virtual international.LanguageCollection WordCollection()
 		{
-			international.LanguageCollection lang = new international.LanguageCollection(this._context);
-			processor.AnydatasetLangFilenameProcessor langFile = new processor.AnydatasetLangFilenameProcessor(_xmlModuleName.ToString().ToLower().Replace('.', '-'), _context);
-			lang.LoadLanguages(langFile);
-			return lang;
+            if (this._words == null)
+		    {
+    			this._words = LanguageFactory.GetLanguageCollection(this._context, LanguageFileTypes.MODULE, this._moduleName);
+		    }
+		    return this._words;
 		}
 
 		/// <summary>

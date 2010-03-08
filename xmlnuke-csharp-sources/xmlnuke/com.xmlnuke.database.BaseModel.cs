@@ -63,24 +63,14 @@ namespace com.xmlnuke.database
 	    {
 		    this._propertyPattern = new string[]{pattern, replace};
 	    }
+        public string[] getPropertyPattern()
+        {
+            return this._propertyPattern;
+        }
 
 		public void bindSingleRow(SingleRow sr)
 		{
-			Type t = this.GetType();
-			
-			string[] fields = sr.getFieldNames();
-
-			foreach (String field in fields)
-			{
-                PropertyInfo prop = t.GetProperty(Regex.Replace(field, this._propertyPattern[0], this._propertyPattern[1]));
-                if (prop.Name == "_propertyPattern")
-                    continue;
-				
-				if (prop.CanWrite && (prop.PropertyType.FullName == "System.String"))
-				{
-					prop.SetValue(this, sr.getField(field), null);
-				}
-			}
+            this.bindObject(sr);
 		}	
 
 		public void bindIterator(IIterator it)
@@ -91,6 +81,32 @@ namespace com.xmlnuke.database
 				this.bindSingleRow(sr);
 			}
 		}
-		
-	}
+
+        public void bindFromContext(Context context)
+        {
+            this.bindObject(context);
+        }
+
+        protected void bindObject(object o)
+        {
+            Type t = this.GetType();
+
+			PropertyInfo[] pi = t.GetProperties();
+			foreach (PropertyInfo prop in pi)
+			{
+				if (prop.CanWrite && (prop.PropertyType.FullName == "System.String") && (prop.Name != "_propertyPattern"))
+				{
+                    string propValue = "";
+                    bool change = false;
+                    if (o is SingleRow)
+                        propValue = ((SingleRow)o).getField(prop.Name);
+                    else if (o is Context)
+                        propValue = ((Context)o).ContextValue(prop.Name);
+
+                    if (propValue != "")
+					    prop.SetValue(this, propValue, null);
+				}
+			}
+        }
+    }
 }

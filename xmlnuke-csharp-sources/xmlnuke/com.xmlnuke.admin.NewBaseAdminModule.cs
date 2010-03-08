@@ -77,7 +77,16 @@ namespace com.xmlnuke.admin
 			return true;
 		}
 
-		public void admin()
+        override public international.LanguageCollection WordCollection()
+        {
+            if (this._words == null)
+            {
+                this._words = LanguageFactory.GetLanguageCollection(this._context, LanguageFileTypes.ADMINMODULE, this._moduleName);
+            }
+            return this._words;
+        }
+        
+        public void admin()
 		{ }
 
 		protected void addMenuOption(string strMenu, string strLink)
