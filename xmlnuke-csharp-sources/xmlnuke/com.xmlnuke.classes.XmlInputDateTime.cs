@@ -120,6 +120,7 @@ namespace com.xmlnuke.classes
 			if (this._showHour)
 			{
 				string[] time = this._time.Split(':');
+                util.XmlUtil.AddAttribute(datetimebox, "showhour", "true");
 				util.XmlUtil.AddAttribute(datetimebox, "hour", this.removeLeadingZero(time[0])); // Hour without leading zeros
 				util.XmlUtil.AddAttribute(datetimebox, "minute", this.removeLeadingZero(time[1]));
 			}
