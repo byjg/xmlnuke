@@ -777,10 +777,15 @@ namespace com.xmlnuke.processor
 
 		public bool UseFileFromAnyLanguage()
 		{
-			NameValueCollection langAvail = this._context.LanguagesAvailable();
 			if (!this.Exists())
 			{
-				foreach (string key in langAvail.Keys)
+                NameValueCollection langAvail = this._context.LanguagesAvailable();
+                if (langAvail["en-us"] == "")
+                {
+                    langAvail["en-us"] = "English (Default)";
+                }
+
+                foreach (string key in langAvail.Keys)
 				{
 					this.LanguageId = key;
 					if (this.Exists())

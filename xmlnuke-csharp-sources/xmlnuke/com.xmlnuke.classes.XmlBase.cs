@@ -78,7 +78,7 @@ namespace com.xmlnuke.classes
         /// Method for add new objects to collection.
         /// </summary>
         /// <param name="docobj">Any object it implements IXmlnukeDocumentObject interface</param>
-        public void addXmlnukeObject(IXmlnukeDocumentObject docobj)
+        public virtual void addXmlnukeObject(IXmlnukeDocumentObject docobj)
         {
             _items.Add(docobj);
         }

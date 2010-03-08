@@ -100,6 +100,15 @@ namespace com.xmlnuke.Database
     	/// <param name="hour"></param>
     	/// <returns></returns>
 	    string fromDate(string date, DATEFORMAT dateFormat, bool hour);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dbdataset"></param>
+        /// <param name="sql"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        int executeAndGetInsertedId(com.xmlnuke.anydataset.DBDataSet dbdataset, string sql, com.xmlnuke.anydataset.DbParameters param);
     }
 
 }

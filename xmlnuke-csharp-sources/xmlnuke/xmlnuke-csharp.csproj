@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="com.xmlnuke.anydataset.IteratorEnumerable.cs" />
+    <Compile Include="com.xmlnuke.classes.XmlnukeMediaGallery.cs" />
     <Compile Include="com.xmlnuke.classes.XmlnukeUIAlert.cs" />
     <Compile Include="com.xmlnuke.database.DbBaseFunctions.cs" />
     <Compile Include="com.xmlnuke.database.DbMySQLFunctions.cs" />

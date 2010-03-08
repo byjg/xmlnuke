@@ -139,6 +139,15 @@ namespace com.xmlnuke.util
 			}
 		}
 
+	    public int getWidth()
+	    {
+            return this._image.Width;
+	    }
+
+	    public int getHeight()
+	    {
+            return this._image.Height;
+	    }
 
 		/// <summary>
 		/// 

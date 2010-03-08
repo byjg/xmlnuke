@@ -231,10 +231,21 @@ namespace com.xmlnuke.classes
 
 			fieldValues = this.preUpdateField(this._currentAction, fieldValues);
 
-			AnyDataSet data = new AnyDataSet(this._anydata);
+            // Get a SingleRow with all field values
+            AnyDataSet anyCurInfo = new AnyDataSet();
+            anyCurInfo.appendRow();
+            foreach (string key in fieldValues.Keys)
+            {
+                anyCurInfo.addField(key, fieldValues[key]);
+            }
+            IIterator itCurInfo = anyCurInfo.getIterator();
+            SingleRow srCurInfo = itCurInfo.moveNext();
+
+            AnyDataSet data = new AnyDataSet(this._anydata);
 			if (this._currentAction == ACTION_NEW_CONFIRM)
 			{
-				if (this._updateMethod == AnydataSetUpdateMethod.APPEND)
+
+                if (this._updateMethod == AnydataSetUpdateMethod.APPEND)
 				{
 					data.appendRow();
 				}
@@ -242,9 +253,15 @@ namespace com.xmlnuke.classes
 				{
 					data.insertRowBefore(0);
 				}
-				foreach (string field in fieldValues.Keys)
+
+				foreach (ProcessPageField field in this._fields)
 				{
-					data.addField(field, fieldValues[field]);
+		            string value = srCurInfo.getField(field.fieldName);
+				    if (field.saveDatabaseFormatter != null)
+				    {
+					    value = field.saveDatabaseFormatter.Format(srCurInfo, field.fieldName, value);
+                    }
+                    data.addField(field.fieldName, value);
 				}
 			}
 			else
@@ -258,9 +275,23 @@ namespace com.xmlnuke.classes
 
 					if (this._currentAction == ACTION_EDIT_CONFIRM)
 					{
-						foreach (string field in fieldValues.Keys)
+						foreach (ProcessPageField field in this._fields)
 						{
-							sr.setField(field, fieldValues[field]);
+                            string value = srCurInfo.getField(field.fieldName);
+
+                            if (field.fieldXmlInput == XmlInputObjectType.FILEUPLOAD)
+                            {
+	                            ArrayList files = this._context.getUploadFileNames();
+	                            if (files.Contains(field.fieldName))
+		                            continue; // Do nothing if none files are uploaded.
+                            }
+
+                            if (field.saveDatabaseFormatter != null)
+                            {
+	                            value = field.saveDatabaseFormatter.Format(srCurInfo, field.fieldName, value);
+                            }
+
+							sr.setField(field.fieldName, value);
 						}
 					}
 					else if (this._currentAction == ACTION_DELETE_CONFIRM)

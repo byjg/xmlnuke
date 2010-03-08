@@ -274,11 +274,34 @@ namespace com.xmlnuke.classes
             SQLFieldArray sqlfields = new SQLFieldArray();
             if (sqlType != SQLType.SQL_DELETE)
             {
+			    // Get a SingleRow with all field values
+			    AnyDataSet anyCurInfo = new AnyDataSet();
+			    anyCurInfo.appendRow();
+			    foreach (ProcessPageField field in this._fields)
+			    {
+				    anyCurInfo.addField(field.fieldName, this._context.ContextValue(field.fieldName));
+			    }
+			    IIterator itCurInfo = anyCurInfo.getIterator();
+			    SingleRow srCurInfo = itCurInfo.moveNext();
+
+                // Process
                 foreach (ProcessPageField field in this._fields)
                 {
                     if (field.editable)
                     {
                         DbParameter paramItem = this.preProcessValue(field.fieldName, field.dataType, this._context.ContextValue(field.fieldName));
+                        if (field.fieldXmlInput == XmlInputObjectType.FILEUPLOAD)
+                        {
+                            ArrayList files = this._context.getUploadFileNames();
+                            if (files.Contains(field.fieldName))
+                                continue; // Do nothing if none files are uploaded.
+                        }
+
+                        if (field.saveDatabaseFormatter != null)
+                        {
+                            paramItem.Value = field.saveDatabaseFormatter.Format(srCurInfo, field.fieldName, (string)paramItem.Value);
+                        }
+
                         sqlfields.Add(paramItem.Name, paramItem.Value);
                     }
                 }

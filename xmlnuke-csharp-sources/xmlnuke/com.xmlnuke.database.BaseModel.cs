@@ -46,6 +46,19 @@ namespace com.xmlnuke.database
 	{
 		protected string[] _propertyPattern = new string[]{@"(\w*)", "$1"};
 
+        public BaseModel() { }
+
+	    public BaseModel(SingleRow o)
+	    {
+		    this.bindSingleRow(o);
+	    }
+
+        public BaseModel(IIterator o)
+        {
+            this.bindIterator(o);
+        }
+
+
 	    public void setPropertyPattern(string pattern, string replace)
 	    {
 		    this._propertyPattern = new string[]{pattern, replace};

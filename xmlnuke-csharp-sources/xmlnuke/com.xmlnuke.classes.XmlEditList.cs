@@ -162,7 +162,7 @@ namespace com.xmlnuke.classes
 	/// with the name "valueid" and a parameter name called "action"
 	/// </remarks>
 	/// <seealso cref="com.xmlnuke.classes.XmlEditList">XmlEditList</seealso>
-	public struct EditListField
+	public class EditListField
 	{
 		// Header NAME for this field (Show on top)
 		public string fieldData;
@@ -174,6 +174,8 @@ namespace com.xmlnuke.classes
 		public IEditListFormatter formatter;
 		public NameValueCollection arrayLookup;
 		public EditListFieldSummary summary;
+
+        public EditListField() : this(true) { }
 
 		public EditListField(bool newcolumn)
 		{

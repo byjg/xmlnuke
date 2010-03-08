@@ -106,6 +106,7 @@ namespace com.xmlnuke.module
             xmlnukeDoc.addMenuItem("url://module:sample?op=16", "Sortable", "Sortable Component");
             xmlnukeDoc.addMenuItem("url://module:sample?op=17", "Calendar", "Calendar Component");
             xmlnukeDoc.addMenuItem("url://module:sample?op=18", "UI Alert", "UI Alert Component");
+            xmlnukeDoc.addMenuItem("url://module:sample?op=19", "Media Gallery", "Media Gallery Component");
 
             XmlBlockCollection block = new XmlBlockCollection("Módulo de Demonstração das Novas Funcionalidades", BlockPosition.Center);
 
@@ -216,6 +217,11 @@ namespace com.xmlnuke.module
                 case 18:
                     {
                         this.Opcao18(xmlnukeDoc);
+                        break;
+                    }
+                case 19:
+                    {
+                        this.Opcao19(xmlnukeDoc);
                         break;
                     }
             }
@@ -794,6 +800,7 @@ namespace com.xmlnuke.module
 						"titlelang",
 						"year",
 						"price",
+						"buyprice",
 						"author"
 					};
             }
@@ -839,6 +846,7 @@ namespace com.xmlnuke.module
 						"titlelang",
 						"year",
 						"price",
+						"buyprice",
 						"author"
 					};
             AnydatasetFilenameProcessor processor = new AnydatasetFilenameProcessor("sample", this._context);
@@ -852,6 +860,7 @@ namespace com.xmlnuke.module
             XmlChart chart = new XmlChart(this._context, "Book Store", dataset.getIterator(), ChartOutput.Flash, ChartSeriesFormat.Column);
             chart.setLegend("category", "#000000", "#C0C0C0");
             chart.addSeries("price", "Sell Price", "#000000");
+            chart.addSeries("buyprice", "Buy Price", "#000000");
             para1.addXmlnukeObject(chart);
 
             XmlnukeCode code = new XmlnukeCode("Code Sample");
@@ -1198,6 +1207,56 @@ namespace com.xmlnuke.module
                 listElement.addXmlnukeObject(href);
             }
             block.addXmlnukeObject(listElement);
+
+            xmlnukeDoc.addXmlnukeObject(block);
+        }
+
+        protected void Opcao19(XmlnukeDocument xmlnukeDoc)
+        {
+            XmlBlockCollection block = new XmlBlockCollection("Exemplo 19: Media Gallery", BlockPosition.Center);
+
+
+            XmlParagraphCollection para = new XmlParagraphCollection();
+            para.addXmlnukeObject(new XmlnukeText("Galeria de Imagens (album de Fotos)"));
+
+            XmlnukeMediaGallery gallery = new XmlnukeMediaGallery(this._context, "Galeria1");
+            gallery.addImage("common/imgs/albumsample/1.jpg", "common/imgs/albumsample/t_1.jpg", "Titulo Imagem 1", "Você pode colocar um caption aqui", 60, 60);
+            gallery.addImage("common/imgs/albumsample/2.jpg", "common/imgs/albumsample/t_2.jpg", "Titulo Imagem 2", "Você pode colocar um caption aqui", 60, 60);
+            gallery.addImage("common/imgs/albumsample/3.jpg", "common/imgs/albumsample/t_3.jpg", "Titulo Imagem 3", "Você pode colocar um caption aqui", 60, 60);
+            para.addXmlnukeObject(gallery);
+            block.addXmlnukeObject(para);
+
+            para = new XmlParagraphCollection();
+            para.addXmlnukeObject(new XmlnukeText("Flash, Youtube e Quicktime"));
+
+            gallery = new XmlnukeMediaGallery(this._context);
+            gallery.addEmbed("http://www.adobe.com/products/flashplayer/include/marquee/design.swf", 792, 294, "http://images.apple.com/trailers/wb/images/terminatorsalvation_200903131052.jpg", "Titulo Flash", "Aqui vc está vendo um Flash");
+            gallery.addEmbed("http://movies.apple.com/movies/wb/terminatorsalvation/terminatorsalvation-tlr3_h.480.mov", 480, 204, "http://images.apple.com/trailers/wb/images/terminatorsalvation_200903131052.jpg", "Titulo Quicktime", "Aqui vc está vendo um Quicktime Movie");
+            gallery.addEmbed("http://www.youtube.com/watch?v=4m48GqaOz90", 0, 0, "http://i1.ytimg.com/vi/4m48GqaOz90/default.jpg", "Titulo Youtube", "Aqui vc está vendo um Vídeo do Youtube");
+            para.addXmlnukeObject(gallery);
+            block.addXmlnukeObject(para);
+
+            para = new XmlParagraphCollection();
+            para.addXmlnukeObject(new XmlnukeText("IFrame"));
+
+            gallery = new XmlnukeMediaGallery(this._context);
+            gallery.addIFrame("module:sample", 480, 204, "", "IFrame");
+            para.addXmlnukeObject(gallery);
+            block.addXmlnukeObject(para);
+
+            gallery = new XmlnukeMediaGallery(this._context, "Galeria2");
+            gallery.setApi(true);
+            gallery.setVisible(false);
+            gallery.addImage("common/imgs/albumsample/4.jpg", "", "Titulo Imagem 1", "Você pode colocar um caption aqui");
+            gallery.addImage("common/imgs/albumsample/5.jpg", "", "Titulo Imagem 2", "Você pode colocar um caption aqui");
+            gallery.addImage("common/imgs/albumsample/1.jpg", "", "Titulo Imagem 3", "Você pode colocar um caption aqui");
+            block.addXmlnukeObject(gallery);
+
+            XmlFormCollection form = new XmlFormCollection(this._context, "", "Abrir por JavaScript");
+            XmlInputButtons button = new XmlInputButtons();
+            button.addButton("Clique para abrir a Galeria", "kk", "open_Galeria2()");
+            form.addXmlnukeObject(button);
+            block.addXmlnukeObject(form);
 
             xmlnukeDoc.addXmlnukeObject(block);
         }

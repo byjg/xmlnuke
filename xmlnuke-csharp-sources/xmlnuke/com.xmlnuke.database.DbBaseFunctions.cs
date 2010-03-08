@@ -145,6 +145,19 @@ namespace com.xmlnuke.Database
 	    {
 		    return DateUtil.ConvertDate(date, DATEFORMAT.YMD, dateFormat, hour);
 	    }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dbdataset"></param>
+        /// <param name="sql"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public int executeAndGetInsertedId(com.xmlnuke.anydataset.DBDataSet dbdataset, string sql, com.xmlnuke.anydataset.DbParameters param)
+        {
+            dbdataset.execSQL(sql, param);
+		    return -1;
+        }
     }
 
 }

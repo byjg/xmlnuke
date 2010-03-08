@@ -63,33 +63,45 @@ namespace com.xmlnuke.database
             return this._db;
         }
 
-        protected void executeSQL(string sql)
+        protected int executeSQL(string sql)
         {
-            this.executeSQL(sql, null);
+            return this.executeSQL(sql, null, false);
         }
 
-        protected void executeSQL(string sql, DbParameters param)
+        protected int executeSQL(string sql, DbParameters param)
         {
-            DBDataSet db = this.getDBDataSet();
+            return this.executeSQL(sql, param, false);
+        }
+
+        protected int executeSQL(string sql, DbParameters param, bool getId)
+        {
+            IDbFunctions db = this.getDbFunctions();
 
             int start = this.printDebugInfoHeader(sql, param);
+            int id = -1;
 
-            if (param == null)
+            if (!getId)
             {
-                db.execSQL(sql);
+                this.getDBDataSet().execSQL(sql, param);
             }
             else
             {
-                db.execSQL(sql, param);
+                id = this.getDbFunctions().executeAndGetInsertedId(this.getDBDataSet(), sql, param);
             }
 
             this.printDebugInfoFooter(start);
 
+            return id;
         }
 
         protected void executeSQL(SQLUpdateData data)
         {
-            this.executeSQL(data.SQL, data.Parameters);
+            this.executeSQL(data, false);
+        }
+
+        protected void executeSQL(SQLUpdateData data, bool getId)
+        {
+            this.executeSQL(data.SQL, data.Parameters, getId);
         }
 
 

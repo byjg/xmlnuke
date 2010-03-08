@@ -27,6 +27,7 @@
  */
 
 using System;
+using com.xmlnuke.anydataset;
 
 namespace com.xmlnuke.Database
 {
@@ -177,6 +178,26 @@ namespace com.xmlnuke.Database
             s += "')";
             if (concat) s = "CONCAT(" + s + ")";
             return s;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dbdataset"></param>
+        /// <param name="sql"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public int executeAndGetInsertedId(com.xmlnuke.anydataset.DBDataSet dbdataset, string sql, com.xmlnuke.anydataset.DbParameters param)
+        {
+		    int id = base.executeAndGetInsertedId(dbdataset, sql, param);
+		    IIterator it = dbdataset.getIterator("select LAST_INSERT_ID() id");
+		    if (it.hasNext())
+		    {
+			    SingleRow sr = it.moveNext();
+                Int32.TryParse(sr.getField("id"), out id);
+		    }
+
+		    return id;
         }
     }
 
