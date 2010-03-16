@@ -183,7 +183,7 @@ namespace com.xmlnuke.anydataset
 			    {
 				    if ( (previousValue != null) && (previousValue.Command != IteratorFilterStruct.CMD_STGRP) )
 				    {
-					    filter += value.Name;
+					    filter += value.Command;
 				    }
 				    if (type == 1)
 				    {
@@ -335,9 +335,12 @@ namespace com.xmlnuke.anydataset
 				    result = field + " like " + valueparam;
 				    break;
 			    }
+
 		    }
 
-		    return result;
+			param.Add(par);
+
+			return result;
 	    }
 
 
