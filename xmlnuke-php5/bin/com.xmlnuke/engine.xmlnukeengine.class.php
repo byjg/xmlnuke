@@ -287,11 +287,11 @@ class XmlNukeEngine
 			}
 			elseif ($attr->nodeName == "xmlobject")
 			{
-				$match = preg_match($pattern, $attr->value, $matches);
-				if ($match)
+				$match = preg_match_all($pattern, $attr->value, $matches);
+				for($iCount=0;$iCount<$match;$iCount++)
 				{
-					$param = explode(",", $matches["param"]);
-					for ($i=0;$i<=3;$i++)
+					$param = explode(",", $matches["param"][$iCount]);
+					for ($i=0;$i<=4;$i++)
 					{
 						if (count($param) < $i+1)
 						{
@@ -306,7 +306,7 @@ class XmlNukeEngine
 							$param[$i] = trim($param[$i]);
 						}
 					}
-					$plugin = PluginFactory::LoadPlugin($matches["plugin"], "", $param[0], $param[1], $param[2], $param[3]);
+					$plugin = PluginFactory::LoadPlugin($matches["plugin"][$iCount], "", $param[0], $param[1], $param[2], $param[3], $param[4]);
 					if (!($plugin instanceof IXmlnukeDocumentObject))
 					{
 						throw new Exception("The attribute in XMLNuke need to implement IXmlnukeDocumentObject interface");

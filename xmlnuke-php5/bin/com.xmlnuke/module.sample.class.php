@@ -1260,9 +1260,11 @@ class Sample extends BaseModule
 		$sortable->setConnectKey("ligacao");
 		$sortable->setFullSize(true);
 
+		$sortable->addSortableItem("", new XmlnukeText("Coluna 1"), SortableListItemState::Disabled, "col1");
 		$sortable->addPortlet("1", "Titulo 1", new XmlnukeText("Teste 1"), "col1");
 		$sortable->addPortlet("2", "Titulo 2", new XmlnukeText("Teste 2"), "col1");
 		$sortable->addPortlet("3", "Titulo 3", new XmlnukeText("Teste 3"), "col1");
+		$sortable->addSortableItem("", new XmlnukeText("Coluna 2"), SortableListItemState::Disabled, "col2");
 		$sortable->addPortlet("4", "Titulo 4", new XmlnukeText("Teste 4"), "col2");
 		$sortable->addPortlet("5", "Titulo 5", new XmlnukeText("Teste 5"), "col2");
 		$form->addXmlnukeObject($sortable);
@@ -1272,6 +1274,7 @@ class Sample extends BaseModule
 		$sortable->setConnectKey("ligacao");
 		$sortable->setFullSize(true);
 
+		$sortable->addSortableItem("", new XmlnukeText("Outra Coluna"), SortableListItemState::Disabled);
 		$sortable->addPortlet("6", "Titulo 6", new XmlnukeText("Teste 6"));
 		$sortable->addPortlet("7", "Titulo 7", new XmlnukeText("Teste 7"));
 		$form->addXmlnukeObject($sortable);
