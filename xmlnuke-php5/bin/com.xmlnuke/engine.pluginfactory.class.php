@@ -84,7 +84,7 @@ class PluginFactory
 	 * @param string $param4
 	 * @return instance of class
 	 */
-	public static function LoadPluginInFile($phpFile, $className, $basePath = null, $param1 = null, $param2 = null, $param3 = null, $param4 = null)
+	public static function LoadPluginInFile($phpFile, $className, $basePath = null, $param1 = null, $param2 = null, $param3 = null, $param4 = null, $param5 = null)
 	{
 		$phpFile = strtolower($phpFile);
 		$namespace = "";
@@ -136,9 +136,13 @@ class PluginFactory
 		{
 			$plugin = $class->newInstance($param1, $param2, $param3);
 		}
-		else
+		elseif ($param5 == null)
 		{
 			$plugin = $class->newInstance($param1, $param2, $param3, $param4);
+		}
+		else
+		{
+			$plugin = $class->newInstance($param1, $param2, $param3, $param4, $param5);
 		}
 		
 

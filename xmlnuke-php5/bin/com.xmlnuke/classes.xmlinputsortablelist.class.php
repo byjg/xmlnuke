@@ -43,16 +43,37 @@ class XmlInputSortableList extends XmlnukeDocumentObject
 	protected $_items = array();
 	protected $_name;
 	protected $_caption;
-	
+	protected $_connectKey;
+	protected $_columns = 1;
+	protected $_fullSize = false;
+
 	/**
-	*@desc Generate page, processing yours childs.
-	*@param DOMNode $current
-	*@return void
-	*/
-	public function XmlInputSortableList($caption, $name)
+	 *
+	 * @param string $caption
+	 * @param string $name
+	 * @param int_or_array $columns
+	 */
+	public function  __construct($caption, $name, $columns = 1)
 	{	
 		$this->_name = $name;
 		$this->_caption = $caption;
+
+		if (is_array($columns))
+		{
+			$this->_columns = count($columns);
+			foreach($columns as $value)
+			{
+				$this->_items[$value] = array();
+			}
+		}
+		else
+		{
+			$this->_columns = $columns;
+			for($i=0;$i<$columns;$i++)
+			{
+				$this->_items[$i] = array();
+			}
+		}
 	}
 	
 	/**
@@ -60,17 +81,57 @@ class XmlInputSortableList extends XmlnukeDocumentObject
 	 * @param string $key
 	 * @param IXmlnukeDocumentObject $docobj
 	 * @param SortableListItemState $state
+	 * @param int $column
 	 * @return unknown_type
 	 */
-	public function addSortableItem($key, $docobj, $state = "")
+	public function addSortableItem($key, $docobj, $state = "", $column = 0)
 	{
 		if (is_null($docobj) || !($docobj instanceof IXmlnukeDocumentObject)) 
 		{
 			throw new XmlNukeObjectException(853, "Object is null or not is IXmlnukeDocumentObject. Found object type: " . get_class($docobj));
 		}
-		$this->_items[$key . "|" . $state] = $docobj;
+		if (!array_key_exists($column, $this->_items))
+		{
+			throw new XmlNukeObjectException(853, "Column does not exists");
+		}
+		$this->_items[$column][$key . "|" . $state] = $docobj;
 	}
 		
+	public function addPortlet($key, $title, $docobj, $column = 0)
+	{
+		if (is_null($docobj) || !($docobj instanceof IXmlnukeDocumentObject))
+		{
+			throw new XmlNukeObjectException(853, "Object is null or not is IXmlnukeDocumentObject. Found object type: " . get_class($docobj));
+		}
+		if (!array_key_exists($column, $this->_items))
+		{
+			throw new XmlNukeObjectException(853, "Column does not exists");
+		}
+		$this->_items[$column][$key . "|portlet"] = array($title, $docobj);
+	}
+
+	public function getConnectKey()
+	{
+		if ($this->_connectKey == "")
+		{
+			$this->_connectKey = "connect" . rand(0, 9) . rand(1000, 9999);
+		}
+		return $this->_connectKey;
+	}
+	public function setConnectKey($value)
+	{
+		$this->_connectKey = $value;
+	}
+
+	public function getFullSize()
+	{
+		return $this->_fullSize;
+	}
+	public function setFullSize($value)
+	{
+		$this->_fullSize = $value;
+	}
+
 	public function generateObject($current)
 	{
 		$editForm = $current;
@@ -87,13 +148,30 @@ class XmlInputSortableList extends XmlnukeDocumentObject
 		$node = XmlUtil::CreateChild($current, "sortablelist", "");
 		XmlUtil::AddAttribute($node, "name", $this->_name);
 		XmlUtil::AddAttribute($node, "caption", $this->_caption);
-		foreach ($this->_items as $key=>$value) 
+		XmlUtil::AddAttribute($node, "connectkey", $this->getConnectKey());
+		XmlUtil::AddAttribute($node, "columns", $this->_columns);
+		XmlUtil::AddAttribute($node, "fullsize", ($this->_fullSize ? "true" : "false"));
+		foreach ($this->_items as $index=>$column)
 		{
-			$info = explode("|", $key);
-			$nodeitem = XmlUtil::CreateChild($node, "item", "");
-			XmlUtil::AddAttribute($nodeitem, "key", $info[0]);
-			XmlUtil::AddAttribute($nodeitem, "state", $info[1]);
-			$value->generateObject($nodeitem);
+			$columnNode = XmlUtil::CreateChild($node, "column", "");
+			XmlUtil::AddAttribute($columnNode, "id", $index);
+
+			foreach ($column as $key=>$value)
+			{
+				$info = explode("|", $key);
+				$nodeitem = XmlUtil::CreateChild($columnNode, "item", "");
+				XmlUtil::AddAttribute($nodeitem, "key", $info[0]);
+				XmlUtil::AddAttribute($nodeitem, "state", $info[1]);
+				if (is_array($value))
+				{
+					XmlUtil::AddAttribute($nodeitem, "title", $value[0]);
+					$value[1]->generateObject($nodeitem);
+				}
+				else
+				{
+					$value->generateObject($nodeitem);
+				}
+			}
 		}
 	}
 }

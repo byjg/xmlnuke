@@ -27,7 +27,7 @@ else
 	if [ $1 = "yes" -o ! -f $NEW ]
 	then
 		echo "Renamed from $FILE to $NEW."
-		mv "$FILE" "$NEW"
+		cp "$FILE" "$NEW"
 	else
 		echo "Already exists file $NEW and replace mode is 'no'"
 	fi

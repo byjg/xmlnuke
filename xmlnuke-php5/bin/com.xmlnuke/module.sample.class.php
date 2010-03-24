@@ -110,6 +110,7 @@ class Sample extends BaseModule
 		$this->_document->addMenuItem($linkModule."?op=14",$this->_myWords->Value("AUTOSUGGEST"), $this->_myWords->Value("DESCAUTOSUGGEST"));
 		$this->_document->addMenuItem($linkModule."?op=15",$this->_myWords->Value("TREEVIEW"), $this->_myWords->Value("DESCTREEVIEW"));
 		$this->_document->addMenuItem($linkModule."?op=16",$this->_myWords->Value("SORTABLE"), $this->_myWords->Value("DESCSORTABLE"));
+		$this->_document->addMenuItem($linkModule."?op=20",$this->_myWords->Value("PORTLET"), $this->_myWords->Value("PORTLET"));
 		$this->_document->addMenuItem($linkModule."?op=17",$this->_myWords->Value("CALENDAR"), $this->_myWords->Value("DESCCALENDAR"));
 		$this->_document->addMenuItem($linkModule."?op=18",$this->_myWords->Value("UIALERT"), $this->_myWords->Value("DESCUIALERT"));
 		$this->_document->addMenuItem($linkModule."?op=19",$this->_myWords->Value("MEDIAGALLERY"), $this->_myWords->Value("DESCMEDIAGALLERY"));
@@ -221,6 +222,11 @@ class Sample extends BaseModule
 			case 19:
 				{
 					$this->Opcao19();
+					break;
+				}
+			case 20:
+				{
+					$this->Opcao20();
 					break;
 				}
 		}
@@ -1081,7 +1087,7 @@ class Sample extends BaseModule
 
 
 		$para = new XmlParagraphCollection();
-		$para->addXmlnukeObject(new XmlnukeText("Esse exemplo mostra como criar um componente Treeview através das classes de abstração XmlnukeTreeview, XmlnukeTreeviewFolder e XmlnukeTreeviewLeaf"));
+		$para->addXmlnukeObject(new XmlnukeText("Esse exemplo mostra como criar um componente de ordenação interativa através das classes de abstração XmlnukeSortable"));
 		$block->addXmlnukeObject($para);
 
 		$form = new XmlFormCollection($this->_context, "", "Sortable Example");
@@ -1231,6 +1237,45 @@ class Sample extends BaseModule
 		$button = new XmlInputButtons();
 		$button->addButton("Clique para abrir a Galeria", "kk", "open_Galeria2()");
 		$form->addXmlnukeObject($button);
+		$block->addXmlnukeObject($form);
+
+		$this->_document->addXmlnukeObject($block);
+	}
+
+	protected function Opcao20()
+	{
+		$block = new XmlBlockCollection("Exemplo 20: Portlets", BlockPosition::Center);
+
+		//XmlnukeBreakLine br = new XmlnukeBreakLine();
+
+
+		$para = new XmlParagraphCollection();
+		$para->addXmlnukeObject(new XmlnukeText("Esse exemplo mostra como criar um componente de ordenação interativa com o uso de Portlets através da classe de abstração XmlInputSortable"));
+		$block->addXmlnukeObject($para);
+
+		$form = new XmlFormCollection($this->_context, "", "Portlet Example");
+
+		// Portlet One
+		$sortable = new XmlInputSortableList("Teste", "meunome", array("col1", "col2"));
+		$sortable->setConnectKey("ligacao");
+		$sortable->setFullSize(true);
+
+		$sortable->addPortlet("1", "Titulo 1", new XmlnukeText("Teste 1"), "col1");
+		$sortable->addPortlet("2", "Titulo 2", new XmlnukeText("Teste 2"), "col1");
+		$sortable->addPortlet("3", "Titulo 3", new XmlnukeText("Teste 3"), "col1");
+		$sortable->addPortlet("4", "Titulo 4", new XmlnukeText("Teste 4"), "col2");
+		$sortable->addPortlet("5", "Titulo 5", new XmlnukeText("Teste 5"), "col2");
+		$form->addXmlnukeObject($sortable);
+
+		// Portlet Two
+		$sortable = new XmlInputSortableList("Teste2", "meunome2");
+		$sortable->setConnectKey("ligacao");
+		$sortable->setFullSize(true);
+
+		$sortable->addPortlet("6", "Titulo 6", new XmlnukeText("Teste 6"));
+		$sortable->addPortlet("7", "Titulo 7", new XmlnukeText("Teste 7"));
+		$form->addXmlnukeObject($sortable);
+
 		$block->addXmlnukeObject($form);
 
 		$this->_document->addXmlnukeObject($block);

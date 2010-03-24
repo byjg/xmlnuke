@@ -54,26 +54,49 @@
 <!-- Include specific JavaScript for AutoSuggest  -->
 <xsl:if test="//sortablelist">
 	<style type="text/css">
-		<xsl:for-each select="//sortablelist"><xsl:if test="not(position()=1)">,</xsl:if>#<xsl:value-of select="@name" />_list</xsl:for-each> { font-size: 80%; list-style-type: none; margin: 0; padding: 0; width: 100%; }
-		<xsl:for-each select="//sortablelist"><xsl:if test="not(position()=1)">,</xsl:if>#<xsl:value-of select="@name" />_list</xsl:for-each> li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; height: 1.5em; }
-		html>body <xsl:for-each select="//sortablelist"><xsl:if test="not(position()=1)">,</xsl:if>#<xsl:value-of select="@name" />_list</xsl:for-each> li { height: 1.5em; line-height: 1.2em; }
-		.ui-state-highlight { height: 1.5em; line-height: 1.2em; }
+		<xsl:for-each select="//sortablelist/column"><xsl:if test="not(position()=1)">,</xsl:if>#<xsl:value-of select="parent::node()/@name" />_<xsl:value-of select="@id" />_list</xsl:for-each> { font-size: 80%; list-style-type: none; margin: 0; padding: 0; }
+		<xsl:for-each select="//sortablelist/column"><xsl:if test="not(position()=1)">,</xsl:if>#<xsl:value-of select="parent::node()/@name" />_<xsl:value-of select="@id" />_list  .ui-state-default</xsl:for-each> { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; height: 1.5em; }
+		html>body <xsl:for-each select="//sortablelist/column"><xsl:if test="not(position()=1)">,</xsl:if>#<xsl:value-of select="parent::node()/@name" />_<xsl:value-of select="@id" />_list .ui-state-default</xsl:for-each> { height: 1.5em; line-height: 1.2em; }
+		.ui-state-highlight { border: 1px dotted black; visibility: visible !important; height: 50px !important; }
+		.ui-state-highlight * { visibility: hidden; }
+
+		.portlet { margin: 0 1em 1em 0; }
+		.portlet-header { margin: 0.3em; padding-bottom: 4px; padding-left: 0.2em; }
+		.portlet-header .ui-icon { float: right; }
+		.portlet-content { padding: 0.4em; }
 	</style>
 	<script type="text/javascript">
+	function updateSortable(event, ui)
+	{
+		var result = $(this).sortable('toArray');
+		var sName = "#" + $(this).attr("id").replace("_list", "");
+		var joined = result.join("|");
+		$(sName).attr("value", joined);
+		//alert($(sName).attr("value"));
+	}
+
 	$(function() {
-		$("<xsl:for-each select="//sortablelist"><xsl:if test="not(position()=1)">,</xsl:if>#<xsl:value-of select="@name" />_list</xsl:for-each>").sortable({
+		$(".portlet").addClass("ui-widget ui-widget-content ui-helper-clearfix ui-corner-all")
+			.find(".portlet-header")
+				.addClass("ui-widget-header ui-corner-all")
+				.prepend('<span class="ui-icon ui-icon-minusthick"></span>')
+				.end()
+			.find(".portlet-content");
+
+		$(".portlet-header .ui-icon").click(function() {
+			$(this).toggleClass("ui-icon-minusthick").toggleClass("ui-icon-plusthick");
+			$(this).parents(".portlet:first").find(".portlet-content").toggle();
+		});
+
+		<xsl:for-each select="//sortablelist/column">
+		$("#<xsl:value-of select="parent::node()/@name" />_<xsl:value-of select="@id" />_list").sortable({
 			placeholder: 'ui-state-highlight',
 			cancel: '.ui-state-disabled',
+			connectWith: '.<xsl:value-of select="parent::node()/@connectkey" />',
 			//items: 'li:not(.ui-state-disabled)',
-			update: function(event, ui)
-			{
-				var result = $(this).sortable('toArray');
-				var sName = "#" + $(this).attr("id").replace("_list", "");
-				var joined = result.join("|");
-				$(sName).attr("value", joined);
-				//alert($(sName).attr("value"));
-			}
+			update: updateSortable
 		}).disableSelection();
+		</xsl:for-each>
 	});
 	</script>
 </xsl:if>
