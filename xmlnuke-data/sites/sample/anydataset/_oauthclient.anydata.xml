@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<anydataset>
+  <!--
+  Example:
+
+	require_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/net.oauthclient.class.php");
+	$oauth = new OAuthClient($this->_context, "YOUR_APP_NAME");
+	$handle = $oauth->handle();
+
+	Debug::PrintValue($handle->OAuthRequest('https://twitter.com/statuses/replies.xml', array(), 'POST'));
+
+  -->
+  <row>
+    <field name="appname">YOUR_APP_NAME</field>
+    <field name="appclass">TwitterOAuth</field>
+    <field name="consumer_key">YOUR_CONSUMER_KEY</field>
+    <field name="consumer_secret">YOUR_CONSUMER_SECRET</field>
+    <field name="extra_arg"></field>
+  </row>
+</anydataset>
