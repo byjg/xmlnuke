@@ -142,7 +142,7 @@ class OAuthClient
 				}
 
 				/* Create TwitterOAuth with app key/secret and user access key/secret */
-				$to = $class->newInstance($consumer_key, $consumer_secret, $this->getVar('oauth_access_token'), $this->getVar('oauth_access_token_secret'));
+				$to = $class->newInstance($this->_consumer_key, $this->_consumer_secret, $this->getVar('oauth_access_token'), $this->getVar('oauth_access_token_secret'));
 
 				return $to;
 				//$content = $to->OAuthRequest('https://twitter.com/statuses/replies.xml', array(), 'POST');
