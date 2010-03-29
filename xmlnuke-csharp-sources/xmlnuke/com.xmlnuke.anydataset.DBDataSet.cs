@@ -375,12 +375,18 @@ namespace com.xmlnuke.anydataset
         /// TODO: Test it
 	    public IDbFunctions getDbFunctions()
 	    {
-		    if (this._dbFunction == null)
-		    {
-			    this._dbFunction = (IDbFunctions)PluginFactory.LoadPlugin("com.xmluke.database.Db" + this._dbtype + "Functions");
-		    }
-    		
-		    return this._dbFunction;
+            if (this._dbFunction == null)
+            {
+                string typeName = this._dbtype;
+                int i = typeName.LastIndexOf(".");
+                if (i >= 0)
+                {
+                    typeName = typeName.Substring(i+1);
+                }
+                this._dbFunction = (IDbFunctions)PluginFactory.LoadPlugin("com.xmlnuke.Database.Db" + typeName + "Functions");
+            }
+
+            return this._dbFunction; 
 	    }
 	}
 
