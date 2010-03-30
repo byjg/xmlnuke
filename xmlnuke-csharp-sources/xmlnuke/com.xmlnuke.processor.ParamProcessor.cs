@@ -29,6 +29,8 @@
 
 using System;
 using System.Xml;
+using com.xmlnuke.util;
+using com.xmlnuke;
 
 namespace com.xmlnuke.processor
 {
@@ -221,14 +223,23 @@ namespace com.xmlnuke.processor
 
 			if ((node.NodeType == XmlNodeType.Element) || (node.NodeType == XmlNodeType.Text))
 			{
+                if (!String.IsNullOrEmpty(node.Value) && node.Value.IndexOf("<") >= 0)
+                {
+                    XmlNode nodeToProc = util.XmlUtil.CreateXmlDocumentFromStr("<root>" + node.Value + "</root>").DocumentElement;
+                    node.Value = "";
+                    util.XmlUtil.AddNodeFromNode(node.ParentNode, nodeToProc);
+                }
+                
 				result = this.CheckParameters(node.Value);
+
 				if (result != "")
 				{
 					// If test below is True RESULT contains HTML TAGS. These tags need be processed
 					// Otherwise, go ahead!
 					if (result.IndexOf("<") >= 0)
 					{
-						XmlNode nodeToProc = util.XmlUtil.CreateXmlDocumentFromStr("<root>" + result + "</root>").DocumentElement;
+                        
+                        XmlNode nodeToProc = util.XmlUtil.CreateXmlDocumentFromStr("<root>" + result + "</root>").DocumentElement;
 						if (node.NodeType == XmlNodeType.Text)
 						{
 							node.Value = "";
