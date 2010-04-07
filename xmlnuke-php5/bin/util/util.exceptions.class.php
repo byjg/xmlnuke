@@ -99,6 +99,7 @@ class XMLNukeException extends Exception
 		}
 		$this->setExceptionClassName($this);
 		$this->backTrace = Debug::GetBackTrace();
+		$this->showStackTrace = true;
 	}
 	/**
 	 * Config exception type
@@ -192,6 +193,7 @@ class NotAuthenticatedException extends XMLNukeException
 	{
 		parent::XMLNukeException(402, $message);
 		$this->errorType = ErrorType::NotAuthenticated; 
+		$this->showStackTrace = false;
 	}
 }
 /**
@@ -211,6 +213,7 @@ class InsufficientPrivilegeException extends XMLNukeException
 	{
 		parent::XMLNukeException(403, $message);
 		$this->errorType = ErrorType::InsufficientPrivilege; 
+		$this->showStackTrace = false;
 	}
 }
 /**
@@ -233,6 +236,7 @@ class FileUtilException extends XMLNukeException
 	{
 		parent::XMLNukeException($code, $message);
 		$this->errorType = ErrorType::Util;
+		$this->showStackTrace = true;
 		$this->setRangeCode(100, 249);
 	}
 }
@@ -255,6 +259,7 @@ class XmlUtilException extends XMLNukeException
 	{
 		parent::XMLNukeException($code, $message);
 		$this->errorType = ErrorType::Util;
+		$this->showStackTrace = true;
 		$this->setRangeCode(250, 399);
 	}
 }
@@ -276,6 +281,7 @@ class KernelException extends XMLNukeException
 	function KernelException($code, $message = "")
 	{
 		parent::XMLNukeException($code, $message);
+		$this->showStackTrace = true;
 		$this->setRangeCode(500, 699);
 	}
 }
@@ -298,6 +304,7 @@ class DateUtilException extends XMLNukeException
 	{
 		parent::XMLNukeException($code, $message);
 		$this->errorType = ErrorType::Util;
+		$this->showStackTrace = true;
 		$this->setRangeCode(700, 749);
 	}
 }
@@ -320,6 +327,7 @@ class EngineException extends XMLNukeException
 	{
 		parent::XMLNukeException($code, $message);
 		$this->errorType = ErrorType::Engine;
+		$this->showStackTrace = true;
 		$this->setRangeCode(750, 800);
 	}
 }
@@ -342,6 +350,7 @@ class ImageUtilException extends XMLNukeException
 	{
 		parent::XMLNukeException($code, $message);
 		$this->errorType = ErrorType::Util;
+		$this->showStackTrace = true;
 		$this->setRangeCode(801, 820);
 	}
 }
@@ -364,6 +373,7 @@ class UploadUtilException extends XMLNukeException
 	{
 		parent::XMLNukeException($code, $message);
 		$this->errorType = ErrorType::Util;
+		$this->showStackTrace = true;
 		$this->setRangeCode(821, 840);
 	}
 }
@@ -406,6 +416,7 @@ class XmlNukeObjectException extends XMLNukeException
 	{
 		parent::XMLNukeException($code, $message);
 		$this->errorType = ErrorType::Object;
+		$this->showStackTrace = true;
 		$this->setRangeCode(850, 999);
 	}
 }
@@ -428,6 +439,7 @@ class ModuleException extends XMLNukeException
 	{
 		parent::XMLNukeException($code, $message);
 		$this->errorType = ErrorType::Module;
+		$this->showStackTrace = true;
 		$this->setRangeCode(5000, 7000);
 	}
 }

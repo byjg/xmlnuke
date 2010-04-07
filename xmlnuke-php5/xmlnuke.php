@@ -114,7 +114,7 @@
 				if ($ex instanceof PDOException)
 				{
 					$ex->errorType = ErrorType::DataBase ;
-					$ex->showStackTrace = false;
+					$ex->showStackTrace = true;
 				}
 				
 				$ex->moduleName = $moduleName;

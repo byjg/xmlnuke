@@ -25,6 +25,7 @@ class OAuthClient
 	 */
 	protected $_context;
 	protected $_saveToUser;
+	protected $_user;
 
 	/**
 	 *
@@ -39,7 +40,9 @@ class OAuthClient
 
 		if ($saveToUser)
 		{
-			if (!$this->_context->IsAuthenticated())
+			$users = $this->_context->getUsersDatabase();
+			$this->_user = $users->getUserName($saveToUser);
+			if ($this->_user == null)
 			{
 				throw new NotAuthenticatedException("You have to be authenticated to access this feature");
 			}
@@ -77,7 +80,7 @@ class OAuthClient
 		}
 		else
 		{
-			throw new Exception("Ainda tou fazendo!");
+			return $this->_user->getField($name);
 		}
 	}
 
@@ -89,7 +92,9 @@ class OAuthClient
 		}
 		else
 		{
-			throw new Exception("Ainda tou fazendo!");
+			$users = $this->_context->getUsersDatabase();
+			$users->removePropertyValueFromUser($sr->getField($this->_UserTable->Id), null, $name);
+			$users->addPropertyValueToUser($sr->getField($this->_UserTable->Id), $value, $name);
 		}
 	}
 
