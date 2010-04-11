@@ -44,7 +44,7 @@ interface IModule
 	/**
 	 * Create the main module page
 	 * 
-	 * @return PageXml
+	 * @return IXmlnukeDocument
 	 */
 	function CreatePage();
 

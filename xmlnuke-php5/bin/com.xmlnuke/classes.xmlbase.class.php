@@ -53,8 +53,13 @@ class XmlnukeCollection
 	*/
 	public function addXmlnukeObject($docobj)
 	{
-		if (is_null($docobj) || !($docobj instanceof IXmlnukeDocumentObject)) {
+		if (is_null($docobj) || !($docobj instanceof IXmlnukeDocumentObject))
+		{
 			throw new XmlNukeObjectException(853, "Object is null or not is IXmlnukeDocumentObject. Found object type: " . get_class($docobj));
+		}
+		if ($docobj == $this)
+		{
+			throw new XmlNukeObjectException(853, "You are adding the object to itself");
 		}
 		$this->_items[] = $docobj;
 	}

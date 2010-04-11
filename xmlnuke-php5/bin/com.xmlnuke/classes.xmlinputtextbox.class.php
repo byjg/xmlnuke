@@ -114,7 +114,7 @@ class XmlInputTextBox extends XmlInputValidate
 	*@param string $value
 	*@param int $size 
 	*/
-	public function XmlInputTextBox($caption, $name, $value, $size = 20)
+	public function __construct($caption, $name, $value, $size = 20)
 	{
 		parent::XmlInputValidate();
 		$this->_name = $name;

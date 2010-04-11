@@ -233,6 +233,63 @@ abstract class BaseDBAccess
 	}
 
 	/**
+	 *
+	 * @param IIterator $it
+	 * @param string $name
+	 * @param array fields
+	 * @param bool $saveToBrowser
+	 */
+	public static function saveToCSV($it, $name = "data.csv", $fields = null, $saveToBrowser = true)
+	{
+		if ($saveToBrowser)
+		{
+			ob_clean();
+
+			header ( "Content-Type: text/csv;" );
+			header ( "Content-Disposition: attachment; filename=$name" );
+		}
+
+		$first = true;
+		$line = "";
+		foreach ($it as $sr)
+		{
+			if ($first)
+			{
+				$first = false;
+
+				if ($fields == null)
+				{
+					$fields = $sr->getFieldNames();
+				}
+
+				$line .= '"' . implode('","', $fields) . '"' . "\n";
+			}
+
+			$raw = array();
+			foreach ($fields as $field)
+			{
+				$raw[] = $sr->getField($field);
+			}
+			$line .= '"' . implode('","', array_values($raw)) . '"' . "\n";
+
+			if ($saveToBrowser)
+			{
+				echo $line;
+				$line = "";
+			}
+		}
+
+		if ($saveToBrowser)
+		{
+			die();
+		}
+		else
+		{
+			return $line;
+		}
+	}
+
+	/**
 	 * Get a IDbFunctions class containing specific database operations
 	 * @return IDbFunctions
 	 */

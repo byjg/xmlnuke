@@ -79,7 +79,7 @@ class XmlFormCollection extends XmlnukeCollection implements IXmlnukeDocumentObj
 	*@param string $action
 	*@param string $title
 	*/
-	public function XmlFormCollection($context, $action, $title)
+	public function __construct($context, $action, $title)
 	{
 		parent::XmlnukeCollection();
 		$this->_context = $context;

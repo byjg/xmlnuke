@@ -62,7 +62,7 @@ class XmlnukeText extends XmlnukeDocumentObject
 	*@param bool $underline
 	*@param bool $breakline
 	*/
-	public function XmlnukeText($text, $bold = false, $italic = false, $underline = false, $breakline = false)
+	public function __construct($text, $bold = false, $italic = false, $underline = false, $breakline = false)
 	{
 		$this->_text = $text;
 		$this->_bold = $bold;
