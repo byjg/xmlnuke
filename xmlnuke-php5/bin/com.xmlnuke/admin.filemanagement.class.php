@@ -81,10 +81,12 @@ class FileManagement extends NewBaseAdminModule
 		$browser = new XmlFileBrowser($root, $this->_action, $this->_context);
 		
 		//SET FILEBROWSER ACESS LEVEL
-		$processor = new AnydatasetSetupFilenameProcessor("filemanagement", $this->_context);
-//		$processor->setFilenameLocation(ForceFilenameLocation::SharedPath );
+		$processor = new AnydatasetFilenameProcessor("filemanagement", $this->_context);
+		$processor->setFilenameLocation(ForceFilenameLocation::UseWhereExists );
 		$anyDataSet = new AnyDataSet($processor);
-		
+
+		$ignoreAdmin = false;
+
 		$it = $anyDataSet->getIterator();
 		while($it->hasNext())
 		{
@@ -129,11 +131,12 @@ class FileManagement extends NewBaseAdminModule
 					$browser->setFolderView($row->getField("folder_view"));
 					$browser->setFolderEdit($row->getField("folder_edit"));
 					$browser->setFolderDelete($row->getField("folder_delete"));
+					$ignoreAdmin = ($row->getField("ignore_admin")=="true");
 					break;
 			}
 		}		
 		
-		if ($this->isUserAdmin())
+		if ($this->isUserAdmin() && !$ignoreAdmin)
 			$browser->setUserType(FileBrownserUserType::ADMIN );
 		
 		$this->_block->addXmlnukeObject($browser);                                                                             

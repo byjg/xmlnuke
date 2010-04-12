@@ -150,8 +150,18 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 	/**
 	 * @var XmlBlockCollection
 	 */
-	protected $_block;
-	
+	protected $_blockTop;
+
+	/**
+	 * @var XmlTableColumnCollection
+	 */
+	protected $_leftCol;
+
+	/**
+	 * @var XmlTableColumnCollection
+	 */
+	protected $_rightCol;
+
 	/**
 	 * @var Action
 	 */
@@ -230,8 +240,28 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 	 */
 	public function generateObject($current)
 	{
-		$this->_block = new XmlnukeSpanCollection();
-		
+		$block = new XmlnukeSpanCollection();
+
+		$this->_blockTop = new XmlContainerCollection();
+		$block->addXmlnukeObject($this->_blockTop);
+
+		$table = new XmlTableCollection();
+		$table->setStyle("border: 1px solid black; width: 100%");
+		$block->addXmlnukeObject($table);
+
+		$tableRow = new XmlTableRowCollection();
+		$table->addXmlnukeObject($tableRow);
+
+		$this->_leftCol = new XmlTableColumnCollection();
+		$this->_leftCol->setStyle("width: 30%; vertical-align: top");
+		$tableRow->addXmlnukeObject($this->_leftCol);
+
+		$this->_rightCol = new XmlTableColumnCollection();
+		$this->_rightCol->setStyle("width: 70%; vertical-align: top");
+		$tableRow->addXmlnukeObject($this->_rightCol);
+
+		$showFiles = false;
+
 		switch ($this->_action)
 		{
 			case 'new':
@@ -245,6 +275,7 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 				break;
 			case 'view':
 				$this->view();
+				$showFiles = true;
 				break;
 			case 'delete':
 				$this->delete();
@@ -258,72 +289,84 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 			case 'create':
 				$this->createNew();
 				break;
+			default:
+				$showFiles = true;
 		}
 
-		$this->_block->addXmlnukeObject(new XmlnukeBreakLine());
-		$this->_block->addXmlnukeObject(new XmlnukeBreakLine());
+		$this->showBreadCumbs();
+		$this->showDirectories();
+
+		if ($showFiles)
+		{
+			$this->showFiles();
+		}
 		
-		$this->showFolder();
-		
-		$this->_block->generateObject($current);
+		$block->generateObject($current);
 		
 		//Debug::PrintValue($this->_currentFolder);
 	}
-	
-	
-	/**
-	 * Show the Current Folder
-	 *
-	 */
-	private function showFolder()
-	{	
+
+	protected function showBreadCumbs()
+	{
 		//ROOT FOLDER
 		$anchor = new XmlAnchorCollection("module:".$this->_module);
 		$anchor->addXmlnukeObject(new XmlnukeText("Root"));
-		$this->_block->addXmlnukeObject($anchor);		
-		
+		$this->_blockTop->addXmlnukeObject($anchor);
+
 		if ($this->_currentFolder != "")
-			$this->_block->addXmlnukeObject(new XmlnukeText(" / "));				
-			
+			$this->_blockTop->addXmlnukeObject(new XmlnukeText(" / "));
+
 		//TREE FOLDERS
 		$treeFolders = $this->getTreeFolder();
-		
+
 		//CURRENT SUB FOLDER
 		$anchor = new XmlAnchorCollection("module:".$this->_module."&folder=".$this->_currentSubFolder);
 		$anchor->addXmlnukeObject(new XmlnukeText($this->_currentSubFolder));
-		$this->_block->addXmlnukeObject($anchor);		
-		
+		$this->_blockTop->addXmlnukeObject($anchor);
+
 		if ($this->_currentFolder != "")
-			$this->_block->addXmlnukeObject(new XmlnukeText(" / "));
-		
+			$this->_blockTop->addXmlnukeObject(new XmlnukeText(" / "));
+
+		// Show Bread Cumbs
 		$fullFolder = "";
 		foreach ($treeFolders as $folder)
 		{
 			if ($fullFolder == "")
 				$fullFolder =  $this->_currentSubFolder . FileUtil::Slash() . $folder;
 			else
-				$fullFolder .= FileUtil::Slash().$folder; 
-				
+				$fullFolder .= FileUtil::Slash().$folder;
+
 			$anchor = new XmlAnchorCollection("module:".$this->_module."&folder=".$fullFolder);
 			$anchor->addXmlnukeObject(new XmlnukeText($folder));
-			$this->_block->addXmlnukeObject($anchor);
-			$this->_block->addXmlnukeObject(new XmlnukeText(" ".FileUtil::Slash()." "));
+			$this->_blockTop->addXmlnukeObject($anchor);
+			$this->_blockTop->addXmlnukeObject(new XmlnukeText(" ".FileUtil::Slash()." "));
 		}
-				
-		$this->_block->addXmlnukeObject(new XmlnukeBreakLine());
-		$this->_block->addXmlnukeObject(new XmlnukeBreakLine());
-		
+	}
 
+	
+	private function showDirectories()
+	{
 		//EDIT LIST SUB FOLDERS
-		$subFolders = $this->getSubFoldersFromCurrent();	
-			
+		$subFolders = $this->getSubFoldersFromCurrent();
+
 		if ($this->_existDirectory)
-			$this->showEditlist($subFolders, $this->_lang->Value("SUBFOLDERS"),  $this->_lang->Value("SUBFOLDERS"), FileBrowserEditListType::SUBFOLDER );
-		
-		$this->_block->addXmlnukeObject(new XmlnukeBreakLine());
-		$this->_block->addXmlnukeObject(new XmlnukeBreakLine());
-		
-		
+		{
+			$this->showEditlist($this->_leftCol, $subFolders, $this->_lang->Value("SUBFOLDERS"),  $this->_lang->Value("SUBFOLDERS"), FileBrowserEditListType::SUBFOLDER );
+		}
+		else
+		{
+			$this->_leftCol->addXmlnukeObject(new XmlnukeText($this->_lang->Value("DIRECTORY_DOES_NOT_EXISTS")));
+		}
+	}
+
+	/**
+	 * Show the Current Folder
+	 *
+	 */
+	private function showFiles()
+	{
+
+		$show = false;
 		//EDIT LIST FILES
 		if (($this->_currentFolder != "") || ($this->_userType == FileBrownserUserType::ADMIN ))
 		{
@@ -336,9 +379,18 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 					if ($this->extensionIsPermitted($this->_fileViewList, $file))
 						$files[] = $file;
 			}
+
+			$show = $this->_existDirectory;
 			
-			if ($this->_existDirectory)					
-				$this->showEditlist($files, $this->_lang->Value("FILES"), $this->_lang->Value("FILES"), FileBrowserEditListType::FILE );
+		}
+
+		if ($show)
+		{
+			$this->showEditlist($this->_rightCol, $files, $this->_lang->Value("FILES"), $this->_lang->Value("FILES"), FileBrowserEditListType::FILE );
+		}
+		else
+		{
+			$this->_rightCol->addXmlnukeObject(new XmlnukeText($this->_lang->Value("DIRECTORY_EMPTY")));
 		}
 	}
 	
@@ -350,7 +402,7 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 	 * @param String $field
 	 * @param FileBrowserEditListType $type
 	 */
-	private function showEditlist($values, $title, $field, $type)
+	private function showEditlist($block, $values, $title, $field, $type)
 	{	
 		if ($this->_currentFolder != "")
 		{
@@ -363,7 +415,7 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 					$values[] = $this->getSingleName($value);
 			}
 		}
-			
+
 		$arrayDs = new ArrayDataSet($values);
 		$arrayIt = $arrayDs->getIterator();		
 		
@@ -404,10 +456,6 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 			$customButton->action = "uploadform";
 			$customButton->enabled = true;
 			$customButton->alternateText = "UPLOAD";
-			$url = new XmlnukeManageUrl(URLTYPE::MODULE , "admin.FileManagement");
-			$url->addParam("type", $type);
-			$url->addParam("folder", $this->_currentFolder);
-			$customButton->url = htmlentities($url->getUrlFull($this->_context));
 			$customButton->icon = "common/editlist/ic_custom.gif";
 			$customButton->multiple = MultipleSelectType::NONE;
 			$editlist->setCustomButton($customButton);
@@ -419,7 +467,7 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 			$editlist->setReadonly();
 		}
 		
-		$this->_block->addXmlnukeObject($editlist);
+		$block->addXmlnukeObject($editlist);
 	}
 	
 	/**
@@ -512,12 +560,12 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 		{
 			$erro = new NotFoundException($e->getMessage());
 			$erro = $erro->getMessage();
-			$this->_block->addXmlnukeObject(new XmlnukeText($erro,true));
+
+			$uiAlert = new XmlnukeUIAlert($this->_context, UIAlert::ModalDialog);
+			$uiAlert->addXmlnukeObject($erro);
+			$this->_blockTop->addXmlnukeObject($uiAlert);
 			
-			$this->_existDirectory = false;
-			
-			$this->_block->addXmlnukeObject(new XmlnukeBreakLine());
-			$this->_block->addXmlnukeObject(new XmlnukeBreakLine());
+			$this->_existDirectory = false;			
 		}		
 		
 		return $directories;
@@ -571,6 +619,7 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 					return array();
 				}
 			}
+
 			$tempFiles = FileUtil::RetrieveFilesFromFolder($folder,"");
 			
 			//remove the files that was blocked for user
@@ -593,10 +642,10 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 		{
 			$erro = new NotFoundException($e->getMessage());
 			$erro = $erro->getMessage();
-			$this->_block->addXmlnukeObject(new XmlnukeText($erro,true));
-			
-			$this->_block->addXmlnukeObject(new XmlnukeBreakLine());
-			$this->_block->addXmlnukeObject(new XmlnukeBreakLine());
+
+			$uiAlert = new XmlnukeUIAlert($this->_context, UIAlert::ModalDialog);
+			$uiAlert->addXmlnukeObject($erro);
+			$this->_blockTop->addXmlnukeObject($uiAlert);			
 		}		
 
 		return $files;
@@ -625,14 +674,14 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 				$form->addXmlnukeObject($textBox);
 				
 				$button = new XmlInputButtons();
-				$button->addSubmit($this->_lang->Value("CONFIRM"),"");
+				$button->addSubmit($this->_lang->Value("TXT_CONFIRM"),"");
 				$form->addXmlnukeObject($button);
 				
-				$this->_block->addXmlnukeObject($form);
+				$this->_rightCol->addXmlnukeObject($form);
 			}
 			else
 			{
-				$this->_block->addXmlnukeObject(new XmlnukeText($this->_lang->Value("NEWFOLDERNOTPERMITTED"),true));
+				$this->_rightCol->addXmlnukeObject(new XmlnukeText($this->_lang->Value("NEWFOLDERNOTPERMITTED"),true));
 			}
 		}
 		else//FILE
@@ -649,19 +698,19 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 				$textBox->setRequired(true);
 				$form->addXmlnukeObject($textBox);
 				
-				$textMemo = new XmlInputMemo($this->_lang->Value("FILE"), "filecontent", "");
+				$textMemo = new XmlInputMemo($this->_lang->Value("LABEL_CONTENT"), "filecontent", "");
 				$textMemo->setSize(70,20);
 				$form->addXmlnukeObject($textMemo);
 				
 				$button = new XmlInputButtons();
-				$button->addSubmit($this->_lang->Value("CONFIRM"),"");
+				$button->addSubmit($this->_lang->Value("TXT_CONFIRM"),"");
 				$form->addXmlnukeObject($button);
 				
-				$this->_block->addXmlnukeObject($form);
+				$this->_rightCol->addXmlnukeObject($form);
 			}
 			else
 			{
-				$this->_block->addXmlnukeObject(new XmlnukeText($this->_lang->Value("NEWFILENOTPERMITTED"),true));				
+				$this->_rightCol->addXmlnukeObject(new XmlnukeText($this->_lang->Value("NEWFILENOTPERMITTED"),true));
 			}
 		}
 	}
@@ -674,23 +723,26 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 	{	
 		if ($this->getFileUpload())
 		{	
-			$form = new XmlFormCollection($this->_context, "module:".$this->_module, $this->_lang->Value("UPLOAD"));
+			$form = new XmlFormCollection($this->_context, "module:".$this->_module, $this->_lang->Value("FORM_UPLOAD"));
 				
 			$form->addXmlnukeObject(new XmlInputHidden("action","uploadfile"));
 			$form->addXmlnukeObject(new XmlInputHidden("folder", $this->_currentFolder));
-				
-			$file = new XmlInputFile($this->_lang->Value("FILE"),"form_file");
-			$form->addXmlnukeObject($file);
+
+			for($i=1;$i<=5;$i++)
+			{
+				$file = new XmlInputFile($this->_lang->Value("TXT_FILE", $i),"form_file$i");
+				$form->addXmlnukeObject($file);
+			}
 				
 			$button = new XmlInputButtons();
-			$button->addSubmit($this->_lang->Value("SEND"),"");
+			$button->addSubmit($this->_lang->Value("TXT_SUBMIT"),"");
 			$form->addXmlnukeObject($button);
 				
-			$this->_block->addXmlnukeObject($form);	
+			$this->_rightCol->addXmlnukeObject($form);
 		}
 		else
 		{
-			$this->_block->addXmlnukeObject(new XmlnukeText($this->_lang->Value("UPLOADNOTPERMITTED"),true));				
+			$this->_rightCol->addXmlnukeObject(new XmlnukeText($this->_lang->Value("UPLOADNOTPERMITTED"),true));
 		}
 	}
 	
@@ -704,17 +756,32 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 			
 		$fileProcessor = new UploadFilenameProcessor("", $this->_context);
 		$fileProcessor->setFilenameLocation(ForceFilenameLocation::DefinePath, $this->_context->SystemRootPath() . $dir);
-			
-		$result = $this->_context->processUpload($fileProcessor, false);
-		
-		//if ($this->extensionIsPermitted($this->_fileUploadList, $filename))
-		if (is_array($result) && (sizeof($result)) >= 1)
+
+		$fileList = $this->_context->getUploadFileNames();
+		Debug::PrintValue($fileList);
+
+		foreach ($fileList as $field=>$file)
 		{
-			$this->_block->addXmlnukeObject(new XmlnukeText($this->_lang->Value("FILE")." ".$result[0]." ".$this->_lang->Value("SENDED")));
-		}
-		else
-		{
-			$this->_block->addXmlnukeObject(new XmlnukeText($this->_lang->Value("EXTENSIONNOTPERMITTED"),true));
+			if ($file == "")
+			{
+				continue;
+			}
+			elseif ($this->extensionIsPermitted($this->_fileUploadList, $file))
+			{
+				$result = $this->_context->processUpload($fileProcessor, false, $field);
+				if (is_array($result) && (sizeof($result)) >= 1)
+				{
+					$this->_rightCol->addXmlnukeObject(new XmlnukeText($this->_lang->Value("FILEUPLOAD_OK", basename(file)), true));
+				}
+				else
+				{
+					$this->_rightCol->addXmlnukeObject(new XmlnukeText($this->_lang->Value("FILEUPLOAD_ERR", basename(file)), true));
+				}
+			}
+			else
+			{
+				$this->_rightCol->addXmlnukeObject(new XmlnukeText($this->_lang->Value("EXTENSIONNOTPERMITTED", basename($file)),true));
+			}
 		}
 	}	
 	
@@ -739,10 +806,10 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 			{
 				$erro = new NotFoundException($e->getMessage());
 				$erro = $erro->getMessage();
-				$this->_block->addXmlnukeObject(new XmlnukeText($erro,true));
-				
-				$this->_block->addXmlnukeObject(new XmlnukeBreakLine());
-				$this->_block->addXmlnukeObject(new XmlnukeBreakLine());
+
+				$uiAlert = new XmlnukeUIAlert($this->_context, UIAlert::ModalDialog);
+				$uiAlert->addXmlnukeObject($erro);
+				$this->_blockTop->addXmlnukeObject($uiAlert);
 			}
 		}
 		else //CREATE FILE
@@ -759,10 +826,10 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 			{
 				$erro = new NotFoundException($e->getMessage());
 				$erro = $erro->getMessage();
-				$this->_block->addXmlnukeObject(new XmlnukeText($erro,true));
-				
-				$this->_block->addXmlnukeObject(new XmlnukeBreakLine());
-				$this->_block->addXmlnukeObject(new XmlnukeBreakLine());
+
+				$uiAlert = new XmlnukeUIAlert($this->_context, UIAlert::ModalDialog);
+				$uiAlert->addXmlnukeObject($erro);
+				$this->_blockTop->addXmlnukeObject($uiAlert);
 			}
 		}
 	}
@@ -802,11 +869,11 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 				$button->addSubmit($this->_lang->Value("TXT_UPDATE"),"");
 				$form->addXmlnukeObject($button);
 				
-				$this->_block->addXmlnukeObject($form);
+				$this->_rightCol->addXmlnukeObject($form);
 			}
 			else
 			{
-				$this->_block->addXmlnukeObject(new XmlnukeText($this->_lang->Value("EDITFOLDERNOTPERMITTED"),true));				
+				$this->_rightCol->addXmlnukeObject(new XmlnukeText($this->_lang->Value("EDITFOLDERNOTPERMITTED"),true));
 			}		
 		}
 		else
@@ -843,10 +910,10 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 					{
 						$erro = new NotFoundException($e->getMessage());
 						$erro = $erro->getMessage();
-						$this->_block->addXmlnukeObject(new XmlnukeText($erro,true));
-						
-						$this->_block->addXmlnukeObject(new XmlnukeBreakLine());
-						$this->_block->addXmlnukeObject(new XmlnukeBreakLine());
+
+						$uiAlert = new XmlnukeUIAlert($this->_context, UIAlert::ModalDialog);
+						$uiAlert->addXmlnukeObject($erro);
+						$this->_blockTop->addXmlnukeObject($uiAlert);
 					}
 					
 					$textMemo = new XmlInputMemo("", "filecontent", $filecontent);
@@ -857,16 +924,16 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 					$button->addSubmit($this->_lang->Value("UPDATE"),"");
 					$form->addXmlnukeObject($button);
 					
-					$this->_block->addXmlnukeObject($form);
+					$this->_rightCol->addXmlnukeObject($form);
 				}
 				else
 				{
-					$this->_block->addXmlnukeObject(new XmlnukeText($this->_lang->Value("EXTENSIONEDITNOTPERMITTED"),true));				
+					$this->_rightCol->addXmlnukeObject(new XmlnukeText($this->_lang->Value("EXTENSIONEDITNOTPERMITTED"),true));
 				}
 			}
 			else
 			{
-				$this->_block->addXmlnukeObject(new XmlnukeText($this->_lang->Value("EDITFILENOTPERMITTED"),true));				
+				$this->_rightCol->addXmlnukeObject(new XmlnukeText($this->_lang->Value("EDITFILENOTPERMITTED"),true));
 			}			
 		}
 	}
@@ -905,10 +972,10 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 		{
 			$erro = new NotFoundException($e->getMessage());
 			$erro = $erro->getMessage();
-			$this->_block->addXmlnukeObject(new XmlnukeText($erro,true));
-				
-			$this->_block->addXmlnukeObject(new XmlnukeBreakLine());
-			$this->_block->addXmlnukeObject(new XmlnukeBreakLine());
+
+			$uiAlert = new XmlnukeUIAlert($this->_context, UIAlert::ModalDialog);
+			$uiAlert->addXmlnukeObject($erro);
+			$this->_blockTop->addXmlnukeObject($uiAlert);
 		}	
 	}
 	
@@ -935,7 +1002,7 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 			}
 			else
 			{
-				$this->_block->addXmlnukeObject(new XmlnukeText($this->_lang->Value("VIEWFOLDERNOTPERMITTED"),true));				
+				$this->_rightCol->addXmlnukeObject(new XmlnukeText($this->_lang->Value("VIEWFOLDERNOTPERMITTED"),true));
 			}
 		}
 		else
@@ -953,8 +1020,8 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 				
 				$textBox = new XmlInputTextBox($this->_lang->Value("TXT_NAME"),"filename",$filename,60);
 				$textBox->setReadOnly(true);
-				$this->_block->addXmlnukeObject($textBox);				
-				$this->_block->addXmlnukeObject(new XmlnukeBreakLine());			
+				$this->_rightCol->addXmlnukeObject($textBox);
+				$this->_rightCol->addXmlnukeObject(new XmlnukeBreakLine());
 
 				$img = false;
 				$ext = $this->getExtension($filename);
@@ -973,9 +1040,9 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 				
 				if ($img)
 				{
-					$this->_block->addXmlnukeObject(new XmlnukeText($this->_lang->Value("IMAGE").":",false,false,false,true));
+					$this->_rightCol->addXmlnukeObject(new XmlnukeText($this->_lang->Value("IMAGE").":",false,false,false,true));
 					$img = new XmlnukeImage(str_replace("\\", "/", $this->_currentFolder.FileUtil::Slash().$filename) );
-					$this->_block->addXmlnukeObject($img);	
+					$this->_rightCol->addXmlnukeObject($img);
 				}
 				else 
 				{
@@ -988,20 +1055,20 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 					{
 						$erro = new NotFoundException($e->getMessage());
 						$erro = $erro->getMessage();
-						$this->_block->addXmlnukeObject(new XmlnukeText($erro,true));
-						
-						$this->_block->addXmlnukeObject(new XmlnukeBreakLine());
-						$this->_block->addXmlnukeObject(new XmlnukeBreakLine());
+
+						$uiAlert = new XmlnukeUIAlert($this->_context, UIAlert::ModalDialog);
+						$uiAlert->addXmlnukeObject($erro);
+						$this->_blockTop->addXmlnukeObject($uiAlert);
 					}
 									
 					$textMemo = new XmlInputMemo($this->_lang->Value("FILE"), "filecontent", $filecontent);
 					$textMemo->setSize(110,20);
-					$this->_block->addXmlnukeObject($textMemo);
+					$this->_rightCol->addXmlnukeObject($textMemo);
 				}
 			}
 			else 
 			{
-				$this->_block->addXmlnukeObject(new XmlnukeText($this->_lang->Value("VIEWFILENOTPERMITTED"),true));
+				$this->_rightCol->addXmlnukeObject(new XmlnukeText($this->_lang->Value("VIEWFILENOTPERMITTED"),true));
 			}
 		}
 	}
@@ -1065,15 +1132,15 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 				{
 					$erro = new NotFoundException($e->getMessage());
 					$erro = $erro->getMessage();
-					$this->_block->addXmlnukeObject(new XmlnukeText($erro,true));
-					
-					$this->_block->addXmlnukeObject(new XmlnukeBreakLine());
-					$this->_block->addXmlnukeObject(new XmlnukeBreakLine());
+
+					$uiAlert = new XmlnukeUIAlert($this->_context, UIAlert::ModalDialog);
+					$uiAlert->addXmlnukeObject($erro);
+					$this->_blockTop->addXmlnukeObject($uiAlert);
 				}
 			}
 			else
 			{
-				$this->_block->addXmlnukeObject(new XmlnukeText($this->_lang->Value("DELETEFOLDERNOTPERMITTED"),true));					
+				$this->_rightCol->addXmlnukeObject(new XmlnukeText($this->_lang->Value("DELETEFOLDERNOTPERMITTED"),true));
 			}
 		}
 		else //FILE
@@ -1089,15 +1156,15 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 				{
 					$erro = new NotFoundException($e->getMessage());
 					$erro = $erro->getMessage();
-					$this->_block->addXmlnukeObject(new XmlnukeText($erro,true));
-					
-					$this->_block->addXmlnukeObject(new XmlnukeBreakLine());
-					$this->_block->addXmlnukeObject(new XmlnukeBreakLine());
+
+					$uiAlert = new XmlnukeUIAlert($this->_context, UIAlert::ModalDialog);
+					$uiAlert->addXmlnukeObject($erro);
+					$this->_blockTop->addXmlnukeObject($uiAlert);
 				}
 			}
 			else
 			{
-				$this->_block->addXmlnukeObject(new XmlnukeText($this->_lang->Value("DELETEFILENOTPERMITTED"),true));				
+				$this->_rightCol->addXmlnukeObject(new XmlnukeText($this->_lang->Value("DELETEFILENOTPERMITTED"),true));
 			}
 		}
 	}
@@ -1113,25 +1180,14 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 	{
 		if ($this->_userType == FileBrownserUserType::ADMIN )
 			return true;
-		
-		$tempNames = explode(".", $filename);
-		
-		foreach ($tempNames as $name)
-		{}
-		$ext = ".".$name;
-			
+
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+
 		//Debug::PrintValue("Ext: ".$ext);
-		
-		foreach ($PermittedExtensionList as $extension)
-		{
-			//Debug::PrintValue("Extension: ".$extension);
-			//Debug::PrintValue("= ".$ext);
-			if ($extension == $ext)
-				return true;
-		}
-		
-				//Debug::PrintValue("False");
-		return false;	
+
+		$valid = "-" . implode("-", $PermittedExtensionList) . "-";
+
+		return (preg_match("/-\.?" . $ext . "-/", $valid));
 	}
 	
 	

@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<anydataset>
+   <row>
+      <field name="LANGUAGE">en-us</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">pt-br</field>
+      <field name="DIRECTORY_DOES_NOT_EXISTS">Pasta não existe</field>
+      <field name="DIRECTORY_EMPTY">Sem arquivos para exibir</field>
+      <field name="FILES">Lista de Arquivos</field>
+      <field name="SUBFOLDERS">Lista de Pastas</field>
+      <field name="NEWDIRECTORY">Nova pasta</field>
+      <field name="NEWFOLDERNOTPERMITTED">Não é permitido criar uma pasta na raiz. Selecione uma pasta.</field>
+      <field name="NEWFILE">Novo Arquivo</field>
+      <field name="NEWFILENOTPERMITTED">Não é permitido criar um novo arquivo.</field>
+      <field name="FORM_UPLOAD">Upload de Arquivos</field>
+      <field name="TXT_FILE">Arquivo {0}</field>
+      <field name="UPLOADNOTPERMITTED">Não é permitido fazer o Upload</field>
+      <field name="FILEUPLOAD_OK">Upload do arquivo '{0}' com sucesso</field>
+      <field name="FILEUPLOAD_ERR">Não foi possível salvar arquivo '{0}'</field>
+      <field name="EXTENSIONNOTPERMITTED">Extensão do arquivo '{0}' não é permitida.</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">de-de</field>
+      <field name="ERROR_POLLNOTSETUP">Fehler! Die Abstimmung wurde nicht richtig eingerichtet. Kontaktieren Sie den System-Administrator um dies zu beheben.</field>
+      <field name="SENDBTN">Abstimmen</field>
+      <field name="VIEWRESULTSBTN">Ergebnis ansehen</field>
+      <field name="POLLENDED">Diese Abstimmung ist beendet.</field>
+      <field name="ERROR_POLLEMPTY">Diese Abstimmung ist leer oder existiert nicht.</field>
+      <field name="VOTECOMPUTED">Vielen Dank für Ihre Stimme!</field>
+      <field name="CANNOTSHOWRESULTS">Das Ergebnis kann nicht angezeigt werden. Bitte entschuldigen Sie!</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">fr-fr</field>
+      <field name="ERROR_POLLNOTSETUP">Erreur! Le sondage n'est pas configuré correctement. Contactez votre administrateur système pour résoudre ce problème.</field>
+      <field name="SENDBTN">Vote</field>
+      <field name="VIEWRESULTSBTN">Voir les résultats</field>
+      <field name="POLLENDED">Ce sondage est clos</field>
+      <field name="ERROR_POLLEMPTY">Ce sondage est vide ou n'existe pas.</field>
+      <field name="VOTECOMPUTED">Merci. Votre vote est calculé.</field>
+      <field name="CANNOTSHOWRESULTS">Désolé. Je ne peux pas montrer les résultats pour vous.</field>
+   </row>
+   <row>
+      <field name="LANGUAGE">sv-se</field>
+      <field name="ERROR_POLLNOTSETUP">Fel! Undersökningen är inte setup ordentligt. Kontakta systemadministratören för att åtgärda detta.</field>
+      <field name="SENDBTN">Omröstning</field>
+      <field name="VIEWRESULTSBTN">Visa resultat</field>
+      <field name="POLLENDED">Denna omröstning är stängd</field>
+      <field name="ERROR_POLLEMPTY">Denna enkät är tom eller inte existerar.</field>
+      <field name="VOTECOMPUTED">Tack. Din röst beräknas.</field>
+      <field name="CANNOTSHOWRESULTS">Ledsen. Jag kan inte visa resultaten för dig.</field>
+   </row>
+</anydataset>
