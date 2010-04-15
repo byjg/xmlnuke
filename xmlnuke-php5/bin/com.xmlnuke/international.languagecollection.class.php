@@ -53,7 +53,7 @@ class LanguageCollection
 	*@return void
 	*@desc LanguageCollection Constructor
 	*/
-	public function LanguageCollection($context)
+	public function __construct($context)
 	{
 		$this->_context = $context;
 	}

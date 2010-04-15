@@ -41,7 +41,7 @@ class XmlInputLabelObjects extends XmlnukeCollection implements IXmlnukeDocument
 	*@desc XmlInputLabelObjects constructor
 	*@param string $caption
 	*/
-	public function XmlInputLabelObjects($caption)
+	public function __construct($caption)
 	{ 
 		$this->_caption = $caption;
 	}

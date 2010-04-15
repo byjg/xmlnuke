@@ -68,7 +68,7 @@ class XmlDataSet
 	 * @param string[] $colNode
 	 * @return XmlDataSet
 	 */
-	public function XmlDataSet($context, $xml, $rowNode, $colNode)
+	public function __construct($context, $xml, $rowNode, $colNode)
 	{
 		if (!is_array($colNode))
 		{

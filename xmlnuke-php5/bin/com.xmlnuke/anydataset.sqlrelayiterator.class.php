@@ -50,7 +50,7 @@ class SQLRelayIterator extends GenericIterator
 	*@param Context $context
 	*@return void
 	*/
-	public function SQLRelayIterator($cursor, $context)
+	public function __construct($cursor, $context)
 	{
 		$this->_context = $context;
 		$this->_cursor = $cursor;

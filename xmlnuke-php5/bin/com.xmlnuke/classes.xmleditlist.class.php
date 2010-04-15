@@ -155,7 +155,7 @@ class EditListField
 	 */
 	public $summary;
 
-	public function EditListField($new = true)
+	public function __construct($new = true)
 	{
 		$this->newColumn = $new;
 		$this->arrayLookup = array();

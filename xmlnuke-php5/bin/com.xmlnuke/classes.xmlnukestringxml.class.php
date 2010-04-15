@@ -33,8 +33,12 @@
 class XmlnukeStringXML extends XmlnukeDocumentObject
 {
 	protected $_xml;
-	
-	public function XmlnukeStringXML($xml)
+
+	/**
+	 *
+	 * @param string $xml
+	 */
+	public function __construct($xml)
 	{
 		$this->_xml = $xml;
 	}

@@ -40,7 +40,7 @@ class LocaleFactory
 	*@return void
 	*@desc 
 	*/
-	private function LocaleFactory()
+	private function __construct()
 	{
 	}
 	

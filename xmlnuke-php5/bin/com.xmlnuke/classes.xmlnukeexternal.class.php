@@ -59,7 +59,7 @@ class XmlnukeExternal extends XmlnukeDocumentObject
 	 * @param string $width
 	 * @param string $height
 	 */
-	public function XmlnukeExternal($src, $name = "", $width = "100%", $height = "100%")
+	public function __construct($src, $name = "", $width = "100%", $height = "100%")
 	{
 		if ($name != "")
 		{

@@ -44,7 +44,7 @@ class XmlnukeAjaxCallback extends XmlnukeDocumentObject
 	*@param DOMNode $current
 	*@return void
 	*/
-	public function XmlnukeAjaxCallback($context)
+	public function __construct($context)
 	{	
 		$this->_context = $context;
 	}

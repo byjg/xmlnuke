@@ -103,9 +103,9 @@ class XmlEasyList extends XmlnukeDocumentObject
 	 * @param string $selected
 	 * @return XmlEasyList
 	 */
-	public function XmlEasyList( $listType, $name, $caption, $values, $selected = null)
+	public function __construct($listType, $name, $caption, $values, $selected = null)
 	{
-		parent::XmlnukeDocumentObject();
+		parent::__construct();
 		$this->_name = $name;
 		$this->_caption = $caption;
 		$this->_values = $values;

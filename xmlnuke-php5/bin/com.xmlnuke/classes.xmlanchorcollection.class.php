@@ -46,9 +46,9 @@ class XmlAnchorCollection extends XmlnukeCollection implements IXmlnukeDocumentO
 	*@param string $hrefSrc
 	*@param string $target
 	*/
-	public function XmlAnchorCollection($hrefSrc, $target = '')
+	public function __construct($hrefSrc, $target = '')
 	{
-		parent::XmlnukeCollection();
+		parent::__construct();
 		$this->_src = $hrefSrc;
 		$this->_target = $target;
 	}

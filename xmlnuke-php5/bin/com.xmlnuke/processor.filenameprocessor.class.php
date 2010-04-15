@@ -73,7 +73,7 @@ abstract class FilenameProcessor
 	 *@return string
 	 *@desc Constructor
 	 */
-	public function FilenameProcessor($singlename, $context)
+	public function __construct($singlename, $context)
 	{
 		if ($context instanceof Context)
 		{
@@ -355,9 +355,9 @@ class XMLFilenameProcessor extends FilenameProcessor
 	 *@return string
 	 *@desc
 	 */
-	public function XMLFilenameProcessor($singlename, $context )
+	public function __construct($singlename, $context )
 	{
-		parent::FilenameProcessor($singlename, $context);
+		parent::__construct($singlename, $context);
 		// The function to manipulate HASHED XML files is in BTREEUTILS...
 		// So nothing to change HERE (instead XMLCacheFileName and XSLCacheFileName).
 		$this->_filenameLocation = ForceFilenameLocation::PrivatePath;
@@ -414,9 +414,9 @@ class XSLFilenameProcessor extends FilenameProcessor
 	 *@return string
 	 *@desc
 	 */
-	public function XSLFilenameProcessor($singlename,$context)
+	public function __construct($singlename,$context)
 	{
-		parent::FilenameProcessor($singlename, $context);
+		parent::__construct($singlename, $context);
 	}
 
 	/**
@@ -478,11 +478,11 @@ class XMLCacheFilenameProcessor extends FilenameProcessor
 	 *@return string
 	 *@desc
 	 */
-	public function XMLCacheFilenameProcessor($singlename,$context)
+	public function __construct($singlename,$context)
 	{
 		$singlename = $singlename;
 
-		parent::FilenameProcessor($singlename, $context);
+		parent::__construct($singlename, $context);
 		if ($this->_context->CacheHashedDir())
 		{
 			$this->setFilenameLocation(ForceFilenameLocation::DefinePath, $this->_context->CachePath() . $singlename[0] . FileUtil::Slash() . $singlename[1] . FileUtil::Slash());
@@ -548,9 +548,9 @@ class XSLCacheFilenameProcessor extends FilenameProcessor
 	 *@return string
 	 *@desc
 	 */
-	public function XSLCacheFilenameProcessor($singlename,$context)
+	public function __construct($singlename,$context)
 	{
-		parent::FilenameProcessor($singlename, $context);
+		parent::__construct($singlename, $context);
 		if ($this->_context->CacheHashedDir())
 		{
 			$this->setFilenameLocation(ForceFilenameLocation::DefinePath, $this->_context->CachePath() . $singlename[0] . FileUtil::Slash() . $singlename[1] . FileUtil::Slash());
@@ -614,9 +614,9 @@ class OfflineFilenameProcessor extends FilenameProcessor
 	 *@return string
 	 *@desc
 	 */
-	public function OfflineFilenameProcessor($singlename,$context)
+	public function __construct($singlename,$context)
 	{
-		parent::FilenameProcessor($singlename,$context);
+		parent::__construct($singlename,$context);
 		$this->_filenameLocation = ForceFilenameLocation::PrivatePath;
 	}
 
@@ -671,9 +671,9 @@ abstract class AnydatasetBaseFilenameProcessor extends FilenameProcessor
 	 *@return string
 	 *@desc
 	 */
-	public function AnydatasetBaseFilenameProcessor($singlename,$context)
+	public function __construct($singlename,$context)
 	{
-		parent::FilenameProcessor($singlename,$context);
+		parent::__construct($singlename,$context);
 	}
 
 	/**
@@ -708,9 +708,9 @@ class AnydatasetFilenameProcessor extends AnydatasetBaseFilenameProcessor
 	 *@return void
 	 *@desc
 	 */
-	public function AnydatasetFilenameProcessor($singlename,$context)
+	public function __construct($singlename,$context)
 	{
-		parent::FilenameProcessor($singlename,$context);
+		parent::__construct($singlename,$context);
 	}
 
 	/**
@@ -744,9 +744,9 @@ class AnydatasetSetupFilenameProcessor extends AnydatasetBaseFilenameProcessor
 	 *@return void
 	 *@desc
 	 */
-	public function AnydatasetSetupFilenameProcessor($singlename, $context)
+	public function __construct($singlename, $context)
 	{
-		parent::FilenameProcessor($singlename,$context);
+		parent::__construct($singlename,$context);
 		$this->_filenameLocation = ForceFilenameLocation::SharedPath;
 	}
 
@@ -781,9 +781,9 @@ class AnydatasetBackupFilenameProcessor extends AnydatasetBaseFilenameProcessor
 	 * @param string $singlename
 	 * @param Context $context
 	 */
-	public function AnydatasetBackupFilenameProcessor($singlename, $context)
+	public function __construct($singlename, $context)
 	{
-		parent::FilenameProcessor($singlename,$context);
+		parent::__construct($singlename,$context);
 		//		$this->_filenameLocation = ForceFilenameLocation::SharedPath;
 	}
 
@@ -821,9 +821,9 @@ class AnydatasetBackupLogFilenameProcessor extends AnydatasetBaseFilenameProcess
 	 * @param string $singlename
 	 * @param Context $context
 	 */
-	public function AnydatasetBackupLogFilenameProcessor($singlename, $context)
+	public function __construct($singlename, $context)
 	{
-		parent::FilenameProcessor($singlename,$context);
+		parent::__construct($singlename,$context);
 		$this->_filenameLocation = ForceFilenameLocation::SharedPath;
 	}
 
@@ -862,9 +862,9 @@ class AnydatasetLangFilenameProcessor extends AnydatasetBaseFilenameProcessor
 	 *@return void
 	 *@desc
 	 */
-	public function AnydatasetLangFilenameProcessor($singlename, $context )
+	public function __construct($singlename, $context )
 	{
-		parent::FilenameProcessor($singlename, $context);
+		parent::__construct($singlename, $context);
 	}
 
 	/**
@@ -902,9 +902,9 @@ class BackupFilenameProcessor extends FilenameProcessor
 	 *@return void
 	 *@desc
 	 */
-	public function BackupFilenameProcessor($singlename,$context)
+	public function __construct($singlename,$context)
 	{
-		parent::FilenameProcessor($singlename,$context);
+		parent::__construct($singlename,$context);
 		$this->_filenameLocation = ForceFilenameLocation::PrivatePath;
 	}
 
@@ -960,9 +960,9 @@ class SnippetFilenameProcessor extends FilenameProcessor
 	 *@return void
 	 *@desc
 	 */
-	public function SnippetFilenameProcessor($singlename,$context)
+	public function __construct($singlename,$context)
 	{
-		parent::FilenameProcessor($singlename,$context);
+		parent::__construct($singlename,$context);
 	}
 
 	/**
@@ -1016,9 +1016,9 @@ class UploadFilenameProcessor extends FilenameProcessor
 	 * @param Context $context
 	 * @return void
 	 */
-	public function UploadFilenameProcessor($singlename, $context )
+	public function __construct($singlename, $context )
 	{
-		parent::FilenameProcessor($singlename, $context);
+		parent::__construct($singlename, $context);
 		$this->_filenameLocation = ForceFilenameLocation::PrivatePath;
 	}
 
@@ -1077,7 +1077,7 @@ class ImageFilenameProcessor extends FilenameProcessor
 	 * @param string $singlename
 	 * @param Context $context
 	 */
-	public function ImageFilenameProcessor($singlename, $context )
+	public function __construct($singlename, $context )
 	{
 		$parts = pathinfo($singlename);
 		if ($parts["dirname"] != '.')
@@ -1099,7 +1099,7 @@ class ImageFilenameProcessor extends FilenameProcessor
 			$this->_extension = 'jpg';
 		}
 		$singlename = basename($parts["basename"], $this->Extension());
-		parent::FilenameProcessor($singlename, $context);
+		parent::__construct($singlename, $context);
 	}
 
 	/**

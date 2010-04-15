@@ -85,7 +85,7 @@ class IteratorFilter
 	/**
 	*@desc IteratorFilter Constructor
 	*/
-	public function IteratorFilter()
+	public function __construct()
 	{
 		$this->_filters = array();
 	}

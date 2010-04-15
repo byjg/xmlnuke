@@ -32,7 +32,7 @@ class ChartFactory
 	/**
 	* Doesn't need constructor because all methods are statics.
 	*/
-	public function ModuleFactory()
+	public function __construct()
 	{}
 
 	/**

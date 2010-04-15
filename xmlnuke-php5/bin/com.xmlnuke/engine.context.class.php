@@ -116,7 +116,7 @@ class Context
 	* @access public
 	* @return void
 	*/
-	public function Context()
+	public function __construct()
 	{
 		$this->AddCollectionToConfig(Config::getValuesConfig());
 

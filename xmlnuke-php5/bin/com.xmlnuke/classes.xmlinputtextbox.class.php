@@ -116,7 +116,7 @@ class XmlInputTextBox extends XmlInputValidate
 	*/
 	public function __construct($caption, $name, $value, $size = 20)
 	{
-		parent::XmlInputValidate();
+		parent::__construct();
 		$this->_name = $name;
 		$this->_value = $value;
 		$this->_caption = $caption;

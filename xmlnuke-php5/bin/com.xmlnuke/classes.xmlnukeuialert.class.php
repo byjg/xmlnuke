@@ -67,12 +67,13 @@ class XmlnukeUIAlert extends XmlnukeCollection implements IXmlnukeDocumentObject
 	protected $_height = 0;
 	
 	protected $_buttons = array();
-	
+
 	/**
-	*@desc Generate page, processing yours childs.
-	*@param DOMNode $current
-	*@return void
-	*/
+	 *
+	 * @param string $context
+	 * @param UIAlert $uialert
+	 * @param string $title
+	 */
 	public function  __construct($context, $uialert, $title = "")
 	{
 		$this->_context = $context;

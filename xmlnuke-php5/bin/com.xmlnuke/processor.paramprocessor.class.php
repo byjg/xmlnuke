@@ -44,7 +44,7 @@ class ParamProcessor
 	*@return void
 	*@desc ParamProcessor constructor.
 	*/
-	public function ParamProcessor($context)
+	public function __construct($context)
 	{
 		$this->_context = $context;
 	}

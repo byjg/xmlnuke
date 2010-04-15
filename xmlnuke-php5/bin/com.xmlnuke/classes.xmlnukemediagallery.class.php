@@ -46,11 +46,11 @@ class XmlnukeMediaGallery extends XmlnukeCollection implements IXmlnukeDocumentO
 	protected $_showCaptionOnThumb = false;
 
 	/**
-	*@desc Generate page, processing yours childs.
-	*@param DOMNode $current
-	*@return void
-	*/
-	public function XmlnukeMediaGallery($context, $name = "")
+	 *
+	 * @param Context $context
+	 * @param string $name 
+	 */
+	public function __construct($context, $name = "")
 	{
 		$this->_context = $context;
 		$this->_name = $name;

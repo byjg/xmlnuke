@@ -46,7 +46,7 @@ class XmlInputLabelField extends XmlnukeDocumentObject
 	*@param string $caption
 	*@param string $value
 	*/
-	public function XmlInputLabelField($caption, $value)
+	public function __construct($caption, $value)
 	{ 
 		$this->_caption = $caption;
 		$this->_value = $value;

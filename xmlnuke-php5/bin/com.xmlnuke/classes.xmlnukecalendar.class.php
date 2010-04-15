@@ -54,7 +54,7 @@ class XmlnukeCalendar extends XmlnukeDocumentObject
 	* @param int month;
 	* @param int year;
 	*/
-	public function	XmlnukeCalendar($month, $year)
+	public function	__construct($month, $year)
 	{		
 		$this->_month = $month;
 		$this->_year = $year;

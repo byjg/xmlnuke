@@ -69,7 +69,7 @@ class XmlInputGroup extends XmlnukeCollection implements IXmlnukeDocumentObject
 	 * @param string $caption
 	 * @return XmlInputGroup
 	 */
-	public function XmlInputGroup($context, $name = "", $breakline = false, $canhide = false, $caption="")
+	public function __construct($context, $name = "", $breakline = false, $canhide = false, $caption="")
 	{
 		if (!($context instanceof Context))
 		{

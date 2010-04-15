@@ -41,7 +41,7 @@ class XmlnukeTabView extends XmlnukeDocumentObject
 	*@param DOMNode $current
 	*@return void
 	*/
-	public function XmlnukeTabView()
+	public function __construct()
 	{	
 	
 	}

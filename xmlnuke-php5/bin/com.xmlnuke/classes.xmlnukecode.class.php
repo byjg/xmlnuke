@@ -49,7 +49,7 @@ class XmlnukeCode extends XmlnukeDocumentObject
 	 * @param string $title
 	 * @return XmlnukeCode
 	 */
-	public function XmlnukeCode($text = "", $title = "")
+	public function __construct($text = "", $title = "")
 	{
 		if ($title == "")
 		{

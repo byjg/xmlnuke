@@ -156,7 +156,7 @@ class XmlDualList extends XmlnukeDocumentObject
 	* @param string $captionLeft
 	* @param string $captionRight
 	*/
-	public function XmlDualList($context, $name, $captionLeft = "", $captionRight = "")
+	public function __construct($context, $name, $captionLeft = "", $captionRight = "")
 	{
 		$this->_name = $name;
 		$this->_context = $context;

@@ -48,7 +48,7 @@ class XmlContainerCollection extends XmlnukeCollection implements IXmlnukeDocume
 	*@param DOMNode $current
 	*@return void
 	*/
-	public function XmlContainerCollection($id = "")
+	public function __construct($id = "")
 	{	
 		if ($id != "")
 		{

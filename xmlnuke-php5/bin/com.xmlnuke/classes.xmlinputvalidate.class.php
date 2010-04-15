@@ -60,7 +60,7 @@ class XmlInputValidate extends XmlnukeDocumentObject
 	/**
 	*@desc XmlnukeText constructor
 	*/
-	public function XmlInputValidate()
+	public function __construct()
 	{
 		$this->_required = false;
 		$this->_inputtype = INPUTTYPE::TEXT;

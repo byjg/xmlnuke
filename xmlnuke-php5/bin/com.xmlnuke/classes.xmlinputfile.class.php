@@ -49,7 +49,7 @@ class XmlInputFile extends XmlnukeDocumentObject
 	*@desc XmlInputFile constructor
 	*@param string $name
 	*/
-	public function XmlInputFile($caption, $name)
+	public function __construct($caption, $name)
 	{ 
 		$this->_caption = $caption;
 		$this->_name = $name;

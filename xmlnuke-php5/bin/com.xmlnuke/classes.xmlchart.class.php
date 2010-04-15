@@ -158,9 +158,9 @@ class XmlChart extends XmlnukeDocumentObject
 	 * @param ChartSeriesFormat $defaultChartType
 	 * @return XmlChart
 	 */
-	public function XmlChart($context, $title, $iterator, $chartoutput, $defaultChartType)
+	public function __construct($context, $title, $iterator, $chartoutput, $defaultChartType)
 	{
-		parent::XmlnukeDocumentObject();
+		parent::__construct();
 		$this->_context = $context;
 		$this->_title = $title;
 		$this->_iterator = $iterator;

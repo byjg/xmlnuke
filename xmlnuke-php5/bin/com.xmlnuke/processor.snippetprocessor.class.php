@@ -53,7 +53,7 @@ class SnippetProcessor
 	*@return void 
 	*@desc SnippetProcessor constructor
 	*/
-	public function SnippetProcessor($context, $file)
+	public function __construct($context, $file)
 	{
 		$this->_context = $context;
 		$this->_file = $file;

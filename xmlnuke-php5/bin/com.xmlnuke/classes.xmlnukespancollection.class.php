@@ -29,7 +29,7 @@
 
 class XmlnukeSpanCollection extends XmlnukeCollection implements IXmlnukeDocumentObject 
 {
-	public function XmlnukeSpanCollection()
+	public function __construct()
 	{}
 	
 	/**

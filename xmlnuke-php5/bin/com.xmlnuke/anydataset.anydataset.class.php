@@ -78,7 +78,7 @@ class AnyDataSet
 	 *@param AnydatasetBaseFilenameProcessor $file
 	 *@desc AnyDataSet constructor
 	 */
-	public function AnyDataSet($file = null)
+	public function __construct($file = null)
 	{
 		$this->_collection = array();
 		$this->_currentRow = -1;

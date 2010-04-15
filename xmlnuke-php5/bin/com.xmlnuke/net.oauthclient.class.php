@@ -29,9 +29,9 @@ class OAuthClient
 
 	/**
 	 *
-	 * @param <type> $context
-	 * @param <type> $appName
-	 * @param <type> $saveToUser
+	 * @param Context $context
+	 * @param string $appName
+	 * @param bool $saveToUser
 	 */
 	public function  __construct($context, $appName, $saveToUser = false)
 	{

@@ -72,9 +72,9 @@ class XmlInputCheck extends XmlnukeDocumentObject
 	*@param string $name
 	*@param string $value
 	*/
-	public function XmlInputCheck($caption, $name, $value)
+	public function __construct($caption, $name, $value)
 	{
-		parent::XmlnukeDocumentObject();
+		parent::__construct();
 		$this->_name = $name;
 		$this->_value = $value;
 		$this->_caption = $caption;

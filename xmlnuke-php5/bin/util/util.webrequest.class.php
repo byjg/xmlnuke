@@ -47,6 +47,10 @@ class WebRequest
 	const GET = "GET";
 	const DELETE = "DELETE";
 
+	/**
+	 *
+	 * @param string $url
+	 */
 	public function __construct($url)
 	{
 		$this->_url = $url;

@@ -51,13 +51,15 @@ class XmlNukeEngine
 	 * @var string
 	 */
 	protected $_extractNodesRoot = "xmlnuke";
-	
+
 	/**
-	*@desc ParamProcessor constructor.
-	*@param Context $context
-	*@return void
-	*/
-	public function XmlNukeEngine($context, $applyXslTemplate = true, $extractNodes = "", $extractNodesRoot = "xmlnuke")
+	 *
+	 * @param Context $context
+	 * @param bool $applyXslTemplate
+	 * @param string $extractNodes
+	 * @param string $extractNodesRoot
+	 */
+	public function __construct($context, $applyXslTemplate = true, $extractNodes = "", $extractNodesRoot = "xmlnuke")
 	{
 		$this->_context = $context;
 		$this->_applyXslTemplate = $applyXslTemplate;

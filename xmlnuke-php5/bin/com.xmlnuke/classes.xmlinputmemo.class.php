@@ -77,9 +77,9 @@ class XmlInputMemo extends XmlnukeDocumentObject
 	*@desc XmlInputMemo constructor
 	*@param 
 	*/	
-	public function XmlInputMemo($caption, $name, $value)
+	public function __construct($caption, $name, $value)
 	{
-		parent::XmlnukeDocumentObject();
+		parent::__construct();
 		$this->_name = $name;
 		$this->_value = $value;
 		$this->_caption = $caption;

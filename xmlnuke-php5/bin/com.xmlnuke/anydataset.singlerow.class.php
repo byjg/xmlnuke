@@ -45,7 +45,7 @@ class SingleRow
 	* SingleRow constructor
 	* @param array()
 	*/
-	public function SingleRow($array = null)
+	public function __construct($array = null)
 	{
 		if (is_null($array))
 		{

@@ -45,7 +45,7 @@ class SocketIterator extends GenericIterator
 	*@param Context $context
 	*@return void
 	*/
-	public function SocketIterator($context, $handle, $fieldnames, $rowsep, $colsep)
+	public function __construct($context, $handle, $fieldnames, $rowsep, $colsep)
 	{
 		$this->_context = $context;
 		$this->_rowsep = $rowsep;

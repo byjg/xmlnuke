@@ -41,7 +41,7 @@ class XmlnukeCollection
 	/**
 	*@desc XmlnukeCollection Constructor 
 	*/
-	public function XmlnukeCollection()
+	public function __construct()
 	{
 		$this->_items = array();
 	}
@@ -172,10 +172,10 @@ class XmlnukeDocument extends XmlnukeCollection implements IXmlnukeDocument
 	*@param string $pageTitle
 	*@param string $desc
 	*/
-	public function XmlnukeDocument($pageTitle = "", $desc = "")
+	public function __construct($pageTitle = "", $desc = "")
 	{
 		$this->_created = date("Y-m-d H:m:s");
-		parent::XmlnukeCollection();
+		parent::__construct();
 		$this->_pageTitle = $pageTitle;
 		$this->_abstract = $desc;
 		

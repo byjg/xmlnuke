@@ -47,7 +47,7 @@ class TextFileIterator extends GenericIterator
 	*@access public
 	*@return IIterator
 	*/
-	public function TextFileIterator($context, $handle, $fields, $fieldexpression)
+	public function __construct($context, $handle, $fields, $fieldexpression)
 	{
 		$this->_context = $context;
 		$this->_fields = $fields;

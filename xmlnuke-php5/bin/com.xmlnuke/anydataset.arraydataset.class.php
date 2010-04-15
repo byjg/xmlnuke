@@ -41,7 +41,7 @@ class ArrayDataSet
 	 * @param Array $array
 	 * @return ArrayDataSet
 	 */
-	public function ArrayDataSet($array, $fieldName="value")
+	public function __construct($array, $fieldName="value")
 	{
 //		if (!is_array($array))
 //		{

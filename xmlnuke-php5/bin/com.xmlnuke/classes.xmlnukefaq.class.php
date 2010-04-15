@@ -37,10 +37,10 @@ class XmlnukeFaq extends XmlnukeDocumentObject
 	
 	/**
 	*@desc Generate page, processing yours childs.
-	*@param DOMNode $current
+	*@param string $title
 	*@return void
 	*/
-	public function XmlnukeFaq($title)
+	public function __construct($title)
 	{	
 		$this->_title = $title;
 	}

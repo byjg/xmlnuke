@@ -52,7 +52,7 @@ class TextFileDataSet
 	 * @param string $fieldexpression
 	 * @return TextFileDataSet
 	 */
-	public function TextFileDataSet($context, $source, $fields, $fieldexpression = CSVFILE)
+	public function __construct($context, $source, $fields, $fieldexpression = CSVFILE)
 	{
 		if (!is_array($fields))
 		{

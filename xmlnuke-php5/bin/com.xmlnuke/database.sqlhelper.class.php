@@ -57,6 +57,10 @@ class SQLHelper
 	protected $_fieldDeliLeft = " ";
 	protected $_fieldDeliRight = " ";
 
+	/**
+	 *
+	 * @param DBDataSet $db
+	 */
 	public function __construct($db)
 	{
 		if (!($db instanceof DBDataSet) )

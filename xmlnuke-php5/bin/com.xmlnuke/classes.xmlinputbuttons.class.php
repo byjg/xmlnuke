@@ -76,7 +76,7 @@ class XmlInputButtons extends XmlnukeDocumentObject
 	*@param 
 	*@return 
 	*/
-	public function XmlInputButtons()
+	public function __construct()
 	{
 		$this->_values = array();
 	}

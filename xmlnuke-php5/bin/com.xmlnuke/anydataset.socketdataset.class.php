@@ -47,7 +47,7 @@ class SocketDataSet
 	*@param Context $context
 	*@desc Constructor
 	*/
-	public function SocketDataSet($context, $server, $path, $rowsep, $colsep, $fieldnames, $port = 80)
+	public function __construct($context, $server, $path, $rowsep, $colsep, $fieldnames, $port = 80)
 	{
 		//print_r($fieldnames);
 		$this->_context = $context;

@@ -71,7 +71,7 @@ class XmlListCollection extends XmlnukeCollection implements IXmlnukeDocumentObj
 	 * @param String $name
 	 * @return XmlListCollection
 	 */
-	public function XmlListCollection($type, $caption = "", $name = "")
+	public function __construct($type, $caption = "", $name = "")
 	{	
 		$this->_type = $type;
 		$this->_caption = $caption;

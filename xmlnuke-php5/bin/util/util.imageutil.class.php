@@ -32,10 +32,11 @@ class ImageUtil
 	private $org_image;
 
 	/**
-	 * Constructor -
-	 * Arguments : Image Filepath
+	 *
+	 * @param string $image_file
+	 * @return ImageUtil
 	 */
-	function ImageUtil($image_file)
+	function __construct($image_file)
 	{
 		if (! function_exists ( 'imagecreatefrompng' ))
 			return; //GD not available

@@ -80,7 +80,7 @@ class XmlInputDateTime extends XmlnukeDocumentObject
 	 * @param string $time
 	 * @return XmlInputDateTime
 	 */
-	public function XmlInputDateTime($caption, $name, $dateformat, $showhour = true, $date="", $time="")
+	public function __construct($caption, $name, $dateformat, $showhour = true, $date="", $time="")
 	{ 
 		$this->_caption = $caption;
 		$this->_name = $name;

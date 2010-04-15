@@ -57,9 +57,9 @@ class XmlBlockCollection extends XmlnukeCollection implements IXmlnukeDocumentOb
 	*@param string $title
 	*@param BlockPosition $position
 	*/
-	public function XmlBlockCollection($title, $position)
+	public function __construct($title, $position)
 	{
-		parent::XmlnukeCollection();
+		parent::__construct();
 		$this->_title = $title;
 		$this->_position = $position;
 	}

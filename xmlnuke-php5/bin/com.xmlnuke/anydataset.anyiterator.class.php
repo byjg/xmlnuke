@@ -55,7 +55,7 @@ class AnyIterator extends GenericIterator
 	*@return void
 	*@desc Iterator constructor
 	*/
-	public function AnyIterator($list)
+	public function __construct($list)
 	{
 		$this->_curRow = 0;
 		$this->_list = $list;

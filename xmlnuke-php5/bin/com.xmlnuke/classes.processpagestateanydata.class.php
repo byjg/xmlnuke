@@ -108,9 +108,9 @@ class ProcessPageStateAnydata extends ProcessPageStateBase
 	*@param AnydatasetBaseFilenameProcessor $anydata Database connections.
 	*@param IteratorFilter iteratorFilter
 	*/
-	public function ProcessPageStateAnydata($context, $fields, $header, $module, $buttons, $anydata, $iteratorFilter = null)
+	public function __construct($context, $fields, $header, $module, $buttons, $anydata, $iteratorFilter = null)
 	{
-		parent::ProcessPageStateBase($context, $fields, $header, $module, $buttons);
+		parent::__construct($context, $fields, $header, $module, $buttons);
 		$this->_anydata = $anydata;
 		$this->_itf = $iteratorFilter;
 	}

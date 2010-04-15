@@ -46,7 +46,7 @@ class XmlInputHidden extends XmlnukeDocumentObject
 	*@param string $name
 	*@param string $value
 	*/
-	public function XmlInputHidden($name, $value)
+	public function __construct($name, $value)
 	{ 
 		$this->_name = $name;
 		$this->_value = $value;

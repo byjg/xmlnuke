@@ -117,9 +117,9 @@ class ProcessPageStateDB extends ProcessPageStateBase
 	*@param string $table Table in database-> This table must contains all fields defined in "fields" parameter
 	*@param string $connection Database connections
 	*/
-	public function ProcessPageStateDB($context, $fields, $header, $module, $buttons, $table, $connection)
+	public function __construct($context, $fields, $header, $module, $buttons, $table, $connection)
 	{
-		parent::ProcessPageStateBase($context, $fields, $header, $module, $buttons);
+		parent::__construct($context, $fields, $header, $module, $buttons);
 		$this->_conn = $connection;
 		$this->_table = $table;
 		$this->_dbData = new DBDataSet($this->_conn, $this->_context);

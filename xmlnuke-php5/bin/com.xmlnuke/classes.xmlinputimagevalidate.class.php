@@ -46,7 +46,7 @@ class XmlInputImageValidate extends XmlnukeDocumentObject
 	*@param string $title
 	*@param BlockPosition $position
 	*/
-	public function XmlInputImageValidate($caption)
+	public function __construct($caption)
 	{
 		$this->_caption = $caption;
 	}

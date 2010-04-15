@@ -59,15 +59,15 @@ class XmlnukeManageUrl
 	private $_parameters = array();
 
 	/**
-	*@param URLTYPE $urltype
-	*@param string $target
-	*@desc XmlnukeManageUrl Constructor
 	*If URLTYPE is MODULE $target must to be the Module name target
 	*If URLTYPE is ENGINE or ADMIN $target must to be NULL
 	*If URLTYPE is HTTP $target must to be the full URL whitout "http://"
 	*If URLTYPE is JAVASCRIPT $target must to be the javascript command whitout "http://javascript:"
+	*@param URLTYPE $urltype
+	*@param string $target
+	*@desc XmlnukeManageUrl Constructor
 	*/
-	public function XmlnukeManageUrl($urltype, $target="")
+	public function __construct($urltype, $target="")
 	{
 		$this->_urltype = $urltype;
 		$arr = explode("?", $target);

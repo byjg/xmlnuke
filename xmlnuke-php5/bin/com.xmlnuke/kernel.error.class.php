@@ -61,7 +61,7 @@ class XMLNukeErrorModule
 	 * @param XMLNukeException $ex
 	 * @return XMLNukeErrorModule
 	 */
-	function XMLNukeErrorModule($context, $ex, $cleanbuffer = true)
+	function __construct($context, $ex, $cleanbuffer = true)
 	{
 		$this->variableContents = "";
 		//cleaning buffer to show module erros

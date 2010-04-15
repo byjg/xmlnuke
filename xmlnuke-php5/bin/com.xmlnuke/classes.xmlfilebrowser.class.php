@@ -187,9 +187,9 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 	 * @param Context $context
 	 * @return XmlFileBrowser
 	 */
-	public function XmlFileBrowser($root, $action, $context)
+	public function __construct($root, $action, $context)
 	{
-		parent::XmlnukeDocumentObject();
+		parent::__construct();
 
 		$this->_context = $context;
 		$this->_currentFolder = $root;

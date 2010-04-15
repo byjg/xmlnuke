@@ -51,7 +51,7 @@ class UsersAnyDataSet extends UsersBase
 	/**
 	 * AnyDataSet constructor
 	*/
-	public function UsersAnyDataSet($context)
+	public function __construct($context)
 	{
 		$this->_context = $context;
 		$this->_usersFile = new AnydatasetSetupFilenameProcessor("users", $context);

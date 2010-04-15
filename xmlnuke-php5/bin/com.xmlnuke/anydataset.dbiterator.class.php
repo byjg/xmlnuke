@@ -50,7 +50,7 @@ class DBIterator extends GenericIterator
 	*@param Context $context
 	*@return void
 	*/
-	public function DBIterator($recordset, $context)
+	public function __construct($recordset, $context)
 	{
 		$this->_context = $context;
 		$this->_rs = $recordset;

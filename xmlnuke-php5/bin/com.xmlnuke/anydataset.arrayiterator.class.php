@@ -51,7 +51,7 @@ class ArrayIIterator extends GenericIterator
 	*@access public
 	*@return IIterator
 	*/
-	public function ArrayIIterator($rows)
+	public function __construct($rows)
 	{
 		if (!is_array($rows))
 		{

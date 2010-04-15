@@ -76,6 +76,19 @@ class XmlTableCollection extends XmlTableCollectionBase
 	{
 		$this->_NODE = "table";
 	}
+
+	/**
+	 *
+	 * @param XmlTableRowCollection $docobj
+	 */
+	public function addXmlnukeObject($docobj)
+	{
+		if (!($docobj instanceof XmlTableRowCollection))
+		{
+			throw new XMLNukeException("XmlTableCollecion expects a XmlTableRowCollection");
+		}
+		parent::addXmlnukeObject($docobj);
+	}
 }
 
 class XmlTableRowCollection extends XmlTableCollectionBase
@@ -84,6 +97,20 @@ class XmlTableRowCollection extends XmlTableCollectionBase
 	{
 		$this->_NODE = "tr";
 	}
+
+	/**
+	 *
+	 * @param XmlTableColumnCollection $docobj
+	 */
+	public function addXmlnukeObject($docobj)
+	{
+		if (!($docobj instanceof XmlTableColumnCollection))
+		{
+			throw new XMLNukeException("XmlTableRowCollecion expects a XmlTableColumnCollection");
+		}
+		parent::addXmlnukeObject($docobj);
+	}
+
 }
 
 

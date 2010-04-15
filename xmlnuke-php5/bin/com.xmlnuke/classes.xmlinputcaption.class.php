@@ -41,7 +41,7 @@ class XmlInputCaption extends XmlnukeDocumentObject
 	*@desc XmlInputCaption constructor
 	*@param string $caption
 	*/
-	public function XmlInputCaption($caption)
+	public function __construct($caption)
 	{ 
 		$this->_caption = $caption;
 	}

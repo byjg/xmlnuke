@@ -140,7 +140,7 @@ abstract class BaseModule implements IModule
 	/**
 	*BaseModule constructor
 	*/
-	public function BaseModule()
+	public function __construct()
 	{}
 
 	/**

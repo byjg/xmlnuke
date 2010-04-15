@@ -127,9 +127,9 @@ class ProcessPageField
 	 */
 	public $saveDatabaseFormatter;
 
-	public function ProcessPageField()
+	public function __construct($newcolumn = true)
 	{
-		$this->newColumn = true;
+		$this->newColumn = $newcolumn;
 	}
 }
 
@@ -145,7 +145,7 @@ class ProcessPageFields
 	*/
 	protected $fields;
 
-	public function ProcessPageFields()
+	public function __construct()
 	{
 		$this->fields = array();
 	}
@@ -328,7 +328,7 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 	*@param array $buttons Custom $buttons in View/Select mode
 	*@return
 	*/
-	public function ProcessPageStateBase($context, $fields, $header, $module, $buttons)
+	public function __construct($context, $fields, $header, $module, $buttons)
 	{
 		$this->_context = $context;
 		$this->_fields = $fields->getProcessPageFields();

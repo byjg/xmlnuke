@@ -64,7 +64,7 @@ class XmlIterator extends GenericIterator
 	 */
 	private $_current = 0;
 
-	public function XmlIterator($context, $nodeList, $colNodes)
+	public function __construct($context, $nodeList, $colNodes)
 	{
 		if (!($nodeList instanceof DOMNodeList))
 		{

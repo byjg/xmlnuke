@@ -44,13 +44,14 @@ class XmlNukeFlash extends XmlnukeCollection implements IXmlnukeDocumentObject
 	protected $_majorVersion;
 	protected $_minorVersion;
 	protected $_revision;
-	
+
 	/**
-	*@desc Generate page, processing yours childs.
-	*@param DOMNode $current
-	*@return void
-	*/
-	public function XmlNukeFlash($majorVersion=9, $minorVersion=0, $revision=45)
+	 *
+	 * @param int $majorVersion
+	 * @param int $minorVersion
+	 * @param int $revision
+	 */
+	public function __construct($majorVersion=9, $minorVersion=0, $revision=45)
 	{	
 		$this->_majorVersion = $majorVersion;
 		$this->_minorVersion = $minorVersion;

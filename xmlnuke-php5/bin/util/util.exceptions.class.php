@@ -86,7 +86,7 @@ class XMLNukeException extends Exception
 	 * @param int $code
 	 * @param string $message
 	 */
-	function XMLNukeException($code = 0, $message = "")
+	public function __construct($code = 0, $message = "")
 	{
 		if ($message != "")
 		{
@@ -151,7 +151,7 @@ class NotFoundException extends XMLNukeException
 	 */
 	function NotFoundException($message = "")
 	{
-		parent::XMLNukeException(404, $message);
+		parent::__construct(404, $message);
 		$this->errorType = ErrorType::NotFound;
 		$this->showStackTrace = false;
 	}
@@ -171,7 +171,7 @@ class NotFoundClassException extends XMLNukeException
 	 */
 	function NotFoundClassException($message = "")
 	{
-		parent::XMLNukeException(405, $message);
+		parent::__construct(405, $message);
 		$this->errorType = ErrorType::ClassNotFound;
 		$this->showStackTrace = true;
 	}
@@ -191,7 +191,7 @@ class NotAuthenticatedException extends XMLNukeException
 	 */
 	function NotAuthenticatedException($message = "")
 	{
-		parent::XMLNukeException(402, $message);
+		parent::__construct(402, $message);
 		$this->errorType = ErrorType::NotAuthenticated; 
 		$this->showStackTrace = false;
 	}
@@ -211,7 +211,7 @@ class InsufficientPrivilegeException extends XMLNukeException
 	 */
 	function InsufficientPrivilegeException($message = "")
 	{
-		parent::XMLNukeException(403, $message);
+		parent::__construct(403, $message);
 		$this->errorType = ErrorType::InsufficientPrivilege; 
 		$this->showStackTrace = false;
 	}
@@ -234,7 +234,7 @@ class FileUtilException extends XMLNukeException
 	 */
 	function FileUtilException($code, $message = "")
 	{
-		parent::XMLNukeException($code, $message);
+		parent::__construct($code, $message);
 		$this->errorType = ErrorType::Util;
 		$this->showStackTrace = true;
 		$this->setRangeCode(100, 249);
@@ -257,7 +257,7 @@ class XmlUtilException extends XMLNukeException
 	 */
 	function XmlUtilException($code, $message = "")
 	{
-		parent::XMLNukeException($code, $message);
+		parent::__construct($code, $message);
 		$this->errorType = ErrorType::Util;
 		$this->showStackTrace = true;
 		$this->setRangeCode(250, 399);
@@ -280,7 +280,7 @@ class KernelException extends XMLNukeException
 	 */
 	function KernelException($code, $message = "")
 	{
-		parent::XMLNukeException($code, $message);
+		parent::__construct($code, $message);
 		$this->showStackTrace = true;
 		$this->setRangeCode(500, 699);
 	}
@@ -302,7 +302,7 @@ class DateUtilException extends XMLNukeException
 	 */
 	function DateUtilException($code = 0, $message = "")
 	{
-		parent::XMLNukeException($code, $message);
+		parent::__construct($code, $message);
 		$this->errorType = ErrorType::Util;
 		$this->showStackTrace = true;
 		$this->setRangeCode(700, 749);
@@ -325,7 +325,7 @@ class EngineException extends XMLNukeException
 	 */
 	function EngineException($code = 0, $message = "")
 	{
-		parent::XMLNukeException($code, $message);
+		parent::__construct($code, $message);
 		$this->errorType = ErrorType::Engine;
 		$this->showStackTrace = true;
 		$this->setRangeCode(750, 800);
@@ -348,7 +348,7 @@ class ImageUtilException extends XMLNukeException
 	 */
 	function ImageUtilException($code = 0, $message = "")
 	{
-		parent::XMLNukeException($code, $message);
+		parent::__construct($code, $message);
 		$this->errorType = ErrorType::Util;
 		$this->showStackTrace = true;
 		$this->setRangeCode(801, 820);
@@ -371,7 +371,7 @@ class UploadUtilException extends XMLNukeException
 	 */
 	function UploadUtilException($code = 0, $message = "")
 	{
-		parent::XMLNukeException($code, $message);
+		parent::__construct($code, $message);
 		$this->errorType = ErrorType::Util;
 		$this->showStackTrace = true;
 		$this->setRangeCode(821, 840);
@@ -394,7 +394,7 @@ class DataBaseException extends XMLNukeException
 	 */
 	function DataBaseException($errno, $errmsg)
 	{
-		parent::XMLNukeException($errno, $errmsg);
+		parent::__construct($errno, $errmsg);
 	}
 }
 /**
@@ -414,7 +414,7 @@ class XmlNukeObjectException extends XMLNukeException
 	 */
 	function XmlNukeObjectException($code = 0, $message = "")
 	{
-		parent::XMLNukeException($code, $message);
+		parent::__construct($code, $message);
 		$this->errorType = ErrorType::Object;
 		$this->showStackTrace = true;
 		$this->setRangeCode(850, 999);
@@ -437,7 +437,7 @@ class ModuleException extends XMLNukeException
 	 */
 	function ModuleException($message = "", $code = 0)
 	{
-		parent::XMLNukeException($code, $message);
+		parent::__construct($code, $message);
 		$this->errorType = ErrorType::Module;
 		$this->showStackTrace = true;
 		$this->setRangeCode(5000, 7000);

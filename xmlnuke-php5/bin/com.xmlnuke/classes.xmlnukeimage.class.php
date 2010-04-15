@@ -58,7 +58,7 @@ class XmlnukeImage extends XmlnukeDocumentObject
 	*@param string $src
 	*@param string $text
 	*/
-	public function XmlnukeImage($src, $text = "")
+	public function __construct($src, $text = "")
 	{
 		$this->_src = $src;
 		$this->_alt = $text;

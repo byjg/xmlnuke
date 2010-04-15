@@ -50,7 +50,7 @@ class DBDataSet {
 	 *@param Context $context
 	 *@desc Constructor
 	 */
-	public function DBDataSet($dbname, $context) 
+	public function __construct($dbname, $context)
 	{
 		$this->_context = $context;
 		
