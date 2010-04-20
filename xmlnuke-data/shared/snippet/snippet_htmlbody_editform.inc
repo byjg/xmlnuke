@@ -130,7 +130,7 @@
 	<xsl:if test="$type='label'">
 		<span id="form_label">
 			<xsl:apply-templates/>
-			<xsl:value-of select="@value"/><xsl:if test="@value=''"><img src="common/spacer.gif" width="1" height="1" /></xsl:if>
+			<xsl:value-of select="@value"/><xsl:if test="@value=''">&#160;</xsl:if>
 		</span>
 	</xsl:if>
 	<xsl:if test="$type='select'">
@@ -262,7 +262,7 @@
 					<xsl:with-param name="maxlength"><xsl:value-of select="@maxlength"/></xsl:with-param>
 					<xsl:with-param name="selected"><xsl:value-of select="@selected"/></xsl:with-param>
 				</xsl:call-template>
-				<xsl:if test="position()!=last()"><img src="common/spacer.gif" width="5" height="1" /></xsl:if>
+				<xsl:if test="position()!=last()"> &#160; </xsl:if>
 			</xsl:for-each>
 			<xsl:for-each select="hidden">
 				<input type="hidden"><xsl:attribute name="name"><xsl:value-of select="@name"/></xsl:attribute><xsl:attribute name="id"><xsl:value-of select="@name"/></xsl:attribute><xsl:attribute name="value"><xsl:value-of select="@value"/></xsl:attribute></input>
@@ -314,7 +314,7 @@
 </xsl:template>
 
 <xsl:template match="buttons">
-	<dt><img src="common/spacer.gif" width="1" height="1" /></dt>
+	<dt>&#160;</dt>
 	<dd>
 	<xsl:apply-templates select="submit|button|reset"/>
 	</dd>
@@ -343,7 +343,7 @@
 	<dd>
 		<input type="text" name="{@name}" id="{@name}" value="{@date}" maxlength="10" size="10"></input>
 		<xsl:if test="@showhour">
-			<img src="common/spacer.gif" width="10" height="1"/>
+			&#160; &#160; 
 			<select name="{@name}_hour" id="{@name}_hour">
 				<xsl:call-template name="datetimebox.loop">
 					<xsl:with-param name="i"><xsl:value-of select="0"/></xsl:with-param>
