@@ -12,6 +12,9 @@
  * Version: r2
  * Date: 16 July 2007
  *
+ * Changed by JG for XMLNuke Project on 23 April 2010
+ *    - Added property defaultAction
+ *
  * For documentation visit http://www.trendskitchens.co.nz/jquery/contextmenu/
  *
  */
@@ -45,7 +48,8 @@
     eventPosY: 'pageY',
     shadow : true,
     onContextMenu: null,
-    onShowMenu: null
+    onShowMenu: null,
+	defaultAction: null
  	};
 
   $.fn.contextMenu = function(id, options) {
@@ -75,7 +79,8 @@
       onContextMenu: options.onContextMenu || defaults.onContextMenu,
       onShowMenu: options.onShowMenu || defaults.onShowMenu,
       eventPosX: options.eventPosX || defaults.eventPosX,
-      eventPosY: options.eventPosY || defaults.eventPosY
+      eventPosY: options.eventPosY || defaults.eventPosY,
+	  defaultAction: options.defaultAction || defaults.defaultAction
     });
 
     var index = hash.length - 1;
@@ -108,6 +113,18 @@
 		// updating the content
     if (!!cur.onShowMenu) menu = cur.onShowMenu(e, menu);
 
+	// Default click action
+	if (cur.defaultAction)
+	{
+		$.each($('#'+cur.id).find('ul:first').find('li'), function(id, curMenu) {
+			$('#'+curMenu.id, menu).bind('click', function(e) {
+				hide();
+				cur.defaultAction(curMenu, trigger, currentTarget);
+			});
+		});
+	}
+
+	// Bind for specific action
     $.each(cur.bindings, function(id, func) {
       $('#'+id, menu).bind('click', function(e) {
         hide();

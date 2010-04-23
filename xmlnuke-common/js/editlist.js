@@ -15,79 +15,15 @@ BTN_PREVIOUS = "Previous Page";
 BTN_NEXT = "Next Page";
 BTN_LAST = "Last Page";
 
-function submitEditList(form, editmode, url, multiple)
-{   
-	if (multiple=='')
+function submitEditList(name, li, row)
+{
+	if ($("#"+li.id).attr("url") != "")
 	{
-		multiple = 1;
+		$("#form_" + name).attr("action", $("#"+li.id).attr("url"));
 	}
-	formlist = document.getElementById(form.name+"_LIST");
-	onechecked = ( (editmode=='new') || (editmode=='move') || (multiple==0) );
-	justonechecked = (editmode=='check') || (editmode=='edit') || (multiple==1);
-	form.valueid.value = "";
-	if (formlist.inputvalueid)
-	{
-		if (formlist.inputvalueid.length)
-		{
-			sDeli = "";
-			iMark = 0;
-			for(i=0;(formlist.inputvalueid.length-i)!=0;i++)
-			{
-				onechecked = onechecked || formlist.inputvalueid[i].checked;
-				if (formlist.inputvalueid[i].checked)
-				{
-					form.valueid.value = form.valueid.value + sDeli + formlist.inputvalueid[i].value;
-					sDeli = "_";
-					iMark++;
-				}
-			}
-			if (justonechecked && (iMark > 1))
-			{
-				alert(MSG_SELECTONE);
-				return;
-			}
-		}
-		else
-		{
-			onechecked = onechecked || formlist.inputvalueid.checked;
-			form.valueid.value = formlist.inputvalueid.value;
-		}
-	}
-	if (!onechecked)
-	{
-		alert(MSG_NONESELECTED);
-		return;
-	}
-	else
-	{
-		form.acao.value=editmode;
-		if (editmode == 'move')
-		{
-			form.curpage.value = url;
-		}
-		else if (url != "")
-		{
-			eval('formcustom=this.document.'+url);
-			//alert(formcustom.name);
-			//alert(formcustom.action);
-			formcustom.acao.value = editmode;
-			//alert(formcustom.acao.value);
-			//alert(form.valueid.value);
-			formcustom.valueid.value = form.valueid.value;
-			formcustom.submit();
-			return;
-		}
-		
-		if(editmode=='delete')
-		{
-			if (!confirm(MSG_CONFIRMDELETE))
-			{
-				return;
-			} 
-		}
-	}
-	
-	eval("submit"+form.name+"()");
+	$("#form_" + name).find("input[name='acao']").attr("value", $("#"+li.id).attr("action"));
+	$("#form_" + name).find("input[name='valueid']").attr("value", $("#"+row.id).attr("value"));
+	$("#form_" + name).submit();
 }
 
 function defineImageCaption(idImg, text)
@@ -97,5 +33,14 @@ function defineImageCaption(idImg, text)
 	{
 		imgObj.alt = text;
 		imgObj.title = text;
+	}
+}
+
+function defineCaption(id, text)
+{
+	obj = document.getElementById(id);
+	if (obj)
+	{
+		obj.innerHTML = text;
 	}
 }

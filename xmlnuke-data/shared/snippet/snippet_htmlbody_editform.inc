@@ -188,39 +188,23 @@
 
 	<!-- INPUT OBJECTS -->
 	<xsl:if test="name()!='inputgroup'">
-		<xsl:if test="name()='checkbox' or name()='radiobox'">
-			<!-- checkbox|radiobox -->
-			<dt>
-				<xsl:if test="local-name(parent::node())='inputgroup' and parent::node()/@name"><xsl:attribute name="id"><xsl:value-of select="parent::node()/@name" /></xsl:attribute><xsl:if test="parent::node()/@visible"><xsl:attribute name="style">display:none</xsl:attribute></xsl:if></xsl:if>
-				<xsl:call-template name="generic.input">
-					<xsl:with-param name="type"><xsl:value-of select="name()"/></xsl:with-param>
-					<xsl:with-param name="name"><xsl:value-of select="@name"/></xsl:with-param>
-					<xsl:with-param name="value"><xsl:value-of select="@value"/></xsl:with-param>
-					<xsl:with-param name="size"><xsl:value-of select="@size"/></xsl:with-param>
-					<xsl:with-param name="maxlength"><xsl:value-of select="@maxlength"/></xsl:with-param>
-					<xsl:with-param name="selected"><xsl:value-of select="@selected"/></xsl:with-param>
-				</xsl:call-template>
-			</dt>
-			<dd>
-				<xsl:if test="local-name(parent::node())='inputgroup' and parent::node()/@name"><xsl:attribute name="id"><xsl:value-of select="parent::node()/@name" /></xsl:attribute><xsl:if test="parent::node()/@visible"><xsl:attribute name="style">display:none</xsl:attribute></xsl:if></xsl:if>
-				<xsl:call-template name="generic.label">
-					<xsl:with-param name="caption"><xsl:value-of select="@caption"/></xsl:with-param>
-					<xsl:with-param name="name"><xsl:value-of select="@name"/></xsl:with-param>
-					<xsl:with-param name="required"><xsl:value-of select="@required"/></xsl:with-param>
-				</xsl:call-template>
-			</dd>
-		</xsl:if>
-		<xsl:if test="name()!='checkbox' and name()!='radiobox' and name()!='inputgroup'">
 			<!-- textbox|password|file|label -->
 			<dt>
+				<xsl:if test="name()='checkbox' or name()='radiobox'">
+					&#160;
+				</xsl:if>
+				
+				<xsl:if test="name()!='checkbox' and name()!='radiobox' and name()!='inputgroup'">
 				<xsl:if test="local-name(parent::node())='inputgroup' and parent::node()/@name"><xsl:attribute name="id"><xsl:value-of select="parent::node()/@name" /></xsl:attribute><xsl:if test="parent::node()/@visible"><xsl:attribute name="style">display:none</xsl:attribute></xsl:if></xsl:if>
 				<xsl:call-template name="generic.label">
 					<xsl:with-param name="caption"><xsl:value-of select="@caption"/></xsl:with-param>
 					<xsl:with-param name="name"><xsl:value-of select="@name"/></xsl:with-param>
 					<xsl:with-param name="required"><xsl:value-of select="@required"/></xsl:with-param>
 				</xsl:call-template>
+				</xsl:if>
 			</dt>
 			<dd>
+				
 				<xsl:if test="local-name(parent::node())='inputgroup' and parent::node()/@name"><xsl:attribute name="id"><xsl:value-of select="parent::node()/@name" /></xsl:attribute><xsl:if test="parent::node()/@visible"><xsl:attribute name="style">display:none</xsl:attribute></xsl:if></xsl:if>
 				<xsl:call-template name="generic.input">
 					<xsl:with-param name="type"><xsl:value-of select="name()"/></xsl:with-param>
@@ -230,9 +214,17 @@
 					<xsl:with-param name="maxlength"><xsl:value-of select="@maxlength"/></xsl:with-param>
 					<xsl:with-param name="selected"><xsl:value-of select="@selected"/></xsl:with-param>
 				</xsl:call-template>
+				
+				<xsl:if test="name()='checkbox' or name()='radiobox'">
+				<xsl:if test="local-name(parent::node())='inputgroup' and parent::node()/@name"><xsl:attribute name="id"><xsl:value-of select="parent::node()/@name" /></xsl:attribute><xsl:if test="parent::node()/@visible"><xsl:attribute name="style">display:none</xsl:attribute></xsl:if></xsl:if>
+				<xsl:call-template name="generic.label">
+					<xsl:with-param name="caption"><xsl:value-of select="@caption"/></xsl:with-param>
+					<xsl:with-param name="name"><xsl:value-of select="@name"/></xsl:with-param>
+					<xsl:with-param name="required"><xsl:value-of select="@required"/></xsl:with-param>
+				</xsl:call-template>
+				</xsl:if>
 			</dd>
 		</xsl:if>
-	</xsl:if>
 
 	<!-- Dont breakline!! -->
 	<xsl:if test="name()='inputgroup' and (@breakline!='true' or not(@breakline))">
@@ -314,9 +306,9 @@
 </xsl:template>
 
 <xsl:template match="buttons">
-	<dt>&#160;</dt>
+	<dt id="buttons" >&#160;</dt>
 	<dd>
-	<xsl:apply-templates select="submit|button|reset"/>
+		<xsl:apply-templates select="submit|button|reset"/>
 	</dd>
 </xsl:template>
 

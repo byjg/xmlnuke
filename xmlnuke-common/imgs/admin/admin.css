@@ -140,7 +140,6 @@ p { font-size:1.2em}
 	text-decoration: none;
 }
 
-
 #footer {
 	clear:both;
 	color:#425274;
@@ -149,113 +148,42 @@ p { font-size:1.2em}
 }
 
 
-fieldset.filtro {
-	padding:10px;
-	background:#7e92c9;
-}
-
-fieldset.filtro legend {
-	text-indent:-99999px;
-}
-
-#editform .title
-{	
-	/*background-color: rgb(200, 200, 200);*/
-}
-
-#editform dt {margin-top:10px; }
-#editform dt label { font-size:1.2em; color:#666; }
-#editform dd input[type="text"], #editform dd input[type="password"], #editform dd input[type="textbox"] {
-	border:2px solid #ccc;
-	height:22px;
+#editform.form-label-top 			{ border-bottom:1px solid #ccc; margin-bottom:40px; }
+#editform fieldset 					{ border-width:0; margin:0px; padding:10px 0px;  }
+#editform.form-label-top fieldset legend 	{ display:none; }
+#editform.form-label-top #buttons 			{ line-height:0px; height:0px; font-size:0px; }
+#editform.form-label-top dt 				{ margin-top:5px; width:100%; text-align:left; padding-left:5px; margin-bottom:2px;  }
+#editform.form-label-top dt label 			{ font-size:1.2em; color:#607895; }
+#editform.form-label-top dd 				{ width:auto; }
+#editform.form-label-top dd input[type="text"], #editform dd input[type="password"], #editform dd input[type="textbox"] {
+	border:2px solid #607895;
 	width:200px;
+	padding:4px;
+	float:left;
+	-moz-border-radius: 2px;
 }
 
-.filtro input[type="text"], .filtro input[type="password"], .filtro input[type="textbox"] {
-   	border: 1px #ffffff solid;
-   	padding:2px;
-	}
-
-#editform .btn_buscar { 
+#editform.form-label-top input[type="submit"] { 
 	border:1px #94b2d1 solid; 
 	background:#bbcde0; 
-	padding:1px 10px;
-	}
+	padding:4px 10px;
+	font-weight:bold;
+	-moz-border-radius: 3px;
+}
 	
-#editform .btn_buscar:hover {
+#editform.form-label-top input[type="submit"]:hover {
 	background-color:#a2bcd7;
 	color:#ffffff;
 	cursor:pointer;
 }
 
-
-#editform #pesquser {
+#editform.form-label-top #pesquser {
 	width:300px;
 }
 
-#editform .field_info {
+#editform.form-label-top .field_info {
 	color:#fff;
 	margin-top:5px;
-}
-
-/* //////////// ??????? ///////////// */
-
-#editform .caption
-{
-	clear:both;
-	width:99%;
-	float:left;
-	text-align:center;
-	font-weight:bold;
-	margin:0 0 0.5em 0.25em;
-	background-color: #EFEFEF
-}
-
-#editform .group
-{
-	clear:both;
-	width:99%;
-	float:left;
-	text-align:left;
-	font-weight:bold;
-	margin:0 0 0.5em 0.25em
-}
-
-/* //////////// ??????? ///////////// */
-
-
-.action_buttons  {
-    background-color: #E6E6E6;
-	display:inline-block;
-	width:100%;
-}
-
-.action_buttons .button-container {
-	margin:5px 15px;
-	display:inline-block;	
-}
-
-.action_buttons a {
-	display:block;
-	text-indent:-99999px;
-	width:21px;
-	height:18px;
-	float:left;
-	background-repeat:no-repeat;
-	margin:0 5px 0 0;
-}
-
-.tbl-btn-novo { background: url(../images/ic_novo.gif);  }
-.tbl-btn-editar { background: url(../images/ic_editar.gif); }
-.tbl-btn-apagar { background: url(../images/ic_excluir.gif); }
-.tbl-btn-prim-page { background: url(../images/ic_primeiro.gif);}
-.tbl-btn-ante-page { background: url(../images/ic_voltar.gif); }
-.tbl-btn-prox-page { background: url(../images/ic_avancar.gif); }
-.tbl-btn-ulti-page { background: url(../images/ic_ultimo.gif); }
-.action_buttons select { float:left; margin:0 5px 0 0;}
-
-.new-user-block {
-	margin: 20px 0;
 }
 
 

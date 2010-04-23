@@ -213,7 +213,8 @@ class ManageUsers extends NewBaseAdminModule
 		}
 		$it = $users->getIterator($itf);
 
-		$formpesq = new XmlFormCollection($this->_context, $this->url, $this->myWords->Value("TITLEPESQUSER"));
+		$formpesq = new XmlFormCollection($this->_context, $this->url, $this->myWords->Value("TITLEPESQUSER")); 
+		$formpesq->setFormName("form-label-top");
                 $textbox = new XmlInputTextBox($this->myWords->Value("PESQUSER"), "pesquser", $this->_context->ContextValue("pesquser"));
                 $textbox->setDataType(INPUTTYPE::TEXT);
                 $formpesq->addXmlnukeObject($textbox);

@@ -185,57 +185,88 @@ abstract class NewBaseAdminModule extends BaseModule
 	 */
 	protected function GetAdminGroups($group = "")
 	{
-		if ($group == "")
+		$keys = array_keys($this->GetAdminModulesList());
+		if ($group != "")
 		{
-			$rowNode = "group";
+			if (in_array($group, $keys))
+			{
+				$keys = array($group);
+			}
+			else
+			{
+				$keys = array();
+			}
 		}
-		else 
-		{
-			$rowNode = "group[@name='" . $group . "']";
-		}
-		$colNode = array();
-		$colNode["name"] = "@name";
-		$dataset = new XmlDataSet($this->_context, $this->GetAdminModulesList(), $rowNode, $colNode);
-		return $dataset->getIterator();
+		
+		$arr = new ArrayDataSet($keys, "name");
+		return $arr->getIterator();
 	}
 	
 	/**
 	 * Enter description here...
 	 *
 	 * @param string $group
-	 * @return IIterator
+	 * @return array()
 	 */
 	protected function GetAdminModules($group)
 	{
-		$rowNode = "group[@name='" . $group . "']/module";
-		$colNode = array();
-		$colNode["name"] = "@name";
-		$colNode["icon"] = "icon";
-		$colNode["url"] = "url";
-		
-		$dataset = new XmlDataSet($this->_context, $this->GetAdminModulesList(), $rowNode, $colNode);
-		return $dataset->getIterator();
+		$arr = $this->GetAdminModulesList();
+
+		return $arr[$group];
 	}
 	
-	protected $_adminModulesList = "";
-	protected $_adminModulesListLocal = false;
+	protected $_adminModulesList = null;
+
 	protected function GetAdminModulesList()
 	{
-		if ($this->_adminModulesList == "")
+		if ($this->_adminModulesList == null)
 		{
+			$this->_adminModulesList = array();
+
+			// Nodes
+			$rowNode = "group/module";
+			$colNode = array();
+			$colNode["group"] = "../@name";
+			$colNode["name"] = "@name";
+			$colNode["icon"] = "icon";
+			$colNode["url"] = "url";
+
+			// Read from Generic XML
+			$xmlProcessor = new XMLFilenameProcessor("admin" . FileUtil::Slash() . "adminmodules" . FileUtil::Slash() , $this->_context);
+			$xmlProcessor->setFilenameLocation(ForceFilenameLocation::PathFromRoot);
+			$configFile = $xmlProcessor->PathSuggested() . "admin" . FileUtil::Slash() . "adminmodules.config.xml";
+			$config = FileUtil::QuickFileRead($configFile);
+
+			$dataset = new XmlDataSet($this->_context, $config, $rowNode, $colNode);
+			foreach ($dataset->getIterator() as $sr)
+			{
+				$this->_adminModulesList[$sr->getField("group")][$sr->getField("name")] = array($sr->getField("icon"), $sr->getField("url"));
+			}
+
+			$global_keys = array_keys($this->_adminModulesList);
+
+			// Read Local XML
 			$localXmlProcessor = new AnydatasetFilenameProcessor("adminmodules.config", $this->_context);
 			$configFile = $localXmlProcessor->PathSuggested() . $localXmlProcessor->ToString() . ".xml";
 			if (FileUtil::Exists($configFile))
 			{
-				$this->_adminModulesListLocal = true;
+				$config = FileUtil::QuickFileRead($configFile);
+				$dataset = new XmlDataSet($this->_context, $config, $rowNode, $colNode);
+				foreach ($dataset->getIterator() as $sr)
+				{
+					if (array_key_exists($sr->getField("group"), $this->_adminModulesList))
+					{
+						$this->_adminModulesList[$sr->getField("group")][$sr->getField("name")] = array($sr->getField("icon"), $sr->getField("url"));
+					}
+					else
+					{
+						$x = array();
+						$x[$sr->getField("group")][$sr->getField("name")] = array($sr->getField("icon"), $sr->getField("url"));
+						$this->_adminModulesList = $x + $this->_adminModulesList;
+					}
+				}
 			}
-			else 
-			{
-				$xmlProcessor = new XMLFilenameProcessor("admin" . FileUtil::Slash() . "adminmodules" . FileUtil::Slash() , $this->_context);
-				$xmlProcessor->setFilenameLocation(ForceFilenameLocation::PathFromRoot);
-				$configFile = $xmlProcessor->PathSuggested() . "admin" . FileUtil::Slash() . "adminmodules.config.xml";
-			}
-			$this->_adminModulesList = FileUtil::QuickFileRead($configFile);
+
 		}
 		return $this->_adminModulesList;
 	}
@@ -261,17 +292,23 @@ abstract class NewBaseAdminModule extends BaseModule
 			$srGroup = $itGroup->moveNext();
 			$this->defaultXmlnukeDocument->addMenuGroup($lang->Value("GROUP_" . strtoupper($srGroup->getField("name"))), "CP_" . $srGroup->getField("name"));
 			
-			$itModule = $this->GetAdminModules($srGroup->getField("name"));
+			$arrModules = $this->GetAdminModules($srGroup->getField("name"));
 			
-			while ($itModule->hasNext())
+			foreach ($arrModules as $key=>$value)
 			{
-				$srModule = $itModule->moveNext();
-				$this->defaultXmlnukeDocument->addMenuItem(
-					$srModule->getField("url"), 
-					$lang->Value("MODULE_TITLE_" . strtoupper($srModule->getField("name"))), 
-					$lang->Value("MODULE_ABSTRACT_" . strtoupper($srModule->getField("name"))), 
-					"CP_" . $srGroup->getField("name"),
-					$srModule->getField("icon"));
+				$url = $value[1];
+				$name = $key;
+				$icon = $value[0];
+
+				if ($url != "")
+				{
+					$this->defaultXmlnukeDocument->addMenuItem(
+						$url,
+						$lang->Value("MODULE_TITLE_" . strtoupper($name)),
+						$lang->Value("MODULE_ABSTRACT_" . strtoupper($name)),
+						"CP_" . $srGroup->getField("name"),
+						$icon);
+				}
 			}
 		}			
 	}	
