@@ -3,6 +3,8 @@
 <!-- EDITLIST -->
 
 <xsl:template match="editlist" >
+
+	<xsl:if test="not(@readonly='true')">
 	<script language="javascript">
 	$(document).ready(function() {
 		$('tr.odd, tr.even').contextMenu('<xsl:value-of select="@name" />Menu', {
@@ -54,10 +56,13 @@
 		</xsl:for-each>
       </ul>
     </div>
+	</xsl:if>
 
 	<div id="editlist" class="{@name}">
-		<div class="edit_title"><xsl:value-of select="@title"/></div>
 		<table id="edit_table">
+
+			<!-- Table Caption -->
+			<caption><xsl:value-of select="@title"/></caption>
 
 			<!-- Table header -->
 			<thead>
