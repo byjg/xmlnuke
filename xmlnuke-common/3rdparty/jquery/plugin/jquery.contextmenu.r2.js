@@ -114,6 +114,9 @@
 		// updating the content
     if (!!cur.onShowMenu) menu = cur.onShowMenu(e, menu);
 
+	$("#" + trigger.id).parent().find("tr").removeClass("selected");
+	$("#" + trigger.id).addClass("selected");
+
 	// Default click action
 	if (cur.defaultAction)
 	{

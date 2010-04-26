@@ -26,6 +26,14 @@
 	color:#FFFFFF;
 }
 
+#editlist .odd {
+	background-color:white;
+}
+
 #editlist .even {
 	background-color:#CCCCCC;
+}
+
+#editlist .selected {
+	background-color: orange;
 }
