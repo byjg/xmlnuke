@@ -21,15 +21,16 @@
 
 (function($) {
 
- 	var menu, shadow, trigger, content, hash, currentTarget;
+  var menu, shadow, trigger, content, hash, currentTarget;
   var defaults = {
     menuStyle: {
+	  textAlign: 'left',
       listStyle: 'none',
       padding: '1px',
       margin: '0px',
       backgroundColor: '#fff',
       border: '1px solid #999',
-      width: '100px'
+      width: '160px'
     },
     itemStyle: {
       margin: '0px',
