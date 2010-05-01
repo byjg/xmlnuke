@@ -42,8 +42,9 @@
       backgroundColor: 'transparent'
     },
     itemHoverStyle: {
-      border: '1px solid #0a246a',
-      backgroundColor: '#b6bdd2'
+      border: '1px solid #fff',
+      backgroundColor: '#d9deed',
+	  cursor: 'pointer'
     },
     eventPosX: 'pageX',
     eventPosY: 'pageY',

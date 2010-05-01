@@ -161,6 +161,7 @@ p { font-size:1.2em}
 	padding:4px;
 	float:left;
 	-moz-border-radius: 2px;
+	-webkit-border-radius:2px;
 }
 
 #editform.form-label-top input[type="submit"] { 
@@ -169,6 +170,7 @@ p { font-size:1.2em}
 	padding:4px 10px;
 	font-weight:bold;
 	-moz-border-radius: 3px;
+	-webkit-border-radius:3px;
 }
 	
 #editform.form-label-top input[type="submit"]:hover {
@@ -230,4 +232,9 @@ p { font-size:1.2em}
 .btn_azul input, .btn_azul a, .btn_azul span { background-color:transparent; background-image:url(btn_azul.png);}
 .btn_azul a:hover, .btn_azul input:hover {cursor:pointer; color:#000; text-decoration:none;}
 
+/* Edit LIST */
+
+
+
+/* Edit LIST */
 

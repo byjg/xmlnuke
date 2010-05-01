@@ -5,15 +5,17 @@
 	text-align:left;
 }
 
+#editlist #edit_table {
+	width:100%;	
+}
+
 #editlist caption {
 	font-size: 14px;
 	font-weight: bold;
 	line-height: 30px;
 }
 
-#editlist tr:hover {
-	background-color: yellow;
-}
+
 
 #editlist td, #editlist th {
 	border-right:1px solid #FFFFFF;
@@ -22,8 +24,11 @@
 }
 
 #editlist th {
-	background-color:#333333;
+	background-color:#707a8c;
 	color:#FFFFFF;
+	padding:10px;
+	font-weight:bold;
+	font-size:1.2em;
 }
 
 #editlist .odd {
@@ -31,9 +36,66 @@
 }
 
 #editlist .even {
-	background-color:#CCCCCC;
+	background-color:#eeeeef;
+}
+
+#editlist tr:hover {
+	background-color:#d9deed;
+	cursor:pointer;
 }
 
 #editlist .selected {
-	background-color: orange;
+	background-color:#adc4e6 ;
 }
+
+
+/* NAV bar */
+
+#editlist .edit_nav  {
+	background: #d9deed;
+	height:30px;
+	padding:5px 5px 0 5px;
+}
+
+#editlist .edit_nav input[type="button"] {
+	-webkit-border-radius:3px;
+	-moz-border-radius:3px;
+	background:#BBCDE0 none repeat scroll 0 0;
+	border:1px solid #94B2D1;
+	font-weight:bold;
+	padding:1px 3px;
+}
+
+#editlist .edit_nav input[require="0"] {
+	padding: 1px 15px;
+	background:#9bbac0;
+}
+
+#editlist .edit_nav input[type="button"]:hover {
+	background-color:#a2bcd7;
+	color:#ffffff;
+	cursor:pointer;
+}
+
+#editlist .edit_nav input[require="0"]:hover {
+	background:#5c9f91;
+}
+
+#editlist .edit_nav_pages {
+	float:right;
+}
+
+#editlist div.edit_nav_pages a {
+	width:21px;
+	height:18px;
+	text-indent: -999999px;
+	display:block;
+	float:left;
+	background-repeat:no-repeat;
+}
+
+#editlist div.edit_nav_pages a[active="false"] {
+	background-position: bottom;
+	cursor:default;
+}
+

@@ -38,9 +38,14 @@ function defineImageCaption(idImg, text)
 
 function defineCaption(id, text)
 {
-	obj = document.getElementById(id);
-	if (obj)
+	imgObj = document.getElementById("lbl_" + id);
+	if (imgObj)
 	{
-		obj.innerHTML = text;
+		imgObj.innerHTML = text;
+	}
+	btnObj = document.getElementById("valbtn_" + id);
+	if (btnObj)
+	{
+		btnObj.value = text;
 	}
 }
