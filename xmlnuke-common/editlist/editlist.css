@@ -13,17 +13,17 @@
 	outline: 0; 
 	font-weight: inherit; 
 	font-style: inherit; 
-	font-size: 1em; 
-	font-family: inherit; 
+	font-size: 1em;  
+	font-family: Arial, Helvetica, sans-serif;
 	vertical-align: baseline;
 	background:none;
-	color:#000;
 }
 
 #editlist {
 	border-left:1px solid #FFFFFF;
 	border-top:1px solid #FFFFFF;
 	text-align:left;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 #editlist #edit_table {
@@ -91,8 +91,10 @@
 	background:#BBCDE0 none repeat scroll 0 0;
 	border:1px solid #94B2D1;
 	font-weight:bold;
+	height:20px;
 	padding:1px 3px;
 	font-size:0.9em;
+	color:#000;
 }
 
 #editlist .edit_nav input[require="0"] {
@@ -117,6 +119,9 @@
 #editlist .edit_nav select {
 	float:left;
 	margin-right:15px;
+	font-size:0.9em;
+	font-family:Arial, Helvetica, sans-serif;
+	height:20px;
 }
 
 #editlist div.edit_nav_pages span {
