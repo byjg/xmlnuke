@@ -143,7 +143,8 @@
 	<xsl:if test="$type!='label' and $type!='select'">
 	<input>
 		<xsl:attribute name="type">
-			<xsl:if test="$type!='radiobox'"><xsl:value-of select="$type"/></xsl:if>
+			<xsl:if test="$type!='radiobox' and $type!='textbox' "><xsl:value-of select="$type"/></xsl:if>
+			<xsl:if test="$type='textbox'">text</xsl:if>
 			<xsl:if test="$type='radiobox'">radio</xsl:if>
 		</xsl:attribute>
 		<xsl:if test="$selected='yes'"><xsl:attribute name="checked"/></xsl:if>

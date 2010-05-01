@@ -271,8 +271,9 @@ class Login extends LoginBase
 		$form = new XmlFormCollection($this->_context, $url->getUrl() , $myWords->Value("CREATEUSERTITLE"));
 		$paragraph->addXmlnukeObject($form);
 		
-		$textbox = new XmlInputTextBox($myWords->Value("LABEL_LOGIN"), 'loguser', $this->_context->ContextValue("loguser"), 20);
+		$textbox = new XmlInputTextBox($myWords->Value("LABEL_LOGIN"), 'newloguser', $this->_context->ContextValue("newloguser"), 20);
 		$textbox->setInputTextBoxType(InputTextBoxType::TEXT );
+		$textbox->setMaxLength(20);
 		$textbox->setDataType(INPUTTYPE::TEXT);
 		$textbox->setRequired(true);
 		$form->addXmlnukeObject($textbox);
@@ -316,14 +317,14 @@ class Login extends LoginBase
 		}
 		else 
 		{
-			if (!$this->_users->addUser( $this->_context->ContextValue("name"), $this->_context->ContextValue("loguser"), $this->_context->ContextValue("email"), $newpassword ) )
+			if (!$this->_users->addUser( $this->_context->ContextValue("name"), $this->_context->ContextValue("newloguser"), $this->_context->ContextValue("email"), $newpassword ) )
 			{
 				$container->addXmlnukeObject(new XmlnukeText($myWords->Value("CREATEUSERFAIL"), true));
 				$this->CreateNewUser($block);
 			}
 			else
 			{
-				$this->sendWelcomeMessage($myWords, $this->_context->ContextValue("name"), $this->_context->ContextValue("loguser"), $this->_context->ContextValue("email"), $newpassword );
+				$this->sendWelcomeMessage($myWords, $this->_context->ContextValue("name"), $this->_context->ContextValue("newloguser"), $this->_context->ContextValue("email"), $newpassword );
 				$this->_users->Save();
 				$container->addXmlnukeObject(new XmlnukeText($myWords->Value("CREATEUSEROK"), true));
 				$container->setUIAlertType(UIAlert::BoxInfo);
