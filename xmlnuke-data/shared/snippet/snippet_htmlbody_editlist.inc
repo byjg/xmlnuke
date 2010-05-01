@@ -7,10 +7,17 @@
 	<xsl:if test="not(@readonly='true')">
 	<script language="javascript">
 	$(document).ready(function() {
-		$('tr.odd, tr.even').contextMenu('<xsl:value-of select="@name" />Menu', {
-			defaultAction: function(li, row)
+		$('tr.odd, tr.even, #edit_caption').contextMenu('<xsl:value-of select="@name" />Menu', {
+			defaultAction: function(source, row)
 			{
-				submitEditList("<xsl:value-of select="@name" />", li, row);
+				submitEditList("<xsl:value-of select="@name" />", source, row);
+			},
+		    onShowMenu: function(e, menu)
+			{
+				if ($(e.target).attr('id') == 'edit_caption') {
+					menu.find("li[require!='0']").remove();
+				}
+				return menu;
 			}
 		});
 	} );
@@ -38,10 +45,10 @@
 
 	<div class="contextMenu" id="{@name}Menu" style="display: none">
       <ul>
-		<xsl:if test="@new"><li require="1" action="new" id="{@name}_new"><img src="common/editlist/ic_novo.gif" border="0" /><span id="lbl_{@name}_new"></span></li></xsl:if>
-		<xsl:if test="@view"><li require="0" action="view" id="{@name}_view"><img src="common/editlist/ic_detalhes.gif" border="0" /><span id="lbl_{@name}_view"></span></li></xsl:if>
-		<xsl:if test="@edit"><li require="0" action="edit" id="{@name}_edit"><img src="common/editlist/ic_editar.gif" border="0" /></li><span id="lbl_{@name}_edit"></span></xsl:if>
-		<xsl:if test="@delete"><li require="0" action="delete" id="{@name}_delete"><img src="common/editlist/ic_excluir.gif" border="0" /></li><span id="lbl_{@name}_delete"></span></xsl:if>
+		<xsl:if test="@new"><li require="0" action="new" id="{@name}_new"><img src="common/editlist/ic_novo.gif" border="0" /><span id="lbl_{@name}_new"></span></li></xsl:if>
+		<xsl:if test="@view"><li require="1" action="view" id="{@name}_view"><img src="common/editlist/ic_detalhes.gif" border="0" /><span id="lbl_{@name}_view"></span></li></xsl:if>
+		<xsl:if test="@edit"><li require="1" action="edit" id="{@name}_edit"><img src="common/editlist/ic_editar.gif" border="0" /></li><span id="lbl_{@name}_edit"></span></xsl:if>
+		<xsl:if test="@delete"><li require="1" action="delete" id="{@name}_delete"><img src="common/editlist/ic_excluir.gif" border="0" /></li><span id="lbl_{@name}_delete"></span></xsl:if>
 		<xsl:for-each select="button">
 			<li>
 				<xsl:attribute name="require"><xsl:value-of select="@multiple"/></xsl:attribute>
@@ -62,7 +69,7 @@
 		<table id="edit_table">
 
 			<!-- Table Caption -->
-			<caption><xsl:value-of select="@title"/></caption>
+			<caption id="edit_caption"><xsl:value-of select="@title"/></caption>
 
 			<!-- Table header -->
 			<thead>
