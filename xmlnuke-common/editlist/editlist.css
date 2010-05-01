@@ -1,4 +1,25 @@
 
+#editlist div, #editlist span, #editlist object, #editlist p, #editlist blockquote, #editlist pre,
+#editlist a, #editlist abbr, #editlist acronym, #editlist address, #editlist big, #editlist cite, #editlist code,
+#editlist del, #editlist dfn, #editlist em, #editlist font, #editlist img, #editlist ins, #editlist kbd, #editlist q, #editlist s,
+#editlist small, #editlist strike, #editlist strong, #editlist sub, #editlist sup, #editlist tt, #editlist var,
+#editlist dl, #editlist dt, #editlist dd, #editlist ol, #editlist ul, #editlist li,
+#editlist fieldset, #editlist form, #editlist label, #editlist legend,
+#editlist table, #editlist caption, #editlist tbody, #editlist tfoot, #editlist thead, #editlist tr, #editlist th, #editlist td,
+#editlist input[type="button"] {
+	margin: 0; 
+	padding: 0; 
+	border: 0; 
+	outline: 0; 
+	font-weight: inherit; 
+	font-style: inherit; 
+	font-size: 1em; 
+	font-family: inherit; 
+	vertical-align: baseline;
+	background:none;
+	color:#000;
+}
+
 #editlist {
 	border-left:1px solid #FFFFFF;
 	border-top:1px solid #FFFFFF;
@@ -16,19 +37,24 @@
 }
 
 
-
 #editlist td, #editlist th {
 	border-right:1px solid #FFFFFF;
-	border-bottom:1px solid #FFFFFF;
-	padding:3px 10px;
+}
+
+#editlist td {
+	padding:7px 10px;
 }
 
 #editlist th {
 	background-color:#707a8c;
 	color:#FFFFFF;
-	padding:10px;
+	padding:5px 10px;
 	font-weight:bold;
-	font-size:1.2em;
+	font-size:1.1em;
+	-webkit-border-top-left-radius:5px;
+	-webkit-border-top-right-radius:5px;
+	-moz-border-radius-topleft:5px;
+	-moz-border-radius-topright:5px;
 }
 
 #editlist .odd {
@@ -53,8 +79,10 @@
 
 #editlist .edit_nav  {
 	background: #d9deed;
-	height:30px;
-	padding:5px 5px 0 5px;
+	padding:5px;
+	-webkit-border-radius:0;
+	-moz-border-radius:0;
+	border-bottom: solid #fff 5px;
 }
 
 #editlist .edit_nav input[type="button"] {
@@ -64,6 +92,7 @@
 	border:1px solid #94B2D1;
 	font-weight:bold;
 	padding:1px 3px;
+	font-size:0.9em;
 }
 
 #editlist .edit_nav input[require="0"] {
@@ -85,11 +114,30 @@
 	float:right;
 }
 
-#editlist div.edit_nav_pages a {
-	width:21px;
-	height:18px;
-	text-indent: -999999px;
+#editlist .edit_nav select {
+	float:left;
+	margin-right:15px;
+}
+
+#editlist div.edit_nav_pages span {
+	float:left;
+	color:#707a8c;
+	font-size: 11px;
+	font-weight:normal;
 	display:block;
+	padding-top:3px;
+	padding-right:5px;
+}
+
+#editlist div.edit_nav_pages a {
+	display:block;
+	line-height:1px;
+	font-size:1px;
+	padding:0;
+	width:28px;
+	height:20px;
+	margin-left:2px;
+	text-indent: -999999px;
 	float:left;
 	background-repeat:no-repeat;
 }

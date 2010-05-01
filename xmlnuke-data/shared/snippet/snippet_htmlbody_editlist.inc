@@ -68,16 +68,15 @@
 						</xsl:for-each>
 
 						<div class="edit_nav_pages">
-							
+							<span>Página:</span>
 							<xsl:if test="@offset">
 								<select><xsl:attribute name="onChange">submitEditList(document.<xsl:value-of select="@name" />, 'move', this.selectedIndex + 1);</xsl:attribute>
-								<xsl:call-template name="editlist.loop">
-								<xsl:with-param name="i">1</xsl:with-param>
-								<xsl:with-param name="current"><xsl:value-of select="@curpage" /></xsl:with-param>
-								<xsl:with-param name="count"><xsl:value-of select="@pages" /></xsl:with-param>
-								</xsl:call-template>
+									<xsl:call-template name="editlist.loop">
+									<xsl:with-param name="i">1</xsl:with-param>
+									<xsl:with-param name="current"><xsl:value-of select="@curpage" /></xsl:with-param>
+									<xsl:with-param name="count"><xsl:value-of select="@pages" /></xsl:with-param>
+									</xsl:call-template>
 								</select>
-								<img src="common/editlist/blank.gif" width="10" height="1" />
 							</xsl:if>
 				
 							<a href="a" id="{@name}_imgfirst" style="background-image: url(common/editlist/ic_primeiro.gif);">Primeira página</a>
@@ -99,7 +98,6 @@
 							<xsl:if test="not(@pagefwd) and @offset"><img border="0"  src="common/editlist/ic_ultimo.gif"><xsl:attribute name="id"><xsl:value-of select="@name"/>_imglast</xsl:attribute></img></xsl:if>
 							-->
 						</div>
-						
 					</th>
 				</tr>
 				<tr>
