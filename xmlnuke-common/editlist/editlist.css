@@ -81,7 +81,7 @@
 
 #editlist .edit_nav  {
 	background: #d9deed;
-	padding:5px;
+	padding:5px 5px 3px 5px;
 	-webkit-border-radius:0;
 	-moz-border-radius:0;
 	border-bottom: solid #fff 5px;
@@ -98,6 +98,7 @@
 	font-size:0.9em;
 	color:#000;
 	margin-right:2px;
+	margin-bottom:2px;
 }
 
 #editlist .edit_nav input[require="0"] {
