@@ -25,6 +25,7 @@
 		<xsl:if test="@edit"><li require="1" action="edit" id="{@name}_edit"><img src="common/editlist/ic_editar.gif" border="0" /><span id="lbl_{@name}_edit"></span></li></xsl:if>
 		<xsl:if test="@delete"><li require="1" action="delete" id="{@name}_delete"><img src="common/editlist/ic_excluir.gif" border="0" /><span id="lbl_{@name}_delete"></span></li></xsl:if>
 		<xsl:for-each select="button">
+			<xsl:if test="not(@multiple='0')">
 			<li>
 				<xsl:attribute name="require"><xsl:value-of select="@multiple"/></xsl:attribute>
 				<xsl:attribute name="id"><xsl:value-of select="parent::*/@name"/>_C<xsl:value-of select="@custom" /></xsl:attribute>
@@ -35,6 +36,7 @@
 				<img src="{@img}" border="0" alt="{@alt}" title="{@alt}" />
 				<span><xsl:value-of select="@alt" /></span>
 			</li>
+			</xsl:if>
 		</xsl:for-each>
       </ul>
     </div>
@@ -51,26 +53,6 @@
 			<thead>
 				<tr>
 					<th class="edit_nav" colspan="999">
-
-						<xsl:if test="not(@readonly='true')">
-
-						<!-- Header Buttons -->
-						<xsl:if test="@new"><input type="button" require="0" action="new" id="valbtn_{@name}_new" /></xsl:if>
-						<xsl:if test="@view"><input type="button" require="1" action="view" id="valbtn_{@name}_view" /></xsl:if>
-						<xsl:if test="@edit"><input type="button" require="1" action="edit" id="valbtn_{@name}_edit" /></xsl:if>
-						<xsl:if test="@delete"><input type="button" require="1" action="delete" id="valbtn_{@name}_delete" /></xsl:if>
-						<xsl:for-each select="button">
-							<input type="button" value="{@alt}">
-								<xsl:attribute name="require"><xsl:value-of select="@multiple"/></xsl:attribute>
-								<xsl:attribute name="id"><xsl:value-of select="parent::*/@name"/>_C<xsl:value-of select="@custom" /></xsl:attribute>
-								<xsl:attribute name="action"><xsl:value-of select="@acao" /></xsl:attribute>
-								<xsl:if test="@url!=''">
-									<xsl:attribute name="url"><xsl:value-of select="@url"/></xsl:attribute>
-								</xsl:if>
-							</input>
-						</xsl:for-each>
-
-						</xsl:if>
 
 						<!-- navigation buttons -->
 						<div class="edit_nav_pages">
@@ -90,6 +72,25 @@
 							<a id="navbtn_{@name}_next" style="background-image: url(common/editlist/ic_avancar.gif);"><xsl:if test="@pagefwd"><xsl:attribute name="href">javascript:navigate('<xsl:value-of select="@name" />', '<xsl:value-of select="@pagefwd" />');</xsl:attribute></xsl:if><xsl:if test="not(@pagefwd)"><xsl:attribute name="active">false</xsl:attribute></xsl:if></a>
 							<a id="navbtn_{@name}_last" style="background-image: url(common/editlist/ic_ultimo.gif);"><xsl:if test="@pagefwd"><xsl:attribute name="href">javascript:navigate('<xsl:value-of select="@name" />', '<xsl:value-of select="@pages" />');</xsl:attribute></xsl:if><xsl:if test="not(@pagefwd)"><xsl:attribute name="active">false</xsl:attribute></xsl:if></a>
 						</div>
+
+						<!-- Header Buttons -->
+						<xsl:if test="not(@readonly='true')">
+						<xsl:if test="@new"><input type="button" require="0" action="new" id="valbtn_{@name}_new" /></xsl:if>
+						<xsl:if test="@view"><input type="button" require="1" action="view" id="valbtn_{@name}_view" /></xsl:if>
+						<xsl:if test="@edit"><input type="button" require="1" action="edit" id="valbtn_{@name}_edit" /></xsl:if>
+						<xsl:if test="@delete"><input type="button" require="1" action="delete" id="valbtn_{@name}_delete" /></xsl:if>
+						<xsl:for-each select="button">
+							<input type="button" value="{@alt}">
+								<xsl:attribute name="require"><xsl:value-of select="@multiple"/></xsl:attribute>
+								<xsl:attribute name="id"><xsl:value-of select="parent::*/@name"/>_C<xsl:value-of select="@custom" /></xsl:attribute>
+								<xsl:attribute name="action"><xsl:value-of select="@acao" /></xsl:attribute>
+								<xsl:if test="@url!=''">
+									<xsl:attribute name="url"><xsl:value-of select="@url"/></xsl:attribute>
+								</xsl:if>
+							</input>
+						</xsl:for-each>
+						</xsl:if>
+
 					</th>
 				</tr>
 				<tr>

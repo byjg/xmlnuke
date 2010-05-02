@@ -30,7 +30,7 @@ function submitEditList(name, trigger)
 		valueid += (valueid != "" ? "," : "") + $(this).attr("value");
 	});
 
-	if (valueid == "")
+	if ( (valueid == "") && ($("#"+trigger.id).attr("require") != "0"))
 	{
 		alert(MSG_NONESELECTED);
 		return;
