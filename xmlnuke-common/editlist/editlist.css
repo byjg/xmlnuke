@@ -34,6 +34,7 @@
 	font-size: 14px;
 	font-weight: bold;
 	line-height: 30px;
+	text-align: left;
 }
 
 
@@ -51,6 +52,7 @@
 	padding:5px 10px;
 	font-weight:bold;
 	font-size:1.1em;
+	text-align: left;
 	-webkit-border-top-left-radius:5px;
 	-webkit-border-top-right-radius:5px;
 	-moz-border-radius-topleft:5px;
@@ -71,7 +73,7 @@
 }
 
 #editlist .selected {
-	background-color:#adc4e6 ;
+	background-color:#adc4e6 !important;
 }
 
 
@@ -95,6 +97,7 @@
 	padding:1px 3px;
 	font-size:0.9em;
 	color:#000;
+	margin-right:2px;
 }
 
 #editlist .edit_nav input[require="0"] {

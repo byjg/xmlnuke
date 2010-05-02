@@ -15,24 +15,51 @@ BTN_PREVIOUS = "Previous Page";
 BTN_NEXT = "Next Page";
 BTN_LAST = "Last Page";
 
-function submitEditList(name, li, row)
+function submitEditList(name, trigger)
 {
-	if ($("#"+li.id).attr("url") != "")
+	if ($("#"+trigger.id).attr("action") == "delete")
 	{
-		$("#form_" + name).attr("action", $("#"+li.id).attr("url"));
+		if (!confirm(MSG_CONFIRMDELETE))
+		{
+			return;
+		}
 	}
-	$("#form_" + name).find("input[name='acao']").attr("value", $("#"+li.id).attr("action"));
-	$("#form_" + name).find("input[name='valueid']").attr("value", $("#"+row.id).attr("value"));
+
+	valueid = "";
+	$("#editlist." + name).find('tr.selected').each(function() {
+		valueid += (valueid != "" ? "," : "") + $(this).attr("value");
+	});
+
+	if (valueid == "")
+	{
+		alert(MSG_NONESELECTED);
+		return;
+	}
+
+	if ($("#"+trigger.id).attr("url") != "")
+	{
+		$("#form_" + name).attr("action", $("#"+trigger.id).attr("url"));
+	}
+
+	$("#form_" + name).find("input[name='acao']").attr("value", $("#"+trigger.id).attr("action"));
+	$("#form_" + name).find("input[name='valueid']").attr("value", valueid);
 	$("#form_" + name).submit();
 }
 
-function defineImageCaption(idImg, text)
+function navigate(name, qtd)
 {
-	imgObj = document.getElementById(idImg);
-	if (imgObj)
+	$("#form_" + name).find("input[name='acao']").attr("value", 'move');
+	$("#form_" + name).find("input[name='curpage']").attr("value", qtd);
+	$("#form_" + name).submit();
+}
+
+function defineImageCaption(id, text)
+{
+	obj = document.getElementById("navbtn_" + id);
+	if (obj)
 	{
-		imgObj.alt = text;
-		imgObj.title = text;
+		obj.innerHTML = text;
+		obj.title = text;
 	}
 }
 

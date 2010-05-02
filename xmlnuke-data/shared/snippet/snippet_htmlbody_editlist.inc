@@ -20,7 +20,7 @@
 	<!-- Context Menu -->
 	<div class="contextMenu" id="{@name}Menu" style="display: none">
       <ul>
-		<xsl:if test="@new"><li require="0" action="new" id="{@name}_new"><img src="common/editlist/ic_novo.gif" border="0" /><span id="lbl_{@name}_new"></span></li></xsl:if>
+		<!-- <xsl:if test="@new"><li require="0" action="new" id="{@name}_new"><img src="common/editlist/ic_novo.gif" border="0" /><span id="lbl_{@name}_new"></span></li></xsl:if> -->
 		<xsl:if test="@view"><li require="1" action="view" id="{@name}_view"><img src="common/editlist/ic_detalhes.gif" border="0" /><span id="lbl_{@name}_view"></span></li></xsl:if>
 		<xsl:if test="@edit"><li require="1" action="edit" id="{@name}_edit"><img src="common/editlist/ic_editar.gif" border="0" /><span id="lbl_{@name}_edit"></span></li></xsl:if>
 		<xsl:if test="@delete"><li require="1" action="delete" id="{@name}_delete"><img src="common/editlist/ic_excluir.gif" border="0" /><span id="lbl_{@name}_delete"></span></li></xsl:if>
@@ -51,11 +51,14 @@
 			<thead>
 				<tr>
 					<th class="edit_nav" colspan="999">
-						<xsl:if test="@new"><input type="button" require="0" id="valbtn_{@name}_new" /></xsl:if>
-						<xsl:if test="@view"><input type="button" require="1" id="valbtn_{@name}_view" /></xsl:if>
-						<xsl:if test="@edit"><input type="button" require="1" id="valbtn_{@name}_edit" /></xsl:if>
-						<xsl:if test="@delete"><input type="button" require="1" id="valbtn_{@name}_delete" /></xsl:if>
-						
+
+						<xsl:if test="not(@readonly='true')">
+
+						<!-- Header Buttons -->
+						<xsl:if test="@new"><input type="button" require="0" action="new" id="valbtn_{@name}_new" /></xsl:if>
+						<xsl:if test="@view"><input type="button" require="1" action="view" id="valbtn_{@name}_view" /></xsl:if>
+						<xsl:if test="@edit"><input type="button" require="1" action="edit" id="valbtn_{@name}_edit" /></xsl:if>
+						<xsl:if test="@delete"><input type="button" require="1" action="delete" id="valbtn_{@name}_delete" /></xsl:if>
 						<xsl:for-each select="button">
 							<input type="button" value="{@alt}">
 								<xsl:attribute name="require"><xsl:value-of select="@multiple"/></xsl:attribute>
@@ -67,10 +70,13 @@
 							</input>
 						</xsl:for-each>
 
+						</xsl:if>
+
+						<!-- navigation buttons -->
 						<div class="edit_nav_pages">
-							<span>Página:</span>
+							<span>#</span>
 							<xsl:if test="@offset">
-								<select><xsl:attribute name="onChange">submitEditList(document.<xsl:value-of select="@name" />, 'move', this.selectedIndex + 1);</xsl:attribute>
+								<select onChange="navigate('{@name}', this.selectedIndex + 1)">
 									<xsl:call-template name="editlist.loop">
 									<xsl:with-param name="i">1</xsl:with-param>
 									<xsl:with-param name="current"><xsl:value-of select="@curpage" /></xsl:with-param>
@@ -79,24 +85,10 @@
 								</select>
 							</xsl:if>
 				
-							<a href="a" id="{@name}_imgfirst" style="background-image: url(common/editlist/ic_primeiro.gif);">Primeira página</a>
-							<a href="b" id="{@name}_imgfirst" style="background-image: url(common/editlist/ic_voltar.gif);">Página anterior</a>
-							<a href="c" id="{@name}_imgfirst" style="background-image: url(common/editlist/ic_avancar.gif);">Próxima página</a>
-							<a active="false" id="{@name}_imgfirst" style="background-image: url(common/editlist/ic_ultimo.gif);">Última página</a>
-							
-							<!-- 
-							<xsl:if test="@pageback"><a><xsl:attribute name="href">javascript:submitEditList(this.document.<xsl:value-of select="@name" />, 'move', '1');</xsl:attribute><img border="0"  src="common/editlist/ic_primeiro.gif"><xsl:attribute name="id"><xsl:value-of select="@name"/>_imgfirst</xsl:attribute></img></a></xsl:if>
-							<xsl:if test="not(@pageback) and @offset"><img border="0"  src="common/editlist/ic_primeiro.gif"><xsl:attribute name="id"><xsl:value-of select="@name"/>_imgfirst</xsl:attribute></img></xsl:if>
-				
-							<xsl:if test="@pageback"><a><xsl:attribute name="href">javascript:submitEditList(this.document.<xsl:value-of select="@name" />, 'move', '<xsl:value-of select="@pageback" />');</xsl:attribute><img border="0"  src="common/editlist/ic_voltar.gif"><xsl:attribute name="id"><xsl:value-of select="@name"/>_imgprevious</xsl:attribute></img></a></xsl:if>
-							<xsl:if test="not(@pageback) and @offset"><img border="0"  src="common/editlist/ic_voltar.gif"><xsl:attribute name="id"><xsl:value-of select="@name"/>_imgprevious</xsl:attribute></img></xsl:if>
-				
-							<xsl:if test="@pagefwd"><a><xsl:attribute name="href">javascript:submitEditList(this.document.<xsl:value-of select="@name" />, 'move', '<xsl:value-of select="@pagefwd" />');</xsl:attribute><img border="0"  src="common/editlist/ic_avancar.gif"><xsl:attribute name="id"><xsl:value-of select="@name"/>_imgnext</xsl:attribute></img></a></xsl:if>
-							<xsl:if test="not(@pagefwd) and @offset"><img border="0"  src="common/editlist/ic_avancar.gif"><xsl:attribute name="id"><xsl:value-of select="@name"/>_imgnext</xsl:attribute></img></xsl:if>
-				
-							<xsl:if test="@pagefwd"><a><xsl:attribute name="href">javascript:submitEditList(this.document.<xsl:value-of select="@name" />, 'move', '<xsl:value-of select="@pages" />');</xsl:attribute><img border="0"  src="common/editlist/ic_ultimo.gif"><xsl:attribute name="id"><xsl:value-of select="@name"/>_imglast</xsl:attribute></img></a></xsl:if>
-							<xsl:if test="not(@pagefwd) and @offset"><img border="0"  src="common/editlist/ic_ultimo.gif"><xsl:attribute name="id"><xsl:value-of select="@name"/>_imglast</xsl:attribute></img></xsl:if>
-							-->
+							<a id="navbtn_{@name}_first" style="background-image: url(common/editlist/ic_primeiro.gif);"><xsl:if test="@pageback"><xsl:attribute name="href">javascript:navigate('<xsl:value-of select="@name" />', 1);</xsl:attribute></xsl:if><xsl:if test="not(@pageback)"><xsl:attribute name="active">false</xsl:attribute></xsl:if></a>
+							<a id="navbtn_{@name}_previous" style="background-image: url(common/editlist/ic_voltar.gif);"><xsl:if test="@pageback"><xsl:attribute name="href">javascript:navigate('<xsl:value-of select="@name" />', '<xsl:value-of select="@pageback" />');</xsl:attribute></xsl:if><xsl:if test="not(@pageback)"><xsl:attribute name="active">false</xsl:attribute></xsl:if></a>
+							<a id="navbtn_{@name}_next" style="background-image: url(common/editlist/ic_avancar.gif);"><xsl:if test="@pagefwd"><xsl:attribute name="href">javascript:navigate('<xsl:value-of select="@name" />', '<xsl:value-of select="@pagefwd" />');</xsl:attribute></xsl:if><xsl:if test="not(@pagefwd)"><xsl:attribute name="active">false</xsl:attribute></xsl:if></a>
+							<a id="navbtn_{@name}_last" style="background-image: url(common/editlist/ic_ultimo.gif);"><xsl:if test="@pagefwd"><xsl:attribute name="href">javascript:navigate('<xsl:value-of select="@name" />', '<xsl:value-of select="@pages" />');</xsl:attribute></xsl:if><xsl:if test="not(@pagefwd)"><xsl:attribute name="active">false</xsl:attribute></xsl:if></a>
 						</div>
 					</th>
 				</tr>
@@ -157,10 +149,10 @@
 	
 	<script language="javascript">
 	$(document).ready(function() {
-		$('tr.odd, tr.even, #edit_caption').contextMenu('<xsl:value-of select="@name" />Menu', {
+		$('#editlist.<xsl:value-of select="@name"/>').find('tr.odd, tr.even').contextMenu('<xsl:value-of select="@name" />Menu', {
 			defaultAction: function(source, row)
 			{
-				submitEditList("<xsl:value-of select="@name" />", source, row);
+				submitEditList("<xsl:value-of select="@name" />", source);
 			},
 		    onShowMenu: function(e, menu)
 			{
@@ -177,10 +169,23 @@
 	defineCaption(editlistName + "_view", BTN_VIEW);
 	defineCaption(editlistName + "_edit", BTN_EDIT);
 	defineCaption(editlistName + "_delete", BTN_DELETE);
-	defineImageCaption(editlistName + "_imgfirst", BTN_FIRST);
-	defineImageCaption(editlistName + "_imgprevious", BTN_PREVIOUS);
-	defineImageCaption(editlistName + "_imgnext", BTN_NEXT);
-	defineImageCaption(editlistName + "_imglast", BTN_LAST);
+	defineImageCaption(editlistName + "_first", BTN_FIRST);
+	defineImageCaption(editlistName + "_previous", BTN_PREVIOUS);
+	defineImageCaption(editlistName + "_next", BTN_NEXT);
+	defineImageCaption(editlistName + "_last", BTN_LAST);
+
+	$('#editlist.<xsl:value-of select="@name"/>').find('th').find('input').click(function() {
+		submitEditList('<xsl:value-of select="@name"/>', this);
+	});
+
+	$('#editlist.<xsl:value-of select="@name"/>').find('tr.even, tr.odd').click(function() {
+		attrClass = ($(this).attr("class"));
+		$(this).parent().find("tr").removeClass("selected");
+		if (!attrClass.match("selected"))
+		{
+			$(this).addClass("selected");
+		}
+	});
 	</script>
 
 	
