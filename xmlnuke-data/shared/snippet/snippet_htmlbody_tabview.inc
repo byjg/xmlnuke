@@ -4,17 +4,36 @@
 
 <xsl:template match="tabview">
 
-	<div class="tabber">
+	<xsl:variable name="number"><xsl:value-of select="position()" /></xsl:variable>
 
-	     <xsl:for-each select="tabitem">
-	     <div class="">
-	     	<xsl:attribute name="class">tabbertab<xsl:if test="@default"> tabbertabdefault</xsl:if></xsl:attribute>
-	     	<xsl:attribute name="title"><xsl:value-of select="@title" /></xsl:attribute>
-		  <h2>Tab <xsl:value-of select="position()" /></h2>
-		  <xsl:apply-templates />
-	     </div>
-	     </xsl:for-each>
+	<script type="text/javascript">
+	$(function() {
+		$("#tabview<xsl:value-of select="$number" />").tabs({
+			collapsible: true
+			<xsl:for-each select="tabitem">
+				<xsl:if test="@default='true'">, selected: <xsl:value-of select="position()" />-1</xsl:if>
+			</xsl:for-each>
+		}).find(".ui-tabs-nav").sortable({axis:'x'});
+	});
+	</script>
+
+
+	<div id="tabview{$number}">
+
+		<ul>
+			<xsl:for-each select="tabitem">
+				<li><a href="#tabview{$number}-{position()}"><xsl:value-of select="@title" /></a></li>
+			</xsl:for-each>
+		</ul>
+
+		<xsl:for-each select="tabitem">
+			<div id="tabview{$number}-{position()}">
+				<xsl:apply-templates />
+			</div>
+	    </xsl:for-each>
 
 	</div>
 
 </xsl:template>
+
+

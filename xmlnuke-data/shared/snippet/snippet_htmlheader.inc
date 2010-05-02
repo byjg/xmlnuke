@@ -1,42 +1,11 @@
-<script type="text/javascript" src="http://www.google.com/jsapi"></script>
-<script type="text/javascript">
-	google.load("jquery", "1.3.2");
-</script>
+<script type="text/javascript" src="common/3rdparty/jquery/jquery-1.4.2.min.js" />
 <script type="text/javascript" src="common/js/xmlnuke.js"></script>
 
 <!-- UI JavaScript Object -->
-<xsl:if test="//sortablelist or //calendar or //faq or //datetimebox or //uialert or //mediagallery">
+<xsl:if test="//sortablelist or //calendar or //faq or //datetimebox or //uialert or //mediagallery or //tabview">
 
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/smoothness/jquery-ui.css" rel="stylesheet" />
-	<!--
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/black-tie/jquery-ui.css" rel="stylesheet" />
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/blitzer/jquery-ui.css" rel="stylesheet" />
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/cupertino/jquery-ui.css" rel="stylesheet" />
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/dark-hive/jquery-ui.css" rel="stylesheet" />
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/dot-luv/jquery-ui.css" rel="stylesheet" />
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/eggplant/jquery-ui.css" rel="stylesheet" />
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/excite-bike/jquery-ui.css" rel="stylesheet" />
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/flick/jquery-ui.css" rel="stylesheet" />
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/hot-sneaks/jquery-ui.css" rel="stylesheet" />
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/humanity/jquery-ui.css" rel="stylesheet" />
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/le-frog/jquery-ui.css" rel="stylesheet" />
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/mint-choc/jquery-ui.css" rel="stylesheet" />
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/overcast/jquery-ui.css" rel="stylesheet" />
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/pepper-grinder/jquery-ui.css" rel="stylesheet" />
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/redmond/jquery-ui.css" rel="stylesheet" />
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/smoothness/jquery-ui.css" rel="stylesheet" />
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/south-street/jquery-ui.css" rel="stylesheet" />
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/start/jquery-ui.css" rel="stylesheet" />
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/sunny/jquery-ui.css" rel="stylesheet" />
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/swanky-purse/jquery-ui.css" rel="stylesheet" />
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/trontastic/jquery-ui.css" rel="stylesheet" />
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/ui-darkness/jquery-ui.css" rel="stylesheet" />
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
-	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/vader/jquery-ui.css" rel="stylesheet" />
-	-->
-	<script type="text/javascript">
-		google.load("jqueryui", "1.7.2");
-	</script>
+	<link type="text/css" href="common/3rdparty/jquery/css/smoothness/jquery-ui-1.8.1.custom.css" rel="stylesheet" />
+	<script type="text/javascript" src="common/3rdparty/jquery/jquery-ui-1.8.1.custom.min.js" />
 	<script type="text/javascript" src="common/3rdparty/jquery/jquery-ui-i18n.min.js" />
 	<style type="text/css">
 		.ui-state-error, .ui-state-highlight {
@@ -187,13 +156,6 @@
 	</script>
 </xsl:if>
 
-
-<!-- Include specific JavaScript for TabView element -->
-<xsl:if test="//tabview">
-   <script type="text/javascript" src="common/3rdparty/tabber/tabber.js"></script>
-   <link rel="stylesheet" href="common/3rdparty/tabber/tabber.css" TYPE="text/css" MEDIA="screen" />
-   <style type="text/css">.tabber{display:none;}</style>
-</xsl:if>
 
 <!-- Include specific JavaScript for WebtoolKit.AIM -->
 <xsl:if test="//ajaxcallback">
