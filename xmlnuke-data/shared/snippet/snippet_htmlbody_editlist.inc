@@ -149,47 +149,9 @@
 	</div>
 	
 	<script language="javascript">
-	$(document).ready(function() {
-		$('#editlist.<xsl:value-of select="@name"/>').find('tr.odd, tr.even').contextMenu('<xsl:value-of select="@name" />Menu', {
-			defaultAction: function(source, row)
-			{
-				submitEditList("<xsl:value-of select="@name" />", source);
-			},
-		    onShowMenu: function(e, menu)
-			{
-				if ($(e.target).attr('id') == 'edit_caption') {
-					menu.find("li[require!='0']").remove();
-				}
-				return menu;
-			}
-		});
-	} );
-
-	var editlistName = '<xsl:value-of select="@name"/>';
-	defineCaption(editlistName + "_new", BTN_NEW);
-	defineCaption(editlistName + "_view", BTN_VIEW);
-	defineCaption(editlistName + "_edit", BTN_EDIT);
-	defineCaption(editlistName + "_delete", BTN_DELETE);
-	defineImageCaption(editlistName + "_first", BTN_FIRST);
-	defineImageCaption(editlistName + "_previous", BTN_PREVIOUS);
-	defineImageCaption(editlistName + "_next", BTN_NEXT);
-	defineImageCaption(editlistName + "_last", BTN_LAST);
-
-	$('#editlist.<xsl:value-of select="@name"/>').find('th').find('input').click(function() {
-		submitEditList('<xsl:value-of select="@name"/>', this);
-	});
-
-	$('#editlist.<xsl:value-of select="@name"/>').find('tr.even, tr.odd').click(function() {
-		attrClass = ($(this).attr("class"));
-		$(this).parent().find("tr").removeClass("selected");
-		if (!attrClass.match("selected"))
-		{
-			$(this).addClass("selected");
-		}
-	});
+	initializeEditList('<xsl:value-of select="@name" />', <xsl:if test="button[@multiple='2']">true</xsl:if><xsl:if test="not(button[@multiple='2'])">false</xsl:if>);
 	</script>
 
-	
 </xsl:template>
 
 

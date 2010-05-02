@@ -2,9 +2,9 @@
 // http://www.XMLNuke.com
 // http://www.byjg.com.br
 
-MSG_NONESELECTED = "You must select one line";
+MSG_NONESELECTED = "You need to select at least one line to execute this command";
 MSG_CONFIRMDELETE = "Do you want delete the selected record(s)?";
-MSG_SELECTONE = "You must select only one line";
+MSG_SELECTONE = "This command accept only one line selected.";
 
 BTN_NEW = "New";
 BTN_VIEW = "View";
@@ -35,6 +35,12 @@ function submitEditList(name, trigger)
 		alert(MSG_NONESELECTED);
 		return;
 	}
+	else if (valueid.match(",") && ($("#"+trigger.id).attr("require") != "2") )
+	{
+		alert(MSG_SELECTONE);
+		return;
+	}
+
 
 	if ($("#"+trigger.id).attr("url") != "")
 	{
@@ -44,6 +50,59 @@ function submitEditList(name, trigger)
 	$("#form_" + name).find("input[name='acao']").attr("value", $("#"+trigger.id).attr("action"));
 	$("#form_" + name).find("input[name='valueid']").attr("value", valueid);
 	$("#form_" + name).submit();
+}
+
+function initializeEditList(name, multiple)
+{
+	// Enable Context Menu
+	$(document).ready(function() {
+		$('#editlist.' + name).find('tr.odd, tr.even').contextMenu(name + 'Menu', {
+			defaultAction: function(source, row)
+			{
+				submitEditList(name, source);
+			},
+		    onShowMenu: function(e, menu)
+			{
+				if ($(e.target).attr('id') == 'edit_caption') {
+					menu.find("li[require!='0']").remove();
+				}
+				return menu;
+			}
+		});
+	} );
+
+	// Enable actions on buttons
+	$('#editlist.' + name).find('th').find('input').click(function() {
+		submitEditList(name, this);
+	});
+
+	// Enable line selection
+	$('#editlist.' + name).find('tr.even, tr.odd').click(function() {
+		attrClass = ($(this).attr("class"));
+		if (!multiple)
+		{
+			$(this).parent().find("tr").removeClass("selected");
+		}
+		if (!attrClass.match("selected"))
+		{
+			$(this).addClass("selected");
+		}
+		else
+		{
+			$(this).removeClass("selected");
+		}
+	});
+
+	// Define internationalized button captions
+	defineCaption(name + "_new", BTN_NEW);
+	defineCaption(name + "_view", BTN_VIEW);
+	defineCaption(name + "_edit", BTN_EDIT);
+	defineCaption(name + "_delete", BTN_DELETE);
+	defineImageCaption(name + "_first", BTN_FIRST);
+	defineImageCaption(name + "_previous", BTN_PREVIOUS);
+	defineImageCaption(name + "_next", BTN_NEXT);
+	defineImageCaption(name + "_last", BTN_LAST);
+
 }
 
 function navigate(name, qtd)

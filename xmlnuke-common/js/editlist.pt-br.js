@@ -1,8 +1,8 @@
 // http://www.XMLNuke.com
 
-MSG_NONESELECTED = "Selecione alguma linha antes!";
+MSG_NONESELECTED = "Você tem que selecionar ao menos uma linha para executar esse comando.";
 MSG_CONFIRMDELETE = "Tem certeza que deseja excluir este(s) registro(s)?";
-MSG_SELECTONE = "Não é possível selecionar mais que 1 registro!";
+MSG_SELECTONE = "Este comando aceita apenas uma linha selecionada.";
 
 BTN_NEW = "Novo";
 BTN_VIEW = "Visualizar";

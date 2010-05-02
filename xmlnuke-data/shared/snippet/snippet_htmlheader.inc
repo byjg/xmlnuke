@@ -165,7 +165,7 @@
 <xsl:if test="//editlist">
 	<link href="common/editlist/editlist.css" type="text/css" rel="stylesheet" />
 	<script language="javascript" src="common/3rdparty/jquery/plugin/jquery.contextmenu.r2.js" />
-	<script language='JavaScript' src='common/js/editlist.js'></script>
+	<script language='JavaScript' src='common/js/editlist.js?20100502'></script>
 	<script language='JavaScript'><xsl:attribute name="src">common/js/editlist.<xsl:value-of select = "$lang" />.js</xsl:attribute></script>
 </xsl:if>
 
