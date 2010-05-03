@@ -232,47 +232,42 @@ abstract class NewBaseAdminModule extends BaseModule
 			$colNode["url"] = "url";
 
 			// Read from Generic XML
-			$xmlProcessor = new XMLFilenameProcessor("admin" . FileUtil::Slash() . "adminmodules" . FileUtil::Slash() , $this->_context);
-			$xmlProcessor->setFilenameLocation(ForceFilenameLocation::PathFromRoot);
-			$configFile = $xmlProcessor->PathSuggested() . "admin" . FileUtil::Slash() . "adminmodules.config.xml";
-			$config = FileUtil::QuickFileRead($configFile);
-
-			$dataset = new XmlDataSet($this->_context, $config, $rowNode, $colNode);
-			foreach ($dataset->getIterator() as $sr)
+			$xmlProcessor = new AdminModulesXMLFilenameProcessor($this->_context);
+			for($i=0;$i<2;$i++)
 			{
-				$this->_adminModulesList[$sr->getField("group")][$sr->getField("name")] = array($sr->getField("icon"), $sr->getField("url"));
-			}
-
-			$global_keys = array_keys($this->_adminModulesList);
-
-			// Read Local XML
-			$localXmlProcessor = new AnydatasetFilenameProcessor("adminmodules.config", $this->_context);
-			$configFile = $localXmlProcessor->PathSuggested() . $localXmlProcessor->ToString() . ".xml";
-			if (FileUtil::Exists($configFile))
-			{
-				$config = FileUtil::QuickFileRead($configFile);
-				$dataset = new XmlDataSet($this->_context, $config, $rowNode, $colNode);
-				foreach ($dataset->getIterator() as $sr)
+				if ($i==0)
 				{
-					if (array_key_exists($sr->getField("group"), $this->_adminModulesList))
+					$xmlProcessor->setFilenameLocation(ForceFilenameLocation::SharedPath);
+				}
+				else
+				{
+					$xmlProcessor->setFilenameLocation(ForceFilenameLocation::PrivatePath);
+				}
+
+				$configFile = $xmlProcessor->FullQualifiedNameAndPath();
+				if (FileUtil::Exists($configFile))
+				{
+					$config = FileUtil::QuickFileRead($configFile);
+					$dataset = new XmlDataSet($this->_context, $config, $rowNode, $colNode);
+					foreach ($dataset->getIterator() as $sr)
 					{
-						$this->_adminModulesList[$sr->getField("group")][$sr->getField("name")] = array($sr->getField("icon"), $sr->getField("url"));
-					}
-					else
-					{
-						$x = array();
-						$x[$sr->getField("group")][$sr->getField("name")] = array($sr->getField("icon"), $sr->getField("url"));
-						$this->_adminModulesList = $x + $this->_adminModulesList;
+						if (array_key_exists($sr->getField("group"), $this->_adminModulesList) || ($i==0))
+						{
+							$this->_adminModulesList[$sr->getField("group")][$sr->getField("name")] = array($sr->getField("icon"), $sr->getField("url"));
+						}
+						else
+						{
+							$x = array();
+							$x[$sr->getField("group")][$sr->getField("name")] = array($sr->getField("icon"), $sr->getField("url"));
+							$this->_adminModulesList = $x + $this->_adminModulesList;
+						}
 					}
 				}
 			}
-
 		}
 		return $this->_adminModulesList;
 	}
 		
-	
-	
 	/**
 	 * Enter description here...
 	 *
@@ -281,7 +276,7 @@ abstract class NewBaseAdminModule extends BaseModule
 	protected function CreateMenuAdmin()
 	{
 		// Load Language file for Module Object
-		$lang = LanguageFactory::GetLanguageCollection($this->_context, LanguageFileTypes::ADMININTERNAL, "adminmodules");
+		$lang = LanguageFactory::GetLanguageCollection($this->_context, LanguageFileTypes::ADMININTERNAL, null);
 		
 		// Create a Menu Item for GROUPS and MODULES. 
 		// This menu have CP_ before GROUP NAME

@@ -179,11 +179,11 @@ class LanguageCollection
 			$this->_debugInfo .= $langFile->ToString() . " in " . $langFile->getFilenameLocation() . "(\"" . $langFile->FullQualifiedNameAndPath() . "\") ";
 			if (!$langFile->Exists())
 			{
-				$this->_debugInfo .= "Does not exists; ";
+				$this->_debugInfo .= "Does not exists; \n";
 				continue;
 			}
 			
-			$this->_debugInfo .= "Exists; ";
+			$this->_debugInfo .= "Exists; \n";
 			
 			$curLang = strtolower($this->_context->Language()->getName());
 			try 
@@ -213,7 +213,6 @@ class LanguageCollection
 			}
 			
 		}
-
 	}
 	
 	/**

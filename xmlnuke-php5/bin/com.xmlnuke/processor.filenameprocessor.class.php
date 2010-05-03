@@ -406,6 +406,44 @@ class XMLFilenameProcessor extends FilenameProcessor
 	}
 }
 
+class AdminModulesXMLFilenameProcessor extends AnydatasetFilenameProcessor
+{
+	/**
+	 *
+	 * @param <type> $context
+	 */
+	public function __construct($context )
+	{
+		parent::__construct("adminmodules", $context);
+		$this->_filenameLocation = ForceFilenameLocation::SharedPath;
+	}
+
+	/**
+	 *@param
+	 *@return string
+	 *@desc Implementing
+	 */
+	public function SharedPath()
+	{
+		return $this->_context->SharedRootPath() . "admin" . FileUtil::Slash();
+	}
+
+	/**
+	 *@param
+	 *@return string
+	 *@desc Implementing
+	 */
+	public function Extension()
+	{
+		return ".config.xml";
+	}
+
+	public function FullName($xml, $xsl, $languageId)
+	{
+		return $xml;
+	}
+}
+
 class XSLFilenameProcessor extends FilenameProcessor
 {
 	/**
@@ -890,6 +928,31 @@ class AnydatasetLangFilenameProcessor extends AnydatasetBaseFilenameProcessor
 	public function Extension()
 	{
 		return ".lang" . parent::Extension();
+	}
+}
+
+class AdminModulesLangFilenameProcessor extends AnydatasetLangFilenameProcessor
+{
+	/**
+	 *@param string $singlename
+	 *@param Context $context
+	 *@return void
+	 *@desc
+	 */
+	public function __construct($context)
+	{
+		parent::__construct("adminmodules", $context);
+		$this->_filenameLocation = ForceFilenameLocation::UseWhereExists;
+	}
+
+	/**
+	 *@param
+	 *@return string
+	 *@desc
+	 */
+	public function SharedPath()
+	{
+		return $this->_context->SharedRootPath() . "admin" . FileUtil::Slash();
 	}
 }
 

@@ -56,13 +56,7 @@ class LanguageFactory
 				break;
 		
 			case LanguageFileTypes::ADMININTERNAL:
-				$langFile = new AnydatasetLangFilenameProcessor($name, $context);
-				$langFile->setFilenameLocation(ForceFilenameLocation::PrivatePath);
-				if (!FileUtil::Exists($langFile))
-				{
-					$langFile = new AnydatasetLangFilenameProcessor("admin" . FileUtil::Slash() . "adminmodules", $context);
-					$langFile->setFilenameLocation(ForceFilenameLocation::PathFromRoot);
-				}
+				$langFile = new AdminModulesLangFilenameProcessor($context);
 				break;
 		
 			case LanguageFileTypes::MODULE:
