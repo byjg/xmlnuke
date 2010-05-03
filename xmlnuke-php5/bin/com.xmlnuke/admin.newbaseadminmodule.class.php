@@ -96,8 +96,6 @@ abstract class NewBaseAdminModule extends BaseModule
 	*/
 	public function CreatePage() 
 	{
-		$this->defaultXmlnukeDocument->setPageTitle("XMLNuke");
-		$this->defaultXmlnukeDocument->setAbstract("Painel de controle do XMLNuke");
 		$this->_mainBlock = new XmlBlockCollection('Menu', BlockPosition::Center );
 		$this->_help = new XmlParagraphCollection();
 		//$this->_menu = new XmlParagraphCollection();
@@ -109,7 +107,11 @@ abstract class NewBaseAdminModule extends BaseModule
 		//$link = new XmlAnchorCollection($url->getUrl(), '');
 		//$link->addXmlnukeObject(new XmlnukeText('Menu'));
 		//$this->_menu->addXmlnukeObject($link);
-		$this->CreateMenuAdmin();
+		$lang = $this->CreateMenuAdmin();
+
+		$this->defaultXmlnukeDocument->setPageTitle("XMLNuke");
+		$this->defaultXmlnukeDocument->setAbstract($lang->Value("CONTROLPANEL_TITLE"));
+		$this->defaultXmlnukeDocument->addMetaTag("controlpaneltitle", $lang->Value("CONTROLPANEL_TITLE"));
 	}
 
 	/**
@@ -305,7 +307,9 @@ abstract class NewBaseAdminModule extends BaseModule
 						$icon);
 				}
 			}
-		}			
+		}
+
+		return $lang;
 	}	
 }
 

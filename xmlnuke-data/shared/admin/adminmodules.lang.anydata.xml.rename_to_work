@@ -3,6 +3,8 @@
    <row>
       <field name="LANGUAGE">en-us</field>
       
+      <field name="CONTROLPANEL_TITLE">XMLNUke Control Panel</field>
+
       <field name="GROUP_CONTENT">Contents</field>
       <field name="GROUP_MANAGEMENT">Management</field>
       <field name="GROUP_USERMODULES">User Modules</field>
@@ -43,7 +45,9 @@
    <row>
       <field name="LANGUAGE">pt-br</field>
 
-      <field name="GROUP_CONTENT">Conteúdo</field>
+      <field name="CONTROLPANEL_TITLE">Painel de Controle XMLNuke</field>
+
+	  <field name="GROUP_CONTENT">Conteúdo</field>
       <field name="GROUP_MANAGEMENT">Gerenciamento</field>
       <field name="GROUP_USERMODULES">Módulos Usuário</field>
       
@@ -83,7 +87,9 @@
    <row>
       <field name="LANGUAGE">de-de</field>
       
-      <field name="GROUP_CONTENT">Inhalt</field>
+      <field name="CONTROLPANEL_TITLE">Systemsteuerung XMLNuke</field>
+
+	  <field name="GROUP_CONTENT">Inhalt</field>
       <field name="GROUP_MANAGEMENT">Verwaltung</field>
       <field name="GROUP_USERMODULES">Benutzer-Module</field>
       

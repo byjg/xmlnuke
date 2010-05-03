@@ -2,7 +2,7 @@
 <anydataset>
    <row>
       <field name="LANGUAGE">en-us</field>
-      <field name="CONTROLPANEL">Control Panel</field>
+      <field name="CONTROLPANEL">Home</field>
       <field name="CONTROLPANEL_HELP">Welcome to the XMLNuke Control Panel.<br/><br/>Select your action from the left option.</field>      
       <field name="BLOCKINFO_TITLE">Informations</field>
       <field name="INFO_USER">User: {0} ({1})</field>
@@ -10,7 +10,7 @@
    </row>
    <row>
       <field name="LANGUAGE">pt-br</field>
-      <field name="CONTROLPANEL">Painel de Controle</field>
+      <field name="CONTROLPANEL">Tela Inicial</field>
       <field name="CONTROLPANEL_HELP">Bem vindo ao painel de controle do XMLNuke. <br/><br/>Selecione o que deseja fazer nas opções listadas à esquerda.</field>
       <field name="BLOCKINFO_TITLE">Informações</field>
       <field name="INFO_USER">Usuário: {0} ({1})</field>
@@ -18,7 +18,7 @@
    </row>
    <row>
       <field name="LANGUAGE">de-de</field>
-      <field name="CONTROLPANEL">Systemsteuerung</field>
+      <field name="CONTROLPANEL">Home Screen</field>
       <field name="CONTROLPANEL_HELP">Willkommen in der XMLNuke Systemsteuerung.<br/><br/>Wählen Sie eine Aktion.</field>      
       <field name="BLOCKINFO_TITLE">Informationen</field>
       <field name="INFO_USER">Benutzer: {0} ({1})</field>
@@ -26,7 +26,7 @@
    </row>
    <row>
       <field name="LANGUAGE">fr-fr</field>
-      <field name="CONTROLPANEL">Panneau de configuration</field>
+      <field name="CONTROLPANEL">Écran d'accueil</field>
       <field name="CONTROLPANEL_HELP">Bienvenue au Groupe de contrôle XMLNuke.<br/><br/>Sélectionnez votre action de l'option de gauche.</field>      
       <field name="BLOCKINFO_TITLE">Informations</field>
       <field name="INFO_USER">User: {0} ({1})</field>
@@ -34,7 +34,7 @@
    </row>
    <row>
       <field name="LANGUAGE">sv-se</field>
-      <field name="CONTROLPANEL">Kontrollpanelen</field>
+      <field name="CONTROLPANEL">Hemskärm</field>
       <field name="CONTROLPANEL_HELP">Välkommen till XMLNuke Kontrollpanelen.<br/><br/>Välj din åtgärd från vänster alternativet.</field>      
       <field name="BLOCKINFO_TITLE">Informations</field>
       <field name="INFO_USER">User: {0} ({1})</field>
