@@ -59,20 +59,20 @@
 	-moz-border-radius-topright:5px;
 }
 
-#editlist .odd {
+#editlist .odd td {
 	background-color:white;
 }
 
-#editlist .even {
+#editlist .even td {
 	background-color:#eeeeef;
 }
 
-#editlist tr:hover {
+#editlist tr:hover td {
 	background-color:#d9deed;
 	cursor:pointer;
 }
 
-#editlist .selected {
+#editlist .selected td {
 	background-color:#adc4e6 !important;
 }
 

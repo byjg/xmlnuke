@@ -52,7 +52,7 @@
 			<!-- Table header -->
 			<thead>
 				<tr>
-					<th class="edit_nav" colspan="999">
+					<th class="edit_nav" colspan="{@cols}">
 
 						<!-- navigation buttons -->
 						<div class="edit_nav_pages">
