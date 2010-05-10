@@ -232,7 +232,7 @@ function EditConfig()
 		$configValues["xmlnuke.DEFAULTPAGE"]="page";
 		$configValues["xmlnuke.LOGINMODULE"]="login";
 		$configValues["xmlnuke.URLBASE"]="";
-		$configValues["xmlnuke.ALWAYSUSECACHE"]=true;
+		$configValues["xmlnuke.ALWAYSUSECACHE"]=false;
 		$configValues["xmlnuke.SHOWCOMPLETEERRORMESSAGES"]=true;
 		$configValues["xmlnuke.LANGUAGESAVAILABLE"]="en-us=English (United States)|pt-br=Português (Brasil)";
 		$configValues["xmlnuke.SMTPSERVER"]="localhost";
