@@ -196,12 +196,12 @@
 				</xsl:if>
 				
 				<xsl:if test="name()!='checkbox' and name()!='radiobox' and name()!='inputgroup'">
-				<xsl:if test="local-name(parent::node())='inputgroup' and parent::node()/@name"><xsl:attribute name="id"><xsl:value-of select="parent::node()/@name" /></xsl:attribute><xsl:if test="parent::node()/@visible"><xsl:attribute name="style">display:none</xsl:attribute></xsl:if></xsl:if>
-				<xsl:call-template name="generic.label">
-					<xsl:with-param name="caption"><xsl:value-of select="@caption"/></xsl:with-param>
-					<xsl:with-param name="name"><xsl:value-of select="@name"/></xsl:with-param>
-					<xsl:with-param name="required"><xsl:value-of select="@required"/></xsl:with-param>
-				</xsl:call-template>
+					<xsl:if test="local-name(parent::node())='inputgroup' and parent::node()/@name"><xsl:attribute name="id"><xsl:value-of select="parent::node()/@name" /></xsl:attribute><xsl:if test="parent::node()/@visible"><xsl:attribute name="style">display:none</xsl:attribute></xsl:if></xsl:if>
+					<xsl:call-template name="generic.label">
+						<xsl:with-param name="caption"><xsl:value-of select="@caption"/></xsl:with-param>
+						<xsl:with-param name="name"><xsl:value-of select="@name"/></xsl:with-param>
+						<xsl:with-param name="required"><xsl:value-of select="@required"/></xsl:with-param>
+					</xsl:call-template>
 				</xsl:if>
 			</dt>
 			<dd>
@@ -217,12 +217,11 @@
 				</xsl:call-template>
 				
 				<xsl:if test="name()='checkbox' or name()='radiobox'">
-				<xsl:if test="local-name(parent::node())='inputgroup' and parent::node()/@name"><xsl:attribute name="id"><xsl:value-of select="parent::node()/@name" /></xsl:attribute><xsl:if test="parent::node()/@visible"><xsl:attribute name="style">display:none</xsl:attribute></xsl:if></xsl:if>
-				<xsl:call-template name="generic.label">
-					<xsl:with-param name="caption"><xsl:value-of select="@caption"/></xsl:with-param>
-					<xsl:with-param name="name"><xsl:value-of select="@name"/></xsl:with-param>
-					<xsl:with-param name="required"><xsl:value-of select="@required"/></xsl:with-param>
-				</xsl:call-template>
+					<xsl:call-template name="generic.label">
+						<xsl:with-param name="caption"><xsl:value-of select="@caption"/></xsl:with-param>
+						<xsl:with-param name="name"><xsl:value-of select="@name"/></xsl:with-param>
+						<xsl:with-param name="required"><xsl:value-of select="@required"/></xsl:with-param>
+					</xsl:call-template>
 				</xsl:if>
 			</dd>
 		</xsl:if>

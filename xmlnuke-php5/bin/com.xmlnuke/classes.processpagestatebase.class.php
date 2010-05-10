@@ -625,7 +625,7 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 			for($i=0, $buttonsLength = sizeof($this->_buttons); $i<$buttonsLength ;$i++)
 			{
 //				CustomButtons $cb;
-				if (($this->_buttons[$i]->action != "") || ($cb->url = $this->_buttons[$i]->url != ""))
+				if (($this->_buttons[$i]->action != "") || ($this->_buttons[$i]->url != ""))
 				{
 					$cb = new CustomButtons();
 					$cb->action = $this->_buttons[$i]->action;

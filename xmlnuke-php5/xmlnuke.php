@@ -6,15 +6,24 @@
 	#############################################
 	
 
-	$applyXslTemplate = ($context->ContextValue("rawxml")=="");
 	$selectNodes = $context->ContextValue("xpath");
-	
-	if (!$applyXslTemplate)
+	if ($context->ContextValue("rawxml")!="")
 	{
+		$filename = str_replace(".", "_", ($context->ContextValue("module") != "" ? $context->ContextValue("module") : $context->getXml())) . ".xsl";
+		$output = "xml";
 		header("Content-Type: text/xml; charset=utf-8");
+		header("Content-Disposition: inline; filename=\"{$filename}\";");
+	}
+	elseif ($context->ContextValue("rawjson")!="")
+	{
+		$filename = str_replace(".", "_", ($context->ContextValue("module") != "" ? $context->ContextValue("module") : $context->getXml())) . ".json";
+		$output = "json";
+		header("Content-Type: application/json; charset=utf-8");
+		header("Content-Disposition: inline; filename=\"{$filename}\";");
 	}
 	else
 	{
+		$output = "";
 		if (detectMobile())
 		{
 			// WML
@@ -32,7 +41,7 @@
 		header("Content-Type: $contentType; charset=utf-8");
 	}
 	
-	$engine = new XmlNukeEngine($context, $applyXslTemplate, $selectNodes);
+	$engine = new XmlNukeEngine($context, $output, $selectNodes);
 	if ($context->ContextValue("remote")!="")
 	{
 		echo $engine->TransformDocumentRemote($context->ContextValue("remote"));

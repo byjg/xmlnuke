@@ -491,6 +491,7 @@ class XmlEditList extends XmlnukeDocumentObject
 			}
 		}
 
+		$processor = new ParamProcessor($this->_context);
 		if($this->_customButton != null)
 		{
 			for ($i=0, $customButtonsLength = sizeof($this->_customButton); $i < $customButtonsLength ; $i++)
@@ -500,6 +501,10 @@ class XmlEditList extends XmlnukeDocumentObject
 				if ($cb->enabled)
 				{
 					$nodeButton = XmlUtil::CreateChild($nodeWorking, "button");
+					if ($cb->url != "")
+					{
+						$cb->url = str_replace("&", "&amp;", $processor->GetFullLink($cb->url));
+					}
 					XmlUtil::AddAttribute($nodeButton, "custom", $i+1);
 					XmlUtil::AddAttribute($nodeButton, "acao", $cb->action);
 					XmlUtil::AddAttribute($nodeButton, "alt", $cb->alternateText);

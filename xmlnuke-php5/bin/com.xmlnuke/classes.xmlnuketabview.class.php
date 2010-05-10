@@ -45,32 +45,68 @@ class XmlnukeTabView extends XmlnukeDocumentObject
 	{	
 	
 	}
-	
+
+	/**
+	 * Add a Tab with content.
+	 * @param string $title
+	 * @param IXmlnukeDocumentObject $docobj
+	 * @param bool $tabdefault
+	 */
 	public function addTabItem($title, $docobj, $tabdefault = false)
 	{
 		if (is_null($docobj) || !($docobj instanceof IXmlnukeDocumentObject)) 
 		{
 			throw new XmlNukeObjectException(853, "Object is null or not is IXmlnukeDocumentObject. Found object type: " . get_class($docobj));
 		}
-		$this->_tabs[$title] = $docobj;
+		$this->_tabs[] = array($title, "OBJ", $docobj);
 		if ($tabdefault)
 		{
-			$this->_tabDefault = $title;
+			$this->_tabDefault = count($this->_tabs)-1;
 		}
 	}
-		
+
+	/**
+	 *
+	 * @param string $title
+	 * @param string $url
+	 * @param bool $tabdefault
+	 */
+	public function addTabAjax($title, $url, $tabdefault = false)
+	{
+		if (is_null($url) || !is_string($url))
+		{
+			throw new XmlNukeObjectException(853, "Object is null or not is URL.");
+		}
+		$this->_tabs[] = array($title, "URL", $url);
+		if ($tabdefault)
+		{
+			$this->_tabDefault = count($this->_tabs)-1;
+		}
+	}
+
 	public function generateObject($current)
 	{
 		$node = XmlUtil::CreateChild($current, "tabview", "");
 		foreach ($this->_tabs as $key=>$value) 
 		{
+			$title = $value[0];
+			$type = $value[1];
+			$content = $value[2];
+
 			$nodetab = XmlUtil::CreateChild($node, "tabitem", "");
-			XmlUtil::AddAttribute($nodetab, "title", $key);
+			XmlUtil::AddAttribute($nodetab, "title", $title);
 			if ($this->_tabDefault == $key)
 			{
 				XmlUtil::AddAttribute($nodetab, "default", "true");
 			}
-			$value->generateObject($nodetab);
+			if ($type == "OBJ")
+			{
+				$content->generateObject($nodetab);
+			}
+			else
+			{
+				XmlUtil::AddAttribute($nodetab, "url", $content);
+			}
 		}
 	}
 }

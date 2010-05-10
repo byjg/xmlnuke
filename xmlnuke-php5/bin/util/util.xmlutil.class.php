@@ -541,5 +541,60 @@ class XmlUtil
 			return false;
 		}
 	}
+
+	/**
+	 *
+	 * @param DOMElement $domnode
+	 */
+	public static function xml2array($domnode, $attributes = false, $onlyData = false)
+	{
+		if ($arr == null) $arr = array();
+
+		$keys = array();
+        foreach($domnode->childNodes as $element)
+		{
+			$name = trim($element->nodeName);
+			//$parent = trim($domnode->nodeName);
+
+			// Generic
+			if ( (!$element->hasChildNodes()) || (($element->childNodes->length == 1) && ($element->childNodes->item(0) instanceof DOMText)) )
+			{
+				if (!array_key_exists($name, $arr))
+				{
+					$arr[$name] = trim($element->nodeValue);
+				}
+				elseif (!is_array($arr[$name]))
+				{
+					$arr[$name] = array($arr[$name], trim($element->nodeValue));
+				}
+				else
+				{
+					$arr[$name][] = trim($element->nodeValue);
+				}
+			}
+			else
+			{
+				$arr[$name][] = XmlUtil::xml2array($element, $attributes);
+			}
+
+			if ($attributes && $domnode->hasAttributes())
+			{
+				foreach($domnode->attributes as $attr)
+				{
+					$arr[$name]["@".$attr->name] = $attr->value;
+				}
+			}
+        }
+        return $arr;
+	}
+
+	public static function xml2json($domnode, $attributes)
+	{
+		$arr = XmlUtil::xml2array($domnode, $attributes);
+		foreach ($arr as $items)
+		{
+			return json_encode($items);
+		}
+	}
 }
 ?>

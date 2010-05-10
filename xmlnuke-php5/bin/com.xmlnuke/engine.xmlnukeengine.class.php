@@ -42,7 +42,7 @@ class XmlNukeEngine
 	/**
 	 * @var bool
 	 */
-	protected $_applyXslTemplate = true;
+	protected $_outputResult = "";
 	/**
 	 * @var string
 	 */
@@ -55,14 +55,14 @@ class XmlNukeEngine
 	/**
 	 *
 	 * @param Context $context
-	 * @param bool $applyXslTemplate
+	 * @param string $outputResult
 	 * @param string $extractNodes
 	 * @param string $extractNodesRoot
 	 */
-	public function __construct($context, $applyXslTemplate = true, $extractNodes = "", $extractNodesRoot = "xmlnuke")
+	public function __construct($context, $outputResult = "", $extractNodes = "", $extractNodesRoot = "xmlnuke")
 	{
 		$this->_context = $context;
-		$this->_applyXslTemplate = $applyXslTemplate;
+		$this->_outputResult = $outputResult;
 		$this->_extractNodes = $extractNodes;
 		$this->_extractNodesRoot = $extractNodesRoot;
 	}
@@ -78,7 +78,7 @@ class XmlNukeEngine
 
 		// Check if file cache already exists
 		// If exists read it from there;
-		if (FileUtil::Exists($xmlCacheFile->FullQualifiedNameAndPath()) && !$this->_context->getNoCache() && !$this->_context->getReset() && $this->_applyXslTemplate)
+		if (FileUtil::Exists($xmlCacheFile->FullQualifiedNameAndPath()) && !$this->_context->getNoCache() && !$this->_context->getReset() && ($this->_outputResult == ""))
 		{
 			return FileUtil::QuickFileRead($xmlCacheFile->FullQualifiedNameAndPath());
 		}
@@ -91,7 +91,7 @@ class XmlNukeEngine
 			$result = $this->TransformDocumentFromDOM($this->getXmlDocument($xmlFile));
 
 			// Save cache file - NOCACHE: Doesn't Save; Otherwise: Allways save
-			if (!$this->_context->getNoCache() && $this->_applyXslTemplate)
+			if (!$this->_context->getNoCache() && ($this->_outputResult == ""))
 			{
 				try
 				{
@@ -115,7 +115,7 @@ class XmlNukeEngine
 	public function TransformDocumentFromModule($module)
 	{
 		$useCache = $module->useCache() && !$this->_context->getReset();
-		if (!$useCache || !$module->hasInCache() || !$this->_applyXslTemplate)
+		if (!$useCache || !$module->hasInCache() || ($this->_outputResult != ""))
 		{
 			//IXmlnukeDocument
 			$px = $module->CreatePage();
@@ -146,7 +146,7 @@ class XmlNukeEngine
 				$result = $this->TransformDocument($xmlDoc, $xslFile);
 			}
 			
-			if ($useCache && $this->_applyXslTemplate)
+			if ($useCache && ($this->_outputResult == ""))
 			{
 				$module->saveToCache($result);
 			}
@@ -319,11 +319,11 @@ class XmlNukeEngine
 		}
 
 		// Check if there is no XSL template
-		if (!$this->_applyXslTemplate)
+		if ($this->_outputResult != "")
 		{
 			if ($this->_extractNodes == "")
 			{
-				return $xml->saveXML();
+				$outDocument = $xml;
 			}
 			else 
 			{
@@ -342,7 +342,16 @@ class XmlNukeEngine
 					}
 					XmlUtil::AddNodeFromNode($nodeToAdd, $node);
 				}
-				return $retDocument->saveXML();
+				$outDocument = $retDocument;
+			}
+
+			if ($this->_outputResult == "json")
+			{
+				return XmlUtil::xml2json($outDocument, false);
+			}
+			else // Default XML.
+			{
+				return $outDocument->saveXML();
 			}
 		}
 

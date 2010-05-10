@@ -245,20 +245,7 @@ class ParamProcessor
 
 					if ($result != "")
 					{
-						//Todos os atributos que possuem link devem passar por esse tratamento
-						if(strtolower($attribs->item($i)->nodeName) == "href"||
-							strtolower($attribs->item($i)->nodeName) == "action"||
-								strtolower($attribs->item($i)->nodeName) == "onclick")
-							 
-						{
-							$result = str_replace("&amp;","&",$result);
-							$attribs->item($i)->nodeValue = htmlentities($result);
-						}
-						else 
-						{
-							$attribs->item($i)->nodeValue = $result;
-						}							
-						
+						$attribs->item($i)->nodeValue = str_replace("&amp;amp;", "&amp;", str_replace("&", "&amp;", $result));
 					}
 
 					$i++;
@@ -269,7 +256,7 @@ class ParamProcessor
 		}
 		elseif ($node->nodeType == XML_TEXT_NODE)
 		{
-			
+
 			$result = $this->CheckParameters($node->nodeValue);
 
 			if ($result != "")

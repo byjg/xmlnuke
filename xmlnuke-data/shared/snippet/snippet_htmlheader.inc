@@ -20,7 +20,7 @@
 	</style>
 </xsl:if>
 
-<!-- Include specific JavaScript for AutoSuggest  -->
+<!-- Include specific JavaScript for Sortable  -->
 <xsl:if test="//sortablelist">
 	<style type="text/css">
 		<xsl:for-each select="//sortablelist/column"><xsl:if test="not(position()=1)">,</xsl:if>#<xsl:value-of select="parent::node()/@name" />_<xsl:value-of select="@id" />_list</xsl:for-each> { font-size: 80%; list-style-type: none; margin: 0; padding: 0; }
@@ -225,9 +225,7 @@
 
 <!-- Include specific JavaScript for Flash element -->
 <xsl:if test="//flash">
-	<script language="javascript">AC_FL_RunContent = 0;</script>
-	<script language="javascript"> DetectFlashVer = 0; </script>
-	<script src="common/js/AC_RunActiveContent.js" language="javascript"></script>
+	<script src="common/3rdparty/jquery/plugin/jquery.flash.js" language="javascript"></script>
 </xsl:if>
 
 <!-- Include specific JavaScript for Select List as Image element -->

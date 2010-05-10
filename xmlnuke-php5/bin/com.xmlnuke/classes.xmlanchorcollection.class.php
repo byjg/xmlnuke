@@ -62,7 +62,7 @@ class XmlAnchorCollection extends XmlnukeCollection implements IXmlnukeDocumentO
 	{
 		
 		$nodeWorking = XmlUtil::CreateChild($current, "a", "");
-		$link = str_replace("&amp;amp;", "&amp;", str_replace("&", "&amp;", $this->_src));
+		$link = str_replace("&", "&amp;", $this->_src);
 		XmlUtil::AddAttribute($nodeWorking, "href", $link);
 		if ($this->_target != "")
 		{

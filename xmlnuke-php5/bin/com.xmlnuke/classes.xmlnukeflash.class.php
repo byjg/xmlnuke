@@ -64,7 +64,7 @@ class XmlNukeFlash extends XmlnukeCollection implements IXmlnukeDocumentObject
 	}
 	public function getMovie()
 	{
-		return str_replace(".swf", "", str_replace("&", "&amp;", str_replace("&amp;amp;","&amp;",$this->_movie)));
+		return str_replace("&", "&amp;", $this->_movie);
 	}
 	public function setWidth($width)
 	{
@@ -119,7 +119,7 @@ class XmlNukeFlash extends XmlnukeCollection implements IXmlnukeDocumentObject
 		{
 			$param = XmlUtil::CreateChild($node, "param");
 			XmlUtil::AddAttribute($param, "name", $key);
-			XmlUtil::AddAttribute($param, "value", str_replace("&", "&amp;amp;", $value));
+			XmlUtil::AddAttribute($param, "value", str_replace("&", "&amp;", $value));
 		}
 				
 		parent::generatePage($node);

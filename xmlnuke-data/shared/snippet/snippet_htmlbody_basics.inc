@@ -67,31 +67,20 @@
 </xsl:template>
 
 <xsl:template match="flash">
+	<div id="xmlnukeflash{position()}"></div>
 	<script language="JavaScript" type="text/javascript">
-	if (AC_FL_RunContent == 0 || DetectFlashVer == 0) {
-		alert("This page requires AC_RunActiveContent.js.");
-	} else {
-		var hasRightVersion = DetectFlashVer(<xsl:value-of select="@major"/>, <xsl:value-of select="@minor"/>, <xsl:value-of select="@revision"/>);
-		if(hasRightVersion) { 
-			AC_FL_RunContent(
-				'codebase', 'http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=<xsl:value-of select="@major"/>,<xsl:value-of select="@minor"/>,<xsl:value-of select="@revision"/>,0',
-				'width', '<xsl:value-of select="@width"/>',
-				'height', '<xsl:value-of select="@height"/>',
-				'movie', '<xsl:value-of select="@movie"/>',
-				'pluginspage', 'http://www.macromedia.com/go/getflashplayer'<xsl:for-each select="param">,
-				'<xsl:value-of select="@name" />', '<xsl:value-of select="@value" />'
-				</xsl:for-each>
-				); 
-		} else { 
-			var alternateContent = 'This content requires the Adobe Flash Player. '
-			+ '<u><a href="http://www.macromedia.com/go/getflash/">Get Flash</a></u>.';
-			document.write(alternateContent); 
-		}
-	}
+		$(function () {
+			$('#xmlnukeflash<xsl:value-of select="position()"/>').flash({
+				src: '<xsl:value-of select="@movie"/>',	<xsl:if test="param">
+				flashvars: { <xsl:for-each select="param"><xsl:value-of select="@name" />: '<xsl:value-of select="@value" />'</xsl:for-each>},
+				</xsl:if>
+				width: '<xsl:value-of select="@width"/>',
+				height: '<xsl:value-of select="@height"/>'
+			},
+			{version: '<xsl:value-of select="@major"/>.<xsl:value-of select="@minor"/>.<xsl:value-of select="@revision"/>'}
+			)
+		});
 	</script>
-	<noscript>
-		<p>This content requires JavaScript.</p>
-	</noscript>
 </xsl:template>
 
 

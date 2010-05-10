@@ -60,7 +60,7 @@ class XmlnukeImage extends XmlnukeDocumentObject
 	*/
 	public function __construct($src, $text = "")
 	{
-		$this->_src = $src;
+		$this->_src = str_replace("&", "&amp;", $src);
 		$this->_alt = $text;
 	}
 
@@ -103,7 +103,7 @@ class XmlnukeImage extends XmlnukeDocumentObject
 	{
 		$nodeWorking = XmlUtil::CreateChild($current, "img", "");
 		
-		$link = str_replace("&", "&amp;", str_replace("&amp;amp;","&amp;",$this->_src));		
+		$link = $this->_src;
 		XmlUtil::AddAttribute($nodeWorking, "src", $link);
 		XmlUtil::AddAttribute($nodeWorking, "alt", $this->_alt);
 		if ($this->_width != 0)
