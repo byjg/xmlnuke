@@ -578,6 +578,7 @@ class XmlEditList extends XmlnukeDocumentObject
 							{
 								$first = false;
 							}
+							XmlUtil::AddAttribute($currentNode, "source", $field->fieldData);
 						}
 					}
 					else

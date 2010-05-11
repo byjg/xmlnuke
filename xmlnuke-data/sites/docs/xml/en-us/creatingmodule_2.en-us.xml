@@ -116,7 +116,7 @@ public function CreatePage()
 			<p>Once the XMLNukeDocument is created, you can start writing the code. For example, to create a block to the center (BlockCenter) and add a paragraph, the following code can be used: 
          </p>
 			<p>
-				<code information="PHP"><![CDATA[
+				<code information="CSharp"><![CDATA[
 XmlBlockCollection block = new XmlBlockCollection("Title", BlockPosition.Center);
 	
 XmlParagraphCollection p = new XmlParagraphCollection();

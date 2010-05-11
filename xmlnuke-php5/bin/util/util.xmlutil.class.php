@@ -554,10 +554,67 @@ class XmlUtil
         foreach($domnode->childNodes as $element)
 		{
 			$name = trim($element->nodeName);
-			//$parent = trim($domnode->nodeName);
+			$parent = trim($domnode->nodeName);
 
+			// For Editlist
+			if (($name == "editlist") && ($_REQUEST["xpath"] != ""))
+			{
+				// Get Field Names
+				$fieldList = XmlUtil::selectNodes($element, "row[1]/field");
+				$fieldNames = array();
+				$cnt = 1;
+				foreach($fieldList as $fieldElement)
+				{
+					$source = $fieldElement->getAttribute("source");
+					if (is_null($source) || ($source == ""))
+					{
+						$source = "field$cnt";
+					}
+					elseif (array_key_exists($source, $fieldNames))
+					{
+						$source = "field$cnt";
+					}
+					$fieldNames[$source] = ".";
+					$cnt++;
+				}
+
+				// Iterate each row to get values
+				$fieldNames = array_keys($fieldNames);
+				$rowList = XmlUtil::selectNodes($element, "row");
+				foreach($rowList as $row)
+				{
+					$arrTemp = array();
+					$cnt = 0;
+					$fieldList = XmlUtil::selectNodes($row, "field");
+					foreach($fieldNames as $fld)
+					{
+						$node = $fieldList->item($cnt);
+						if ($node != null)
+						{
+							$arrTemp[$fld] = $node->nodeValue;
+						}
+						else
+						{
+							$arrTemp[$fld] = "null";
+						}
+						$cnt++;
+					}
+					$arr[] = $arrTemp;
+				}
+			}
+			// Select from EditForm
+			elseif (($name == "select") && ($_REQUEST["xpath"] != ""))
+			{
+				$nodeList = XmlUtil::selectNodes($element, "option");
+				foreach($nodeList as $node)
+				{
+					$id = $node->getAttribute("value");
+					$value = $node->nodeValue;
+					$arr[] = array("id"=>$id, "value"=>$value);
+				}
+			}
 			// Generic
-			if ( (!$element->hasChildNodes()) || (($element->childNodes->length == 1) && ($element->childNodes->item(0) instanceof DOMText)) )
+			elseif ( (!$element->hasChildNodes()) || (($element->childNodes->length == 1) && ($element->childNodes->item(0) instanceof DOMText)) )
 			{
 				if (!array_key_exists($name, $arr))
 				{
