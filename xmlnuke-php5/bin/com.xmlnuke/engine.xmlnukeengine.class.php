@@ -62,6 +62,10 @@ class XmlNukeEngine
 	public function __construct($context, $outputResult = "", $extractNodes = "", $extractNodesRoot = "xmlnuke")
 	{
 		$this->_context = $context;
+		if (is_bool($outputResult))
+		{
+			$outputResult = ($outputResult ? "" : "xml");
+		}
 		$this->_outputResult = $outputResult;
 		$this->_extractNodes = $extractNodes;
 		$this->_extractNodesRoot = $extractNodesRoot;
