@@ -1284,5 +1284,23 @@ namespace com.xmlnuke.engine
             }
             return this.__userdb;
         }
+
+        public string getBestSupportedMimeType(string[] mimeTypes)
+        {
+            string[] acceptedTypes = HttpContext.Current.Request.AcceptTypes;
+
+            foreach (string mimeType in mimeTypes)
+            {
+                foreach (string accType in acceptedTypes)
+                {
+                    if (accType.ToLower().Contains(mimeType.ToLower()))
+                    {
+                        return mimeType;
+                    }
+                }
+            }
+
+            return acceptedTypes[0];
+        }
     }
 }

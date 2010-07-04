@@ -474,7 +474,7 @@ namespace com.xmlnuke.classes
 					util.XmlUtil.AddAttribute(nodeButton, "custom", (i + 1).ToString());
 					util.XmlUtil.AddAttribute(nodeButton, "acao", cb.action);
 					util.XmlUtil.AddAttribute(nodeButton, "alt", cb.alternateText);
-                    if (cb.url != "")
+                    if (!String.IsNullOrEmpty(cb.url))
 					    util.XmlUtil.AddAttribute(nodeButton, "url", processor.GetFullLink(cb.url));
 					util.XmlUtil.AddAttribute(nodeButton, "img", cb.icon);
 					try
