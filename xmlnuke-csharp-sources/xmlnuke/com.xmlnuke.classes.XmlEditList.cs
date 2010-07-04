@@ -34,6 +34,8 @@ using System.Xml;
 using com.xmlnuke.engine;
 using System.Collections.Generic;
 using com.xmlnuke.anydataset;
+using com.xmlnuke.processor;
+using com.xmlnuke.util;
 
 namespace com.xmlnuke.classes
 {
@@ -462,6 +464,7 @@ namespace com.xmlnuke.classes
 				util.XmlUtil.AddAttribute(param, "value", this._extraParam[key]);
 			}
 
+            ParamProcessor processor = new ParamProcessor(this._context);
 			for (int i = 0; i < this._customButton.Count; i++)
 			{
 				CustomButtons cb = (CustomButtons)this._customButton[i];
@@ -471,7 +474,8 @@ namespace com.xmlnuke.classes
 					util.XmlUtil.AddAttribute(nodeButton, "custom", (i + 1).ToString());
 					util.XmlUtil.AddAttribute(nodeButton, "acao", cb.action);
 					util.XmlUtil.AddAttribute(nodeButton, "alt", cb.alternateText);
-					util.XmlUtil.AddAttribute(nodeButton, "url", cb.url);
+                    if (cb.url != "")
+					    util.XmlUtil.AddAttribute(nodeButton, "url", processor.GetFullLink(cb.url));
 					util.XmlUtil.AddAttribute(nodeButton, "img", cb.icon);
 					try
 					{
@@ -541,6 +545,7 @@ namespace com.xmlnuke.classes
 								{
 									first = false;
 								}
+                                XmlUtil.AddAttribute(currentNode, "source", field.fieldData);
 							}
 						}
 						else
@@ -728,6 +733,101 @@ namespace com.xmlnuke.classes
 		{
 			this._customsubmit = fnclient;
 		}
+
+        /*
+	    public function saveToCSV($name = "")
+	    {
+		    if ($name == "")
+		    {
+			    $name = $this->_name . ".csv";
+		    }
+
+		    ob_clean();
+		    header ( "Content-Type: text/csv;" );
+		    header ( "Content-Disposition: attachment; filename=$name" );
+
+		    $firstRow = true;
+
+		    // Generate XML With Data
+		    while ($this->_it->hasNext())
+		    {
+			    //com.xmlnuke.anydataset.SingleRow
+			    $registro = $this->_it->moveNext();
+
+			    // Show Header
+			    if ($firstRow)
+			    {
+				    $firstRow = false;
+				    $fields = array();
+
+				    // Insert fields if none is passed.
+				    if (sizeof($this->_fields) == 0)
+				    {
+					    foreach ($registro->getFieldNames() as $fieldname)
+					    {
+						    $fields[] = $fieldname;
+						    $fieldtmp = new EditListField(true);
+						    $fieldtmp->editlistName = $fieldname;
+						    $fieldtmp->fieldData = $fieldname;
+						    $fieldtmp->fieldType = EditListFieldType::TEXT;
+						    $this->addEditListField($fieldtmp);
+					    }
+				    }
+				    else
+				    {
+					    foreach ($this->_fields as $value)
+					    {
+						    $fields[] = $value->editlistName;
+					    }
+				    }
+
+				    echo '"' . implode('","', $fields) . '"' . "\n";
+			    }
+
+			    // Show Data
+			    $data = array();
+			    foreach($this->_fields as $chave=>$field)
+			    {
+
+				    if ($field->fieldType == EditListFieldType::FORMATTER)
+				    {
+					    $obj = $field->formatter;
+					    if (is_null($obj) || !($obj instanceof IEditListFormatter))
+					    {
+						    throw new Exception("The EditListFieldType::FORMATTER requires a valid IEditListFormatter class");
+					    }
+					    else
+					    {
+						    $result = $obj->Format($registro, $field->fieldData, $registro->getField($field->fieldData));
+					    }
+				    }
+				    elseif ($field->fieldType == EditListFieldType::LOOKUP)
+				    {
+					    $value = $registro->getField($field->fieldData);
+					    if ($value == "")
+					    {
+						    $value = "---";
+					    }
+					    else
+					    {
+						    $value = $field->arrayLookup[$value];
+					    }
+					    $result = $value;
+				    }
+				    else
+				    {
+					    $result = $registro->getField($field->fieldData);
+				    }
+
+				    $data[] = str_replace('"', "'", $result);
+			    }
+
+			    echo '"' . implode('","', array_values($data)) . '"' . "\n";
+		    }
+
+		    die();
+	    }
+	    */
 	}
 
 }

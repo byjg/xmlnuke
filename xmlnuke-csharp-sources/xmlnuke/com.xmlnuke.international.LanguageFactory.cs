@@ -68,13 +68,7 @@ namespace com.xmlnuke.international
 					break;
 
 				case LanguageFileTypes.ADMININTERNAL:
-					langFile = new AnydatasetLangFilenameProcessor(name, context);
-					langFile.FilenameLocation = ForceFilenameLocation.PrivatePath;
-					if (!FileUtil.Exists(langFile))
-					{
-						langFile = new AnydatasetLangFilenameProcessor("admin" + FileUtil.Slash() + name, context);
-						langFile.FilenameLocation = ForceFilenameLocation.PathFromRoot;
-					}
+					langFile = new AdminModulesLangFilenameProcessor(context);
 					break;
 
 				case LanguageFileTypes.MODULE:

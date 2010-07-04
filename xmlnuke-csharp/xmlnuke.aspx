@@ -4,12 +4,27 @@
 	void Page_Load(object sender, System.EventArgs e)
 	{
 		com.xmlnuke.engine.Context context = new com.xmlnuke.engine.Context(Context);
-		bool applyXslTemplate = (context.ContextValue("rawxml") == "");
 		string selectNodes = context.ContextValue("xpath");
-		if (!applyXslTemplate)
-		{
-			Context.Response.ContentType = "text/xml";
-		}
+        com.xmlnuke.engine.OutputResult output = com.xmlnuke.engine.OutputResult.XHtml;
+        
+        if (context.ContextValue("rawxml")!="")
+        {
+	        string filename = (context.ContextValue("module") != "" ? context.ContextValue("module") : context.Xml);
+            filename = filename.Replace(".", "_") + ".xsl";
+            
+	        output = com.xmlnuke.engine.OutputResult.Xml;
+            Context.Response.ContentType = "text/xml";
+            Context.Response.AppendHeader("Content-Disposition", "inline; filename=\"" + filename + "\";");
+        }
+        else if (context.ContextValue("rawjson")!="")
+        {
+	        string filename = (context.ContextValue("module") != "" ? context.ContextValue("module") : context.Xml);
+            filename = filename.Replace(".", "_") + ".json";
+            
+	        output = com.xmlnuke.engine.OutputResult.Json;
+            Context.Response.ContentType = "application/json";
+            Context.Response.AppendHeader("Content-Disposition", "inline; filename=\"" + filename + "\";");
+        }
 		else
 		{
 			Context.Response.ContentType = context.getSuggestedContentType();
@@ -17,7 +32,7 @@
 		Context.Response.ContentEncoding = System.Text.Encoding.UTF8;
 		try
 		{
-			com.xmlnuke.engine.XmlNukeEngine engine = new com.xmlnuke.engine.XmlNukeEngine(context, applyXslTemplate, selectNodes);
+			com.xmlnuke.engine.XmlNukeEngine engine = new com.xmlnuke.engine.XmlNukeEngine(context, output, selectNodes);
 			if (context.ContextValue("remote") != "")
 			{
 				Response.Write(engine.TransformDocumentRemote(context.ContextValue("remote")));

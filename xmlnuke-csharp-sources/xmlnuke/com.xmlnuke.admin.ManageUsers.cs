@@ -231,7 +231,8 @@ namespace com.xmlnuke.admin
 			it = users.getIterator(itf);
 
 			XmlFormCollection formpesq = new XmlFormCollection(this._context, this.url, this.myWords.Value("TITLEPESQUSER"));
-			XmlInputTextBox textbox = new XmlInputTextBox(this.myWords.Value("PESQUSER"), "pesquser", this._context.ContextValue("pesquser"));
+            formpesq.setFormName("form-label-top");
+            XmlInputTextBox textbox = new XmlInputTextBox(this.myWords.Value("PESQUSER"), "pesquser", this._context.ContextValue("pesquser"));
 			textbox.setDataType(INPUTTYPE.TEXT);
 			formpesq.addXmlnukeObject(textbox);
 			textbox.setRequired(true);

@@ -32,11 +32,20 @@ using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Xsl;
 using com.xmlnuke.admin;
+using com.xmlnuke.util;
 using System.Text.RegularExpressions;
 using com.xmlnuke.classes;
 
 namespace com.xmlnuke.engine
 {
+    // Output Result for XML processing
+    public enum OutputResult
+    {
+        XHtml,
+        Xml, 
+        Json
+    }
+
 	/// <summary>
 	/// XmlNukeEngine class use a Facade Design Pattern. This class call all of other xmlnuke classes and return the XML/XSL processed
 	/// </summary>
@@ -44,7 +53,7 @@ namespace com.xmlnuke.engine
 	{
 		private engine.Context _context = null;
 
-		protected bool _applyXslTemplate = true;
+		protected OutputResult _outputResult = OutputResult.XHtml;
 
 		protected string _extractNodes;
 
@@ -55,17 +64,17 @@ namespace com.xmlnuke.engine
 		/// </summary>
 		/// <param name="context">The com.xmlnuke.engine.Context class</param>
 		public XmlNukeEngine(engine.Context context)
-			: this(context, true, "", "xmlnuke")
+			: this(context, OutputResult.XHtml, "", "xmlnuke")
 		{ }
 
-		public XmlNukeEngine(engine.Context context, bool applyXslTemplate, string extractNodes)
-			: this(context, applyXslTemplate, extractNodes, "xmlnuke")
+		public XmlNukeEngine(engine.Context context, OutputResult outputResult, string extractNodes)
+			: this(context, outputResult, extractNodes, "xmlnuke")
 		{ }
 
-		public XmlNukeEngine(engine.Context context, bool applyXslTemplate, string extractNodes, string extractNodesRoot)
+		public XmlNukeEngine(engine.Context context, OutputResult outputResult, string extractNodes, string extractNodesRoot)
 		{
 			this._context = context;
-			this._applyXslTemplate = applyXslTemplate;
+			this._outputResult = outputResult;
 			this._extractNodes = extractNodes;
 			this._extractNodesRoot = extractNodesRoot;
 		}
@@ -81,7 +90,7 @@ namespace com.xmlnuke.engine
 
 			// Check if file cache already exists
 			// If exists read it from there;
-			if (util.FileUtil.Exists(xmlCacheFile.FullQualifiedNameAndPath()) && !this._context.NoCache && !this._context.Reset && this._applyXslTemplate)
+			if (util.FileUtil.Exists(xmlCacheFile.FullQualifiedNameAndPath()) && !this._context.NoCache && !this._context.Reset && (this._outputResult == OutputResult.XHtml))
 			{
 				return util.FileUtil.QuickFileRead(xmlCacheFile.FullQualifiedNameAndPath());
 			}
@@ -95,7 +104,7 @@ namespace com.xmlnuke.engine
 				string result = TransformDocument(getXmlDocument(xmlFile));
 
 				// Save cache file - NOCACHE: Doesn't Save; Otherwise: Allways save
-				if (!this._context.NoCache && this._applyXslTemplate)
+                if (!this._context.NoCache && (this._outputResult == OutputResult.XHtml))
 				{
 					util.FileUtil.QuickFileWrite(xmlCacheFile.FullQualifiedNameAndPath(), result);
 				}
@@ -114,7 +123,7 @@ namespace com.xmlnuke.engine
 			bool useCache = module.useCache();
 			string result;
 
-			if (!module.hasInCache() || !useCache || !this._applyXslTemplate)
+            if (!module.hasInCache() || !useCache || (this._outputResult != OutputResult.XHtml))
 			{
 				classes.IXmlnukeDocument px = module.CreatePage();
 				XmlDocument xmlDoc = px.makeDomObject();
@@ -143,7 +152,7 @@ namespace com.xmlnuke.engine
 					result = TransformDocument(xmlDoc, xslFile);
 				}
 
-				if (useCache && this._applyXslTemplate)
+				if (useCache && (this._outputResult == OutputResult.XHtml))
 				{
 					module.saveToCache(result);
 				}
@@ -252,11 +261,13 @@ namespace com.xmlnuke.engine
             }
 
 		    // Check if there is no XSL template
-			if (!this._applyXslTemplate)
-			{
+			if (this._outputResult != OutputResult.XHtml)
+            {
+                XmlDocument xmlResult = null;
+
 				if (this._extractNodes == "")
 				{
-					return xml.OuterXml;
+					xmlResult = xml;
 				}
 				else
 				{
@@ -274,8 +285,18 @@ namespace com.xmlnuke.engine
 						}
 						util.XmlUtil.AddNodeFromNode(nodeToAdd, node);
 					}
-					return retDocument.OuterXml;
+					xmlResult = retDocument;
 				}
+
+                if (this._outputResult == OutputResult.Json)
+                {
+                    // Convert to JSon.
+                    return XmlUtil.XmlToJSON(xmlResult);
+                }
+                else
+                {
+                    return xmlResult.OuterXml;
+                }
 			}
 
 			_context.Xsl = xslFile.ToString();

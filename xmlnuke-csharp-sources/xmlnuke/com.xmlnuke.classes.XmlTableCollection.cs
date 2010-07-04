@@ -74,6 +74,18 @@ namespace com.xmlnuke.classes
 		{
 			this._NODE = "table";
 		}
+
+        public override void addXmlnukeObject(IXmlnukeDocumentObject docobj)
+        {
+            if (docobj is XmlTableRowCollection)
+            {
+                base.addXmlnukeObject(docobj);
+            }
+            else
+            {
+                throw new Exception("XmlTableCollecion expects a XmlTableRowCollection");
+            }
+        }
 	}
 
 	public class XmlTableRowCollection : XmlTableCollectionBase
@@ -82,6 +94,18 @@ namespace com.xmlnuke.classes
 		{
 			this._NODE = "tr";
 		}
+
+        public override void addXmlnukeObject(IXmlnukeDocumentObject docobj)
+        {
+            if (docobj is XmlTableColumnCollection)
+            {
+                base.addXmlnukeObject(docobj);
+            }
+            else
+            {
+                throw new Exception("XmlTableRowCollecion expects a XmlTableColumnCollection");
+            }
+        }
 	}
 
 

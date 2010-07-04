@@ -107,12 +107,12 @@ namespace com.xmlnuke.Database
         /// <param name="fmt"></param>
         /// <param name="col"></param>
         /// <returns></returns>
-	    public string SQLDate(string fmt, string col)
+	    public virtual string SQLDate(string fmt, string col)
 	    {
 		    return "";
 	    }
 
-        public string toDate(string date, DATEFORMAT dateFormat)
+        public virtual string toDate(string date, DATEFORMAT dateFormat)
         {
             return this.toDate(date, dateFormat, false);
         }
@@ -129,7 +129,7 @@ namespace com.xmlnuke.Database
 		    return DateUtil.ConvertDate(date, dateFormat, DATEFORMAT.YMD, hour);
 	    }
 
-	    public string fromDate(string date, DATEFORMAT dateFormat)
+	    public virtual string fromDate(string date, DATEFORMAT dateFormat)
         {
             return this.fromDate(date, dateFormat, false);
         }
@@ -153,7 +153,7 @@ namespace com.xmlnuke.Database
         /// <param name="sql"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        public int executeAndGetInsertedId(com.xmlnuke.anydataset.DBDataSet dbdataset, string sql, com.xmlnuke.anydataset.DbParameters param)
+        public virtual int executeAndGetInsertedId(com.xmlnuke.anydataset.DBDataSet dbdataset, string sql, com.xmlnuke.anydataset.DbParameters param)
         {
             dbdataset.execSQL(sql, param);
 		    return -1;

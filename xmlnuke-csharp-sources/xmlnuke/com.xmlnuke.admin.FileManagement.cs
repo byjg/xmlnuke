@@ -84,8 +84,10 @@ namespace com.xmlnuke.admin
 
 			//SET FILEBROWSER ACESS LEVEL
 			AnydatasetSetupFilenameProcessor processor = new AnydatasetSetupFilenameProcessor("filemanagement", this._context);
-			//		processor.setFilenameLocation(ForceFilenameLocation.SharedPath );
+			processor.FilenameLocation = ForceFilenameLocation.UseWhereExists;
 			AnyDataSet anyDataSet = new AnyDataSet(processor);
+
+            bool ignoreAdmin = false;
 
 			IIterator it = anyDataSet.getIterator();
 			while (it.hasNext())
@@ -131,11 +133,12 @@ namespace com.xmlnuke.admin
 						browser.setFolderView(row.getField("folder_view") == "true");
 						browser.setFolderEdit(row.getField("folder_edit") == "true");
 						browser.setFolderDelete(row.getField("folder_delete") == "true");
+                        ignoreAdmin = (row.getField("ignore_admin")=="true");
 						break;
 				}
 			}
 
-			if (this.isUserAdmin())
+			if (this.isUserAdmin() && !ignoreAdmin)
 				browser.setUserType(FileBrownserUserType.ADMIN);
 
 			this._block.addXmlnukeObject(browser);

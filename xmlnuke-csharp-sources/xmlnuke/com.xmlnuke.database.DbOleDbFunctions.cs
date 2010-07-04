@@ -118,7 +118,7 @@ namespace com.xmlnuke.Database
         /// <param name="sql"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        public int executeAndGetInsertedId(com.xmlnuke.anydataset.DBDataSet dbdataset, string sql, com.xmlnuke.anydataset.DbParameters param)
+        public override int executeAndGetInsertedId(com.xmlnuke.anydataset.DBDataSet dbdataset, string sql, com.xmlnuke.anydataset.DbParameters param)
         {
 			// http://databases.aspfaq.com/general/how-do-i-get-the-identity/autonumber-value-for-the-row-i-inserted.html
 
@@ -137,7 +137,7 @@ namespace com.xmlnuke.Database
 				string tableName = m.Groups["tablename"].Value;
 			
 				System.Data.Common.DbDataAdapter dataAdapter = dbdataset.getDataAdpater(tableName);
-				string key = dataAdapter.UpdateCommand.Parameters.Item(0).SourceColumn;
+				string key = dataAdapter.UpdateCommand.Parameters[0].SourceColumn;
 			
 		    	IIterator it = dbdataset.getIterator("select max(" + key + ") id from " + tableName);
 			    if (it.hasNext())

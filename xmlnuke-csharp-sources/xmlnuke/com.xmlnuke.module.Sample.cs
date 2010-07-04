@@ -104,6 +104,7 @@ namespace com.xmlnuke.module
             xmlnukeDoc.addMenuItem("url://module:sample?op=14", "Auto Suggest", "Auto Suggest");
             xmlnukeDoc.addMenuItem("url://module:sample?op=15", "Treeview", "Treeview Component");
             xmlnukeDoc.addMenuItem("url://module:sample?op=16", "Sortable", "Sortable Component");
+            xmlnukeDoc.addMenuItem("url://module:sample?op=20", "Portlet", "Portlet Component");
             xmlnukeDoc.addMenuItem("url://module:sample?op=17", "Calendar", "Calendar Component");
             xmlnukeDoc.addMenuItem("url://module:sample?op=18", "UI Alert", "UI Alert Component");
             xmlnukeDoc.addMenuItem("url://module:sample?op=19", "Media Gallery", "Media Gallery Component");
@@ -222,6 +223,11 @@ namespace com.xmlnuke.module
                 case 19:
                     {
                         this.Opcao19(xmlnukeDoc);
+                        break;
+                    }
+                case 20:
+                    {
+                        this.Opcao20(xmlnukeDoc);
                         break;
                     }
             }
@@ -1107,7 +1113,7 @@ namespace com.xmlnuke.module
 
 
             XmlParagraphCollection para = new XmlParagraphCollection();
-            para.addXmlnukeObject(new XmlnukeText("Esse exemplo mostra como criar um componente Treeview através das classes de abstração XmlnukeTreeview, XmlnukeTreeviewFolder e XmlnukeTreeviewLeaf"));
+            para.addXmlnukeObject(new XmlnukeText("Esse exemplo mostra como criar um componente de ordenação interativa através das classes de abstração XmlnukeSortable"));
             block.addXmlnukeObject(para);
 
             XmlFormCollection form = new XmlFormCollection(this._context, "", "Sortable Example");
@@ -1260,6 +1266,48 @@ namespace com.xmlnuke.module
 
             xmlnukeDoc.addXmlnukeObject(block);
         }
+
+        protected void Opcao20(XmlnukeDocument xmlnukeDoc)
+	    {
+            XmlBlockCollection block = new XmlBlockCollection("Exemplo 20: Portlets", BlockPosition.Center);
+
+		    //XmlnukeBreakLine br = new XmlnukeBreakLine();
+
+
+            XmlParagraphCollection para = new XmlParagraphCollection();
+		    para.addXmlnukeObject(new XmlnukeText("Esse exemplo mostra como criar um componente de ordenação interativa com o uso de Portlets através da classe de abstração XmlInputSortable"));
+		    block.addXmlnukeObject(para);
+
+            XmlFormCollection form = new XmlFormCollection(this._context, "", "Portlet Example");
+
+		    // Portlet One
+            XmlInputSortableList sortable = new XmlInputSortableList("Teste", "meunome", new string[] {"col1", "col2"} );
+		    sortable.setConnectKey("ligacao");
+		    sortable.setFullSize(true);
+
+		    sortable.addSortableItem("", new XmlnukeText("Coluna 1"), SortableListItemState.Disabled, "col1");
+		    sortable.addPortlet("1", "Titulo 1", new XmlnukeText("Teste 1"), "col1");
+		    sortable.addPortlet("2", "Titulo 2", new XmlnukeText("Teste 2"), "col1");
+		    sortable.addPortlet("3", "Titulo 3", new XmlnukeText("Teste 3"), "col1");
+		    sortable.addSortableItem("", new XmlnukeText("Coluna 2"), SortableListItemState.Disabled, "col2");
+		    sortable.addPortlet("4", "Titulo 4", new XmlnukeText("Teste 4"), "col2");
+		    sortable.addPortlet("5", "Titulo 5", new XmlnukeText("Teste 5"), "col2");
+		    form.addXmlnukeObject(sortable);
+
+		    // Portlet Two
+		    sortable = new XmlInputSortableList("Teste2", "meunome2");
+		    sortable.setConnectKey("ligacao");
+		    sortable.setFullSize(true);
+
+		    sortable.addSortableItem("", new XmlnukeText("Outra Coluna"), SortableListItemState.Disabled);
+		    sortable.addPortlet("6", "Titulo 6", new XmlnukeText("Teste 6"));
+		    sortable.addPortlet("7", "Titulo 7", new XmlnukeText("Teste 7"));
+		    form.addXmlnukeObject(sortable);
+
+		    block.addXmlnukeObject(form);
+
+            xmlnukeDoc.addXmlnukeObject(block);
+	    }
 
     }
 

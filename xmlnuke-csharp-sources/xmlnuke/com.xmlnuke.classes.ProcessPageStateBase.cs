@@ -565,14 +565,17 @@ namespace com.xmlnuke.classes
             {
                 for (int i = 0; i < this._buttons.Length; i++)
                 {
-                    cb = editList.getCustomButton();
-                    cb.action = this._buttons[i].action;
-                    cb.alternateText = this._buttons[i].alternateText;
-                    cb.icon = this._buttons[i].icon;
-                    cb.url = this._buttons[i].url;
-                    cb.enabled = true;
-                    cb.multiple = this._buttons[i].multiple;
-                    editList.setCustomButton(cb);
+                    if ((this._buttons[i].action != "") || (this._buttons[i].url != ""))
+				    {
+                        cb = editList.getCustomButton();
+                        cb.action = this._buttons[i].action;
+                        cb.alternateText = this._buttons[i].alternateText;
+                        cb.icon = this._buttons[i].icon;
+                        cb.url = this._buttons[i].url;
+                        cb.enabled = true;
+                        cb.multiple = this._buttons[i].multiple;
+                        editList.setCustomButton(cb);
+                    }
                 }
             }
 

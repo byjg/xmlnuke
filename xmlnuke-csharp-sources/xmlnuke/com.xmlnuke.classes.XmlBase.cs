@@ -80,6 +80,10 @@ namespace com.xmlnuke.classes
         /// <param name="docobj">Any object it implements IXmlnukeDocumentObject interface</param>
         public virtual void addXmlnukeObject(IXmlnukeDocumentObject docobj)
         {
+            if (docobj == this)
+            {
+                throw new Exception("You are adding the object to itself");
+            }
             _items.Add(docobj);
         }
 

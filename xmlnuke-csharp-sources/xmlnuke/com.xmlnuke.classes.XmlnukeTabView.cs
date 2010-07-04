@@ -32,12 +32,30 @@ using System.Xml;
 
 namespace com.xmlnuke.classes
 {
+    enum TabTypeEnum
+    {
+        Object,
+        Ajax
+    }
+
+    struct TabStructure
+    {
+        public TabTypeEnum TabType;
+        public string Title;
+        public object Item;
+
+        public TabStructure(TabTypeEnum tabType, string title, object item)
+        {
+            this.TabType = tabType;
+            this.Title = title;
+            this.Item = item;
+        }
+    }
 
 	public class XmlnukeTabView : XmlnukeDocumentObject
 	{
 		protected ArrayList _tabs = new ArrayList();
-		protected ArrayList _tabsData = new ArrayList();
-		protected string _tabDefault = "";
+		protected int _tabDefault = 0;
 
 		/**
 		*@desc Generate page, processing yours childs.
@@ -53,28 +71,49 @@ namespace com.xmlnuke.classes
 		{
 			this.addTabItem(title, docobj, false);
 		}
-		public void addTabItem(string title, IXmlnukeDocumentObject docobj, bool defaultTab)
-		{
-			this._tabs.Add(title);
-			this._tabsData.Add(docobj);
-			if (defaultTab)
-			{
-				this._tabDefault = title;
-			}
-		}
+        public void addTabItem(string title, IXmlnukeDocumentObject docobj, bool defaultTab)
+        {
+            this._tabs.Add(new TabStructure(TabTypeEnum.Object, title, docobj));
+            if (defaultTab)
+            {
+                this._tabDefault = this._tabs.Count - 1;
+            }
+        }
 
-		public override void generateObject(XmlNode current)
+        public void addTabAjax(string title, string url)
+        {
+            this.addTabAjax(title, url, false);
+        }
+        public void addTabAjax(string title, string url, bool defaultTab)
+        {
+            this._tabs.Add(new TabStructure(TabTypeEnum.Ajax, title, url));
+            if (defaultTab)
+            {
+                this._tabDefault = this._tabs.Count - 1;
+            }
+        }
+        
+        public override void generateObject(XmlNode current)
 		{
 			XmlNode node = util.XmlUtil.CreateChild(current, "tabview", "");
 			for (int i = 0; i < this._tabs.Count; i++)
 			{
+                TabStructure tabData = (TabStructure)this._tabs[i];
+
 				XmlNode nodetab = util.XmlUtil.CreateChild(node, "tabitem", "");
-				util.XmlUtil.AddAttribute(nodetab, "title", this._tabs[i].ToString());
-				if (this._tabDefault == this._tabs[i].ToString())
+				util.XmlUtil.AddAttribute(nodetab, "title", tabData.Title);
+				if (this._tabDefault == i)
 				{
 					util.XmlUtil.AddAttribute(nodetab, "default", "true");
 				}
-				((IXmlnukeDocumentObject)this._tabsData[i]).generateObject(nodetab);
+                if (tabData.TabType == TabTypeEnum.Object)
+                {
+                    ((IXmlnukeDocumentObject)tabData.Item).generateObject(nodetab);
+                }
+                else
+                {
+                    util.XmlUtil.AddAttribute(nodetab, "url", tabData.Item.ToString());
+                }
 			}
 		}
 	}

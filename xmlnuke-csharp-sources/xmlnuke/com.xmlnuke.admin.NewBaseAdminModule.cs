@@ -37,6 +37,7 @@ using com.xmlnuke.anydataset;
 using com.xmlnuke.processor;
 using com.xmlnuke.international;
 using com.xmlnuke.util;
+using System.Collections.Generic;
 
 namespace com.xmlnuke.admin
 {
@@ -53,23 +54,25 @@ namespace com.xmlnuke.admin
 
 		override public IXmlnukeDocument CreatePage()
 		{
-			this.defaultXmlnukeDocument.PageTitle = "Control Panel";
-			this.defaultXmlnukeDocument.Abstract = "Painel de Controle do XMLNuke";
 			this._mainBlock = new XmlBlockCollection("Menu", BlockPosition.Center);
 			this._help = new XmlParagraphCollection();
-			this._menu = new XmlParagraphCollection();
+			//this._menu = new XmlParagraphCollection();
 			this._mainBlock.addXmlnukeObject(this._help);
-			this._mainBlock.addXmlnukeObject(this._menu);
+			//this._mainBlock.addXmlnukeObject(this._menu);
 			this.defaultXmlnukeDocument.addXmlnukeObject(this._mainBlock);
-			XmlnukeManageUrl url = new XmlnukeManageUrl(URLTYPE.ADMIN, "");
-			url.addParam("site", this._context.Site);
-			XmlAnchorCollection link = new XmlAnchorCollection(url.getUrl(), "");
-			link.addXmlnukeObject(new XmlnukeText("Menu"));
-			this._menu.addXmlnukeObject(link);
-			this.defaultXmlnukeDocument.setMenuTitle("Menu");
-			this.CreateMenuAdmin();
+			//XmlnukeManageUrl url = new XmlnukeManageUrl(URLTYPE.ADMIN, "");
+			//url.addParam("site", this._context.Site);
+			//XmlAnchorCollection link = new XmlAnchorCollection(url.getUrl(), "");
+			//link.addXmlnukeObject(new XmlnukeText("Menu"));
+			//this._menu.addXmlnukeObject(link);
+			//this.defaultXmlnukeDocument.setMenuTitle("Menu");
+			LanguageCollection lang = this.CreateMenuAdmin();
 
-			return null;
+            this.defaultXmlnukeDocument.PageTitle = "XMLNuke";
+            this.defaultXmlnukeDocument.Abstract = lang.Value("CONTROLPANEL_TITLE");
+            this.defaultXmlnukeDocument.addMetaTag("controlpaneltitle", lang.Value("CONTROLPANEL_TITLE"));
+
+            return null;
 		}
 
 		override public sealed bool requiresAuthentication()
@@ -124,63 +127,91 @@ namespace com.xmlnuke.admin
 		}
 		protected IIterator GetAdminGroups(string group)
 		{
-			string rowNode;
-			if (String.IsNullOrEmpty(group))
+			string[] keys;
+			if (!String.IsNullOrEmpty(group))
 			{
-				rowNode = "group";
+                if (this.GetAdminModulesList().ContainsKey(group))
+                {
+                    keys = new string[] { group };
+                }
+                else
+                {
+                    keys = new string[] {};
+                }
 			}
 			else
 			{
-				rowNode = "group[@name='" + group + "']";
+                keys = new string[this.GetAdminModulesList().Keys.Count];
+                int i = 0;
+                foreach (string val in this.GetAdminModulesList().Keys)
+                {
+                    keys[i++] = val;
+                }
 			}
-			NameValueCollection colNode = new NameValueCollection();
-			colNode["name"] = "@name";
-			XmlDataSet dataset = new XmlDataSet(this._context, this.GetAdminModulesList(), rowNode, colNode);
-			return dataset.getIterator();
+
+            ArrayDataSet arr = new ArrayDataSet(keys, "name");
+            return arr.getIterator();
 		}
 
-		protected IIterator GetAdminModules(string group)
+		protected Dictionary<string, string[]> GetAdminModules(string group)
 		{
-			string rowNode = "group[@name='" + group + "']/module";
-			NameValueCollection colNode = new NameValueCollection();
-			colNode["name"] = "@name";
-			colNode["icon"] = "icon";
-			colNode["url"] = "url";
+            Dictionary<string,Dictionary<string, string[]>> arr = this.GetAdminModulesList();
+            return arr[group];
+        }
 
-			XmlDataSet dataset = new XmlDataSet(this._context, this.GetAdminModulesList(), rowNode, colNode);
-			return dataset.getIterator();
-		}
+        protected Dictionary<string,Dictionary<string, string[]>> _adminModulesList = null;
 
-		protected string _adminModulesList = "";
-		protected bool _adminModulesListLocal = false;
-		protected string GetAdminModulesList()
+
+        protected Dictionary<string, Dictionary<string, string[]>> GetAdminModulesList()
 		{
+            if (this._adminModulesList == null)
+            {
+                this._adminModulesList = new Dictionary<string,Dictionary<string, string[]>>();
 
-			if (this._adminModulesList == "")
-			{
-				// Load Module List
-				AnydatasetFilenameProcessor localXmlProcessor = new AnydatasetFilenameProcessor("adminmodules.config", this._context);
-				string configFile = localXmlProcessor.PathSuggested() + localXmlProcessor.ToString() + ".xml";
-				if (FileUtil.Exists(configFile))
-				{
-					this._adminModulesListLocal = true;
-				}
-				else
-				{
-					XMLFilenameProcessor xmlProcessor = new XMLFilenameProcessor("admin" + FileUtil.Slash() + "adminmodules" + FileUtil.Slash(), this._context);
-					xmlProcessor.FilenameLocation = ForceFilenameLocation.PathFromRoot;
-					configFile = xmlProcessor.PathSuggested() + "admin" + FileUtil.Slash() + "adminmodules.config.xml";
-				}
-				this._adminModulesList = FileUtil.QuickFileRead(configFile);
-			}
-			return this._adminModulesList;
+                string rowNode = "group/module";
+			    NameValueCollection colNode = new NameValueCollection();
+                colNode["group"] = "../@name";
+                colNode["name"] = "@name";
+			    colNode["icon"] = "icon";
+			    colNode["url"] = "url";
+
+                AdminModulesXMLFilenameProcessor xmlProcessor = new AdminModulesXMLFilenameProcessor(this._context);
+                for (int i = 0; i < 2; i++)
+                {
+                    if (i == 0)
+                    {
+                        xmlProcessor.FilenameLocation = ForceFilenameLocation.SharedPath;
+                    }
+                    else
+                    {
+                        xmlProcessor.FilenameLocation =ForceFilenameLocation.PrivatePath;
+                    }
+
+                    string configFile = xmlProcessor.FullQualifiedNameAndPath();
+                    if (FileUtil.Exists(configFile))
+                    {
+                        string config = FileUtil.QuickFileRead(configFile);
+                        XmlDataSet dataset = new XmlDataSet(this._context, config, rowNode, colNode);
+                        foreach (SingleRow sr in dataset.getIterator())
+                        {
+                            if (!this._adminModulesList.ContainsKey(sr.getField("group")))
+                            {
+                                this._adminModulesList[sr.getField("group")] = new Dictionary<string, string[]>();
+                            }
+                            this._adminModulesList[sr.getField("group")][sr.getField("name")] = new string[] { sr.getField("icon"), sr.getField("url") };
+                        }
+                    }
+                }
+            }
+
+            return this._adminModulesList;
 		}
 
 
-		protected void CreateMenuAdmin()
+		protected LanguageCollection CreateMenuAdmin()
 		{
 			// Load Language file for Module Object
-			LanguageCollection lang = LanguageFactory.GetLanguageCollection(this._context, LanguageFileTypes.ADMININTERNAL, "adminmodules");
+			LanguageCollection lang = LanguageFactory.GetLanguageCollection(this._context, LanguageFileTypes.ADMININTERNAL, null);
 
 			// Create a Menu Item for GROUPS and MODULES. 
 			// This menu have CP_ before GROUP NAME
@@ -191,19 +222,26 @@ namespace com.xmlnuke.admin
 				SingleRow srGroup = itGroup.moveNext();
 				this.defaultXmlnukeDocument.addMenuGroup(lang.Value("GROUP_" + srGroup.getField("name").ToUpper()), "CP_" + srGroup.getField("name"));
 
-				IIterator itModule = this.GetAdminModules(srGroup.getField("name"));
+                Dictionary<string, string[]> arrModule = this.GetAdminModules(srGroup.getField("name"));
 
-				while (itModule.hasNext())
+				foreach (string name in arrModule.Keys)
 				{
-					SingleRow srModule = itModule.moveNext();
-					this.defaultXmlnukeDocument.addMenuItem(
-						srModule.getField("url"),
-						lang.Value("MODULE_TITLE_" + srModule.getField("name").ToUpper()),
-						lang.Value("MODULE_ABSTRACT_" + srModule.getField("name").ToUpper()),
-						"CP_" + srGroup.getField("name"),
-						srModule.getField("icon"));
+                    string url = arrModule[name][1];
+                    string icon = arrModule[name][0];
+
+                    if (!String.IsNullOrEmpty(url))
+                    {
+                        this.defaultXmlnukeDocument.addMenuItem(
+                            url,
+                            lang.Value("MODULE_TITLE_" + name.ToUpper()),
+                            lang.Value("MODULE_ABSTRACT_" + name.ToUpper()),
+                            "CP_" + srGroup.getField("name"),
+                            icon);
+                    }
 				}
 			}
+
+            return lang;
 		}
 
 	}

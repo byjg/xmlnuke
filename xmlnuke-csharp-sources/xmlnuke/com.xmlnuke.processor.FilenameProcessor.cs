@@ -29,6 +29,8 @@
 
 using System;
 using System.Collections.Specialized;
+using com.xmlnuke.engine;
+using com.xmlnuke.util;
 
 namespace com.xmlnuke.processor
 {
@@ -77,6 +79,36 @@ namespace com.xmlnuke.processor
 		}
 	}
 	#endregion
+
+    #region AdminModulesXMLFilenameProcessor
+    public class AdminModulesXMLFilenameProcessor : AnydatasetFilenameProcessor
+    {
+	    public AdminModulesXMLFilenameProcessor(Context context) : base("adminmodules", context)
+	    {
+		    this._filenameLocation = ForceFilenameLocation.SharedPath;
+	    }
+
+	    public override string SharedPath()
+	    {
+		    return this._context.SharedRootPath + "admin" + FileUtil.Slash();
+	    }
+
+	    /**
+	     *@param
+	     *@return string
+	     *@desc Implementing
+	     */
+	    public override string Extension()
+	    {
+		    return ".config.xml";
+	    }
+
+	    public override string FullName(string xml, string xsl, string languageId)
+	    {
+		    return xml;
+	    }
+    }
+    #endregion
 
 	/// <summary>
 	/// 
@@ -484,6 +516,35 @@ namespace com.xmlnuke.processor
 		}
 	}
 	#endregion
+
+    /// <summary>
+    /// 
+    /// </summary>
+    #region AdminModulesLangFilenameProcessor
+    public class AdminModulesLangFilenameProcessor : AnydatasetLangFilenameProcessor
+    {
+	    /**
+	     *@param string $singlename
+	     *@param Context $context
+	     *@return void
+	     *@desc
+	     */
+	    public AdminModulesLangFilenameProcessor(Context context) : base("adminmodules", context)
+	    {
+		    this._filenameLocation = ForceFilenameLocation.UseWhereExists;
+	    }
+
+	    /**
+	     *@param
+	     *@return string
+	     *@desc
+	     */
+	    public override string SharedPath()
+	    {
+		    return this._context.SharedRootPath + "admin" + FileUtil.Slash();
+	    }
+    }
+    #endregion
 
 	/// <summary>
 	/// 

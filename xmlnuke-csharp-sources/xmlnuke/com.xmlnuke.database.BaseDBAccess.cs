@@ -34,6 +34,7 @@ using com.xmlnuke.classes;
 using com.xmlnuke.anydataset;
 using com.xmlnuke.util;
 using com.xmlnuke.Database;
+using System.Web;
 
 namespace com.xmlnuke.database
 {
@@ -207,6 +208,70 @@ namespace com.xmlnuke.database
             return retArray;
         }
 
+
+	    public static string saveToCSV(IIterator it)
+        {
+            return saveToCSV(it, "data.csv", null, true);
+        }
+
+	    public static string saveToCSV(IIterator it, string filename)
+	    {
+            return saveToCSV(it, filename, null, true);
+        }
+
+	    public static string saveToCSV(IIterator it, string filename, string[] fields)
+	    {
+            return saveToCSV(it, filename, fields, true);
+        }
+
+        public static string saveToCSV(IIterator it, string filename, string[] fields, bool saveToBrowser)
+	    {
+		    if (saveToBrowser)
+		    {
+                HttpContext.Current.Response.Clear();
+
+                HttpContext.Current.Response.ContentType = "text/csv";
+                HttpContext.Current.Response.AppendHeader("Content-Disposition", "attachment; filename=\"" + filename + "\";");
+		    }
+
+		    bool first = true;
+		    string line = "";
+		    foreach (SingleRow sr in it)
+		    {
+			    if (first)
+			    {
+				    first = false;
+
+				    if (fields == null)
+				    {
+					    fields = sr.getFieldNames();
+				    }
+
+				    line += '"' + String.Join("\",\"", fields) + '"' + "\n";
+			    }
+
+			    string[] raw = new string[fields.Length];
+
+                int i = 0;
+			    foreach (string field in fields)
+			    {
+				    raw[i++] = sr.getField(field);
+			    }
+			    line += '"' + String.Join("\",\"", raw) + '"' + "\n";
+
+			    if (saveToBrowser)
+			    {
+				    HttpContext.Current.Response.Write(line);
+				    line = "";
+			    }
+		    }
+
+		    if (saveToBrowser)
+		    {
+                HttpContext.Current.Response.End();
+		    }
+		    return line;
+	    }
 
         /// <summary>
         /// Get a IDbFunctions class containing specific database operations

@@ -231,9 +231,10 @@ namespace com.xmlnuke.module
 
 			XmlFormCollection form = new XmlFormCollection(this._context, url.getUrl(), myWords.Value("CREATEUSERTITLE"));
 
-			XmlInputTextBox textbox = new XmlInputTextBox(myWords.Value("LABEL_LOGIN"), "loguser", this._context.ContextValue("loguser"), 20);
+			XmlInputTextBox textbox = new XmlInputTextBox(myWords.Value("LABEL_LOGIN"), "newloguser", this._context.ContextValue("newloguser"), 20);
 			textbox.setInputTextBoxType(InputTextBoxType.TEXT);
 			textbox.setDataType(INPUTTYPE.TEXT);
+            textbox.setMaxLength(20);
 			textbox.setRequired(true);
 			form.addXmlnukeObject(textbox);
 
@@ -279,14 +280,14 @@ namespace com.xmlnuke.module
 			}
 			else
 			{
-				if (!this._users.addUser(this._context.ContextValue("name"), this._context.ContextValue("loguser"), this._context.ContextValue("email"), newpassword))
+				if (!this._users.addUser(this._context.ContextValue("name"), this._context.ContextValue("newloguser"), this._context.ContextValue("email"), newpassword))
 				{
 					container.addXmlnukeObject(new XmlnukeText(myWords.Value("CREATEUSERFAIL"), true, false, false));
 					this.CreateNewUser(block);
 				}
 				else
 				{
-					this.sendWelcomeMessage(myWords, this._context.ContextValue("name"), this._context.ContextValue("loguser"), this._context.ContextValue("email"), newpassword);
+					this.sendWelcomeMessage(myWords, this._context.ContextValue("name"), this._context.ContextValue("newloguser"), this._context.ContextValue("email"), newpassword);
 					this._users.Save();
 					container.addXmlnukeObject(new XmlnukeText(myWords.Value("CREATEUSEROK"), true, false, false));
                     container.setUIAlertType(UIAlert.BoxInfo);
