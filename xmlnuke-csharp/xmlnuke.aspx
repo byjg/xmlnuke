@@ -27,6 +27,7 @@
         }
 		else
 		{
+            output = com.xmlnuke.engine.OutputResult.XHtml;
             string contentType;
             if (detectMobile())
 		    {
@@ -113,7 +114,7 @@
                     "pda", "windows ce", "mmp/", "blackberry", "mib/", "symbian", "wireless", "nokia", "hand", "mobi",
                     "phone", "cdm", "up.b", "audio", "SIE-", "SEC-", "samsung", "HTC", "mot-", "mitsu", "sagem", "sony"
                     , "alcatel", "lg", "eric", "vx", "NEC", "philips", "mmm", "xx", "panasonic", "sharp", "wap", "sch",
-                    "rover", "pocket", "benq", "java", "pt", "pg", "vox", "amoi", "bird", "compal", "kg", "voda",
+                    "rover", "pocket", "benq", "java", /*"pt", */"pg", "vox", "amoi", "bird", "compal", "kg", "voda",
                     "sany", "kdd", "dbt", "sendo", "sgh", "gradi", "jb", "dddi", "moto", "iphone"
                 };
 
