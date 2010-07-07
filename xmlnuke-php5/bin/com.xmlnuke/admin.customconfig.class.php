@@ -82,6 +82,7 @@ class CustomConfig extends NewBaseAdminModule
 			$nv["xmlnuke.USERSDATABASE"] = $this->_context->ContextValue("usersdatabase");
 			$nv["xmlnuke.USERSCLASS"] = $this->_context->ContextValue("usersclass");
 			$nv["xmlnuke.DEBUG"] = $this->_context->ContextValue("txtdebug");
+			$nv["xmlnuke.DETECTMOBILE"] = $this->_context->ContextValue("txtdetectmobile");
     		$nv["xmlnuke.CAPTCHACHALLENGE"] = $this->_context->ContextValue("captchachallenge");
 			$nv["xmlnuke.CAPTCHALETTERS"] = $this->_context->ContextValue("captchaletters");
 			$nv["xmlnuke.ENABLEPARAMPROCESSOR"] = $this->_context->ContextValue("enableparamprocessor");
@@ -116,6 +117,7 @@ class CustomConfig extends NewBaseAdminModule
 		$form->addXmlnukeObject(new XmlInputTextBox("xmlnuke.LOGINMODULE", "loginmodule", $this->_context->ContextValue("xmlnuke.LOGINMODULE"), 30));
 		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "usersdatabase", "xmlnuke.USERSDATABASE", $this->getStringConnectionsArray(), $this->_context->ContextValue("xmlnuke.USERSDATABASE")));
 		$form->addXmlnukeObject(new XmlInputTextBox("xmlnuke.USERSCLASS", "usersclass", $this->_context->ContextValue("xmlnuke.USERSCLASS"), 30));
+		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "txtdetectmobile", "xmlnuke.DETECTMOBILE", $truefalse, $this->getStringBool($this->_context->ContextValue("xmlnuke.DETECTMOBILE"))));
 		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "txtdebug", "xmlnuke.DEBUG", $truefalse, $this->getStringBool($this->_context->ContextValue("xmlnuke.DEBUG"))));
 		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "captchachallenge", "xmlnuke.CAPTCHACHALLENGE", array("easy"=>"Easy", "hard"=>"Hard"), $this->_context->ContextValue("xmlnuke.CAPTCHACHALLENGE")));
 		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "captchaletters", "xmlnuke.CAPTCHALETTERS", array("5"=>"5", "6"=>"6", "7"=>"7", "8"=>"8", "9"=>"9", "10"=>"10"), $this->_context->ContextValue("xmlnuke.CAPTCHALETTERS")));

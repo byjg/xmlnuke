@@ -141,6 +141,13 @@
 	 */
 	function detectMobile()
 	{
+		global $context;
+
+		if (!$context->ContextValue("xmlnuke.DETECTMOBILE"))
+		{
+			return false;
+		}
+
 		$mobile_browser = '0';
 
 		if(preg_match('/(up.browser|up.link|mmp|symbian|smartphone|midp|wap|phone)/i', strtolower($_SERVER['HTTP_USER_AGENT']))) {
