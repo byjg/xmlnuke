@@ -270,11 +270,12 @@ class XmlChart extends XmlnukeDocumentObject
 			elseif ($this->_chartoutput == ChartOutput::Flash)
 			{
 				$url->addParam("xcrt", "flash");
-				$link = urlencode($this->_context->joinUrlBase(str_replace("&amp;", "&", str_replace("&amp;", "&", str_replace("&amp;", "&", $url->getUrl())))));
+				$link = $this->_context->joinUrlBase($url->getUrl());
 				
 				$flash = new XmlNukeFlash();
 				$flash->setMovie($this->_context->joinUrlBase("common/swfchart/charts.swf"));
-				$flash->addParam("FlashVars", "library_path=" . $this->_context->joinUrlBase("common/swfchart/charts_library&xml_source=" . $link));
+				$flash->addParam("library_path", $this->_context->joinUrlBase("common/swfchart/charts_library"));
+				$flash->addParam("xml_source", $link);
 				$flash->setHeight($this->_height);
 				$flash->setWidth($this->_width);
 				$flash->generateObject($current);

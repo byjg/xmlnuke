@@ -72,7 +72,7 @@
 		$(function () {
 			$('#xmlnukeflash<xsl:value-of select="position()"/>').flash({
 				src: '<xsl:value-of select="@movie"/>',	<xsl:if test="param">
-				flashvars: { <xsl:for-each select="param"><xsl:value-of select="@name" />: '<xsl:value-of select="@value" />'</xsl:for-each>},
+				flashvars: { <xsl:for-each select="param"><xsl:if test="position()>1">, </xsl:if><xsl:value-of select="@name" />: '<xsl:value-of select="@value" />'</xsl:for-each>},
 				</xsl:if>
 				width: '<xsl:value-of select="@width"/>',
 				height: '<xsl:value-of select="@height"/>'
