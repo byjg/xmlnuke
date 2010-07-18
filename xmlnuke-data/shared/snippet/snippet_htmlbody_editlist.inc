@@ -33,7 +33,9 @@
 				<xsl:if test="@url!=''">
 					<xsl:attribute name="url"><xsl:value-of select="@url"/></xsl:attribute>
 				</xsl:if>
-				<img src="{@img}" border="0" alt="{@alt}" title="{@alt}" />
+				<xsl:if test="@img!=''">
+					<img src="{@img}" border="0" alt="{@alt}" title="{@alt}" />
+				</xsl:if>
 				<span><xsl:value-of select="@alt" /></span>
 			</li>
 			</xsl:if>
