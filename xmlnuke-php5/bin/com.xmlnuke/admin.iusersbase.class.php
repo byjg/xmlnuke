@@ -170,5 +170,21 @@ interface IUsersBase
 	 * @param string $newValue
 	 */
 	public function editRolePublic($site, $role, $newValue = null);
+
+	/**
+	 *
+	 * @param int $userId
+	 * @return bool
+	 */
+	public function userIsAdmin($userId = "");
+
+	/**
+	 *
+	 * @param string $role
+	 * @param int $userId
+	 * @return bool
+	 */
+	public function userHasRole($role, $userId = "");
+
 }
 ?>

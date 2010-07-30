@@ -131,7 +131,7 @@ interface IModule
 	function getRole();
 
 	/**
-	 * Verify if user is Administrator
+	 * Verify if this module is admin page
 	 *
 	 */
 	function isAdmin();

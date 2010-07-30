@@ -442,5 +442,44 @@ abstract class UsersBase implements IUsersBase
 	{
 		throw new Exception("This method must be implemented");
 	}
+
+	/**
+	 *
+	 * @param int $userId
+	 * @return bool
+	 */
+	public function userIsAdmin($userId = "")
+	{
+		if ($userId == "")
+		{
+			$userId = $this->_context->authenticatedUserId();
+			if ($userId == "")
+				throw new NotAuthenticatedException();
+		}
+		
+		$user = $this->getUserId($userId);
+		if ($user != null)
+			return ($user->getField($this->_UserTable->Admin) == "yes");
+		else
+			throw new Exception("Cannot find the user");
+	}
+
+	/**
+	 *
+	 * @param string $role
+	 * @param int $userId
+	 * @return bool
+	 */
+	public function userHasRole($role, $userId = "")
+	{
+		if ($userId == "")
+		{
+			$userId = $this->_context->authenticatedUserId();
+			if ($userId == "")
+				throw new NotAuthenticatedException();
+		}
+
+		return $users->checkUserProperty($userId, $role, UserProperty::Role);
+	}
 }
 ?>

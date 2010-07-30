@@ -232,6 +232,7 @@ abstract class NewBaseAdminModule extends BaseModule
 			$colNode["name"] = "@name";
 			$colNode["icon"] = "icon";
 			$colNode["url"] = "url";
+			$colNode["command"] = "@command";
 
 			// Read from Generic XML
 			$xmlProcessor = new AdminModulesXMLFilenameProcessor($this->_context);
@@ -255,7 +256,14 @@ abstract class NewBaseAdminModule extends BaseModule
 					{
 						if (array_key_exists($sr->getField("group"), $this->_adminModulesList) || ($i==0))
 						{
-							$this->_adminModulesList[$sr->getField("group")][$sr->getField("name")] = array($sr->getField("icon"), $sr->getField("url"));
+							if ($sr->getField("command") != "@hidegroup")
+							{
+								$this->_adminModulesList[$sr->getField("group")][$sr->getField("name")] = array($sr->getField("icon"), $sr->getField("url"));
+							}
+							else
+							{
+								unset($this->_adminModulesList[$sr->getField("group")]);
+							}
 						}
 						else
 						{
