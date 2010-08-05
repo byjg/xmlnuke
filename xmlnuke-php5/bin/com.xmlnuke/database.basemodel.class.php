@@ -30,7 +30,7 @@
 abstract class BaseModel
 {
 
-	protected $_propertyPattern = array("/(\w*)/", "$1");
+	protected $_propertyPattern = array('/(\w*)/', '$1');
 
 	/**
 	 *
