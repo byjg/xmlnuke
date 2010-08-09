@@ -254,7 +254,17 @@ class Debug
 	 */
 	public static function LogError($module, $error)
 	{
-		Debug::LogText(get_class($error) . ": $module: " . $error->getMessage());
+		if ($error instanceof Exception)
+		{
+			$chamada = get_class($error);
+			$mensagem = $error->getMessage();
+		}
+		else
+		{
+			$chamada = "ERROR";
+			$mensagem = $error;
+		}
+		Debug::LogText($chamada . ": $module: " . $mensagem);
 	}
 
 

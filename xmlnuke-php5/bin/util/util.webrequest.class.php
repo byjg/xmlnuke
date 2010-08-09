@@ -148,7 +148,7 @@ class WebRequest
 	 * @param array $params
 	 * @return object
 	 */
-	public function Soap($method, $params = null)
+	public function Soap($method, $params = null, $soapOptions = null)
 	{
 		if (is_array($params))
 		{
@@ -163,15 +163,19 @@ class WebRequest
 			$soapParams = null;
 		}
 
+		if (!is_array($soapOptions) || ($soapOptions == null))
+		{
+			$soapOptions = array(
+	            "uri" => "urn:xmethods-delayed-quotes",
+            	"soapaction" => "urn:xmethods-delayed-quotes#getQuote"
+        	);
+		}
+
 		// Chamando método do webservice
 		$result = $this->getSoapClient()->__call(
 			$method,
 			$soapParams,
-	        // Opções
-        	array(
-	            "uri" => "urn:xmethods-delayed-quotes",
-            	"soapaction" => "urn:xmethods-delayed-quotes#getQuote"
-        	)
+	        $soapOptions
 		);
 
 		return $result;
