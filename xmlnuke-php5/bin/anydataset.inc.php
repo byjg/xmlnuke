@@ -17,4 +17,6 @@ require_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/anydataset.textfiledataset.class.p
 require_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/anydataset.textfileiterator.class.php");
 require_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/anydataset.xmldataset.class.php");
 require_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/anydataset.xmliterator.class.php");
+require_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/anydataset.fixedtextfiledataset.class.php");
+require_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/anydataset.fixedtextfileiterator.class.php");
 ?>
