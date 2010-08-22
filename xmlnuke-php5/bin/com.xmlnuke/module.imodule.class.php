@@ -135,5 +135,11 @@ interface IModule
 	 *
 	 */
 	function isAdmin();
+
+	/**
+	 * This page requires SSL Layer.
+	 *
+	 */
+	function requiresSSL();
 }
 ?>

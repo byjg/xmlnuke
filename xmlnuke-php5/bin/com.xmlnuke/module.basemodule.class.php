@@ -48,6 +48,13 @@ class AccessLevel
 	const CurrentSiteAndRole = 4;
 }
 
+class SSLAccess
+{
+	const Wherever = 0;
+	const ForceSSL = 1;
+	const ForcePlain = 2;
+}
+
 /**
 * BaseModule class is the base for custom module implementation. This class uses cache, save to disk and other functionalities.
 * All custom modules must inherits this class and need to have com.xmlnuke.module namespace.
@@ -595,7 +602,11 @@ abstract class BaseModule implements IModule
 	{
 		return ( $this->_context->ContextValue("__postback") != "" );
 	}
-	
+
+	public function requiresSSL()
+	{
+		return SSLAccess::Wherever;
+	}
 
 }
 ?>

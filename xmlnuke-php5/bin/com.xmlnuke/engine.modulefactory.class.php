@@ -125,6 +125,36 @@ class ModuleFactory
 		$xml = new XMLFilenameProcessor($modulename, $context);
 		$result->Setup($xml, $context, $o);
 
+		$urlSSL = "";
+		if ( ($result->requiresSSL() == SSLAccess::ForcePlain) && ($context->ContextValue("HTTPS") == "on") )
+		{
+			$urlSSL = "http://" . $context->ContextValue("HTTP_HOST") . $context->ContextValue("REQUEST_URI");
+		}
+		else if (($result->requiresSSL() == SSLAccess::ForceSSL) && ($context->ContextValue("HTTPS") != "on"))
+		{
+			$urlSSL = "https://" . $context->ContextValue("HTTP_HOST") . $context->ContextValue("REQUEST_URI");
+		}
+
+		if (strlen($urlSSL) > 0)
+		{
+			if ($context->ContextValue("REQUEST_METHOD") == "GET")
+				$context->redirectUrl($urlSSL);
+			else
+			{
+				echo "<html><body>";
+				echo "<div style='font-family: arial; font-size: 14px; background-color: lightblue; line-height: 24px; width: 80px; text-align: center'>Switching...</div>";
+				echo '<form action="' . $urlSSL . '" method="post">';
+				foreach ($_POST as $key=>$value)
+				{
+					echo "<input type='hidden' name='$key' value='$value' />";
+				}
+				echo "<script language='JavaScript'>document.forms[0].submit()</script>";
+				echo "</body></html>";
+				die();
+			}
+		}
+
+
 		if ($result->requiresAuthentication())
 		{
 			if (!$context->IsAuthenticated())
