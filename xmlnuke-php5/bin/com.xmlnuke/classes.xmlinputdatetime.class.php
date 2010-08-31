@@ -102,8 +102,8 @@ class XmlInputDateTime extends XmlnukeDocumentObject
 			$this->_time = date("H:i");
 		}
 		$this->_showHour = $showhour;
-		$this->_yearmin = -10;
-		$this->_yearmax = +10;
+		$this->_yearmin = "c-5";
+		$this->_yearmax = "c+5";
 	}
 	
 	public static function ParseSubmit($context, $name, $getTime=true)
