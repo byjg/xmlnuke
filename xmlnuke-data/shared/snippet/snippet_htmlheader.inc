@@ -2,7 +2,7 @@
 <script type="text/javascript" src="common/js/xmlnuke.js"></script>
 
 <!-- UI JavaScript Object -->
-<xsl:if test="//sortablelist or //calendar or //faq or //datetimebox or //uialert or //mediagallery or //tabview">
+<xsl:if test="//sortablelist or //calendar or //faq or //datetimebox or //uialert or //mediagallery or //tabview or //progressbar">
 
 	<link type="text/css" href="common/3rdparty/jquery/css/smoothness/jquery-ui-1.8.1.custom.css" rel="stylesheet" />
 	<script type="text/javascript" src="common/3rdparty/jquery/jquery-ui-1.8.1.custom.min.js" />
@@ -326,3 +326,18 @@
 	</script>
 </xsl:if>
 
+
+<!-- Include specific JavaScript for ProgressBar -->
+<xsl:if test="//progressbar">
+	<script type="text/javascript">
+	$(function() {
+		<xsl:for-each select="//progressbar">
+		$("#<xsl:value-of select="@name" />").progressbar({ value: <xsl:value-of select="@value" /> });
+		</xsl:for-each>
+	});
+
+	function getProgressValue(name) { return $( "#" + name ).progressbar( "option", "value" ); }
+	function setProgressValue(name, value) { $( "#" + name ).progressbar( "option", "value", value ); }
+	function addProgressValue(name, value) { $( "#" + name ).progressbar( "option", "value", getProgressValue(name, value) ); }
+	</script>
+</xsl:if>
