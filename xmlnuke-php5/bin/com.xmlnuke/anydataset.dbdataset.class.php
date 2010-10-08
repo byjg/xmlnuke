@@ -493,7 +493,7 @@ class ConnectionManagement {
 		    DSN=DRIVER://USERNAME[:PASSWORD]@SERVER/DATABASE[?PARAMETERS]
     		*/
 			
-			$pat = "/([\w\.]+)\:\/\/([\w\.$!%&]+)(?::([\w\.$!%&]+))?@([\w\.]+)(?::(\d+))?\/([\w\.]+)/i";
+			$pat = "/([\w\.]+)\:\/\/([\w\.$!%&\-_]+)(?::([\w\.$!%&#\*\+=\[\]\(\)\-_]+))?@([\w\.]+)(?::(\d+))?\/([\w\.]+)/i";
 			$parts = preg_split ( $pat, $this->_dbconnectionstring, - 1, PREG_SPLIT_DELIM_CAPTURE );
 			
 			$this->setDriver ( $parts [1] );
