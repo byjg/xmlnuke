@@ -4,7 +4,7 @@
  *******/
 function initTinyMCE(varElements, editDoc, baseHref)
 {
-	buttonsAvailable = "bold,italic,underline,separator,bullist,numlist,link,unlink,image,separator,undo,redo,removeformat,cleanup,code";
+	buttonsAvailable = "bold,italic,underline,separator,bullist,numlist,link,unlink,image,separator,undo,redo,removeformat,cleanup,pastetext,pasteword,selectall,separator,code";
 
 	if (editDoc)
 	{
@@ -20,11 +20,13 @@ function initTinyMCE(varElements, editDoc, baseHref)
 		theme_advanced_buttons3 : "",
 		theme_advanced_toolbar_location : "top",
 		theme_advanced_toolbar_align : "left",
+		plugins : "paste",
 		entity_encoding : "raw",
 		document_base_url : baseHref,
 		add_unload_trigger : false,
 		remove_linebreaks : false,
 		inline_styles : false,
+		extended_valid_elements : "iframe[src|width|height|name|align]",
 		convert_fonts_to_spans : false,
 		theme_advanced_statusbar_location : "bottom",
 		theme_advanced_resizing : true,
@@ -36,7 +38,7 @@ function initTinyMCE(varElements, editDoc, baseHref)
 				o.content = o.content.replace(/&lt;/gi,"<");
 				o.content = o.content.replace(/&gt;/gi,">");
 				o.content = o.content.replace(/&amp;/gi,"&");
-				o.content = o.content.replace(/<blockcenter>/gi, "<div style=\"border: 1px solid silver; margin: 5px\">");
+				o.content = o.content.replace(/<blockcenter>/gi, "<div style=\"border: 1px solid silver; margin: 5px;\">");
 				o.content = o.content.replace(/<\/blockcenter>/gi, "</div>");
 				o.content = o.content.replace(/<\/?body>/gi, "");
 				o.content = o.content.replace(/<title>(.*)<\/title>/gi, "<h1>$1</h1>");
@@ -47,7 +49,7 @@ function initTinyMCE(varElements, editDoc, baseHref)
 				// State get is set when contents is extracted from editor
 				if (o.get) {
 					//o.content = o.content.replace(/\r?\n/gi, "");
-					o.content = o.content.replace(/<div style=\"border: 1px solid silver; margin: 5px\"><h1>(.*?)<\/h1>(.*?)<\/div>/gi,"<blockcenter><title>$1</title><body>$2</body></blockcenter>");
+					o.content = o.content.replace(/<div style=\"border: 1px solid silver; margin: 5px;\"><h1>(.*?)<\/h1>(.*?)<\/div>/gi,"<blockcenter><title>$1</title><body>$2</body></blockcenter>");
 					o.content = o.content.replace(/<\/(strong|b)>/gi,"</b>");
 					o.content = o.content.replace(/<(strong|b)>/gi,"<b>");
 					o.content = o.content.replace(/<\/(em|i)>/gi,"</i>");
