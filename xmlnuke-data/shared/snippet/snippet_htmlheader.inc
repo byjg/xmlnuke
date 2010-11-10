@@ -1,5 +1,6 @@
 <script type="text/javascript" src="common/3rdparty/jquery/jquery-1.4.2.min.js" />
 <script type="text/javascript" src="common/js/xmlnuke.js"></script>
+<link type="text/css" href="common/xmlnuke.css" rel="stylesheet" />
 
 <!-- UI JavaScript Object -->
 <xsl:if test="//sortablelist or //calendar or //faq or //datetimebox or //uialert or //mediagallery or //tabview or //progressbar">

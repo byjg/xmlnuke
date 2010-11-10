@@ -5,7 +5,7 @@
 <xsl:template match="faq">
 
   <xsl:if test="@title">
-	<div style="text-weight: bold; font-size:18px"><xsl:value-of select="@title" /></div>
+	<div id="faqtitle"><xsl:value-of select="@title" /></div>
   </xsl:if>
 
   <div id="faqaccordion" class="faqaccordion" style="margin-top: 2em;">
