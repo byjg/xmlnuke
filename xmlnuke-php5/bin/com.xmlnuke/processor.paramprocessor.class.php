@@ -243,7 +243,7 @@ class ParamProcessor
 				{
 					$result = $this->CheckParameters($attribs->item($i)->nodeValue);
 
-					if ($result != "")
+					if ($result != $attribs->item($i)->nodeValue)
 					{
 						$attribs->item($i)->nodeValue = str_replace("&amp;amp;", "&amp;", str_replace("&", "&amp;", $result));
 					}
