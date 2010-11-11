@@ -178,13 +178,13 @@ class XmlFormCollection extends XmlnukeCollection implements IXmlnukeDocumentObj
 			XmlUtil::AddAttribute($nodeWorking, "jsvalidate", "true");
 			XmlUtil::AddAttribute($nodeWorking, "decimalseparator", $this->_decimalSeparator);
 			XmlUtil::AddAttribute($nodeWorking, "dateformat", $this->_dateformat);
-			$this->_customSubmit .= (($this->_customSubmit!="")?" &amp;amp;&amp;amp; ":"") . $this->_formname . "_checksubmit()";
+			$this->_customSubmit .= (($this->_customSubmit!="")?" &amp;&amp; ":"") . $this->_formname . "_checksubmit()";
 		}
 
 		if ($this->_ajaxcallback != null)
 		{
 			$ajaxId = $this->_ajaxcallback->getId();
-			$this->_customSubmit .= (($this->_customSubmit!="")?" &amp;amp;&amp;amp; ":"") . "AIM.submit(this, {'onStart' : startCallback$ajaxId, 'onComplete' : completeCallback$ajaxId})";
+			$this->_customSubmit .= (($this->_customSubmit!="")?" &amp;&amp; ":"") . "AIM.submit(this, {'onStart' : startCallback$ajaxId, 'onComplete' : completeCallback$ajaxId})";
 		}
 		if ($this->_customSubmit != "")
 		{

@@ -285,7 +285,7 @@ class XmlDualList extends XmlnukeDocumentObject
 		{
 			if ($editForm->hasAttribute("customsubmit"))
 			{
-				$editForm->getAttributeNode("customsubmit")->value = $editForm->getAttributeNode("customsubmit")->value . "  &amp;amp;&amp;amp;  " . $submitFunction;
+				$editForm->getAttributeNode("customsubmit")->value = $editForm->getAttributeNode("customsubmit")->value . "  &amp;&amp;  " . $submitFunction;
 			}
 			else 
 			{

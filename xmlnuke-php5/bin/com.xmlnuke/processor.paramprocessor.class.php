@@ -245,7 +245,7 @@ class ParamProcessor
 
 					if ($result != $attribs->item($i)->nodeValue)
 					{
-						$attribs->item($i)->nodeValue = str_replace("&amp;amp;", "&amp;", str_replace("&", "&amp;", $result));
+						$attribs->item($i)->nodeValue = $result; // str_replace("&amp;amp;", "&amp;", str_replace("&", "&amp;", $result));
 					}
 
 					$i++;
@@ -259,13 +259,13 @@ class ParamProcessor
 
 			$result = $this->CheckParameters($node->nodeValue);
 
-			if ($result != "")
+			if (true || $result != $node->nodeValue)
 			{
 				// If test below is True RESULT contains HTML TAGS. These tags need be processed
 				// Otherwise, go ahead!
 				if (strpos($result,"<")!==false)
 				{
-					$result = str_replace("&amp;","&",$result);
+					//$result = str_replace("&amp;","&",$result);
 					
 					try
 					{
@@ -330,7 +330,7 @@ class ParamProcessor
 			{
 				$iEnd = strpos($param,"]",$iStart+1);
 				$paramDesc = substr($param,$iStart + 7, $iEnd - $iStart - 7);
-				$param = substr($param, 0, $iStart).$this->_context->ContextValue($paramDesc).substr($param,$iEnd+ 1);
+				$param = substr($param, 0, $iStart). str_replace("&", "&amp;", $this->_context->ContextValue($paramDesc)) . substr($param,$iEnd+ 1);
 				$iStart = strpos($param,"[param:");
 				
 			}
