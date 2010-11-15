@@ -193,7 +193,12 @@ namespace com.xmlnuke.admin
 		/// <param name="newValue"></param>
 		void editRolePublic(string site, string role, string newValue);
 		void editRolePublic(string site, string role);
+	    
+        bool userIsAdmin(string userId);
+        bool userIsAdmin();
 
+    	bool userHasRole(string role, string userId);
+    	bool userHasRole(string role);
 	}
 
 }

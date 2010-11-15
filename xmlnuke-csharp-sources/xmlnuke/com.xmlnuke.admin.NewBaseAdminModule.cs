@@ -174,6 +174,7 @@ namespace com.xmlnuke.admin
                 colNode["name"] = "@name";
 			    colNode["icon"] = "icon";
 			    colNode["url"] = "url";
+                colNode["command"] = "@command";
 
                 AdminModulesXMLFilenameProcessor xmlProcessor = new AdminModulesXMLFilenameProcessor(this._context);
                 for (int i = 0; i < 2; i++)
@@ -196,7 +197,14 @@ namespace com.xmlnuke.admin
                         {
                             if (!this._adminModulesList.ContainsKey(sr.getField("group")))
                             {
-                                this._adminModulesList[sr.getField("group")] = new Dictionary<string, string[]>();
+                                if (sr.getField("command") != "@hidegroup")
+                                {
+                                    this._adminModulesList[sr.getField("group")] = new Dictionary<string, string[]>();
+                                }
+                                else
+                                {
+                                    this._adminModulesList.Remove(sr.getField("group"));
+                                }
                             }
                             this._adminModulesList[sr.getField("group")][sr.getField("name")] = new string[] { sr.getField("icon"), sr.getField("url") };
                         }

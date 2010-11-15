@@ -87,6 +87,7 @@ namespace com.xmlnuke.admin
 				nv.Add("xmlnuke.USERSDATABASE", this._context.ContextValue("usersdatabase"));
 				nv.Add("xmlnuke.USERSCLASS", this._context.ContextValue("usersclass"));
 				nv.Add("xmlnuke.DEBUG", this._context.ContextValue("txtdebug"));
+                nv.Add("xmlnuke.DETECTMOBILE", this._context.ContextValue("txtdetectmobile"));
         		nv.Add("xmlnuke.CAPTCHACHALLENGE", this._context.ContextValue("captchachallenge"));
 	    		nv.Add("xmlnuke.CAPTCHALETTERS", this._context.ContextValue("captchaletters"));
 				nv.Add("xmlnuke.ENABLEPARAMPROCESSOR", this._context.ContextValue("enableparamprocessor"));
@@ -130,6 +131,7 @@ namespace com.xmlnuke.admin
 			form.addXmlnukeObject(new XmlInputTextBox("xmlnuke.LOGINMODULE", "loginmodule", this._context.ContextValue("xmlnuke.LOGINMODULE"), 30));
 			form.addXmlnukeObject(new XmlEasyList(EasyListType.SELECTLIST, "usersdatabase", "xmlnuke.USERSDATABASE", this.getStringConnectionsArray(), this._context.ContextValue("xmlnuke.USERSDATABASE")));
 			form.addXmlnukeObject(new XmlInputTextBox("xmlnuke.USERSCLASS", "usersclass", this._context.ContextValue("xmlnuke.USERSCLASS"), 30));
+    		form.addXmlnukeObject(new XmlEasyList(EasyListType.SELECTLIST, "txtdetectmobile", "xmlnuke.DETECTMOBILE", truefalse, this._context.ContextValue("xmlnuke.DETECTMOBILE")));
 			form.addXmlnukeObject(new XmlEasyList(EasyListType.SELECTLIST, "txtdebug", "xmlnuke.DEBUG", truefalse, this._context.ContextValue("xmlnuke.DEBUG")));
     		form.addXmlnukeObject(new XmlEasyList(EasyListType.SELECTLIST, "captchachallenge", "xmlnuke.CAPTCHACHALLENGE", easyhard, this._context.ContextValue("xmlnuke.CAPTCHACHALLENGE")));
 	    	form.addXmlnukeObject(new XmlEasyList(EasyListType.SELECTLIST, "captchaletters", "xmlnuke.CAPTCHALETTERS", nletters, this._context.ContextValue("xmlnuke.CAPTCHALETTERS")));

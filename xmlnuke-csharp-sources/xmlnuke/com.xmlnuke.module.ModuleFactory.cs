@@ -30,6 +30,7 @@
 using System;
 using System.Reflection;
 using com.xmlnuke.exceptions;
+using System.Collections.Generic;
 
 namespace com.xmlnuke.module
 {
@@ -120,6 +121,36 @@ namespace com.xmlnuke.module
 			}
 
 			result.Setup(mod, context, o);
+
+		    string urlSSL = "";
+		    if ( (result.requiresSSL() == SSLAccess.ForcePlain) && (context.ContextValue("HTTPS") == "on") )
+		    {
+			    urlSSL = "http://" + context.ContextValue("HTTP_HOST") + context.ContextValue("REQUEST_URI");
+		    }
+		    else if ((result.requiresSSL() == SSLAccess.ForceSSL) && (context.ContextValue("HTTPS") != "on"))
+		    {
+			    urlSSL = "https://" + context.ContextValue("HTTP_HOST") + context.ContextValue("REQUEST_URI");
+		    }
+
+		    if (!String.IsNullOrEmpty(urlSSL))
+		    {
+			    if (context.ContextValue("REQUEST_METHOD") == "GET")
+				    context.redirectUrl(urlSSL);
+			    else
+			    {
+				    System.Web.HttpContext.Current.Response.Write("<html><body>");
+				    System.Web.HttpContext.Current.Response.Write("<div style='font-family: arial; font-size: 14px; background-color: lightblue; line-height: 24px; width: 80px; text-align: center'>Switching...</div>");
+				    System.Web.HttpContext.Current.Response.Write("<form action=\"" + urlSSL + "\" method=\"post\">");
+				    foreach (KeyValuePair<string, string> pair in System.Web.HttpContext.Current.Request.Form)
+				    {
+					    System.Web.HttpContext.Current.Response.Write("<input type=\"hidden\" name=\"" + pair.Key + "\" value=\"" + pair.Value + "\" />");
+				    }
+				    System.Web.HttpContext.Current.Response.Write("<script language='JavaScript'>document.forms[0].submit()</script>");
+				    System.Web.HttpContext.Current.Response.Write("</body></html>");
+				    System.Web.HttpContext.Current.Response.End();
+			    }
+		    }
+
 			if (result.requiresAuthentication())
 			{
 				if (!context.IsAuthenticated())

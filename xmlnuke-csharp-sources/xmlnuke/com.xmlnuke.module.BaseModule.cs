@@ -47,7 +47,14 @@ namespace com.xmlnuke.module
 		CurrentSiteAndRole
 	}
 
-	public class ModuleAction
+    public enum SSLAccess
+    {
+	    Wherever,
+	    ForceSSL,
+	    ForcePlain
+    }
+
+    public class ModuleAction
 	{
 		public const string Create = "new";
 		public const string CreateConfirm = "action.CREATECONFIRM";
@@ -502,5 +509,14 @@ namespace com.xmlnuke.module
 			return (this._context.ContextValue("__postback") != "");
 		}
 
-	}
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public virtual SSLAccess requiresSSL()
+        {
+            return SSLAccess.Wherever;
+        }
+    
+    }
 }

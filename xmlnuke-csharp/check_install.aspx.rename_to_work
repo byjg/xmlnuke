@@ -99,6 +99,7 @@ void EditConfig()
 		configValues["xmlnuke.DEFAULTPAGE"] = "page";
 		configValues["xmlnuke.LOGINMODULE"] = "login";
 		configValues["xmlnuke.URLBASE"] = "";
+		configValues["xmlnuke.DETECTMOBILE"] = "";
 		configValues["xmlnuke.ALWAYSUSECACHE"] = "false";
 		configValues["xmlnuke.SHOWCOMPLETEERRORMESSAGES"] = "true";
 		configValues["xmlnuke.LANGUAGESAVAILABLE"] = "en-us=English (United States)|pt-br=Portugu&#234;s (Brasil)";
@@ -195,6 +196,9 @@ void EditConfig()
 		"Define the base URL of XMLNuke installation. For example: " +
 		"http://www.somesite.com/xmlnuke-csharp/. " + 
 		"This is optional and you can safely leave blank this parameter.", 1);		
+
+	writeInputData(configValues, "xmlnuke.DETECTMOBILE",
+		"Enable/Disable detecting mobile client and the switch the mobile XSL.", 2);
 
 	writeInputData(configValues, "xmlnuke.ALWAYSUSECACHE", 
 		"Enable/Disable the cache system on XMLNuke. Avoid set this option to false. " + 

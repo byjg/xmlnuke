@@ -118,5 +118,10 @@ namespace com.xmlnuke.module
 
 		string[] getRole();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        SSLAccess requiresSSL();
 	}
 }

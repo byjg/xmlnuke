@@ -29,7 +29,7 @@
 		{
             output = com.xmlnuke.engine.OutputResult.XHtml;
             string contentType;
-            if (detectMobile())
+            if (detectMobile(context))
 		    {
     			// WML
 			    //$contentType = "text/vnd.wap.wml";
@@ -81,8 +81,13 @@
     /// </summary>
     /// <see cref="http://www.codeproject.com/KB/aspnet/mobiledetect.aspx"/>
     /// <returns></returns>
-	protected bool detectMobile()
+	protected bool detectMobile(com.xmlnuke.engine.Context xmlnukeContext)
 	{
+		if (xmlnukeContext.ContextValue("xmlnuke.DETECTMOBILE") == "false")
+		{
+			return false;
+		}
+        
         //GETS THE CURRENT USER CONTEXT
         HttpContext context = HttpContext.Current;
 

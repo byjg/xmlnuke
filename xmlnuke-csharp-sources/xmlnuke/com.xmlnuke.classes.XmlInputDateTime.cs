@@ -124,8 +124,8 @@ namespace com.xmlnuke.classes
 				util.XmlUtil.AddAttribute(datetimebox, "hour", this.removeLeadingZero(time[0])); // Hour without leading zeros
 				util.XmlUtil.AddAttribute(datetimebox, "minute", this.removeLeadingZero(time[1]));
 			}
-			util.XmlUtil.AddAttribute(datetimebox, "yearmin", this._yearmin);
-			util.XmlUtil.AddAttribute(datetimebox, "yearmax", this._yearmax);
+			util.XmlUtil.AddAttribute(datetimebox, "yearmin", "c" + this._yearmin.ToString());
+			util.XmlUtil.AddAttribute(datetimebox, "yearmax", "c+" + this._yearmax.ToString());
 		}
 
 		protected string removeLeadingZero(string str)

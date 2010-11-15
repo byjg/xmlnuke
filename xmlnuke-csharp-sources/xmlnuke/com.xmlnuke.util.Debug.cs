@@ -300,6 +300,10 @@ namespace com.xmlnuke.util
             Debug.LogText(error.GetType().Name + ": " + module + ": " + error.Message, EventLogEntryType.Error);
         }
 
+        public static void LogError(string module, string message)
+        {
+            Debug.LogText("ERROR: " + module + ": " + message, EventLogEntryType.Error);
+        }
 
         public static void LogText(string text)
         {
