@@ -114,6 +114,11 @@ class XmlEasyList extends XmlnukeDocumentObject
 		$this->_readOnly = false;
 		$this->_size = 1;
 	}
+
+	public function setName($name)
+	{
+		$this->_name = $name;
+	}
 	
 	public function setSize($size)
 	{
