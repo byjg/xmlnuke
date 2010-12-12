@@ -63,6 +63,10 @@ class ImageUtil
 			default :
 				break;
 		}
+
+		if ($image == null)
+			throw new Exception("'$image_file' is not a valid image file");
+
 		$this->info = $img;
 		$this->width = imagesx ( $image );
 		$this->height = imagesy ( $image );
