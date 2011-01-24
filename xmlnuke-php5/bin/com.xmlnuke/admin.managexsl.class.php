@@ -82,9 +82,12 @@ class ManageXSL extends BaseAdminModule
 			$contents = stripslashes($contents);
 			try
 			{
+				// It is necessary only to load the document to check if it is OK.
+				// If OK, use the original raw file
 				$xsl = XmlUtil::CreateXmlDocumentFromStr($contents);
 				$xslFile = new XSLFilenameProcessor($id, $this->_context);
-				XmlUtil::SaveXmlDocument($xsl, $xslFile->FullQualifiedNameAndPath());
+				FileUtil::QuickFileWrite($xslFile->FullQualifiedNameAndPath(), str_replace("&amp;#", "&#", $contents));
+
 				$paragraph = $this->_px->addParagraph($block);
 				FileUtil::DeleteFilesFromPath($this->_cacheFile);
 				FileUtil::DeleteFilesFromPath(new XSLCacheFilenameProcessor("", $this->_context));
@@ -144,8 +147,9 @@ class ManageXSL extends BaseAdminModule
 		}
 		else
 		{
-			$this->addMenuOption($myWords->Value("PREVIEWPAGE"), "engine:xmlnuke?site=[param:site]&xml=home&xsl=" . $id . "&lang=[param:lang]", null);
 			$this->addMenuOption($myWords->Value("NEWPAGE"), "admin:ManageXSL", null);
+			$this->addMenuOption($myWords->Value("PREVIEWPAGE"), "engine:xmlnuke?xml=home&xsl=" . $id . "&lang=" . $this->_context->Language()->getName(), null);
+
 			//array
 			$langAvail = $this->_context->LanguagesAvailable();
 			foreach($langAvail as $key => $value)
@@ -179,7 +183,7 @@ class ManageXSL extends BaseAdminModule
 				{
 					//XmlDocument
 					$xsl = XmlUtil::CreateXmlDocumentFromFile($xslFile->FullQualifiedNameAndPath());
-					$contents = str_replace("&amp;", "&", XmlUtil::GetFormattedDocument($xsl));							
+					$contents = XmlUtil::GetFormattedDocument($xsl);
 
 				}
 			}
