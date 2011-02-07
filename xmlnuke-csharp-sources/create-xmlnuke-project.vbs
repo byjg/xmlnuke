@@ -10,7 +10,7 @@ if filesys.FileExists(".\xmlnuke-csharp\xmlnuke.aspx") then
 elseif filesys.FileExists("..\xmlnuke-csharp\xmlnuke.aspx") then
 	source = "..\xmlnuke-csharp"
 else
-	MsgBox "Xmlnuke release not found!!! Cannot continue."	
+	MsgBox "Xmlnuke C# release was not prepared. Please run 'mount-csharp-release.vbs' before continue."	
 end if
 
 
@@ -41,8 +41,8 @@ if source <> "" then
 		' Creating Solution
 		'
 		Set filetxt = filesys.CreateTextFile(basedir & project & ".sln", True)
-		filetxt.WriteLine "Microsoft Visual Studio Solution File, Format Version 10.00"
-		filetxt.WriteLine "# Visual Studio 2008"
+		filetxt.WriteLine "Microsoft Visual Studio Solution File, Format Version 11.00"
+		filetxt.WriteLine "# Visual Studio 2010"
 		filetxt.WriteLine "Project(""{E24C65DC-7377-472B-9ABA-BC803B73C61A}"") = ""xmlnuke"", ""xmlnuke\"", ""{ABC73716-D1E9-4D3B-8B25-016FE8DE36D3}"""
 		filetxt.WriteLine "	ProjectSection(WebsiteProperties) = preProject"
 		filetxt.WriteLine "		Debug.AspNetCompiler.VirtualPath = ""/xmlnuke"""
@@ -89,7 +89,7 @@ if source <> "" then
 		' Creating Project
 		'
 		Set filetxt = filesys.CreateTextFile(classdir & "\" & project & ".csproj", True)
-		filetxt.WriteLine "<Project DefaultTargets=""Build"" xmlns=""http://schemas.microsoft.com/developer/msbuild/2003"" ToolsVersion=""3.5"">"
+		filetxt.WriteLine "<Project DefaultTargets=""Build"" xmlns=""http://schemas.microsoft.com/developer/msbuild/2003"" ToolsVersion=""4.0"">"
 		filetxt.WriteLine "  <PropertyGroup>"
 		filetxt.WriteLine "    <Configuration Condition="" '$(Configuration)' == '' "">Debug</Configuration>"
 		filetxt.WriteLine "    <Platform Condition="" '$(Platform)' == '' "">AnyCPU</Platform>"
@@ -102,7 +102,7 @@ if source <> "" then
 		filetxt.WriteLine "    <AssemblyName>" & project & "</AssemblyName>"
 		filetxt.WriteLine "    <FileUpgradeFlags>"
 		filetxt.WriteLine "    </FileUpgradeFlags>"
-		filetxt.WriteLine "    <OldToolsVersion>2.0</OldToolsVersion>"
+		filetxt.WriteLine "    <OldToolsVersion>3.5</OldToolsVersion>"
 		filetxt.WriteLine "    <UpgradeBackupLocation>"
 		filetxt.WriteLine "    </UpgradeBackupLocation>" 
 		filetxt.WriteLine "  </PropertyGroup>"
