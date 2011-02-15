@@ -29,6 +29,8 @@
 */
 
 define("CSVFILE",  '/[|,;](?=(?:[^"]*"[^"]*")*(?![^"]*"))/');
+define("CSVFILE_SEMICOLON",  '/[;](?=(?:[^"]*"[^"]*")*(?![^"]*"))/');
+define("CSVFILE_COMMA",  '/[,](?=(?:[^"]*"[^"]*")*(?![^"]*"))/');
 
 class TextFileDataSet
 {	
