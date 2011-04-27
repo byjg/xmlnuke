@@ -54,24 +54,24 @@ class ArrayDataSet
 		{
 			foreach ($array as $key => $value) 
 			{
-				if (!is_object($value))
+				if (is_array($value))
 				{
-					$this->_array[$key] = "$fieldName:=$value";
+					$this->_array[$key] = $value;
+				}
+				elseif (!is_object($value))
+				{
+					$this->_array[$key] = array($fieldName, $value);
 				}
 				else 
 				{
-					$result = "";
+					$result = array();
 					$methods = get_class_methods($value);
 					foreach ($methods as $method)
 					{
 						if (strpos($method, "get") == 0)
 						{
-							if ($result != "")
-							{
-								$result .= "||#||";
-							}
 							$met = new ReflectionMethod($value, $method);
-							$result .= substr($method,3) . ":=" . $met->invoke($value);
+							$result[substr($method,3)] = $met->invoke($value);
 						}
 					}
 				}

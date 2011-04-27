@@ -90,24 +90,15 @@ class ArrayIIterator extends GenericIterator
 		{
 			$cols = array();
 			$key = $this->_keys[$this->_currentRow];
-			$row = $this->_rows[$key];
-			if (strpos($row, "||#||")===false)
-			{
-				$cols[] = $row;
-			}
-			else
-			{
-				$cols = explode("||#||", $this->_rows[$this->_currentRow]);
-			}
+			$cols = $this->_rows[$key];
 
 			$any = new AnyDataSet();
 			$any->appendRow();
 			$any->addField("id", $this->_currentRow);
 			$any->addField("key", $key);
-			for($i=0;$i<sizeof($cols); $i++)
+			foreach ($cols as $key=>$value)
 			{
-				$field = explode(":=", $cols[$i]);
-				$any->addField(strtolower($field[0]), $field[1]);
+				$any->addField(strtolower($key), $value);
 			}
 			$it = $any->getIterator(null);
 			$sr = $it->moveNext();
