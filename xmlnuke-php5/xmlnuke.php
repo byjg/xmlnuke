@@ -9,14 +9,14 @@
 	$selectNodes = $context->ContextValue("xpath");
 	if ($context->ContextValue("rawxml")!="")
 	{
-		$filename = str_replace(".", "_", ($context->ContextValue("module") != "" ? $context->ContextValue("module") : $context->getXml())) . ".xsl";
+		$filename = str_replace(".", "_", ($context->getModule() != "" ? $context->getModule() : $context->getXml())) . ".xsl";
 		$output = "xml";
 		header("Content-Type: text/xml; charset=utf-8");
 		header("Content-Disposition: inline; filename=\"{$filename}\";");
 	}
 	elseif ($context->ContextValue("rawjson")!="")
 	{
-		$filename = str_replace(".", "_", ($context->ContextValue("module") != "" ? $context->ContextValue("module") : $context->getXml())) . ".json";
+		$filename = str_replace(".", "_", ($context->getModule() != "" ? $context->getModule() : $context->getXml())) . ".json";
 		$output = "json";
 		header("Content-Type: application/json; charset=utf-8");
 		header("Content-Disposition: inline; filename=\"{$filename}\";");
@@ -46,7 +46,7 @@
 	{
 		echo $engine->TransformDocumentRemote($context->ContextValue("remote"));
 	}
-	elseif ($context->ContextValue("module")=="")
+	elseif ($context->getModule()=="")
 	{
 		echo $engine->TransformDocumentNoArgs();
 	}
@@ -64,7 +64,7 @@
 	{
 		//IModule
 		$module = null;
-		$moduleName = $context->ContextValue("module");
+		$moduleName = $context->getModule();
 		if ($moduleName=="")
 		{
 			// Experimental... Not finished...

@@ -31,6 +31,9 @@ if(!defined('PHP_VERSION_ID'))
 }
 
 /* This main of engine */
+if (!file_exists("config.inc.php"))
+	die("<b>Fatal error:</b> Could not find required 'config.inc.php'");
+
 require_once("config.inc.php");
 if (!class_exists('config')) { header("Location: check_install.php"); exit(); }
 

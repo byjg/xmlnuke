@@ -215,9 +215,9 @@ abstract class BaseModule implements IModule
 		// Retrieve Basic XMLNuke paramenters
 		$chavesXmlnuke = array();
 		$chavesXmlnuke["site"]= $this->_context->getSite();
-		if ($this->_context->ContextValue("module") != "")
+		if ($this->_context->getModule() != "")
 		{
-			$chavesXmlnuke["module"]= $this->_context->ContextValue("module");
+			$chavesXmlnuke["module"]= $this->_context->getModule();
 		}
 		else
 		{

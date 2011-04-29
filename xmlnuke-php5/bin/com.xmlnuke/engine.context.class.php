@@ -70,6 +70,10 @@ class Context
 	*/
 	private $_site = "";
 	/**
+	 * @var string
+	 */
+	private $_module = "";
+	/**
 	* @access private
 	* @var bool
 	*/
@@ -125,17 +129,29 @@ class Context
 		{
 			$this->_xsl = $this->ContextValue("xmlnuke.DEFAULTPAGE");
 		}
+		else
+		{
+			$this->_xsl = htmlentities($this->_xsl);
+		}
 
 		$this->_xml = $this->getParameter("xml");
 		if ($this->_xml == "")
 		{
 			$this->_xml = "home";
 		}
+		else
+		{
+			$this->_xml = htmlentities($this->_xml);
+		}
 
 		$this->_site = $this->getParameter("site");
 		if ($this->_site == "")
 		{
 			$this->_site = $this->ContextValue("xmlnuke.DEFAULTSITE");
+		}
+		else
+		{
+			$this->_site = htmlentities($this->_site);
 		}
 
 		$this->_xmlnukepath = $this->ContextValue("xmlnuke.ROOTDIR");
@@ -161,6 +177,13 @@ class Context
 		if (gettype($this->_debug) != "boolean")
 		{
 			$this->_debug = ($this->_debug == "true");
+		}
+
+		$this->_module = $this->ContextValue("module");
+		if ($this->_module != "")
+		{
+			$this->_module = htmlentities($this->_module);
+			$this->putContextValue("module", $this->_module);
 		}
 
 		ModuleFactory::PhpLibDir($this);
@@ -359,6 +382,11 @@ class Context
 	public function setSite($value)
 	{
 		$this->_site = $value;
+	}
+
+	public function getModule()
+	{
+		return $this->_module;
 	}
 
 	/**
