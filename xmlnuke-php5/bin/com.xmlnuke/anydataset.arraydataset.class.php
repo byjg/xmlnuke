@@ -60,7 +60,7 @@ class ArrayDataSet
 				}
 				elseif (!is_object($value))
 				{
-					$this->_array[$key] = array($fieldName, $value);
+					$this->_array[$key] = array($fieldName => $value);
 				}
 				else 
 				{
