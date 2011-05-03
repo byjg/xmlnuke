@@ -91,6 +91,20 @@ class DBDataSet {
 					$this->_db->setAttribute ( PDO::ATTR_EMULATE_PREPARES, true );
 				}
 			}
+			// Solve the error:
+			// SQLSTATE[HY000]: General error: 1934 General SQL Server error: Check messages from the SQL Server [1934] (severity 16) [(null)]
+			// http://gullele.wordpress.com/2010/12/15/accessing-xml-column-of-sql-server-from-php-pdo/
+			// http://stackoverflow.com/questions/5499128/error-when-using-xml-in-stored-procedure-pdo-ms-sql-2008
+			if ($this->_connectionManagement->getDriver() == "dblib")
+			{
+				$this->execSql('SET QUOTED_IDENTIFIER ON');
+				$this->execSql('SET ANSI_WARNINGS ON');
+				$this->execSql('SET ANSI_PADDING ON');
+				$this->execSql('SET ANSI_NULLS ON');
+				$this->execSql('SET CONCAT_NULL_YIELDS_NULL ON');
+				//$this->execSql('SET NUMERIC_ROUNDABORT OFF');
+				//$this->execSql('set dateformat ymd');
+			}
 		}
 	}
 	
