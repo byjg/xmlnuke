@@ -416,7 +416,8 @@ class XmlNukeEngine
 		//      comprimidos. Exemplo: <table />
 		//      para o HTML isso eh ruim. Logo o metodo deve ser saveHTML que deixa o tag
 		//      assim: <table></table>
-		if ($this->_context->getSuggestedContentType() == "text/html")
+		$arrCt = $this->_context->getSuggestedContentType();
+		if ($arrCt["content-type"] == "text/html")
 		{
 			return FileUtil::CheckUTF8Encode($xhtml->saveHTML());
 		}

@@ -7,23 +7,23 @@
 	
 
 	$selectNodes = $context->ContextValue("xpath");
+	$alternateFilename = str_replace(".", "_", ($context->getModule() != "" ? $context->getModule() : $context->getXml()));
 	if ($context->ContextValue("rawxml")!="")
 	{
-		$filename = str_replace(".", "_", ($context->getModule() != "" ? $context->getModule() : $context->getXml())) . ".xsl";
 		$output = "xml";
 		header("Content-Type: text/xml; charset=utf-8");
-		header("Content-Disposition: inline; filename=\"{$filename}\";");
+		header("Content-Disposition: inline; filename=\"{$alternateFilename}.xml\";");
 	}
 	elseif ($context->ContextValue("rawjson")!="")
 	{
-		$filename = str_replace(".", "_", ($context->getModule() != "" ? $context->getModule() : $context->getXml())) . ".json";
 		$output = "json";
 		header("Content-Type: application/json; charset=utf-8");
-		header("Content-Disposition: inline; filename=\"{$filename}\";");
+		header("Content-Disposition: inline; filename=\"{$alternateFilename}.json\";");
 	}
 	else
 	{
 		$output = "";
+		$contentType = array("xsl"=>"", "content-type"=>"", "content-disposition"=>"", "extension"=>"");
 		if (detectMobile())
 		{
 			// WML
@@ -31,14 +31,18 @@
 			//$context->setXsl("wml");
 
 			// XHTML + MP
-			$contentType = $context->getBestSupportedMimeType(array("application/vnd.wap.xhtml+xml", "application/xhtml+xml", "text/html"));
+			$contentType["content-type"] = $context->getBestSupportedMimeType(array("application/vnd.wap.xhtml+xml", "application/xhtml+xml", "text/html"));
 			$context->setXsl("mobile");
 		}
 		else
 		{
 			$contentType = $context->getSuggestedContentType();
 		}
-		header("Content-Type: $contentType; charset=utf-8");
+		header("Content-Type: {$contentType["content-type"]}; charset=utf-8");
+		if ($contentType["content-disposition"] != "")
+		{
+			header("Content-Disposition: {$contentType["content-disposition"]}; filename=\"{$alternateFilename}.{$contentType["extension"]}\";");
+		}
 	}
 	
 	$engine = new XmlNukeEngine($context, $output, $selectNodes);

@@ -111,7 +111,7 @@ class Context
 //	*/
 //	private $_rnd;
 
-	private $_contentType = "";
+	private $_contentType = array();
 
 
 	/**
@@ -1281,9 +1281,12 @@ class Context
 
 	public function getSuggestedContentType()
 	{
-		if ($this->_contentType == "")
+		if (count($this->_contentType) == 0)
 		{
-			$contentType = "text/html";
+			$this->_contentType["xsl"] = $this->getXsl();
+			$this->_contentType["content-type"] = "text/html";
+			$this->_contentType["content-disposition"] = "";
+			$this->_contentType["extension"] = "";
 			if ($this->ContextValue("xmlnuke.CHECKCONTENTTYPE"))
 			{
 				$filename = new AnydatasetFilenameProcessor("contenttype", $this);
@@ -1294,7 +1297,7 @@ class Context
 				if ($it->hasNext())
 				{
 					$sr = $it->moveNext();
-					$contentType = $sr->getField("content-type");
+					$this->_contentType = $sr->getOriginalRawFormat();
 				}
 				else
 				{
@@ -1306,11 +1309,10 @@ class Context
 					if ($it->hasNext())
 					{
 						$sr = $it->moveNext();
-						$contentType = $sr->getField("content-type");
+						$this->_contentType = $sr->getOriginalRawFormat();
 					}
 				}
 			}
-			$this->_contentType = ($contentType == "")?"text/html":$contentType;
 		}
 		return ($this->_contentType);
 	}

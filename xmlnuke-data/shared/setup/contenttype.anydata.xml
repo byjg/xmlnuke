@@ -10,17 +10,25 @@
   <row>
     <field name="xsl">rss</field>
     <field name="content-type">text/xml</field>
+    <field name="content-disposition"></field>
+    <field name="extension"></field>
   </row>
   <row>
     <field name="xsl">wml</field>
     <field name="content-type">text/vnd.wap.wml</field>
+    <field name="content-disposition"></field>
+    <field name="extension"></field>
   </row>
   <row>
     <field name="xsl">xmlexcel</field>
     <field name="content-type">application/vnd.ms-excel</field>
+    <field name="content-disposition">attachment</field>
+    <field name="extension">xls</field>
   </row>
   <row>
     <field name="xsl">xmlword</field>
     <field name="content-type">application/vnd.ms-word</field>
+    <field name="content-disposition">attachment</field>
+    <field name="extension">doc</field>
   </row>
 </anydataset>

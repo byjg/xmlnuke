@@ -97,11 +97,11 @@ class DBDataSet {
 			// http://stackoverflow.com/questions/5499128/error-when-using-xml-in-stored-procedure-pdo-ms-sql-2008
 			if ($this->_connectionManagement->getDriver() == "dblib")
 			{
-				$this->execSql('SET QUOTED_IDENTIFIER ON');
-				$this->execSql('SET ANSI_WARNINGS ON');
-				$this->execSql('SET ANSI_PADDING ON');
-				$this->execSql('SET ANSI_NULLS ON');
-				$this->execSql('SET CONCAT_NULL_YIELDS_NULL ON');
+				$this->_db->exec('SET QUOTED_IDENTIFIER ON');
+				$this->_db->exec('SET ANSI_WARNINGS ON');
+				$this->_db->exec('SET ANSI_PADDING ON');
+				$this->_db->exec('SET ANSI_NULLS ON');
+				$this->_db->exec('SET CONCAT_NULL_YIELDS_NULL ON');
 				//$this->execSql('SET NUMERIC_ROUNDABORT OFF');
 				//$this->execSql('set dateformat ymd');
 			}
