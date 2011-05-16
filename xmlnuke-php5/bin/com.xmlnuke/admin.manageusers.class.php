@@ -27,8 +27,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
-/// Summary description for com.
-/// </summary>
+/**
+ * @package xmlnuke
+ */
 class ManageUsers extends NewBaseAdminModule
 {
 	private $url = "admin:ManageUsers";

@@ -28,6 +28,9 @@
  */
 
 
+/**
+ * @package xmlnuke
+ */
 class TreeViewActionType
 {
 	const OpenUrl = 1;
@@ -37,6 +40,9 @@ class TreeViewActionType
 	const ExecuteJS = 99;
 }
 
+/**
+ * @package xmlnuke
+ */
 class XmlnukeTreeview extends XmlnukeDocumentObject 
 {
 	/**

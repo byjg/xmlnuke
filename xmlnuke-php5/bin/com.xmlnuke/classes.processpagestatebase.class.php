@@ -28,9 +28,8 @@
  */
 
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class XmlInputObjectType
 {
 	const TEXTBOX = 1;
@@ -49,9 +48,8 @@ class XmlInputObjectType
 	const CUSTOM = 100; // This $fields need be created by the user
 }
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class ProcessPageField
 {
 	/**
@@ -135,9 +133,8 @@ class ProcessPageField
 
 
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class ProcessPageFields
 {
 	/**
@@ -216,9 +213,9 @@ class ProcessPageFields
 
 
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * Basic CRUD.
+ * @package xmlnuke
+ */
 abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IProcessPageState
 {
 	const ACTION_LIST = "";
@@ -1162,7 +1159,7 @@ class ProcessPageStateBaseSaveFormatterFileUpload implements IEditListFormatter
 
 		if ($files[$fieldname] != "")
 		{
-			$fileProcessor = new UploadFilenameProcessor($this->_saveAs, $this->_context);
+			$fileProcessor = new UploadFilenameProcessor($this->_saveAs);
 			$fileProcessor->setFilenameLocation(ForceFilenameLocation::DefinePath, FileUtil::GetTempDir());
 
 			// Save the files in a temporary directory

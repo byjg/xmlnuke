@@ -26,10 +26,10 @@
  *
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
+
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class XmlnukeTabView extends XmlnukeDocumentObject 
 {
 	protected $_tabs = array();

@@ -28,6 +28,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+/**
+ * @package xmlnuke
+ */
 class UIAlert
 {
 	const Dialog = "dialog";
@@ -36,6 +39,9 @@ class UIAlert
 	const BoxAlert = "boxalert";
 }
 
+/**
+ * @package xmlnuke
+ */
 class UIAlertOpenAction
 {
 	const URL = "url";
@@ -47,9 +53,8 @@ class UIAlertOpenAction
 
 
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class XmlnukeUIAlert extends XmlnukeCollection implements IXmlnukeDocumentObject 
 {
 	/**

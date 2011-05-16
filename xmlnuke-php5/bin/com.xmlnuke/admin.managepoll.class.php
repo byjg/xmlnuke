@@ -28,9 +28,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
-/// <summary>
-/// Summary description for com.
-/// </summary>
+/**
+ * @package xmlnuke
+ */
 class ManagePoll extends NewBaseAdminModule
 {	
 	protected $_tblpoll = "";
@@ -75,7 +75,7 @@ class ManagePoll extends NewBaseAdminModule
 		$this->addMenuItem("module:admin.managedbconn", $this->myWords->Value("MENUMANAGEDBCONN"), "");
 			
 		// Create a NEW config file and SETUP Database
-		$configfile = new AnydatasetFilenameProcessor("_poll", $this->_context);
+		$configfile = new AnydatasetFilenameProcessor("_poll");
 		if (!FileUtil::Exists($configfile))
 		{
 			$this->CreateSetup($block);
@@ -155,7 +155,7 @@ class ManagePoll extends NewBaseAdminModule
 					
 					$block->addXmlnukeObject(new XmlEasyList(EasyListType::UNORDEREDLIST, "", $this->myWords->Value("RESULTSQL"), $results));
 					
-					$anypoll = new AnyDataSet(new AnydatasetFilenameProcessor("_poll", $this->_context));
+					$anypoll = new AnyDataSet(new AnydatasetFilenameProcessor("_poll"));
 					$anypoll->appendRow();
 					$anypoll->addField("dbname", $this->_context->ContextValue("type"));
 					$anypoll->addField("tbl_poll", $tblpoll);
@@ -170,7 +170,7 @@ class ManagePoll extends NewBaseAdminModule
 			}
 			else 
 			{
-				$anypoll = new AnyDataSet(new AnydatasetFilenameProcessor("_poll", $this->_context));
+				$anypoll = new AnyDataSet(new AnydatasetFilenameProcessor("_poll"));
 				$anypoll->appendRow();
 				$anypoll->addField("dbname", "-anydata-");
 				$anypoll->Save();
@@ -188,7 +188,7 @@ class ManagePoll extends NewBaseAdminModule
 			$form = new XmlFormCollection($this->_context, $this->_moduleUrl, $this->myWords->Value("CREATESETUP"));
 			$form->addXmlnukeObject(new XmlInputHidden("action", ModuleAction::CreateConfirm));
 			$db = array("-anydata-"=>$this->myWords->Value("NOTUSEDB"));
-			$anydatafile = new AnydatasetFilenameProcessor("_db", $this->_context);
+			$anydatafile = new AnydatasetFilenameProcessor("_db");
 			$anydata = new AnyDataSet($anydatafile);
 			$it = $anydata->getIterator();
 			while ($it->hasNext())
@@ -329,7 +329,7 @@ class ManagePoll extends NewBaseAdminModule
 		}
 		else 
 		{
-			$anydatafile = new AnydatasetFilenameProcessor("poll_list", $this->_context);
+			$anydatafile = new AnydatasetFilenameProcessor("poll_list");
 			$processpage = 
 				new ProcessPageStateAnydata(
 					$this->_context, 
@@ -403,7 +403,7 @@ class ManagePoll extends NewBaseAdminModule
 		}
 		else 
 		{
-			$anydatafile = new AnydatasetFilenameProcessor("poll_" . $pollname . "_" . $lang, $this->_context);
+			$anydatafile = new AnydatasetFilenameProcessor("poll_" . $pollname . "_" . $lang);
 			$processpage = 
 				new ProcessPageStateAnydata(
 					$this->_context, 

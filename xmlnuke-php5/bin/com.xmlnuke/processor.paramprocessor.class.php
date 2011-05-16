@@ -31,6 +31,7 @@
 *ParamProcessor can process the XSL transform result (or xhtml cache) and replace the [PARAM:...] 
 *and Adjust Links to Full XMLNuke link (when is possible).
 *<P><b>Only uses this class after XML/XSL Transform and with XHTML files</b></P>
+ * @package xmlnuke
 */
 class ParamProcessor
 {

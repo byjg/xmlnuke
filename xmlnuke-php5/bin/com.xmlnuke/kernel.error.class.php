@@ -28,10 +28,8 @@
 */
 
 /**
-*This is base engine exception
-*@package com.xmlnuke
-*@subpackage xmlnuke.kernel
-*/
+ * @package xmlnuke
+ */
 class XMLNukeErrorModule
 {
 	/**
@@ -57,11 +55,11 @@ class XMLNukeErrorModule
 	/**
 	 * Constructor
 	 *
-	 * @param Context $context
 	 * @param XMLNukeException $ex
+	 * @param bool $cleanbuffer
 	 * @return XMLNukeErrorModule
 	 */
-	function __construct($context, $ex, $cleanbuffer = true)
+	function __construct($ex, $cleanbuffer = true)
 	{
 		$this->variableContents = "";
 		//cleaning buffer to show module erros
@@ -70,7 +68,7 @@ class XMLNukeErrorModule
 			ob_end_flush();
 			ob_clean();
 		}
-		$this->context = $context;
+		$this->context = Context::getInstance();
 		if ($ex->moduleName == "") {
 			$this->isModule = false;
 			$ex->moduleName = $this->context->getSite();

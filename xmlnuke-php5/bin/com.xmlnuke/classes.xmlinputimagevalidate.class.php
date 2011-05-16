@@ -29,12 +29,8 @@
  */
 	
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-* This class will be define a single XML InputImageValidate.
-* This XML need be transformed to generate a PNG Image with a random number and chars/
-* The method Validate will test if a sequence is typed corretly or not.
-*/
+ * @package xmlnuke
+ */
 class XmlInputImageValidate extends XmlnukeDocumentObject 
 {
 	protected $_caption;

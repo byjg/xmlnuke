@@ -27,9 +27,10 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/// <summary>
-/// XmlNukeEngine class use a Facade Design Pattern. This class call all of other xmlnuke classes and return the XML/XSL processed
-/// </summary>
+/**
+ * This class call all of other xmlnuke classes and return the XML/XSL processed. 
+ * @package xmlnuke
+ */
 class XmlNukeEngine
 {
 	/**
@@ -78,7 +79,7 @@ class XmlNukeEngine
 	public function TransformDocumentNoArgs()
 	{
 		// Creating FileNames will be used in this functions.
-		$xmlCacheFile = new XMLCacheFilenameProcessor($this->_context->getXml(), $this->_context);
+		$xmlCacheFile = new XMLCacheFilenameProcessor($this->_context->getXml());
 
 		// Check if file cache already exists
 		// If exists read it from there;
@@ -90,7 +91,7 @@ class XmlNukeEngine
 		else
 		{
 			// Creating FileNames will be used in this functions.
-			$xmlFile = new XMLFilenameProcessor($this->_context->getXml(), $this->_context);
+			$xmlFile = new XMLFilenameProcessor($this->_context->getXml());
 			// Transform Document
 			$result = $this->TransformDocumentFromDOM($this->getXmlDocument($xmlFile));
 
@@ -143,7 +144,7 @@ class XmlNukeEngine
 			}
 			else
 			{
-				$xslFile = new XSLFilenameProcessor("admin" . FileUtil::Slash() . "admin_page", $this->_context);
+				$xslFile = new XSLFilenameProcessor("admin" . FileUtil::Slash() . "admin_page");
 				$xslFile->setFilenameLocation(ForceFilenameLocation::PathFromRoot);
 				//Pendente
 				$xslFile->UseFileFromAnyLanguage();
@@ -167,7 +168,7 @@ class XmlNukeEngine
 	public function TransformDocumentRemote($url)
 	{
 		$cachename = str_replace(".", "_", "REMOTE-" . UsersBase::getSHAPassword($url));
-		$cacheFile = new XMLCacheFilenameProcessor($cachename, $this->_context);
+		$cacheFile = new XMLCacheFilenameProcessor($cachename);
 		
 		$file = $cacheFile->FullQualifiedNameAndPath();
 		if (file_exists($file))
@@ -243,8 +244,8 @@ class XmlNukeEngine
 	private function addXMLDefault($nodePage)
 	{
 		// Creating FileNames will be used in this functions.
-		$allFile = new XMLFilenameProcessor("_all", $this->_context);
-		$indexFile = new XMLFilenameProcessor("index", $this->_context);
+		$allFile = new XMLFilenameProcessor("_all");
+		$indexFile = new XMLFilenameProcessor("index");
 
 		XmlUtil::AddNodeFromFile($nodePage, $allFile, "page");
 		XmlUtil::AddNodeFromFile($nodePage, $indexFile, "xmlindex");
@@ -259,7 +260,7 @@ class XmlNukeEngine
 	public function TransformDocumentFromDOM($xml)
 	{
 		// Creating FileNames will be used in this functions.
-		$xslFile = new XSLFilenameProcessor($this->_context->getXsl(), $this->_context);
+		$xslFile = new XSLFilenameProcessor($this->_context->getXsl());
 		return $this->TransformDocument($xml, $xslFile);
 	}
 
@@ -451,7 +452,7 @@ class XmlNukeEngine
 		}
 		catch (Exception $ex)
 		{
-			$xmlFileNotFound = new XMLFilenameProcessor("notfound", $this->_context);
+			$xmlFileNotFound = new XMLFilenameProcessor("notfound");
 			if ($this->_context->getXMLDataBase()->existsDocument($xmlFileNotFound->FullQualifiedName()))
 			{
 				$xmlDoc = $this->_context->getXMLDataBase()->getDocument($xmlFileNotFound->FullQualifiedName(),null);

@@ -27,10 +27,10 @@
  *
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
+
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class XmlNukeFlash extends XmlnukeCollection implements IXmlnukeDocumentObject 
 {
 	protected $_movie = "";

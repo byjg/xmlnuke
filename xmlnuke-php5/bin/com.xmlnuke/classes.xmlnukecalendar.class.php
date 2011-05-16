@@ -30,6 +30,9 @@
  */
 
 
+/**
+ * @package xmlnuke
+ */
 class XmlnukeCalendar extends XmlnukeDocumentObject 
 {
 	/**

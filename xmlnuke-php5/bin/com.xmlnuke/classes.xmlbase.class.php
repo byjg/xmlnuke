@@ -26,11 +26,12 @@
  *
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
+
 /**
-*Abstract class. Base implementations for all XML tags it can contain another XML tags.
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * Implements a collection of Xmlnuke Xml Objects. 
+ * 
+ * @package xmlnuke
+ */
 class XmlnukeCollection
 {
 	/**
@@ -53,13 +54,21 @@ class XmlnukeCollection
 	*/
 	public function addXmlnukeObject($docobj)
 	{
-		if (is_null($docobj) || !($docobj instanceof IXmlnukeDocumentObject))
+		if (is_null($docobj))
 		{
-			throw new XmlNukeObjectException(853, "Object is null or not is IXmlnukeDocumentObject. Found object type: " . get_class($docobj));
+			throw new XmlNukeObjectException(853, "Parameter is null");
 		}
-		if ($docobj == $this)
+		else if (is_string($docobj))
+		{
+			$docobj = new XmlnukeText($docobj);
+		}
+		else if ($docobj == $this)
 		{
 			throw new XmlNukeObjectException(853, "You are adding the object to itself");
+		}
+		else if (!($docobj instanceof IXmlnukeDocumentObject))
+		{
+			throw new XmlNukeObjectException(853, "Object is not a IXmlnukeDocumentObject. Found object type: " . get_class($docobj));
 		}
 		$this->_items[] = $docobj;
 	}
@@ -83,9 +92,8 @@ class XmlnukeCollection
 }
 
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class Menus
 {
 	public $id;
@@ -94,6 +102,9 @@ class Menus
 	public $icon;
 }
 
+/**
+ * @package xmlnuke
+ */
 class MenuGroup
 {
 	public $menuTitle;
@@ -106,9 +117,8 @@ class MenuGroup
 }
 
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class Script
 {
 	public $source;
@@ -117,9 +127,14 @@ class Script
 }
 
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * Implements a XMLNuke Document. 
+ * 
+ * Any module in XMLNuke must return a IXmlnukeDocument object. This class is a concrete implementaion of the interface. 
+ * 
+ * You can implement your own document, like HumanML for example and use this in your module. 
+ * 
+ * @package xmlnuke
+ */
 class XmlnukeDocument extends XmlnukeCollection implements IXmlnukeDocument 
 {
 	/**
@@ -408,9 +423,14 @@ class XmlnukeDocument extends XmlnukeCollection implements IXmlnukeDocument
 	}
 	
 	/**
-	*@desc DEPRECATED - For compatibility reason.
-	*@return IXmlnukeDocument 
-	*/
+	 * Returns a IXmlnukeDocument. 
+	 * 
+	 * In the newer versions you can simply return the object
+	 * 
+	 * @deprecated since version 3.0
+	 * @package xmlnuke
+	 * @return IXmlnukeDocument
+	 */
 	public function generatePage()
 	{
 		return $this;
@@ -538,8 +558,8 @@ class XmlnukeDocument extends XmlnukeCollection implements IXmlnukeDocument
 	}	
 	
 	/**
-	 * Based on 
-	 *
+	 * A 3rd party implementation for compact a javascript. 
+	 * 
 	 * @Author: Hannes Dorn
      * @Company: IBIT.at
      * @Homepage: http://www.ibit.at
@@ -652,9 +672,8 @@ class XmlnukeDocument extends XmlnukeCollection implements IXmlnukeDocument
 }
 
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 interface IXmlnukeDocumentObject
 {
 	/**
@@ -667,9 +686,8 @@ interface IXmlnukeDocumentObject
 
 
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 interface IXmlnukeDocument
 {
 	/**
@@ -679,9 +697,8 @@ interface IXmlnukeDocument
 }
 	
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class XmlnukeDocumentObject implements IXmlnukeDocumentObject
 {
 	public function XmlnukeDocumentObject(){}

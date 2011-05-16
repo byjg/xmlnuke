@@ -1,4 +1,14 @@
 <?php
+/**
+ * Contains all commands necessary to run XMLNuke. 
+ * 
+ * To run the XMLNuke as a Web site you need to have the file xmlnuke.php. 
+ * 
+ * You can use the XMLNuke as a library. In this case, you have to include in your PHP files this files. 
+ * 
+ * @package xmlnuke
+ */
+
 ## Profiling Tool ########
 # xdebug_enable();
 ##########################
@@ -55,7 +65,7 @@ require_once(PHPXMLNUKEDIR . "bin/modules.inc.php");
 fixbadthingsinphp();
 
 /* Initialize default XMLNuke CONTEXT */
-$context = new Context();
+$context = Context::getInstance();
 
 
 

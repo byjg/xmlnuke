@@ -189,7 +189,7 @@ class MailUtil
 	 */
 	public static function getEmailFromID($context, $IDEmail)
 	{
-		$configFile = new AnydatasetFilenameProcessor("_configemail", $context);		
+		$configFile = new AnydatasetFilenameProcessor("_configemail");
 		$config = new AnyDataSet($configFile);
 		$filter = new IteratorFilter();
 		$filter->addRelation("destination_id", Relation::Equal, $IDEmail);

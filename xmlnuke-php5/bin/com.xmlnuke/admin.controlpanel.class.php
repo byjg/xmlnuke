@@ -27,6 +27,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 	
+/**
+ * @package xmlnuke
+ */
 class ControlPanel extends NewBaseAdminModule
 {
 	/**

@@ -30,9 +30,8 @@
 
 
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class XmlnukeMediaGallery extends XmlnukeCollection implements IXmlnukeDocumentObject
 {
 	/**

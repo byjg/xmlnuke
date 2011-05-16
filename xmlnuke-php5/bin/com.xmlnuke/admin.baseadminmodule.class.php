@@ -28,8 +28,9 @@
  */
 
 /**
-*Base Admin Modules
-*/
+ * Base Admin Modules
+ * @package xmlnuke
+ */
 abstract class BaseAdminModule extends BaseModule
 {
 	/**

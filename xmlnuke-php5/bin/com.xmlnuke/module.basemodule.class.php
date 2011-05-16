@@ -27,6 +27,9 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
+/**
+ * @package xmlnuke
+ */
 class ModuleAction
 {
 	const Create = 'new';
@@ -39,6 +42,9 @@ class ModuleAction
 	const DeleteConfirm = 'action.DELETECONFIRM';
 }
 
+/**
+ * @package xmlnuke
+ */
 class AccessLevel
 {
 	const OnlyAdmin = 0;
@@ -48,6 +54,9 @@ class AccessLevel
 	const CurrentSiteAndRole = 4;
 }
 
+/**
+ * @package xmlnuke
+ */
 class SSLAccess
 {
 	const Wherever = 0;
@@ -56,12 +65,11 @@ class SSLAccess
 }
 
 /**
-* BaseModule class is the base for custom module implementation. This class uses cache, save to disk and other functionalities.
-* All custom modules must inherits this class and need to have com.xmlnuke.module namespace.
-*@see com.xmlnuke.module.IModule
-*@see com.xmlnuke.module.ModuleFactory
-*@package com.xmlnuke
-*@subpackage xmlnuke.modules
+ * BaseModule class is the base for custom module implementation. 
+ * This class uses cache, save to disk and other functionalities.
+ * All custom modules must inherits this class and need to have com.xmlnuke.module namespace.
+ * @see com.xmlnuke.module.ModuleFactory
+ * @package xmlnuke
 */
 abstract class BaseModule implements IModule
 {
@@ -152,17 +160,16 @@ abstract class BaseModule implements IModule
 
 	/**
 	*@param XMLFilenameProcessor $xmlModuleName
-	*@param Context $context
 	*@param Object $customArgs
 	*@return void
 	*@desc Add custom setup elements
 	*/
-	public function Setup($xmlModuleName, $context, $customArgs)
+	public function Setup($xmlModuleName, $customArgs)
 	{
 		$this->_start = microtime(true);
 		$this->_xmlModuleName = $xmlModuleName;
-		$this->_context = $context;
-		$this->_cacheFile = new XMLCacheFilenameProcessor($this->_xmlModuleName->ToString(), $this->_context);
+		$this->_context = Context::getInstance();
+		$this->_cacheFile = new XMLCacheFilenameProcessor($this->_xmlModuleName->ToString());
 		$this->_action = $this->_context->ContextValue("action");
 		if ($this->_action == "") 
 		{
@@ -252,7 +259,7 @@ abstract class BaseModule implements IModule
 			$str .= $key . "=" . $value . "/";
 		}
 		//Debug::PrintValue($str);
-		$this->_cacheFile = new XMLCacheFilenameProcessor(UsersAnyDataSet::getSHAPassword(strtolower($str)), $this->_context);
+		$this->_cacheFile = new XMLCacheFilenameProcessor(UsersAnyDataSet::getSHAPassword(strtolower($str)));
 		
 		// Test if cache exists
 		$fileControl = $this->_cacheFile->FullQualifiedNameAndPath() . ".control";

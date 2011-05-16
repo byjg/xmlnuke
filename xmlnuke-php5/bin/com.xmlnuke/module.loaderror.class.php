@@ -27,6 +27,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
+/**
+ * @package xmlnuke
+ */
 class LoadErrorStructure
 {
 	/**
@@ -47,6 +50,9 @@ class LoadErrorStructure
 	public $stackTrace;
 }
 
+/**
+ * @package xmlnuke
+ */
 class LoadError extends BaseModule
 {
 	/**

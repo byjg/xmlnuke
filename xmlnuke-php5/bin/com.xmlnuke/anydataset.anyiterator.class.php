@@ -27,11 +27,10 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/// <summary>
-/// Iterator class is a structure used to navigate foward in a AnyDataSet structure.
-/// You need to use the getIterator method in a AnyDataSet class to create an Iterator.
-/// </summary>
-
+/**
+ * Iterator class is a structure used to navigate forward in a AnyDataSet structure.
+ * @package xmlnuke
+ */
 class AnyIterator extends GenericIterator
 {
 

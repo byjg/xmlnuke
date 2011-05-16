@@ -27,6 +27,9 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
+/**
+ * @package xmlnuke
+ */
 class URLTYPE
 {
 	const ADMINENGINE = 'admin:engine';
@@ -39,9 +42,8 @@ class URLTYPE
 }
 
 /**
-*this Class manager url to Xmlnuke engine
-*@package com.xmlnuke
-*/
+ * @package xmlnuke
+ */
 class XmlnukeManageUrl
 {
 	/**

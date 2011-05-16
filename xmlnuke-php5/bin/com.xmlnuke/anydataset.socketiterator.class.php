@@ -28,6 +28,9 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
+/**
+ * @package xmlnuke
+ */
 class SocketIterator extends GenericIterator
 {
 	private $_colsep = null;

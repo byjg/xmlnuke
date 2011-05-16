@@ -28,9 +28,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
-/// <summary>
-/// Summary description for com.
-/// </summary>
+/**
+ * @package xmlnuke
+ */
 class ManageDBConn extends NewBaseAdminModule
 {
 	public function ManageDBConn()
@@ -63,7 +63,7 @@ class ManageDBConn extends NewBaseAdminModule
 
 		$block = new XmlBlockCollection($this->myWords->Value("BLOCK_TITLE"), BlockPosition::Center);
 
-		$anydatafile = new AnydatasetFilenameProcessor("_db", $this->_context);
+		$anydatafile = new AnydatasetFilenameProcessor("_db");
 
 		if ($this->_action != "test")
 		{

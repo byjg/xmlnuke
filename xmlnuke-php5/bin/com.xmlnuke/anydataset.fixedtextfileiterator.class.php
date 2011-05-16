@@ -28,6 +28,9 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
+/**
+ * @package xmlnuke
+ */
 class FixedTextFileIterator extends GenericIterator
 {
 	/**

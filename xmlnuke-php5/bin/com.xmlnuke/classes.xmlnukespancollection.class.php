@@ -27,6 +27,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+/**
+ * @package xmlnuke
+ */
 class XmlnukeSpanCollection extends XmlnukeCollection implements IXmlnukeDocumentObject 
 {
 	public function __construct()

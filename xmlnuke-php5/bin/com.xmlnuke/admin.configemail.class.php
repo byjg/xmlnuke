@@ -27,6 +27,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+/**
+ * @package xmlnuke
+ */
 class ConfigEmail extends NewBaseAdminModule
 {
 	public function ConfigEmail()
@@ -60,7 +63,7 @@ class ConfigEmail extends NewBaseAdminModule
 		$this->defaultXmlnukeDocument->addXmlnukeObject($block);
 				
 		// configEmail File
-		$configEmailFile = new AnydatasetFilenameProcessor("_configemail", $this->_context);
+		$configEmailFile = new AnydatasetFilenameProcessor("_configemail");
 
 		$fields = new ProcessPageFields();
 		

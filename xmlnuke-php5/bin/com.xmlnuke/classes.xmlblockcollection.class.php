@@ -26,10 +26,10 @@
  *
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
+
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class BlockPosition
 {
 	const Left = 1;
@@ -38,9 +38,8 @@ class BlockPosition
 }
 	
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class XmlBlockCollection extends XmlnukeCollection implements IXmlnukeDocumentObject 
 {
 	/**

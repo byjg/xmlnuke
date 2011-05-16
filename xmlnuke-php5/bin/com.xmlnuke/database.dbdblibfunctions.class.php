@@ -27,6 +27,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+/**
+ * @package xmlnuke
+ */
 class DBDBLibfunctions extends DbBaseFunctions
 {
 	function Concat($s1, $s2 = null)

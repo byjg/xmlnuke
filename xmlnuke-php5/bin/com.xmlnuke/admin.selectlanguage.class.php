@@ -27,9 +27,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
-/// <summary>
-/// Summary description for com.
-/// </summary>
+/**
+ * @package xmlnuke
+ */
 class SelectLanguage extends BaseAdminModule
 {
 	public function SelectLanguage()

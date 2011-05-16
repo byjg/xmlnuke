@@ -28,18 +28,17 @@
  */
 
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class InputTextBoxType
 {
 	const TEXT = 1;
 	const PASSWORD = 2;
 }
+
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class XmlInputTextBox extends XmlInputValidate 
 {
 	/**

@@ -30,11 +30,14 @@
 /**
  * Locate and create custom user modules.
  * All modules must follow these rules:
+ 
  * <ul>
  * <li>implement IModule interface or inherit from BaseModule (recommended); </li>
  * <li>Compile into XMLNuke engine or have the file name com.xmlnuke.module.[modulename]; </li>
  * <li>Have com.xmlnuke.module namespace. </li>
  * </ul>
+ * 
+ * @package xmlnuke
  */
 class ModuleFactory
 {
@@ -48,11 +51,10 @@ class ModuleFactory
 		* Locate and create custom module if exists. Otherwise throw exception.
 		*
 		* @param string $modulename
-		* @param Context $context
 		* @param object $o
 		* @return IModule
 		*/
-	public static function GetModule($modulename, $context, $o)
+	public static function GetModule($modulename, $o = null)
 	{
 		// Module name options:
 		// <xmlnukedir>/bin/com.xmlnuke/module.<modulename>.class.php
@@ -61,6 +63,8 @@ class ModuleFactory
 		//  - or -
 		// <xmlnukedir>/modules/<subdir>/<modulename>.class.php
 
+		$context = Context::getInstance();
+		
 		$modulename = strtolower($modulename);
 		$loaded = false;
 
@@ -122,8 +126,8 @@ class ModuleFactory
 			}
 		}
 
-		$xml = new XMLFilenameProcessor($modulename, $context);
-		$result->Setup($xml, $context, $o);
+		$xml = new XMLFilenameProcessor($modulename);
+		$result->Setup($xml, $o);
 
 		$urlSSL = "";
 		if ( ($result->requiresSSL() == SSLAccess::ForcePlain) && ($context->ContextValue("HTTPS") == "on") )

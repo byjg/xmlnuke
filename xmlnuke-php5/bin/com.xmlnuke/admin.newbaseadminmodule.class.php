@@ -28,8 +28,9 @@
  */
 
 /**
-*Base Admin Modules New Structure
-*/
+ * Template pattern for xmlnuke administration modules 
+ * @package xmlnuke
+ */
 abstract class NewBaseAdminModule extends BaseModule
 {
 	/**
@@ -235,7 +236,7 @@ abstract class NewBaseAdminModule extends BaseModule
 			$colNode["command"] = "@command";
 
 			// Read from Generic XML
-			$xmlProcessor = new AdminModulesXMLFilenameProcessor($this->_context);
+			$xmlProcessor = new AdminModulesXMLFilenameProcessor();
 			for($i=0;$i<2;$i++)
 			{
 				if ($i==0)

@@ -35,8 +35,7 @@
  * Output different XML document for each parameter and action;
  * Smtp send mail
  * 
- * @see com.xmlnuke.module.IModule
- * @see com.xmlnuke.module.BaseModule
+ * @package xmlnuke
  */
 class SendEmail extends BaseModule
 {

@@ -30,9 +30,7 @@
 /**
  * XSLTheme is a default module descendant from BaseModule class.
  * 
- * @see com.xmlnuke.module.IModule
- * @see com.xmlnuke.module.BaseModule
- * @see com.xmlnuke.module.ModuleFactory
+ * @package xmlnuke
  */
 class XSLTheme extends BaseModule
 {
@@ -92,7 +90,7 @@ class XSLTheme extends BaseModule
 
 		$xslUsed = array();
 
-		$xsl = new XSLFilenameProcessor("", $this->_context);
+		$xsl = new XSLFilenameProcessor("");
 		$filelist = FileUtil::RetrieveFilesFromFolder($xsl->PrivatePath(), $xsl->Extension());
 		$this->generateList($myWords->Value("LISTPERSONAL"), $paragraph, $filelist, $xslUsed, $xsl);
 

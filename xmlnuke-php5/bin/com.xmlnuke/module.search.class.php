@@ -27,6 +27,9 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
+/**
+ * @package xmlnuke
+ */
 class Search extends BaseModule
 {
 	/**
@@ -213,7 +216,7 @@ class Search extends BaseModule
 			$nodeTitleList = array("/meta/title");
 			$nodeAbstractList = array("/meta/abstract");
 
-			$configSearchFile = new AnydatasetFilenameProcessor("_configsearch", $this->_context);
+			$configSearchFile = new AnydatasetFilenameProcessor("_configsearch");
 			$configSearch = new AnyDataSet( $configSearchFile );
 			
 			$iterator = $configSearch->getIterator();
@@ -230,7 +233,7 @@ class Search extends BaseModule
 
 				try
 				{
-					$file = new XMLFilenameProcessor($singleName, $this->_context); 					
+					$file = new XMLFilenameProcessor($singleName);
 					$docResult = $this->_context->getXMLDataBase()->getDocument($file->FullQualifiedName(), null);
 					$nodeResult = $this->getNode($nodeTitleList, $docResult);
 					$titulo = ($nodeResult == null) ? $myWords->Value("NOTITLE") : $nodeResult->nodeValue;

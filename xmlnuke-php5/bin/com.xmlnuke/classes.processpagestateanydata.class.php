@@ -27,62 +27,64 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 /**
-* ProcessPageStateDB is class to make easy View, Edit, Delete and Update single tables from relational databases like MySQL, PostGres, Oracle, SQLServer and others->
-* To use this class is necessary define the fields are used->
-* <code>
-* ProcessPageFields[] fieldPage = new ProcessPageFields[3];
-* fieldPage[0]->fieldName = "field1";
-* fieldPage[0]->key = true;             // Only one key field->
-* fieldPage[0]->dataType = INPUTTYPE->NUMBER;
-* fieldPage[0]->fieldCaption = "Key Field";
-* fieldPage[0]->fieldXmlInput = XmlInputObjectType->TEXTBOX;
-* fieldPage[0]->visibleInList = true;   // This field must be visible and in the FIRST position
-* fieldPage[0]->editable = true;        // If the Key field is AutoIncrement set this property
-*                                      // to false->
-* fieldPage[0]->required = true;
-*
-* fieldPage[1]->fieldName = "field2";
-* fieldPage[1]->key = false;
-* fieldPage[1]->dataType = INPUTTYPE->TEXT;
-* fieldPage[1]->fieldCaption = "Caption of Field 2";
-* fieldPage[1]->fieldXmlInput = XmlInputObjectType->TEXTBOX;
-* fieldPage[1]->visibleInList = true;
-* fieldPage[1]->editable = true;
-* fieldPage[1]->required = true;
-*
-* fieldPage[2]->fieldName = "field3";
-* fieldPage[2]->key = false;
-* fieldPage[2]->dataType = INPUTTYPE->DATE;
-* fieldPage[2]->fieldCaption = "Caption of Field 3";
-* fieldPage[2]->fieldXmlInput = XmlInputObjectType->TEXTBOX;
-* fieldPage[2]->visibleInList = true;
-* fieldPage[2]->editable = true;
-* fieldPage[2]->required = true;
-* </code>
-* After defined all the fields the user must create the class, like this:
-* <code>
-* // Create a Block->
-* XmlBlockCollection block = new XmlBlockCollection("ProcessPageStateDB Example", BlockPosition->Center);
-*
-* // Create the class passing all relevant paramenters->
-* ProcessPageStateDB processPage = new ProcessPageStateDB(
-*                   $this->_context,
-*                   fieldPage,
-*                   "Editing Table 'mytable'",
-*                   "module:sample",
-*                   null,
-*                   "mytable",
-*                   "myconnection");
-* block1->addXmlnukeObject(processPage);
-*
-* // Create a XmlnukeDocument and generate XML in the CreatePage method->
-* XmlnukeDocument xmlnukeDoc = new XmlnukeDocument("Titulo da Página", "Abstract Dessa Página");
-* xmlnukeDoc->addXmlnukeObject(block1);
-* return xmlnukeDoc->generatePage();
-* </code>
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * Basic CRUD based on XmlEditList, XmlFormCollection and AnyDataSet classes. 
+ * 
+ * ProcessPageStateDB is class to make easy View, Edit, Delete and Update single tables from relational databases like MySQL, PostGres, Oracle, SQLServer and others->
+ * To use this class is necessary define the fields are used, like a data dictionary. 
+ * <code>
+ * ProcessPageFields[] fieldPage = new ProcessPageFields[3];
+ * fieldPage[0]->fieldName = "field1";
+ * fieldPage[0]->key = true;             // Only one key field->
+ * fieldPage[0]->dataType = INPUTTYPE->NUMBER;
+ * fieldPage[0]->fieldCaption = "Key Field";
+ * fieldPage[0]->fieldXmlInput = XmlInputObjectType->TEXTBOX;
+ * fieldPage[0]->visibleInList = true;   // This field must be visible and in the FIRST position
+ * fieldPage[0]->editable = true;        // If the Key field is AutoIncrement set this property
+ *                                      // to false->
+ * fieldPage[0]->required = true;
+ *
+ * fieldPage[1]->fieldName = "field2";
+ * fieldPage[1]->key = false;
+ * fieldPage[1]->dataType = INPUTTYPE->TEXT;
+ * fieldPage[1]->fieldCaption = "Caption of Field 2";
+ * fieldPage[1]->fieldXmlInput = XmlInputObjectType->TEXTBOX;
+ * fieldPage[1]->visibleInList = true;
+ * fieldPage[1]->editable = true;
+ * fieldPage[1]->required = true;
+ *
+ * fieldPage[2]->fieldName = "field3";
+ * fieldPage[2]->key = false;
+ * fieldPage[2]->dataType = INPUTTYPE->DATE;
+ * fieldPage[2]->fieldCaption = "Caption of Field 3";
+ * fieldPage[2]->fieldXmlInput = XmlInputObjectType->TEXTBOX;
+ * fieldPage[2]->visibleInList = true;
+ * fieldPage[2]->editable = true;
+ * fieldPage[2]->required = true; 
+ * </code>
+ * After defined all the fields the user must create the class, like this:
+ * <code>
+ * // Create a Block->
+ * XmlBlockCollection block = new XmlBlockCollection("ProcessPageStateDB Example", BlockPosition->Center);
+ *
+ * // Create the class passing all relevant paramenters->
+ * ProcessPageStateDB processPage = new ProcessPageStateDB(
+ *                   $this->_context,
+ *                   fieldPage,
+ *                   "Editing Table 'mytable'",
+ *                   "module:sample",
+ *                   null,
+ *                   "mytable",
+ *                   "myconnection");
+ * block1->addXmlnukeObject(processPage);
+ *
+ * // Create a XmlnukeDocument and generate XML in the CreatePage method->
+ * XmlnukeDocument xmlnukeDoc = new XmlnukeDocument("Titulo da Página", "Abstract Dessa Página");
+ * xmlnukeDoc->addXmlnukeObject(block1);
+ * return xmlnukeDoc->generatePage();
+ * </code>
+ * 
+ * @package xmlnuke
+ */
 class ProcessPageStateAnydata extends ProcessPageStateBase
 {
 	/**

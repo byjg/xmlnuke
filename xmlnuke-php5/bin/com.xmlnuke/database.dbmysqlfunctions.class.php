@@ -27,6 +27,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+/**
+ * @package xmlnuke
+ */
 class DbMySQLFunctions extends DbBaseFunctions
 {
     private $sysTimeStamp = 'NOW()';

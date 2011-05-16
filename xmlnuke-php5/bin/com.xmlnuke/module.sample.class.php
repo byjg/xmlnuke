@@ -27,6 +27,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+/**
+ * @package xmlnuke
+ */
 class Sample extends BaseModule
 {
 	/**
@@ -361,7 +364,7 @@ class Sample extends BaseModule
 		$firstParagraph->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("DESCEDITLISTTEXT2"), true, false, false));
 		$firstParagraph->addXmlnukeObject($breakLine);
 
-		$guestbookFile = new AnydatasetFilenameProcessor("guestbook", $this->_context);
+		$guestbookFile = new AnydatasetFilenameProcessor("guestbook");
 		$guestbook = new AnyDataSet($guestbookFile);
 		$iterator = $guestbook->getIterator();
 
@@ -500,7 +503,7 @@ class Sample extends BaseModule
 			        $this->_myWords->Value("EDITDB"),
 			        "module:sample?op=4",
 			        null,
-			        new AnydatasetFilenameProcessor("sample", $this->_context));
+			        new AnydatasetFilenameProcessor("sample"));
 		$processPage->setPageSize(3, 0);
 		$paragraph->addXmlnukeObject($processPage);
 
@@ -561,7 +564,7 @@ class Sample extends BaseModule
 				}
 			case "setupconf":
 				{
-					$filename = new AnydatasetFilenameProcessor("_db", $this->_context);
+					$filename = new AnydatasetFilenameProcessor("_db");
 					$anydata = new AnyDataSet($filename);
 					$itf = new IteratorFilter();
 					$itf->addRelation("dbname", Relation::Equal, "sampledb");
@@ -663,7 +666,7 @@ class Sample extends BaseModule
 		switch ($this->_action)
 		{
 			case 'add':
-				$fileProcessor = new UploadFilenameProcessor('*.*', $this->_context);
+				$fileProcessor = new UploadFilenameProcessor('*.*');
 				$fileProcessor->setFilenameLocation(ForceFilenameLocation::DefinePath, "diretorio/subdir/");
 				$result = $this->_context->processUpload($fileProcessor, false, 'form_file');
 				$paragraph->addXmlnukeObject(new XmlnukeText("Arquivo " . $result[0] . " enviado com sucesso ao servidor!"));
@@ -717,7 +720,7 @@ class Sample extends BaseModule
 		}
 		else
 		{
-			$processor = new AnydatasetFilenameProcessor("sample", $this->_context);
+			$processor = new AnydatasetFilenameProcessor("sample");
 			$xmlstr = FileUtil::QuickFileRead($processor->PathSuggested() . "sample.xml");
 			$rowNode = "book";
 			$colNodeStr = array();
@@ -768,7 +771,7 @@ class Sample extends BaseModule
 		$colNodeStr = preg_split("/\n/", $this->_context->ContextValue("cols"));
 		if ($txtstr != "")
 		{
-			$processor = new AnydatasetFilenameProcessor("sample", $this->_context);
+			$processor = new AnydatasetFilenameProcessor("sample");
 			FileUtil::QuickFileWrite($processor->PathSuggested() . "sample.csv", $txtstr);
 			$dataset = new TextFileDataSet($this->_context, $processor->PathSuggested() . "sample.csv", $colNodeStr, $regexp);
 			//$para1->addXmlnukeObject(new XmlnukeText(""));
@@ -779,7 +782,7 @@ class Sample extends BaseModule
 		}
 		else
 		{
-			$processor = new AnydatasetFilenameProcessor("sample", $this->_context);
+			$processor = new AnydatasetFilenameProcessor("sample");
 			$txtstr = FileUtil::QuickFileRead($processor->PathSuggested() . "sample.csv");
 			$regexp = CSVFILE;
 			$colNodeStr = array();
@@ -835,7 +838,7 @@ class Sample extends BaseModule
 		$colNodeStr[] = "buyprice";
 		$colNodeStr[] = "author";
 
-		$processor = new AnydatasetFilenameProcessor("sample", $this->_context);
+		$processor = new AnydatasetFilenameProcessor("sample");
 		$dataset = new TextFileDataSet($this->_context, $processor->PathSuggested() . "sample.csv", $colNodeStr);
 
 		//$para1->addXmlnukeObject(new XmlnukeText(""));

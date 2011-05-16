@@ -27,9 +27,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
-/// <summary>
-/// Summary description for com.
-/// </summary>
+/**
+ * @package xmlnuke
+ */
 class ManageXSL extends BaseAdminModule
 {
 	public function ManageXSL()
@@ -85,12 +85,12 @@ class ManageXSL extends BaseAdminModule
 				// It is necessary only to load the document to check if it is OK.
 				// If OK, use the original raw file
 				$xsl = XmlUtil::CreateXmlDocumentFromStr($contents);
-				$xslFile = new XSLFilenameProcessor($id, $this->_context);
+				$xslFile = new XSLFilenameProcessor($id);
 				FileUtil::QuickFileWrite($xslFile->FullQualifiedNameAndPath(), str_replace("&amp;#", "&#", $contents));
 
 				$paragraph = $this->_px->addParagraph($block);
 				FileUtil::DeleteFilesFromPath($this->_cacheFile);
-				FileUtil::DeleteFilesFromPath(new XSLCacheFilenameProcessor("", $this->_context));
+				FileUtil::DeleteFilesFromPath(new XSLCacheFilenameProcessor(""));
 				$this->_px->addBold($paragraph, $myWords->Value("SAVED"));
 			}
 			//catch (XmlException ex)
@@ -112,7 +112,7 @@ class ManageXSL extends BaseAdminModule
 		if ($action == "confirmdelete")
 		{
 			$paragraph = $this->_px->addParagraph($block);
-			FileUtil::DeleteFile(new XSLFilenameProcessor($this->_context->ContextValue("id"), $this->_context));
+			FileUtil::DeleteFile(new XSLFilenameProcessor($this->_context->ContextValue("id")));
 			$this->_px->addBold($paragraph, $myWords->Value("DELETED"));
 			$deleteMode = true;
 		}
@@ -125,7 +125,7 @@ class ManageXSL extends BaseAdminModule
 		{
 			//XmlNode list;
 			//XmlNode optlist;
-			$xslFile = new XSLFilenameProcessor("page", $this->_context);
+			$xslFile = new XSLFilenameProcessor("page");
 			//array
 			$templates = FileUtil::RetrieveFilesFromFolder($xslFile->PathSuggested(), "." . strtolower($this->_context->Language()->getName() . $xslFile->Extension()));
 			$paragraph = $this->_px->addParagraph($block);
@@ -178,7 +178,7 @@ class ManageXSL extends BaseAdminModule
 			{
 				$this->_px->addLabelField($form, $myWords->Value("XSLBOX"), $id);
 				$this->_px->addHidden($form, "id", $id);
-				$xslFile = new XSLFilenameProcessor($id, $this->_context);
+				$xslFile = new XSLFilenameProcessor($id);
 				if (FileUtil::Exists($xslFile->FullQualifiedNameAndPath()))
 				{
 					//XmlDocument

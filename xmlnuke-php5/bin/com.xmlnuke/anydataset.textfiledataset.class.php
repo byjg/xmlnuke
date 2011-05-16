@@ -32,6 +32,9 @@ define("CSVFILE",  '/[|,;](?=(?:[^"]*"[^"]*")*(?![^"]*"))/');
 define("CSVFILE_SEMICOLON",  '/[;](?=(?:[^"]*"[^"]*")*(?![^"]*"))/');
 define("CSVFILE_COMMA",  '/[,](?=(?:[^"]*"[^"]*")*(?![^"]*"))/');
 
+/**
+ * @package xmlnuke
+ */
 class TextFileDataSet
 {	
 	protected $_context = null;

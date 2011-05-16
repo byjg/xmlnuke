@@ -27,6 +27,9 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
+/**
+ * @package xmlnuke
+ */
 class LanguageFileTypes
 {
 	const ADMINMODULE = 1;
@@ -36,6 +39,9 @@ class LanguageFileTypes
 	const INTERNAL = 999;
 }
 
+/**
+ * @package xmlnuke
+ */
 class LanguageFactory
 {
 	/**
@@ -52,16 +58,16 @@ class LanguageFactory
 		{
 			case LanguageFileTypes::ADMINMODULE:
 				$name = "com-xmlnuke-".str_replace(".","-",strtolower($name));
-				$langFile = new AnydatasetLangFilenameProcessor($name, $context);
+				$langFile = new AnydatasetLangFilenameProcessor($name);
 				break;
 		
 			case LanguageFileTypes::ADMININTERNAL:
-				$langFile = new AdminModulesLangFilenameProcessor($context);
+				$langFile = new AdminModulesLangFilenameProcessor();
 				break;
 		
 			case LanguageFileTypes::MODULE:
 				$name = str_replace(".","-",strtolower($name));
-				$langFile = new AnydatasetLangFilenameProcessor($name, $context);
+				$langFile = new AnydatasetLangFilenameProcessor($name);
 				break;
 				
 			case LanguageFileTypes::OBJECT:
@@ -78,11 +84,11 @@ class LanguageFactory
 					$name = str_replace($context->ContextValue("xmlnuke.PHPLIBDIR") . FileUtil::Slash(), "", $name);
 				}
 				$name = str_replace(FileUtil::Slash(),"-",str_replace(".","-",strtolower($name)));
-				$langFile = new AnydatasetLangFilenameProcessor($name, $context);
+				$langFile = new AnydatasetLangFilenameProcessor($name);
 				break;
 				
 			default:
-				$langFile = new AnydatasetLangFilenameProcessor($name, $context);
+				$langFile = new AnydatasetLangFilenameProcessor($name);
 				break;
 		}
 		$lang = new LanguageCollection($context);

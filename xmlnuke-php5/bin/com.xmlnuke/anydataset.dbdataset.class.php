@@ -27,7 +27,11 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-class DBDataSet {
+/**
+ * @package xmlnuke
+ */
+class DBDataSet 
+{
 	/**
 	 * @var PDO
 	 */
@@ -475,7 +479,7 @@ class ConnectionManagement {
 	{
 		$this->_context = $context;
 		
-		$configFile = new AnydatasetFilenameProcessor ( "_db", $context );
+		$configFile = new AnydatasetFilenameProcessor ( "_db");
 		$config = new AnyDataSet ( $configFile );
 		$filter = new IteratorFilter ( );
 		$filter->addRelation ( "dbname", Relation::Equal, $dbname );

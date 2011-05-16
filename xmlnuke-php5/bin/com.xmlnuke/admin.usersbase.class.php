@@ -28,8 +28,8 @@
 */
 
 /**
- * User property informations
- *
+ * Constants for the most common custom property values.
+ * @package xmlnuke
  */
 class UserProperty
 {
@@ -65,8 +65,8 @@ class UserProperty
 }
 
 /**
- * Representation of the Database Users Table structure
- *
+ * Structure to represent the users in XMLNuke
+ * @package xmlnuke
  */
 class UserTable
 {
@@ -81,8 +81,8 @@ class UserTable
 }
 
 /**
- * Representation of the Database Custom Table structure
- *
+ * Structure to represent the user's custom values in XMLNuke
+ * @package xmlnuke
  */
 class CustomTable
 {
@@ -93,8 +93,8 @@ class CustomTable
 }
 
 /**
- * Roles structure
- *
+ * Structure to represent the user roles used in XMLNuke. 
+ * @package xmlnuke
  */
 class RolesTable
 {
@@ -104,10 +104,9 @@ class RolesTable
 }
 
 /**
-* UserAnyDataSet is a class to Store and Retrive USERS from an AnyDataSet structure.
-* Note that UsersAnyDataSet doesn't inherits from AnyDataSet, because some funcionalities
-* from AnyDataSet didn't used in this class.
-*/
+ * Base implementation to search and handle users in XMLNuke.
+ * @package xmlnuke
+ */
 abstract class UsersBase implements IUsersBase
 {
 	/**

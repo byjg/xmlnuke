@@ -27,6 +27,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+/**
+ * @package xmlnuke
+ */
 class SortableListItemState
 {
 	const Normal="";
@@ -35,9 +38,8 @@ class SortableListItemState
 }
 
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class XmlInputSortableList extends XmlnukeDocumentObject 
 {
 	protected $_items = array();

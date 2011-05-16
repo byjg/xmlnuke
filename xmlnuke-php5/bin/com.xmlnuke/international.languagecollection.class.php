@@ -28,8 +28,9 @@
 */
 
 /**
-*LanguageCollection class create a NameValueCollection but only add elements from the current language context
-*/
+ * LanguageCollection class create a NameValueCollection but only add elements from the current language context
+ * @package xmlnuke
+ */
 class LanguageCollection
 {
 
@@ -151,7 +152,7 @@ class LanguageCollection
 
 		if (!$all)
 		{
-			$this->LoadLanguages(new AnydatasetLangFilenameProcessor("_all", $this->_context));
+			$this->LoadLanguages(new AnydatasetLangFilenameProcessor("_all"));
 		}
 
 		$this->_loadedFromFile = false;

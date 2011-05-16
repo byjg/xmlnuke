@@ -28,23 +28,19 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/// <summary>
-/// PageXml class abstract the XMLNuke's XML structure. Use this class to create custom user modules.
-/// </summary>
 /**
-*@package com.xmlnuke
-*@subpackage xmlnuke_kernel
-*/
+ * @package xmlnuke
+ */
 class DATEFORMAT
 {
 	const DMY = 0;
 	const MDY = 1;
 	const YMD = 2;
 }
+
 /**
-*@package com.xmlnuke
-*@subpackage xmlnuke_kernel
-*/
+ * @package xmlnuke
+ */
 class INPUTTYPE
 {
 	const TEXT = 0;
@@ -58,9 +54,9 @@ class INPUTTYPE
 }
 
 /**
-*@package com.xmlnuke
-*@subpackage xmlnuke_kernel
-*/
+ * @package xmlnuke
+ * @deprecated since version 2.0.
+ */
 class PageXml implements IXmlnukeDocument 
 {
 	/**

@@ -29,7 +29,7 @@
 
 /**
 *This class is parent of the core engine functions
-*@package com.xmlnuke
+*@package xmlnuke
 *@subpackage xmlnuke.kernel
 */
 class XMLNukeKernel
@@ -39,7 +39,7 @@ class XMLNukeKernel
 /**
 *This exception occurs when the requested module not found
 * Erros range 10 and 29
-*@package com.xmlnuke
+*@package xmlnuke
 *@subpackage xmlnuke.kernel
 */
 class FileUtilKernel extends XMLNukeKernel 
@@ -242,7 +242,7 @@ class FileUtilKernel extends XMLNukeKernel
 /**
 *This exception occurs when the requested module not found
 * Errors range 30 and 50
-*@package com.xmlnuke
+*@package xmlnuke
 *@subpackage xmlnuke.kernel
 */
 class XmlUtilKernel extends XMLNukeKernel 

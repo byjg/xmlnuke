@@ -28,9 +28,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
-/// <summary>
-/// Summary description for com.
-/// </summary>
+/**
+ * @package xmlnuke
+ */
 class ListXML extends NewBaseAdminModule
 {
 	public function ListXML()
@@ -73,7 +73,7 @@ class ListXML extends NewBaseAdminModule
 		$this->addMenuOption($this->myWords->Value("NEWGROUP"), $urlGrp);
 		
 		// Open Index File
-		$indexFile = new XMLFilenameProcessor("index", $this->_context);
+		$indexFile = new XMLFilenameProcessor("index");
 		//XmlDocument 
 		
 		$index = $this->_context->getXMLDataBase()->getDocument($indexFile->FullQualifiedName(),null);

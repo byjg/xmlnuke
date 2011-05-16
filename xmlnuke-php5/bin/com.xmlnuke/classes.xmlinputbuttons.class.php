@@ -26,10 +26,10 @@
  *
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
+
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class ButtonType
 {
 	const SUBMIT = 1;
@@ -37,10 +37,10 @@ class ButtonType
 	const CLICKEVENT = 3;
 	const BUTTON = 4;
 }
+
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class InputButton
 {
 	/**
@@ -60,10 +60,10 @@ class InputButton
 	*/
 	public $onClick;
 }
+
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class XmlInputButtons extends XmlnukeDocumentObject
 {
 	/**

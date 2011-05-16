@@ -3,7 +3,7 @@
 	# If 'module' didnt passed define the ControlPanel
 	#
 	##################################################
-	if ($_REQUEST["module"] == "")
+	if (!array_key_exists("module", $_REQUEST))
 	{
 		$_GET["module"] = "admin.ControlPanel";
 		$_REQUEST["module"] = $_GET["module"];

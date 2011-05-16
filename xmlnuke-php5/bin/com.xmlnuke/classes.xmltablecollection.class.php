@@ -27,6 +27,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+/**
+ * @package xmlnuke
+ */
 abstract class XmlTableCollectionBase extends XmlnukeCollection implements IXmlnukeDocumentObject
 {
 	protected $_NODE = "";
@@ -67,9 +70,8 @@ abstract class XmlTableCollectionBase extends XmlnukeCollection implements IXmln
 }
 
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class XmlTableCollection extends XmlTableCollectionBase
 {
 	public function __construct()
@@ -91,6 +93,9 @@ class XmlTableCollection extends XmlTableCollectionBase
 	}
 }
 
+/**
+ * @package xmlnuke
+ */
 class XmlTableRowCollection extends XmlTableCollectionBase
 {
 	public function __construct()
@@ -114,6 +119,9 @@ class XmlTableRowCollection extends XmlTableCollectionBase
 }
 
 
+/**
+ * @package xmlnuke
+ */
 class XmlTableColumnCollection extends XmlTableCollectionBase
 {
 	protected $_colspan = "";

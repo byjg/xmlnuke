@@ -27,9 +27,10 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
- * IMPORTANT NOTE:
+/** 
+ * Get the Culture Info based in the context
  *
+ * <b>Important Note</b>
  * This class is Operational System dependant. Your OS must support the desired language to get work
  * specific regional settings.
  *
@@ -40,8 +41,8 @@
  * On Windows Machines:
  *   ??
  *
+ * @package xmlnuke
  */
-
 class CultureInfo
 {
 	private $_name;

@@ -29,9 +29,11 @@
 */
 
 /**
-*LocaleFactory creates the proper CultureInfo and assign it to CurrentThread. This classes enable output from Data, Currency, 
-*numbers and others are localized properly from the Language specified.
-*/
+ * LocaleFactory creates the proper CultureInfo and assign it to CurrentThread. 
+ * 
+ * This classes enable output from Data, Currency, numbers and others are localized properly from the Language specified.
+ * @package xmlnuke
+ */
 class LocaleFactory
 {
 	

@@ -27,9 +27,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
-/// <summary>
-/// Summary description for com.
-/// </summary>
+/**
+ * @package xmlnuke
+ */
 class ManageSitesAction extends ModuleAction 
 {
 	const OFFLINE = 'action.OFFLINE';
@@ -223,7 +223,7 @@ class ManageSites extends NewBaseAdminModule
 		$textbox->setDataType(INPUTTYPE::LOWER);
 		$textbox->setRequired(true);
 
-		$xsl = new XSLFilenameProcessor("", $this->_context);
+		$xsl = new XSLFilenameProcessor("");
 		$filelist = FileUtil::RetrieveFilesFromFolder($xsl->SharedPath(), $xsl->Extension());
 		$xsllist = array();
 		foreach($filelist as $key=>$file)
@@ -248,7 +248,7 @@ class ManageSites extends NewBaseAdminModule
 	*/
 	protected function getSiteList()
 	{
-		$sites = new AnydatasetFilenameProcessor("sites", $this->_context);
+		$sites = new AnydatasetFilenameProcessor("sites");
 		$sitesanydata = new AnyDataSet($sites);
 		$siteAvail = $this->_context->ExistingSites();
 		foreach($siteAvail as $key )
@@ -268,7 +268,7 @@ class ManageSites extends NewBaseAdminModule
 	public static function createRepositoryForSite($hashedDir, $xslTemplate, $sitePath, $language, $context)
 	{
 		$repositorio = 	new XmlNukeDB($hashedDir, $sitePath . FileUtil::Slash() . "xml" . FileUtil::Slash(), $language, true);
-		$processorFile = new XMLFilenameProcessor("index", $context);
+		$processorFile = new XMLFilenameProcessor("index");
 		$index = $processorFile->FullName("index", "", $language) . $processorFile->Extension();
 		$home = $processorFile->FullName("home", "", $language) . $processorFile->Extension();
 		$notfound = $processorFile->FullName("notfound", "", $language) . $processorFile->Extension();
@@ -288,7 +288,7 @@ class ManageSites extends NewBaseAdminModule
 			$repositorio->saveIndex();
 		//}
 		//catch (Exception $e){}
-		$xslFile = new XSLFilenameProcessor("index", $context);
+		$xslFile = new XSLFilenameProcessor("index");
 		$indexXsl = $sitePath . FileUtil::Slash() . "xsl" . FileUtil::Slash() . $xslFile->FullName("", "index", $language) . $xslFile->Extension();
 		$pageXsl = $sitePath . FileUtil::Slash() . "xsl" . FileUtil::Slash() . $xslFile->FullName("", "page", $language) . $xslFile->Extension();
 

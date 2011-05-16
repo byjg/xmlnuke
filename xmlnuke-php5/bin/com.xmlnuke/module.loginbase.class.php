@@ -31,9 +31,7 @@
  * Login is a default module descendant from BaseModule class.
  * This class shows/edit the profile from the current user.
  *
- * @see module.IModule.class.php
- * @see module.BaseModule.class.php
- * @subpackage xmlnuke.modules
+ * @package xmlnuke
  */
 abstract class LoginBase extends BaseModule
 {

@@ -27,9 +27,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
-/// <summary>
-/// Summary description for com.
-/// </summary>
+/**
+ * @package xmlnuke
+ */
 class ManageXML extends BaseAdminModule
 {
 	public function ManageXML()
@@ -84,7 +84,7 @@ class ManageXML extends BaseAdminModule
 		*/
 
 		// Open Index File
-		$indexFile = new XMLFilenameProcessor("index", $this->_context);
+		$indexFile = new XMLFilenameProcessor("index");
 		//XmlDocument 
 		
 		$index = $this->_context->getXMLDataBase()->getDocument($indexFile->FullQualifiedName(),null);
@@ -171,14 +171,14 @@ class ManageXML extends BaseAdminModule
 					}
 				}
 
-				$xmlFile = new XMLFilenameProcessor($id, $this->_context);
+				$xmlFile = new XMLFilenameProcessor($id);
 					
 				$this->_context->getXMLDataBase()->saveDocumentXML($xmlFile->FullQualifiedName(), $xml);
 				$this->_context->getXMLDataBase()->saveDocumentXML($indexFile->FullQualifiedName(), $index);
 				$this->_context->getXMLDataBase()->saveIndex();
 				$paragraph = $this->_px->addParagraph($block);
 				FileUtil::DeleteFilesFromPath($this->_cacheFile);
-				FileUtil::DeleteFilesFromPath(new XSLCacheFilenameProcessor("", $this->_context));
+				FileUtil::DeleteFilesFromPath(new XSLCacheFilenameProcessor(""));
 				$this->_px->addBold($paragraph, $myWords->Value("SAVED"));
 			}
 			//catch (XmlException ex)
@@ -240,7 +240,7 @@ class ManageXML extends BaseAdminModule
 			$this->addMenuOption($myWords->Value("PREVIEWMENU"), "engine:xmlnuke?site=[param:site]&xml=" . $id . "&xsl=[param:xsl]&lang=[param:lang]", "preview");
 			$this->addMenuOption($myWords->Value("NEWXMLMENU"), "admin:ManageXML", null);
 			$langAvail = $this->_context->LanguagesAvailable();
-			$processorFile = new XMLFilenameProcessor($id, $this->_context );
+			$processorFile = new XMLFilenameProcessor($id);
 			foreach(array_keys($langAvail) as $key) 				
 			{
 				if ($key != strtolower($this->_context->Language()->getName()));
@@ -274,7 +274,7 @@ class ManageXML extends BaseAdminModule
 			$xmlExist = true;
 			if ($id != "")
 			{
-				$xmlTestExist = new XMLFilenameProcessor($id, $this->_context );
+				$xmlTestExist = new XMLFilenameProcessor($id);
 				$xmlExist = $this->_context->getXMLDataBase()->existsDocument($xmlTestExist->FullQualifiedName());
 			}
 
@@ -322,7 +322,7 @@ class ManageXML extends BaseAdminModule
 			{
 				$this->_px->addLabelField($form, $myWords->Value("LANGUAGEBOX"), strtolower($this->_context->Language()->getName()));
 				$this->_px->addHidden($form, "id", $id);
-				$xmlFile = new XMLFilenameProcessor($id, $this->_context);
+				$xmlFile = new XMLFilenameProcessor($id);
 				//XmlDocument 
 				$xml = $this->_context->getXMLDataBase()->getDocument($xmlFile->FullQualifiedName(), null);
 				//if($contents!="")					

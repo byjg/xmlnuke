@@ -28,8 +28,7 @@
  */
 
 /**
- * @package com.xmlnuke
- * @subpackage xmlnukeobject
+ * @package xmlnuke
  */
 class EasyListType
 {
@@ -45,7 +44,7 @@ class EasyListType
  * You can create the object pass a $name $value collection and the list of object will be create
  * List of objects: CheckBox, RadioBox, SelectList and UnorderedList
  *
- * @package com.xmlnuke
+ * @package xmlnuke
  * @subpackage xmlnukeobject
  */
 class XmlEasyList extends XmlnukeDocumentObject

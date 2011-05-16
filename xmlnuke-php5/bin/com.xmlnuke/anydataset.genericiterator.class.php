@@ -27,6 +27,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+/**
+ * @package xmlnuke
+ */
 abstract class GenericIterator implements IIterator, Iterator
 {
 	public function hasNext()

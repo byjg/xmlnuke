@@ -27,9 +27,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
-/// <summary>
-/// Summary description for com.
-/// </summary>
+/**
+ * @package xmlnuke
+ */
 class ConfigSearch extends NewBaseAdminModule
 {
 	public function ConfigSearch()
@@ -63,7 +63,7 @@ class ConfigSearch extends NewBaseAdminModule
 		$this->defaultXmlnukeDocument->addXmlnukeObject($block);
 		
 		// configSearch File
-		$configSearchFile = new AnydatasetFilenameProcessor("_configsearch", $this->_context);
+		$configSearchFile = new AnydatasetFilenameProcessor("_configsearch");
 
 		$fields = new ProcessPageFields();
 		

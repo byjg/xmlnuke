@@ -27,10 +27,17 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+/**
+ * @package xmlnuke
+ */
 class UsersGroupsActions extends ModuleAction 
 {
 	
 }
+
+/**
+ * @package xmlnuke
+ */
 class ManageUsersGroups extends NewBaseAdminModule 
 {
 	/**

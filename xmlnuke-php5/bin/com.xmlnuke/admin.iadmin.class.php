@@ -27,11 +27,14 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
-	interface IAdmin
-	{
+/**
+ * @package xmlnuke
+ */
+interface IAdmin
+{
 
-		function adminName();
+	function adminName();
 
-	}
+}
 
 ?>

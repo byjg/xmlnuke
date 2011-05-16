@@ -27,6 +27,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+/**
+ * @package xmlnuke
+ */
 class Guestbook extends  BaseModule
 {
 	/**
@@ -60,8 +63,8 @@ class Guestbook extends  BaseModule
 	public function Setup($xmlModuleName, $context, $customArgs)
 	{
 		parent::Setup($xmlModuleName, $context, $customArgs);
-		$this->guestbookFile = new AnydatasetFilenameProcessor("guestbook", $context);
-		$this->cacheFile = new XMLCacheFilenameProcessor("guestbook", $context);
+		$this->guestbookFile = new AnydatasetFilenameProcessor("guestbook");
+		$this->cacheFile = new XMLCacheFilenameProcessor("guestbook");
 	}
 
 	/**

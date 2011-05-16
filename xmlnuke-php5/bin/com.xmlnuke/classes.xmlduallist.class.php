@@ -28,10 +28,8 @@
  */
 
 /**
-*Dual list Button Types
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class DualListButtonType
 {
 	const Button = 1;
@@ -40,10 +38,8 @@ class DualListButtonType
 }
 
 /**
-*Dual list Buttons
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class DualListButton
 {
 	/**
@@ -81,10 +77,8 @@ class DualListButton
 }
 
 /**
-*Edit list class
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class XmlDualList extends XmlnukeDocumentObject
 {
 	/**

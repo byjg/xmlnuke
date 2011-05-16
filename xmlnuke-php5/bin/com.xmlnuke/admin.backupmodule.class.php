@@ -30,6 +30,9 @@
 
 require_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/classes.tar.class.php");
 
+/**
+ * @package xmlnuke
+ */
 class BackupModule extends NewBaseAdminModule
 {
 	const OP_EDITPROJECT = "prj";
@@ -231,7 +234,7 @@ class BackupModule extends NewBaseAdminModule
 
 			case self::AC_DELETE :
 				$projectName = $projectList[$this->_context->ContextValue("valueid")];
-				$project = new AnydatasetBackupFilenameProcessor($projectName, $this->_context);
+				$project = new AnydatasetBackupFilenameProcessor($projectName);
 				if (FileUtil::Exists($project->FullQualifiedNameAndPath()))
 				{
 					FileUtil::DeleteFile($project);
@@ -300,7 +303,7 @@ class BackupModule extends NewBaseAdminModule
 	 */
 	public function getProjectList()
 	{
-		$project = new AnydatasetBackupFilenameProcessor("", $this->_context);
+		$project = new AnydatasetBackupFilenameProcessor("");
 
 		//personal list
 		$tempProjectList = FileUtil::RetrieveFilesFromFolder($project->PrivatePath(), $project->Extension());
@@ -451,7 +454,7 @@ class BackupModule extends NewBaseAdminModule
 			return "";
 		}
 
-		$project = new AnydatasetBackupFilenameProcessor($projectName, $this->_context);
+		$project = new AnydatasetBackupFilenameProcessor($projectName);
 		$anyProject = new AnyDataSet($project);
 
 		$itf = new IteratorFilter();
@@ -482,7 +485,7 @@ class BackupModule extends NewBaseAdminModule
 	 */
 	public function openProject($projectName)
 	{
-		$projectProcessor = new AnydatasetBackupFilenameProcessor($projectName, $this->_context);
+		$projectProcessor = new AnydatasetBackupFilenameProcessor($projectName);
 		$project = new AnyDataSet($projectProcessor);
 		return $project;
 	}
@@ -497,7 +500,7 @@ class BackupModule extends NewBaseAdminModule
 	 */
 	public function createProject($projectName, $directory, $file, $setup)
 	{
-		$project = new AnydatasetBackupFilenameProcessor($projectName, $this->_context);
+		$project = new AnydatasetBackupFilenameProcessor($projectName);
 		//if (FileUtil::Exists($project->FullQualifiedNameAndPath()))
 		//{
 		//	FileUtil::DeleteFile($project);
@@ -642,10 +645,10 @@ class BackupModule extends NewBaseAdminModule
 		$block = new XmlBlockCollection($this->_myWords->Value("TITLE_FINISHUPLOAD"), BlockPosition::Center);
 		$this->defaultXmlnukeDocument->addXmlnukeObject($block);
 
-		$backup = new BackupFilenameProcessor("",$this->_context);
+		$backup = new BackupFilenameProcessor("");
 		$filepath = $backup->PrivatePath();
 
-		$fileProcessor = new UploadFilenameProcessor("*.*", $this->_context);
+		$fileProcessor = new UploadFilenameProcessor("*.*");
 		$fileProcessor->setFilenameLocation(ForceFilenameLocation::DefinePath, $filepath);
 		$fileProcessor->setValidExtension($backup->Extension());
 
@@ -667,17 +670,17 @@ class BackupModule extends NewBaseAdminModule
 	protected function downloadPackage()
 	{
 		$bkp = $this->_context->ContextValue("bkp");
-		$backupFile = new BackupFilenameProcessor($bkp, $this->_context);
+		$backupFile = new BackupFilenameProcessor($bkp);
 		FileUtil::ResponseCustomContentFromFile("application/x-compressed", $backupFile->FullQualifiedNameAndPath());
 	}
 
 	protected function getBackupList()
 	{
-		$backup = new BackupFilenameProcessor("", $this->_context);
+		$backup = new BackupFilenameProcessor("");
 		$backupList = array();
 
 		// Installed Backups
-		$backupLogProcessor = new AnydatasetBackupLogFilenameProcessor("backup", $this->_context);
+		$backupLogProcessor = new AnydatasetBackupLogFilenameProcessor("backup");
 		$anyDataSet = new AnyDataSet($backupLogProcessor);
 		$it = $anyDataSet->getIterator();
 		while($it->hasNext())
@@ -759,7 +762,7 @@ class BackupModule extends NewBaseAdminModule
 		$it = $anyDataSet->getIterator();
 
 		// Test if exists a previous versions. Old versions must be deleted.
-		$backupProcessor = new BackupFilenameProcessor($projectName, $this->_context);
+		$backupProcessor = new BackupFilenameProcessor($projectName);
 		if (FileUtil::Exists($backupProcessor))
 		{
 			FileUtil::DeleteFile($backupProcessor);
@@ -853,7 +856,7 @@ class BackupModule extends NewBaseAdminModule
 		$block = new XmlBlockCollection($this->_myWords->Value("TITLE_BACKUPCONTENTS", $backupName), BlockPosition::Center);
 		$this->defaultXmlnukeDocument->addXmlnukeObject($block);
 
-		$backupProcessor = new BackupFilenameProcessor($backupName, $this->_context);
+		$backupProcessor = new BackupFilenameProcessor($backupName);
 		$backupProcessor->setFilenameLocation(ForceFilenameLocation::UseWhereExists);
 
 		$form = new XmlFormCollection($this->_context, "admin:backupmodule", "");
@@ -882,7 +885,7 @@ class BackupModule extends NewBaseAdminModule
 		$block = new XmlBlockCollection($this->_myWords->Value("TITLE_BACKUPLOGCONTENTS", $backupName), BlockPosition::Center);
 		$this->defaultXmlnukeDocument->addXmlnukeObject($block);
 
-		$backupProcessor = new BackupFilenameProcessor($backupName, $this->_context);
+		$backupProcessor = new BackupFilenameProcessor($backupName);
 		$backupProcessor->setFilenameLocation(ForceFilenameLocation::UseWhereExists);
 
 		$form = new XmlFormCollection($this->_context, "admin:backupmodule", "");
@@ -895,7 +898,7 @@ class BackupModule extends NewBaseAdminModule
 
 		$block->addXmlnukeObject($form);
 
-		$anyDataSetFile = new AnydatasetBackupLogFilenameProcessor("backup", $this->_context);
+		$anyDataSetFile = new AnydatasetBackupLogFilenameProcessor("backup");
 		$anyDataSet = new AnyDataSet($anyDataSetFile);
 
 		$error = false;
@@ -955,7 +958,7 @@ class BackupModule extends NewBaseAdminModule
 		$this->defaultXmlnukeDocument->addXmlnukeObject($block);
 
 		//install directories and files in tar files
-		$backupProcessor = new BackupFilenameProcessor($backupName, $this->_context);
+		$backupProcessor = new BackupFilenameProcessor($backupName);
 		$tar = new Tar($backupProcessor->FullQualifiedNameAndPath());
 		$tar->extract(".");   // <<<===-------------------------------
 
@@ -973,7 +976,7 @@ class BackupModule extends NewBaseAdminModule
 		if ((!$tar->error) && (!$tar->warning))
 		{
 			//set the status of backup installation in config file
-			$anyDataSetLogFile = new AnydatasetBackupLogFilenameProcessor("backup", $this->_context);
+			$anyDataSetLogFile = new AnydatasetBackupLogFilenameProcessor("backup");
 			$anyDataSetLog = new AnyDataSet($anyDataSetLogFile);
 			$anyDataSetLog->appendRow();
 			$anyDataSetLog->addField("project", $backupName);
@@ -1045,7 +1048,7 @@ class BackupModule extends NewBaseAdminModule
 	protected function getAnyDataByReflection($strProcessor, $singleName, $location)
 	{
 		$class = new ReflectionClass($strProcessor);
-		//$fileProcessorRfl = new AnyDataSetFilenameProcessor("a", $this->_context);
+		//$fileProcessorRfl = new AnyDataSetFilenameProcessor("a");
 		$fileProcessorRfl = $class->newInstance($singleName, $this->_context);
 		switch ($location)
 		{
@@ -1102,7 +1105,7 @@ class BackupModule extends NewBaseAdminModule
 		$block = new XmlBlockCollection($this->_myWords->Value("TITLE_UNINSTALLBACKUP", $projectName), BlockPosition::Center);
 		$this->defaultXmlnukeDocument->addXmlnukeObject($block);
 
-		$anyDataSetFile = new AnydatasetBackupLogFilenameProcessor("backup", $this->_context);
+		$anyDataSetFile = new AnydatasetBackupLogFilenameProcessor("backup");
 		$anyDataSet = new AnyDataSet($anyDataSetFile);
 
 		$error = false;
@@ -1218,7 +1221,7 @@ class BackupModule extends NewBaseAdminModule
 
 		if (!$error)
 		{
-			$anyDataSetFile = new AnydatasetBackupLogFilenameProcessor("backup", $this->_context);
+			$anyDataSetFile = new AnydatasetBackupLogFilenameProcessor("backup");
 			$anyDataSet = new AnyDataSet($anyDataSetFile);
 			$it = $anyDataSet->getIterator();
 			while($it->hasNext())

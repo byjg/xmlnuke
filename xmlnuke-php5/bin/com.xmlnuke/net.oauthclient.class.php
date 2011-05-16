@@ -4,6 +4,9 @@ require_once(PHPXMLNUKEDIR . 'bin/modules/oauthclient/oauth.class.php');
 require_once(PHPXMLNUKEDIR . 'bin/modules/oauthclient/baseoauth.class.php');
 require_once(PHPXMLNUKEDIR . 'bin/modules/oauthclient/twitteroauth.class.php');
 
+/**
+ * @package xmlnuke
+ */
 class OAuthClient
 {
 	/* Consumer key form OAuth Server */
@@ -48,7 +51,7 @@ class OAuthClient
 			}
 		}
 
-		$oauthFile = new AnydatasetFilenameProcessor("_oauthclient", $context);
+		$oauthFile = new AnydatasetFilenameProcessor("_oauthclient");
 		$oauthAny = new AnyDataSet($oauthFile);
 
 		$itf = new IteratorFilter();

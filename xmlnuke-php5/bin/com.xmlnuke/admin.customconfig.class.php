@@ -27,9 +27,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
-/// <summary>
-/// Summary description for com.
-/// </summary>
+/**
+ * @package xmlnuke
+ */
 class CustomConfig extends NewBaseAdminModule
 {
 	public function CustomConfig()
@@ -217,7 +217,7 @@ class CustomConfig extends NewBaseAdminModule
 	 */
 	protected function getStringConnectionsArray()
 	{
-		$processor = new AnydatasetFilenameProcessor("_db", $this->_context);
+		$processor = new AnydatasetFilenameProcessor("_db");
 		$processor->UseFileFromAnyLanguage();
 		$anydata = new AnyDataSet($processor);
 		$it = $anydata->getIterator();

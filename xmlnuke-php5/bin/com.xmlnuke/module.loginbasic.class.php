@@ -28,6 +28,9 @@
 */
 require_once("module.loginbase.class.php");
 
+/**
+ * @package xmlnuke
+ */
 class ModuleActionLogin extends ModuleAction 
 {
 	const LOGIN = 'action.LOGIN';

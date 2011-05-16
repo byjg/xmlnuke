@@ -26,10 +26,10 @@
  *
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
+
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class CustomButtons
 {
 	/**
@@ -76,28 +76,27 @@ interface IEditListFormatter
 
 
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class MultipleSelectType
 {
 	const NONE = 0;
 	const ONLYONE = 1;
 	const MULTIPLE = 2;
 }
+
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class SelectType
 {
 	const RADIO = 1;
 	const CHECKBOX = 2;
 }
+
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class EditListFieldType
 {
 	const TEXT = 1;
@@ -107,6 +106,9 @@ class EditListFieldType
 	const CUSTOM = 99;
 }
 
+/**
+ * @package xmlnuke
+ */
 class EditListFieldSummary
 {
 	const NONE = 0;
@@ -116,10 +118,8 @@ class EditListFieldSummary
 }
 
 /**
-*Edit list Field elements, to simulate the struct of the .NET C#
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class EditListField
 {
 	/**
@@ -165,10 +165,8 @@ class EditListField
 }
 
 /**
-*Edit list class
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class XmlEditList extends XmlnukeDocumentObject
 {
 	/**

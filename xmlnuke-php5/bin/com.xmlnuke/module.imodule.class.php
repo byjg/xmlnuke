@@ -28,8 +28,12 @@
 */
 
 /**
- * IModule is a generic interface used to create custom user modules. All modules need implement this interface.
+ * IModule is a generic interface used to create custom user modules. 
+ * 
+ * All modules need implement this interface.
  * To create a user module you can implement this interface or inherit from BaseModule class it implements all generic functions.
+ * 
+ * @package xmlnuke
  */
 interface IModule
 {
@@ -52,10 +56,9 @@ interface IModule
 	 * ModuleFactory call this method to Setup default values to module.
 	 *
 	 * @param XMLFilenameProcessor $xmlModuleName
-	 * @param Context $context
 	 * @param object $customArgs
 	 */
-	function Setup($xmlModuleName, $context, $customArgs);
+	function Setup($xmlModuleName, $customArgs);
 
 	/**
 	 * Check if module result already in cache.

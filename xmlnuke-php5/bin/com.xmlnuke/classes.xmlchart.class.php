@@ -27,7 +27,7 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 /**
-*@package com.xmlnuke
+*@package xmlnuke
 *@subpackage xmlnukeobject
 */
 
@@ -110,9 +110,8 @@ class SeriesNotes
 
 
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class XmlChart extends XmlnukeDocumentObject
 {
 	const MAXCHARTSERIESNAME = 30;

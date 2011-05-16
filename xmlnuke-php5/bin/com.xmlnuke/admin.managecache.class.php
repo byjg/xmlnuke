@@ -27,9 +27,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
-/// <summary>
-/// Summary description for com.
-/// </summary>
+/**
+ * @package xmlnuke
+ */
 class ManageCache extends BaseAdminModule
 {
 	public function ManageCache()
@@ -70,7 +70,7 @@ class ManageCache extends BaseAdminModule
 		if ($action == "erase")
 		{
 			FileUtil::DeleteFilesFromPath($this->_cacheFile);
-			FileUtil::DeleteFilesFromPath(new XSLCacheFilenameProcessor("", $this->_context));
+			FileUtil::DeleteFilesFromPath(new XSLCacheFilenameProcessor(""));
 			$dirs = FileUtil::RetrieveSubFolders($this->_context->CachePath());
 			foreach ($dirs as $key=>$value)
 			{

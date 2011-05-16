@@ -30,8 +30,7 @@
 /**
  * Xml Paragraph Collection
  *
- * @package com.xmlnuke
- * @subpackage xmlnukeobject
+ * @package xmlnuke
  */
 class XmlParagraphCollection extends XmlnukeCollection implements IXmlnukeDocumentObject 
 {

@@ -27,6 +27,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+/**
+ * @package xmlnuke
+ */
 class Download extends NewBaseAdminModule
 {
 	function Download()
@@ -80,7 +83,7 @@ class Download extends NewBaseAdminModule
 		$this->defaultXmlnukeDocument->addXmlnukeObject($block);
 		
 		// Download File
-		$downloadFile = new AnydatasetFilenameProcessor("_download", $this->_context);
+		$downloadFile = new AnydatasetFilenameProcessor("_download");
 
 		$fields = new ProcessPageFields();
 

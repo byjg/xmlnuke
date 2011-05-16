@@ -28,6 +28,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+/**
+ * @package xmlnuke
+ */
 class EditLanguage extends NewBaseAdminModule
 {
 	/**
@@ -72,7 +75,7 @@ class EditLanguage extends NewBaseAdminModule
 
 		$op = $this->_context->ContextValue("op");
 		$ed = $this->_context->ContextValue("ed");
-		$langDir = new AnydatasetLangFilenameProcessor("", $this->_context);
+		$langDir = new AnydatasetLangFilenameProcessor("");
 
 		if ($op == "")
 		{
@@ -115,7 +118,7 @@ class EditLanguage extends NewBaseAdminModule
 				$file = $this->_context->ContextValue("valueid");
 			}
 
-			$langDir = new AnydatasetLangFilenameProcessor($file, $this->_context);
+			$langDir = new AnydatasetLangFilenameProcessor($file);
 			$langDir->setFilenameLocation(($op == "" ? ForceFilenameLocation::PrivatePath : ForceFilenameLocation::SharedPath));
 			$anydata = new AnyDataSet($langDir);
 
@@ -167,7 +170,7 @@ class EditLanguage extends NewBaseAdminModule
 		elseif ($this->_action == ModuleAction::CreateConfirm)
 		{
 			$file = $this->_context->ContextValue("newfile");
-			$langDir = new AnydatasetLangFilenameProcessor($file, $this->_context);
+			$langDir = new AnydatasetLangFilenameProcessor($file);
 			$langDir->setFilenameLocation(($op == "" ? ForceFilenameLocation::PrivatePath : ForceFilenameLocation::SharedPath));
 			$anydata = new AnyDataSet($langDir);
 

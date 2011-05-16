@@ -29,6 +29,9 @@
 
 require_once("module.loginbase.class.php");
 
+/**
+ * @package xmlnuke
+ */
 class ModuleActionLogin extends ModuleAction 
 {
 	const LOGIN = 'action.LOGIN';
@@ -42,9 +45,7 @@ class ModuleActionLogin extends ModuleAction
  * Login is a default module descendant from BaseModule class.
  * This class shows/edit the profile from the current user.
  * 
- * @see module.IModule.class.php
- * @see module.BaseModule.class.php
- * @subpackage xmlnuke.modules
+ * @package xmlnuke
  */
 class Login extends LoginBase
 {

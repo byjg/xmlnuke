@@ -29,6 +29,9 @@
 
 require_once('Archive/Tar.php');
 
+/**
+ * @package xmlnuke
+ */
 class Tar extends Archive_Tar
 {
 	

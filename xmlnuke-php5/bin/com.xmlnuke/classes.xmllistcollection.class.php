@@ -28,6 +28,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+/**
+ * @package xmlnuke
+ */
 class XmlListType
 {
 	const UnorderedList = 1;
@@ -37,8 +40,7 @@ class XmlListType
 /**
  * Xml List Collection
  *
- * @package com.xmlnuke
- * @subpackage xmlnukeobject
+ * @package xmlnuke
  */
 class XmlListCollection extends XmlnukeCollection implements IXmlnukeDocumentObject 
 {

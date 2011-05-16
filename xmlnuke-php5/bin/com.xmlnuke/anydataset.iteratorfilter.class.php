@@ -29,51 +29,55 @@
 
 
 /**
-*Enum to abstract relational operators. Used on AddRelation method.
-*/
+ * Constants to represent relational operators. 
+ * 
+ * Use this in AddRelation method. 
+ * @package xmlnuke
+ */
 class Relation
 {
 	/**
-	*@desc = operator
-	*/
+	 * "Equal" relational operator
+	 */
 	const Equal = 0;
 
 	/**
-	*@desc < operator
-	*/
+	 * "Less than" relational operator
+	 */
 	const LessThan = 1;
 
 	/**
-	*@desc > operator
-	*/
+	 * "Greater than" relational operator
+	 */
 	const GreaterThan = 2;
 
 	/**
-	*@desc <= operator
-	*/
+	 * "Less or Equal Than" relational operator
+	 */
 	const LessOrEqualThan = 3;
 	/**
-	*@desc >= operator
-	*/
+	 * "Greater or equal than" relational operator
+	 */
 	const GreaterOrEqualThan = 4;
 	/**
-	*@desc != operator
-	*/
+	 * "Not equal" relational operator
+	 */
 	const NotEqual = 5;
 	/**
-	*@desc != operator
-	*/
+	 * "Starts with" unary comparator
+	 */
 	const StartsWith = 6;
 	/**
-	*@desc != operator
-	*/
+	 * "Contains" unary comparator
+	 */
 	const Contains = 7;
 }
 
 
 /**
-*IteratorFilter class abstract XPATH commands to filter an AnyDataSet XML. Used on getIterator method.
-*/
+ * Abstract XPath or SQL query commands to filter a AnyDataSet based iterator. 
+ * @package xmlnuke
+ */
 class IteratorFilter
 {
 

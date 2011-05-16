@@ -28,8 +28,9 @@
 */
 
 /**
-* SingleRow class represent an unique anydataset row.
-*/
+ * Row from a AnyDataSet based. 
+ * @package xmlnuke
+ */
 class SingleRow
 {
 	/**

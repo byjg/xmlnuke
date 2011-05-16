@@ -27,6 +27,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+/**
+ * @package xmlnuke
+ */
 class Download extends BaseModule
 {
 	/**
@@ -128,7 +131,7 @@ class Download extends BaseModule
 		$this->_category = $this->_context->ContextValue("cat");
 		$this->_file = $this->_context->ContextValue("file");
 
-		$downloadFile = new AnydatasetFilenameProcessor("_download", $this->_context);
+		$downloadFile = new AnydatasetFilenameProcessor("_download");
 		$this->_download = new AnyDataSet( $downloadFile );
 		
 		if ($this->_file != "") 

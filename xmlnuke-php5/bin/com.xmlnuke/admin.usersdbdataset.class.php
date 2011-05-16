@@ -28,10 +28,10 @@
 */
 
 /**
-  * UserAnyDataSet is a class to Store and Retrive USERS from an AnyDataSet structure.
-  * Note that UsersAnyDataSet doesn't inherits from AnyDataSet, because some funcionalities
-  * from AnyDataSet didn't used in this class.
-  */
+ * Stores and retrieves user information from a database. 
+ * @see UsersAnyDataSet
+ * @package xmlnuke
+ */
 class UsersDBDataSet extends UsersBase
 {
 	/**

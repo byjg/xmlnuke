@@ -27,6 +27,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+/**
+ * @package xmlnuke
+ */
 class FileBrownserUserType
 {
 	const ADMIN = 1;
@@ -34,12 +37,18 @@ class FileBrownserUserType
 }
 
 
+/**
+ * @package xmlnuke
+ */
 class FileBrowserEditListType
 {
 	const SUBFOLDER = 1;
 	const FILE = 2;
 }
 
+/**
+ * @package xmlnuke
+ */
 class XmlFileBrowser extends XmlnukeDocumentObject
 {
 	/**
@@ -754,7 +763,7 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 	{	
 		$dir = $this->_currentFolder.FileUtil::Slash();
 			
-		$fileProcessor = new UploadFilenameProcessor("", $this->_context);
+		$fileProcessor = new UploadFilenameProcessor("");
 		$fileProcessor->setFilenameLocation(ForceFilenameLocation::DefinePath, $this->_context->SystemRootPath() . $dir);
 
 		$fileList = $this->_context->getUploadFileNames();

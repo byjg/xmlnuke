@@ -44,7 +44,7 @@ class ErrorType
 }
 /**
 *This is base engine exception
-*@package com.xmlnuke
+*@package xmlnuke
 *@subpackage xmlnuke.kernel
 */
 class XMLNukeException extends Exception 
@@ -138,7 +138,7 @@ class XMLNukeException extends Exception
 }
 /**
 *This is Not Found exception type
-*@package com.xmlnuke
+*@package xmlnuke
 *@subpackage xmlnuke.kernel
 */
 class NotFoundException extends XMLNukeException 
@@ -158,7 +158,7 @@ class NotFoundException extends XMLNukeException
 }
 /**
 *This is Not Found exception type
-*@package com.xmlnuke
+*@package xmlnuke
 *@subpackage xmlnuke.kernel
 */
 class NotFoundClassException extends XMLNukeException 
@@ -178,7 +178,7 @@ class NotFoundClassException extends XMLNukeException
 }
 /**
 *This is Not Authenticated exception type
-*@package com.xmlnuke
+*@package xmlnuke
 *@subpackage xmlnuke.kernel
 */
 class NotAuthenticatedException extends XMLNukeException 
@@ -198,7 +198,7 @@ class NotAuthenticatedException extends XMLNukeException
 }
 /**
 *This is Insufficient Privilege exception type
-*@package com.xmlnuke
+*@package xmlnuke
 *@subpackage xmlnuke.kernel
 */
 class InsufficientPrivilegeException extends XMLNukeException 
@@ -219,7 +219,7 @@ class InsufficientPrivilegeException extends XMLNukeException
 /**
 *This File Util exception type
 * Range code error: 100 to 249
-*@package com.xmlnuke
+*@package xmlnuke
 *@subpackage xmlnuke.kernel
 */
 class FileUtilException extends XMLNukeException 
@@ -243,7 +243,7 @@ class FileUtilException extends XMLNukeException
 /**
 *This Xml Util exception type
 * Range code error: 250 to 399
-*@package com.xmlnuke
+*@package xmlnuke
 *@subpackage xmlnuke.kernel
 */
 class XmlUtilException extends XMLNukeException 
@@ -266,7 +266,7 @@ class XmlUtilException extends XMLNukeException
 /**
 *This is base engine too exception type
 * Range code error: 500 to 699
-*@package com.xmlnuke
+*@package xmlnuke
 *@subpackage xmlnuke.kernel
 */
 class KernelException extends XMLNukeException 
@@ -288,7 +288,7 @@ class KernelException extends XMLNukeException
 /**
 *This Date Util exception type
 * Range code error: 700 to 749
-*@package com.xmlnuke
+*@package xmlnuke
 *@subpackage xmlnuke.kernel
 */
 class DateUtilException extends XMLNukeException 
@@ -311,7 +311,7 @@ class DateUtilException extends XMLNukeException
 /**
 *This is base engine exception
 * Range code error: 750 to 800
-*@package com.xmlnuke
+*@package xmlnuke
 *@subpackage xmlnuke.kernel
 */
 class EngineException extends XMLNukeException 
@@ -334,7 +334,7 @@ class EngineException extends XMLNukeException
 /**
 *This Image Util exception type
 * Range code error: 801 to 820
-*@package com.xmlnuke
+*@package xmlnuke
 *@subpackage xmlnuke.kernel
 */
 class ImageUtilException extends XMLNukeException 
@@ -357,7 +357,7 @@ class ImageUtilException extends XMLNukeException
 /**
 *This Upload Util exception type
 * Range code error: 821 to 840
-*@package com.xmlnuke
+*@package xmlnuke
 *@subpackage xmlnuke.kernel
 */
 class UploadUtilException extends XMLNukeException 
@@ -380,7 +380,7 @@ class UploadUtilException extends XMLNukeException
 /**
 *This is database exception type
 * Range code error: 1000 to 2000
-*@package com.xmlnuke
+*@package xmlnuke
 *@subpackage xmlnuke.kernel
 */
 class DataBaseException extends XMLNukeException 
@@ -400,7 +400,7 @@ class DataBaseException extends XMLNukeException
 /**
 *This is XmlNukeObject exception type
 * Range code error: 850 to 999
-*@package com.xmlnuke
+*@package xmlnuke
 *@subpackage xmlnuke.kernel
 */
 class XmlNukeObjectException extends XMLNukeException 
@@ -423,7 +423,7 @@ class XmlNukeObjectException extends XMLNukeException
 /**
 * This is Module exception type
 * Range code error: 5000 to 7000
-*@package com.xmlnuke
+*@package xmlnuke
 *@subpackage xmlnuke.kernel
 */
 class ModuleException extends XMLNukeException 

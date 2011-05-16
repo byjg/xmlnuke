@@ -30,10 +30,7 @@
 /**
  * NotFound is a default module descendant from BaseModule class.
  * This class runs only if the requested module not found.
- * 
- * @see com.xmlnuke.module.IModule
- * @see com.xmlnuke.module.BaseModule
- * @see com.xmlnuke.module.ModuleFactory
+ * @package xmlnuke
  */
 class NotFound extends BaseModule
 {

@@ -26,9 +26,10 @@
  *
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
+
 /**
-*Interface for Iterator structures. Use this for receive Iterator paramenters.
-*/
+ * @package xmlnuke
+ */
 interface IIterator
 {
 	/**

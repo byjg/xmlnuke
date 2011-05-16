@@ -26,10 +26,10 @@
  *
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
+
 /**
-*@package com.xmlnuke
-*@subpackage xmlnukeobject
-*/
+ * @package xmlnuke
+ */
 class XmlnukePoll extends XmlnukeDocumentObject
 {
 	/**
@@ -110,7 +110,7 @@ class XmlnukePoll extends XmlnukeDocumentObject
 	 */
 	protected function getPollConfig()
 	{
-		$pollfile = new AnydatasetFilenameProcessor("_poll", $this->_context);
+		$pollfile = new AnydatasetFilenameProcessor("_poll");
 		$anyconfig = new AnyDataSet($pollfile);
 
 		$it = $anyconfig->getIterator();
@@ -135,9 +135,9 @@ class XmlnukePoll extends XmlnukeDocumentObject
 	 */
 	protected function getAnyData()
 	{
-		$filepoll = new AnydatasetFilenameProcessor("poll_list", $this->_context);
+		$filepoll = new AnydatasetFilenameProcessor("poll_list");
 		$this->_anyPoll = new AnyDataSet($filepoll);
-		$fileanswer = new AnydatasetFilenameProcessor("poll_" . $this->_poll . "_" . $this->_lang, $this->_context);
+		$fileanswer = new AnydatasetFilenameProcessor("poll_" . $this->_poll . "_" . $this->_lang);
 		$this->_anyAnswer = new AnyDataSet($fileanswer);
 	}
 
@@ -160,7 +160,7 @@ class XmlnukePoll extends XmlnukeDocumentObject
 
 				// Try to get the Last IP who vote here.
 				$ok = false;
-				$filelastip = new AnydatasetFilenameProcessor("poll_lastip_" . $this->_poll, $this->_context);
+				$filelastip = new AnydatasetFilenameProcessor("poll_lastip_" . $this->_poll);
 				$anylastip = new AnyDataSet($filelastip);
 				$itlastip = $anylastip->getIterator();
 				if ($itlastip->hasNext())

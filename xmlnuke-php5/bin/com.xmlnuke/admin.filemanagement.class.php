@@ -27,6 +27,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+/**
+ * @package xmlnuke
+ */
 class FileManagement extends NewBaseAdminModule
 {
 	public function FileManagement()
@@ -81,7 +84,7 @@ class FileManagement extends NewBaseAdminModule
 		$browser = new XmlFileBrowser($root, $this->_action, $this->_context);
 		
 		//SET FILEBROWSER ACESS LEVEL
-		$processor = new AnydatasetFilenameProcessor("filemanagement", $this->_context);
+		$processor = new AnydatasetFilenameProcessor("filemanagement");
 		$processor->setFilenameLocation(ForceFilenameLocation::UseWhereExists );
 		$anyDataSet = new AnyDataSet($processor);
 

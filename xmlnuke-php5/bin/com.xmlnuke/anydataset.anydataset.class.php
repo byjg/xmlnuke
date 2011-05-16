@@ -32,24 +32,32 @@
  * Your structure is hierarquical and each "row" contains "fields" but these structure can vary for each row.
  * Anydataset files have extension ".anydata.xml" and have many classes to put and get data into anydataset xml file.
  * Anydataset class just read and write files. To search elements you need use AnyIterator and IteratorFilter. Each row have a class SingleRow.
- * @see "com.xmlnuke.anydataset.SingleRow"
- * @see "com.xmlnuke.anydataset.AnyIterator"
- * @see "com.xmlnuke.anydataset.IteratorFilter"
- *
- * <example>
+ * 
+ * XML Structure
  * <code>
- * &lt;anydataset&gt;
- *		&lt;row&gt;
- *			&lt;field name="fieldname1"&gt;value of fieldname 1&lt;/field&gt;
- *			&lt;field name="fieldname2"&gt;value of fieldname 2&lt;/field&gt;
- *			&lt;field name="fieldname3"&gt;value of fieldname 3&lt;/field&gt;
- *		&lt;/row&gt;
- *		&lt;row&gt;
- *			&lt;field name="fieldname1"&gt;value of fieldname 1&lt;/field&gt;
- *			&lt;field name="fieldname4"&gt;value of fieldname 4&lt;/field&gt;
- *		&lt;/row&gt;
- * &lt;/anydataset&gt;
+ * <anydataset>
+ *		<row>
+ *			<field name="fieldname1">value of fieldname 1</field>
+ *			<field name="fieldname2">value of fieldname 2</field>
+ *			<field name="fieldname3">value of fieldname 3</field>
+ *		</row>
+ *		<row>
+ *			<field name="fieldname1">value of fieldname 1</field>
+ *			<field name="fieldname4">value of fieldname 4</field>
+ *		</row>
+ * </anydataset>
  * </code>
+ * 
+ * How to use:
+ * <code>
+ * $any = new AnyDataSet();
+ * </code>
+ * 
+ * @see SingleRow
+ * @see AnyIterator
+ * @see IteratorFilter
+ * @package xmlnuke
+ *
  */
 
 class AnyDataSet

@@ -27,6 +27,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+/**
+ * @package xmlnuke
+ */
 class ForceFilenameLocation
 {
 	const UseWhereExists = "UseWhereExists";
@@ -37,8 +40,10 @@ class ForceFilenameLocation
 }
 
 /**
- *FilenameProcessor is the class who process the Single argument filename (example: home or page)
- *and get directory and localized informations about this file from FilenameType and XmlNukeContext.
+ * FilenameProcessor is the class who process the Single argument filename (example: home or page)
+ * and get directory and localized informations about this file from FilenameType and XmlNukeContext.
+ * 
+ * @package xmlnuke
  */
 abstract class FilenameProcessor
 {
@@ -69,29 +74,21 @@ abstract class FilenameProcessor
 
 	/**
 	 *@param string $singlename
-	 *@param Context $context
 	 *@return string
 	 *@desc Constructor
 	 */
-	public function __construct($singlename, $context)
+	public function __construct($singlename)
 	{
-		if ($context instanceof Context)
+		if (strpos($singlename, "..")===false)
 		{
-			if (strpos($singlename, "..")===false)
-			{
-				$this->_singlename = $singlename;
-				$this->_context = $context;
-				$this->_languageid = strtolower($this->_context->Language()->getName());
-				$this->_filenameLocation = ForceFilenameLocation::UseWhereExists;
-			}
-			else
-			{
-				throw new Exception("Invalid file name");
-			}
+			$this->_singlename = $singlename;
+			$this->_context = Context::getInstance();
+			$this->_languageid = strtolower($this->_context->Language()->getName());
+			$this->_filenameLocation = ForceFilenameLocation::UseWhereExists;
 		}
 		else
 		{
-			throw new Exception("You must pass a valid Xmlnuke Context to FilenameProcessor");
+			throw new Exception("Invalid file name");
 		}
 	}
 
@@ -345,19 +342,19 @@ abstract class FilenameProcessor
 }
 
 /**
- *XMLFilenameProcessor class
+ * XMLFilenameProcessor class
+ * @package xmlnuke
  */
 class XMLFilenameProcessor extends FilenameProcessor
 {
 	/**
 	 *@param string $singlename
-	 *@param Context $context
 	 *@return string
 	 *@desc
 	 */
-	public function __construct($singlename, $context )
+	public function __construct($singlename)
 	{
-		parent::__construct($singlename, $context);
+		parent::__construct($singlename);
 		// The function to manipulate HASHED XML files is in BTREEUTILS...
 		// So nothing to change HERE (instead XMLCacheFileName and XSLCacheFileName).
 		$this->_filenameLocation = ForceFilenameLocation::PrivatePath;
@@ -406,15 +403,17 @@ class XMLFilenameProcessor extends FilenameProcessor
 	}
 }
 
+/**
+ * @package xmlnuke
+ */
 class AdminModulesXMLFilenameProcessor extends AnydatasetFilenameProcessor
 {
 	/**
 	 *
-	 * @param <type> $context
 	 */
-	public function __construct($context )
+	public function __construct()
 	{
-		parent::__construct("adminmodules", $context);
+		parent::__construct("adminmodules");
 		$this->_filenameLocation = ForceFilenameLocation::SharedPath;
 	}
 
@@ -444,17 +443,19 @@ class AdminModulesXMLFilenameProcessor extends AnydatasetFilenameProcessor
 	}
 }
 
+/**
+ * @package xmlnuke
+ */
 class XSLFilenameProcessor extends FilenameProcessor
 {
 	/**
 	 *@param string $singlename
-	 *@param Context $context
 	 *@return string
 	 *@desc
 	 */
-	public function __construct($singlename,$context)
+	public function __construct($singlename)
 	{
-		parent::__construct($singlename, $context);
+		parent::__construct($singlename);
 	}
 
 	/**
@@ -508,19 +509,18 @@ class XSLFilenameProcessor extends FilenameProcessor
 	}
 }
 
+/**
+ * @package xmlnuke
+ */
 class XMLCacheFilenameProcessor extends FilenameProcessor
 {
 	/**
-	 *@param string $singlename
-	 *@param Context $context
-	 *@return string
-	 *@desc
+	 *
+	 * @param string $singlename 
 	 */
-	public function __construct($singlename,$context)
+	public function __construct($singlename)
 	{
-		$singlename = $singlename;
-
-		parent::__construct($singlename, $context);
+		parent::__construct($singlename);
 		if ($this->_context->CacheHashedDir())
 		{
 			$this->setFilenameLocation(ForceFilenameLocation::DefinePath, $this->_context->CachePath() . $singlename[0] . FileUtil::Slash() . $singlename[1] . FileUtil::Slash());
@@ -578,17 +578,17 @@ class XMLCacheFilenameProcessor extends FilenameProcessor
 	}
 }
 
+/**
+ * @package xmlnuke
+ */
 class XSLCacheFilenameProcessor extends FilenameProcessor
 {
 	/**
-	 *@param string $singlename
-	 *@param Context $context
-	 *@return string
-	 *@desc
+	 * @param string $singlename
 	 */
-	public function __construct($singlename,$context)
+	public function __construct($singlename)
 	{
-		parent::__construct($singlename, $context);
+		parent::__construct($singlename);
 		if ($this->_context->CacheHashedDir())
 		{
 			$this->setFilenameLocation(ForceFilenameLocation::DefinePath, $this->_context->CachePath() . $singlename[0] . FileUtil::Slash() . $singlename[1] . FileUtil::Slash());
@@ -644,17 +644,17 @@ class XSLCacheFilenameProcessor extends FilenameProcessor
 	}
 }
 
+/**
+ * @package xmlnuke
+ */
 class OfflineFilenameProcessor extends FilenameProcessor
 {
 	/**
-	 *@param string $singlename
-	 *@param Context $context
-	 *@return string
-	 *@desc
+	 * @param string $singlename
 	 */
-	public function __construct($singlename,$context)
+	public function __construct($singlename)
 	{
-		parent::__construct($singlename,$context);
+		parent::__construct($singlename);
 		$this->_filenameLocation = ForceFilenameLocation::PrivatePath;
 	}
 
@@ -701,6 +701,9 @@ class OfflineFilenameProcessor extends FilenameProcessor
 	}
 }
 
+/**
+ * @package xmlnuke
+ */
 abstract class AnydatasetBaseFilenameProcessor extends FilenameProcessor
 {
 	/**
@@ -709,9 +712,9 @@ abstract class AnydatasetBaseFilenameProcessor extends FilenameProcessor
 	 *@return string
 	 *@desc
 	 */
-	public function __construct($singlename,$context)
+	public function __construct($singlename)
 	{
-		parent::__construct($singlename,$context);
+		parent::__construct($singlename);
 	}
 
 	/**
@@ -738,17 +741,18 @@ abstract class AnydatasetBaseFilenameProcessor extends FilenameProcessor
 }
 
 
+/**
+ * @package xmlnuke
+ */
 class AnydatasetFilenameProcessor extends AnydatasetBaseFilenameProcessor
 {
 	/**
-	 *@param string $singlename
-	 *@param Context $context
-	 *@return void
-	 *@desc
+	 *
+	 * @param string $singlename 
 	 */
-	public function __construct($singlename,$context)
+	public function __construct($singlename)
 	{
-		parent::__construct($singlename,$context);
+		parent::__construct($singlename);
 	}
 
 	/**
@@ -773,18 +777,19 @@ class AnydatasetFilenameProcessor extends AnydatasetBaseFilenameProcessor
 }
 
 
+/**
+ * @package xmlnuke
+ */
 class AnydatasetSetupFilenameProcessor extends AnydatasetBaseFilenameProcessor
 {
 
 	/**
-	 *@param string $singlename
-	 *@param Context $context
-	 *@return void
-	 *@desc
+	 *
+	 * @param string $singlename 
 	 */
-	public function __construct($singlename, $context)
+	public function __construct($singlename)
 	{
-		parent::__construct($singlename,$context);
+		parent::__construct($singlename);
 		$this->_filenameLocation = ForceFilenameLocation::SharedPath;
 	}
 
@@ -811,17 +816,19 @@ class AnydatasetSetupFilenameProcessor extends AnydatasetBaseFilenameProcessor
 }
 
 
+/**
+ * @package xmlnuke
+ */
 class AnydatasetBackupFilenameProcessor extends AnydatasetBaseFilenameProcessor
 {
 	/**
 	 * Constructor Method
 	 *
 	 * @param string $singlename
-	 * @param Context $context
 	 */
-	public function __construct($singlename, $context)
+	public function __construct($singlename)
 	{
-		parent::__construct($singlename,$context);
+		parent::__construct($singlename);
 		//		$this->_filenameLocation = ForceFilenameLocation::SharedPath;
 	}
 
@@ -851,17 +858,19 @@ class AnydatasetBackupFilenameProcessor extends AnydatasetBaseFilenameProcessor
 	}
 }
 
+/**
+ * @package xmlnuke
+ */
 class AnydatasetBackupLogFilenameProcessor extends AnydatasetBaseFilenameProcessor
 {
 	/**
 	 * Constructor Method
 	 *
 	 * @param string $singlename
-	 * @param Context $context
 	 */
-	public function __construct($singlename, $context)
+	public function __construct($singlename)
 	{
-		parent::__construct($singlename,$context);
+		parent::__construct($singlename);
 		$this->_filenameLocation = ForceFilenameLocation::SharedPath;
 	}
 
@@ -892,17 +901,19 @@ class AnydatasetBackupLogFilenameProcessor extends AnydatasetBaseFilenameProcess
 }
 
 
+/**
+ * @package xmlnuke
+ */
 class AnydatasetLangFilenameProcessor extends AnydatasetBaseFilenameProcessor
 {
 	/**
 	 *@param string $singlename
-	 *@param Context $context
 	 *@return void
 	 *@desc
 	 */
-	public function __construct($singlename, $context )
+	public function __construct($singlename)
 	{
-		parent::__construct($singlename, $context);
+		parent::__construct($singlename);
 	}
 
 	/**
@@ -931,6 +942,9 @@ class AnydatasetLangFilenameProcessor extends AnydatasetBaseFilenameProcessor
 	}
 }
 
+/**
+ * @package xmlnuke
+ */
 class AdminModulesLangFilenameProcessor extends AnydatasetLangFilenameProcessor
 {
 	/**
@@ -939,9 +953,9 @@ class AdminModulesLangFilenameProcessor extends AnydatasetLangFilenameProcessor
 	 *@return void
 	 *@desc
 	 */
-	public function __construct($context)
+	public function __construct()
 	{
-		parent::__construct("adminmodules", $context);
+		parent::__construct("adminmodules");
 		$this->_filenameLocation = ForceFilenameLocation::UseWhereExists;
 	}
 
@@ -957,17 +971,19 @@ class AdminModulesLangFilenameProcessor extends AnydatasetLangFilenameProcessor
 }
 
 
+/**
+ * @package xmlnuke
+ */
 class BackupFilenameProcessor extends FilenameProcessor
 {
 	/**
 	 *@param string $singlename
-	 *@param Context $context
 	 *@return void
 	 *@desc
 	 */
-	public function __construct($singlename,$context)
+	public function __construct($singlename)
 	{
-		parent::__construct($singlename,$context);
+		parent::__construct($singlename);
 		$this->_filenameLocation = ForceFilenameLocation::PrivatePath;
 	}
 
@@ -1015,17 +1031,19 @@ class BackupFilenameProcessor extends FilenameProcessor
 }
 
 
+/**
+ * @package xmlnuke
+ */
 class SnippetFilenameProcessor extends FilenameProcessor
 {
 	/**
 	 *@param string $singlename
-	 *@param Context $context
 	 *@return void
 	 *@desc
 	 */
-	public function __construct($singlename,$context)
+	public function __construct($singlename)
 	{
-		parent::__construct($singlename,$context);
+		parent::__construct($singlename);
 	}
 
 	/**
@@ -1071,17 +1089,19 @@ class SnippetFilenameProcessor extends FilenameProcessor
 	}
 }
 
+/**
+ * @package xmlnuke
+ */
 class UploadFilenameProcessor extends FilenameProcessor
 {
 	/**
 	 * Use singlename like path/to/file/filename.* to get the source file extension
 	 * @param string $singlename
-	 * @param Context $context
 	 * @return void
 	 */
-	public function __construct($singlename, $context )
+	public function __construct($singlename)
 	{
-		parent::__construct($singlename, $context);
+		parent::__construct($singlename);
 		$this->_filenameLocation = ForceFilenameLocation::PrivatePath;
 	}
 
@@ -1124,6 +1144,9 @@ class UploadFilenameProcessor extends FilenameProcessor
 	}
 }
 
+/**
+ * @package xmlnuke
+ */
 class ImageFilenameProcessor extends FilenameProcessor
 {
 	/**
@@ -1140,7 +1163,7 @@ class ImageFilenameProcessor extends FilenameProcessor
 	 * @param string $singlename
 	 * @param Context $context
 	 */
-	public function __construct($singlename, $context )
+	public function __construct($singlename)
 	{
 		$parts = pathinfo($singlename);
 		if ($parts["dirname"] != '.')
@@ -1162,7 +1185,7 @@ class ImageFilenameProcessor extends FilenameProcessor
 			$this->_extension = 'jpg';
 		}
 		$singlename = basename($parts["basename"], $this->Extension());
-		parent::__construct($singlename, $context);
+		parent::__construct($singlename);
 	}
 
 	/**

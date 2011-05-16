@@ -27,6 +27,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+/**
+ * @package xmlnuke
+ */
 class SQLType
 {
 	const SQL_UPDATE = 1;
@@ -34,6 +37,9 @@ class SQLType
 	const SQL_DELETE = 3;
 }
 
+/**
+ * @package xmlnuke
+ */
 class SQLFieldType
 {
 	const Literal = 'F';
@@ -44,8 +50,9 @@ class SQLFieldType
 }
 
 /**
- * SQLHelper Class by Joao Gilberto Magalhaes
- *
+ * SQLHelper Class
+ * 
+ * @package xmlnuke 
  */
 class SQLHelper
 {

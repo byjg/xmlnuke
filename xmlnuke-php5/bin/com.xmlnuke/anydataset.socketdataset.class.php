@@ -29,9 +29,15 @@
 */
 
 /**
-*Class to abstract the access to the an HTTP server it returns a delimited string like:
-* COLUMN1;COLUMN2;COLUMN3|COLUMN1;COLUMN2;COLUMN3|COLUMN1;COLUMN2;COLUMN3
-*/
+ * Access a delimited string content from a HTTP server and iterate it. 
+ * 
+ * The string have the format:
+ * COLUMN1;COLUMN2;COLUMN3|COLUMN1;COLUMN2;COLUMN3|COLUMN1;COLUMN2;COLUMN3
+ * 
+ * You can customize the field and row separators. 
+ * 
+ * @package xmlnuke
+ */
 class SocketDataSet
 {
 	private $_server = null;

@@ -30,9 +30,7 @@
 /**
  * UserProfile is a default module descendant from BaseModule class.
  *
- * @see com.xmlnuke.module.IModule
- * @see com.xmlnuke.module.BaseModule
- * @see com.xmlnuke.module.ModuleFactory
+ * @package xmlnuke
  */
 class UserProfile extends BaseModule
 {

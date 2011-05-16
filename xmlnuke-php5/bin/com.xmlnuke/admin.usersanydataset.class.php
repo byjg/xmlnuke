@@ -28,10 +28,14 @@
 */
 
 /**
- * UserAnyDataSet is a class to Store and Retrive USERS from an AnyDataSet structure.
- * Note that UsersAnyDataSet doesn't inherits from AnyDataSet, because some funcionalities
- * from AnyDataSet didn't used in this class.
-*/
+ * Stores and retrieve user information based on AnyDataSet file. 
+ * 
+ * This is the default method in XMLNuke. 
+ * The file where the users, passwords and properties are stored is located on xmlnuke-data/shared/setup/users.anydata.xml
+ * 
+ * @see UsersDBDataSet
+ * @package xmlnuke
+ */
 class UsersAnyDataSet extends UsersBase
 {
 	/**
@@ -54,7 +58,7 @@ class UsersAnyDataSet extends UsersBase
 	public function __construct($context)
 	{
 		$this->_context = $context;
-		$this->_usersFile = new AnydatasetSetupFilenameProcessor("users", $context);
+		$this->_usersFile = new AnydatasetSetupFilenameProcessor("users");
 		$this->_anyDataSet = new AnyDataSet($this->_usersFile);
 		$this->configTableNames();
 		$this->_UserTable->Id = $this->_UserTable->Username;
@@ -228,7 +232,7 @@ class UsersAnyDataSet extends UsersBase
 	 */
 	protected function getRoleAnydataSet()
 	{
-		$fileRole = new AnydatasetSetupFilenameProcessor($this->_RolesTable->Table, $this->_context);
+		$fileRole = new AnydatasetSetupFilenameProcessor($this->_RolesTable->Table);
 		$roleDataSet = new AnyDataSet($fileRole);
 		return $roleDataSet;
 	}

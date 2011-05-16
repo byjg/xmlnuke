@@ -28,16 +28,16 @@
  */
 
 /**
-* Context class get data from HttpContext class and Config.php file and put all in propeties and methods to make easy access their contents
-* @package Context
-*/
+ * Context class get data from HttpContext class and Config.php file and put all in propeties and methods to make easy access their contents
+ * @package xmlnuke
+ */
 class Context
 {
 	/**
 	* @access private
 	* @var Context
 	*/
-	private $_context = null;
+	private static $_context = null;
 	/**
 	* @access private
 	* @var string
@@ -270,6 +270,18 @@ class Context
 		{
 		       $this->MakeLogout();
 		}
+	}
+	
+	/**
+	 *
+	 * @return Context 
+	 */
+	public static function getInstance()
+	{
+		if (Context::$_context == null)
+			Context::$_context = new Context();
+		
+		return Context::$_context;
 	}
 
 	/**
@@ -616,7 +628,7 @@ class Context
 	* @access public
 	* @return string
 	*/
-	public function ContextValue($key)
+	public function Value($key)
 	{
 		$key = strtoupper($key);
 		if (array_key_exists($key, $this->_config))
@@ -637,9 +649,35 @@ class Context
 		}
 	}
 
-	public function putContextValue($key, $value)
+	/**
+	 *
+	 * @param type $key
+	 * @param type $value 
+	 */
+	public function putValue($key, $value)
 	{
 		$this->AddPairToConfig($key, $value);
+	}
+
+	/**
+	 * @deprecated since version 3.6. use Value() instead.
+	 * @param type $key 
+	 * @return string
+	 */
+	public function ContextValue($key)
+	{
+		return $this->Value($key);
+	}
+	
+	/**
+	 *
+	 * @deprecated since version 3.6. use putValue() instead.
+	 * @param type $key
+	 * @param type $value 
+	 */
+	public function putContextValue($key, $value)
+	{
+		$this->putValue($key, $value);
 	}
 
 	/**
@@ -1110,7 +1148,7 @@ class Context
 	public function updateCustomConfig($options)
 	{
 		//processor.AnydatasetFilenameProcessor
-		$configFile = new AnydatasetFilenameProcessor("customconfig", $this);
+		$configFile = new AnydatasetFilenameProcessor("customconfig");
 		$phyFile = $this->CurrentSitePath().$configFile->FullQualifiedName();
 		//anydataset.AnyDataSet
 		$config = new AnyDataSet($phyFile);
@@ -1289,7 +1327,7 @@ class Context
 			$this->_contentType["extension"] = "";
 			if ($this->ContextValue("xmlnuke.CHECKCONTENTTYPE"))
 			{
-				$filename = new AnydatasetFilenameProcessor("contenttype", $this);
+				$filename = new AnydatasetFilenameProcessor("contenttype");
 				$anydataset = new AnyDataSet($filename);
 				$itf = new IteratorFilter();
 				$itf->addRelation("xsl", Relation::Equal, $this->getXsl());
@@ -1301,7 +1339,7 @@ class Context
 				}
 				else
 				{
-					$filename = new AnydatasetSetupFilenameProcessor("contenttype", $this);
+					$filename = new AnydatasetSetupFilenameProcessor("contenttype");
 					$anydataset = new AnyDataSet($filename);
 					$itf = new IteratorFilter();
 					$itf->addRelation("xsl", Relation::Equal, $this->getXsl());

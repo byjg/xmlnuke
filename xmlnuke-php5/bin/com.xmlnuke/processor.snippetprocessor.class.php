@@ -30,6 +30,7 @@
 /**
 *This class is a XmlUrlResolver descendant. It process the XSL file and add the proper snippets. 
 *If this XSL file already process use from cache.
+ * @package xmlnuke
 */
 class SnippetProcessor
 {
@@ -118,7 +119,7 @@ class SnippetProcessor
 	*/
 	public function IncludeSnippet($xslPath)
 	{
-		$xslCache = new XSLCacheFilenameProcessor($this->_file->ToString(), $this->_context);
+		$xslCache = new XSLCacheFilenameProcessor($this->_file->ToString());
 		// Create a new stream representing the file to be written to,
 		// and write the stream cache the stream
 		// from the external location to the file (only if doesnt exist)
@@ -135,7 +136,7 @@ class SnippetProcessor
 					{
 						$iEnd = strpos($line,">",$iStart + 1);
 						$snippetFile = substr($line, $iStart + 9, $iEnd - $iStart - 10);
-						$snippet = new SnippetFilenameProcessor(trim($snippetFile), $this->_context);						
+						$snippet = new SnippetFilenameProcessor(trim($snippetFile));
 						$fStreamSnippet = FileUtilKernel::OpenFile ($snippet->FullQualifiedNameAndPath(), "r");
 						$sReadSnippet = FileUtilKernel::ReadFile($fStreamSnippet, filesize($snippet->FullQualifiedNameAndPath()));
 						FileUtilKernel::CloseFile($fStreamSnippet);

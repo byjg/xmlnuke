@@ -29,9 +29,8 @@
 */
 
 /**
-*Class to abstract the access to the an HTTP server it returns a delimited string like:
-* COLUMN1;COLUMN2;COLUMN3|COLUMN1;COLUMN2;COLUMN3|COLUMN1;COLUMN2;COLUMN3
-*/
+ * @package xmlnuke
+ */
 class XmlDataSet
 {
 	/**

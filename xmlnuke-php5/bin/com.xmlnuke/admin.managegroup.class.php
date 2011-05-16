@@ -27,9 +27,9 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
-/// <summary>
-/// Summary description for com.
-/// </summary>
+/**
+ * @package xmlnuke
+ */
 class ManageGroup extends BaseAdminModule
 {
 	public function ManageGroup()
@@ -71,7 +71,7 @@ class ManageGroup extends BaseAdminModule
 		$this->addMenuOption($myWords->Value("TXT_BACK"), "admin:ListXML?onlygroup=true");
 
 		// Open Index File
-		$indexFile = new XMLFilenameProcessor("index", $this->_context);
+		$indexFile = new XMLFilenameProcessor("index");
 		//DOMDocument
 		$index = $this->_context->getXMLDataBase()->getDocument($indexFile->FullQualifiedName(), null);
 		// Delete a Group Node

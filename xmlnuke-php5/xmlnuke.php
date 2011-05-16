@@ -1,4 +1,27 @@
 <?php
+/**
+ * This file contains the minimum requirements to run a website based on XMLNuke.
+ * 
+ * You do need make any changes in this file. This file is the XMLNuke Front Controller and process all requests to XMLNUke
+ * 
+ * If you want to use the XMLNuke as a library you must include the file "xmlnuke.inc.php".
+ * 
+ * You can create also a file called index.php to define the default values to be passed to xmlnuke.php. See the example below:
+ *
+ * <code>
+ * <?php
+ * $_REQUEST["site"] = "byjg";
+ * $_REQUEST["module"] = "mylib.home";
+ * include("xmlnuke.php");
+ * ?>
+ * </code>
+ * @see xmlnuke.inc.php
+ * @package xmlnuke
+ */
+
+/**
+ * It is necessary include the file xmlnuke.inc.php do process the request. 
+ */
 	#############################################
 	# To create a XMLNuke capable PHP5 page
 	#
@@ -56,7 +79,7 @@
 	}
 	else 
 	{
-		processModule($context, $engine);
+		processModule($engine);
 	}	
 	
 	//echo "<div align='right'><font face='verdana' size='1'><b>";
@@ -64,8 +87,10 @@
 	//echo "</b></font></div>";
 	
 	
-	function processModule($context, $engine)
+	function processModule($engine)
 	{
+		$context = Context::getInstance();
+		
 		//IModule
 		$module = null;
 		$moduleName = $context->getModule();
@@ -81,7 +106,7 @@
 		// Catch errors from permissions and so on.
 		try
 		{
-			$module = ModuleFactory::GetModule($moduleName, $context, null);
+			$module = ModuleFactory::GetModule($moduleName);
 		}
 		catch (NotAuthenticatedException $ex)
 		{
@@ -96,14 +121,14 @@
 			if ($debug) 
 			{
 				Debug::LogError($moduleName, $ex);
-				$kernelError = new XMLNukeErrorModule($context, $firstError, $context->getDebugInModule());
+				$kernelError = new XMLNukeErrorModule($firstError, $context->getDebugInModule());
 				$kernelError->CreatePage();
 				exit();
 			}
 			else
 			{
 				$ex->moduleName = $moduleName;
-				$module = ModuleFactory::GetModule("LoadError", $context,  $ex );
+				$module = ModuleFactory::GetModule("LoadError", $ex );
 			}
 		}
 
@@ -112,14 +137,14 @@
 		// Catch errors from execute
 		try
 		{
-			writePage($engine->TransformDocumentFromModule($module), $context);
+			writePage($engine->TransformDocumentFromModule($module));
 		}
 		catch (Exception $ex)
 		{
 			Debug::LogError($moduleName, $ex);
 			if ($debug) 
 			{
-				$kernelError = new XMLNukeErrorModule($context, $ex, $context->getDebugInModule());
+				$kernelError = new XMLNukeErrorModule($ex, $context->getDebugInModule());
 				$kernelError->CreatePage();
 			}
 			else
@@ -132,8 +157,8 @@
 				
 				$ex->moduleName = $moduleName;
 				$firstError = $ex;
-				$module = ModuleFactory::GetModule("LoadError", $context,  $ex );
-				writePage($engine->TransformDocumentFromModule($module), $context);
+				$module = ModuleFactory::GetModule("LoadError", $ex );
+				writePage($engine->TransformDocumentFromModule($module));
 			}
 		}		
 	}
@@ -190,8 +215,10 @@
 	}
 
 	
-	function writePage($buffer, $context)
+	function writePage($buffer)
 	{
+		$context = Context::getInstance();
+		
 		@include("writepage.inc.php");
 
 		$posi = 0;
