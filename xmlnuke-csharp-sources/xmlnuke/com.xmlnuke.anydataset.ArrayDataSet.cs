@@ -54,7 +54,8 @@ namespace com.xmlnuke.anydataset
 
 			for (int i = 0; i < array.Length; i++)
 			{
-				this._array[i].Add(fieldName, array[i]);
+                this._array.Add(i, new Dictionary<string, string>());
+                this._array[i].Add(fieldName, array[i]);
 			}
 		}
 
@@ -69,11 +70,12 @@ namespace com.xmlnuke.anydataset
 			{
 				if (array[i] is string)
 				{
-					this._array[i].Add(fieldName, array[i].ToString());
+                    this._array.Add(i, new Dictionary<string, string>());
+                    this._array[i].Add(fieldName, array[i].ToString());
 				}
 				else
 				{
-					this._array[i] = this.ListProperties(array[i]);
+                    this._array.Add(i, this.ListProperties(array[i]));
 				}
 			}
 		}
@@ -86,6 +88,7 @@ namespace com.xmlnuke.anydataset
 			this._array = new Dictionary<int, Dictionary<string, string>>();
 			for (int i = 0; i < array.Keys.Count; i++)
 			{
+                this._array.Add(i, new Dictionary<string, string>());
 				this._array[i].Add(fieldkeyname, array.Keys[i]);
 				this._array[i].Add(fieldName, array[array.Keys[i]]);
 			}

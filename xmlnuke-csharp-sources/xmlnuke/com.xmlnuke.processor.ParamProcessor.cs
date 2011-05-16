@@ -225,7 +225,7 @@ namespace com.xmlnuke.processor
 			{
                 if (!String.IsNullOrEmpty(node.Value) && node.Value.IndexOf("<") >= 0)
                 {
-                    XmlNode nodeToProc = util.XmlUtil.CreateXmlDocumentFromStr("<root>" + node.Value + "</root>").DocumentElement;
+                    XmlNode nodeToProc = util.XmlUtil.CreateXmlDocumentFromStr("<root><![CDATA[" + node.Value + "]]></root>").DocumentElement;
                     node.Value = "";
                     util.XmlUtil.AddNodeFromNode(node.ParentNode, nodeToProc);
                 }
