@@ -45,8 +45,6 @@ namespace com.xmlnuke.engine
 	/// </summary>
 	public class Context
 	{
-		private static Context _context;
-		
 		// XmlNuke Version
 		private string _XmlNukeVersion = "XMLNuke 3.x C# Edition";
 
@@ -77,7 +75,7 @@ namespace com.xmlnuke.engine
 		/// Process Web.Config and put into NameValueCollection the make easy access it.
 		/// </summary>
 		/// <param name="context">HttpContext from WebForm</param>
-		public Context()
+		protected Context()
 		{
 			_config = new NameValueCollection();
 
@@ -169,7 +167,7 @@ namespace com.xmlnuke.engine
 			this.readCustomConfig();
 			this._debug = _config["xmlnuke.DEBUG"] == "true";
 			
-			this._module = this.Module;
+			this._module = this.ContextValue("module");
 			if (!String.IsNullOrEmpty(this._module))
 			{
 				this.Module = HttpUtility.HtmlEncode(this._module);
@@ -1054,10 +1052,18 @@ namespace com.xmlnuke.engine
 		
 		public static Context getInstance()
 		{
+            /**
+             * I am having a problem here. 
+             * If I create a private static Context _context this will persist between requests. 
+             * I need a static does not persist between requests
+             * 
 			if (Context._context == null)
 				_context = new Context();
 			
 			return _context;
+             */
+
+            return new Context();
 		}
 
 		/// <summary>

@@ -4,7 +4,6 @@
 	void Page_Load(object sender, System.EventArgs e)
 	{
 		com.xmlnuke.engine.Context context = com.xmlnuke.engine.Context.getInstance();
-		context.Debug();
 		string selectNodes = context.ContextValue("xpath");
         com.xmlnuke.engine.OutputResult output = com.xmlnuke.engine.OutputResult.XHtml;
         
