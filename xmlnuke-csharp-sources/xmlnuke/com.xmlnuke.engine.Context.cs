@@ -79,7 +79,6 @@ namespace com.xmlnuke.engine
 		{
 			_config = new NameValueCollection();
 
-
 			System.Configuration.AppSettingsSection webConfig = null;
 			object appSettings = HttpContext.Current.GetSection("appSettings");
 
@@ -1052,19 +1051,11 @@ namespace com.xmlnuke.engine
 		
 		public static Context getInstance()
 		{
-            /**
-             * I am having a problem here. 
-             * If I create a private static Context _context this will persist between requests. 
-             * I need a static does not persist between requests
-             * 
-			if (Context._context == null)
-				_context = new Context();
-			
-			return _context;
-             */
+            if (HttpContext.Current.Items["__context"] == null)
+                HttpContext.Current.Items["__context"] = new Context();
 
-            return new Context();
-		}
+            return (Context)HttpContext.Current.Items["__context"];
+        }
 
 		/// <summary>
 		/// Get config debug in module

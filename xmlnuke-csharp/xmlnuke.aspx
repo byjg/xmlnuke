@@ -4,7 +4,7 @@
 	void Page_Load(object sender, System.EventArgs e)
 	{
 		com.xmlnuke.engine.Context context = com.xmlnuke.engine.Context.getInstance();
-		string selectNodes = context.ContextValue("xpath");
+        string selectNodes = context.ContextValue("xpath");
         com.xmlnuke.engine.OutputResult output = com.xmlnuke.engine.OutputResult.XHtml;
         
         string alternateFilename = (context.Module != "" ? context.Module : context.Xml).Replace(".", "_");
