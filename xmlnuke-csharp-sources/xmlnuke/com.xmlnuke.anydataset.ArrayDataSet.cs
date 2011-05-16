@@ -31,6 +31,7 @@ using System;
 using System.Xml;
 using System.Collections;
 using System.Collections.Specialized;
+using System.Collections.Generic;
 using System.Reflection;
 using com.xmlnuke.engine;
 using com.xmlnuke.processor;
@@ -41,20 +42,19 @@ namespace com.xmlnuke.anydataset
 	public class ArrayDataSet
 	{
 
-		protected NameValueCollection _array;
-		protected string _fieldName;
+		protected Dictionary<int, Dictionary<string, string>> _array;
 
 		public ArrayDataSet(string[] array)
 			: this(array, "value")
 		{ }
 		public ArrayDataSet(string[] array, string fieldName)
 		{
-			this._fieldName = fieldName;
-			this._array = new NameValueCollection();
+			this._array = new Dictionary<int, Dictionary<string, string>>();
+			
 
 			for (int i = 0; i < array.Length; i++)
 			{
-				this._array[i.ToString()] = this._fieldName + '\xFF' + array[i];
+				this._array[i].Add(fieldName, array[i]);
 			}
 		}
 
@@ -63,32 +63,31 @@ namespace com.xmlnuke.anydataset
 		{ }
 		public ArrayDataSet(ArrayList array, string fieldName)
 		{
-			this._fieldName = fieldName;
-			this._array = new NameValueCollection();
+			this._array = new Dictionary<int, Dictionary<string, string>>();
 
 			for (int i = 0; i < array.Count; i++)
 			{
 				if (array[i] is string)
 				{
-					this._array[i.ToString()] = this._fieldName + '\xFF' + array[i].ToString();
+					this._array[i].Add(fieldName, array[i].ToString());
 				}
 				else
 				{
-					this._array[i.ToString()] = this.ListProperties(array[i]);
+					this._array[i] = this.ListProperties(array[i]);
 				}
 			}
 		}
 
 		public ArrayDataSet(NameValueCollection array)
-			: this(array, "value")
+			: this(array, "key", "value")
 		{ }
-		public ArrayDataSet(NameValueCollection array, string fieldName)
+		public ArrayDataSet(NameValueCollection array, string fieldkeyname, string fieldName)
 		{
-			this._fieldName = fieldName;
-			this._array = new NameValueCollection();
+			this._array = new Dictionary<int, Dictionary<string, string>>();
 			for (int i = 0; i < array.Keys.Count; i++)
 			{
-				this._array[array.Keys[i]] = this._fieldName + '\xFF' + array[array.Keys[i]];
+				this._array[i].Add(fieldkeyname, array.Keys[i]);
+				this._array[i].Add(fieldName, array[array.Keys[i]]);
 			}
 		}
 
@@ -103,9 +102,10 @@ namespace com.xmlnuke.anydataset
 			return new ArrayIterator(this._array);
 		}
 
-		private string ListProperties(object objectToInspect)
+		private Dictionary<string, string> ListProperties(object objectToInspect)
 		{
-			string returnString = "";
+			Dictionary<string, string> returnString = new Dictionary<string, string>();
+			
 			Type objectType = objectToInspect.GetType();
 			PropertyInfo[] properties = objectType.GetProperties();
 
@@ -114,11 +114,7 @@ namespace com.xmlnuke.anydataset
 				object o = property.GetValue(objectToInspect, null);
 				if (o is string)
 				{
-					if (returnString != "")
-					{
-						returnString += '\xFE';
-					}
-					returnString += property.Name + '\xFF' + o.ToString();
+					returnString.Add(property.Name, o.ToString());
 				}
 			}
 

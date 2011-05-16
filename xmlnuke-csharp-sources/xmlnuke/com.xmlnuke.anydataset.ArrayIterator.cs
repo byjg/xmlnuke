@@ -30,7 +30,7 @@
 using System;
 using System.Xml;
 using System.Collections;
-using System.Collections.Specialized;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using com.xmlnuke.engine;
 using com.xmlnuke.processor;
@@ -43,7 +43,7 @@ namespace com.xmlnuke.anydataset
 		/**
 		*@var Context
 		*/
-		protected NameValueCollection _rows;
+		protected Dictionary<int, Dictionary<string, string>> _rows;
 
 		protected int _currentRow;
 
@@ -51,7 +51,7 @@ namespace com.xmlnuke.anydataset
 		*@access public
 		*@return IIterator
 		*/
-		public ArrayIterator(NameValueCollection rows)
+		public ArrayIterator(Dictionary<int, Dictionary<string, string>> rows)
 		{
 			this._currentRow = 0;
 			this._rows = rows;
@@ -83,23 +83,14 @@ namespace com.xmlnuke.anydataset
 		{
 			if (this.hasNext())
 			{
-				string[] cols = this._rows[this._currentRow].Split('\xFE');
-
+				Dictionary<string, string> row = this._rows[this._currentRow];
+				
 				AnyDataSet any = new AnyDataSet();
 				any.appendRow();
 				any.addField("id", this._currentRow.ToString());
-				any.addField("key", this._rows.Keys[this._currentRow]);
-				for (int i = 0; i < cols.Length; i++)
+				foreach (KeyValuePair<string, string> item in row)
 				{
-					string[] field = cols[i].Split('\xFF');
-					if (field.Length == 2)
-					{
-						any.addField(field[0].ToLower(), field[1]);
-					}
-					else
-					{
-						any.addField("value", field[0]);
-					}
+					any.addField(item.Key, item.Value);
 				}
 				IIterator it = any.getIterator(null);
 				SingleRow sr = it.moveNext();

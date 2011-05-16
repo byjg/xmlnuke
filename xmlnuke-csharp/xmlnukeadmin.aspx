@@ -6,20 +6,20 @@
 
     void Page_Load(object sender, System.EventArgs e)
     {
-	com.xmlnuke.engine.Context context = new com.xmlnuke.engine.Context(Context);
+	com.xmlnuke.engine.Context context = com.xmlnuke.engine.Context.getInstance();
 	com.xmlnuke.engine.XmlNukeEngine engine = new com.xmlnuke.engine.XmlNukeEngine(context);
 
-	context.Reset = true;
-	context.NoCache = true;
+		context.Reset = true;
+		context.NoCache = true;
 
-	if (context.ContextValue("module") == "")
-	{
-		Response.Write(com.xmlnuke.engine.XmlNukeEngine.ProcessModule(context, engine, "com.xmlnuke.admin.ControlPanel"));
-	}
-	else
-	{
-		Response.Write(com.xmlnuke.engine.XmlNukeEngine.ProcessModule(context, engine));
-	}
+		if (context.Module == "")
+		{
+			Response.Write(com.xmlnuke.engine.XmlNukeEngine.ProcessModule(context, engine, "com.xmlnuke.admin.ControlPanel"));
+		}
+		else
+		{
+			Response.Write(com.xmlnuke.engine.XmlNukeEngine.ProcessModule(context, engine));
+		}
     }
 
 </script>

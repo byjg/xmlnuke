@@ -33,6 +33,7 @@ using System.Configuration;
 using System.Globalization;
 using System.Collections;
 using System.Collections.Specialized;
+using System.Collections.Generic;
 using com.xmlnuke.anydataset;
 using com.xmlnuke.admin;
 using System.Reflection;
@@ -44,9 +45,8 @@ namespace com.xmlnuke.engine
 	/// </summary>
 	public class Context
 	{
-		// Object HttpContext from .NET
-		private HttpContext _context = null;
-
+		private static Context _context;
+		
 		// XmlNuke Version
 		private string _XmlNukeVersion = "XMLNuke 3.x C# Edition";
 
@@ -56,6 +56,7 @@ namespace com.xmlnuke.engine
 		private string _xsl = "";
 		private CultureInfo _lang = null;
 		private string _site = "";
+		private string _module = "";
 		private bool _reset = false;
 		private bool _nocache = false;
 		private db.XmlNukeDB _xmlnukedb;
@@ -69,21 +70,20 @@ namespace com.xmlnuke.engine
 
 		protected ArrayList _requestedParams;
 
-		protected string _contentType = "";
+		protected Dictionary<string, string> _contentType = new Dictionary<string, string>();
 
 		/// <summary>
 		/// Context construtor. Read data from HttpContext class and assign default values to main arguments (XML, XSL, SITE and LANG) if doesn't exists.
 		/// Process Web.Config and put into NameValueCollection the make easy access it.
 		/// </summary>
 		/// <param name="context">HttpContext from WebForm</param>
-		public Context(HttpContext context)
+		public Context()
 		{
-			_context = context;
 			_config = new NameValueCollection();
 
 
 			System.Configuration.AppSettingsSection webConfig = null;
-			object appSettings = context.GetSection("appSettings");
+			object appSettings = HttpContext.Current.GetSection("appSettings");
 
 			if (appSettings is NameValueCollection)
 			{
@@ -111,11 +111,19 @@ namespace com.xmlnuke.engine
 			{
 				this._xsl = _config["xmlnuke.DEFAULTPAGE"];
 			}
+			else
+			{
+				this._xsl = HttpUtility.HtmlEncode(this._xsl);
+			}
 
 			this._xml = getParameter("xml");
 			if (this._xml == "")
 			{
 				this._xml = "home";
+			}
+			else
+			{
+				this._xml = HttpUtility.HtmlEncode(this._xml);
 			}
 
 			this._site = getParameter("site");
@@ -123,30 +131,34 @@ namespace com.xmlnuke.engine
 			{
 				this._site = _config["xmlnuke.DEFAULTSITE"];
 			}
+			else
+			{
+				this._site = HttpUtility.HtmlEncode(this._site);
+			}
 
 			_xmlnukepath = _config["xmlnuke.ROOTDIR"];
 
 			this._reset = (bool)(getParameter("reset") != "");
 			this._nocache = ((bool)(getParameter("nocache") != "") || (this._config["xmlnuke.ALWAYSUSECACHE"] == "false"));
 
-			this.AddCollectionToConfig(context.Request.QueryString);
-			this.AddCollectionToConfig(context.Request.Form);
-			this.AddCollectionToConfig(context.Request.ServerVariables);
-			this.AddSessionToConfig(context.Session.Contents);
-			this.AddCookieToConfig(context.Request.Cookies);
+			this.AddCollectionToConfig(HttpContext.Current.Request.QueryString);
+			this.AddCollectionToConfig(HttpContext.Current.Request.Form);
+			this.AddCollectionToConfig(HttpContext.Current.Request.ServerVariables);
+			this.AddSessionToConfig(HttpContext.Current.Session.Contents);
+			this.AddCookieToConfig(HttpContext.Current.Request.Cookies);
 
 			this._requestedParams = new ArrayList();
-			if (context.Request.QueryString.Keys.Count > 0)
+			if (HttpContext.Current.Request.QueryString.Keys.Count > 0)
 			{
-				this._requestedParams.AddRange(context.Request.QueryString.Keys);
+				this._requestedParams.AddRange(HttpContext.Current.Request.QueryString.Keys);
 			}
-			if (context.Request.Form.Count > 0)
+			if (HttpContext.Current.Request.Form.Count > 0)
 			{
-				this._requestedParams.AddRange(context.Request.Form);
+				this._requestedParams.AddRange(HttpContext.Current.Request.Form);
 			}
 
-			this.AddPairToConfig("SELFURLREAL", context.Request.ServerVariables["SCRIPT_NAME"] + "?" + context.Request.QueryString + "&");
-			this.AddPairToConfig("SELFURL", context.Request.ServerVariables["URL"] + "?" + context.Request.QueryString + "&");
+			this.AddPairToConfig("SELFURLREAL", HttpContext.Current.Request.ServerVariables["SCRIPT_NAME"] + "?" + HttpContext.Current.Request.QueryString + "&");
+			this.AddPairToConfig("SELFURL", HttpContext.Current.Request.ServerVariables["URL"] + "?" + HttpContext.Current.Request.QueryString + "&");
 			this.AddPairToConfig("ROOTDIR", _xmlnukepath + "/" + _site);
 			this.AddPairToConfig("SITE", _site);
 			this.AddPairToConfig("XMLNUKE", this._XmlNukeVersion);
@@ -156,13 +168,19 @@ namespace com.xmlnuke.engine
 
 			this.readCustomConfig();
 			this._debug = _config["xmlnuke.DEBUG"] == "true";
+			
+			this._module = this.Module;
+			if (!String.IsNullOrEmpty(this._module))
+			{
+				this.Module = HttpUtility.HtmlEncode(this._module);
+			}
 
 			string lang = getParameter("lang");
 			NameValueCollection langAvail = this.LanguagesAvailable();
 			if (lang == "")
 			{
 				// Mono 0.24 doesnt implements SESSION
-				//lang = (string)context.Session["lang"];
+				//lang = (string)HttpContext.Current.Session["lang"];
 				//if (lang == null)
 				//{
 
@@ -170,7 +188,7 @@ namespace com.xmlnuke.engine
 				// Rules For Determine a default Language:
 				// 1- Browser Defined is equals to LanguagesAvailable
 				// 2- Major Language (e.g. pt-br, major is pt) matches to first major language in Available Language
-				lang = context.Request.ServerVariables["http_accept_language"];
+				lang = HttpContext.Current.Request.ServerVariables["http_accept_language"];
 				if (lang != null) // MONO 0.26 doesnt understand HTTP_ACCEPT_LANGUAGE
 				{
 					string[] langOpt = lang.Split(new Char[] { ',', ';' });
@@ -214,7 +232,7 @@ namespace com.xmlnuke.engine
 				}
 			}
 			_lang = international.LocaleFactory.GetLocale(lang);
-			//context.Session["lang"] = _lang.Name.ToLower();
+			//HttpContext.Current.Session["lang"] = _lang.Name.ToLower();
 
 			this.AddPairToConfig("LANGUAGE", _lang.Name.ToLower());
             this.AddPairToConfig("LANGUAGENAME", this._lang.DisplayName);
@@ -228,14 +246,14 @@ namespace com.xmlnuke.engine
 
 			// Adjusts to Run with XMLNukeDB
 			_appNameInMemory = "db_" + this.Site + "_" + this.Language.Name.ToLower();
-			if (_context.Application.Get(_appNameInMemory) == null)
+			if (HttpContext.Current.Application.Get(_appNameInMemory) == null)
 			{
 				_xmlnukedb = new com.xmlnuke.db.XmlNukeDB(this.XmlHashedDir(), this.XmlPath, this.Language.Name.ToLower());
 				_xmlnukedb.loadIndex();
 			}
 			else
 			{
-				_xmlnukedb = (db.XmlNukeDB)_context.Application.Get(_appNameInMemory);
+				_xmlnukedb = (db.XmlNukeDB)HttpContext.Current.Application.Get(_appNameInMemory);
 			}
 
 			rnd = new Random();
@@ -253,13 +271,13 @@ namespace com.xmlnuke.engine
 		/// <returns>Return the param value if exists or an empty string if doesnt exists</returns>
 		private string getParameter(string paramName)
 		{
-			if (_context.Request.Form[paramName] != null)
+			if (HttpContext.Current.Request.Form[paramName] != null)
 			{
-				return _context.Request.Form[paramName];
+				return HttpContext.Current.Request.Form[paramName];
 			}
-			else if (_context.Request.QueryString[paramName] != null)
+			else if (HttpContext.Current.Request.QueryString[paramName] != null)
 			{
-				return _context.Request.QueryString[paramName];
+				return HttpContext.Current.Request.QueryString[paramName];
 			}
 			else
 			{
@@ -309,6 +327,20 @@ namespace com.xmlnuke.engine
 				_site = value;
 			}
 		}
+		
+		public string Module
+		{
+			get
+			{
+				return _module;
+			}
+			set 
+			{
+				_module = value;
+			}
+		}
+		
+		
 		/// <summary>
 		/// Return the current Language page argument
 		/// </summary>
@@ -361,7 +393,7 @@ namespace com.xmlnuke.engine
 				}
 				else
 				{
-					return _context.Server.MapPath(_xmlnukepath) + util.FileUtil.Slash();
+					return HttpContext.Current.Server.MapPath(_xmlnukepath) + util.FileUtil.Slash();
 				}
 			}
 		}
@@ -529,7 +561,7 @@ namespace com.xmlnuke.engine
 				return relativePath;
 			}
 
-			string result = this._context.Request.Path;
+			string result = HttpContext.Current.Request.Path;
 			int iPath = result.LastIndexOf("/");
 			if (iPath >= 0)
 			{
@@ -554,6 +586,23 @@ namespace com.xmlnuke.engine
 		/// <summary>
 		/// Access the Context collection and returns the value from a key.
 		/// </summary>
+		public string Value(string key)
+		{
+			string result = _config[key];
+			if (result == null)
+			{
+				return "";
+			}
+			else
+			{
+				return result;
+			}
+		}
+
+		/// <summary>
+		/// Access the Context collection and returns the value from a key.
+		/// </summary>
+		[Obsolete("Use Value instead")]
 		public string ContextValue(string key)
 		{
 			string result = _config[key];
@@ -716,7 +765,7 @@ namespace com.xmlnuke.engine
 
 			// Create a cookie and add the encrypted ticket to the
 			// cookie as data.
-			this._context.addCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+			HttpContext.Current.addCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
 
 			// Redirect the user to the originally requested page
 			*/
@@ -727,7 +776,7 @@ namespace com.xmlnuke.engine
 
 		public void MakeLogout()
 		{
-			this._context.Session.Abandon();
+			HttpContext.Current.Session.Abandon();
 		}
 
 		/// <summary>
@@ -782,14 +831,14 @@ namespace com.xmlnuke.engine
 
 		public void persistXMLDataBaseInMemory()
 		{
-			_context.Application.Lock();
+			HttpContext.Current.Application.Lock();
 			try
 			{
-				_context.Application.Set(_appNameInMemory, _xmlnukedb);
+				HttpContext.Current.Application.Set(_appNameInMemory, _xmlnukedb);
 			}
 			finally
 			{
-				_context.Application.UnLock();
+				HttpContext.Current.Application.UnLock();
 			}
 		}
 
@@ -797,7 +846,7 @@ namespace com.xmlnuke.engine
 		{
 			processor.ParamProcessor processor = new processor.ParamProcessor(this);
 			url = processor.GetFullLink(url);
-			this._context.Response.Redirect(url);
+			HttpContext.Current.Response.Redirect(url);
 		}
 
 		public void addCookie(string name, string value)
@@ -825,13 +874,13 @@ namespace com.xmlnuke.engine
 			{
 				cookie.Domain = domain;
 			}
-			this._context.Response.Cookies.Add(cookie);
+			HttpContext.Current.Response.Cookies.Add(cookie);
 			this.AddPairToConfig("cookie." + name, value);
 		}
 
 		public void removeCookie(string name)
 		{
-			this._context.Response.Cookies.Remove("name");
+			HttpContext.Current.Response.Cookies.Remove("name");
 			this._config.Remove("cookie." + name);
 		}
 
@@ -847,21 +896,21 @@ namespace com.xmlnuke.engine
 				this.removeSession(name);
 				return;
 			}
-			if (this._context.Session[name] == null)
+			if (HttpContext.Current.Session[name] == null)
 			{
-				this._context.Session.Add(name, value);
+				HttpContext.Current.Session.Add(name, value);
 			}
 			else
 			{
-				this._context.Session[name] = value;
+				HttpContext.Current.Session[name] = value;
 			}
 			this.AddPairToConfig("session." + name, value);
 		}
 
 		public void removeSession(string name)
 		{
-			this._context.Session["name"] = null;
-			this._context.Session.Remove("name");
+			HttpContext.Current.Session["name"] = null;
+			HttpContext.Current.Session.Remove("name");
 			this._config.Remove("session." + name);
 		}
 
@@ -1002,6 +1051,14 @@ namespace com.xmlnuke.engine
 				}
 			}
 		}
+		
+		public static Context getInstance()
+		{
+			if (Context._context == null)
+				_context = new Context();
+			
+			return _context;
+		}
 
 		/// <summary>
 		/// Get config debug in module
@@ -1040,7 +1097,7 @@ namespace com.xmlnuke.engine
 
 		public string SystemRootPath()
 		{
-			string modulename = this._context.Server.MapPath(this._context.Request.ServerVariables["PATH_INFO"]);
+			string modulename = HttpContext.Current.Server.MapPath(HttpContext.Current.Request.ServerVariables["PATH_INFO"]);
 			string path = util.FileUtil.ExtractFilePath(modulename);
 			return path + util.FileUtil.Slash();
 		}
@@ -1067,13 +1124,13 @@ namespace com.xmlnuke.engine
 
 			string sPostData = "";
 			// get form-data
-			byte[] biData = this._context.Request.BinaryRead(this._context.Request.TotalBytes);
+			byte[] biData = HttpContext.Current.Request.BinaryRead(HttpContext.Current.Request.TotalBytes);
 
 			// convert byte-array to its string representation
 			sPostData = System.Text.Encoding.Default.GetString(biData, 0, biData.Length);
 
 			// we get the content type and try to pull out the boundary information
-			string sContentType = this._context.Request.ContentType;
+			string sContentType = HttpContext.Current.Request.ContentType;
 			string[] arrContentType = sContentType.Split(new char[] { ';' });
 
 			if (arrContentType[0] == "multipart/form-data")
@@ -1194,14 +1251,18 @@ namespace com.xmlnuke.engine
 			return result;
 		}
 
-		public string getSuggestedContentType()
+		public Dictionary<string, string> getSuggestedContentType()
 		{
-			if (this._contentType == "")
+			if (this._contentType.Count == 0)
 			{
-				string contentType = "text/html";
+				this._contentType["xsl"] = this.Xsl;
+				this._contentType["content-type"] = "text/html";
+				this._contentType["content-disposition"] = "";
+				this._contentType["extension"] = "";
+				
 				if (this.ContextValue("xmlnuke.CHECKCONTENTTYPE") == "true")
 				{
-					processor.AnydatasetSetupFilenameProcessor filename = new processor.AnydatasetSetupFilenameProcessor("contenttype", this);
+					processor.AnydatasetFilenameProcessor filename = new processor.AnydatasetFilenameProcessor("contenttype", this);
 					AnyDataSet anydataset = new AnyDataSet(filename);
 					IteratorFilter itf = new IteratorFilter();
 					itf.addRelation("xsl", Relation.Equal, this.Xsl);
@@ -1209,22 +1270,36 @@ namespace com.xmlnuke.engine
 					if (it.hasNext())
 					{
 						SingleRow sr = it.moveNext();
-						contentType = sr.getField("content-type");
+						foreach (string field in sr.getFieldNames())
+							this._contentType[field] = sr.getField(field);
+					}
+					else
+					{
+						processor.AnydatasetSetupFilenameProcessor filename2 = new processor.AnydatasetSetupFilenameProcessor("contenttype", this);
+						anydataset = new AnyDataSet(filename);
+						itf = new IteratorFilter();
+						itf.addRelation("xsl", Relation.Equal, this.Xsl);
+						it = anydataset.getIterator(itf);
+						if (it.hasNext())
+						{
+							SingleRow sr = it.moveNext();
+							foreach (string field in sr.getFieldNames())
+								this._contentType[field] = sr.getField(field);
+						}
 					}
 				}
-				this._contentType = (contentType == "") ? "text/html" : contentType;
 			}
 			return (this._contentType);
 		}
 
 		public string[] getAllFormKeys()
 		{
-			return this._context.Request.Form.AllKeys;
+			return HttpContext.Current.Request.Form.AllKeys;
 		}
 
         public string[] getAllQueryKeys()
         {
-            return this._context.Request.QueryString.AllKeys ;
+            return HttpContext.Current.Request.QueryString.AllKeys ;
         }
 
 		public void Debug()
@@ -1265,7 +1340,7 @@ namespace com.xmlnuke.engine
                     Type classType = asm.GetType(classUser);
                     if (classType != null)
                     {
-                        this.__userdb = (IUsersBase)Activator.CreateInstance(classType, this._context, conn);
+                        this.__userdb = (IUsersBase)Activator.CreateInstance(classType, HttpContext.Current, conn);
                     }
 
                     if (this.__userdb == null)

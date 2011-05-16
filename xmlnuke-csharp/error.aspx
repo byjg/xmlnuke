@@ -42,7 +42,7 @@
 
        try
        {
-	   com.xmlnuke.engine.Context context = new com.xmlnuke.engine.Context(Context);
+	   com.xmlnuke.engine.Context context = com.xmlnuke.engine.Context.getInstance();
 	   completeErrMsg = context.showCompleteErrorMessage();
        }
        catch

@@ -437,7 +437,7 @@ namespace com.xmlnuke.engine
 
 		public static string ProcessModule(com.xmlnuke.engine.Context context, com.xmlnuke.engine.XmlNukeEngine engine)
 		{
-			return XmlNukeEngine.ProcessModule(context, engine, context.ContextValue("module"));
+			return XmlNukeEngine.ProcessModule(context, engine, context.Module);
 		}
 
 		public static string ProcessModule(com.xmlnuke.engine.Context context, com.xmlnuke.engine.XmlNukeEngine engine, string moduleName)

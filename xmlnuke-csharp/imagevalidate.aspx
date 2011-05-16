@@ -11,7 +11,7 @@
 
 void Page_Load(Object sender, EventArgs e)
 {
-	com.xmlnuke.engine.Context context = new com.xmlnuke.engine.Context(Context);
+	com.xmlnuke.engine.Context context = com.xmlnuke.engine.Context.getInstance();
 
 	int c = 5;
 	try

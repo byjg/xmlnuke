@@ -10,7 +10,7 @@
 	{
 		try
 		{
-			context = new com.xmlnuke.engine.Context(Context);
+			context = com.xmlnuke.engine.Context.getInstance();
 			siteList.DataSource = context.ExistingSites();
 
 			Page.DataBind();

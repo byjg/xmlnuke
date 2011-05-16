@@ -87,6 +87,11 @@ namespace com.xmlnuke.classes
             _items.Add(docobj);
         }
 
+        public virtual void addXmlnukeObject(string text)
+        {
+            this.addXmlnukeObject(new XmlnukeText(text));
+        }
+		
         /// <summary>
         /// Method for process all XMLNukedocumentObjects in collection.
         /// </summary>
@@ -499,7 +504,8 @@ namespace com.xmlnuke.classes
         /// DEPRECATED. For compatibility only
         /// </summary>
         /// <returns></returns>
-        public IXmlnukeDocument generatePage()
+		[Obsolete("Will removed in the next versions")]
+		public IXmlnukeDocument generatePage()
         {
             return this;
         }

@@ -29,7 +29,7 @@
 
     public void Page_Load(Object Sender, EventArgs e) {
 
-        context = new com.xmlnuke.engine.Context(Context);
+        context = com.xmlnuke.engine.Context.getInstance();
         UsersAnyDataSet users = new UsersAnyDataSet(context);
         SingleRow currentUser = users.getUserName(context.authenticatedUser());
         if ((currentUser == null) || (currentUser.getField("admin") != "yes"))

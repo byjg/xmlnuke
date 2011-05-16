@@ -45,7 +45,7 @@
     void Page_Load(object sender, EventArgs e) {
         if (!Page.IsPostBack)
         {
-			com.xmlnuke.engine.Context context = new com.xmlnuke.engine.Context(Context);
+			com.xmlnuke.engine.Context context = com.xmlnuke.engine.Context.getInstance();
 		    if (context.IsAuthenticated())
 	        {
 				Response.Redirect("default.aspx");
@@ -58,7 +58,7 @@
     }
     
     void btnSubmit_Click(object sender, EventArgs e) {
-        com.xmlnuke.engine.Context context = new com.xmlnuke.engine.Context(Context);
+        com.xmlnuke.engine.Context context = com.xmlnuke.engine.Context.getInstance();
         com.xmlnuke.admin.UsersAnyDataSet users = new com.xmlnuke.admin.UsersAnyDataSet( context );
     
         if ((username.Text != "") && (password.Text == ""))

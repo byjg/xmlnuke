@@ -134,6 +134,11 @@ namespace com.xmlnuke.classes
 			this._readOnly = false;
 		}
 
+		public void setName(string name)
+		{
+			this._name = name;
+		}
+		
 		public void setSize(int value)
 		{
 			if (this._easyListType != EasyListType.SELECTLIST)

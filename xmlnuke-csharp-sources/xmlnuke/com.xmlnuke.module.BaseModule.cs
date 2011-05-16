@@ -159,9 +159,9 @@ namespace com.xmlnuke.module
 			// Retrieve Basic XMLNuke paramenters
 			SortedList chaves = new SortedList();
 			chaves["site"] = this._context.Site;
-			if (this._context.ContextValue("module") != "")
+			if (this._context.Module != "")
 			{
-				chaves["module"] = this._context.ContextValue("module");
+				chaves["module"] = this._context.Module;
 			}
 			else
 			{

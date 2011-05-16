@@ -3,32 +3,33 @@
 
 	void Page_Load(object sender, System.EventArgs e)
 	{
-		com.xmlnuke.engine.Context context = new com.xmlnuke.engine.Context(Context);
+		com.xmlnuke.engine.Context context = com.xmlnuke.engine.Context.getInstance();
+		context.Debug();
 		string selectNodes = context.ContextValue("xpath");
         com.xmlnuke.engine.OutputResult output = com.xmlnuke.engine.OutputResult.XHtml;
         
+        string alternateFilename = (context.Module != "" ? context.Module : context.Xml).Replace(".", "_");
         if (context.ContextValue("rawxml")!="")
         {
-	        string filename = (context.ContextValue("module") != "" ? context.ContextValue("module") : context.Xml);
-            filename = filename.Replace(".", "_") + ".xsl";
-            
 	        output = com.xmlnuke.engine.OutputResult.Xml;
             Context.Response.ContentType = "text/xml";
-            Context.Response.AppendHeader("Content-Disposition", "inline; filename=\"" + filename + "\";");
+            Context.Response.AppendHeader("Content-Disposition", "inline; filename=\"" + alternateFilename + ".xml\";");
         }
         else if (context.ContextValue("rawjson")!="")
         {
-	        string filename = (context.ContextValue("module") != "" ? context.ContextValue("module") : context.Xml);
-            filename = filename.Replace(".", "_") + ".json";
-            
 	        output = com.xmlnuke.engine.OutputResult.Json;
             Context.Response.ContentType = "application/json";
-            Context.Response.AppendHeader("Content-Disposition", "inline; filename=\"" + filename + "\";");
+            Context.Response.AppendHeader("Content-Disposition", "inline; filename=\"" + alternateFilename + ".json\";");
         }
 		else
 		{
             output = com.xmlnuke.engine.OutputResult.XHtml;
-            string contentType;
+            System.Collections.Generic.Dictionary<string, string> contentType = new System.Collections.Generic.Dictionary<string, string>();
+			contentType["xsl"] = "";
+			contentType["content-type"] = "";
+			contentType["content-disposition"] = "";
+			contentType["extension"] = "";
+            
             if (detectMobile(context))
 		    {
     			// WML
@@ -36,17 +37,24 @@
 			    //$context->setXsl("wml");
 
 			    // XHTML + MP
-			    contentType = context.getBestSupportedMimeType(new string[] {"application/vnd.wap.xhtml+xml", "application/xhtml+xml", "text/html"});
+			    contentType["content-type"] = context.getBestSupportedMimeType(new string[] {"application/vnd.wap.xhtml+xml", "application/xhtml+xml", "text/html"});
 			    context.Xsl = "mobile";
 		    }
 		    else
 		    {
     			contentType = context.getSuggestedContentType();
 		    }            
-			Context.Response.ContentType = contentType;
+			Context.Response.ContentType = contentType["content-type"];
+			if (contentType["content-disposition"] != "")
+			{
+	            Context.Response.AppendHeader("Content-Disposition", "\"" + contentType["content-disposition"] + "\"; filename=\"" + alternateFilename + "." + contentType["extension"] + "\";");
+			}
+
 		}
 		Context.Response.ContentEncoding = System.Text.Encoding.UTF8;
-        
+		
+
+		
 		try
 		{
 			com.xmlnuke.engine.XmlNukeEngine engine = new com.xmlnuke.engine.XmlNukeEngine(context, output, selectNodes);
@@ -54,7 +62,7 @@
 			{
 				Response.Write(engine.TransformDocumentRemote(context.ContextValue("remote")));
 			}
-			else if (context.ContextValue("module") == "")
+			else if (context.Module == "")
 			{
 				Response.Write(engine.TransformDocument());
 			}

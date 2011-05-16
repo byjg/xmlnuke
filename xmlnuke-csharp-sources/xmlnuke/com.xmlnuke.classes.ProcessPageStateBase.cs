@@ -880,7 +880,7 @@ namespace com.xmlnuke.classes
             }
             else if (field.fieldXmlInput == XmlInputObjectType.DUALLIST)
             {
-                ArrayDataSet ards = new ArrayDataSet(field.arraySelectList, "value");
+                ArrayDataSet ards = new ArrayDataSet(field.arraySelectList, "key", "value");
                 XmlDualList duallist = new XmlDualList(this._context, field.fieldName, this._lang.Value("TXT_AVAILABLE", field.fieldCaption), this._lang.Value("TXT_USED", field.fieldCaption));
                 duallist.createDefaultButtons();
                 duallist.setDataSourceFieldName("key", "value");
@@ -894,7 +894,7 @@ namespace com.xmlnuke.classes
                         ardt[key] = field.arraySelectList[key];
                     }
                 }
-                ArrayDataSet ards2 = new ArrayDataSet(ardt, "value");
+                ArrayDataSet ards2 = new ArrayDataSet(ardt, "key", "value");
 
                 duallist.setDataSource(ards.getIterator(), ards2.getIterator());
 

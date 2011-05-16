@@ -125,7 +125,7 @@ namespace com.xmlnuke.classes
 			this._context = context;
 			this._currentFolder = root;
 			this._action = action;
-			this._module = context.ContextValue("module");
+			this._module = context.Module;
 
 			//permission
 			this._folderNew = false;

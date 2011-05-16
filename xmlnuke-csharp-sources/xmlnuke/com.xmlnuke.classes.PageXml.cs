@@ -63,7 +63,8 @@ namespace com.xmlnuke.classes
 	/// <remarks>Deprecated. Use XmlnukeObject and XmlnukeCollection instead.</remarks>
 	/// <seealso cref="com.xmlnuke.classes.XmlnukeObject"/>
 	/// <seealso cref="com.xmlnuke.classes.XmlnukeCollection"/>
-	public class PageXml : IXmlnukeDocument // [Obsolete]
+	[Obsolete("Will removed in the next versions")]
+	public class PageXml : IXmlnukeDocument 
 	{
 
 		private XmlDocument xmlDoc;

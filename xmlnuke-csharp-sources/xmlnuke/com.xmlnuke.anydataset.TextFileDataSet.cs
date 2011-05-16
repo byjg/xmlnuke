@@ -40,7 +40,8 @@ namespace com.xmlnuke.anydataset
 	{
 
 		public const string CSVFILE = "[|,;](?=(?:[^\\\"]*\"[^\\\"]*\")*(?![^\\\"]*\\\"))";
-		//public const string CSVFILE2=";(?=(?:[^\\\"]*\"[^\\\"]*\")*(?![^\\\"]*\\\"))";
+		public const string CSVFILE_SEMICOLON = "/[;](?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))/";
+		public const string CSVFILE_COMMA = "/[,](?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))/";
 
 		protected const string HTTP = "HTTP";
 		protected const string FILE = "FILE";
