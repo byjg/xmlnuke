@@ -145,7 +145,7 @@ class UsersDBDataSet extends UsersBase
 	{
 		$sql = "";
 		$param = array();
-		if (get_class($filter) == "IteratorFilter")
+		if (is_object($filter) && get_class($filter) == "IteratorFilter")
 		{
 			$sql = $filter->getSql($this->_UserTable->Table, $param);
 		}
