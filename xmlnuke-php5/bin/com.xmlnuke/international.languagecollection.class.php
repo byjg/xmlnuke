@@ -212,7 +212,7 @@ class LanguageCollection
 				}
 				$this->_loadedFromFile = true;
 			}
-			
+
 		}
 	}
 	

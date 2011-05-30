@@ -402,7 +402,7 @@ class XmlNukeEngine
 		$xhtml->loadXML($xtw);
 
 		// Reload XHTML result to process PARAM and HREFs
-		$paramProcessor = new ParamProcessor($this->_context);
+		$paramProcessor = new ParamProcessor();
 		$paramProcessor->AdjustToFullLink($xhtml, "A", "HREF");
 		$paramProcessor->AdjustToFullLink($xhtml, "FORM", "ACTION");
 		$paramProcessor->AdjustToFullLink($xhtml, "AREA", "HREF");

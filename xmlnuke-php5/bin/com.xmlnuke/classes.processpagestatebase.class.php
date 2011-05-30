@@ -357,7 +357,7 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 
 		$this->_decimalSeparator = $this->_context->Language()->getDecimalPoint();
 		$this->_dateFormat = $this->_context->Language()->getDateFormat();
-		$this->_lang = LanguageFactory::GetLanguageCollection($context, LanguageFileTypes::OBJECT, __FILE__);
+		$this->_lang = LanguageFactory::GetLanguageCollection($context, LanguageFileTypes::OBJECT, "com.xmlnuke.classes.processpagestatebase");
 	}
 
 	/**
@@ -826,7 +826,7 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 		{
 			$buttons->addSubmit($this->_lang->Value("TXT_SUBMIT"), "");
 		}
-		$buttons->addButton($this->_lang->Value("TXT_BACK"), "", "document.location='" . $this->redirProcessPage(true) . "'");
+		$buttons->addButton($this->_lang->Value("TXT_BACK"), "", "document.location='" . str_replace("&", "&amp;", $this->redirProcessPage(true)) . "'");
 		$form->addXmlnukeObject($buttons);
 
 		return $form;
@@ -876,7 +876,7 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 						"You have to pass a array to arraySelectList field parameter with the following keys: URL, PARAMREQ. Optional: ATTRINFO, ATTRID, JSCALLBACK");
 				}
 				$itb->setInputTextBoxType(InputTextBoxType::TEXT);
-				$itb->setAutosuggest($this->_context, $field->arraySelectList["URL"], $field->arraySelectList["PARAMREQ"], $field->arraySelectList["ATTRINFO"], $field->arraySelectList["ATTRID"], $field->arraySelectList["JSCALLBACK"]);
+				$itb->setAutosuggest($this->_context, $field->arraySelectList["URL"], $field->arraySelectList["PARAMREQ"], $field->arraySelectList["JSCALLBACK"]);
 			}
 			else
 			{
@@ -998,7 +998,7 @@ abstract class ProcessPageStateBase extends XmlnukeDocumentObject implements IPr
 		}
 		//if ($full)
 		//{
-			return $url->getUrlFull($this->_context);
+			return $url->getUrlFull();
 		//}
 		//else
 		//{

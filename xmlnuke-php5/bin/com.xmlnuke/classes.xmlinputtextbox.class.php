@@ -84,14 +84,6 @@ class XmlInputTextBox extends XmlInputValidate
 	/**
 	 * @var string
 	 */
-	protected $_autosuggestAttrInfo = "";
-	/**
-	 * @var string
-	 */
-	protected $_autosuggestAttrId ="";
-	/**
-	 * @var string
-	 */
 	protected $_autosuggestCallback ="";
 	/**
 	 * Only used if sets autocomplete!
@@ -207,13 +199,11 @@ class XmlInputTextBox extends XmlInputValidate
 	 * @param string $attrId
 	 * @param string $attrCallback
 	 */
-	public function setAutosuggest($context, $url, $paramReq, $attrInfo="", $attrId="", $jsCallback="")
+	public function setAutosuggest($context, $url, $paramReq, $jsCallback="")
 	{
 		$this->_context = $context;
 		$this->_autosuggestUrl = $url;
 		$this->_autosuggestParamReq = $paramReq;
-		$this->_autosuggestAttrInfo = $attrInfo;
-		$this->_autosuggestAttrId = $attrId;
 		$this->_autosuggestCallback = $jsCallback;
 	}
 	
@@ -266,19 +256,17 @@ class XmlInputTextBox extends XmlInputValidate
 			if ($this->_autosuggestUrl != "")
 			{
 				$url = new XmlnukeManageUrl(URLTYPE::MODULE, $this->_autosuggestUrl);
-				$urlStr = $url->getUrlFull($this->_context);
+				$urlStr = $url->getUrlFull();
 				if (strpos($urlStr, "?")===false)
 				{
 					$urlStr .= "?";
 				}
 				else 
 				{
-					$urlStr .= "&amp;";
+					$urlStr .= "&";
 				}
-				XmlUtil::AddAttribute($nodeWorking, "autosuggesturl", $urlStr);
+				XmlUtil::AddAttribute($nodeWorking, "autosuggesturl", str_replace("&", "&amp;", $urlStr));
 				XmlUtil::AddAttribute($nodeWorking, "autosuggestparamreq", $this->_autosuggestParamReq);
-				if ($this->_autosuggestAttrId) XmlUtil::AddAttribute($nodeWorking, "autosuggestattrid", $this->_autosuggestAttrId);
-				if ($this->_autosuggestAttrInfo) XmlUtil::AddAttribute($nodeWorking, "autosuggestattrinfo", $this->_autosuggestAttrInfo);
 				if ($this->_autosuggestCallback) XmlUtil::AddAttribute($nodeWorking, "autosuggestcallback", $this->_autosuggestCallback);
 			}
 			

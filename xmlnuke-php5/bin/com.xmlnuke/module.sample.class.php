@@ -398,7 +398,7 @@ class Sample extends BaseModule
 		$customButton->alternateText = "Texto alternativo da ação";
 		$url = new XmlnukeManageUrl(URLTYPE::MODULE , "sample");
 		$url->addParam("op", 3);
-		$customButton->url = htmlentities($url->getUrlFull($this->_context));
+		$customButton->url = $url->getUrlFull();
 		$customButton->icon = "common/editlist/ic_custom.gif";
 		$editList->setCustomButton($customButton);
 		$editList->setPageSize(3, 0);
@@ -1024,7 +1024,7 @@ class Sample extends BaseModule
 		$txt = new XmlInputTextBox("Teste", "Nome", "");
 		$txt->setRequired(true);
 		// and then associate the AutoSuggest
-		$txt->setAutosuggest($this->_context, "module:sample?site=sample&rawxml=true&xpath=//a&","input");
+		$txt->setAutosuggest($this->_context, "engine:xmlnuke?site=sample&xml=forms&rawjson=true&xpath=//select","term");
 		$form->addXmlnukeObject($txt);
 
 		$form->addXmlnukeObject(new XmlInputCaption("Auto Suggest com CallBack"));
@@ -1032,7 +1032,7 @@ class Sample extends BaseModule
 		// First Create the the TextBox
 		$txt = new XmlInputTextBox("Teste", "Nome2", "");
 		$txt->setRequired(true);
-		$txt->setAutosuggest($this->_context, "module:sample?site=sample&rawxml=true&xpath=//a&","input","nodeinfo", "nodeid", "alert(obj.id + ' - ' + obj.info + ' - ' + obj.value)");
+		$txt->setAutosuggest($this->_context, "engine:xmlnuke?site=sample&xml=forms&rawjson=true&xpath=//select", "term", "alert(ui.item.id + ' - ' + ui.item.value); $(this).val(ui.item.id); ");
 		$form->addXmlnukeObject($txt);
 
 

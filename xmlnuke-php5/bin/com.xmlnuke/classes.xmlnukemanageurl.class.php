@@ -133,6 +133,8 @@ class XmlnukeManageUrl
 			$count++;
 			$url .= $separator . $param . '=' . XmlnukeManageUrl::encodeParam($value);
 		}
+		
+		//return $url;
 		return str_replace('&', '&amp;', $url);
 	}
 
@@ -141,9 +143,10 @@ class XmlnukeManageUrl
 	*@return string
 	*@desc Build full URL.
 	*/
-	public function getUrlFull($context)
+	public function getUrlFull()
 	{
 		$url = $this->_target;
+		
 		$separator = "?";
 
 		foreach ($this->_parameters as $param => $value)
@@ -158,10 +161,11 @@ class XmlnukeManageUrl
 
 			$url .= $separator . $param . "=" . urlencode($value);
 		}
+		
+		$processor = new ParamProcessor();
 
-		$processor = new ParamProcessor($context);
-
-		return htmlentities($processor->GetFullLink($url));
+		return $processor->GetFullLink($url);
+		//return htmlentities($processor->GetFullLink($url));
 	}
 
 	/**

@@ -122,7 +122,7 @@
 			<!-- Table body -->
 			<tbody>
 				<xsl:for-each select="row[not(@total='true')]">
-				<tr id="{parent::*/@name}_{position()}" value="{field[1]/text()}">
+				<tr id="{parent::*/@name}_{position()}" valueid="{field[1]/text()}">
 					<xsl:if test="position() mod 2 = 1"><xsl:attribute name="class">odd</xsl:attribute></xsl:if>
 					<xsl:if test="position() mod 2 = 0"><xsl:attribute name="class">even</xsl:attribute></xsl:if>
 					<xsl:for-each select="field">

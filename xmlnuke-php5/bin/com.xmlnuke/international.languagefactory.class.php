@@ -71,18 +71,7 @@ class LanguageFactory
 				break;
 				
 			case LanguageFileTypes::OBJECT:
-				$name = str_replace(".class.php", "", $name);
-				$name = str_replace($context->SystemRootPath() . "bin" . FileUtil::Slash(), "", $name);
-				$name = str_replace($context->SystemRootPath() . "lib" . FileUtil::Slash(), "", $name);
-				if ($context->ContextValue("xmlnuke.PHPXMLNUKEDIR") != "")
-				{
-					$name = str_replace($context->ContextValue("xmlnuke.PHPXMLNUKEDIR") . FileUtil::Slash() . "bin" . FileUtil::Slash(), "", $name);
-					$name = str_replace($context->ContextValue("xmlnuke.PHPXMLNUKEDIR") . FileUtil::Slash() . "lib" . FileUtil::Slash(), "", $name);
-				}
-				if ($context->ContextValue("xmlnuke.PHPLIBDIR")!="")
-				{
-					$name = str_replace($context->ContextValue("xmlnuke.PHPLIBDIR") . FileUtil::Slash(), "", $name);
-				}
+				$name = str_replace(".class.php", "", basename($name));
 				$name = str_replace(FileUtil::Slash(),"-",str_replace(".","-",strtolower($name)));
 				$langFile = new AnydatasetLangFilenameProcessor($name);
 				break;

@@ -557,7 +557,10 @@ class XmlUtil
 			$parent = trim($domnode->nodeName);
 
 			// For Editlist
-			if (($name == "editlist") && ($_REQUEST["xpath"] != ""))
+			if ($name == "#text")
+				continue;
+			
+			else if (($name == "editlist") && ($_REQUEST["xpath"] != ""))
 			{
 				// Get Field Names
 				$fieldList = XmlUtil::selectNodes($element, "row[1]/field");
@@ -602,6 +605,7 @@ class XmlUtil
 					$arr[] = $arrTemp;
 				}
 			}
+			
 			// Select from EditForm
 			elseif (($name == "select") && ($_REQUEST["xpath"] != ""))
 			{
@@ -613,25 +617,20 @@ class XmlUtil
 					$arr[] = array("id"=>$id, "value"=>$value);
 				}
 			}
+			
 			// Generic
 			elseif ( (!$element->hasChildNodes()) || (($element->childNodes->length == 1) && ($element->childNodes->item(0) instanceof DOMText)) )
 			{
-				if (!array_key_exists($name, $arr))
-				{
-					$arr[$name] = trim($element->nodeValue);
-				}
-				elseif (!is_array($arr[$name]))
-				{
-					$arr[$name] = array($arr[$name], trim($element->nodeValue));
-				}
-				else
-				{
-					$arr[$name][] = trim($element->nodeValue);
-				}
+				$arr[] = array($name => trim($element->nodeValue));
 			}
+			
+			// Recursive
 			else
 			{
-				$arr[$name][] = XmlUtil::xml2array($element, $attributes);
+				if ($element->nodeName != 'xmlnuke') // XPATH
+					$arr[$name][] = XmlUtil::xml2array($element, $attributes);
+				else
+					$arr[$name] = XmlUtil::xml2array($element, $attributes);
 			}
 
 			if ($attributes && $domnode->hasAttributes())

@@ -27,9 +27,9 @@ function submitEditList(name, trigger)
 
 	valueid = "";
 	$("#editlist." + name).find('tr.selected').each(function() {
-		valueid += (valueid != "" ? "," : "") + $(this).attr("value");
+		valueid += (valueid != "" ? "," : "") + $(this).attr("valueid");
 	});
-
+	
 	if ( (valueid == "") && ($("#"+trigger.id).attr("require") != "0"))
 	{
 		alert(MSG_NONESELECTED);

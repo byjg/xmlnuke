@@ -917,7 +917,7 @@ class Context
 	*/
 	public function redirectUrl($url)
 	{
-		$processor = new ParamProcessor($this);
+		$processor = new ParamProcessor();
 		$url = $processor->GetFullLink($url);
 		$url = str_replace("&amp;", "&", $url);
 

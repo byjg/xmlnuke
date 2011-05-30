@@ -1,12 +1,12 @@
-<script type="text/javascript" src="common/3rdparty/jquery/jquery-1.4.2.min.js" />
+<script type="text/javascript" src="common/3rdparty/jquery/jquery-1.6.1.min.js" />
 <script type="text/javascript" src="common/js/xmlnuke.js"></script>
 <link type="text/css" href="common/xmlnuke.css" rel="stylesheet" />
 
 <!-- UI JavaScript Object -->
-<xsl:if test="//sortablelist or //calendar or //faq or //datetimebox or //uialert or //mediagallery or //tabview or //progressbar">
+<xsl:if test="//sortablelist or //calendar or //faq or //datetimebox or //uialert or //mediagallery or //tabview or //progressbar or //textbox[@autosuggesturl]">
 
-	<link type="text/css" href="common/3rdparty/jquery/css/smoothness/jquery-ui-1.8.1.custom.css" rel="stylesheet" />
-	<script type="text/javascript" src="common/3rdparty/jquery/jquery-ui-1.8.1.custom.min.js" />
+	<link type="text/css" href="common/3rdparty/jquery/css/smoothness/jquery-ui-1.8.13.custom.css" rel="stylesheet" />
+	<script type="text/javascript" src="common/3rdparty/jquery/jquery-ui-1.8.13.custom.min.js" />
 	<script type="text/javascript" src="common/3rdparty/jquery/jquery-ui-i18n.min.js" />
 	<style type="text/css">
 		.ui-state-error, .ui-state-highlight {
@@ -148,6 +148,7 @@
 
 <!-- Include TinyMCE visual editor if have some Textarea using it -->
 <xsl:if test="//memo[@visualedit='true']">
+	<script type="text/javascript" src="common/3rdparty/tiny_mce/jquery.tinymce.js"></script>
 	<script type="text/javascript" src="common/3rdparty/tiny_mce/tiny_mce.js"></script>
 	<script type="text/javascript" src="common/3rdparty/tiny_mce/tiny_mce_xmlnuke.js"></script>
 	<script type="text/javascript">
@@ -208,8 +209,20 @@
 
 <!-- Include specific JavaScript for AutoSuggest  -->
 <xsl:if test="//textbox[@autosuggesturl]">
-	<script type="text/javascript" src="common/3rdparty/autosuggest/js/bsn.AutoSuggest_c_2.0.js"></script>
-	<link rel="stylesheet" href="common/3rdparty/autosuggest/css/autosuggest_inquisitor.css" type="text/css" media="screen" charset="utf-8" />
+	<style>
+	.ui-autocomplete {
+		max-height: 200px;
+		overflow-y: auto;
+		/* prevent horizontal scrollbar */
+		overflow-x: hidden;
+	}
+	/* IE 6 doesn't support max-height
+	 * we use height instead, but this forces the menu to always be this tall
+	 */
+	* html .ui-autocomplete {
+		height: 200px;
+	}
+	</style>
 </xsl:if>
 
 <!-- Include specific JavaScript for Poll  -->
@@ -252,7 +265,7 @@
 
 <!-- Include specific JavaScript for Masked Text box -->
 <xsl:if test="//textbox[@mask]">
-	<script language="javascript" src="common/3rdparty/jquery/plugin/jquery.maskedinput-1.2.2.min.js"></script>
+	<script language="javascript" src="common/3rdparty/jquery/plugin/jquery.maskedinput-1.3.min.js"></script>
 </xsl:if>
 
 

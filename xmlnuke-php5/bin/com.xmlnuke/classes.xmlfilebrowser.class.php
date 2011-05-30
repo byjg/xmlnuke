@@ -227,7 +227,7 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 		
 		$this->_userType = FileBrownserUserType::USER;		
 		
-		$this->_lang = LanguageFactory::GetLanguageCollection($this->_context, LanguageFileTypes::OBJECT, __FILE__);
+		$this->_lang = LanguageFactory::GetLanguageCollection($this->_context, LanguageFileTypes::OBJECT, "com.xmlnuke.classes.xmlfilebrowser");
 	}
 	
 	/**
@@ -767,7 +767,7 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 		$fileProcessor->setFilenameLocation(ForceFilenameLocation::DefinePath, $this->_context->SystemRootPath() . $dir);
 
 		$fileList = $this->_context->getUploadFileNames();
-		Debug::PrintValue($fileList);
+		//Debug::PrintValue($fileList);
 
 		foreach ($fileList as $field=>$file)
 		{

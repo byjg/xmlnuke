@@ -45,9 +45,9 @@ class ParamProcessor
 	*@return void
 	*@desc ParamProcessor constructor.
 	*/
-	public function __construct($context)
+	public function __construct()
 	{
-		$this->_context = $context;
+		$this->_context = Context::getInstance();
 	}
 
 	/**
@@ -124,77 +124,84 @@ class ParamProcessor
 	*/
 	public function GetFullLink($strHref)
 	{
-		$sResult = $strHref;
-		$admin = false;
-		$iPosScript = strpos($strHref,"engine:xmlnuke");
-		if ($iPosScript!==false)
-		{        
-			$sResult = substr($sResult,0,$iPosScript).$this->_context->UrlXmlNukeEngine().substr($sResult, strlen("engine:xmlnuke")+$iPosScript);
-		}
-		else
+		$arResult = array();
+		$result = "";
+		$pattern = "(?:(?<protocol>module|admin|engine):)?(?<host>[\w\d\-\.]*)(?<port>:\d*)?(?:(?:\?)(?<param>(([\w\d\.\-\#%]*=[\w\d\.\-\#%]*)(?:&(?:amp;)?)?)*))?";
+		preg_match_all("/$pattern/", $strHref, $arResult);
+		
+		$sep = "?";
+		
+		switch ($arResult["protocol"][0])
 		{
-			$iPosScript = strpos($strHref,"module:");
-			if ($iPosScript!==false)
-			{
-				$sResult = substr($sResult,0,$iPosScript).$this->_context->UrlModule()."?module=".str_replace("?","&",substr($sResult,strlen("module:")+$iPosScript));
+			case "engine":
+				if ($arResult["host"][0] == "xmlnuke")
+					$result = $this->_context->UrlXmlNukeEngine() . $arResult["port"][0];
+				else
+					$result = "Unknow Engine " . $arResult["host"][0]; 
+				break;
+			
+			case "module":
+				$result = $this->_context->UrlModule() . $arResult["port"][0] . "?module=" . $arResult["host"][0];
+				$sep = "&";
+				break;
 				
-			}
-			else
-			{
-				//Falta testar o admin
-				$iPosScript = strpos($strHref,"admin:");
-				if ($iPosScript!==false)
-				{
-					$admin = true;
-					$namespacedef = "admin.";				
-					
-					if (strpos($strHref,":engine")!==false)
-					{
-						$sResult = $this->_context->UrlXmlNukeAdmin().substr($sResult,strlen("admin:engine")+$iPosScript);
-						
-					}
-					else
-					{
-						if (strpos($strHref,".")!== false)
-						{
-							$namespacedef = "";
-						}
-						$sResult = substr($sResult, 0, $iPosScript).$this->_context->UrlModule()."?module=".$namespacedef.str_replace("?","&",substr($sResult,strlen("admin:")+$iPosScript));
-					}
-				}
+			case "admin":
+				if ($arResult["host"] == "engine")
+					$result = $this->_context->UrlXmlNukeAdmin() . $arResult["port"][0];
 				else
 				{
-					return $strHref;
+					$result = $this->_context->UrlModule() . $arResult["port"][0] . "?module=" . (strpos ($arResult["host"][0], ".") === false ? "admin." : "") . $arResult["host"][0];
+					$sep = "&";
 				}
+				break;
+				
+			default:
+				return $strHref;
+		}
+		
+		$paramsTmp = explode("&", str_replace("&amp;", "&", $arResult["param"][0]));
+		$arParam = array();
+		$xmlnukeParam = array();
+		foreach($paramsTmp as $value)
+		{
+			$arTmp = explode("=", $value);
+			
+			switch ($arTmp[0])
+			{
+				case "site":
+				case "xml":
+				case "xsl":
+				case "lang":
+					$xmlnukeParam[$arTmp[0]] = $arTmp[1];
+					
+				default:
+					if ($value != "")
+						$arParam[] = $value;
 			}
+		}
+		
+		$fullLink = ($this->_context->ContextValue("xmlnuke.USEFULLPARAMETER") == "true");
+		
+		if (!array_key_exists("site", $arParam) && ($fullLink || $this->_context->getSite()!= $this->_context->ContextValue("xmlnuke.DEFAULTSITE")))
+		{
+			$arParam[] = "site=" . $this->_context->getSite();
+		}
+		if (!array_key_exists("xsl", $arParam) && ($fullLink || $this->_context->getXsl()!= $this->_context->ContextValue("xmlnuke.DEFAULTPAGE")))
+		{
+			$arParam[] = "xsl=" . ($this->_context->getXsl() == "index" ? $this->_context->ContextValue("xmlnuke.DEFAULTPAGE") : $this->_context->getXsl());
+		}
+		if (!array_key_exists("xml", $arParam) && $fullLink)
+		{
+			$arParam[] = "xml=" . ($this->_context->getXml());
+		}
+		if (!array_key_exists("lang", $arParam) && ($fullLink || ($_REQUEST["lang"] == strtolower($this->_context->Language()->getName()))))
+		{
+			$arParam[] = "lang=" . strtolower($this->_context->Language()->getName());
 		}
 
-		$iPosQuestion = strpos($sResult,"?");
-		$XML = $this->ExtractPairQueryString($sResult, "xml");
-		$XSL = $this->ExtractPairQueryString($sResult, "xsl");
-		$SITE = $this->ExtractPairQueryString($sResult, "site");
-		$LANG = $this->ExtractPairQueryString($sResult, "lang");
-		$fullLink = ($this->_context->ContextValue("xmlnuke.USEFULLPARAMETER") == "true");
-		if ($iPosQuestion!==false)
-		{
-			if ( (($SITE == "") && $fullLink) || (!$fullLink && ($SITE=="") && ($this->_context->getSite()!= $this->_context->ContextValue("xmlnuke.DEFAULTSITE"))) )
-			{
-				$sResult = $sResult."&site=".$this->_context->getSite();
-			}
-			if ( (($XSL == "") && !$admin && $fullLink) || (!$fullLink && ($XSL=="") && ($this->_context->getXsl()!= $this->_context->ContextValue("xmlnuke.DEFAULTPAGE"))) )
-			{
-				$sResult = $sResult."&xsl=".($this->_context->getXsl() == "index" ? $this->_context->ContextValue("xmlnuke.DEFAULTPAGE") : $this->_context->getXsl());
-			}
-			if ($XML == "" && $fullLink)
-			{
-				$sResult = $sResult."&xml=".$this->_context->getXml();
-			}
-			if ( ($LANG == "" && $fullLink)  || (!$fullLink && ($LANG=="") && (strpos("!".$this->_context->ContextValue("HTTP_ACCEPT_LANGUAGE"), "!".$this->_context->Language()->getName()) === false) ) )
-			{
-				$sResult = $sResult."&lang=".strtolower($this->_context->Language()->getName());
-			}
-		}
-		return $this->_context->VirtualPathAbsolute($sResult);
+		$strParam = implode("&", $arParam);
+		
+		return $this->_context->VirtualPathAbsolute($result . ($strParam != "" ? $sep . $strParam : ""));
 	}
 
 	/**

@@ -489,7 +489,7 @@ class XmlEditList extends XmlnukeDocumentObject
 			}
 		}
 
-		$processor = new ParamProcessor($this->_context);
+		$processor = new ParamProcessor();
 		if($this->_customButton != null)
 		{
 			for ($i=0, $customButtonsLength = sizeof($this->_customButton); $i < $customButtonsLength ; $i++)

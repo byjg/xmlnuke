@@ -130,7 +130,7 @@ class XmlnukeUIAlert extends XmlnukeCollection implements IXmlnukeDocumentObject
 	
 	public function addRedirectButton($text, $url)
 	{
-		$param = new ParamProcessor($this->_context);
+		$param = new ParamProcessor();
 		$urlXml = $param->GetFullLink($url);
 		$this->_buttons[$text] = "window.location='$urlXml';";
 	}

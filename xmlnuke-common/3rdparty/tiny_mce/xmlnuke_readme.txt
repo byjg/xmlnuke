@@ -11,11 +11,11 @@ The follow files/folder are removed from TinyMCE used in Xmlnuke:
 - Themes/Simple folder was removed
 - All *_src.js Files was removed
 
-The current TinyMCE edition is 3.3.9.2
+The current TinyMCE edition is 3.4.2
 
 To use in your XSL you MUST add the follow snippets:
 - HTMLHEADERS inside <head> section
 - HTMLBODY at the end of document
 
-All changes made by João Gilberto Magalhães at 2010-11-03
+All changes made by João Gilberto Magalhães at 2011-05-25
 

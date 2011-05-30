@@ -101,7 +101,7 @@ class XmlnukePoll extends XmlnukeDocumentObject
 		}
 		$this->_processed = false;
 		$this->getPollConfig();
-		$this->_myWords = LanguageFactory::GetLanguageCollection($this->_context, LanguageFileTypes::OBJECT, __FILE__);
+		$this->_myWords = LanguageFactory::GetLanguageCollection($this->_context, LanguageFileTypes::OBJECT, "com.xmlnuke.classes.xmlnukepoll");
 	}
 
 	/**

@@ -196,7 +196,7 @@ class XmlnukeTreeViewLeaf extends XmlnukeDocumentObject
 		if ($this->_action != "")
 		{
 			$jsAction = "";
-			$processor = new ParamProcessor($this->_context);
+			$processor = new ParamProcessor();
 			$url = $processor->GetFullLink($this->_actionText);
 			switch ($this->_action)
 			{

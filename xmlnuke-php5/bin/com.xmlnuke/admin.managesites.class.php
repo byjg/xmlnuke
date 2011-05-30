@@ -88,12 +88,12 @@ class ManageSites extends NewBaseAdminModule
 			case ManageSitesAction::View :
 				$url = new XmlnukeManageUrl(URLTYPE::ENGINE);
 				$url->addParam('site', $this->_context->ContextValue('valueid'));
-				$this->_context->redirectUrl($url->getUrlFull($this->_context));
+				$this->_context->redirectUrl($url->getUrlFull());
 				break;
 			case ManageSitesAction::Edit :
 				$url = new XmlnukeManageUrl(URLTYPE::ADMIN, "admin:ManageSites");
 				$url->addParam('site', $this->_context->ContextValue('valueid'));
-				$this->_context->redirectUrl($url->getUrlFull($this->_context));
+				$this->_context->redirectUrl($url->getUrlFull());
 				break;
 			default:
 			/* Nothing to do */

@@ -433,7 +433,7 @@ class BackupModule extends NewBaseAdminModule
 		$url = new XmlnukeManageUrl(URLTYPE::MODULE, "admin.backupmodule");
 		$url->addParam("op", $op);
 
-		$customButton->url = htmlentities($url->getUrlFull($this->_context));
+		$customButton->url = $url->getUrlFull();
 		$customButton->icon = $icon;
 		$customButton->multiple = $multipleSelectType; //MultipleSelectType::NONE;
 

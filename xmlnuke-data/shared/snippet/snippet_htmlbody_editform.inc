@@ -79,17 +79,39 @@
   </form>
   <xsl:for-each select="textbox[@autosuggesturl]">
 	<script type="text/javascript">
-	var o_<xsl:value-of select="@name" /> = {
-		script:"<xsl:value-of select="@autosuggesturl" />",
-		varname:"<xsl:value-of select="@autosuggestparamreq" />",
-		timeout:5000,
-		maxheight:20,
-		nodeRoot:"xmlnuke"
-		<xsl:if test="@autosuggestattrinfo">,attrInfo:"<xsl:value-of select="@autosuggestattrinfo" />"</xsl:if>
-		<xsl:if test="@autosuggestattrid">,attrId:"<xsl:value-of select="@autosuggestattrid" />"</xsl:if>
-		<xsl:if test="@autosuggestcallback">,callback: function (obj) { <xsl:value-of select="@autosuggestcallback" /> }</xsl:if>
-	};
-	var as_<xsl:value-of select="@name" /> = new AutoSuggest('<xsl:value-of select="@name" />', o_<xsl:value-of select="@name" />);
+	$(function() {
+		var cache_<xsl:value-of select="@name" /> = {}, lastXhr_<xsl:value-of select="@name" />;
+		
+		$("#<xsl:value-of select="@name" />").autocomplete({
+			minLength: 2,
+			delay: 600,
+			source: function( request, response ) {
+				var term = request.term;
+				if (term in cache_<xsl:value-of select="@name" />) {
+					response( cache_<xsl:value-of select="@name" />[term] );
+					return
+				}
+				
+				lastXhr_<xsl:value-of select="@name" /> = $.getJSON( "<xsl:value-of select="@autosuggesturl" /><xsl:value-of select="@autosuggestparamreq" />=" + request.term, request, function( data, status, xhr ) {
+					cache_<xsl:value-of select="@name" />[ term ] = data;
+					if ( xhr === lastXhr_<xsl:value-of select="@name" /> ) {
+						response( data );
+					}
+				});
+			}<xsl:if test="@autosuggestcallback">, 
+			select: function (event, ui) {
+				<xsl:value-of select="@autosuggestcallback" />;
+				return false;
+			}
+			</xsl:if>
+		})
+		.data( "autocomplete" )._renderItem = function( ul, item ) {
+			return $( "<li></li>" )
+				.data( "item.autocomplete", item )
+				.append( "<a>" + item.value.replace($("#<xsl:value-of select="@name" />").val(), "<b>" + $("#<xsl:value-of select="@name" />").val() + "</b>") + "</a>" )
+				.appendTo( ul );
+		};
+	});
 	fn_addEvent("<xsl:value-of select="@name" />", "focus", function () { this.select(); });
 	</script>
   </xsl:for-each>
