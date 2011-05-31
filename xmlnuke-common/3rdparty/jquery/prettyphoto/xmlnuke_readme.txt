@@ -6,11 +6,11 @@ http://www.no-margin-for-errors.com/projects/prettyphoto-jquery-lightbox-clone.
 
 Xmlnuke changed CSS to adjust the image path to XMLNuke structure
 
-The current prettyPhoto version is 2.5.4
+The current prettyPhoto version is 3.1.2
 
 To use in your XSL you MUST add the follow snippets:
 - HTMLHEADERS inside <head> section
 - HTMLBODY at the end of document
 
-All changes made by João Gilberto Magalhães at 2009-12-12
+All changes made by João Gilberto Magalhães at 2011-05-30
 

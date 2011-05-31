@@ -312,15 +312,29 @@
 
 <!-- Include specific JavaScript for pretty Photo -->
 <xsl:if test="//mediagallery">
-	<link rel="stylesheet" href="common/3rdparty/jquery/prettyphoto/prettyPhoto.css" type="text/css" media="screen" title="prettyPhoto main stylesheet" charset="utf-8" />
+	<link rel="stylesheet" href="common/3rdparty/jquery/prettyphoto/css/prettyPhoto.css" type="text/css" media="screen" title="prettyPhoto main stylesheet" charset="utf-8" />
 	<script src="common/3rdparty/jquery/prettyphoto/jquery.prettyPhoto.js" type="text/javascript" charset="utf-8"></script>
 	<style>
-		.mediagallery, .pp_details, .pp_description, .pp_nav
-		{
+		.clearfix:after {
+			clear: both;
+			content: ".";
+			display: block;
+			height: 0;
+			visibility: hidden;
+		}
+		.clearfix {
+			display: inline-block;
+		}
+		* html .clearfix {
+			height: 1%;
+		}
+		.clearfix {
+			display: block;
+		}
+		.mediagallery, .pp_details, .pp_description, .pp_nav {
 			font: 90% Arial, Verdana, Sans-Serif;
 			margin: 0; padding: 0;
 		}
-
 		.mediagallery li { display: block; float: left; margin: 0; padding: 0; }
 	</style>
 	<script type="text/javascript" charset="utf-8">
