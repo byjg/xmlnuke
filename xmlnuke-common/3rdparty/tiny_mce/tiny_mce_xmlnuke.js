@@ -26,7 +26,7 @@ function initTinyMCE(varElements, editDoc, baseHref)
 		add_unload_trigger : false,
 		remove_linebreaks : false,
 		inline_styles : false,
-		extended_valid_elements : "iframe[src|width|height|name|align|style|frameborder|marginheight|marginwidth|scrolling]",
+		extended_valid_elements : "iframe[src|width|height|name|align|style|frameborder|marginheight|marginwidth|scrolling],object[width|height|classid|codebase],param[name|value],embed[src|type|width|height|flashvars|wmode]",
 		convert_fonts_to_spans : false,
 		theme_advanced_statusbar_location : "bottom",
 		theme_advanced_resizing : true,
