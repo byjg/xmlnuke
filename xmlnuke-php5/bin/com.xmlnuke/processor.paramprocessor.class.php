@@ -126,7 +126,7 @@ class ParamProcessor
 	{
 		$arResult = array();
 		$result = "";
-		$pattern = "(?:(?<protocol>module|admin|engine):)?(?<host>[\w\d\-\.]*)(?<port>:\d*)?(?:(?:\?)(?<param>(([\w\d\.\-\#%]*=[\w\d\.\-\#%]*)(?:&(?:amp;)?)?)*))?";
+		$pattern = "(?:(?<protocol>module|admin|engine):)?(?<host>[\w\d\-\.]*)(?<port>:\d*)?(?:\?(?<param>(([\w\d\W]*=[\w\d\W]*)(?:&(?:amp;)?)?)*))?";
 		preg_match_all("/$pattern/", $strHref, $arResult);
 		
 		$sep = "?";

@@ -211,7 +211,15 @@ class WebRequest
 			$fields_string = "";
 			foreach($fields as $key=>$value)
 			{
-				$fields_string .= ($fields_string != "" ? "&" : "") . $key.'='.$value;
+				if (!is_array($value))
+					$fields_string .= ($fields_string != "" ? "&" : "") . $key.'='.$value;
+				else 
+				{
+					foreach ($value as $valueItem)
+					{
+						$fields_string .= ($fields_string != "" ? "&" : "") . $key.'='.$valueItem;
+					}
+				}
 			}
 		}
 		// Check if pass file
