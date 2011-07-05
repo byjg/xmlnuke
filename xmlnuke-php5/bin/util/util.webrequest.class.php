@@ -212,12 +212,12 @@ class WebRequest
 			foreach($fields as $key=>$value)
 			{
 				if (!is_array($value))
-					$fields_string .= ($fields_string != "" ? "&" : "") . $key.'='.$value;
+					$fields_string .= ($fields_string != "" ? "&" : "") . $key.'='.urlencode($value);
 				else 
 				{
 					foreach ($value as $valueItem)
 					{
-						$fields_string .= ($fields_string != "" ? "&" : "") . $key.'='.$valueItem;
+						$fields_string .= ($fields_string != "" ? "&" : "") . $key.'='.urlencode($valueItem);
 					}
 				}
 			}
@@ -259,7 +259,7 @@ class WebRequest
 		}
 
 		$result = curl_exec($curl);
-    	$this->_header = curl_getinfo($curl);
+		$this->_header = curl_getinfo($curl);
 		if ($result === false)
 		{
 			throw new Exception("CURL - " . curl_error($curl));
