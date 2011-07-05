@@ -35,6 +35,14 @@
 			</div>
 		</xsl:for-each>
 	</dd>
+	
+	<input type="hidden" id="{$name}_columns" name="{$name}_columns">
+		<xsl:attribute name="value">
+			<xsl:for-each select="column">
+				<xsl:if test="not(position()=1)">|</xsl:if><xsl:value-of select="@id" />
+			</xsl:for-each>
+		</xsl:attribute>
+	</input>
 
 	<xsl:for-each select="column">
 		<input type="hidden" id="{$name}_{@id}" name="{$name}_{@id}">

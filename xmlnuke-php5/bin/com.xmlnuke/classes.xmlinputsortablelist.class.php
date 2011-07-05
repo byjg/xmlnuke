@@ -176,6 +176,33 @@ class XmlInputSortableList extends XmlnukeDocumentObject
 			}
 		}
 	}
+	
+	/**
+	 * @param string $duallistaname
+	 * @return string[]
+	 */
+	public static function Parse($sortableName)
+	{
+		$context = Context::getInstance();
+		
+		$cols = $context->Value($sortableName. "_columns");
+		
+		if ($cols == "")
+			return null;
+		
+		$arCols = explode("|", $cols);
+		
+		$ret = array();
+		
+		foreach($arCols as $col)
+		{
+			$value = $context->Value($sortableName. "_" . $col);
+			$ret[$col] = explode("|", $value);
+		}
+		
+		return $ret;
+	}
+	
 }
 
 ?>

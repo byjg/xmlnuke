@@ -648,6 +648,11 @@ class Context
 			return "";
 		}
 	}
+	
+	public function Keys()
+	{
+		return array_keys($this->_config);
+	}
 
 	/**
 	 *
