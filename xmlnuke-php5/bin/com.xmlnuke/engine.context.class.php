@@ -1313,7 +1313,32 @@ class Context
 			}
 			else
 			{
-			    throw new Exception("Cannot upload file. Raeson: '" . $field['error'] . "'");
+				$message = "Unknow error: " . $field['error'];
+				switch ($field['error'])
+				{
+					case UPLOAD_ERR_CANT_WRITE:
+						$message = "Can't write";
+						break;
+					case UPLOAD_ERR_EXTENSION:
+						$message = "Extension is not permitted";
+						break;
+					case UPLOAD_ERR_FORM_SIZE:
+						$message = "Max post size reached";
+						break;
+					case UPLOAD_ERR_INI_SIZE:
+						$message = "Max system size reached";
+						break;
+					case UPLOAD_ERR_NO_FILE:
+						$message = "No file was uploaded";
+						break;
+					case UPLOAD_ERR_NO_TMP_DIR:
+						$message = "No temp dir";
+						break;
+					case UPLOAD_ERR_PARTIAL:
+						$message = "The uploaded file was only partially uploaded";
+						break;
+				}
+			    throw new Exception($message);
 			}
 		}
 		else
