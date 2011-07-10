@@ -17,6 +17,13 @@ class StampPosition
 	const Random = 999;
 }
 
+class TextAligment
+{
+	const Left = 1;
+	const Right = 2;
+	const Center = 3;
+}
+
 /**
  * A Wrapper for GD library in PHP. GD must be installed in your system for this to work.
  * Example: $img = new Image('wheel.png');
@@ -38,8 +45,31 @@ class ImageUtil
 	 */
 	function __construct($image_file)
 	{
+		$extern = false;
+		
 		if (! function_exists ( 'imagecreatefrompng' ))
 			return; //GD not available
+		
+		if (strpos($image_file, "http://") !== false)
+		{
+			$extern = true;
+			$url = $image_file;
+			$image_file = basename($url);
+			$info = pathinfo($image_file);
+			$image_file = tempnam(sys_get_temp_dir(), "srzdimg_") . "." . $info['extension'];
+			
+			$handle = fopen($image_file, "w");
+			try
+			{
+				$x = file_get_contents($url);
+				fwrite($handle, $x);
+			}
+			catch (Exception $ex)
+			{
+			}
+			fclose($handle);
+		}
+		
 		if (! file_exists ( $image_file ) or ! is_readable ( $image_file ))
 			return;
 
@@ -71,6 +101,9 @@ class ImageUtil
 		$this->width = imagesx ( $image );
 		$this->height = imagesy ( $image );
 		$this->image = $this->org_image = $image;
+		
+		if ($extern)
+			unlink($image_file);
 	}
 
 	public function getWidth()
@@ -289,6 +322,16 @@ class ImageUtil
 		$dst_h = imagesy ( $dst_image );
 		$src_w = imagesx ( $watermark );
 		$src_h = imagesy ( $watermark );
+		
+		if (is_array($padding))
+		{
+			$padx = $padding[0];
+			$pady = $padding[1];
+		}
+		else
+		{
+			$padx = $pady = $padding;
+		}
 
 		if ($position == StampPosition::Random)
 		{
@@ -297,37 +340,100 @@ class ImageUtil
 		switch ($position)
 		{
 			case StampPosition::TopRight :
-				imagecopy( $dst_image, $watermark, ($dst_w - $src_w) - $padding, $padding, 0, 0, $src_w, $src_h );
+				imagecopy( $dst_image, $watermark, ($dst_w - $src_w) - $padx, $pady, 0, 0, $src_w, $src_h );
 				break;
 			case StampPosition::TopLeft :
-				imagecopy ( $dst_image, $watermark, $padding, $padding, 0, 0, $src_w, $src_h );
+				imagecopy ( $dst_image, $watermark, $padx, $pady, 0, 0, $src_w, $src_h );
 				break;
 			case StampPosition::BottomRight :
-				imagecopy ( $dst_image, $watermark, ($dst_w - $src_w) - $padding, ($dst_h - $src_h) - $padding, 0, 0, $src_w, $src_h );
+				imagecopy ( $dst_image, $watermark, ($dst_w - $src_w) - $padx, ($dst_h - $src_h) - $pady, 0, 0, $src_w, $src_h );
 				break;
 			case StampPosition::BottomLeft :
-				imagecopy ( $dst_image, $watermark, $padding, ($dst_h - $src_h) - $padding, 0, 0, $src_w, $src_h );
+				imagecopy ( $dst_image, $watermark, $padx, ($dst_h - $src_h) - $pady, 0, 0, $src_w, $src_h );
 				break;
 			case StampPosition::Center :
 				imagecopy ( $dst_image, $watermark, (($dst_w / 2) - ($src_w / 2)), (($dst_h / 2) - ($src_h / 2)), 0, 0, $src_w, $src_h );
 				break;
 			case StampPosition::Top :
-				imagecopy ( $dst_image, $watermark, (($dst_w / 2) - ($src_w / 2)), $padding, 0, 0, $src_w, $src_h );
+				imagecopy ( $dst_image, $watermark, (($dst_w / 2) - ($src_w / 2)), $pady, 0, 0, $src_w, $src_h );
 				break;
 			case StampPosition::Bottom :
-				imagecopy ( $dst_image, $watermark, (($dst_w / 2) - ($src_w / 2)), ($dst_h - $src_h) - $padding, 0, 0, $src_w, $src_h );
+				imagecopy ( $dst_image, $watermark, (($dst_w / 2) - ($src_w / 2)), ($dst_h - $src_h) - $pady, 0, 0, $src_w, $src_h );
 				break;
 			case StampPosition::Left :
-				imagecopy ( $dst_image, $watermark, $padding, (($dst_h / 2) - ($src_h / 2)), 0, 0, $src_w, $src_h );
+				imagecopy ( $dst_image, $watermark, $padx, (($dst_h / 2) - ($src_h / 2)), 0, 0, $src_w, $src_h );
 				break;
 			case StampPosition::Right :
-				imagecopy ( $dst_image, $watermark, ($dst_w - $src_w) - $padding, (($dst_h / 2) - ($src_h / 2)), 0, 0, $src_w, $src_h );
+				imagecopy ( $dst_image, $watermark, ($dst_w - $src_w) - $padx, (($dst_h / 2) - ($src_h / 2)), 0, 0, $src_w, $src_h );
 				break;
 		}
 
 		$this->image = $dst_image;
 
 		return $this;
+	}
+	
+	function writeText($text, $point, $size, $angle, $font, $maxwidth = 0, $rgbAr = null, $textAlignment = 1)
+	{
+		if(!is_readable($font)) 
+		    throw new Exception('Error: The server is missing the specified font.') ;
+
+		if (!is_array($rgbAr))
+			$rgbAr = array(0, 0, 0);
+		
+		$color = imagecolorallocate($this->image, $rgbAr[0], $rgbAr[1], $rgbAr[2]);
+		
+		// Determine the line break if required.
+		if (($maxwidth > 0) && ($angle == 0))
+		{			
+			$words = explode(' ', $text); 
+			$lines = array($words[0]); 
+			$currentLine = 0; 
+
+			for($i = 1; $i < count($words); $i++) 
+			{ 
+				$lineSize = imagettfbbox($size, 0, $font, $lines[$currentLine] . ' ' . $words[$i]); 
+				if($lineSize[2] - $lineSize[0] < $maxwidth) 
+				{ 
+					$lines[$currentLine] .= ' ' . $words[$i]; 
+				} 
+				else 
+				{ 
+					$currentLine++; 
+					$lines[$currentLine] = $words[$i]; 
+				} 
+			} 
+	
+		}
+		else
+		{
+			$lines = array($text);
+		}
+		
+		$x = $point[0];
+		$y = $point[1];
+
+		foreach($lines as $text)
+		{
+			$bbox = imagettfbbox($size, $angle, $font, $text);
+			
+			//Debug::PrintValue($bbox);
+			switch ($textAlignment)
+			{
+				case TextAligment::Right:
+					$x = $point[0] - abs($bbox[2] - $bbox[0]);
+					break;
+				
+				case TextAligment::Center:
+					$x = $point[0] - (abs($bbox[2] - $bbox[0]) / 2);
+					break;
+				
+			}
+		
+			imagettftext($this->image, $size, $angle, $x, $y, $color, $font, $text);
+
+			$y += ($size * 1.35);
+		}
 	}
 
 	/**
