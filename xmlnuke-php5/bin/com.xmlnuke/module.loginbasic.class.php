@@ -182,6 +182,7 @@ class LoginBasic extends LoginBase
 		$url->addParam('ReturnUrl', $this->_urlReturn);
 		
 		$form = new XmlFormCollection($this->_context, $url->getUrl() , $myWords->Value("LOGINTITLE"));
+		$form->setDisableAutoComplete(true);
 		$form->setJSValidate(true);
 		$paragraph->addXmlnukeObject($form);
 		
@@ -226,6 +227,7 @@ class LoginBasic extends LoginBase
 		$url->addParam('ReturnUrl', $this->_urlReturn);
 		
 		$form = new XmlFormCollection($this->_context, $url->getUrl() , $myWords->Value("FORGOTPASSTITLE"));
+		$form->setDisableAutoComplete(true);
 		$paragraph->addXmlnukeObject($form);
 		
 		$textbox = new XmlInputTextBox($myWords->Value("LABEL_EMAIL"), 'email', $this->_context->ContextValue("email"), 40);

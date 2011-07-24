@@ -72,6 +72,10 @@ class XmlFormCollection extends XmlnukeCollection implements IXmlnukeDocumentObj
 	 * @var string
 	 */
 	protected $_customSubmit = "";
+	/**
+	 * @var bool
+	 */
+	protected $_disableAutoComplete = false;
 
 	/**
 	*@desc XmlFormCollection construction
@@ -158,6 +162,11 @@ class XmlFormCollection extends XmlnukeCollection implements IXmlnukeDocumentObj
 		$this->_customSubmit = $customSubmit;
 	}
 
+	public function setDisableAutoComplete($value)
+	{
+		$this->_disableAutoComplete = $value;
+	}
+	
 	/**
 	*@desc Generate page, processing yours childs.
 	*@param DOMNode $current
@@ -189,6 +198,10 @@ class XmlFormCollection extends XmlnukeCollection implements IXmlnukeDocumentObj
 		if ($this->_customSubmit != "")
 		{
 			XmlUtil::AddAttribute($nodeWorking, "customsubmit", $this->_customSubmit);
+		}
+		if ($this->_disableAutoComplete)
+		{
+			XmlUtil::AddAttribute($nodeWorking, "autocomplete", "off");
 		}
 
 		$this->generatePage($nodeWorking);

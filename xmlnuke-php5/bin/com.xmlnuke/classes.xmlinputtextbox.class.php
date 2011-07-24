@@ -97,6 +97,10 @@ class XmlInputTextBox extends XmlInputValidate
 	 * @var string
 	 */
 	protected $_maskText;
+	/**
+	 * @var bool
+	 */
+	protected $_disableAutoComplete = false;
 	
 	/**
 	*@desc XmlInputTextBox constructor
@@ -207,6 +211,10 @@ class XmlInputTextBox extends XmlInputValidate
 		$this->_autosuggestCallback = $jsCallback;
 	}
 	
+	public function setDisableAutoComplete($value)
+	{
+		$this->_disableAutoComplete = $value;
+	}
 	/**
 	*@desc Generate page, processing yours childs.
 	*@param DOMNode $current
@@ -285,6 +293,11 @@ class XmlInputTextBox extends XmlInputValidate
 			if ($this->getMask() != "")
 			{
 				XmlUtil::AddAttribute($nodeWorking, "mask", $this->_maskText);
+			}
+			
+			if ($this->_disableAutoComplete)
+			{
+				XmlUtil::AddAttribute($nodeWorking, "autocomplete", "off");
 			}
 			
 			parent::generateObject($nodeWorking);

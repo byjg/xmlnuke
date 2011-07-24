@@ -54,6 +54,9 @@
 	<xsl:if test="not(@customsubmit)">
 		<xsl:attribute name="onsubmit">return <xsl:value-of select="@name"/>_checksubmit()</xsl:attribute>
 	</xsl:if>
+	<xsl:if test="@autocomplete">
+		<xsl:attribute name="autocomplete"><xsl:value-of select="@autocomplete"/></xsl:attribute>
+	</xsl:if>
 
 	<input type="hidden" name="__postback" value="true" />
 
@@ -148,6 +151,7 @@
 	<xsl:param name="size"/>
 	<xsl:param name="maxlength"/>
 	<xsl:param name="selected"/>
+	<xsl:param name="autocomplete"/>
 
 	<xsl:if test="$type='label'">
 		<span id="form_label">
@@ -176,6 +180,7 @@
 
 		<xsl:if test="$size and $size!=''"><xsl:attribute name="size"><xsl:value-of select="$size"/></xsl:attribute></xsl:if>
 		<xsl:if test="$maxlength and $maxlength!=''"><xsl:attribute name="maxlength"><xsl:value-of select="$maxlength"/></xsl:attribute></xsl:if>
+		<xsl:if test="$autocomplete and $autocomplete!=''"><xsl:attribute name="autocomplete"><xsl:value-of select="$autocomplete"/></xsl:attribute></xsl:if>
 	</input>
 	</xsl:if>
 </xsl:template>
@@ -236,6 +241,7 @@
 					<xsl:with-param name="size"><xsl:value-of select="@size"/></xsl:with-param>
 					<xsl:with-param name="maxlength"><xsl:value-of select="@maxlength"/></xsl:with-param>
 					<xsl:with-param name="selected"><xsl:value-of select="@selected"/></xsl:with-param>
+					<xsl:with-param name="autocomplete"><xsl:value-of select="@autocomplete"/></xsl:with-param>
 				</xsl:call-template>
 				
 				<xsl:if test="name()='checkbox' or name()='radiobox'">
@@ -275,6 +281,7 @@
 					<xsl:with-param name="size"><xsl:value-of select="@size"/></xsl:with-param>
 					<xsl:with-param name="maxlength"><xsl:value-of select="@maxlength"/></xsl:with-param>
 					<xsl:with-param name="selected"><xsl:value-of select="@selected"/></xsl:with-param>
+					<xsl:with-param name="autocomplete"><xsl:value-of select="@autocomplete"/></xsl:with-param>
 				</xsl:call-template>
 				<xsl:if test="position()!=last()"> &#160; </xsl:if>
 			</xsl:for-each>

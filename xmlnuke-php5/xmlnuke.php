@@ -157,8 +157,17 @@
 				
 				$ex->moduleName = $moduleName;
 				$firstError = $ex;
-				$module = ModuleFactory::GetModule("LoadError", $ex );
-				writePage($engine->TransformDocumentFromModule($module));
+				
+				try
+				{
+					$module = ModuleFactory::GetModule("LoadError", $ex );
+					writePage($engine->TransformDocumentFromModule($module));
+				}
+				catch (Exception $ex)
+				{
+					echo "Fatal Error: [" . get_class($ex) . "] " . $ex->getMessage() . "<br/>File: " . basename($ex->getFile()) . " at " . $ex->getLine();
+				}
+				
 			}
 		}		
 	}
