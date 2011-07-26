@@ -275,7 +275,7 @@ class XmlNukeEngine
 		// Add a custom XML based on attribute xmlobjet inside root
 		// Example:
 		// <page include="base.namespace, file.php" xmlobject="plugin.name[param1, param2]">
-		$pattern = "/(?<plugin>((\w+)\.)+\w+)\[(?<param>([#']?[\w]+[#']?\s*,?\s*)+)\]/";
+		$pattern = "/(?P<plugin>((\w+)\.)+\w+)\[(?P<param>([#']?[\w]+[#']?\s*,?\s*)+)\]/";
 		$xmlRoot = $xml->documentElement;
 		$xmlRootAttributes = $xmlRoot->attributes;
 		foreach ($xmlRootAttributes as $attr)
