@@ -114,9 +114,9 @@ class SendEmail extends BaseModule
 	 * @param Context $context
 	 * @param Object $customArgs
 	 */
-	public function Setup($xmlModuleName, $context, $customArgs)
+	public function Setup($xmlModuleName, $customArgs)
 	{
-		parent::Setup($xmlModuleName, $context, $customArgs);
+		parent::Setup($xmlModuleName, $customArgs);
 		$this->_toName_ID = $this->_context->ContextValue("toname_id");
 		$this->_fromName = $this->_context->ContextValue("name");
 		$this->_fromEmail = $this->_context->ContextValue("email");

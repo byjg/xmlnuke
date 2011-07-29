@@ -114,9 +114,9 @@ class SendPage extends BaseModule
 	 * @param Conext $context
 	 * @param Null $customArgs
 	 */
-	public function Setup($xmlModuleName, $context, $customArgs)
+	public function Setup($xmlModuleName, $customArgs)
 	{
-		parent::Setup($xmlModuleName, $context, $customArgs);
+		parent::Setup($xmlModuleName, $customArgs);
 
 		$this->_link = $this->_context->ContextValue("link");
 		$this->_toName = $this->_context->ContextValue("toname");

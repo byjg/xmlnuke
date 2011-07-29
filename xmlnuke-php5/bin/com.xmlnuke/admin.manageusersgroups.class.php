@@ -77,9 +77,9 @@ class ManageUsersGroups extends NewBaseAdminModule
 		return "MANAGER"; 
     }
     
-    public function Setup($xmlModuleName, $context, $customArgs) 
+    public function Setup($xmlModuleName, $customArgs) 
     {
-    	parent::Setup($xmlModuleName, $context, $customArgs);
+    	parent::Setup($xmlModuleName, $customArgs);
     	parent::CreatePage();
 		$this->url = new XmlnukeManageUrl(URLTYPE::MODULE , $this->_xmlModuleName->ToString());
 		$this->user = $this->getUsersDatabase();

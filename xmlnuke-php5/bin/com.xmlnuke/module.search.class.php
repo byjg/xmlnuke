@@ -82,9 +82,9 @@ class Search extends BaseModule
 	 * @param Context $context
 	 * @param Object $customArgs
 	 */
-	public function Setup($xmlModuleName, $context, $customArgs)
+	public function Setup($xmlModuleName, $customArgs)
 	{
-		parent::Setup($xmlModuleName, $context, $customArgs);
+		parent::Setup($xmlModuleName, $customArgs);
 	}
 	
 	/**
