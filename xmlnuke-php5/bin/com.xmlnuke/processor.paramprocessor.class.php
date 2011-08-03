@@ -159,10 +159,31 @@ class ParamProcessor
 			default:
 				return $strHref;
 		}
-		
-		$paramsTmp = explode("&", str_replace("&amp;", "&", $arResult["param"][0]));
+
 		$arParam = array();
 		$xmlnukeParam = array();
+		
+		$fullLink = ($this->_context->ContextValue("xmlnuke.USEFULLPARAMETER") == "true");
+		
+		if ($fullLink || $this->_context->getSite()!= $this->_context->ContextValue("xmlnuke.DEFAULTSITE"))
+		{
+			$xmlnukeParam["site"] = $this->_context->getSite();
+		}
+		if ($fullLink || $this->_context->getXsl()!= $this->_context->ContextValue("xmlnuke.DEFAULTPAGE"))
+		{
+			$xmlnukeParam["xsl"] = ($this->_context->getXsl() == "index" ? $this->_context->ContextValue("xmlnuke.DEFAULTPAGE") : $this->_context->getXsl());
+		}
+		if ($fullLink)
+		{
+			$xmlnukeParam["xml"] = ($this->_context->getXml());
+		}
+		if ($fullLink || ($_REQUEST["lang"] == strtolower($this->_context->Language()->getName())))
+		{
+			$xmlnukeParam["lang"] = strtolower($this->_context->Language()->getName());
+		}
+
+		
+		$paramsTmp = explode("&", str_replace("&amp;", "&", $arResult["param"][0]));
 		foreach($paramsTmp as $value)
 		{
 			$arTmp = explode("=", $value);
@@ -174,35 +195,25 @@ class ParamProcessor
 				case "xsl":
 				case "lang":
 					$xmlnukeParam[$arTmp[0]] = $arTmp[1];
+					break;
 					
 				default:
 					if ($value != "")
 						$arParam[] = $value;
 			}
 		}
-		
-		$fullLink = ($this->_context->ContextValue("xmlnuke.USEFULLPARAMETER") == "true");
-		
-		if (!array_key_exists("site", $arParam) && ($fullLink || $this->_context->getSite()!= $this->_context->ContextValue("xmlnuke.DEFAULTSITE")))
-		{
-			$arParam[] = "site=" . $this->_context->getSite();
-		}
-		if (!array_key_exists("xsl", $arParam) && ($fullLink || $this->_context->getXsl()!= $this->_context->ContextValue("xmlnuke.DEFAULTPAGE")))
-		{
-			$arParam[] = "xsl=" . ($this->_context->getXsl() == "index" ? $this->_context->ContextValue("xmlnuke.DEFAULTPAGE") : $this->_context->getXsl());
-		}
-		if (!array_key_exists("xml", $arParam) && $fullLink)
-		{
-			$arParam[] = "xml=" . ($this->_context->getXml());
-		}
-		if (!array_key_exists("lang", $arParam) && ($fullLink || ($_REQUEST["lang"] == strtolower($this->_context->Language()->getName()))))
-		{
-			$arParam[] = "lang=" . strtolower($this->_context->Language()->getName());
-		}
-
 		$strParam = implode("&", $arParam);
 		
-		return $this->_context->VirtualPathAbsolute($result . ($strParam != "" ? $sep . $strParam : ""));
+		$arParam2 = array();
+		foreach ($xmlnukeParam as $key=>$value)
+		{
+			$arParam2[] = $key . "=" . $value;
+		}
+		$strParam2 = implode("&", $arParam2);
+		
+		$paramsFinal = $strParam2 . (!empty ($strParam2) && !empty($strParam) ? "&" : "") . $strParam;
+		
+		return $this->_context->VirtualPathAbsolute($result . ($paramsFinal != "" ? $sep . $paramsFinal : ""));	
 	}
 
 	/**
