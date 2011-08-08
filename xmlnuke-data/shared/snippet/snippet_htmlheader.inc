@@ -312,9 +312,19 @@
 
 <!-- Include specific JavaScript for pretty Photo -->
 <xsl:if test="//mediagallery">
-	<link rel="stylesheet" href="common/3rdparty/jquery/prettyphoto/css/prettyPhoto.css" type="text/css" media="screen" title="prettyPhoto main stylesheet" charset="utf-8" />
-	<script src="common/3rdparty/jquery/prettyphoto/jquery.prettyPhoto.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="common/3rdparty/jquery/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
+	<script type="text/javascript" src="common/3rdparty/jquery/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+	<link rel="stylesheet" type="text/css" href="common/3rdparty/jquery/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
 	<style>
+		.clearfix {
+			display: block;
+		}
+		.clearfix li {
+			display: block;
+			float: left;
+			margin: 0;
+			padding: 0;
+		}
 		.clearfix:after {
 			clear: both;
 			content: ".";
@@ -322,33 +332,22 @@
 			height: 0;
 			visibility: hidden;
 		}
-		.clearfix {
-			display: inline-block;
-		}
-		* html .clearfix {
-			height: 1%;
-		}
-		.clearfix {
-			display: block;
-		}
-		.mediagallery, .pp_details, .pp_description, .pp_nav {
-			font: 90% Arial, Verdana, Sans-Serif;
-			margin: 0; padding: 0;
-		}
-		.mediagallery li { display: block; float: left; margin: 0; padding: 0; }
 	</style>
+	
 	<script type="text/javascript" charset="utf-8">
 	$(document).ready(function(){
-		$(".mediagallery a[rel^='prettyPhoto']").prettyPhoto({theme:'dark_rounded'});
-	});
+		$(".mediagallery a[rel^='mgalxml']").fancybox();
+	});	
 
 	<xsl:for-each select="//mediagallery[@api='true' and @name]">
 	function open_<xsl:value-of select="@name" />()
 	{
+		/*
 		images = [<xsl:for-each select="mediaitem">'<xsl:value-of select="@src" />'<xsl:if test="position()!=last()">,</xsl:if></xsl:for-each>];
 		titles = [<xsl:for-each select="mediaitem">'<xsl:value-of select="@title" />'<xsl:if test="position()!=last()">,</xsl:if></xsl:for-each>];
 		descriptions = [<xsl:for-each select="mediaitem">'<xsl:value-of select="@caption" />'<xsl:if test="position()!=last()">,</xsl:if></xsl:for-each>];
 		$.prettyPhoto.open(images,titles,descriptions);
+		*/
 	}
 	</xsl:for-each>
 	</script>

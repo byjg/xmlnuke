@@ -230,6 +230,7 @@ class XmlnukeMediaItem extends XmlnukeCollection implements IXmlnukeDocumentObje
 	 */
 	public static function EmbedFactory($src, $windowWidth, $windowHeight, $thumb="", $title = "", $caption="", $width="", $height="")
 	{
+		/*
 		if (strpos($src, "?") !== false)
 		{
 			$src .= "&amp;";
@@ -239,7 +240,8 @@ class XmlnukeMediaItem extends XmlnukeCollection implements IXmlnukeDocumentObje
 			$src .= "?";
 		}
 		$src .= "width=$windowWidth&amp;height=$windowHeight";
-
+		*/
+		
 		return new XmlnukeMediaItem($src, $thumb, $title, $caption, $width, $height);
 	}
 
@@ -257,6 +259,7 @@ class XmlnukeMediaItem extends XmlnukeCollection implements IXmlnukeDocumentObje
 	 */
 	public static function IFrameFactory($src, $windowWidth, $windowHeight, $thumb="", $title = "", $caption="", $width="", $height="")
 	{
+		/*
 		if (strpos($src, "?") !== false)
 		{
 			$src .= "&amp;";
@@ -266,7 +269,8 @@ class XmlnukeMediaItem extends XmlnukeCollection implements IXmlnukeDocumentObje
 			$src .= "?";
 		}
 		$src .= "iframe=true&amp;width=$windowWidth&amp;height=$windowHeight";
-
+		*/
+		
 		return new XmlnukeMediaItem($src, $thumb, $title, $caption, $width, $height);
 	}
 

@@ -4,7 +4,7 @@
  *******/
 function initTinyMCE(varElements, editDoc, baseHref)
 {
-	buttonsAvailable = "bold,italic,underline,separator,bullist,numlist,link,unlink,image,separator,undo,redo,removeformat,cleanup,pastetext,pasteword,selectall,separator,code";
+	buttonsAvailable = "bold,italic,underline,separator,bullist,numlist,link,unlink,image,separator,undo,redo,removeformat,cleanup,pastetext,pasteword,selectall,separator,code,spellchecker";
 
 	if (editDoc)
 	{
@@ -20,11 +20,12 @@ function initTinyMCE(varElements, editDoc, baseHref)
 		theme_advanced_buttons3 : "",
 		theme_advanced_toolbar_location : "top",
 		theme_advanced_toolbar_align : "left",
-		plugins : "paste",
+		plugins : "paste,spellchecker",
 		entity_encoding : "raw",
 		document_base_url : baseHref,
 		add_unload_trigger : false,
 		remove_linebreaks : false,
+		spellchecker_languages : "+English=en,Português=pt",
 		inline_styles : false,
 		extended_valid_elements : "iframe[src|width|height|name|align|style|frameborder|marginheight|marginwidth|scrolling],object[width|height|classid|codebase],param[name|value],embed[src|type|width|height|flashvars|wmode]",
 		convert_fonts_to_spans : false,

@@ -20,7 +20,7 @@
 	<ul class="mediagallery clearfix">
 		<xsl:for-each select="mediaitem" >
 			<li>
-				<a href="{@src}" rel="prettyPhoto[{$mediagallery}]" title="{@caption}">
+				<a href="{@src}" rel="mgalxml_{$mediagallery}" title="{@caption}">
 					<xsl:if test="@thumb">
 						<img src="{@thumb}" alt="{@title}" title="{@title}">
 							<xsl:if test="@width and not(@width='')"><xsl:attribute name="width"><xsl:value-of select="@width" /></xsl:attribute></xsl:if>

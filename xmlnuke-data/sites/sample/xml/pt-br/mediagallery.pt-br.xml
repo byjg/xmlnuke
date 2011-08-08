@@ -34,13 +34,13 @@
 
 			<p>Flash
 			<mediagallery name="flash">
-				<mediaitem src="http://www.adobe.com/products/flashplayer/include/marquee/design.swf?width=792&amp;height=294" thumb="http://images.apple.com/trailers/wb/images/terminatorsalvation_200903131052.jpg" caption="This is a Flash Source" title="Flash Source"/>
+				<mediaitem src="http://www.adobe.com/products/flashplayer/include/marquee/design.swf" thumb="http://images.apple.com/trailers/wb/images/terminatorsalvation_200903131052.jpg" caption="This is a Flash Source" title="Flash Source"/>
 			</mediagallery>
 			</p>
 
 			<p>Quicktime Movie
 			<mediagallery name="mov">
-				<mediaitem src="http://movies.apple.com/movies/wb/terminatorsalvation/terminatorsalvation-tlr3_h.480.mov?width=480&amp;height=204" thumb="http://images.apple.com/trailers/wb/images/terminatorsalvation_200903131052.jpg" caption="This is a Quicktime movie" title="Quicktime Movie"/>
+				<mediaitem src="http://movies.apple.com/movies/wb/terminatorsalvation/terminatorsalvation-tlr3_h.480.mov" thumb="http://images.apple.com/trailers/wb/images/terminatorsalvation_200903131052.jpg" caption="This is a Quicktime movie" title="Quicktime Movie"/>
 			</mediagallery>
 			</p>
 
@@ -52,7 +52,7 @@
 
 			<p>Iframe
 			<mediagallery name="iframe">
-				<mediaitem src="engine:xmlnuke?xml=home&amp;xsl=preview&amp;iframe=true&amp;width=600&amp;height=300" caption="This is a IFrame" title="View IFRAME"/>
+				<mediaitem src="engine:xmlnuke?xml=home&amp;xsl=preview" caption="This is a IFrame" title="View IFRAME"/>
 			</mediagallery>
 			</p>
 			<p>
