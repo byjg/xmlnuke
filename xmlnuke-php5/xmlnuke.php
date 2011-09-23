@@ -30,7 +30,7 @@
 	
 
 	$selectNodes = $context->ContextValue("xpath");
-	$alternateFilename = str_replace(".", "_", ($context->getModule() != "" ? $context->getModule() : $context->getXml()));
+	$alternateFilename = str_replace(".", "_", ($context->ContextValue("fn") != "" ? $context->ContextValue("fn") : ($context->getModule() != "" ? $context->getModule() : $context->getXml())));
 	if ($context->ContextValue("rawxml")!="")
 	{
 		$output = "xml";
