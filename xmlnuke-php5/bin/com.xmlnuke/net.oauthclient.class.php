@@ -79,38 +79,62 @@ class OAuthClient
 
 	protected function getVar($name)
 	{
+		$name = $this->_appName . '_' . $name;		
+		return $this->_context->getSession($name);
+	}
+
+	protected function setVar($name, $value)
+	{
 		$name = $this->_appName . '_' . $name;
-		
-		if (!$this->_saveToUser)
+		return $this->_context->setSession($name, $value);
+	}
+
+	protected function getAccessToken()
+	{
+		if ($this->_saveToUser)
 		{
-			return $this->_context->getSession($name);
-		}
-		else
-		{
-			return $this->_user->getField($name);
+			$names = array('oauth_access_token', 'oauth_access_token_secret');
+			$users = $this->_context->getUsersDatabase();
+
+			$this->_user = $users->getUserName($this->_saveToUser);
+			
+			foreach ($names as $name)
+			{
+				$field = $this->_appName . '_' . $name;
+				$value = $this->_user->getField($field);
+				if ($value == "")
+					return; // Abort
+				$this->setVar($name, $value);
+			}
+			
+			$this->setVar("oauth_state", "returned");
 		}
 	}
 
-	protected function setVar($name, $value, $save = false)
+	protected function saveAccessToken()
 	{
-		$name = $this->_appName . '_' . $name;
-
-		if (!$this->_saveToUser || !$save)
+		if ($this->_saveToUser)
 		{
-			return $this->_context->setSession($name, $value);
-		}
-		else
-		{
+			$names = array('oauth_access_token', 'oauth_access_token_secret');
 			$users = $this->_context->getUsersDatabase();
-			$users->removePropertyValueFromUser($sr->getField($this->_UserTable->Id), null, $name);
-			$users->addPropertyValueToUser($sr->getField($this->_UserTable->Id), $value, $name);
+		
+			foreach ($names as $name)
+			{
+				$field = $this->_appName . '_' . $name;
+				$users->removePropertyValueFromUser($this->_user->getField($users->_UserTable->Id), null, $field);
+				$users->addPropertyValueToUser($this->_user->getField($users->_UserTable->Id), $this->getVar($name), $field);
+			}
+		
+			$this->_user = $users->getUserName($this->_saveToUser);
 		}
 	}
 
 	public function handle()
 	{
+		$this->getAccessToken();
+		
 		$state = $this->getVar('oauth_state');
-
+		
 		/* If oauth_token is missing get it */
 		if ($this->_context->ContextValue('oauth_token') != "" && $state === 'start')
 		{/*{{{*/
@@ -151,8 +175,9 @@ class OAuthClient
 					$tok = $to->getAccessToken();
 
 					/* Save the access tokens. Normally these would be saved in a database for future use. */
-					$this->setVar('oauth_access_token', $tok['oauth_token'], true);
-					$this->setVar('oauth_access_token_secret', $tok['oauth_token_secret'], true);
+					$this->setVar('oauth_access_token', $tok['oauth_token']);
+					$this->setVar('oauth_access_token_secret', $tok['oauth_token_secret']);
+					$this->saveAccessToken();
 				}
 
 				/* Create TwitterOAuth with app key/secret and user access key/secret */
