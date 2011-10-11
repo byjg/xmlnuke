@@ -28,6 +28,7 @@ class OAuthClient
 	 */
 	protected $_context;
 	protected $_saveToUser;
+	protected $_appName;
 	protected $_user;
 
 	/**
@@ -40,6 +41,7 @@ class OAuthClient
 	{
 		$this->_context = $context;
 		$this->_saveToUser = $saveToUser;
+		$this->_appName = $appName;
 
 		if ($saveToUser)
 		{
@@ -77,6 +79,8 @@ class OAuthClient
 
 	protected function getVar($name)
 	{
+		$name = $this->_appName . '_' . $name;
+		
 		if (!$this->_saveToUser)
 		{
 			return $this->_context->getSession($name);
@@ -89,6 +93,8 @@ class OAuthClient
 
 	protected function setVar($name, $value)
 	{
+		$name = $this->_appName . '_' . $name;
+
 		if (!$this->_saveToUser)
 		{
 			return $this->_context->setSession($name, $value);
