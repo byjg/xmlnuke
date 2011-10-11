@@ -91,11 +91,11 @@ class OAuthClient
 		}
 	}
 
-	protected function setVar($name, $value)
+	protected function setVar($name, $value, $save = false)
 	{
 		$name = $this->_appName . '_' . $name;
 
-		if (!$this->_saveToUser)
+		if (!$this->_saveToUser || !$save)
 		{
 			return $this->_context->setSession($name, $value);
 		}
@@ -151,8 +151,8 @@ class OAuthClient
 					$tok = $to->getAccessToken();
 
 					/* Save the access tokens. Normally these would be saved in a database for future use. */
-					$this->setVar('oauth_access_token', $tok['oauth_token']);
-					$this->setVar('oauth_access_token_secret', $tok['oauth_token_secret']);
+					$this->setVar('oauth_access_token', $tok['oauth_token'], true);
+					$this->setVar('oauth_access_token_secret', $tok['oauth_token_secret'], true);
 				}
 
 				/* Create TwitterOAuth with app key/secret and user access key/secret */
