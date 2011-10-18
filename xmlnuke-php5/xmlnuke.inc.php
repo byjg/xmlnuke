@@ -59,6 +59,8 @@ require_once(PHPXMLNUKEDIR . "bin/database.inc.php");
 require_once(PHPXMLNUKEDIR . "bin/util.inc.php");
 require_once(PHPXMLNUKEDIR . "bin/admin.inc.php");
 
+require_once(PHPXMLNUKEDIR . "bin/oauth.inc.php");
+
 require_once(PHPXMLNUKEDIR . "bin/modules.inc.php");
 
 /* Fix bad things in PHP */

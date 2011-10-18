@@ -41,6 +41,7 @@ class WebRequest
 	protected $_referer;
 	protected $_header = false;
 	protected $_followLocation = true;
+	protected $_lastStatus = "";
 
 	const POST = "POST";
 	const PUT = "PUT";
@@ -80,6 +81,11 @@ class WebRequest
 	public function setReferer($value)
 	{
 		$this->_referer = $value;
+	}
+
+	public function getLastStatus()
+	{
+		return $this->_lastStatus;
 	}
 
 	public function getOutputHeader()
@@ -185,7 +191,10 @@ class WebRequest
 	protected function CurlWrapper($method, $fields = null, $content_type = null, $data = null)
 	{
 		$curl = curl_init();
+	    if (defined("CURL_CA_BUNDLE_PATH")) curl_setopt($ch, CURLOPT_CAINFO, CURL_CA_BUNDLE_PATH);
 		curl_setopt($curl, CURLOPT_URL, $this->_url);
+		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
 		curl_setopt($curl, CURLOPT_HEADER, $this->_header);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)");
@@ -260,6 +269,9 @@ class WebRequest
 
 		$result = curl_exec($curl);
 		$this->_header = curl_getinfo($curl);
+		$this->_lastStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+		curl_close($curl);
+		
 		if ($result === false)
 		{
 			throw new Exception("CURL - " . curl_error($curl));
@@ -329,6 +341,39 @@ class WebRequest
 	public function Delete($params = null)
 	{
 		return $this->CurlWrapper(WebRequest::DELETE, $params);
+	}
+	
+	/**
+	 * Makes a URL Redirection based on the current client navigation (Browser)
+	 * @param type $params
+	 * @param type $atClientSide 
+	 */
+	public function Redirect($params = null, $atClientSide = false)
+	{
+		$url = $this->_url;
+		
+		if ($params != null)
+		{
+			if (strpos($url, "?") === false)
+				$sep = "?";
+			else
+				$sep = "&";
+			
+			foreach ($params as $key=>$value)
+			{
+				$url .= $sep . $key . "=" . urlencode($value);
+				$sep = "&";
+			}
+		}
+		
+		if (!$atClientSide)
+			Context::getInstance()->redirectUrl($url);
+		else
+		{
+			ob_clean();
+			echo "<script language='javascript'>window.top.location = '" . $url . "'; </script>";
+			die();
+		}
 	}
 
 }

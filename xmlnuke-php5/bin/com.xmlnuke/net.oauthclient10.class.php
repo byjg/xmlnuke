@@ -1,13 +1,9 @@
 <?php
 
-require_once(PHPXMLNUKEDIR . 'bin/modules/oauthclient/oauth.class.php');
-require_once(PHPXMLNUKEDIR . 'bin/modules/oauthclient/baseoauth.class.php');
-require_once(PHPXMLNUKEDIR . 'bin/modules/oauthclient/twitteroauth.class.php');
-
 /**
  * @package xmlnuke
  */
-class OAuthClient
+class OAuthClient10
 {
 	/* Consumer key form OAuth Server */
 	protected $_consumer_key;
@@ -15,9 +11,9 @@ class OAuthClient
 	protected $_consumer_secret;
 	/* Set state if previous session */
 	protected $_state;
-	/* Checks if oauth_token is set from returning from twitter */
+	/* Checks if oauth_token is set from returning from OAuth Server */
 	protected $_session_token;
-	/* Checks if oauth_token is set from returning from twitter */
+	/* Checks if oauth_token is set from returning from OAuth Server */
 	protected $_oauth_token;
 
 	protected $_className = "";
@@ -37,9 +33,9 @@ class OAuthClient
 	 * @param string $appName
 	 * @param bool $saveToUser
 	 */
-	public function  __construct($context, $appName, $saveToUser = false)
+	public function  __construct($appName, $saveToUser = false)
 	{
-		$this->_context = $context;
+		$this->_context = Context::getInstance();
 		$this->_saveToUser = $saveToUser;
 		$this->_appName = $appName;
 
@@ -53,7 +49,7 @@ class OAuthClient
 			}
 		}
 
-		$oauthFile = new AnydatasetFilenameProcessor("_oauthclient");
+		$oauthFile = new AnydatasetFilenameProcessor("_oauthclient10");
 		$oauthAny = new AnyDataSet($oauthFile);
 
 		$itf = new IteratorFilter();
@@ -89,6 +85,12 @@ class OAuthClient
 		return $this->_context->setSession($name, $value);
 	}
 
+	protected function forgetVar($name)
+	{
+		$name = $this->_appName . '_' . $name;
+		return $this->_context->removeSession($name);
+	}
+
 	protected function getAccessToken()
 	{
 		if ($this->_saveToUser)
@@ -111,22 +113,32 @@ class OAuthClient
 		}
 	}
 
-	protected function saveAccessToken()
+	protected function saveAccessToken($forget = false)
 	{
+		$names = array('oauth_access_token', 'oauth_access_token_secret');
+		
 		if ($this->_saveToUser)
 		{
-			$names = array('oauth_access_token', 'oauth_access_token_secret');
 			$users = $this->_context->getUsersDatabase();
 		
 			foreach ($names as $name)
 			{
 				$field = $this->_appName . '_' . $name;
 				$users->removePropertyValueFromUser($this->_user->getField($users->_UserTable->Id), null, $field);
-				$users->addPropertyValueToUser($this->_user->getField($users->_UserTable->Id), $this->getVar($name), $field);
+				
+				if (!$forget)
+					$users->addPropertyValueToUser($this->_user->getField($users->_UserTable->Id), $this->getVar($name), $field);
+				else
+					$this->forgetVar($name);
 			}
 		
 			$this->_user = $users->getUserName($this->_saveToUser);
 		}
+	}
+	
+	public function forgetAccessToken()
+	{
+		$this->saveAccessToken(true); // Forget = true
 	}
 
 	public function handle()
@@ -142,17 +154,18 @@ class OAuthClient
 			$state = 'returned';
 		}/*}}}*/
 		
+		
 		$class = new ReflectionClass($this->_className);
 
 		switch ($state)
 		{/*{{{*/
 			default:
-				/* Create TwitterOAuth object with app key/secret */
+				/* Create CredentialsOAuth object with app key/secret */
 				$to = $class->newInstance($this->_consumer_key, $this->_consumer_secret);
 
-				/* Request tokens from twitter */
+				/* Request tokens from OAuth Server */
 				$tok = $to->getRequestToken();
-
+				
 				/* Save tokens for later */
 				$this->setVar('oauth_request_token', $token = $tok['oauth_token']);
 				$this->setVar('oauth_request_token_secret', $tok['oauth_token_secret']);
@@ -168,10 +181,10 @@ class OAuthClient
 				/* If the access tokens are already set skip to the API call */
 				if ($this->getVar('oauth_access_token') === "" && $this->getVar('oauth_access_token_secret') === "")
 				{
-					/* Create TwitterOAuth object with app key/secret and token key/secret from default phase */
+					/* Create CredentialOAuth object with app key/secret and token key/secret from default phase */
 					$to = $class->newInstance($this->_consumer_key, $this->_consumer_secret, $this->getVar('oauth_request_token'), $this->getVar('oauth_request_token_secret'));
 
-					/* Request access tokens from twitter */
+					/* Request access tokens from OAuth Server */
 					$tok = $to->getAccessToken();
 
 					/* Save the access tokens. Normally these would be saved in a database for future use. */
@@ -180,11 +193,10 @@ class OAuthClient
 					$this->saveAccessToken();
 				}
 
-				/* Create TwitterOAuth with app key/secret and user access key/secret */
+				/* Create CredentialsOAuth with app key/secret and user access key/secret */
 				$to = $class->newInstance($this->_consumer_key, $this->_consumer_secret, $this->getVar('oauth_access_token'), $this->getVar('oauth_access_token_secret'));
 
 				return $to;
-				//$content = $to->OAuthRequest('https://twitter.com/statuses/replies.xml', array(), 'POST');
 				break;
 		}/*}}}*/
 		

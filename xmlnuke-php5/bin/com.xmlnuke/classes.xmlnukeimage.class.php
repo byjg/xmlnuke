@@ -35,6 +35,10 @@ class XmlnukeImage extends XmlnukeDocumentObject
 	/**
 	*@var string
 	*/
+	private $_id;
+	/**
+	*@var string
+	*/
 	private $_src;
 	/**
 	*@var string
@@ -62,6 +66,17 @@ class XmlnukeImage extends XmlnukeDocumentObject
 	{
 		$this->_src = str_replace("&", "&amp;", $src);
 		$this->_alt = $text;
+		$this->_id = "";
+	}
+
+	/**
+	 * @desc set ID
+	 * @param string $text
+	 * @return void
+	*/
+	public function setId($id)
+	{
+		$this->_id = $id;
 	}
 
 	/**
@@ -106,6 +121,10 @@ class XmlnukeImage extends XmlnukeDocumentObject
 		$link = $this->_src;
 		XmlUtil::AddAttribute($nodeWorking, "src", $link);
 		XmlUtil::AddAttribute($nodeWorking, "alt", $this->_alt);
+		if (!empty($this->_id))
+		{
+			XmlUtil::AddAttribute($nodeWorking, "id", $this->_id);
+		}
 		if ($this->_width != 0)
 		{
 			XmlUtil::AddAttribute($nodeWorking, "width", $this->_width);

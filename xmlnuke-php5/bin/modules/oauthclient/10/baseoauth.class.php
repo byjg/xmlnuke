@@ -36,6 +36,34 @@ abstract class baseOAuth {/*{{{*/
   abstract function accessTokenURL();
 
   /**
+   * It is a good idea to implement this also
+   */
+  function validateRequest($result)
+  {
+	$statusCodes = array(
+		"200" => "",
+		"304" => "Not Modified",
+		"400" => "Bad Request",
+		"401" => "Unauthorized",
+		"403" => "Forbidden",
+		"404" => "Not Found",
+		"406" => "Not Acceptable",
+		"420" => "Enhance Your Calm",
+		"500" => "Internal Server Error",
+		"502" => "Bad Gateway",
+		"503" => "Service Unavailable"
+	);
+	  
+	if (array_key_exists($this->lastStatusCode(), $statusCodes))
+		return $this->lastStatusCode() . " " . $statusCodes[$this->lastStatusCode()];
+	else {
+		return $this->lastStatusCode() . " Unknow";
+	}	
+  }
+
+  
+  
+  /**
    * Debug helpers
    */
   function lastStatusCode() { return $this->http_status; }
@@ -114,10 +142,15 @@ abstract class baseOAuth {/*{{{*/
     if (empty($method)) $method = empty($args) ? "GET" : "POST";
     $req = OAuthRequest::from_consumer_and_token($this->consumer, $this->token, $method, $url, $args);
     $req->sign_request($this->sha1_method, $this->consumer, $this->token);
+	
     switch ($method) {
-    case 'GET': return $this->http($req->to_url());
-    case 'POST': return $this->http($req->get_normalized_http_url(), $req->to_postdata());
+    case 'GET': $result = $this->http($req->to_url());
+    case 'POST': $result = $this->http($req->get_normalized_http_url(), $req->to_postdata());
     }
+	
+	$this->validateRequest($result);
+
+	return $result;
   }/*}}}*/
 
   /**
