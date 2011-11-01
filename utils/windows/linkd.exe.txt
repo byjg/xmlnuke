@@ -1,0 +1,6 @@
+Windows 2003 Resource Kit
+
+Original URL:
+http://www.microsoft.com/downloads/details.aspx?FamilyID=9D467A69-57FF-4AE7-96EE-B18C4790CFFD&displaylang=en
+
+Works only with NTFS system. Not all programs in the Windows 2003 Resource Kit runs with Windows 7, but the linkd.exe works fine. 

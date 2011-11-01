@@ -152,13 +152,15 @@ namespace com.xmlnuke.db
 			XmlDocument doc = new XmlDocument();
 			if (xpath == "")
 			{
-				doc.Load(documentName);
+                System.IO.StreamReader stream = new System.IO.StreamReader(documentName, System.Text.Encoding.UTF8);
+				doc.Load(stream);
 			}
 			else
 			{
 				doc.LoadXml("<" + rootNode + " />");
 				XmlDocument source = new XmlDocument();
-				source.Load(documentName);
+                System.IO.StreamReader stream = new System.IO.StreamReader(documentName, System.Text.Encoding.UTF8);
+                source.Load(stream);
 				XmlNodeList nodes = source.SelectNodes(xpath);
 				foreach (XmlNode node in nodes)
 				{
@@ -193,7 +195,8 @@ namespace com.xmlnuke.db
 
 			foreach(string file in files)
 			{
-	   	 		xmldoc.Load(file);
+                System.IO.StreamReader stream = new System.IO.StreamReader(file, System.Text.Encoding.UTF8);
+                xmldoc.Load(stream);
 				if (saveDocs)
 				{
 					btree = this.saveDocument(this.getNameFromFile(file, addLangSufix), xmldoc, btree);

@@ -70,7 +70,8 @@ namespace com.xmlnuke.util
 		{
 			XmlDocument xmldoc = new XmlDocument();
 			//let's add the XML declaration section
-			xmldoc.Load(filename);
+            System.IO.StreamReader stream = new System.IO.StreamReader(filename, System.Text.Encoding.UTF8);
+            xmldoc.Load(stream);
 			return xmldoc;
 		}
 

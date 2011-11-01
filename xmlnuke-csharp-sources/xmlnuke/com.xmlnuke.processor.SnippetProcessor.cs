@@ -127,7 +127,7 @@ namespace com.xmlnuke.processor
 			if (!util.FileUtil.Exists(xslCache.FullQualifiedNameAndPath()) || this._context.NoCache || this._context.Reset)
 			{
 
-				System.IO.StreamReader sRead = new System.IO.StreamReader((System.IO.Stream)base.GetEntity(absoluteUri, role, ofObjectToReturn));
+				System.IO.StreamReader sRead = new System.IO.StreamReader((System.IO.Stream)base.GetEntity(absoluteUri, role, ofObjectToReturn), System.Text.Encoding.UTF8);
 				try
 				{
 					this.OpenCache(xslCache.FullQualifiedNameAndPath());
