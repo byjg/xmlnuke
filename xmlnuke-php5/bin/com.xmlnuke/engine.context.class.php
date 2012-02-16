@@ -574,20 +574,14 @@ class Context
 		$urlBase = $this->UrlBase();
 		if ($urlBase != "")
 		{
+			if ($urlBase[strlen($urlBase)-1] != "/")
+			{
+				$urlBase .= "/";
+			}
+			
 			if ($url[0] == "/")
 			{
-				$i = strpos($urlBase, "/");
-				if (!($i === false))
-				{
-					$urlBase = substr($urlBase, 0, $i);
-				}
-			}
-			else
-			{
-				if ($urlBase[strlen($urlBase)-1] != "/")
-				{
-					$urlBase .= "/";
-				}
+				$url = substr($url, 1);
 			}
 		}
 

@@ -161,6 +161,7 @@ class XmlnukePoll extends XmlnukeDocumentObject
 				// Try to get the Last IP who vote here.
 				$ok = false;
 				$filelastip = new AnydatasetFilenameProcessor("poll_lastip_" . $this->_poll);
+				$filelastip->setFilenameLocation(ForceFilenameLocation::DefinePath, FileUtil::GetTempDir() . FileUtil::Slash());
 				$anylastip = new AnyDataSet($filelastip);
 				$itlastip = $anylastip->getIterator();
 				if ($itlastip->hasNext())
@@ -168,27 +169,26 @@ class XmlnukePoll extends XmlnukeDocumentObject
 					$sr = $itlastip->moveNext();
 					$arr = $sr->getFieldArray("ip");
 
-					// Is The maximum amount of unique IP reached?
-					// If true, I need to remove the excess.
-					if (sizeof($arr) > 20)
-					{
-						array_shift($arr);
-
-						$anylastip->removeRow(0);
-						$anylastip->appendRow();
-						foreach ($arr as $value)
-						{
-							$anylastip->addField("ip", $value);
-						}
-						$anylastip->Save();
-					}
-
 					// Is This a New IP?
 					if (array_search($this->_context->ContextValue("REMOTE_ADDR"), $arr) === false)
 					{
 						$ok = true;
-						$sr->addField("ip", $this->_context->ContextValue("REMOTE_ADDR"));
-						$anylastip->Save();
+
+						// Is The maximum amount of unique IP reached?
+						// If true, I need to remove the excess.
+						if (sizeof($arr) > 20)
+						{
+							array_shift($arr);
+							$arr[] = $this->_context->ContextValue("REMOTE_ADDR");
+
+							$anylastip->removeRow(0);
+							$anylastip->appendRow();
+							foreach ($arr as $value)
+							{
+								$anylastip->addField("ip", $value);
+							}
+							$anylastip->Save();
+						}
 					}
 				}
 				// OK. First time here. I need to add the IP.
@@ -287,6 +287,8 @@ class XmlnukePoll extends XmlnukeDocumentObject
 				if ($itPoll->hasNext())
 				{
 					$sr = $itPoll->moveNext();
+					
+					XmlUtil::AddAttribute($nodeWorking, "multiple", $sr->getField("multiple") == "Y" ? "true" : "false");
 
 					if ($sr->getField("active") == "Y")
 					{

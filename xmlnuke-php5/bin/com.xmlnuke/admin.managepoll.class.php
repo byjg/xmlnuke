@@ -358,13 +358,13 @@ class ManagePoll extends NewBaseAdminModule
 		
 		$field = ProcessPageFields::FactoryMinimal("name", $this->myWords->Value("POLLNAME"), 15, true, true);
 		$field->key = true;
-		$field->editable = false;
+		$field->editable = $this->_context->Value("acao") == ProcessPageStateBase::ACTION_NEW_CONFIRM;
 		$field->defaultValue = $pollname;
 		$processfields->addProcessPageField($field);
 		
 		$field = ProcessPageFields::FactoryMinimal("lang", $this->myWords->Value("POLLLANG"), 5, true, true);
 		$field->key = true;
-		$field->editable = false;
+		$field->editable = $this->_context->Value("acao") == ProcessPageStateBase::ACTION_NEW_CONFIRM;
 		$field->fieldXmlInput = XmlInputObjectType::SELECTLIST;
 		$field->arraySelectList = $this->_context->LanguagesAvailable();
 		$field->defaultValue = $lang;
