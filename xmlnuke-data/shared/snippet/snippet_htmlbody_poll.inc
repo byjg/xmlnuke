@@ -14,13 +14,8 @@
 	<input name="xmlnuke_polllang" type="hidden" value="{@lang}" />
 	
 	<xsl:variable name="opttype">
-		<xsl:if test="@multiple='true'">
-			checkbox
-		</xsl:if>
-		
-		<xsl:if test="not(@multiple='true')">
-			radio
-		</xsl:if>
+		<xsl:if test="@multiple='true'">checkbox</xsl:if>
+		<xsl:if test="not(@multiple='true')">radio</xsl:if>
 	</xsl:variable>
 	
 	<fieldset>
