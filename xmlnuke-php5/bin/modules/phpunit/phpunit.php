@@ -47,8 +47,13 @@ function trace($msg) {
 
 function PHPUnit_error_handler($errno, $errstr, $errfile, $errline) {
 	global $PHPUnit_testRunning;
+    PHPUnit_error_report("PHP ERROR",$errno, $errstr, $errfile, $errline);
+}
+
+function PHPUnit_error_report($source, $errno, $errstr, $errfile, $errline) {
+	global $PHPUnit_testRunning;
 	if (error_reporting())
-	    $PHPUnit_testRunning[0]->fail("<B>PHP ERROR:</B> ".$errstr." <B>in</B> ".$errfile." <B>at line</B> ".$errline);
+	    $PHPUnit_testRunning[0]->fail("<B>$source</B>: ".$errstr." <B>in</B> ".$errfile." <B>at line</B> ".$errline);
 }
 
 class PHPUNITException extends Exception {
@@ -240,7 +245,29 @@ class TestCase extends Assert /* implements Test */ {
     }
     else
     {
-   		$this->$name();
+		try
+		{
+			$this->$name();	
+		}
+		catch (Exception $ex)
+		{
+			$met = new ReflectionMethod($this, $name);
+			preg_match_all('~@AssertIfException\s(\S+)~', $met->getDocComment(), $exceptionList);
+			
+			$found = false;
+			foreach ($exceptionList[1] as $exception)
+			{
+				//echo ($exception . " == " . get_class($ex) . "<br>\n");
+				if (($exception == get_class($ex)) || ($exception == $ex->getMessage()))
+				{
+					$found = true;
+					break;
+				}
+			}
+			
+			if (!$found)
+				PHPUnit_error_report("'" . get_class($ex) . "' throwed", $ex->getCode(), $ex->getMessage(), $ex->getFile(), $ex->getLine());
+		}
     }
 
     if ($old_handler)
