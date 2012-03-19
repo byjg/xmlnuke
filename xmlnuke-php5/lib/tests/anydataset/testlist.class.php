@@ -8,7 +8,8 @@ class TestList
 
 	public function getList()
 	{
-		$arr[] = "tests.anydataset.jsoniteratortest";
+		$arr[] = "tests.anydataset.jsondatasettest";
+		$arr[] = "tests.anydataset.xmldatasettest";
 		return $arr;
 	}
 }		

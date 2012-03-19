@@ -2,7 +2,7 @@
 /**
  * NOTE: The class name must end with "Test" suffix.
  */
-class JSONIteratorTest extends TestCase
+class JSONDatasetTest extends TestCase
 {
 	const JSON_OK = '[{"name":"Joao","surname":"Magalhaes","age":"38"},{"name":"John","surname":"Doe","age":"20"},{"name":"Jane","surname":"Smith","age":"18"}]';
 	const JSON_NOTOK = '"name":"Joao","surname":"Magalhaes","age":"38"}]';
@@ -31,7 +31,7 @@ class JSONIteratorTest extends TestCase
 
 	function test_createJSONIterator()
 	{
-		$jsonDataset = new JSONDataSet(JSONIteratorTest::JSON_OK);
+		$jsonDataset = new JSONDataSet(JSONDatasetTest::JSON_OK);
 		$jsonIterator = $jsonDataset->getIterator();
 
 		$this->assert($jsonIterator instanceof IIterator, "Resultant object must be an interator");
@@ -41,7 +41,7 @@ class JSONIteratorTest extends TestCase
 	
 	function test_navigateJSONIterator()
 	{
-		$jsonDataset = new JSONDataSet(JSONIteratorTest::JSON_OK);
+		$jsonDataset = new JSONDataSet(JSONDatasetTest::JSON_OK);
 		$jsonIterator = $jsonDataset->getIterator();
 
 		$count = 0;
@@ -55,7 +55,7 @@ class JSONIteratorTest extends TestCase
 
 	function test_navigateJSONIterator2()
 	{
-		$jsonDataset = new JSONDataSet(JSONIteratorTest::JSON_OK);
+		$jsonDataset = new JSONDataSet(JSONDatasetTest::JSON_OK);
 		$jsonIterator = $jsonDataset->getIterator();
 
 		$count = 0;
@@ -72,12 +72,12 @@ class JSONIteratorTest extends TestCase
 	 */
 	function test_jsonNotWellFormatted()
 	{
-		$jsonDataset = new JSONDataSet(JSONIteratorTest::JSON_NOTOK);
+		$jsonDataset = new JSONDataSet(JSONDatasetTest::JSON_NOTOK);
 	}
 	
 	function navigateJSONComplex($path)
 	{
-		$jsonDataset = new JSONDataSet(JSONIteratorTest::JSON_OK2);		
+		$jsonDataset = new JSONDataSet(JSONDatasetTest::JSON_OK2);		
 		$jsonIterator = $jsonDataset->getIterator($path);
 
 		$count = 0;
@@ -101,7 +101,7 @@ class JSONIteratorTest extends TestCase
 
 	function test_navigateJSONComplexIteratorWrongPath()
 	{
-		$jsonDataset = new JSONDataSet(JSONIteratorTest::JSON_OK2);		
+		$jsonDataset = new JSONDataSet(JSONDatasetTest::JSON_OK2);		
 		$jsonIterator = $jsonDataset->getIterator("/menu/wrong");
 		
 		$this->assert($jsonIterator->Count() == 0, "Without throw error");
@@ -112,7 +112,7 @@ class JSONIteratorTest extends TestCase
 	 */
 	function test_navigateJSONComplexIteratorWrongPath2()
 	{
-		$jsonDataset = new JSONDataSet(JSONIteratorTest::JSON_OK2);		
+		$jsonDataset = new JSONDataSet(JSONDatasetTest::JSON_OK2);		
 		$jsonIterator = $jsonDataset->getIterator("/menu/wrong", true);
 	}
 	
