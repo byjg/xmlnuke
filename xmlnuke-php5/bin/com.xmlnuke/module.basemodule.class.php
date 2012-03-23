@@ -387,9 +387,9 @@ abstract class BaseModule implements IModule
 		$currentUser = $users->getUserId($this->_context->authenticatedUserId());
 		if(!$currentUser)
 		{
-			throw new EngineException(753, "I can't find the user");
+		    throw new EngineException(753, "I can't find the user");
 		}
-		if ($currentUser->getField($users->_UserTable->Admin) == "yes")
+		if ($users->userIsAdmin($this->_context->authenticatedUserId()))
 		{
 			return true;
 		}

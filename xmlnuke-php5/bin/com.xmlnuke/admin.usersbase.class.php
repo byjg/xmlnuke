@@ -254,7 +254,7 @@ abstract class UsersBase implements IUsersBase
 
 		if ($user != null)
 		{
-			if ($user->getField($this->_UserTable->Admin) == "yes")
+			if ($this->userIsAdmin($userId))
 			{
 				return true;
 			}
@@ -287,7 +287,7 @@ abstract class UsersBase implements IUsersBase
 			//XmlNodeList
 			$nodes = $user->getFieldArray(UserProperty::getPropertyNodeName($userProp));
 
-			if ($user->getField($this->_UserTable->Admin) == "yes")
+			if ($this->userIsAdmin($userId))
 			{
 				if ($userProp == UserProperty::Site)
 				{
@@ -458,7 +458,13 @@ abstract class UsersBase implements IUsersBase
 		
 		$user = $this->getUserId($userId);
 		if ($user != null)
-			return ($user->getField($this->_UserTable->Admin) == "yes");
+			return (
+                            ($user->getField($this->_UserTable->Admin) == "yes") ||
+                            ($user->getField($this->_UserTable->Admin) == "y") ||
+                            ($user->getField($this->_UserTable->Admin) == "true") ||
+                            ($user->getField($this->_UserTable->Admin) == "t") ||
+                            ($user->getField($this->_UserTable->Admin) == "1")
+                        );
 		else
 			throw new Exception("Cannot find the user");
 	}
