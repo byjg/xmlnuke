@@ -122,7 +122,12 @@ class Context
 	*/
 	public function __construct()
 	{
-		$this->AddCollectionToConfig(Config::getValuesConfig());
+		$valuesConfig = Config::getValuesConfig();
+		
+		if (!is_array($valuesConfig))
+			throw new Exception ("getValuesConfig() method expects an array. ");
+		
+		$this->AddCollectionToConfig($valuesConfig);
 
 		$this->_xsl = $this->getParameter("xsl");
 		if ($this->_xsl == "")
