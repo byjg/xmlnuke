@@ -283,20 +283,28 @@ class ModuleFactory
 			}
 			else
 			{
-				$auxArBase = explode(".", $namespaceBase);
-				$end = sizeof($auxArBase);
-				$namespace = "";
-				while($i++<$end)
+				$namespacePath = ModuleFactory::GetLibDir($namespaceBase);
+					
+				if ($namespacePath != "")
 				{
-					$namespace .= ($namespace != "" ? "." : "") . array_shift($auxArBase);
-					$namespacePath = ModuleFactory::GetLibDir($namespace);
-					if ($namespacePath != "")
-					{
-						$filePath = $namespacePath . FileUtil::Slash() . implode(FileUtil::Slash(), $auxArBase) . (sizeof($auxArBase) > 0 ? FileUtil::Slash() : "");
-						ModuleFactory::SetLibDir($namespaceBase, $filePath);
-						break;
-					}
+					$filePath = $namespacePath . FileUtil::Slash() . implode(FileUtil::Slash(), $auxArBase) . (sizeof($auxArBase) > 0 ? FileUtil::Slash() : "");
+					ModuleFactory::SetLibDir($namespaceBase, $filePath);
+					break;
 				}
+				else
+				{
+					$auxArBase = explode(".", $namespaceBase);
+					
+					if (count($auxArBase) > 1)
+					{
+						$path = array_pop($auxArBase) . FileUtil::Slash() . $path;
+					
+						$namespace = implode(".", $auxArBase);
+						return ModuleFactory::LibPath($namespace, $path);
+					}
+				
+				}
+									
 			}
 		}
 
@@ -305,7 +313,7 @@ class ModuleFactory
 			$filePath = "lib" . FileUtil::Slash() . str_replace(".", FileUtil::Slash(), $namespaceBase) . FileUtil::Slash();
 			ModuleFactory::SetLibDir($namespaceBase, $filePath);
 		}
-
+		
 		return $filePath . $path;
 	}
 

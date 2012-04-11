@@ -21,4 +21,7 @@ require_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/anydataset.fixedtextfiledataset.cl
 require_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/anydataset.fixedtextfileiterator.class.php");
 require_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/anydataset.jsondataset.class.php");
 require_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/anydataset.jsoniterator.class.php");
+
+require_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/anydataset.sparqldataset.class.php");
+require_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/anydataset.sparqliterator.class.php");
 ?>
