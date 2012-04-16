@@ -54,9 +54,12 @@ abstract class BaseDBAccess
 	*
 	* @param Context $context
 	*/
-	public function __construct($context)
+	public function __construct($context = null)
 	{
 		if (is_null($context))
+			$context = Context::getInstance();
+		
+		if (!($context instanceof Context))
 		{
 			throw new Exception("Erro de programacao: O Construtor da classe precisa receber um Engine.Context");
 		}
