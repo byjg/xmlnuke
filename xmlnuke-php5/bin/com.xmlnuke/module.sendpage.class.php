@@ -191,8 +191,7 @@ class SendPage extends BaseModule
 
 					MailUtil::Mail
 					(
-						$this->_context,
-						MailUtil::getFullEmailName($this->_fromName, $this->_fromEmail),
+						MailUtil::getEmailFromID(),
 						MailUtil::getFullEmailName($this->_toName, $this->_toEmail),
 						$this->_myWords->Value("SUBJECT"),
 						"",

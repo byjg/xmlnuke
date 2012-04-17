@@ -146,13 +146,12 @@ abstract class LoginBase extends BaseModule
 		$url = $this->_context->ContextValue("SERVER_NAME").$path;
 		$body = $myWords->ValueArgs("WELCOMEMESSAGE", array($name, $this->_context->ContextValue("SERVER_NAME"), $user, $password, $url.$this->_context->bindModuleUrl("UserProfile")));
 
-		MailUtil::Mail($this->_context,
-			MailUtil::getEmailFromID($this->_context, "DEFAULT"),
+		$envelope = new MailEnvelope(
 			MailUtil::getFullEmailName($name, $email),
 			$myWords->Value("SUBJECTMESSAGE", $this->_context->ContextValue("SERVER_NAME")),
-			"",
-			"",
-			$body);
+			$body
+		);
+		$envelope->Send();
 	}
 }
 ?>

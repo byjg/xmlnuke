@@ -212,12 +212,10 @@ class Guestbook extends  BaseModule
 
 		try
 		{
-			MailUtil::Mail($this->_context,
-							MailUtil::getFullEmailName($fromName, $fromMail),
-							MailUtil::getEmailFromID($this->_context, "DEFAULT"),
-							"[Xmlnuke Guestbook] Message Added",
-							"", "",
-							$message);
+			$envelope = new MailEnvelope(MailUtil::getEmailFromID(), "[Xmlnuke Guestbook] Message Added", $message);
+			$envelope->setFrom(MailUtil::getEmailFromID("DEFAULT", $fromName));
+			$envelope->setReplyTo(MailUtil::getFullEmailName($fromName, $fromMail));
+			$envelope->Send();
 		}
 		catch (Exception $e)
 		{

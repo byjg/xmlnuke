@@ -267,10 +267,10 @@ class Download extends BaseModule
 				try
 				{	
 					$message = $this->_myWords->Value("EMAILMESSAGE", $singleRow->getField("name"));
-					$emailto = MailUtil::getEmailFromID($this->_context, $singleRow->getField("emailto"));
+					$emailto = MailUtil::getEmailFromID($singleRow->getField("emailto"));
 					if ($emailto != "")
 					{
-						MailUtil::Mail($this->_context, MailUtil::getFullEmailName($this->_context->ContextValue("txtName"), $this->_context->ContextValue("txtEmail") ), $emailto, $this->_myWords->Value("EMAILSUBJECT", $singleRow->getField("name") ), "", "", $message);	
+						MailUtil::Mail(MailUtil::getFullEmailName($this->_context->ContextValue("txtName"), $this->_context->ContextValue("txtEmail") ), $emailto, $this->_myWords->Value("EMAILSUBJECT", $singleRow->getField("name") ), "", "", $message);	
 					}
 				}
 				catch(Exception $e)

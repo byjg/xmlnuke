@@ -227,14 +227,11 @@ class SendEmail extends BaseModule
 		}
 		else
 		{
-
-			MailUtil::Mail($this->_context,
-							MailUtil::getFullEmailName($this->_fromName, $this->_fromEmail),
-							MailUtil::getEmailFromID($this->_context, $this->_toName_ID),
-							$this->_subject,
-							"",
-							$this->_fromEmail,
-							$this->_extraMessage . $this->_message);
+			$envelope = new MailEnvelope(MailUtil::getEmailFromID($this->_toName_ID), $this->_subject, $this->_extraMessage . $this->_message);
+			$envelope->setFrom(MailUtil::getEmailFromID("DEFAULT", $this->_fromName));
+			$envelope->setReplyTo(MailUtil::getFullEmailName($this->_fromName, $this->_fromEmail));
+			$envelope->setBCC($this->_fromEmail);
+			$envelope->Send();
 
 			if ($this->_redirect != "")
 			{
