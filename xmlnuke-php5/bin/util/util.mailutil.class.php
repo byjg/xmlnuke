@@ -167,10 +167,6 @@ class MailEnvelope
 				$pat = "/(smtp|ssl):\/\/(?:([\w\d\.\-#@!$%&\/]+):([\w\d\.\-#@!$%&\/]+)@)?(?:([\w\d\-]+(?:\.[\w\d\-]+)*))(?::([\d]+))?/";
 				MailEnvelope::$_smtpParts = preg_split ( $pat, $smtpString, - 1, PREG_SPLIT_DELIM_CAPTURE );
 			}
-			else
-			{
-				MailEnvelope::$_smtpParts = array("0"=>"", "1"=>"sendmail");
-			}
 		}
 	}
 	
