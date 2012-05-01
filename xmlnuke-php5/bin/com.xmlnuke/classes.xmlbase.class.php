@@ -132,6 +132,8 @@ class XmlnukeCollection
 				$propName = $prop->getName();
 				$propAttributes = array();
 
+				if ($propName == "_propertyPattern") continue;
+				
 				# Determine where it located the Property Value --> Getter or inside the property
 				if ($prop->isPublic())
 				{
