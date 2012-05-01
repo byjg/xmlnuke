@@ -101,7 +101,7 @@ class MailUtil
 	
 	public static function getEmailPair($fullEmail)
 	{
-		$pat = "/[\"']?([\pL\w\d\s\.&\(\)#$%]*)[\"']?\s*<(.*)>/";
+		$pat = "/[\"']?([\S\s]*)[\"']?\s*<(.*)>/";
 		$parts = preg_split ( $pat, $fullEmail, - 1, PREG_SPLIT_DELIM_CAPTURE );
 		
 		if ($parts[2] == "")
@@ -164,7 +164,7 @@ class MailEnvelope
 			// Define if uses SMTP server or just sendemail
 			if ($smtpString != "")
 			{
-				$pat = "/(smtp|ssl):\/\/(?:([\w\d\.\-#@!$%&\+\/]+):([\w\d\.\-#@!$%&\+\/]+)@)?(?:([\w\d\-]+(?:\.[\w\d\-]+)*))(?::([\d]+))?/";
+				$pat = "/(smtp|ssl):\/\/(?:(\S+):(\S+)@)?(?:([\w\d\-]+(?:\.[\w\d\-]+)*))(?::([\d]+))?/";
 				MailEnvelope::$_smtpParts = preg_split ( $pat, $smtpString, - 1, PREG_SPLIT_DELIM_CAPTURE );
 			}
 		}

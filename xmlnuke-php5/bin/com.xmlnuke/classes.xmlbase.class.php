@@ -35,23 +35,23 @@
 class XmlnukeCollection
 {
 	/**
-	@var array
-	*/
+	 * @var array
+	 */
 	protected $_items;
 
 	/**
-	*@desc XmlnukeCollection Constructor 
-	*/
+	 * @desc XmlnukeCollection Constructor 
+	 */
 	public function __construct()
 	{
 		$this->_items = array();
 	}
 	
 	/**
-	*@desc Add a child in current DocumentObject
-	*@param IXmlnukeDocumentObject $docobj
-	*@return void
-	*/
+	 * @desc Add a child in current DocumentObject
+	 * @param IXmlnukeDocumentObject $docobj
+	 * @return void
+ 	 */
 	public function addXmlnukeObject($docobj)
 	{
 		if (is_null($docobj))
@@ -66,29 +66,154 @@ class XmlnukeCollection
 		{
 			throw new XmlNukeObjectException(853, "You are adding the object to itself");
 		}
-		else if (!($docobj instanceof IXmlnukeDocumentObject))
+		else if (!($docobj instanceof IXmlnukeDocumentObject) && !is_object($docobj))
 		{
-			throw new XmlNukeObjectException(853, "Object is not a IXmlnukeDocumentObject. Found object type: " . get_class($docobj));
+			throw new XmlNukeObjectException(853, "Object is not a IXmlnukeDocumentObject or Class Model. Found object type: " . get_class($docobj));
 		}
 		$this->_items[] = $docobj;
 	}
 
 	/**
-	*@desc Method for process all XMLNukedocumentObjects in array.
-	*@param DOMNode $current
-	*@return void
-	*@internal IXmlnukeDocumentObject $item
-	*/
+	 * @desc Method for process all XMLNukedocumentObjects in array.
+	 * @param DOMNode $current
+	 * @return void
+	 * @internal IXmlnukeDocumentObject $item
+	 */
 	protected function generatePage($current)
 	{
 		if (!is_null($this->_items))
 		{
 			foreach( $this->_items as $item )
 			{
-				$item->generateObject($current);
+				if ($item instanceof IXmlnukeDocumentObject)
+					$item->generateObject($current);
+				else
+					XmlnukeCollection::CreateObjectFromModel($current, $item);
 			}
 		}
 	}
+
+	
+	/**
+	 *
+	 * @param type $current
+	 * @param type $model
+	 * @return DOMNode
+	 */
+	protected static function CreateObjectFromModel($current, $model)
+	{
+		
+		$class = new ReflectionClass(get_class($model));
+		preg_match_all('/@(?<param>\S+)\s*(?<value>\S+)?\n/', $class->getDocComment(), $aux);
+		$classAttributes = XmlnukeCollection::adjustParams($aux);
+
+		#------------
+		# Define Class Attributes
+		$_name = $classAttributes["xmlnuke:nodename"] != "" ? $classAttributes["xmlnuke:nodename"] : get_class($model);
+		$_getter = $classAttributes["xmlnuke:getter"] != "" ? $classAttributes["xmlnuke:getter"] : "get";
+		$_propertyPattern = $classAttributes["xmlnuke:propertypattern"] != "" ? eval($classAttributes["xmlnuke:propertypattern"]) : array('/(\w*)/', '$1');
+		$_writeEmpty = $classAttributes["xmlnuke:writeempty"] == "true";
+
+		$nodeRefs = array();
+		
+		#------------
+		# Create Class Node
+		$node = XmlUtil::CreateChild($current, $_name);
+				
+				
+		#------------
+		# Get all properties
+		$properties = $class->getProperties( ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PRIVATE | ReflectionProperty::IS_PUBLIC );
+
+		if (!is_null($properties))
+		{
+			foreach ($properties as $prop)
+			{
+				$propName = $prop->getName();
+				$propAttributes = array();
+
+				# Determine where it located the Property Value --> Getter or inside the property
+				if ($prop->isPublic())
+				{
+					preg_match_all('/@(?<param>\S+)\s*(?<value>\S+)?\n/', $prop->getDocComment(), $aux);
+					$propAttributes = XmlnukeCollection::adjustParams($aux);
+					$propValue = $prop->getValue($model);
+				}
+				else
+				{
+					// Remove Prefix "_" from Property Name to find a value
+					if ($propName[0] == "_")
+						$propName = substr($propName, 1);
+
+					$methodName = $_getter . ucfirst(preg_replace($_propertyPattern[0], $_propertyPattern[1], $propName));
+					if ($class->hasMethod($methodName))
+					{
+						$method = $class->getMethod($methodName);						
+						preg_match_all('/@(?<param>\S+)\s*(?<value>\S+)?\n/', $method->getDocComment(), $aux);
+						$propAttributes = XmlnukeCollection::adjustParams($aux);
+						$propValue = $method->invoke($model, "");
+					}
+					else
+						continue;
+				}
+				
+				# Define Properties
+				$_propName = $propAttributes["xmlnuke:nodename"] != "" ? $propAttributes["xmlnuke:nodename"] : $propName;
+				$_attributeOf = $propAttributes["xmlnuke:attributeof"];
+		
+				# Process the Property Value
+				$used = null;
+				if (is_object($propValue))
+				{
+					$used = XmlnukeCollection::CreateObjectFromModel($node, $propValue);
+				}
+				elseif (is_array ($propValue))
+				{
+					$used = XmlUtil::CreateChild($node, $_propName);
+					foreach ($propValue as $key=>$value)
+					{
+						if (is_object($value))
+							XmlnukeCollection::CreateObjectFromModel($used, $value);
+						else
+						{
+							if (is_numeric($key))
+								$key = "item";
+							XmlUtil::CreateChild ($used, $key, $value);
+						}
+					}
+				}
+				else if (($propValue != "") || ($_writeEmpty))
+				{
+					if (($_attributeOf != "") && (array_key_exists($_attributeOf, $nodeRefs)))
+						XmlUtil::AddAttribute ($nodeRefs[$_attributeOf], $_propName, $propValue);
+					else
+						$used = XmlUtil::CreateChild($node, $_propName, $propValue);
+				}
+				
+				# Save Reference for "attributeOf" attribute.
+				if ($used != null)
+				{
+					$nodeRefs[$propName] = $used;
+				}
+			}
+		}
+		
+		return $node;
+	}
+	
+	protected static function adjustParams($arr)
+	{
+		$count = count($arr[0]);
+		$result = array();
+		
+		for ($i=0;$i<$count;$i++)
+		{
+			$result[strtolower($arr["param"][$i])] = $arr["value"][$i];
+		}
+		
+		return $result;
+	}
+	
 }
 
 /**

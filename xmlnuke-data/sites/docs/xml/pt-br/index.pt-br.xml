@@ -200,6 +200,11 @@
 			<title>Definindo automaticamente valores de Propriedades.</title>
 			<summary>Definindo automaticamente valores de Propriedades.</summary>
 		</page>
+		<page>
+			<id>ref_createxmlobjects</id>
+			<title>Criando XMLNuke Objects</title>
+			<summary>Como criar XMLNuke Objects que podem ser utilizados para transformação XML/XSL</summary>
+		</page>
 	</group>
 	<group>
 		<id>analysis</id>

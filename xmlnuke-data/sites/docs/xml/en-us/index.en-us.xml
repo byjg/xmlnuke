@@ -170,6 +170,11 @@
 			<title>Automatically defining the values of Properties </title>
 			<summary>Automatically defining the values of Properties </summary>
 		</page>
+		<page>
+			<id>ref_createxmlobjects</id>
+			<title>Creating XMLNuke Objects</title>
+			<summary>How to create XMLNuke Objects used in the XML/XSL transformation process</summary>
+		</page>
 	</group>
 	<group>
 		<id>analysis</id>

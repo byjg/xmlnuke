@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<meta>
+		<title>Creating XMLNuke Objects</title>
+		<abstract>How to create XMLNuke Objects used in the XML/XSL transformation process</abstract>
+		<created>Tue Nov 6 2007 1:40:57</created>
+		<modified>13/4/2008 22:19:30</modified>
+		<keyword>xmlnuke</keyword>
+		<groupkeyword>technicalref</groupkeyword>
+	</meta>
+	<blockcenter>
+		<title>XMLNuke object types available to transform</title>
+		<body>
+			<p>The XMLNuke have two distinct maner to create objects available to XML/XSL transform:
+<ol><li>Um objeto que implementa a interface IXmlnukeDocumentObject</li>
+<li>Um <a href="http://en.wikipedia.org/wiki/Object-relational_mapping">ORM</a>/
+<a href="http://en.wikipedia.org/wiki/Value_object">VO</a>/
+<a href="http://en.wikipedia.org/wiki/Data_transfer_object">DTO</a>/etc com métodos getter.</li></ol></p>
+		</body>
+	</blockcenter>
+		
+	<blockcenter>
+		<title>Objeto com a interface IXMLNukeDocumentObject</title>
+		<body>
+			<p>A interface IXMLNukeDocumentObject habilita que objetos criados em PHP possam ter a capacidade de gerar documentos XML complexos através do helper do XMLNuke. </p>
+			<p>
+				<code information="PHP"><![CDATA[
+interface IXmlnukeDocumentObject
+{
+	/**
+	 * @desc Generate page, processing yours childs.
+	 * @param DOMNode $current
+	 * @return void
+	 */
+	public function generateObject($current);
+}
+				]]></code>
+			</p>
+
+			<p>O método generateObject deverá conter comandos para criar um XML dentro do nó definido pela variável $current. É possível utilizar o conjunto de funções definidas em XMLUtil para auxiliar neste processo. </p>
+			<p>Um exemplo de como seria pode ser mostrado abaixo:
+				<code information="PHP"><![CDATA[
+public function generateObject($current)
+{
+	// Creating a node named 'person' from the current node
+	$node = XmlUtil::CreateChild($current, "person");
+	
+	// Creating more nodes
+	XmlUtil::CreateChild($node, "name", "Joao");
+	XmlUtil::CreateChild($node, "age", "38");
+	
+	// Creating some attributes
+	XmlUtil::AddAttribute($node, "new", "true"); 
+}
+				]]></code>
+			</p>
+
+			<p>The Xml produced will be something like this:
+				<code information="XML"><![CDATA[
+<person new="true">
+	<name>Joao</name>
+	<age>38</age>
+</person>
+				]]></code>
+			</p>
+		</body>
+	</blockcenter>
+
+
+	<blockcenter>
+		<title>Objeto com métodos Getter</title>
+		<body>
+			<p>Também é possível adicionar ao documento do XMLNuke um objeto que contenha métodos getter. Assim o XMLNuke consegue identificar as propriedades e montar um XML para essa definição.</p>
+			<p>Um exemplo de classe que produziria um resultado semelhante ao XML acima:
+				<code information="PHP"><![CDATA[
+class PersonModel
+{
+	protected $name;
+	protected $age;
+	protected $isnew;
+	
+	public function getName()
+	{
+		return $this->name;
+	}
+	
+	public function getAge()
+	{
+		return $this->age;
+	}
+	
+	public function getIsNew()
+	{
+		return $this->Isnew;
+	}
+}
+				]]></code>
+			</p>
+			
+			<p>
+O XMLNuke interpreta esses objetos de uma forma bastante abrangente, mas é importante lembrar algumas regras que são utilizadas para gerar o XML:
+<ol>
+<li>Por padrão, o nome da classe é o nome do nó raiz</li>
+<li>Toda propriedade 'name' protected ou private deve ter um método get'name' e o nome do nó gerado é 'name'</li>
+<li>Se a propriedade 'name' for pública, então será usado valor dela sem nenhum getter</li>
+</ol>
+			</p>
+			
+			<p>Também é possível adicionar comentários no padrão PHPDoc dentro das classes. Com isso o processo de geração do XML será modificado.</p>
+
+			<p><b>Comentários na classe:</b></p>
+			<p>
+			<ul>
+			<li>@XMLNuke:Getter get<br/>Define o prefixo do método getter. Por padrão procurará sempre 'get' e o nome da propriedade</li>
+			<li>@XMLNuke:NodeName node<br/>Define o nome do nó XML que será gerado. Se omitido, utiliza o nome da classe</li>
+			<li>@XMLNuke:WriteEmpty false<br/>Se o conteúdo da propriedade é vazio, ele será omitido. Mas é possível fazer com seja sempre escrito alterando esse parâmetro para true.</li>
+			<li>@XMLNuke:PropertyPattern array('/(\w*)/', '$1')<br/>O nome da propriedade pode ter um formato ligeiramente diferente do método get. Por exemplo, uma propriedade pode ser definida como: nome_da_propriedade, e o seu método get por ser definido como getNomeDaPropriedade(). Isso é possível graças a esse atributo. Não utilize-o caso não seja necessário.</li>
+			</ul>
+			</p>
+
+			<p><b>Comentários no método:</b></p>
+			<p>
+			<ul>
+			<li>@XMLNuke:NodeName node<br/>Define o nome do nó XML que será gerado. Se omitido, utiliza o nome do método.</li>
+			<li>@XMLNuke:AttributeOf name<br/>Define que essa propriedade não deve ser um nó, mas sim um atributo da propriedade 'name'.</li>
+			</ul>
+			</p>
+			
+			<p>Para que o XMLNuke gere um XML exatamente igual ao definido anteriormente poderemos fazer uso destes atributos sem modificar a classe original. Ela ficaria assim:
+				<code information="PHP"><![CDATA[
+/**
+ * @XMLNuke:NodeName person
+ */
+class PersonModel
+{
+	protected $name;
+	protected $age;
+	protected $isnew;
+	
+	public function getName()
+	{
+		return $this->name;
+	}
+	
+	public function getAge()
+	{
+		return $this->age;
+	}
+	
+	/**
+	 * @XMLNuke:NodeName new
+	 * @XMLNuke:AttributeOf name
+	 */
+	public function getIsNew()
+	{
+		return $this->isnew;
+	}
+}
+				]]></code>
+			</p>
+		</body>
+	</blockcenter>
+</page>
