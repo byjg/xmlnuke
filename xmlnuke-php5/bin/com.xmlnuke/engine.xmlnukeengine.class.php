@@ -420,7 +420,7 @@ class XmlNukeEngine
 		$arrCt = $this->_context->getSuggestedContentType();
 		if ($arrCt["content-type"] == "text/html")
 		{
-			return FileUtil::CheckUTF8Encode($xhtml->saveHTML());
+			return FileUtil::CheckUTF8Encode(strtr($xhtml->saveHTML(), array("></br>"=>"/>")));
 		}
 		else 
 		{
