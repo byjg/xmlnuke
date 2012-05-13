@@ -90,6 +90,9 @@ class SingleRow
 	*/
 	public function getField($name)
 	{
+		if (!array_key_exists($name, $this->_row))
+			return NULL;
+		
 		$result = $this->_row[$name];
 		if (is_array($result))
 		{
@@ -109,6 +112,9 @@ class SingleRow
 	 */
 	public function getFieldArray($name)
 	{
+		if (!array_key_exists($name, $this->_row))
+			return array();
+		
 		$result = $this->_row[$name];
 		if (($result == null) || ($result == ""))
 		{

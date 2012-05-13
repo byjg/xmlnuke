@@ -298,7 +298,7 @@ class DBDataSet
 		else 
 		{
 			$stmt = $this->_db->prepare ( $sql );
-			$stmt->execute ();
+			$result = $stmt->execute ();
 		}
 		
 		return $result;
@@ -566,7 +566,7 @@ class XmlnukeProviderFactory
 	 * @param ConnectionManagement $connData
 	 * @return string
 	 */
-	public function GetParamModel($connData) 
+	public static function GetParamModel($connData) 
 	{
 		if ($connData->getExtraParam("parammodel") != "")
 		{

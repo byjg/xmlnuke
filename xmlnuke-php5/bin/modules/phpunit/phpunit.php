@@ -52,6 +52,7 @@ function PHPUnit_error_handler($errno, $errstr, $errfile, $errline) {
 
 function PHPUnit_error_report($source, $errno, $errstr, $errfile, $errline) {
 	global $PHPUnit_testRunning;
+	if ($PHPUnit_testRunning == NULL) return;
 	if (error_reporting())
 	    $PHPUnit_testRunning[0]->fail("<B>$source</B>: ".$errstr." <B>in</B> ".$errfile." <B>at line</B> ".$errline);
 }
@@ -276,10 +277,16 @@ class TestCase extends Assert /* implements Test */ {
 	$PHPUnit_testRunning = null;
   }
 
+  /**
+   * Run Before each test;
+   */
   function setUp() /* expect override */ {
     //print("TestCase::setUp()<br>\n");
   }
 
+  /**
+   * Run after each test;
+   */
   function tearDown() /* possible override */ {
     //print("TestCase::tearDown()<br>\n");
   }
