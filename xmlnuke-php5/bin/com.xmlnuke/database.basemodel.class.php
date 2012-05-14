@@ -50,6 +50,10 @@ abstract class BaseModel
 		{
 			$this->bindIterator($object);
 		}
+		elseif ($object instanceof Context)
+		{
+			$this->bindFromContext($object);
+		}
 	}
 
 

@@ -27,6 +27,13 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+class XMLTransform
+{
+	const ALL = "";
+	const IXMLNukeDocumentObject = "1";
+	const Model = "2";
+}
+
 /**
  * Implements a collection of Xmlnuke Xml Objects. 
  * 
@@ -39,6 +46,9 @@ class XmlnukeCollection
 	 */
 	protected $_items;
 
+	protected $_xmlTransform = XMLTransform::ALL;
+	protected $_configTransform = "xmlnuke";
+	
 	/**
 	 * @desc XmlnukeCollection Constructor 
 	 */
@@ -64,11 +74,11 @@ class XmlnukeCollection
 		}
 		else if ($docobj == $this)
 		{
-			throw new XmlNukeObjectException(853, "You are adding the object to itself");
+			throw new XmlNukeObjectException(853, "You are adding to the document a instance from yourself");
 		}
 		else if (!($docobj instanceof IXmlnukeDocumentObject) && !is_object($docobj))
 		{
-			throw new XmlNukeObjectException(853, "Object is not a IXmlnukeDocumentObject or Class Model. Found object type: " . get_class($docobj));
+			throw new XmlNukeObjectException(853, "Object is not a IXmlnukeDocumentObject or Class Model. ");
 		}
 		$this->_items[] = $docobj;
 	}
@@ -85,10 +95,20 @@ class XmlnukeCollection
 		{
 			foreach( $this->_items as $item )
 			{
-				if ($item instanceof IXmlnukeDocumentObject)
+				# Prepare
+				if ($item instanceof XmlnukeCollection)
+				{
+					$item->setXMLTransform($this->_xmlTransform);
+					$item->setConfigTransform($this->_configTransform);
+				}
+				
+				# Transform
+				if (($item instanceof IXmlnukeDocumentObject) && ($this->_xmlTransform != XMLTransform::Model))
 					$item->generateObject($current);
-				else
-					XmlnukeCollection::CreateObjectFromModel($current, $item);
+				elseif (($item instanceof XmlnukeCollection) && ($this->_xmlTransform != XMLTransform::IXMLNukeDocumentObject))
+					$item->generatePage($current);
+				elseif ($this->_xmlTransform != XMLTransform::IXMLNukeDocumentObject)
+					XmlnukeCollection::CreateObjectFromModel($current, $item, $this->_configTransform);
 			}
 		}
 	}
@@ -100,7 +120,7 @@ class XmlnukeCollection
 	 * @param type $model
 	 * @return DOMNode
 	 */
-	protected static function CreateObjectFromModel($current, $model)
+	protected static function CreateObjectFromModel($current, $model, $config)
 	{
 		
 		$class = new ReflectionClass(get_class($model));
@@ -109,17 +129,44 @@ class XmlnukeCollection
 
 		#------------
 		# Define Class Attributes
-		$_name = $classAttributes["xmlnuke:nodename"] != "" ? $classAttributes["xmlnuke:nodename"] : get_class($model);
-		$_getter = $classAttributes["xmlnuke:getter"] != "" ? $classAttributes["xmlnuke:getter"] : "get";
-		$_propertyPattern = $classAttributes["xmlnuke:propertypattern"] != "" ? eval($classAttributes["xmlnuke:propertypattern"]) : array('/(\w*)/', '$1');
-		$_writeEmpty = $classAttributes["xmlnuke:writeempty"] == "true";
-
+		$_name = $classAttributes["$config:nodename"] != "" ? $classAttributes["$config:nodename"] : get_class($model);
+		$_getter = $classAttributes["$config:getter"] != "" ? $classAttributes["$config:getter"] : "get";
+		$_propertyPattern = $classAttributes["$config:propertypattern"] != "" ? eval($classAttributes["$config:propertypattern"]) : array('/(\w*)/', '$1');
+		$_writeEmpty = $classAttributes["$config:writeempty"] == "true";
+		$_docType = $classAttributes["$config:doctype"] != "" ? strtolower($classAttributes["$config:doctype"]) : "xml";
+		$_rdfType = XmlnukeCollection::replaceVars($model, $_name, $classAttributes["$config:rdftype"] != "" ? $classAttributes["$config:rdftype"] : "{HOST}/rdf/class/{CLASS}");
+		$_rdfAbout = XmlnukeCollection::replaceVars($model, $_name, $classAttributes["$config:rdfabout"] != "" ? $classAttributes["$config:rdfabout"] : "{HOST}/rdf/instance/{CLASS}/{GetID()}");
+		$_defaultPrefix = $classAttributes["$config:defaultprefix"] != "" ? $classAttributes["$config:defaultprefix"] . ":" : "";
+		$_isRDF = ($_docType == "rdf");
+		$_namespace = $classAttributes["$config:namespace"];
+		if (!is_array($_namespace) && !empty($_namespace)) $_namespace = array($_namespace);
+		
 		$nodeRefs = array();
+		
+		#-----------
+		# Setup NameSpaces
+		if (is_array($_namespace))
+		{
+			foreach ($_namespace as $value) 
+			{
+				$prefix = strtok($value, "!");
+				$uri = str_replace($prefix . "!", "", $value);
+				XmlUtil::AddNamespaceToDocument($current, $prefix, $uri);
+			}
+		}
 		
 		#------------
 		# Create Class Node
-		$node = XmlUtil::CreateChild($current, $_name);
-				
+		if (!$_isRDF)
+			$node = XmlUtil::CreateChild($current, $_name);
+		else
+		{
+			XmlUtil::AddNamespaceToDocument($current, "rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+			$node = XmlUtil::CreateChild($current, "rdf:description");
+			XmlUtil::AddAttribute($node, "rdf:about", $_rdfAbout);
+			$nodeType = XmlUtil::CreateChild($node, "rdf:type");
+			XmlUtil::AddAttribute($nodeType, "rdf:resource", $_rdfType);
+		}				
 				
 		#------------
 		# Get all properties
@@ -160,14 +207,19 @@ class XmlnukeCollection
 				}
 				
 				# Define Properties
-				$_propName = $propAttributes["xmlnuke:nodename"] != "" ? $propAttributes["xmlnuke:nodename"] : $propName;
-				$_attributeOf = $propAttributes["xmlnuke:attributeof"];
+				$_ignore = array_key_exists("$config:ignore", $propAttributes);
+				$_propName = $propAttributes["$config:nodename"] != "" ? $propAttributes["$config:nodename"] : $propName;
+				if (strpos($_propName, ":") === false) $_propName = $_defaultPrefix . $_propName;
+				$_attributeOf = $_isRDF ? "" : $propAttributes["$config:isattributeof"];
+				$_isClassAttr = $_isRDF ? false : array_key_exists("$config:isclassattribute", $propAttributes);
+				
+				if ($_ignore) continue;
 		
 				# Process the Property Value
 				$used = null;
 				if (is_object($propValue))
 				{
-					$used = XmlnukeCollection::CreateObjectFromModel($node, $propValue);
+					$used = XmlnukeCollection::CreateObjectFromModel($node, $propValue, $config);
 				}
 				elseif (is_array ($propValue))
 				{
@@ -175,7 +227,7 @@ class XmlnukeCollection
 					foreach ($propValue as $key=>$value)
 					{
 						if (is_object($value))
-							XmlnukeCollection::CreateObjectFromModel($used, $value);
+							XmlnukeCollection::CreateObjectFromModel($used, $value, $config);
 						else
 						{
 							if (is_numeric($key))
@@ -186,13 +238,15 @@ class XmlnukeCollection
 				}
 				else if (($propValue != "") || ($_writeEmpty))
 				{
-					if (($_attributeOf != "") && (array_key_exists($_attributeOf, $nodeRefs)))
+					if ($_isClassAttr)
+						XmlUtil::AddAttribute ($node, $_propName, $propValue);
+					elseif (($_attributeOf != "") && (array_key_exists($_attributeOf, $nodeRefs)))
 						XmlUtil::AddAttribute ($nodeRefs[$_attributeOf], $_propName, $propValue);
 					else
 						$used = XmlUtil::CreateChild($node, $_propName, $propValue);
 				}
 				
-				# Save Reference for "attributeOf" attribute.
+				# Save Reference for "isAttributeOf" attribute.
 				if ($used != null)
 				{
 					$nodeRefs[$propName] = $used;
@@ -203,6 +257,39 @@ class XmlnukeCollection
 		return $node;
 	}
 	
+	protected static function replaceVars($model, $name, $text)
+	{
+		$context = Context::getInstance();
+		
+		# Host
+		$host = $context->UrlBase() != "" ? $context->UrlBase() : ($context->Value("SERVER_PORT") == 443 ? "https://" : "http://") . $context->Value("HTTP_HOST");
+		
+		# Replace Part One
+		$text = preg_replace(array("/\{[hH][oO][sS][tT]\}/", "/\{[cC][lL][aA][sS][sS]\}/"), array($host, $name), $text);
+
+		if(preg_match('/(\{(\S+)\})/', $text, &$matches))
+		{
+			$class = new ReflectionClass(get_class($model));
+			$method = str_replace("()", "", $matches[2]);
+			$value = spl_object_hash($model);
+			if ($class->hasMethod($method))
+			{
+				try
+				{
+					$value = $model->$method();
+				}
+				catch (Exception $ex)
+				{
+					$value = "***$value***";
+				}
+			}
+			$text = preg_replace('/(\{(\S+)\})/', $value, $text);
+		}
+		
+		return $text;
+		
+	}
+	
 	protected static function adjustParams($arr)
 	{
 		$count = count($arr[0]);
@@ -210,10 +297,36 @@ class XmlnukeCollection
 		
 		for ($i=0;$i<$count;$i++)
 		{
-			$result[strtolower($arr["param"][$i])] = $arr["value"][$i];
+			$key = strtolower($arr["param"][$i]);
+			$value = $arr["value"][$i];
+			
+			if (!array_key_exists($key, $result))
+				$result[$key] = $value;
+			elseif (is_array($result[$key]))
+				$result[$key][] = $value;
+			else
+				$result[$key] = array($result[$key], $value);
 		}
 		
 		return $result;
+	}
+	
+	/**
+	 * Define WHAT objects the system will process.
+	 * @param XMLTransform $method 
+	 */
+	function setXMLTransform($method)
+	{
+		$this->_xmlTransform = $method;
+	}
+	
+	/**
+	 * Define WHAT prefix in comment will be used
+	 * @param string $value 
+	 */
+	function setConfigTransform($value)
+	{
+		$this->_xmlTransform = $value;
 	}
 	
 }

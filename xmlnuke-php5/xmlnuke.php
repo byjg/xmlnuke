@@ -33,19 +33,19 @@
 	$alternateFilename = str_replace(".", "_", ($context->ContextValue("fn") != "" ? $context->ContextValue("fn") : ($context->getModule() != "" ? $context->getModule() : $context->getXml())));
 	if ($context->ContextValue("rawxml")!="")
 	{
-		$output = "xml";
+		$output = XmlNukeEngine::OUTPUT_XML;
 		header("Content-Type: text/xml; charset=utf-8");
 		header("Content-Disposition: inline; filename=\"{$alternateFilename}.xml\";");
 	}
 	elseif ($context->ContextValue("rawjson")!="")
 	{
-		$output = "json";
+		$output = XmlNukeEngine::OUTPUT_JSON;
 		header("Content-Type: application/json; charset=utf-8");
 		header("Content-Disposition: inline; filename=\"{$alternateFilename}.json\";");
 	}
 	else
 	{
-		$output = "";
+		$output = XmlNukeEngine::OUTPUT_TRANSFORMED_DOC;
 		$contentType = array("xsl"=>"", "content-type"=>"", "content-disposition"=>"", "extension"=>"");
 		if (detectMobile())
 		{

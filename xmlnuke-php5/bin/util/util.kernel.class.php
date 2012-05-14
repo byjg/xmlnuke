@@ -291,7 +291,11 @@ class XmlUtilKernel extends XMLNukeKernel
 		{
 			throw new XmlUtilException(257, "Object isn't a DOMNode. Found object class type: " . get_class($node));
 		}
-		return $node->ownerDocument;
+		
+		if ($node instanceof DOMDocument)
+			return $node;
+		else
+			return $node->ownerDocument;
 	}
 	
 	/**
@@ -300,15 +304,45 @@ class XmlUtilKernel extends XMLNukeKernel
 	*@param string $name - New name of the node
 	*@return DOMElement 
 	*/
-	public static function createChildNode( $node, $name )
-	{       
+	public static function createChildNode( $node, $name, $uri="" )
+	{
+		if ($uri == "")
+			XmlUtilKernel::checkIfPrefixWasDefined($node, $name);
+		
 		$owner = self::getOwnerDocument($node);
-		$newnode = $owner->createElement($name);
+		
+		if ($uri == "")
+		{
+			$newnode = $owner->createElement($name);
+		}
+		else
+		{
+			$newnode = $owner->createElementNS($uri, $name);
+			if ($owner == $node)
+			{
+				$tok = strtok($name, ":");
+				if ($tok != $name)
+					XmlUtil::$XMLNSPrefix[spl_object_hash($owner)][$tok] = $uri;
+			}
+		}
+		
 		if($newnode === false)
 		{
 			throw new XmlUtilException(258, "Failed when trying to create DOMElement.");
 		}
 		return $newnode;
+	}
+	
+	public static function checkIfPrefixWasDefined( $node, $name )
+	{
+		$owner = self::getOwnerDocument($node);
+		$hash = spl_object_hash($owner);
+		
+		$prefix = strtok($name, ":");
+		if (($prefix != $name) && !array_key_exists($prefix, XmlUtil::$XMLNSPrefix[$hash]))
+		{
+			throw new Exception("You cannot create the node/attribute $name without define the URI. Try to use XmlUtil::AddNamespaceToDocument.");
+		}		
 	}
 }
 ?>

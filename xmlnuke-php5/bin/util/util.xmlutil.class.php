@@ -43,6 +43,8 @@ class XmlUtil
 	* @var string
 	*/
 	const XML_ENCODING = "utf-8";
+	
+	public static $XMLNSPrefix = array();
 
 	/**
 	* Create an empty XmlDocument object with some default parameters
@@ -52,6 +54,7 @@ class XmlUtil
 	public static function CreateXmlDocument()
 	{
 		$xmldoc = new DOMDocument(self::XML_VERSION , self::XML_ENCODING );
+		XmlUtil::$XMLNSPrefix[spl_object_hash($xmldoc)] = array();
 		return $xmldoc;
 	}
 
@@ -80,9 +83,10 @@ class XmlUtil
 	{
 		$xmldoc = self::CreateXmlDocument();
 		if ($checkUTF8)	$xml = FileUtil::CheckUTF8Encode($xml);
-		$xml = self::FixXMLHeader($xml);
+		$xml = XmlUtil::FixXMLHeader($xml);
 		$xml = str_replace("&", "&amp;",$xml);
 		XmlUtilKernel::LoadXMLDocument($xmldoc, $xml);
+		XmlUtil::extractNameSpaces($xmldoc);
 		return $xmldoc;
 	}
 
@@ -94,9 +98,25 @@ class XmlUtil
 	public static function CreateDocumentFromNode($node)
 	{
 		$xmldoc = self::CreateXmlDocument();
+		XmlUtil::$XMLNSPrefix[spl_object_hash($xmldoc)] = array();
 		$root = $xmldoc->importNode($node, true);
 		$xmldoc->appendChild($root);
 		return $xmldoc;
+	}
+	
+	protected static function extractNameSpaces($nodeOrDoc)
+	{
+		$doc = XmlUtilKernel::getOwnerDocument($nodeOrDoc);
+		
+		$hash = spl_object_hash($doc);
+		$root = $doc->documentElement;
+
+		#-- 
+		$xpath = new DOMXPath($doc);
+		foreach( $xpath->query('namespace::*', $root) as $node ) 
+		{
+			XmlUtil::$XMLNSPrefix[$hash][$node->prefix] = $node->nodeValue;
+		}
 	}
 
 	/**
@@ -177,6 +197,28 @@ class XmlUtil
 		}
 		return $document;
 	}
+	
+	
+	/**
+	 *
+	 * @param type $nodeOrDoc 
+	 */
+	public static function AddNamespaceToDocument($nodeOrDoc, $prefix, $uri)
+	{
+		$doc = XmlUtilKernel::getOwnerDocument($nodeOrDoc);
+		
+		if ($doc == null)
+			throw new Exception("Parameter type was not expected.");
+		
+		$hash = spl_object_hash($doc);
+		$root = $doc->documentElement;
+
+		if ($root == null)
+			throw new Exception("Document Elmement (Root Node) was not defined in the DOMDocument");
+		
+		$root->setAttributeNS('http://www.w3.org/2000/xmlns/' ,"xmlns:$prefix", $uri);
+		XmlUtil::$XMLNSPrefix[$hash][$prefix] = $uri;
+	}
 
 	/**
 	* Add node to specific XmlNode from file existing on disk
@@ -244,14 +286,14 @@ class XmlUtil
 	* @param string $nodeText Text to add string
 	* @return DOMElement
 	*/
-	public static function CreateChild($rootNode, $nodeName, $nodeText="")
+	public static function CreateChild($rootNode, $nodeName, $nodeText="", $uri="")
 	{
-		$nodeworking = XmlUtilKernel::createChildNode($rootNode, $nodeName);
+		$nodeworking = XmlUtilKernel::createChildNode($rootNode, $nodeName, $uri);
 		self::AddTextNode($nodeworking, $nodeText);
 		$rootNode->appendChild($nodeworking);
 		return $nodeworking;
 	}
-
+	
 	/**
 	* Create child node on the top from specific node and add text
 	*
@@ -308,6 +350,8 @@ class XmlUtil
 	*/
 	public static function AddAttribute($rootNode, $name, $value)
 	{
+		XmlUtilKernel::checkIfPrefixWasDefined($rootNode, $name);
+		
 		$owner = XmlUtilKernel::getOwnerDocument($rootNode);
 		$attrNode = $owner->createAttribute($name);
 		$attrNode->value = $value;
@@ -332,7 +376,7 @@ class XmlUtil
 
 		$owner = XmlUtilKernel::getOwnerDocument($pNode);
 		$xp = new DOMXPath($owner);
-		XmlUtil::registerNamespace($xp, $arNamespace);
+		XmlUtil::registerNamespaceForFilter($xp, $arNamespace);
 		$rNodeList = $xp->query($xPath, $pNode);
 
 		return $rNodeList;
@@ -356,13 +400,13 @@ class XmlUtil
 		{
 			$owner = XmlUtilKernel::getOwnerDocument($pNode);
 			$xp = new DOMXPath($owner);
-			XmlUtil::registerNamespace($xp, $arNamespace);
+			XmlUtil::registerNamespaceForFilter($xp, $arNamespace);
 			$rNodeList = $xp->query("$xPath", $pNode);
 		}
 		else
 		{
 			$xp = new DOMXPath($pNode);
-			XmlUtil::registerNamespace($xp, $arNamespace);
+			XmlUtil::registerNamespaceForFilter($xp, $arNamespace);
 			$rNodeList = $xp->query("//$xPath");
 		}
 		$rNode = $rNodeList->item(0);
@@ -374,7 +418,7 @@ class XmlUtil
 	 * @param DOMXPath $xpath
 	 * @param array $arNamespace 
 	 */
-	public static function registerNamespace($xpath, $arNamespace)
+	public static function registerNamespaceForFilter($xpath, $arNamespace)
 	{
 		if (($arNamespace != null) && (is_array($arNamespace)))
 		{
