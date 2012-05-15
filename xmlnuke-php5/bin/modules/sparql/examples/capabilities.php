@@ -3,7 +3,7 @@ table.capabilities td { padding-right: 1em; }
 .OK { background-color:#cfc; } 
 .Fail { background-color:#fcc; }
 </style>
-<?
+<?php
 require_once( "sparqllib.php" );
 print "<p>These are tests against PUBLIC endpoints. They may support LOAD when credentials are supplied.</p>";
 print "<p>A cache file is used to save the results for a week, as they will be very unlikely to change.</p>";

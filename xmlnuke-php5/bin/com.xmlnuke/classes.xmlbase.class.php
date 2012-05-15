@@ -138,8 +138,12 @@ class XmlnukeCollection
 		$_rdfAbout = XmlnukeCollection::replaceVars($model, $_name, $classAttributes["$config:rdfabout"] != "" ? $classAttributes["$config:rdfabout"] : "{HOST}/rdf/instance/{CLASS}/{GetID()}");
 		$_defaultPrefix = $classAttributes["$config:defaultprefix"] != "" ? $classAttributes["$config:defaultprefix"] . ":" : "";
 		$_isRDF = ($_docType == "rdf");
+		$_ignoreAllClass = array_key_exists("$config:ignore", $classAttributes);
 		$_namespace = $classAttributes["$config:namespace"];
 		if (!is_array($_namespace) && !empty($_namespace)) $_namespace = array($_namespace);
+		
+		if ($_ignoreAllClass)
+			return $current;
 		
 		$nodeRefs = array();
 		
@@ -267,7 +271,7 @@ class XmlnukeCollection
 		# Replace Part One
 		$text = preg_replace(array("/\{[hH][oO][sS][tT]\}/", "/\{[cC][lL][aA][sS][sS]\}/"), array($host, $name), $text);
 
-		if(preg_match('/(\{(\S+)\})/', $text, &$matches))
+		if(preg_match('/(\{(\S+)\})/', $text, $matches))
 		{
 			$class = new ReflectionClass(get_class($model));
 			$method = str_replace("()", "", $matches[2]);
@@ -326,7 +330,7 @@ class XmlnukeCollection
 	 */
 	function setConfigTransform($value)
 	{
-		$this->_xmlTransform = $value;
+		$this->_configTransform = $value;
 	}
 	
 }
