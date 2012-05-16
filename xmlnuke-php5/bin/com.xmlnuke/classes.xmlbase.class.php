@@ -140,6 +140,7 @@ class XmlnukeCollection
 		$_isRDF = ($_docType == "rdf");
 		$_ignoreAllClass = array_key_exists("$config:ignore", $classAttributes);
 		$_namespace = $classAttributes["$config:namespace"];
+		$_dontCreateClassNode = array_key_exists("$config:dontcreatenode", $classAttributes);
 		if (!is_array($_namespace) && !empty($_namespace)) $_namespace = array($_namespace);
 		
 		if ($_ignoreAllClass)
@@ -161,17 +162,22 @@ class XmlnukeCollection
 		
 		#------------
 		# Create Class Node
-		if (!$_isRDF)
-			$node = XmlUtil::CreateChild($current, $_name);
+		if ($_dontCreateClassNode)
+			$node = $current;
 		else
 		{
-			XmlUtil::AddNamespaceToDocument($current, "rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-			$node = XmlUtil::CreateChild($current, "rdf:description");
-			XmlUtil::AddAttribute($node, "rdf:about", $_rdfAbout);
-			$nodeType = XmlUtil::CreateChild($node, "rdf:type");
-			XmlUtil::AddAttribute($nodeType, "rdf:resource", $_rdfType);
-		}				
-				
+			if (!$_isRDF)
+				$node = XmlUtil::CreateChild($current, $_name);
+			else
+			{
+				XmlUtil::AddNamespaceToDocument($current, "rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+				$node = XmlUtil::CreateChild($current, "rdf:description");
+				XmlUtil::AddAttribute($node, "rdf:about", $_rdfAbout);
+				$nodeType = XmlUtil::CreateChild($node, "rdf:type");
+				XmlUtil::AddAttribute($nodeType, "rdf:resource", $_rdfType);
+			}
+		}
+
 		#------------
 		# Get all properties
 		$properties = $class->getProperties( ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PRIVATE | ReflectionProperty::IS_PUBLIC );
@@ -215,7 +221,9 @@ class XmlnukeCollection
 				$_propName = $propAttributes["$config:nodename"] != "" ? $propAttributes["$config:nodename"] : $propName;
 				if (strpos($_propName, ":") === false) $_propName = $_defaultPrefix . $_propName;
 				$_attributeOf = $_isRDF ? "" : $propAttributes["$config:isattributeof"];
+				$_isLabelOf = $_isRDF ? $propAttributes["$config:islabelof"] : "";
 				$_isClassAttr = $_isRDF ? false : array_key_exists("$config:isclassattribute", $propAttributes);
+				$_dontCreatePropNode = array_key_exists("$config:dontcreatenode", $propAttributes);
 				
 				if ($_ignore) continue;
 		
@@ -223,20 +231,29 @@ class XmlnukeCollection
 				$used = null;
 				if (is_object($propValue))
 				{
-					$used = XmlnukeCollection::CreateObjectFromModel($node, $propValue, $config);
+					if ($_dontCreatePropNode)
+						$nodeUsed = $node; 
+					else
+						$nodeUsed = XmlUtil::CreateChild($node, $_propName);
+
+					$used = XmlnukeCollection::CreateObjectFromModel($nodeUsed, $propValue, $config);
 				}
 				elseif (is_array ($propValue))
 				{
-					$used = XmlUtil::CreateChild($node, $_propName);
+					if ($_dontCreatePropNode)
+						$nodeUsed = $node;
+					else
+						$nodeUsed = $used = XmlUtil::CreateChild($node, $_propName);
+
 					foreach ($propValue as $key=>$value)
 					{
 						if (is_object($value))
-							XmlnukeCollection::CreateObjectFromModel($used, $value, $config);
+							XmlnukeCollection::CreateObjectFromModel($nodeUsed, $value, $config);
 						else
 						{
 							if (is_numeric($key))
 								$key = "item";
-							XmlUtil::CreateChild ($used, $key, $value);
+							XmlUtil::CreateChild ($nodeUsed, $key, $value);
 						}
 					}
 				}
@@ -244,8 +261,15 @@ class XmlnukeCollection
 				{
 					if ($_isClassAttr)
 						XmlUtil::AddAttribute ($node, $_propName, $propValue);
+					elseif (($_isLabelOf != "") && (array_key_exists($_isLabelOf, $nodeRefs)))
+						XmlUtil::CreateChild($nodeRefs[$_isLabelOf], "rdfs:label", $propValue);
 					elseif (($_attributeOf != "") && (array_key_exists($_attributeOf, $nodeRefs)))
 						XmlUtil::AddAttribute ($nodeRefs[$_attributeOf], $_propName, $propValue);
+					elseif (preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $propValue))
+					{
+						$used = XmlUtil::CreateChild($node, $_propName);
+						XmlUtil::AddAttribute($used, "rdf:resource", $propValue);
+					}
 					else
 						$used = XmlUtil::CreateChild($node, $_propName, $propValue);
 				}
