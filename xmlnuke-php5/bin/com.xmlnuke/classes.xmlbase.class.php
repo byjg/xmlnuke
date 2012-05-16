@@ -107,7 +107,7 @@ class XmlnukeCollection
 					$item->generateObject($current);
 				elseif (($item instanceof XmlnukeCollection) && ($this->_xmlTransform != XMLTransform::IXMLNukeDocumentObject))
 					$item->generatePage($current);
-				elseif ($this->_xmlTransform != XMLTransform::IXMLNukeDocumentObject)
+				elseif (!($item instanceof IXmlnukeDocumentObject) && ($this->_xmlTransform != XMLTransform::IXMLNukeDocumentObject))
 					XmlnukeCollection::CreateObjectFromModel($current, $item, $this->_configTransform);
 			}
 		}
@@ -156,7 +156,7 @@ class XmlnukeCollection
 			{
 				$prefix = strtok($value, "!");
 				$uri = str_replace($prefix . "!", "", $value);
-				XmlUtil::AddNamespaceToDocument($current, $prefix, $uri);
+				XmlUtil::AddNamespaceToDocument($current, $prefix, XmlnukeCollection::replaceVars($model, $_name, $uri));
 			}
 		}
 		
@@ -265,7 +265,7 @@ class XmlnukeCollection
 						XmlUtil::CreateChild($nodeRefs[$_isLabelOf], "rdfs:label", $propValue);
 					elseif (($_attributeOf != "") && (array_key_exists($_attributeOf, $nodeRefs)))
 						XmlUtil::AddAttribute ($nodeRefs[$_attributeOf], $_propName, $propValue);
-					elseif (preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $propValue))
+					elseif ((preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $propValue)) && $_isRDF)
 					{
 						$used = XmlUtil::CreateChild($node, $_propName);
 						XmlUtil::AddAttribute($used, "rdf:resource", $propValue);
