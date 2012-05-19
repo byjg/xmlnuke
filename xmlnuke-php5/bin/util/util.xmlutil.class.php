@@ -288,6 +288,9 @@ class XmlUtil
 	*/
 	public static function CreateChild($rootNode, $nodeName, $nodeText="", $uri="")
 	{
+		if (empty($nodeName))
+			throw new Exception("You cannot create a empty nodename.");
+		
 		$nodeworking = XmlUtilKernel::createChildNode($rootNode, $nodeName, $uri);
 		self::AddTextNode($nodeworking, $nodeText);
 		$rootNode->appendChild($nodeworking);

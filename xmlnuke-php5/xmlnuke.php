@@ -27,7 +27,8 @@
 	#
 	require_once("xmlnuke.inc.php");
 	#############################################
-	
+
+	$context = Context::getInstance();
 
 	$selectNodes = $context->ContextValue("xpath");
 	$alternateFilename = str_replace(".", "_", ($context->ContextValue("fn") != "" ? $context->ContextValue("fn") : ($context->getModule() != "" ? $context->getModule() : $context->getXml())));

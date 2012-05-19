@@ -88,6 +88,10 @@ class XmlBlockCollection extends XmlnukeCollection implements IXmlnukeDocumentOb
 				$block = "blockright";
 				break;
 		}
+		
+		if ($block == "")
+			throw new Exception("XmlBlockCollection: You selected an unknown Block Position.");
+		
 		$objBlockCenter = XmlUtil::CreateChild($current, $block, "");
 		XmlUtil::CreateChild($objBlockCenter, "title", $this->_title);	
 		parent::generatePage(XmlUtil::CreateChild($objBlockCenter, "body", ""));

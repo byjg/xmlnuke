@@ -101,14 +101,20 @@ class XmlnukeCollection
 					$item->setXMLTransform($this->_xmlTransform);
 					$item->setConfigTransform($this->_configTransform);
 				}
-				
+
 				# Transform
 				if (($item instanceof IXmlnukeDocumentObject) && ($this->_xmlTransform != XMLTransform::Model))
+				{
 					$item->generateObject($current);
+				}
 				elseif (($item instanceof XmlnukeCollection) && ($this->_xmlTransform != XMLTransform::IXMLNukeDocumentObject))
+				{
 					$item->generatePage($current);
+				}
 				elseif (!($item instanceof IXmlnukeDocumentObject) && ($this->_xmlTransform != XMLTransform::IXMLNukeDocumentObject))
+				{
 					XmlnukeCollection::CreateObjectFromModel($current, $item, $this->_configTransform);
+				}
 			}
 		}
 	}
@@ -124,14 +130,14 @@ class XmlnukeCollection
 	{
 		
 		$class = new ReflectionClass(get_class($model));
-		preg_match_all('/@(?<param>\S+)\s*(?<value>\S+)?\n/', $class->getDocComment(), $aux);
+		preg_match_all('/@(?<param>\S+)\s*(?<value>\S+)?\r?\n/', $class->getDocComment(), $aux);
 		$classAttributes = XmlnukeCollection::adjustParams($aux);
 
 		#------------
 		# Define Class Attributes
 		$_name = $classAttributes["$config:nodename"] != "" ? $classAttributes["$config:nodename"] : get_class($model);
 		$_getter = $classAttributes["$config:getter"] != "" ? $classAttributes["$config:getter"] : "get";
-		$_propertyPattern = $classAttributes["$config:propertypattern"] != "" ? eval($classAttributes["$config:propertypattern"]) : array('/(\w*)/', '$1');
+		$_propertyPattern = $classAttributes["$config:propertypattern"] != "" ? eval($classAttributes["$config:propertypattern"]) : array('/([^a-zA-Z0-9])/', '');
 		$_writeEmpty = $classAttributes["$config:writeempty"] == "true";
 		$_docType = $classAttributes["$config:doctype"] != "" ? strtolower($classAttributes["$config:doctype"]) : "xml";
 		$_rdfType = XmlnukeCollection::replaceVars($model, $_name, $classAttributes["$config:rdftype"] != "" ? $classAttributes["$config:rdftype"] : "{HOST}/rdf/class/{CLASS}");
@@ -208,7 +214,7 @@ class XmlnukeCollection
 					if ($class->hasMethod($methodName))
 					{
 						$method = $class->getMethod($methodName);						
-						preg_match_all('/@(?<param>\S+)\s*(?<value>\S+)?\n/', $method->getDocComment(), $aux);
+						preg_match_all('/@(?<param>\S+)\s*(?<value>\S+)?\r?\n/', $method->getDocComment(), $aux);
 						$propAttributes = XmlnukeCollection::adjustParams($aux);
 						$propValue = $method->invoke($model, "");
 					}

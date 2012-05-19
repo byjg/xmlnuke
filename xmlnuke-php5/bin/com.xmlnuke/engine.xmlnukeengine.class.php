@@ -396,6 +396,7 @@ class XmlNukeEngine
 		$xslTran->setParameter("", "xsl", $this->_context->getXsl());
 		$xslTran->setParameter("", "site", $this->_context->getSite());
 		$xslTran->setParameter("", "lang", $this->_context->Language()->getName());
+		$xslTran->setParameter("", "module", $this->_context->getModule());
 		$xslTran->setParameter("", "transformdate", date("Y-m-d H:i:s") );
 		$xslTran->setParameter("", "urlbase", $this->_context->ContextValue("xmlnuke.URLBASE"));
 		$xslTran->setParameter("", "engine", "PHP");
