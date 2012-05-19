@@ -227,13 +227,16 @@ class ParamProcessor
 		
 		$nodeRoot = $xmlDom->documentElement;
 
-	 	if ($nodeRoot->hasChildNodes())
+		if ($nodeRoot != null)
 		{
-			$nodeWorking = $nodeRoot->firstChild;
-			while ($nodeWorking != null)
+			if ($nodeRoot->hasChildNodes())
 			{
-				$this->ProcessChildren($nodeWorking, 0);
-				$nodeWorking = $nodeWorking->nextSibling;
+				$nodeWorking = $nodeRoot->firstChild;
+				while ($nodeWorking != null)
+				{
+					$this->ProcessChildren($nodeWorking, 0);
+					$nodeWorking = $nodeWorking->nextSibling;
+				}
 			}
 		}
 	}

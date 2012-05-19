@@ -102,7 +102,7 @@ class OAuthClient20
 		return $this->_context->removeSession($name);
 	}
 
-	protected function getAccessToken()
+	public function getAccessToken()
 	{
 		$name = 'access_token';
 		

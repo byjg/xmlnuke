@@ -401,7 +401,7 @@ class XmlNukeEngine
 		$xslTran->setParameter("", "engine", "PHP");
 		
 		//Transform and output		
-		$xtw = $xslTran->transformToXML($xml);		
+		$xtw = $xslTran->transformToXML($xml);	
 		$xhtml = new DOMDocument();		
 		$xhtml->loadXML($xtw);
 
