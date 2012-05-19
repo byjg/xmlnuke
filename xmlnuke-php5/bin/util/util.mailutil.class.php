@@ -96,22 +96,35 @@ class MailUtil
 	 */
 	public static function getFullEmailName($name, $email)
 	{
-		return "\"" . $name . "\" <".$email.">";
+		if (!empty($name))
+			return "\"" . $name . "\" <".$email.">";
+		else
+			return $email;
 	}
 	
 	public static function getEmailPair($fullEmail)
 	{
-		$pat = "/[\"']?([\S\s]*)[\"']?\s*<(.*)>/";
-		$parts = preg_split ( $pat, $fullEmail, - 1, PREG_SPLIT_DELIM_CAPTURE );
+		$pat = "/[\"'](?<name>[\S\s]*)[\"']\s+<(?<email>.*)>/";
+		$pat2 = "/<(?<email>.*)>/";
+
+		$email = $fullEmail;
+		$name = "";
 		
-		if ($parts[2] == "")
+		if (preg_match ( $pat, $fullEmail, $parts ))
 		{
-			return array("email"=>$fullEmail, "name"=>"");
+			if (array_key_exists("name", $parts))
+				$name = ConvertFromUTF8::ISO88591_ASCII($parts["name"]);
+
+			if (array_key_exists("email", $parts))
+				$email = $parts["email"];
 		}
-		else
+		else if (preg_match($pat2, $fullEmail, $parts))
 		{
-			return array("email"=>$parts[2], "name"=>ConvertFromUTF8::ISO88591_ASCII($parts[1]));
+			if (array_key_exists("email", $parts))
+				$email = $parts["email"];			
 		}
+		
+		return array("email"=>$email, "name"=>$name);
 	}
 
 	public static function isValidEmail($email)
@@ -159,13 +172,17 @@ class MailEnvelope
 		
 		if (MailEnvelope::$_smtpParts == null)
 		{
-			$smtpString = Context::getInstance()->ContextValue("xmlnuke.SMTPSERVER");
+			$smtpString = Context::getInstance()->Value("xmlnuke.SMTPSERVER");
 
 			// Define if uses SMTP server or just sendemail
 			if ($smtpString != "")
 			{
 				$pat = "/(smtp|ssl):\/\/(?:(\S+):(\S+)@)?(?:([\w\d\-]+(?:\.[\w\d\-]+)*))(?::([\d]+))?/";
 				MailEnvelope::$_smtpParts = preg_split ( $pat, $smtpString, - 1, PREG_SPLIT_DELIM_CAPTURE );
+				if (count(MailEnvelope::$_smtpParts) >= 5 && !empty(MailEnvelope::$_smtpParts[5]) && MailEnvelope::$_smtpParts[5][0] == "@")
+				{
+					throw new Exception("Wrong SMTP server definition");
+				}
 			}
 		}
 	}
