@@ -31,6 +31,11 @@
 * Generic functions to manipulate XML nodes.
 * Note: This classes didn't inherits from DOMDocument or DOMNode
 */
+define('XMLUTIL_OPT_DONT_PRESERVE_WHITESPACE', 0x01);
+define('XMLUTIL_OPT_FORMAT_OUTPUT', 0x02);
+define('XMLUTIL_OPT_DONT_FIX_AMPERSAND', 0x04);
+	
+	
 class XmlUtil
 {
 	/**
@@ -51,9 +56,15 @@ class XmlUtil
 	*
 	* @return DOMDocument object
 	*/
-	public static function CreateXmlDocument()
+	public static function CreateXmlDocument($docOptions = 0)
 	{
 		$xmldoc = new DOMDocument(self::XML_VERSION , self::XML_ENCODING );
+		$xmldoc->preserveWhiteSpace = ($docOptions & XMLUTIL_OPT_DONT_PRESERVE_WHITESPACE) != XMLUTIL_OPT_DONT_PRESERVE_WHITESPACE;
+		if (($docOptions & XMLUTIL_OPT_FORMAT_OUTPUT) == XMLUTIL_OPT_FORMAT_OUTPUT)
+		{
+			$xmldoc->preserveWhiteSpace = false;
+			$xmldoc->formatOutput = true;
+		}
 		XmlUtil::$XMLNSPrefix[spl_object_hash($xmldoc)] = array();
 		return $xmldoc;
 	}
@@ -63,14 +74,15 @@ class XmlUtil
 	* @param string $filename
 	* @return DOMDocument
 	*/
-	public static function CreateXmlDocumentFromFile($filename)
+	public static function CreateXmlDocumentFromFile($filename, $docOptions = 0)
 	{
 		if (!FileUtil::Exists($filename)) {
 			throw new XmlUtilException(250, "Don't possible to create XML Document.");
 		}
 		$xml = FileUtil::QuickFileRead($filename);
-		$xml = str_replace("&amp;", "&",$xml);
-		$xmldoc = self::CreateXmlDocumentFromStr($xml);
+		if (($docOptions & XMLUTIL_OPT_DONT_FIX_AMPERSAND) != XMLUTIL_OPT_DONT_FIX_AMPERSAND)
+			$xml = str_replace("&amp;", "&",$xml);
+		$xmldoc = self::CreateXmlDocumentFromStr($xml, true, $docOptions);
 		return $xmldoc;
 	}
 
@@ -79,12 +91,13 @@ class XmlUtil
 	* @param string $xml - XML string document
 	* @return DOMDocument
 	*/
-	public static function CreateXmlDocumentFromStr($xml, $checkUTF8 = true)
+	public static function CreateXmlDocumentFromStr($xml, $checkUTF8 = true, $docOptions = 0)
 	{
-		$xmldoc = self::CreateXmlDocument();
+		$xmldoc = self::CreateXmlDocument($docOptions);
 		if ($checkUTF8)	$xml = FileUtil::CheckUTF8Encode($xml);
 		$xml = XmlUtil::FixXMLHeader($xml);
-		$xml = str_replace("&", "&amp;",$xml);
+		if (($docOptions & XMLUTIL_OPT_DONT_FIX_AMPERSAND) != XMLUTIL_OPT_DONT_FIX_AMPERSAND)
+			$xml = str_replace("&", "&amp;",$xml);
 		XmlUtilKernel::LoadXMLDocument($xmldoc, $xml);
 		XmlUtil::extractNameSpaces($xmldoc);
 		return $xmldoc;
@@ -95,9 +108,9 @@ class XmlUtil
 	* @param DOMNode $node
 	* @return DOMDocument
 	*/
-	public static function CreateDocumentFromNode($node)
+	public static function CreateDocumentFromNode($node, $docOptions = 0)
 	{
-		$xmldoc = self::CreateXmlDocument();
+		$xmldoc = self::CreateXmlDocument($docOptions);
 		XmlUtil::$XMLNSPrefix[spl_object_hash($xmldoc)] = array();
 		$root = $xmldoc->importNode($node, true);
 		$xmldoc->appendChild($root);

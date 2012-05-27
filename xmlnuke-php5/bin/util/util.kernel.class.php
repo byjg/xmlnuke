@@ -239,6 +239,7 @@ class FileUtilKernel extends XMLNukeKernel
 		}
 	}
 }
+
 /**
 *This exception occurs when the requested module not found
 * Errors range 30 and 50
@@ -247,25 +248,34 @@ class FileUtilKernel extends XMLNukeKernel
 */
 class XmlUtilKernel extends XMLNukeKernel 
 {
+	public static function HandleXmlError($errno, $errstr, $errfile, $errline)
+	{
+		if ($errno==E_WARNING && (substr_count($errstr,"DOMDocument::loadXML()")>0))
+		{
+			throw new DOMException(str_replace("DOMDocument::loadXML(): ", "", $errstr));
+		}
+		else
+			return false;
+	}
+
 	/**
 	*@desc Try to load xml document from a string
 	*@param DOMDocument &$document
 	*@param string $xml
 	*@return void
 	*/
-	public static function LoadXMLDocument( &$document, $xml )
+	public static function LoadXMLDocument( $document, $xml )
 	{
-		if(@!$document->loadXML($xml))
-		{
-			throw new XmlUtilException(254, "Not able to load the XML document.");
-		}
+		set_error_handler('XmlUtilKernel::HandleXmlError');
+		@$document->loadXML($xml);
+		restore_error_handler();
 	}
 	/**
 	*@desc Try to save xml document to a file
 	*@param DOMDocument &$document
 	*@return void
 	*/
-	public static function SaveXMLDocument( &$document , $filename)
+	public static function SaveXMLDocument( $document , $filename)
 	{   
 		if (!($document instanceof DOMDocument))
 		{
