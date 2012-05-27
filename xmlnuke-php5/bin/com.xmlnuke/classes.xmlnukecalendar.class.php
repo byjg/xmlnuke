@@ -57,11 +57,12 @@ class XmlnukeCalendar extends XmlnukeDocumentObject
 	* @param int month;
 	* @param int year;
 	*/
-	public function	__construct($month, $year)
-	{		
-		$this->_month = $month;
-		$this->_year = $year;
-		$this->_title = date('F/Y', mktime(0, 0, 0, $month, 1, $year));
+	public function	__construct($month = "", $year = "")
+	{
+		$today = getdate();
+		$this->_month = $month != "" ? $month : $today['mon'];
+		$this->_year = $year != "" ? $year : $today['year'];
+		$this->_title = date('F/Y', mktime(0, 0, 0, $this->_month, 1, $this->_year));
 		
 		$this->_events = array();
 	}
@@ -74,6 +75,16 @@ class XmlnukeCalendar extends XmlnukeDocumentObject
 	public function setTitle($title)
 	{
 		$this->_title = $title;
+	}
+	
+	public function getMonth()
+	{
+		return $this->_month;
+	}
+	
+	public function getYear()
+	{
+		return $this->_year;
 	}
 	
 	public function addCalendarEvent($calendarEvent)
@@ -111,7 +122,7 @@ class XmlnukeCalendarEvent extends XmlnukeCollection implements IXmlnukeDocument
 	protected  $_type;
 	protected  $_text;
 	
-	public function XmlnukeCalendarEvent($day, $type=-1, $text="")
+	public function __construct($day, $type=-1, $text="")
 	{
 		$this->_day = $day;
 		$this->_type = $type;
@@ -130,7 +141,7 @@ class XmlnukeCalendarEvent extends XmlnukeCollection implements IXmlnukeDocument
 		XmlUtil::AddAttribute($nodeCalendarEvent, "day", $this->_day);
 		if ($this->_type > 0)
 		{
-			XmlUtil::AddAttribute($nodeCalendarEvent, "type", $this->_type);
+			XmlUtil::AddAttribute($nodeCalendarEvent, "type", ($this->_type-1) % 24 + 1);
 		}
 		
 		$this->generatePage($nodeCalendarEvent);

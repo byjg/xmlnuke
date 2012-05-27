@@ -387,7 +387,7 @@ class XMLFilenameProcessor extends FilenameProcessor
 	 */
 	public function PrivatePath()
 	{
-		return $this->_context->XmlPath();
+		return $this->_context->XmlPath() . $this->getLanguageId() . FileUtil::Slash();
 	}
 
 	/**

@@ -597,8 +597,13 @@ abstract class BaseModule implements IModule
 				// If exists value, set it;
 				if ($this->_context->ContextValue($propName) != "")
 				{
-					$method = new ReflectionMethod(get_class($obj), "set" . ucfirst($propName));
-					$method->invokeArgs($obj, array($this->_context->ContextValue($propName)));
+					if ($prop->isPublic())
+						$prop->setValue($obj, $this->_context->ContextValue($propName));
+					else
+					{
+						$method = new ReflectionMethod(get_class($obj), "set" . ucfirst($propName));
+						$method->invokeArgs($obj, array($this->_context->ContextValue($propName)));
+					}
 				}
 			}
 		}

@@ -161,8 +161,13 @@ abstract class BaseModel
 				// If exists value, set it;
 				if ($propValue != "")
 				{
-					$method = new ReflectionMethod(get_class($this), "set" . ucfirst(preg_replace($this->_propertyPattern[0], $this->_propertyPattern[1], $propName)));
-					$method->invokeArgs($this, array($propValue));
+					if ($prop->isPublic())
+						$prop->setValue($obj, $propValue);
+					else
+					{
+						$method = new ReflectionMethod(get_class($this), "set" . ucfirst(preg_replace($this->_propertyPattern[0], $this->_propertyPattern[1], $propName)));
+						$method->invokeArgs($this, array($propValue));
+					}
 				}
 			}
 		}

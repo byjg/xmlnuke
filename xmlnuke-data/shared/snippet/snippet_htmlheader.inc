@@ -8,17 +8,6 @@
 	<link type="text/css" href="common/3rdparty/jquery/css/smoothness/jquery-ui-1.8.13.custom.css" rel="stylesheet" />
 	<script type="text/javascript" src="common/3rdparty/jquery/jquery-ui-1.8.13.custom.min.js" />
 	<script type="text/javascript" src="common/3rdparty/jquery/jquery-ui-i18n.min.js" />
-	<style type="text/css">
-		.ui-state-error, .ui-state-highlight {
-			margin: 0.5em;
-		}
-		.ui-state-error p, .ui-state-highlight p
-		{
-			margin: 0.8em 0 0.8em 0;
-			line-height: 1.2em;
-			padding-bottom: 0px;
-		}
-	</style>
 </xsl:if>
 
 <!-- Include specific JavaScript for Sortable  -->
@@ -73,6 +62,35 @@
 
 <!-- Include specific JavaScript for Calendar element -->
 <xsl:if test="//calendar">
+	<style>
+		.bgcaltype   { background-color: black !important; }
+		
+		.bgcaltype1  { background-color: #33E6D9 !important; }
+		.bgcaltype2  { background-color: #FFA600 !important; }
+		.bgcaltype3  { background-color: #A64B00 !important; }
+		.bgcaltype4  { background-color: #8CCCF2 !important; }
+		.bgcaltype5  { background-color: #ED0000 !important; }
+		.bgcaltype6  { background-color: #A6FF00 !important; }
+		.bgcaltype7  { background-color: #8C19A3 !important; }
+		.bgcaltype8  { background-color: #00AAE6 !important; }
+		.bgcaltype9  { background-color: #5CF22C !important; }
+		.bgcaltype10 { background-color: #FF6600 !important; }
+		.bgcaltype11 { background-color: #806600 !important; }
+		.bgcaltype12 { background-color: #0057D9 !important; }
+		
+		.bgcaltype13 { background-color: #8DD3C7 !important; }
+		.bgcaltype14 { background-color: #FFFFB3 !important; }
+		.bgcaltype15 { background-color: #BEBADA !important; }
+		.bgcaltype16 { background-color: #FB8072 !important; }
+		.bgcaltype17 { background-color: #80B1D3 !important; }
+		.bgcaltype18 { background-color: #FDB462 !important; }
+		.bgcaltype19 { background-color: #B3DE69 !important; }
+		.bgcaltype20 { background-color: #FCCDE5 !important; }
+		.bgcaltype21 { background-color: #D9D9D9 !important; }
+		.bgcaltype22 { background-color: #BC80BD !important; }
+		.bgcaltype23 { background-color: #CCEBC5 !important; }
+		.bgcaltype24 { background-color: #FFED6F !important; }
+	</style>
 	<script type="text/javascript">
 	$(function() {
 		$.datepicker.setDefaults($.extend({showMonthAfterYear: false}, $.datepicker.regional[<xsl:call-template name="i18n.jquery" />]));
@@ -80,7 +98,8 @@
 		$("#<xsl:value-of select="@name" />").datepicker({
 			inline: true,
 			defaultDate: new Date ( "<xsl:value-of select="@month"/> 1 <xsl:value-of select="@year"/>" ),
-			onSelect: function (event, ui) { $('#<xsl:value-of select="@name" />_dialog').dialog('open'); }
+			onSelect: function (event, ui) { $('#<xsl:value-of select="@name" />_dialog').dialog('open'); }, 
+			beforeShowDay: function (date) { return colorDayCalendar(date, calDays_<xsl:value-of select="@name" />); }
 		});
 		$('#<xsl:value-of select="@name" />_dialog').dialog({
 			autoOpen: false,
@@ -93,6 +112,11 @@
 		});
 		</xsl:for-each>
 	});
+	
+	function colorDayCalendar(date, calDays)
+	{
+		return [true, calDays['day_' + date.getDate()]];
+	}
 	</script>
 </xsl:if>
 

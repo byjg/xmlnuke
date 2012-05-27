@@ -133,19 +133,29 @@ class FileUtil
 	*@param string $filename
 	*@return array
 	*/
-	public static function QuickFileRead($filename)
+	public static function QuickFileRead($file)
 	{
+		if ($file instanceof FilenameProcessor)
+			$filename = $file->FullQualifiedNameAndPath();
+		else
+			$filename = $file;
+		
 		return FileUtilKernel::getFileContents($filename);
 	}
 
 	/**
-	*@param string $filename
+	*@param string $file
 	*@param string $content
 	*@param bool $append Adiciona ao final ou nao.
 	*@return void
 	*/
-	public static function QuickFileWrite($filename, $content, $append=null)
+	public static function QuickFileWrite($file, $content, $append=null)
 	{
+		if ($file instanceof FilenameProcessor)
+			$filename = $file->FullQualifiedNameAndPath();
+		else
+			$filename = $file;
+		
 		$operacao = "w";
 		if ($append != null)
 		{
