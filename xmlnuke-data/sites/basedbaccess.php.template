@@ -1,0 +1,16 @@
+<?php
+
+class __PROJECT__BaseDBAccess extends BaseDBAccess
+{
+	public static function DatabaseName()
+	{
+		return "__PROJECT_FILE__";		
+	}
+	public function getDataBaseName() 
+	{
+		return __PROJECT__BaseDBAccess::DatabaseName();
+	}
+	//put your code here
+}
+
+?>

@@ -1,0 +1,26 @@
+<?php
+
+class __PROJECT__AdminBaseModule extends __PROJECT__BaseModule
+{
+	public function CreateDocument($title) 
+	{
+		parent::CreateDocument($title);
+	}
+
+	public function requiresAuthentication() 
+	{
+		return true;
+	}
+	
+	public function getAccessLevel() 
+	{
+		return AccessLevel::OnlyAdmin;
+	}
+	
+	public function CreatePage() 
+	{
+		return $this->defaultXmlnukeDocument;
+	}
+}
+
+?>

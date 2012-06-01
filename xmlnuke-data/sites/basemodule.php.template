@@ -1,0 +1,36 @@
+<?php
+
+class __PROJECT__BaseModule extends BaseModule
+{
+	public function CreateDocument($title)
+	{
+		$this->defaultXmlnukeDocument = new XmlnukeDocument($title, "");
+	}
+	
+	public function CreatePage() 
+	{
+		return $this->defaultXmlnukeDocument;
+	}
+	
+	/**
+	 * Returns if use cache
+	 *
+	 * @return bool
+	 */
+	public function useCache() 
+	{
+		return false;
+	}
+
+	/**
+	 * 
+	 * @return boolean 
+	 */
+	public function requiresAuthentication()
+	{
+		return false;
+	}
+	
+}
+
+?>

@@ -1,0 +1,22 @@
+<?php
+
+# Base Classes
+ModuleFactory::IncludePhp("__PROJECT_FILE__.base.__PROJECT_FILE__basemodule");
+ModuleFactory::IncludePhp("__PROJECT_FILE__.base.__PROJECT_FILE__adminbasemodule");
+ModuleFactory::IncludePhp("__PROJECT_FILE__.base.__PROJECT_FILE__basemodel");
+ModuleFactory::IncludePhp("__PROJECT_FILE__.base.__PROJECT_FILE__basedbaccess");
+ModuleFactory::IncludePhp("__PROJECT_FILE__.base.__PROJECT_FILE__baseuiedit");
+
+# Model Classes
+// Put here
+
+# Database Classes
+// Put here
+
+# UIEdit Classes
+// Put here
+
+# XmlObject Classes
+// Put here
+
+?>

@@ -1,6 +1,6 @@
 Const Title = "Create PHP5 Project"
 
-MsgBox "CREATE PHP5 PROJECT" + vbCrLf + "@ 2009" + vbCrLf + "by Joao Gilberto Magalhaes" + vbCrLf + vbCrLf + "Use this batch to create a XMLNuke PHP5 project ready to use on PDT Eclipse or another editor.", 0, Title 
+MsgBox "CREATE PHP5 PROJECT" + vbCrLf + "@ 2012" + vbCrLf + "by Joao Gilberto Magalhaes" + vbCrLf + vbCrLf + "Use this batch to create a XMLNuke PHP5 project ready to use on PDT Eclipse or another editor.", 0, Title 
 
 Dim xmlnukeDir, phpDir, dataDir
 xmlnukeDir = ""
@@ -24,6 +24,8 @@ if phpDir <> "" then
 	home = InputBox ( "Enter the path for the new XMLNuke PHP5 Project", Title, "C:\Projects\XMLNuke")
 	Dim site
 	site = InputBox ( "Enter the site name", Title, "mysite")
+	Dim project
+	project = InputBox ( "Enter the project name", Title, "MyProject")
 	Dim langStr
 	langStr = InputBox ( "Enter the available languages", Title, "en-us pt-br")
 
@@ -82,9 +84,42 @@ if phpDir <> "" then
 		next
 
 		wshshell.run "%COMSPEC% /C mkdir """ & home & "\lib""", 6, True
-		wshshell.run "%COMSPEC% /C mkdir """ & home & "\lib\modules""", 6, True
-		wshshell.run "%COMSPEC% /C copy """ & dataDir & "\sites\module.php.template""  """ & home & "\lib\modules\home.class.php""", 6, True
+		GrepSed dataDir & "\sites\_includelist.php.template", home & "\lib\_includelist.php", "__PROJECT__", project, "__PROJECT_FILE__", LCase(project)
 
+		wshshell.run "%COMSPEC% /C mkdir """ & home & "\lib\modules""", 6, True
+		GrepSed dataDir & "\sites\module.php.template", home & "\lib\modules\home.class.php", "__PROJECT__", project, "__PROJECT_FILE__", LCase(project)
+
+		wshshell.run "%COMSPEC% /C mkdir """ & home & "\lib\base""", 6, True
+		GrepSed dataDir & "\sites\adminbasemodule.php.template", home & "\lib\base\" & LCase(project) & "adminbasemodule.class.php", "__PROJECT__", project, "__PROJECT_FILE__", LCase(project)
+		GrepSed dataDir & "\sites\basedbaccess.php.template", home & "\lib\base\" & LCase(project) & "basedbaccess.class.php", "__PROJECT__", project, "__PROJECT_FILE__", LCase(project)
+		GrepSed dataDir & "\sites\basemodel.php.template", home & "\lib\base\" & LCase(project) & "basemodel.class.php", "__PROJECT__", project, "__PROJECT_FILE__", LCase(project)
+		GrepSed dataDir & "\sites\basemodule.php.template", home & "\lib\base\" & LCase(project) & "basemodule.class.php", "__PROJECT__", project, "__PROJECT_FILE__", LCase(project)
+		GrepSed dataDir & "\sites\baseuiedit.php.template", home & "\lib\base\" & LCase(project) & "baseuiedit.class.php", "__PROJECT__", project, "__PROJECT_FILE__", LCase(project)
+			
+
+		' Creating Anydataset 
+		Set filetxt = filesys.CreateTextFile(home & "\data\anydataset\_db.anydata.xml", True)
+		filetxt.WriteLine "<?xml version=""1.0"" encoding=""utf-8""?>"
+		filetxt.WriteLine "<anydataset>"
+		filetxt.WriteLine "	<row>"
+		filetxt.WriteLine "		<field name=""dbname"">" & LCase(project) & "</field>"
+		filetxt.WriteLine "		<field name=""dbtype"">dsn</field>"
+		filetxt.WriteLine "		<field name=""dbconnectionstring"">mysql://root@localhost/" & LCase(project) & "</field>"
+		filetxt.WriteLine "	</row>"
+		filetxt.WriteLine "</anydataset>"
+		filetxt.Close
+
+		' Creating ConfigEmail 
+		Set filetxt = filesys.CreateTextFile(home & "\data\anydataset\_configemail.anydata.xml", True)
+		filetxt.WriteLine "<?xml version=""1.0"" encoding=""utf-8""?>"
+		filetxt.WriteLine "<anydataset>"
+		filetxt.WriteLine "	<row>"
+		filetxt.WriteLine "		<field name=""destination_id"">DEFAULT</field>"
+		filetxt.WriteLine "		<field name=""email"">youremail@provider.com</field>"
+		filetxt.WriteLine "		<field name=""name"">Your Name</field>"
+		filetxt.WriteLine "	</row>"
+		filetxt.WriteLine "</anydataset>"
+		filetxt.Close
 
 		'
 		' Creating Config file
@@ -97,7 +132,7 @@ if phpDir <> "" then
 		filetxt.WriteLine "$configValues[""xmlnuke.USEABSOLUTEPATHSROOTDIR""] = true; "
 		filetxt.WriteLine "$configValues[""xmlnuke.DEFAULTSITE""]='" & site & "'; "
 		filetxt.WriteLine "$configValues[""xmlnuke.EXTERNALSITEDIR""] = '" & site & "=" & home & "\data'; "
-		filetxt.WriteLine "$configValues[""xmlnuke.PHPLIBDIR""] = 'mylib=" & home & "\lib'; "
+		filetxt.WriteLine "$configValues[""xmlnuke.PHPLIBDIR""] = '" & LCase(project) & "=" & home & "\lib'; "
 		filetxt.WriteLine "$configValues[""xmlnuke.PHPXMLNUKEDIR""] = '" & phpDir & "'; "
 		filetxt.WriteLine "?>"
 		filetxt.Close
@@ -114,7 +149,7 @@ if phpDir <> "" then
 		filetxt.WriteLine ""
 		filetxt.WriteLine "After this you can play with these URLs:"
 		filetxt.WriteLine "http://localhost/xmlnuke.php?xml=home"
-		filetxt.WriteLine "http://localhost/xmlnuke.php?module=mylib.home"
+		filetxt.WriteLine "http://localhost/xmlnuke.php?module=" & LCase(project) & ".home"
 		filetxt.Close
 		
 		MsgBox "Done." & vbCrLf & vbCrLf & "Press OK to read the post install notes.", 0, Title
@@ -130,3 +165,21 @@ if phpDir <> "" then
 	end if
 
 end if
+
+
+
+Sub GrepSed(source, target, search1, replace1, search2, replace2)
+
+	Set objFSO = CreateObject("Scripting.FileSystemObject")
+
+	Set objSource = objFSO.OpenTextFile(source)
+	strContents = objSource.ReadAll
+	objSource.Close
+
+	strContents = Replace(Replace(strContents, search1, replace1), search2, replace2)
+
+	Set objTarget = objFSO.CreateTextFile(target, True)
+	objTarget.Write(strContents)
+	objTarget.Close
+
+End Sub

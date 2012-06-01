@@ -1,6 +1,8 @@
 <?php
 
-class Home extends BaseModule
+ModuleFactory::IncludePhp("__PROJECT_FILE__", "_includelist.php");
+
+class Home extends __PROJECT__BaseModule
 {
 	/**
 	*@desc Default constructor
@@ -8,21 +10,11 @@ class Home extends BaseModule
 	public function __constructor()
 	{}
 
-	/**
-	 * Returns if use cache
-	 *
-	 * @return bool
-	 */
-	public function useCache() 
-	{
-		return false;
-	}
-
 	public function CreatePage() 
 	{
 		$myWords = $this->WordCollection();		
 		
-		$this->defaultXmlnukeDocument = new XmlnukeDocument("Template", "Template Document");
+		$this->defaultXmlnukeDocument = $this->CreateDocument("Template");
 		
 		$block = new XmlBlockCollection("Template Block", BlockPosition::Center);
 		$this->defaultXmlnukeDocument->addXmlnukeObject($block);
@@ -32,11 +24,6 @@ class Home extends BaseModule
 		$block->addXmlnukeObject($p);
 		
 		return $this->defaultXmlnukeDocument;
-	}
-	
-	public function requiresAuthentication()
-	{
-		return false;
 	}
 	
 }

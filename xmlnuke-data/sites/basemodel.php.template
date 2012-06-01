@@ -1,0 +1,12 @@
+<?php
+
+class __PROJECT__BaseModel extends BaseModel
+{
+	public function __construct($object=null)
+	{
+		$this->setPropertyPattern("_", "");
+		parent::__construct($object);
+	}	
+}
+
+?>
