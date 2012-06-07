@@ -77,19 +77,22 @@ function initializeEditList(name, multiple)
 	});
 
 	// Enable line selection
-	$('#editlist.' + name).find('tr.even, tr.odd').click(function() {
-		attrClass = ($(this).attr("class"));
-		if (!multiple)
+	$('#editlist.' + name).find('tr.even, tr.odd').mousedown(function(event) {
+		if (event.which != 3) // Ignoring right click.
 		{
-			$(this).parent().find("tr").removeClass("selected");
-		}
-		if (!attrClass.match("selected"))
-		{
-			$(this).addClass("selected");
-		}
-		else
-		{
-			$(this).removeClass("selected");
+			attrClass = ($(this).attr("class"));
+			if (!multiple)
+			{
+				$(this).parent().find("tr").removeClass("selected");
+			}
+			if (!attrClass.match("selected"))
+			{
+				$(this).addClass("selected");
+			}
+			else
+			{
+				$(this).removeClass("selected");
+			}
 		}
 	});
 
