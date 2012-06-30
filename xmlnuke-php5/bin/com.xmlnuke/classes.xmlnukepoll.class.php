@@ -158,6 +158,7 @@ class XmlnukePoll extends XmlnukeDocumentObject
 				$this->_poll = $this->_context->ContextValue("xmlnuke_poll");
 				$this->_lang = $this->_context->ContextValue("xmlnuke_polllang");
 
+				/*
 				// Try to get the Last IP who vote here.
 				$ok = false;
 				$filelastip = new AnydatasetFilenameProcessor("poll_lastip_" . $this->_poll);
@@ -199,6 +200,8 @@ class XmlnukePoll extends XmlnukeDocumentObject
 					$anylastip->addField("ip", $this->_context->ContextValue("REMOTE_ADDR"));
 					$anylastip->Save();
 				}
+				 */
+				$ok = true;
 
 				// Is My IP Unique? If true I can process the vote.
 				// Note if the poll name, lang and code are wrong the system does not do anything.
@@ -216,7 +219,7 @@ class XmlnukePoll extends XmlnukeDocumentObject
 						$sql = $itf->getSql($this->_tblanswer, $param); // Use only to get Where clause
 						$i = strpos($sql, $this->_tblanswer);
 						$sql = "update " . $this->_tblanswer . " set " .
-							" votes = votes + 1 " .
+							" votes = IFNULL(votes,0) + 1 " .
 							substr($sql, $i + strlen($this->_tblanswer) + 1);
 						$dbdata->execSQL($sql, $param);
 					}

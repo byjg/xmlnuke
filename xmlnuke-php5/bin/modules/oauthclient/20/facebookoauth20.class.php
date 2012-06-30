@@ -39,9 +39,9 @@ class FacebookOAuth20 extends baseOAuth20
 		return parent::preparedUrl($this->GRAPH_API . $url);
 	}
 	
-	public function getData($objectId = "me")
+	public function getData($objectId = "me", $params = null)
 	{
-		return json_decode($this->get(($objectId[0] != "/" ? "/" : "") . $objectId));
+		return json_decode($this->get(($objectId[0] != "/" ? "/" : "") . $objectId, $params));
 	}
 	
 	public function publishData($objectId = "me", $type = "", $params = null)

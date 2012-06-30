@@ -312,7 +312,7 @@ class ManagePoll extends NewBaseAdminModule
 		$buttons->icon = "common/editlist/ic_subcategorias.gif";
 		$buttons->message = $this->myWords->Value("SHOWEDITANSWERS");
 		$buttons->multiple = MultipleSelectType::ONLYONE;
-		$buttons->url = $this->_moduleUrl . "?op=answer";
+		$buttons->url = $this->_moduleUrl . "?op=answer&curpage=0";
 		
 		if ($this->_isdb)
 		{
