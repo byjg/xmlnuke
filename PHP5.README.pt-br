@@ -1,13 +1,13 @@
 ====================================================================
 XMLNuke
-Framework de desenvolvimento de aplicativos baseado em XML
-2009-06-01
+Um framework de desenvolvimento web focado nos dados
+2012-07-07
 http://www.xmlnuke.com/
 --------------------------------------------------------------------
 PHP5 Edition
 Autor : João Gilberto Magalhães
 Mantido por : João Gilberto Magalhães
-Version: 3.5
+Version: 3.8
 ====================================================================
 
 
@@ -35,7 +35,7 @@ Se você quer trabalhar com a versão mais recente você precisa fazer o
 download diretamente do repositório Subversion. 
 
 Faça o download de:
-svn co https://xmlnuke.svn.xmlnuke.com/svnroot/xmlnuke/trunk xmlnuke
+svn co svn://svn.code.sf.net/p/xmlnuke/code/trunk xmlnuke
 
 e digite:
 ./rename-config-files.sh, para o Linux
@@ -53,10 +53,13 @@ ou
 e seguir as instruções contidas nele. 
 
 
-Use o fórum para questões:
+Use the forum for community questions 
 http://forum.xmlnuke.com/
 
-Veja a documentação do XMLNuke em:
+Submit your ticket
+http://support.xmlnuke.com/
+
+See docs about XMLNuke
 http://docs.xmlnuke.com/
 
 ---
