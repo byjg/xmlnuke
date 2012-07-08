@@ -1,13 +1,13 @@
 ====================================================================
 XMLNuke
 Application Development Framework XML Based
-2009-06-01
+2012-07-07
 http://www.xmlnuke.com/
 --------------------------------------------------------------------
 PHP5 Edition
 XMLNuke Author: João Gilberto Magalhães
 Developed by: João Gilberto Magalhães
-Version: 3.5
+Version: 3.8
 ====================================================================
 
 This package contains all files necessaries to run XMLNuke PHP5 Edition
@@ -33,7 +33,7 @@ If you want the most recent version you have to download the files
 from Subversion Repository.
 
 Download from:
-svn co https://xmlnuke.svn.xmlnuke.com/svnroot/xmlnuke/trunk xmlnuke
+svn co svn://svn.code.sf.net/p/xmlnuke/code/trunk xmlnuke
 
 and type:
 ./rename-config-files.sh, for Linux
@@ -50,8 +50,11 @@ or
 and follow the instructions.
 
 
-Use the forum for questions 
+Use the forum for community questions 
 http://forum.xmlnuke.com/
+
+Submit your ticket
+http://support.xmlnuke.com/
 
 See docs about XMLNuke
 http://docs.xmlnuke.com/
