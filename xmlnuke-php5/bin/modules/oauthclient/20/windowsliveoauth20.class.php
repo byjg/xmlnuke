@@ -1,24 +1,17 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
 /**
- * Facebook20 is an OAuth 2.0 client implementation
- * More information can be found at https://developers.facebook.com/docs/reference/api/
+ * WindowsLiveOAuth20 is an OAuth 2.0 client implementation
+ * More information can be found at http://msdn.microsoft.com/en-us/library/live/hh243647.aspx
  *
  * @author jg
  */
-class FacebookOAuth20 extends baseOAuth20
-{
-	protected $GRAPH_API = "https://graph.facebook.com";
-	
-	public function authorizationURL() { return "http://www.facebook.com/dialog/oauth"; }
 
-	public function accessTokenURL() { return "https://graph.facebook.com/oauth/access_token"; }
+class WindowsLiveOAuth20 extends baseOAuth20
+{
+	public function authorizationURL() { return "https://login.live.com/oauth20_authorize.srf"; }
+
+	public function accessTokenURL() { return "https://login.live.com/oauth20_token.srf"; }
 	
 	public function validateRequest($result) {
 		$statusCode = trim(parent::validateRequest($result));

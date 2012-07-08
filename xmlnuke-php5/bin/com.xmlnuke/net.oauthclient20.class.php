@@ -51,7 +51,7 @@ class OAuthClient20
 			$this->_user = $users->getUserName($saveToUser);
 			if ($this->_user == null)
 			{
-				throw new NotAuthenticatedException("You have to be authenticated to access this feature");
+				throw new NotAuthenticatedException("You need to be authenticated in order to save data into a existing user");
 			}
 		}
 
@@ -69,7 +69,7 @@ class OAuthClient20
 			$this->_client_id = $sr->getField("client_id");
 			$this->_client_secret = $sr->getField("client_secret");
 			$this->_redirect_uri = $sr->getField("redirect_uri");
-			$this->_scope = $sr->getField("scope");
+			$this->_scope = $sr->getField("scope") != "" ? $sr->getField("scope") : $this->_scope;
 			
 			$this->_window_top = ($sr->getField("window_top") == "true");
 			$this->_app_uri = $sr->getField("app_uri");
@@ -79,7 +79,7 @@ class OAuthClient20
 		}
 		else
 		{
-			throw new Exception("Cant find OAuth 2.0 AppName " . $appName);
+			throw new Exception("The OAuth 2.0 AppName " . $appName . " is not defined in _oauthclient20.anydata.xml file");
 		}
 
 	}

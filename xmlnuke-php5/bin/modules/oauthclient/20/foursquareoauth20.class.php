@@ -1,24 +1,16 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
 /**
- * Facebook20 is an OAuth 2.0 client implementation
- * More information can be found at https://developers.facebook.com/docs/reference/api/
+ * FourSquareOAuth20 is an OAuth 2.0 client implementation
+ * More information can be found at https://developer.foursquare.com/overview/auth
  *
  * @author jg
  */
-class FacebookOAuth20 extends baseOAuth20
+class FourSquareOAuth20 
 {
-	protected $GRAPH_API = "https://graph.facebook.com";
-	
-	public function authorizationURL() { return "http://www.facebook.com/dialog/oauth"; }
+	public function authorizationURL() { return "https://foursquare.com/oauth2/authenticate"; }
 
-	public function accessTokenURL() { return "https://graph.facebook.com/oauth/access_token"; }
+	public function accessTokenURL() { return "https://foursquare.com/oauth2/access_token"; }
 	
 	public function validateRequest($result) {
 		$statusCode = trim(parent::validateRequest($result));
