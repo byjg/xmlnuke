@@ -8,23 +8,23 @@ echo
 
 if [ -z $1 ] ; then
 
-   XMLNUKE_SVN="https://xmlnuke.svn.sourceforge.net/svnroot/xmlnuke/trunk"
-   svn export $XMLNUKE_SVN/VERSION /tmp/VERSION
-   VERSION=`cat /tmp/VERSION`
+   XMLNUKE_SVN="svn://svn.code.sf.net/p/xmlnuke/code/trunk"
 
 else
 
-   XMLNUKE_SVN="${PWD}"   # USE THE CURRENT WORKAREA
-   VERSION=$1
+   XMLNUKE_SVN="."   # USE THE CURRENT WORKAREA
 
 fi
+
+   svn export $XMLNUKE_SVN/VERSION /tmp/VERSION
+   VERSION=`cat /tmp/VERSION`
 
    svn info $XMLNUKE_SVN/ --xml > /tmp/RELEASE
    RELEASE=`cat /tmp/RELEASE | grep revision -m 1 | sed -e 's/   revision="\(\w*\)">/\1/gi'`
 
    # DOWNLOAD THE REQUIRED FILES
    echo Downloading the required files
-   XMLNUKEDIR=xmlnuke-php5-v${VERSION}r${RELEASE}
+   XMLNUKEDIR=xmlnuke-php5-${VERSION}.${RELEASE}
    mkdir /tmp/$XMLNUKEDIR
    #mkdir /tmp/$XMLNUKEDIR/xmlnuke-php5
    #mkdir /tmp/$XMLNUKEDIR/xmlnuke-php5/data
