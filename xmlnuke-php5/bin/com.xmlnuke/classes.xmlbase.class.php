@@ -177,7 +177,7 @@ class XmlnukeCollection
 			else
 			{
 				XmlUtil::AddNamespaceToDocument($current, "rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-				$node = XmlUtil::CreateChild($current, "rdf:description");
+				$node = XmlUtil::CreateChild($current, "rdf:Description");
 				XmlUtil::AddAttribute($node, "rdf:about", $_rdfAbout);
 				$nodeType = XmlUtil::CreateChild($node, "rdf:type");
 				XmlUtil::AddAttribute($nodeType, "rdf:resource", $_rdfType);
@@ -227,7 +227,8 @@ class XmlnukeCollection
 				$_propName = $propAttributes["$config:nodename"] != "" ? $propAttributes["$config:nodename"] : $propName;
 				if (strpos($_propName, ":") === false) $_propName = $_defaultPrefix . $_propName;
 				$_attributeOf = $_isRDF ? "" : $propAttributes["$config:isattributeof"];
-				$_isLabelOf = $_isRDF ? $propAttributes["$config:islabelof"] : "";
+				$_isBlankNode = $_isRDF ? $propAttributes["$config:isblanknode"] : "";
+				$_isResourceUri = $_isRDF && array_key_exists("$config:isresourceuri", $propAttributes); // Valid Only Inside BlankNode
 				$_isClassAttr = $_isRDF ? false : array_key_exists("$config:isclassattribute", $propAttributes);
 				$_dontCreatePropNode = array_key_exists("$config:dontcreatenode", $propAttributes);
 				
@@ -267,8 +268,24 @@ class XmlnukeCollection
 				{
 					if ($_isClassAttr)
 						XmlUtil::AddAttribute ($node, $_propName, $propValue);
-					elseif (($_isLabelOf != "") && (array_key_exists($_isLabelOf, $nodeRefs)))
-						XmlUtil::CreateChild($nodeRefs[$_isLabelOf], "rdfs:label", $propValue);
+					elseif ($_isBlankNode != "")
+					{ 
+						if (!array_key_exists($_isBlankNode, $nodeRefs))
+						{
+							$nodeRefs[$_isBlankNode] = XmlUtil::CreateChild($node, $_isBlankNode);
+							XmlUtil::AddAttribute($nodeRefs[$_isBlankNode], "rdf:parseType", "Resource");
+						}
+
+						if ($_isResourceUri)
+						{
+							$blankNodeType = XmlUtil::CreateChild($nodeRefs[$_isBlankNode], "rdf:type");
+							XmlUtil::AddAttribute($blankNodeType, "rdf:resource", $propValue);
+						}
+						else 
+						{
+							XmlUtil::CreateChild($nodeRefs[$_isBlankNode], $_propName, $propValue);
+						}
+					}
 					elseif (($_attributeOf != "") && (array_key_exists($_attributeOf, $nodeRefs)))
 						XmlUtil::AddAttribute ($nodeRefs[$_attributeOf], $_propName, $propValue);
 					elseif ((preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $propValue)) && $_isRDF)
