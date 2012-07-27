@@ -22,24 +22,37 @@ else
 	SITE="$2"
 	PROJECT="$3"
 	PROJECT_FILE="`echo $PROJECT | tr '[:upper:]' '[:lower:]'`"
-	XMLNUKE="`dirname $0`"
+	XMLNUKE=$(readlink -f ${0%/*})
 
-	if [ -d "$XMLNUKE/xmlnuke-php5" ]
+	PHPDIR="$XMLNUKE/xmlnuke-php5"
+	DATADIR="$XMLNUKE/xmlnuke-data"
+
+	if [ -d "$PHPDIR" ]
 	then
+		if [ ! -d "$DATADIR" ]
+		then
+			DATADIR="$PHPDIR/data"
+			if [ ! -d "$DATADIR" ]
+			then
+				echo XMLNuke release not found!!! Cannot continue.
+				exit
+			fi
+		fi
+
 		if [ -d "$HOME" ]
 		then
 
-			ln -sf "$XMLNUKE/xmlnuke-php5/imagevalidate.php" "$HOME/"
-			ln -sf "$XMLNUKE/xmlnuke-php5/xmlnukeadmin.php" "$HOME/"
-			ln -sf "$XMLNUKE/xmlnuke-php5/xmlnuke.inc.php" "$HOME/"
-			ln -sf "$XMLNUKE/xmlnuke-php5/check_install.php.rename_to_work" "$HOME/check_install.php"
-			ln -sf "$XMLNUKE/xmlnuke-php5/index.php.rename_to_work" "$HOME/index.php"
-			ln -sf "$XMLNUKE/xmlnuke-php5/xmlnuke.php" "$HOME/"
+			ln -sf "$PHPDIR/imagevalidate.php" "$HOME/"
+			ln -sf "$PHPDIR/xmlnukeadmin.php" "$HOME/"
+			ln -sf "$PHPDIR/xmlnuke.inc.php" "$HOME/"
+			ln -sf "$PHPDIR/check_install.php.rename_to_work" "$HOME/check_install.php"
+			ln -sf "$PHPDIR/index.php.rename_to_work" "$HOME/index.php"
+			ln -sf "$PHPDIR/xmlnuke.php" "$HOME/"
 
-			ln -sf "$XMLNUKE/xmlnuke-php5/writepage.inc.php.rename_to_work" "$HOME/writepage.inc.php"
-			ln -sf "$XMLNUKE/xmlnuke-php5/unittest.php" "$HOME/"
-			ln -sf "$XMLNUKE/xmlnuke-php5/webservice.php" "$HOME/"
-			ln -sf "$XMLNUKE/xmlnuke-php5/chart.php" "$HOME/"
+			ln -sf "$PHPDIR/writepage.inc.php.rename_to_work" "$HOME/writepage.inc.php"
+			ln -sf "$PHPDIR/unittest.php" "$HOME/"
+			ln -sf "$PHPDIR/webservice.php" "$HOME/"
+			ln -sf "$PHPDIR/chart.php" "$HOME/"
 			
 			
 			touch "$HOME/config.inc.php"
@@ -56,11 +69,11 @@ else
 			while [ ! -z "$4" ]
 			do
 				mkdir -p "$HOME/data/xml/$4"
-				cp "$XMLNUKE/xmlnuke-data/sites/index.xsl.template" "$HOME/data/xsl/index.$4.xsl"
-				cp "$XMLNUKE/xmlnuke-data/sites/page.xsl.template" "$HOME/data/xsl/page.$4.xsl"
-				cp "$XMLNUKE/xmlnuke-data/sites/index.xml.template" "$HOME/data/xml/$4/index.$4.xml"
-				cp "$XMLNUKE/xmlnuke-data/sites/home.xml.template" "$HOME/data/xml/$4/home.$4.xml"
-				cp "$XMLNUKE/xmlnuke-data/sites/notfound.xml.template" "$HOME/data/xml/$4/notfound.$4.xml"
+				cp "$DATADIR/sites/index.xsl.template" "$HOME/data/xsl/index.$4.xsl"
+				cp "$DATADIR/sites/page.xsl.template" "$HOME/data/xsl/page.$4.xsl"
+				cp "$DATADIR/sites/index.xml.template" "$HOME/data/xml/$4/index.$4.xml"
+				cp "$DATADIR/sites/home.xml.template" "$HOME/data/xml/$4/home.$4.xml"
+				cp "$DATADIR/sites/notfound.xml.template" "$HOME/data/xml/$4/notfound.$4.xml"
 				echo "xmlnuke\n+home.$4.xml" > "$HOME/data/xml/$4/index.php.btree"
 				shift
 			done
@@ -68,17 +81,17 @@ else
 			chmod 777 -R "$HOME/data"
 
 			mkdir -p "$HOME/lib"
-			cat "$XMLNUKE/xmlnuke-data/sites/_includelist.php.template" | sed -e "s/__PROJECT__/$PROJECT/gi" | sed -e "s/__PROJECT_FILE__/$PROJECT_FILE/gi" > "$HOME/lib/_includelist.php"
+			cat "$DATADIR/sites/_includelist.php.template" | sed -e "s/__PROJECT__/$PROJECT/gi" | sed -e "s/__PROJECT_FILE__/$PROJECT_FILE/gi" > "$HOME/lib/_includelist.php"
 
 			mkdir -p "$HOME/lib/modules"
-			cat "$XMLNUKE/xmlnuke-data/sites/module.php.template" | sed -e "s/__PROJECT__/$PROJECT/gi" | sed -e "s/__PROJECT_FILE__/$PROJECT_FILE/gi" > "$HOME/lib/modules/home.class.php"
+			cat "$DATADIR/sites/module.php.template" | sed -e "s/__PROJECT__/$PROJECT/gi" | sed -e "s/__PROJECT_FILE__/$PROJECT_FILE/gi" > "$HOME/lib/modules/home.class.php"
 
 			mkdir -p "$HOME/lib/base"
-			cat "$XMLNUKE/xmlnuke-data/sites/adminbasemodule.php.template" | sed -e "s/__PROJECT__/$PROJECT/gi" | sed -e "s/__PROJECT_FILE__/$PROJECT_FILE/gi"  > "$HOME/lib/base/${PROJECT_FILE}adminbasemodule.class.php"
-			cat "$XMLNUKE/xmlnuke-data/sites/basedbaccess.php.template" | sed -e "s/__PROJECT__/$PROJECT/gi" | sed -e "s/__PROJECT_FILE__/$PROJECT_FILE/gi"  > "$HOME/lib/base/${PROJECT_FILE}basedbaccess.class.php"
-			cat "$XMLNUKE/xmlnuke-data/sites/basemodel.php.template" | sed -e "s/__PROJECT__/$PROJECT/gi" | sed -e "s/__PROJECT_FILE__/$PROJECT_FILE/gi"  > "$HOME/lib/base/${PROJECT_FILE}basemodel.class.php"
-			cat "$XMLNUKE/xmlnuke-data/sites/basemodule.php.template" | sed -e "s/__PROJECT__/$PROJECT/gi" | sed -e "s/__PROJECT_FILE__/$PROJECT_FILE/gi"  > "$HOME/lib/base/${PROJECT_FILE}basemodule.class.php"
-			cat "$XMLNUKE/xmlnuke-data/sites/baseuiedit.php.template" | sed -e "s/__PROJECT__/$PROJECT/gi" | sed -e "s/__PROJECT_FILE__/$PROJECT_FILE/gi"  > "$HOME/lib/base/${PROJECT_FILE}baseuiedit.class.php"
+			cat "$DATADIR/sites/adminbasemodule.php.template" | sed -e "s/__PROJECT__/$PROJECT/gi" | sed -e "s/__PROJECT_FILE__/$PROJECT_FILE/gi"  > "$HOME/lib/base/${PROJECT_FILE}adminbasemodule.class.php"
+			cat "$DATADIR/sites/basedbaccess.php.template" | sed -e "s/__PROJECT__/$PROJECT/gi" | sed -e "s/__PROJECT_FILE__/$PROJECT_FILE/gi"  > "$HOME/lib/base/${PROJECT_FILE}basedbaccess.class.php"
+			cat "$DATADIR/sites/basemodel.php.template" | sed -e "s/__PROJECT__/$PROJECT/gi" | sed -e "s/__PROJECT_FILE__/$PROJECT_FILE/gi"  > "$HOME/lib/base/${PROJECT_FILE}basemodel.class.php"
+			cat "$DATADIR/sites/basemodule.php.template" | sed -e "s/__PROJECT__/$PROJECT/gi" | sed -e "s/__PROJECT_FILE__/$PROJECT_FILE/gi"  > "$HOME/lib/base/${PROJECT_FILE}basemodule.class.php"
+			cat "$DATADIR/sites/baseuiedit.php.template" | sed -e "s/__PROJECT__/$PROJECT/gi" | sed -e "s/__PROJECT_FILE__/$PROJECT_FILE/gi"  > "$HOME/lib/base/${PROJECT_FILE}baseuiedit.class.php"
 			
 			echo '<?xml version="1.0" encoding="utf-8"?>' > "$HOME/data/anydataset/_db.anydata.xml"
 			echo '<anydataset>' >> "$HOME/data/anydataset/_db.anydata.xml"
@@ -101,12 +114,12 @@ else
 			echo "<?php" > "$HOME/config.default.php"
 			echo "# This file was generated by create-php5-project.sh. " >> "$HOME/config.default.php"
 			echo "# You can safely remove this file after you XMLNuke installation is running." >> "$HOME/config.default.php"
-			echo "\$configValues[\"xmlnuke.ROOTDIR\"]='$XMLNUKE/xmlnuke-data'; " >> "$HOME/config.default.php"
+			echo "\$configValues[\"xmlnuke.ROOTDIR\"]='$DATADIR'; " >> "$HOME/config.default.php"
 			echo "\$configValues[\"xmlnuke.USEABSOLUTEPATHSROOTDIR\"] = true; " >> "$HOME/config.default.php"
 			echo "\$configValues[\"xmlnuke.DEFAULTSITE\"]='$SITE'; " >> "$HOME/config.default.php"
 			echo "\$configValues[\"xmlnuke.EXTERNALSITEDIR\"] = '$SITE=$HOME/data'; " >> "$HOME/config.default.php"
 			echo "\$configValues[\"xmlnuke.PHPLIBDIR\"] = '${PROJECT_FILE}=$HOME/lib'; " >> "$HOME/config.default.php"
-			echo "\$configValues[\"xmlnuke.PHPXMLNUKEDIR\"] = '$XMLNUKE/xmlnuke-php5'; " >> "$HOME/config.default.php"
+			echo "\$configValues[\"xmlnuke.PHPXMLNUKEDIR\"] = '$PHPDIR'; " >> "$HOME/config.default.php"
 			echo "?>" >> "$HOME/config.default.php"
 		
 
