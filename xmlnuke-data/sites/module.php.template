@@ -14,7 +14,7 @@ class Home extends __PROJECT__BaseModule
 	{
 		$myWords = $this->WordCollection();		
 		
-		$this->defaultXmlnukeDocument = $this->CreateDocument("Template");
+		$this->CreateDocument("Template");
 		
 		$block = new XmlBlockCollection("Template Block", BlockPosition::Center);
 		$this->defaultXmlnukeDocument->addXmlnukeObject($block);

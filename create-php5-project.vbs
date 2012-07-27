@@ -13,8 +13,16 @@ xmlnukeDir = filesys.GetParentFolderName(Wscript.ScriptFullName)
 if filesys.FileExists(xmlnukeDir & "\xmlnuke-php5\xmlnuke.php") then
 	phpDir = xmlnukeDir & "\xmlnuke-php5"
         dataDir = xmlnukeDir & "\xmlnuke-data"
+	if not filesys.FileExists(dataDir & "\anydataset.dtd") then
+		dataDir = phpDir & "\data"
+		if not filesys.FileExists(dataDir & "\anydataset.dtd") then
+			MsgBox "Xmlnuke release not found!!! Cannot continue."
+			phpDir = ""
+		end if
+	end if
 else
 	MsgBox "XMLNuke release not found!!! Cannot continue."	
+	phpDir = ""
 end if
 
 
