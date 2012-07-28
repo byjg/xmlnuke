@@ -599,6 +599,8 @@ class XmlnukeProviderFactory
 			$SQL = str_replace ( "[[" . $key . "]]", $arg, $SQL );
 		}
 		
+		$SQL = preg_replace("/\[\[[\w\d\-\.]+\]\]/", "null", $SQL);
+		
 		return $SQL;
 	}
 	

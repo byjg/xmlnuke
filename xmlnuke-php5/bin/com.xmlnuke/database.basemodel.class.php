@@ -36,8 +36,8 @@ abstract class BaseModel
 	protected $_propertyPattern = array('/(\w*)/', '$1');
 
 	/**
-	 *
-	 * @param SingleRow $object
+	 * Construct a model and optionally can set (bind) your properties base and the attribute matching from SingleRow, IIterator or the Xmlnuke Context
+	 * @param Object $object
 	 * @return void
 	 */
 	public function __construct($object=null)
@@ -73,7 +73,7 @@ abstract class BaseModel
 	}
 
 	/**
-	 * Bind public string class parameters based on Request Get e Form
+	 * Set the public properties based on the matching with the SingleRow->getField()
 	 *
 	 * @param SingleRow $sr
 	 */
@@ -92,7 +92,7 @@ abstract class BaseModel
 	}
 
 	/**
-	 * Enter description here...
+	 * Set the public properties based on the first iteration matching with IIterater->moveNext()->getField() 
 	 *
 	 * @param IIterator $it
 	 */
@@ -107,9 +107,9 @@ abstract class BaseModel
 
 
 	/**
-	 * Bind public string class parameters based on Request Get e Form
+	 * Set the public properties based on the Get/Post request defined in the XMLnuke context;
 	 *
-	 * @param SingleRow $sr
+	 * @param Context $context
 	 */
 	public function bindFromContext($context)
 	{
@@ -125,6 +125,11 @@ abstract class BaseModel
 		$this->bindObject($context);
 	}
 
+	/**
+	 * Set the public properties based on the public properties existing in the $object variable
+	 *
+	 * @param Object object
+	 */
 	protected function bindObject($object)
 	{
 		$class = new ReflectionClass(get_class($this));
@@ -162,7 +167,7 @@ abstract class BaseModel
 				if ($propValue != "")
 				{
 					if ($prop->isPublic())
-						$prop->setValue($obj, $propValue);
+						$prop->setValue($object, $propValue);
 					else
 					{
 						$method = new ReflectionMethod(get_class($this), "set" . ucfirst(preg_replace($this->_propertyPattern[0], $this->_propertyPattern[1], $propName)));
