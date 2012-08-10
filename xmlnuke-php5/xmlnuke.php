@@ -32,6 +32,8 @@
 
 	$selectNodes = $context->ContextValue("xpath");
 	$alternateFilename = str_replace(".", "_", ($context->ContextValue("fn") != "" ? $context->ContextValue("fn") : ($context->getModule() != "" ? $context->getModule() : $context->getXml())));
+	$extraParam = array();
+	
 	if ($context->ContextValue("rawxml")!="")
 	{
 		$output = XmlNukeEngine::OUTPUT_XML;
@@ -41,6 +43,7 @@
 	elseif ($context->ContextValue("rawjson")!="")
 	{
 		$output = XmlNukeEngine::OUTPUT_JSON;
+		$extraParam["json_function"] = $context->Value("jsonfn");
 		header("Content-Type: application/json; charset=utf-8");
 		header("Content-Disposition: inline; filename=\"{$alternateFilename}.json\";");
 	}
@@ -69,7 +72,7 @@
 		}
 	}
 	
-	$engine = new XmlNukeEngine($context, $output, $selectNodes);
+	$engine = new XmlNukeEngine($context, $output, $selectNodes, $extraParam);
 	if ($context->ContextValue("remote")!="")
 	{
 		echo $engine->TransformDocumentRemote($context->ContextValue("remote"));

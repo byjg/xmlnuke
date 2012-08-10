@@ -546,7 +546,7 @@ class XmlUtil
 	{
 		$doc = XmlUtilKernel::getOwnerDocument($node);
 		$string = $doc->saveXML($node);
-		return "<rootxml>$string</rootxml>";
+		return $string;
 	}
 
 	/**
@@ -602,115 +602,49 @@ class XmlUtil
 		}
 	}
 
-	/**
-	 *
-	 * @param DOMElement $domnode
-	 */
-	public static function xml2array($domnode, $attributes = false, $onlyData = false)
+	public static function xml2Array($arr, $func = "") 
 	{
-		if ($arr == null) $arr = array();
-
-		$keys = array();
-        foreach($domnode->childNodes as $element)
+		if ($arr instanceof SimpleXMLElement)
 		{
-			$name = trim($element->nodeName);
-			$parent = trim($domnode->nodeName);
-
-			// For Editlist
-			if ($name == "#text")
-				continue;
-			
-			else if (($name == "editlist") && ($_REQUEST["xpath"] != ""))
-			{
-				// Get Field Names
-				$fieldList = XmlUtil::selectNodes($element, "row[1]/field");
-				$fieldNames = array();
-				$cnt = 1;
-				foreach($fieldList as $fieldElement)
-				{
-					$source = $fieldElement->getAttribute("source");
-					if (is_null($source) || ($source == ""))
-					{
-						$source = "field$cnt";
-					}
-					elseif (array_key_exists($source, $fieldNames))
-					{
-						$source = "field$cnt";
-					}
-					$fieldNames[$source] = ".";
-					$cnt++;
-				}
-
-				// Iterate each row to get values
-				$fieldNames = array_keys($fieldNames);
-				$rowList = XmlUtil::selectNodes($element, "row");
-				foreach($rowList as $row)
-				{
-					$arrTemp = array();
-					$cnt = 0;
-					$fieldList = XmlUtil::selectNodes($row, "field");
-					foreach($fieldNames as $fld)
-					{
-						$node = $fieldList->item($cnt);
-						if ($node != null)
-						{
-							$arrTemp[$fld] = $node->nodeValue;
-						}
-						else
-						{
-							$arrTemp[$fld] = "null";
-						}
-						$cnt++;
-					}
-					$arr[] = $arrTemp;
-				}
-			}
-			
-			// Select from EditForm
-			elseif (($name == "select") && ($_REQUEST["xpath"] != ""))
-			{
-				$nodeList = XmlUtil::selectNodes($element, "option");
-				foreach($nodeList as $node)
-				{
-					$id = $node->getAttribute("value");
-					$value = $node->nodeValue;
-					$arr[] = array("id"=>$id, "value"=>$value);
-				}
-			}
-			
-			// Generic
-			elseif ( (!$element->hasChildNodes()) || (($element->childNodes->length == 1) && ($element->childNodes->item(0) instanceof DOMText)) )
-			{
-				$arr[] = array($name => trim($element->nodeValue));
-			}
-			
-			// Recursive
-			else
-			{
-				if ($element->nodeName != 'xmlnuke') // XPATH
-					$arr[$name][] = XmlUtil::xml2array($element, $attributes);
-				else
-					$arr[$name] = XmlUtil::xml2array($element, $attributes);
-			}
-
-			if ($attributes && $domnode->hasAttributes())
-			{
-				foreach($domnode->attributes as $attr)
-				{
-					$arr[$name]["@".$attr->name] = $attr->value;
-				}
-			}
-        }
-        return $arr;
+			return XmlUtil::xml2Array((array)$arr, $func);
+		}
+		
+		if (($arr instanceof DOMElement) || ($arr instanceof DOMDocument))
+		{
+			return XmlUtil::xml2Array((array)simplexml_import_dom($arr), $func);
+		}
+		
+		$newArr = array(); 
+		if (!empty($arr)) 
+		{ 
+			foreach($arr AS $key => $value) 
+			{ 
+				$newArr[$key] = 
+					(is_array($value) || ($value instanceof DOMElement) || ($value instanceof DOMDocument) || ($value instanceof SimpleXMLElement) ? XmlUtil::xml2Array($value, $func) : (
+							!empty($func) ? $func($value) : $value
+						)
+					); 
+			} 
+		} 
+		
+		return $newArr; 
 	}
 
-	public static function xml2json($domnode, $attributes)
+	public static function xml2json($domnode, $jsonFunction)
 	{
-		$arr = XmlUtil::xml2array($domnode, $attributes);
-		foreach ($arr as $items)
+		$xml = simplexml_import_dom($domnode);
+		
+		$pre = $pos = "";
+		if (!empty($jsonFunction))
 		{
-			return json_encode($items);
+			$pre = "(";
+			$pos = ")";
 		}
+		
+		if ($xml->getName() == "xmlnuke")
+			return $jsonFunction . $pre . json_encode($xml->children()) . $pos;
+		else
+			return $jsonFunction . $pre . json_encode($xml) . $pos;
 	}
 }
 ?>

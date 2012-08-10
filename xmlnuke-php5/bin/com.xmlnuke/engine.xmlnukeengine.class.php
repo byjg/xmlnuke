@@ -56,15 +56,25 @@ class XmlNukeEngine
 	 * @var string
 	 */
 	protected $_extractNodesRoot = "xmlnuke";
+	
+	protected $_extraParams = array();
 
 	/**
-	 *
+	 * Known $extraParams:
+	 *     root_node = XML Root Node
+	 *     json_funcion = return a JSON function instead a single JSON
+	 * 
 	 * @param Context $context
 	 * @param string $outputResult
 	 * @param string $extractNodes
 	 * @param string $extractNodesRoot
 	 */
-	public function __construct($context, $outputResult = XmlNukeEngine::OUTPUT_TRANSFORMED_DOC, $extractNodes = "", $extractNodesRoot = "xmlnuke")
+	public function __construct(
+			$context, 
+			$outputResult = XmlNukeEngine::OUTPUT_TRANSFORMED_DOC, 
+			$extractNodes = "", 
+			$extraParams = array()
+	)
 	{
 		$this->_context = $context;
 		if (is_bool($outputResult))
@@ -73,7 +83,14 @@ class XmlNukeEngine
 		}
 		$this->_outputResult = $outputResult;
 		$this->_extractNodes = $extractNodes;
-		$this->_extractNodesRoot = $extractNodesRoot;
+		
+		if (!is_array($extraParams))
+			throw new Exception("Engine extra parameters must be an array");
+		else
+			$this->_extraParams = $extraParams;
+		
+		if ($this->_extraParams["root_node"] != null)
+			$this->_extractNodesRoot = $this->_extraParams["root_node"];
 	}
 
 	/**
@@ -356,7 +373,7 @@ class XmlNukeEngine
 
 			if ($this->_outputResult == XmlNukeEngine::OUTPUT_JSON)
 			{
-				return XmlUtil::xml2json($outDocument, false);
+				return XmlUtil::xml2json($outDocument, $this->_extraParams["json_function"]);
 			}
 			else // Default XML.
 			{

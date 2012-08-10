@@ -62,19 +62,31 @@ class DBDataSet
 		
 		if ($this->_connectionManagement->getDriver () == "sqlrelay") 
 		{
-			$this->_conn = sqlrcon_alloc ( $this->_connectionManagement->getServer(), $this->_connectionManagement->getPort(), $this->_connectionManagement->getExtraParam("unixsocket"), $this->_connectionManagement->getUsername(), $this->_connectionManagement->getPassword(), 0, 1 );
+			$this->_conn = sqlrcon_alloc ( 
+					$this->_connectionManagement->getServer(), 
+					$this->_connectionManagement->getPort(), 
+					$this->_connectionManagement->getExtraParam("unixsocket"), 
+					$this->_connectionManagement->getUsername(), 
+					$this->_connectionManagement->getPassword(), 
+					0, 
+					1 
+				);
 		}
 		else
 		{
 			if ($this->_connectionManagement->getDriver () == "literal")
 			{
-				$strcnn = $this->_connectionManagement->getServer();
+				$strcnn = $this->_connectionManagement->getDbConnectionString();
+			}
+			else if ($this->_connectionManagement->getDriver () == "odbc")
+			{
+				$strcnn = $this->_connectionManagement->getDriver () . ":" . $this->_connectionManagement->getServer ();
 			}
 			else 
 			{
 				$strcnn = $this->_connectionManagement->getDriver () . ":host=" . $this->_connectionManagement->getServer () . ";dbname=" . $this->_connectionManagement->getDatabase ();
 			}
-			
+
 			// Create Connection
 			$this->_db = new PDO ( $strcnn, $this->_connectionManagement->getUsername (), $this->_connectionManagement->getPassword () );
 			$this->_connectionManagement->setDriver($this->_db->getAttribute(PDO::ATTR_DRIVER_NAME));
@@ -393,68 +405,86 @@ class DBDataSet
  * Enter description here...
  *
  */
-class ConnectionManagement {
+class ConnectionManagement 
+{
 	protected $_dbtype;
-	public function setDbType($value) {
-		$this->_dbtype = $value;
+	public function setDbType($value) 
+	{
+	    $this->_dbtype = $value;
 	}
-	public function getDbType() {
-		return $this->_dbtype;
+	
+	public function getDbType() 
+	{
+	    return $this->_dbtype;
 	}
 	
 	protected $_dbconnectionstring;
-	public function setDbConnectionString($value) {
+	public function setDbConnectionString($value) 
+	{
 		$this->_dbconnectionstring = $value;
 	}
-	public function getDbConnectionString() {
+	public function getDbConnectionString() 
+	{
 		return $this->_dbconnectionstring;
 	}
 	
 	protected $_driver;
-	public function setDriver($value) {
+	public function setDriver($value) 
+	{
 		$this->_driver = $value;
 	}
-	public function getDriver() {
+	public function getDriver() 
+	{
 		return $this->_driver;
 	}
 	
 	protected $_username;
-	public function setUsername($value) {
+	public function setUsername($value) 
+	{
 		$this->_username = $value;
 	}
-	public function getUsername() {
+	public function getUsername() 
+	{
 		return $this->_username;
 	}
 	
 	protected $_password;
-	public function setPassword($value) {
+	public function setPassword($value) 
+	{
 		$this->_password = $value;
 	}
-	public function getPassword() {
+	public function getPassword() 
+	{
 		return $this->_password;
 	}
 	
 	protected $_server;
-	public function setServer($value) {
+	public function setServer($value) 
+	{
 		$this->_server = $value;
 	}
-	public function getServer() {
+	public function getServer() 
+	{
 		return $this->_server;
 	}
 	
 	protected $_port;
-	public function setPort($value) {
+	public function setPort($value) 
+	{
 		$this->_port = $value;
 	}
-	public function getPort() {
+	public function getPort() 
+	{
 		return $this->_port;
 	}
 	
 	protected $_database;
-	public function setDatabase($value) {
+	public function setDatabase($value) 
+	{
 		$this->_database = $value;
 	}
-	public function getDatabase() {
+	public function getDatabase() 
+	{
 		return $this->_database;
 	}
 	
@@ -511,7 +541,7 @@ class ConnectionManagement {
 		    DSN=DRIVER://USERNAME[:PASSWORD]@SERVER/DATABASE[?PARAMETERS]
     		*/
 			
-			$pat = "/([\w\.]+)\:\/\/([\w\.$!%&\-_]+)(?::([\w\.$!%&#\*\+=\[\]\(\)\-_]+))?@([\w\-\.]+)(?::(\d+))?\/([\w\.]+)/i";
+			$pat = "/([\w\.]+)\:\/\/([\w\.$!%&\-_]+)(?::([\w\.$!%&#\*\+=\[\]\(\)\-_]+))?@([\w\-\.]+)(?::(\d+))?\/([\w\.]+)(?:\?((?:[\w\.]+=[\w\.]+&?)*))?/i";
 			$parts = preg_split ( $pat, $this->_dbconnectionstring, - 1, PREG_SPLIT_DELIM_CAPTURE );
 			
 			$this->setDriver ( $parts [1] );
@@ -521,28 +551,34 @@ class ConnectionManagement {
 			$this->setPort ( $parts [5] );
 			$this->setDatabase ( $parts [6] );
 			
+			if ($parts[7] != null)
+			{
+				$arrAux = explode('&', $parts[7]);
+				foreach($arrAux as $item)
+				{
+					$aux = explode("=", $item);
+					$this->addExtraParam($aux[0], $aux[1]);
+				}
+			}
+			
 			$user = $parts [2];
 			$pass = $parts [4];
 		}
+		else if ( $this->getDbType() == "literal" )
+		{
+			$parts = explode("|", $this->_dbconnectionstring);
+			$this->_dbconnectionstring = $parts[0];
+			$this->setUsername($parts[1]);
+			$this->setPassword($parts[2]);
+		}
 		else if ($this->_dbconnectionstring != "") 
 		{
-			if ( $this->getDbType() == "literal" )
-			{
-				$connection_string = explode( "|", $this->_dbconnectionstring );
-				$this->setDriver ( $this->getDbType () );
-				$this->setUsername ( $connection_string [1] );
-				$this->setPassword ( $connection_string [2] );
-				$this->setServer ( $connection_string [0] );
-			}
-			else
-			{
-				$connection_string = explode( ";", $this->_dbconnectionstring );
-				$this->setDriver ( $this->getDbType () );
-				$this->setUsername ( $connection_string [1] );
-				$this->setPassword ( $connection_string [2] );
-				$this->setServer ( $connection_string [0] );
-				$this->setDatabase ( $connection_string [3] );
-			}
+			$connection_string = explode( ";", $this->_dbconnectionstring );
+			$this->setDriver ( $this->getDbType () );
+			$this->setUsername ( $connection_string [1] );
+			$this->setPassword ( $connection_string [2] );
+			$this->setServer ( $connection_string [0] );
+			$this->setDatabase ( $connection_string [3] );
 		}
 	}
 
