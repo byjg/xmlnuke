@@ -28,7 +28,7 @@
 */
 
 /**
- * Row from a AnyDataSet based. 
+ * Row from a AnyDataSet based.
  * @package xmlnuke
  */
 class SingleRow
@@ -46,19 +46,22 @@ class SingleRow
 	* SingleRow constructor
 	* @param array()
 	*/
-	public function __construct($array = null)
+	public function __construct($instance = null)
 	{
-		if (is_null($array))
+		if (is_null($instance))
 		{
-			$array = array();
+			$this->_row = array();
+		}
+		else if (is_array ($instance))
+		{
+			$this->_row = $instance;
+		}
+		else
+		{
+			$this->_row = array();
+			$this->bindFromObject($instance);
 		}
 
-		if (!is_array($array))
-		{
-			throw new XMLNukeException("SingleRow construct expects an array");
-		}
-
-		$this->_row = $array;
 		$this->acceptChanges();
 	}
 
@@ -92,7 +95,7 @@ class SingleRow
 	{
 		if (!array_key_exists($name, $this->_row))
 			return NULL;
-		
+
 		$result = $this->_row[$name];
 		if (is_array($result))
 		{
@@ -114,7 +117,7 @@ class SingleRow
 	{
 		if (!array_key_exists($name, $this->_row))
 			return array();
-		
+
 		$result = $this->_row[$name];
 		if (($result == null) || ($result == ""))
 		{
@@ -307,5 +310,44 @@ class SingleRow
 	{
 		$this->_node = null;
 	}
+
+	protected function bindFromObject($instance)
+	{
+		$class = new ReflectionClass(get_class($instance));
+
+		$properties = $class->getProperties( ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PRIVATE | ReflectionProperty::IS_PUBLIC );
+
+		if (!is_null($properties))
+		{
+			foreach ($properties as $prop)
+			{
+				$propName = $prop->getName();
+
+				// Remove Prefix "_" from Property Name to find a value
+				if ($propName[0] == "_")
+				{
+					$propName = substr($propName, 1);
+				}
+
+				if ($propName == "propertyPattern")
+					continue;
+
+				// If exists value, set it;
+				if ($prop->isPublic())
+					$this->AddField($propName, $prop->getValue($instance));
+				else
+				{
+					$metName = "get" . ucfirst($propName);
+
+					if ($class->hasMethod($metName))
+					{
+						$this->AddField($propName, $class->getMethod($metName)->invoke($instance));
+					}
+				}
+			}
+		}
+	}
+
+
 }
 ?>
