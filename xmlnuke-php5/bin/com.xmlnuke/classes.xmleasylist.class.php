@@ -98,20 +98,30 @@ class XmlEasyList extends XmlnukeDocumentObject
 	 * @param EasyListType $listType
 	 * @param string $name
 	 * @param string $caption
-	 * @param array $values
+	 * @param array $iterator
 	 * @param string $selected
-	 * @return XmlEasyList
+	 * @param string $fieldKey
+	 * @param string $fieldValue
 	 */
-	public function __construct($listType, $name, $caption, $values, $selected = null)
+	public function __construct($listType, $name, $caption, $iterator, $selected = null, $fieldKey = null, $fieldValue = null)
 	{
 		parent::__construct();
 		$this->_name = $name;
 		$this->_caption = $caption;
-		$this->_values = $values;
+		$this->_values = $iterator;
 		$this->_selected = $selected;
 		$this->_easyListType = $listType;
 		$this->_readOnly = false;
 		$this->_size = 1;
+
+		if (!is_array($iterator) && !($iterator instanceof IIterator))
+			throw new Exception("I expected an Iterator or an Array");
+
+		if (($iterator instanceof IIterator) && (empty($fieldKey) || empty($fieldValue)))
+			throw new Exception("IIterator object requires the parameters fieldKey and fieldValue");
+
+		if ($iterator instanceof IIterator)
+			$this->_values = BaseDBAccess::getArrayFromIterator($iterator, $fieldKey, $fieldValue, "");
 	}
 
 	public function setName($name)
@@ -217,7 +227,7 @@ class XmlEasyList extends XmlnukeDocumentObject
 			{
 				XmlUtil::CreateChild($current, "caption", $this->_caption);
 				$nodeWorking = $current;
-				$iHid = new XmlInputHidden("qty" . $this->_name, sizeof($this->_values));
+				$iHid = new XmlInputHidden("qty" . $this->_name, count($this->_values));
 				$iHid->generateObject($nodeWorking);
 				break;
 			}
