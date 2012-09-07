@@ -39,6 +39,7 @@ abstract class BaseModelCollection extends GenericIterator
 	protected $_type = null;
 
 	// <editor-fold desc="Implementation of IIterator interface based on GenericIterator">
+
 	public function hasNext()
 	{
 		return ($this->_curRow < $this->Count());
@@ -66,6 +67,7 @@ abstract class BaseModelCollection extends GenericIterator
 	{
 		return $this->_curRow;
 	}
+
 	// </editor-fold>
 
 	public function __construct($it = null, $type = 'BaseModel')
@@ -77,12 +79,15 @@ abstract class BaseModelCollection extends GenericIterator
 				throw new Exception("You have to pass an IIterator class");
 			}
 
-			$this->_type = $type;
-
-			if ($this->_type instanceof BaseModel)
+			// Check if the object is an instance of BaseModel
+			$tObj = new $type();
+			if (!($tObj instanceof BaseModel))
 			{
 				throw new Exception("You have to pass a BaseModel descendant as type");
 			}
+
+			// Save the type to be used in the future
+			$this->_type = $type;
 
 			foreach ($it as $singleRow)
 			{
@@ -102,8 +107,8 @@ abstract class BaseModelCollection extends GenericIterator
 	{
 		$this->_items[] = $item;
 	}
-	// </editor-fold>
 
+	// </editor-fold>
 }
 
 ?>
