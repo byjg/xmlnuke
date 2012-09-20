@@ -7,7 +7,7 @@ class Home extends __PROJECT__BaseModule
 	/**
 	*@desc Default constructor
 	*/
-	public function __constructor()
+	public function __construct()
 	{}
 
 	public function CreatePage() 

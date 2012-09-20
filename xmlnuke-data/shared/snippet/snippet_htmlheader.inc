@@ -64,7 +64,7 @@
 <xsl:if test="//calendar">
 	<style>
 		.bgcaltype   { background-color: black !important; }
-		
+
 		.bgcaltype1  { background-color: #33E6D9 !important; }
 		.bgcaltype2  { background-color: #FFA600 !important; }
 		.bgcaltype3  { background-color: #A64B00 !important; }
@@ -77,7 +77,7 @@
 		.bgcaltype10 { background-color: #FF6600 !important; }
 		.bgcaltype11 { background-color: #806600 !important; }
 		.bgcaltype12 { background-color: #0057D9 !important; }
-		
+
 		.bgcaltype13 { background-color: #8DD3C7 !important; }
 		.bgcaltype14 { background-color: #FFFFB3 !important; }
 		.bgcaltype15 { background-color: #BEBADA !important; }
@@ -130,18 +130,41 @@
 </xsl:if>
 
 <!-- Include specific JavaScript for DHTMLGoodies Calendar  -->
-<xsl:if test="//datetimebox">
+<xsl:if test="//datetimebox[@showday='true']">
 	<script type="text/javascript">
 		$(function(){
 			$.datepicker.setDefaults($.extend({showMonthAfterYear: false}, $.datepicker.regional[<xsl:call-template name="i18n.jquery" />]));
 			<xsl:for-each select="//datetimebox">$("#<xsl:value-of select="@name" />").datepicker({
-					changeMonth: true,
-					changeYear: true,
-					stepMonths: 12,
-					yearRange: '<xsl:value-of select="@yearmin"/>:<xsl:value-of select="@yearmax"/>'
+				changeMonth: true,
+				changeYear: true,
+				stepMonths: 12,
+				yearRange: '<xsl:value-of select="@yearmin"/>:<xsl:value-of select="@yearmax"/>'
 			});</xsl:for-each>
 		});
 	</script>
+</xsl:if>
+<xsl:if test="//datetimebox[@showday='false']">
+	<script type="text/javascript">
+		$(function(){
+			$.datepicker.setDefaults($.extend({showMonthAfterYear: false}, $.datepicker.regional[<xsl:call-template name="i18n.jquery" />]));
+				<xsl:for-each select="//datetimebox">$("#<xsl:value-of select="@name" />").datepicker({
+				changeMonth: true,
+				changeYear: true,
+				stepMonths: 12,
+				dateFormat: 'mm/yy',
+				yearRange: '<xsl:value-of select="@yearmin"/>:<xsl:value-of select="@yearmax"/>',
+				onClose: function(dateText, inst){
+					var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+					var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+					$(this).datepicker('setDate', new Date(year, month, 1));				}
+			});</xsl:for-each>
+			});
+	</script>
+	<style>
+		.ui-datepicker-calendar {
+			display: none;
+		}
+	</style>
 </xsl:if>
 
 
@@ -166,7 +189,7 @@
 
 <!-- Include specific JavaScript for DualList element -->
 <xsl:if test="//duallist">
-  <script language="JavaScript" src="common/duallist/script.js"></script>
+	<script language="JavaScript" src="common/duallist/script.js"></script>
 </xsl:if>
 
 
@@ -185,33 +208,33 @@
 
 <!-- Include specific JavaScript for WebtoolKit.AIM -->
 <xsl:if test="//ajaxcallback">
-   <script type="text/javascript" src="common/3rdparty/webtoolkit/webtoolkit.aim.js"></script>
-   <xsl:for-each select="//ajaxcallback">
-	<script type="text/javascript">
+	<script type="text/javascript" src="common/3rdparty/webtoolkit/webtoolkit.aim.js"></script>
+	<xsl:for-each select="//ajaxcallback">
+		<script type="text/javascript">
 		function startCallback<xsl:value-of select="@id" />() {
 			area = document.getElementById('<xsl:value-of select="@id" />');
-		   	var bgImage = "url('common/imgs/ajax-loader.gif')";
-		 	area.style.backgroundImage = bgImage;
-		 	area.style.backgroundRepeat = "no-repeat";
-		 	area.style.backgroundPosition = "center center";
+			var bgImage = "url('common/imgs/ajax-loader.gif')";
+			area.style.backgroundImage = bgImage;
+			area.style.backgroundRepeat = "no-repeat";
+			area.style.backgroundPosition = "center center";
 			area.style.display = "block";
 			area.innerHTML = "<br/><br/><br/>";
 			return true;
 		}
 
 		function completeCallback<xsl:value-of select="@id" />(response) {
-		 	area.style.backgroundImage = "";
+			area.style.backgroundImage = "";
 			document.getElementById('<xsl:value-of select="@id" />').innerHTML = response;
 		}
 	</script>
-   </xsl:for-each>
+	</xsl:for-each>
 </xsl:if>
 
 
 <!-- Include specific JavaScript for Container (Div)  -->
 <xsl:if test="//container">
     <style>
-    #objectfoo { width: 100%; height: 100%; }
+		#objectfoo { width: 100%; height: 100%; }
     </style>
 	<script language="javascript" type="text/javascript"><![CDATA[
 		function loadUrl(containerId, url)
@@ -234,18 +257,18 @@
 <!-- Include specific JavaScript for AutoSuggest  -->
 <xsl:if test="//textbox[@autosuggesturl]">
 	<style>
-	.ui-autocomplete {
-		max-height: 200px;
-		overflow-y: auto;
-		/* prevent horizontal scrollbar */
-		overflow-x: hidden;
-	}
-	/* IE 6 doesn't support max-height
-	 * we use height instead, but this forces the menu to always be this tall
-	 */
-	* html .ui-autocomplete {
-		height: 200px;
-	}
+		.ui-autocomplete {
+			max-height: 200px;
+			overflow-y: auto;
+			/* prevent horizontal scrollbar */
+			overflow-x: hidden;
+		}
+		/* IE 6 doesn't support max-height
+		 * we use height instead, but this forces the menu to always be this tall
+		*/
+		* html .ui-autocomplete {
+			height: 200px;
+		}
 	</style>
 </xsl:if>
 
@@ -257,8 +280,8 @@
 
 <!-- Include specific JavaScript for TreeView element -->
 <xsl:if test="//treeview">
-   <script type="text/javascript" language="javascript" src="common/3rdparty/treeview/treeview.js"></script>
-   <link rel="stylesheet" href="common/3rdparty/treeview/treeview.css" TYPE="text/css" MEDIA="screen" />
+	<script type="text/javascript" language="javascript" src="common/3rdparty/treeview/treeview.js"></script>
+	<link rel="stylesheet" href="common/3rdparty/treeview/treeview.css" TYPE="text/css" MEDIA="screen" />
 </xsl:if>
 
 <!-- Include specific JavaScript for Flash element -->
@@ -315,7 +338,7 @@
 			<xsl:if test="@autohide">
 			open: function(event, ui) {
 				setTimeout(function() {
-				     $("#<xsl:value-of select="@name" />").dialog("close");
+					$("#<xsl:value-of select="@name" />").dialog("close");
 				}, <xsl:value-of select="@autohide" />);
 			},
 			</xsl:if>
@@ -327,7 +350,7 @@
 
 		<xsl:for-each select="//uialert[contains(@type, 'box') and @autohide]">
 		setTimeout(function() {
-		     $("#<xsl:value-of select="@name" />").hide('blind', {}, 500);
+			$("#<xsl:value-of select="@name" />").hide('blind', {}, 500);
 		}, <xsl:value-of select="@autohide" />);
 		</xsl:for-each>
 	});
@@ -357,7 +380,7 @@
 			visibility: hidden;
 		}
 	</style>
-	
+
 	<script type="text/javascript" charset="utf-8">
 	$(document).ready(function(){
 		$(".mediagallery a[rel^='mgalxml']").fancybox();

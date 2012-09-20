@@ -96,9 +96,24 @@
 				}
 				
 				lastXhr_<xsl:value-of select="@name" /> = $.getJSON( "<xsl:value-of select="@autosuggesturl" /><xsl:value-of select="@autosuggestparamreq" />=" + request.term, request, function( data, status, xhr ) {
-					cache_<xsl:value-of select="@name" />[ term ] = data;
+					var resultData = [].concat( data.<xsl:value-of select="@autosuggest_array" /> );
+					var processedData = [];
+
+					for (var key in resultData)
+					{
+						processedData = processedData.concat(
+							[{
+								"id": resultData[key]["<xsl:value-of select="@autosuggest_objid" />"],
+								"value": resultData[key]["<xsl:value-of select="@autosuggest_objvalue" />"],
+								"info": resultData[key]["<xsl:value-of select="@autosuggest_objinfo" />"]
+							}]
+						);
+					}
+
+					cache_<xsl:value-of select="@name" />[ term ] = processedData;
+
 					if ( xhr === lastXhr_<xsl:value-of select="@name" /> ) {
-						response( data );
+						response( processedData );
 					}
 				});
 			}<xsl:if test="@autosuggestcallback">, 

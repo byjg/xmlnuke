@@ -5,7 +5,7 @@
 require_once("xmlnuke.inc.php");
 #############################################
 
-require_once(PHPXMLNUKEDIR . "bin/modules/webservice/webservice.php");
+require_once(PHPXMLNUKEDIR . "src/modules/webservice/webservice.php");
 
 $context = new Context();
 

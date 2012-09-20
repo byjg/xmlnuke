@@ -632,6 +632,7 @@ function createConfigFile()
 	$fileContent .= "	}\n" ;
 	$fileContent .= "}\n" ;
 	$fileContent .= "define('PHPXMLNUKEDIR', '" . ($_POST["xmlnuke_PHPXMLNUKEDIR"] != "" ? $_POST["xmlnuke_PHPXMLNUKEDIR"] . "/" : "") . "');\n";
+	$fileContent .= "define('AUTOLOAD', 'AUTOLOAD');\n";
 	$fileContent .= "## END-OF-FILE\n" ;
 
 	//echo "<pre>";

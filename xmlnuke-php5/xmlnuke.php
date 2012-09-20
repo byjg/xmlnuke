@@ -125,8 +125,7 @@
 			if ($debug) 
 			{
 				Debug::LogError($moduleName, $ex);
-				$kernelError = new XMLNukeErrorModule($firstError, $context->getDebugInModule());
-				$kernelError->CreatePage();
+				untreatedError($ex);
 				exit();
 			}
 			else
@@ -148,14 +147,12 @@
 			Debug::LogError($moduleName, $ex);
 			if ($debug) 
 			{
-				$kernelError = new XMLNukeErrorModule($ex, $context->getDebugInModule());
-				$kernelError->CreatePage();
+				untreatedError($ex);
 			}
 			else
 			{
 				if ($ex instanceof PDOException)
 				{
-					$ex->errorType = ErrorType::DataBase ;
 					$ex->showStackTrace = true;
 				}
 				
@@ -169,7 +166,7 @@
 				}
 				catch (Exception $ex)
 				{
-					echo "Fatal Error: [" . get_class($ex) . "] " . $ex->getMessage() . "<br/>File: " . basename($ex->getFile()) . " at " . $ex->getLine();
+					echo "<b>Fatal Error</b>: [" . get_class($ex) . "] " . $ex->getMessage() . "<br/>File: " . basename($ex->getFile()) . " at " . $ex->getLine();
 				}
 				
 			}
@@ -216,11 +213,11 @@
 			$mobile_browser++;
 		}
 
-		if (strpos(strtolower($_SERVER['ALL_HTTP']),'OperaMini')>0) {
+		if (array_key_exists('ALL_HTTP', $_SERVER) && strpos(strtolower($_SERVER['ALL_HTTP']),'OperaMini')>0) {
 			$mobile_browser++;
 		}
 
-		if (strpos(strtolower($_SERVER['HTTP_USER_AGENT']),'windows')>0) {
+		if (array_key_exists('HTTP_USER_AGENT', $_SERVER) && strpos(strtolower($_SERVER['HTTP_USER_AGENT']),'windows')>0) {
 			$mobile_browser=0;
 		}
 
@@ -253,4 +250,14 @@
 		echo substr($buffer, $posi);
 	}
 
+	function untreatedError($ex)
+	{
+		echo "<b>" . $ex->getMessage() . "<b> in " . $ex->getFile() . " at " . $ex->getLine() . "<hr/>";
+		echo "<pre>";
+		echo $ex->getTraceAsString();
+		echo "</pre><hr/>";
+
+		Context::getInstance()->Debug();
+
+	}
 ?>

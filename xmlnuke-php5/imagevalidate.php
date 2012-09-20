@@ -5,7 +5,7 @@
 require_once("xmlnuke.inc.php");
 #############################################
 
-require_once(PHPXMLNUKEDIR . "bin/modules/captcha/captcha.class.php");
+require_once(PHPXMLNUKEDIR . "src/modules/captcha/captcha.class.php");
 
 $context = new Context();
 

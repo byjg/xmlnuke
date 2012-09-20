@@ -126,7 +126,7 @@ foreach ($arr as $key=>$value)
 
 if($context->ContextValue("submeteu")!="")
 {
-	require_once(PHPXMLNUKEDIR . "bin/modules/phpunit/phpunit.php");
+	require_once(PHPXMLNUKEDIR . "src/modules/phpunit/phpunit.php");
 
 	$mainTestSuite = new TestSuite();
 

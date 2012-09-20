@@ -47,21 +47,37 @@ if (!file_exists("config.inc.php"))
 require_once("config.inc.php");
 if (!class_exists('config')) { header("Location: check_install.php"); exit(); }
 
-/* Base required files. The most of another required files is in module.basemodule.class.php */
-require_once(PHPXMLNUKEDIR . "bin/processor.inc.php");
-require_once(PHPXMLNUKEDIR . "bin/engine.inc.php");
-require_once(PHPXMLNUKEDIR . "bin/xmlnukedb.inc.php");
-require_once(PHPXMLNUKEDIR . "bin/anydataset.inc.php");
-require_once(PHPXMLNUKEDIR . "bin/international.inc.php");
+if (!defined("AUTOLOAD"))
+{
+	/* Base required files. The most of another required files is in module.basemodule.class.php */
+	require_once(PHPXMLNUKEDIR . "src/enum.inc.php");
+	require_once(PHPXMLNUKEDIR . "src/processor.inc.php");
+	require_once(PHPXMLNUKEDIR . "src/engine.inc.php");
+	require_once(PHPXMLNUKEDIR . "src/xmlnukedb.inc.php");
+	require_once(PHPXMLNUKEDIR . "src/anydataset.inc.php");
+	require_once(PHPXMLNUKEDIR . "src/international.inc.php");
 
-require_once(PHPXMLNUKEDIR . "bin/classes.inc.php");
-require_once(PHPXMLNUKEDIR . "bin/database.inc.php");
-require_once(PHPXMLNUKEDIR . "bin/util.inc.php");
-require_once(PHPXMLNUKEDIR . "bin/admin.inc.php");
+	require_once(PHPXMLNUKEDIR . "src/classes.inc.php");
+	require_once(PHPXMLNUKEDIR . "src/database.inc.php");
+	require_once(PHPXMLNUKEDIR . "src/util.inc.php");
+	require_once(PHPXMLNUKEDIR . "src/admin.inc.php");
 
-require_once(PHPXMLNUKEDIR . "bin/oauth.inc.php");
+	require_once(PHPXMLNUKEDIR . "src/oauth.inc.php");
 
-require_once(PHPXMLNUKEDIR . "bin/modules.inc.php");
+	require_once(PHPXMLNUKEDIR . "src/modules.inc.php");
+}
+else
+{
+	// Activate AutoLoad
+	require_once PHPXMLNUKEDIR . "src/com.xmlnuke/engine/engine.autoload.class.php";
+	$autoload = new AutoLoad();
+
+	// Start Generic Classes
+	require_once PHPXMLNUKEDIR . "src/com.xmlnuke/enum/enum.class.php";
+	require_once PHPXMLNUKEDIR . "src/util/util.conversion.class.php";
+	require_once PHPXMLNUKEDIR . "src/util/util.exceptions.class.php";
+
+}
 
 /* Fix bad things in PHP */
 fixbadthingsinphp();
@@ -123,8 +139,9 @@ function fixbadthingsinphp()
 			echo "<br/><b>Warning</b>: I suppose you do not need enter here. Please deactivate \"register_globals\" directive<br/>";
 		}
 	}
+
 	error_reporting(E_ALL ^ E_NOTICE);
-	//error_reporting(E_ALL);
+	//error_reporting(E_STRICT);
 }
 
 function remove_magicquotes(&$var)
