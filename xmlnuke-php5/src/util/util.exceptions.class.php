@@ -69,7 +69,10 @@ class XMLNukeException extends Exception
 		$this->backTrace = Debug::GetBackTrace();
 		$this->showStackTrace = true;
 
-		parent::__construct($message, $code, $previous);
+		if (PHP_VERSION_ID < 50300)
+			parent::__construct($message, $code);
+		else
+			parent::__construct($message, $code, $previous);
 	}
 
 }
