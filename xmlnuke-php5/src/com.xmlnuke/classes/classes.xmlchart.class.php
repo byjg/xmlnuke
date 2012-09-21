@@ -318,7 +318,7 @@ class XmlChart extends XmlnukeDocumentObject
 				
 			if ($this->_context->ContextValue("xcrt") == "image")
 			{
-				require_once(PHPXMLNUKEDIR . "bin/modules/panachart/panachart.php");
+				require_once(PHPXMLNUKEDIR . "src/modules/panachart/panachart.php");
 	
 			    // AREA
 			    $ochart = new chart($this->_width, $this->_height, 7, '#eeeeee');

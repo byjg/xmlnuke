@@ -28,7 +28,7 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
-require_once(PHPXMLNUKEDIR . "bin/com.xmlnuke/classes.tar.class.php");
+require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.tar.class.php");
 
 /**
  * @package xmlnuke
