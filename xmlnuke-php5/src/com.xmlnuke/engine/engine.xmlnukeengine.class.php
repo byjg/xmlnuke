@@ -33,7 +33,7 @@
  */
 class XmlNukeEngine
 {
-	const OUTPUT_TRANSFORMED_DOC = "";
+	const OUTPUT_TRANSFORMED_DOC = "-";
 	const OUTPUT_XML = "xml";
 	const OUTPUT_JSON = "json";
 	

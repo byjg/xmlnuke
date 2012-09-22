@@ -594,6 +594,18 @@ abstract class BaseModule implements IModule
 		return SSLAccess::Wherever;
 	}
 
+	protected $_rawRequest = null;
+
+	public function getRawRequest()
+	{
+		if (is_null($this->_rawRequest))
+		{
+			$this->_rawRequest = file_get_contents("php://input");
+		}
+
+		return $this->_rawRequest;
+	}
+
 }
 
 ?>

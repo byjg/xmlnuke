@@ -7,6 +7,7 @@ require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.ixmlnukedocumentob
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.xmlnukecollection.class.php");
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.xmlnukedocumentobject.class.php");
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.xmlnukedocument.class.php");
+require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.xmlnukeemptydocument.class.php");
 
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.crudfield.class.php");
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.crudfieldcollection.class.php");

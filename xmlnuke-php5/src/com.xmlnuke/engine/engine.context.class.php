@@ -1506,5 +1506,32 @@ class Context
 		return $this->__userdb;
     }
 
+	public function getOutputFormat()
+	{
+		if ($this->Value("xmlnuke.OUTPUT_FORMAT") == "")
+		{
+			if ($this->Value("rawxml")!="")
+			{
+				$output = XmlNukeEngine::OUTPUT_XML;
+			}
+			elseif (($this->ContextValue("rawjson")!="") || ($this->Value("CONTENT_TYPE") == "application/json"))
+			{
+				$output = XmlNukeEngine::OUTPUT_JSON;
+			}
+			else
+			{
+				$output = XmlNukeEngine::OUTPUT_TRANSFORMED_DOC;
+			}
+
+			$this->putValue("xmlnuke.OUTPUT_FORMAT", $output);
+		}
+
+		return $this->Value("xmlnuke.OUTPUT_FORMAT");
+	}
+
+	public function setOutputFormat($value)
+	{
+		throw new NotImplementedException("setOutput is not implemented");
+	}
 }
 ?>

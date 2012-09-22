@@ -144,5 +144,9 @@ interface IModule
 	 *
 	 */
 	function requiresSSL();
+	/**
+	 * Returns the php://input stream
+	 */
+	function getRawRequest();
 }
 ?>
