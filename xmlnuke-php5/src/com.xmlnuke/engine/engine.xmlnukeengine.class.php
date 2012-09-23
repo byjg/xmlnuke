@@ -388,7 +388,7 @@ class XmlNukeEngine
 		// Set up a transform object with the XSLT file
 		//XslTransform xslTran = new XslTransform();
 		$xslTran = new XSLTProcessor();
-		$snippetProcessor = new SnippetProcessor($this->_context, $xslFile);
+		$snippetProcessor = new SnippetProcessor($xslFile);
 		//Uri
 		try
 		{

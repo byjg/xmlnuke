@@ -66,7 +66,7 @@ abstract class NewBaseAdminModule extends BaseModule
 	{	
 		if ($this->_words == null)
 		{
-			$this->_words = LanguageFactory::GetLanguageCollection($this->_context, LanguageFileTypes::ADMINMODULE, $this->_xmlModuleName->ToString());
+			$this->_words = LanguageFactory::GetLanguageCollection(LanguageFileTypes::ADMINMODULE, $this->_xmlModuleName->ToString());
 		}
 		return $this->_words;
 	}
@@ -287,7 +287,7 @@ abstract class NewBaseAdminModule extends BaseModule
 	protected function CreateMenuAdmin()
 	{
 		// Load Language file for Module Object
-		$lang = LanguageFactory::GetLanguageCollection($this->_context, LanguageFileTypes::ADMININTERNAL, null);
+		$lang = LanguageFactory::GetLanguageCollection(LanguageFileTypes::ADMININTERNAL, null);
 		
 		// Create a Menu Item for GROUPS and MODULES. 
 		// This menu have CP_ before GROUP NAME

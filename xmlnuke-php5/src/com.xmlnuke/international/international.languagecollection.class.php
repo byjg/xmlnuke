@@ -54,9 +54,9 @@ class LanguageCollection
 	*@return void
 	*@desc LanguageCollection Constructor
 	*/
-	public function __construct($context)
+	public function __construct()
 	{
-		$this->_context = $context;
+		$this->_context = Context::getInstance();
 	}
 	
 	/**

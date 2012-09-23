@@ -20,7 +20,7 @@ class Captcha {
 	 */
 	public function __construct($context, $useQuestion = true, $characters=5)
 	{
-		$mywords = LanguageFactory::GetLanguageCollection($context, LanguageFileTypes::OBJECT, "captcha");
+		$mywords = LanguageFactory::GetLanguageCollection(LanguageFileTypes::OBJECT, "captcha");
 
 		if ($characters < 5) $characters = 5;
 

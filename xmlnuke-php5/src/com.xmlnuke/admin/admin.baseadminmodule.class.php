@@ -63,7 +63,7 @@ abstract class BaseAdminModule extends BaseModule
 	*/
 	public function WordCollection()
 	{	
-		$lang = LanguageFactory::GetLanguageCollection($this->_context, LanguageFileTypes::ADMINMODULE, $this->_xmlModuleName->ToString());
+		$lang = LanguageFactory::GetLanguageCollection(LanguageFileTypes::ADMINMODULE, $this->_xmlModuleName->ToString());
 		return $lang;
 	}
 	

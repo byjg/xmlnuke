@@ -227,7 +227,7 @@ class XmlFileBrowser extends XmlnukeDocumentObject
 		
 		$this->_userType = FileBrownserUserType::USER;		
 		
-		$this->_lang = LanguageFactory::GetLanguageCollection($this->_context, LanguageFileTypes::OBJECT, "com.xmlnuke.classes.xmlfilebrowser");
+		$this->_lang = LanguageFactory::GetLanguageCollection(LanguageFileTypes::OBJECT, "com.xmlnuke.classes.xmlfilebrowser");
 	}
 	
 	/**

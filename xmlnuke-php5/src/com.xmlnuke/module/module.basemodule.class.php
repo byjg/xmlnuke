@@ -173,7 +173,7 @@ abstract class BaseModule implements IModule
 	{
 		if ($this->_words == null)
 		{
-			$this->_words = LanguageFactory::GetLanguageCollection($this->_context, LanguageFileTypes::MODULE, $this->_xmlModuleName->ToString());
+			$this->_words = LanguageFactory::GetLanguageCollection(LanguageFileTypes::MODULE, $this->_xmlModuleName->ToString());
 		}
 		return $this->_words;
 	}

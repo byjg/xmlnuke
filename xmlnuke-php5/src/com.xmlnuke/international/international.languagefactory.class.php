@@ -52,7 +52,7 @@ class LanguageFactory
 	 * @param string $name
 	 * @return LanguageCollection
 	 */
-	public static function GetLanguageCollection($context, $type, $name)
+	public static function GetLanguageCollection($type, $name)
 	{
 		switch ($type) 
 		{
@@ -80,7 +80,7 @@ class LanguageFactory
 				$langFile = new AnydatasetLangFilenameProcessor($name);
 				break;
 		}
-		$lang = new LanguageCollection($context);
+		$lang = new LanguageCollection();
 		$lang->LoadLanguages($langFile);
 		return $lang;
 	}
