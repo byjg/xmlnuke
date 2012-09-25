@@ -30,6 +30,7 @@ require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.xmlcontainercollec
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.xmlduallist.class.php");
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.xmleasylist.class.php");
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.xmlfilebrowser.class.php");
+require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.mailenvelope.class.php");
 
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.xmlinputvalidate.class.php");
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.xmlformcollection.class.php");
