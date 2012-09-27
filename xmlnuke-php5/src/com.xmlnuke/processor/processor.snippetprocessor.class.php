@@ -177,7 +177,7 @@ class SnippetProcessor
 		{
 			if (!$xslFile->UseFileFromAnyLanguage())
 			{
-				throw new EngineException(754, "XSL document \"" . $xslFile->FullQualifiedName() . "\" not found in local site or shared locations.");
+				throw new EngineException("XSL document \"" . $xslFile->FullQualifiedName() . "\" not found in local site or shared locations.", 754);
 			}
 		}
 		return FileUtil::getUriFromFile($xslFile->FullQualifiedNameAndPath());
