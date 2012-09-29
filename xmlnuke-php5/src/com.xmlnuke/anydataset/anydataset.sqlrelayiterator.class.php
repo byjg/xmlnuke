@@ -141,7 +141,7 @@ class SQLRelayIterator extends GenericIterator
 	{
 		if (!is_null($this->_cursor))
 		{
-			sqlrcur_free($this->_cursor);
+			@sqlrcur_free($this->_cursor); 
 			$this->_cursor = null;
 		}
 	}

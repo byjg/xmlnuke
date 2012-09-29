@@ -183,11 +183,12 @@ class XmlUtil
 	}
 
 	/**
-	* @param DOMDocument $xmldoc
-	* @param string $filename - File name to save.
-	* @return void
-	*/
-	public static function SaveXmlDocument($xmldoc, $filename)
+	 *
+	 * @param DOMDocument $document
+	 * @param string $filename
+	 * @throws XmlUtilException
+	 */
+	public static function SaveXmlDocument($document, $filename)
 	{
 		if (!($document instanceof DOMDocument))
 		{

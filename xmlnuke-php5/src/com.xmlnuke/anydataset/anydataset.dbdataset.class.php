@@ -54,9 +54,12 @@ class DBDataSet
 	 *@param Context $context
 	 *@desc Constructor
 	 */
-	public function __construct($dbname, $context)
+	public function __construct($dbname, $context = null)
 	{
-		$this->_context = $context;
+		if (is_null($context))
+			$this->_context = Context::getInstance();
+		else
+			$this->_context = $context;
 		
 		$this->_connectionManagement = new ConnectionManagement ( $context, $dbname );
 		
