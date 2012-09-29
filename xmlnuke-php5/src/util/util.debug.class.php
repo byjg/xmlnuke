@@ -85,7 +85,7 @@ class Debug
 			}
 			elseif ( ($var instanceof IIterator) || ($var instanceof AnyIterator) )
 			{
-				$it = clone $var;
+				$it = $var;
 				echo "<hr>";
 				if (!$it->hasNext())
 				{
