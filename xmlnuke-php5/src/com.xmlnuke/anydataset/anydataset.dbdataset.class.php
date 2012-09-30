@@ -61,7 +61,7 @@ class DBDataSet
 		else
 			$this->_context = $context;
 		
-		$this->_connectionManagement = new ConnectionManagement ( $context, $dbname );
+		$this->_connectionManagement = new ConnectionManagement ( $dbname );
 		
 		if ($this->_connectionManagement->getDriver () == "sqlrelay") 
 		{
@@ -87,7 +87,20 @@ class DBDataSet
 			}
 			else 
 			{
-				$strcnn = $this->_connectionManagement->getDriver () . ":host=" . $this->_connectionManagement->getServer () . ";dbname=" . $this->_connectionManagement->getDatabase ();
+				if ($this->_connectionManagement->getFilePath() != "")
+					$strcnn = $this->_connectionManagement->getDriver () . ":" . $this->_connectionManagement->getFilePath ();
+				else
+				{
+					$strcnn = $this->_connectionManagement->getDriver () . ":dbname=" . $this->_connectionManagement->getDatabase ();
+					if ($this->_connectionManagement->getExtraParam("unixsocket") != "")
+						$strcnn .= ";unix_socket=" . $this->_connectionManagement->getExtraParam("unixsocket");
+					else
+					{
+						$strcnn .= ";host=" . $this->_connectionManagement->getServer ();
+						if ($this->_connectionManagement->getPort() != "")
+							$strcnn .= ";port=" . $this->_connectionManagement->getPort ();
+					}
+				}
 			}
 
 			// Create Connection
@@ -152,61 +165,91 @@ class DBDataSet
 	}
 	
 	/**
-	 *@access public
-	 *@param string $sql
-	 *@param array $array
-	 *@return IIterator
+	 * @access public
+	 * @param string $sql
+	 * @param array $array
+	 * @return IIterator
 	 */
 	public function getIterator($sql, $array = null) 
 	{
-		if ($this->_connectionManagement->getDriver () == "sqlrelay") {
+		if ($this->_connectionManagement->getDriver () == "sqlrelay") 
 			return $this->getSQLRelayIterator ( $sql, $array );
-		} else {
+		else
 			return $this->getDBIterator ( $sql, $array );
+	}
+
+	public function getScalar($sql, $array = null)
+	{
+		if ($this->_connectionManagement->getDriver () == "sqlrelay")
+			return $this->getSQLRelayScalar ( $sql, $array );
+		else
+			return $this->getDBScalar ( $sql, $array );
+	}
+
+	/**
+	 *
+	 * @param string $sql
+	 * @param array $array
+	 * @return PDOStatement
+	 */
+	protected function getDBStatement($sql, $array = null)
+	{
+		if ($array)
+		{
+			$sql = XmlnukeProviderFactory::ParseSQL ( $this->_connectionManagement, $sql, $array );
+			$stmt = $this->_db->prepare ( $sql );
+			foreach ( $array as $key => $value )
+			{
+				$stmt->bindValue ( ":" . XmlnukeProviderFactory::KeyAdj ( $key ), $value );
+			}
 		}
+		else
+			$stmt = $this->_db->prepare ( $sql );
+
+		return $stmt;
 	}
 	
 	protected function getDBIterator($sql, $array = null) 
 	{
-		if ($array) 
-		{
-			$sql = XmlnukeProviderFactory::ParseSQL ( $this->_connectionManagement, $sql, $array );
-			$stmt = $this->_db->prepare ( $sql );
-			foreach ( $array as $key => $value ) 
-			{
-				$stmt->bindValue ( ":" . XmlnukeProviderFactory::KeyAdj ( $key ), $value );
-			}
-			$result = $stmt->execute ();
-		}
-		else 
-		{
-			$stmt = $this->_db->prepare ( $sql );
-			$stmt->execute ();
-		}
+		$stmt = $this->getDBStatement($sql, $array);
+		$stmt->execute();
 		$it = new DBIterator ( $stmt, $this->_context );
 		return $it;
 	}
-	
-	protected function getSQLRelayIterator($sql, $array = null) 
+
+	protected function getDBScalar($sql, $array = null)
+	{
+		$stmt = $this->getDBStatement($sql, $array);
+		$stmt->execute();
+
+		$scalar = $stmt->fetchColumn();
+
+        $stmt->closeCursor();
+
+		return $scalar;
+	}
+
+
+	protected function getSQLRelayCursor($sql, $array = null)
 	{
 		$cur = sqlrcur_alloc ( $this->_conn );
 		$success = true;
-		
-		if ($array) 
+
+		if ($array)
 		{
 			$sql = XmlnukeProviderFactory::ParseSQL ( $this->_connectionManagement, $sql, $array );
-			
+
 			sqlrcur_prepareQuery ( $cur, $sql );
 			$bindCount = 1;
-			foreach ( $array as $key => $value ) 
+			foreach ( $array as $key => $value )
 			{
 				$field = strval ( $bindCount ++ );
 				sqlrcur_inputBind ( $cur, $field, $value );
 			}
 			$success = sqlrcur_executeQuery ( $cur );
 			sqlrcon_endSession ( $this->_conn );
-		} 
-		else 
+		}
+		else
 		{
 			$success = sqlrcur_sendQuery ( $cur, $sql );
 			sqlrcon_endSession ( $this->_conn );
@@ -215,10 +258,26 @@ class DBDataSet
 		{
 			throw new DatasetException(sqlrcur_errorMessage($cur));
 		}
+
+		return $cur;
+	}
+
+	protected function getSQLRelayIterator($sql, $array = null) 
+	{
+		$cur = $this->getSQLRelayCursor($sql, $array);
 		$it = new SQLRelayIterator ( $cur, $this->_context );
 		return $it;
 	}
 	
+	protected function getSQLRelayScalar($sql, $array = null)
+	{
+		$cur = $this->getSQLRelayCursor($sql, $array);
+		$scalar = sqlrcur_getField($cur,0,0);
+		sqlrcur_free($cur);
+
+		return $scalar;
+	}
+
 	/**
 	 *@access public
 	 *@param string $tablename
@@ -300,55 +359,15 @@ class DBDataSet
 	
 	protected function execDBQuery($sql, $array = null)
 	{
-		if ($array) 
-		{
-			$sql = XmlnukeProviderFactory::ParseSQL ( $this->_connectionManagement, $sql, $array );
-			$stmt = $this->_db->prepare ( $sql );
-			foreach ( $array as $key => $value ) 
-			{
-				$stmt->bindValue ( ":" . XmlnukeProviderFactory::KeyAdj ( $key ), $value );
-			}
-			$result = $stmt->execute ();
-		} 
-		else 
-		{
-			$stmt = $this->_db->prepare ( $sql );
-			$result = $stmt->execute ();
-		}
-		
+		$stmt = $this->getDBStatement($sql, $array);
+		$result = $stmt->execute ();
 		return $result;
 	}
 
 	protected function execSQLRelayQuery($sql, $array = null)
 	{
-		$cur = sqlrcur_alloc ( $this->_conn );
-		$success = true;
-		
-		if ($array) 
-		{
-			$sql = XmlnukeProviderFactory::ParseSQL ( $this->_connectionManagement, $sql, $array );
-			
-			sqlrcur_prepareQuery ( $cur, $sql );
-			$bindCount = 1;
-			foreach ( $array as $key => $value ) 
-			{
-				$field = strval ( $bindCount ++ );
-				sqlrcur_inputBind ( $cur, $field, $value );
-			}
-			$success = sqlrcur_executeQuery ( $cur );
-			sqlrcon_endSession ( $this->_conn );
-		} 
-		else 
-		{
-			$success = sqlrcur_sendQuery ( $cur, $sql );
-			sqlrcon_endSession ( $this->_conn );
-		}
-
-		if (!$success)
-		{
-			throw new DatasetException(sqlrcur_errorMessage($cur));
-		}
-
+		$cur = $this->getSQLRelayCursor($sql, $array);
+		sqlrcur_free($cur);
 		return true;
 	}
 	

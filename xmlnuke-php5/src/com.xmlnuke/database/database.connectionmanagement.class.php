@@ -99,7 +99,7 @@ class ConnectionManagement
 		return $this->_server;
 	}
 
-	protected $_port;
+	protected $_port = "";
 	public function setPort($value)
 	{
 		$this->_port = $value;
@@ -126,7 +126,20 @@ class ConnectionManagement
 	}
 	public function getExtraParam($key)
 	{
-		return $this->_extraParam[$key];
+		if (array_key_exists($key, $this->_extraParam))
+			return $this->_extraParam[$key];
+		else
+			return "";
+	}
+
+	protected $_file;
+	public function setFilePath($value)
+	{
+		$this->_file = $value;
+	}
+	public function getFilePath()
+	{
+		return $this->_file;
 	}
 
 	/**
@@ -136,9 +149,15 @@ class ConnectionManagement
 	 */
 	protected $_context;
 
-	public function __construct($context, $dbname)
+	/**
+	 * 
+	 * @param string $dbname
+	 * @throws DataBaseException
+	 * @throws InvalidArgumentException
+	 */
+	public function __construct($dbname)
 	{
-		$this->_context = $context;
+		$this->_context = Context::getInstance();
 
 		$configFile = new AnydatasetFilenameProcessor ( "_db");
 		$config = new AnyDataSet ( $configFile );
@@ -154,37 +173,58 @@ class ConnectionManagement
 
 		$this->setDbType ( $data->getField ( "dbtype" ) );
 		$this->setDbConnectionString ( $data->getField ( "dbconnectionstring" ) );
-		$this->addExtraParam("unixsocket", $data->getField("unixsocket") );
-		$this->addExtraParam("parammodel", $data->getField("parammodel"));
+		//$this->addExtraParam("unixsocket", $data->getField("unixsocket") );
+		//$this->addExtraParam("parammodel", $data->getField("parammodel"));
 
 		if ($this->getDbType () == 'dsn')
 		{
 			/*
-		    [0] => --IGNORE--
-		    [1] => DRIVER
-		    [2] => USERNAME
-		    [3] => PASSWORD
-		    [4] => SERVER
-		    [5] => PORT
-		    [6] => DATABASE
-		    [7] => PARAMETERS (NOTUSED!)
+		    DSN=DRIVER://USERNAME[:PASSWORD]@SERVER[:PORT]/DATABASE[?KEY1=VALUE1&KEY2=VALUE2&...]
 
-		    DSN=DRIVER://USERNAME[:PASSWORD]@SERVER/DATABASE[?PARAMETERS]
+			or
+
+			DSN=DRIVER:///path[?PARAMETERS]
+
+			or
+
+			DSN=DRIVER://C:/PATH[?PARAMETERS]
+
+			------------------
+		    PARAMETERS (Working: unixsocket and parammodel)
     		*/
 
-			$pat = "/([\w\.]+)\:\/\/([\w\.$!%&\-_]+)(?::([\w\.$!%&#\*\+=\[\]\(\)\-_]+))?@([\w\-\.]+)(?::(\d+))?\/([\w\.]+)(?:\?((?:[\w\.]+=[\w\.]+&?)*))?/i";
-			$parts = preg_split ( $pat, $this->_dbconnectionstring, - 1, PREG_SPLIT_DELIM_CAPTURE );
+			$patDriver = "(?<driver>[\w\.]+)\:\/\/";
+			$patCredentials = "(?<username>[\w\.$!%&\-_]+)(?::(?<password>[\w\.$!%&#\*\+=\[\]\(\)\-_]+))?@";
+			$patHost = "(?<host>[\w\-\.]+)(?::(?<port>\d+))?";
+			$patDatabase = "\/(?<database>[\w\-\.]+)";
+			$patExtra = "(?:\?(?<extraparam>(?:[\w\-\.]+=[\w\-%\.\/]+&?)*))?";
+			$patFile = "(?<path>(?:\w\:)?\/(?:[\w\-\.]+\/?)+)?";
 
-			$this->setDriver ( $parts [1] );
-			$this->setUsername ( $parts [2] );
-			$this->setPassword ( $parts [3] );
-			$this->setServer ( $parts [4] );
-			$this->setPort ( $parts [5] );
-			$this->setDatabase ( $parts [6] );
+			// Try to parse the connection string.
+			$pat = "/$patDriver($patCredentials$patHost$patDatabase|$patFile)$patExtra/i";
+			$parts = array();
+			if (!preg_match($pat, $this->_dbconnectionstring, $parts))
+				throw new InvalidArgumentException("Connection string " . $this->_dbconnectionstring . " is invalid! Please fix it.");
 
-			if ($parts[7] != null)
+			// Set the Driver
+			$this->setDriver ( $parts ['driver'] );
+
+			// If a path pattern was found set it; otherwise define the database properties
+			if (array_key_exists('path', $parts) && (!empty($parts['path'])))
+				$this->setFilePath ($parts['path']);
+			else
 			{
-				$arrAux = explode('&', $parts[7]);
+				$this->setUsername ( $parts ['username'] );
+				$this->setPassword ( $parts ['password'] );
+				$this->setServer ( $parts ['host'] );
+				$this->setPort ( $parts ['port'] );
+				$this->setDatabase ( $parts ['database'] );
+			}
+
+			// If extra param is defined, set it.
+			if (array_key_exists('extraparam', $parts) && (!empty($parts['extraparam'])))
+			{
+				$arrAux = explode('&', $parts['extraparam']);
 				foreach($arrAux as $item)
 				{
 					$aux = explode("=", $item);
@@ -192,8 +232,8 @@ class ConnectionManagement
 				}
 			}
 
-			$user = $parts [2];
-			$pass = $parts [4];
+			$user = $this->getUsername();
+			$pass = $this->getPassword();
 		}
 		else if ( $this->getDbType() == "literal" )
 		{
