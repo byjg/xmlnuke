@@ -5,6 +5,4 @@ TMPPATH="$1"
 
 BASE="/usr/local/xmlnuke"
 
-mkdir -p $BASE
-
-cp -R $TMPPATH/xmlnuke-common $BASE
+cp -R $TMPPATH/xmlnuke-data $BASE

@@ -16,11 +16,14 @@ if [ -z $1 ] ; then
 
 else
 
-   echo Stating Process...
+   echo Starting Process...
    echo
 
+   CURDIR="`dirname \"$0\"`"              # relative
+   CURDIR="`( cd \"$CURDIR\" && pwd )`"  # absolutized and normalized
+
    #Recursively rename some to other
-   for FILE in `find . -name '*.rename_to_work'`
+   for FILE in `find $CURDIR -name '*.rename_to_work'`
    do
 	NEW=`echo $FILE | sed -e 's/\.rename_to_work//'`
 	

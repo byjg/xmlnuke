@@ -4,8 +4,6 @@ BASE="/usr/local/xmlnuke"
 
 chown -R www-data:www-data $BASE/xmlnuke-data
 chmod -R 755 $BASE/xmlnuke-data
-chown -R www-data:www-data $BASE/xmlnuke-sites
-chmod -R 755 $BASE/xmlnuke-sites
 
 
 

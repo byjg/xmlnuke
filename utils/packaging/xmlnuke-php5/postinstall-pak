@@ -1,4 +1,0 @@
-#!/bin/sh
-
-sed -i -e "s/\[XMLNUKEDIR\]/\/usr\/local\/xmlnuke/g" /etc/apache2/sites-available/xmlnuke-php5-virtualhost.conf
-
