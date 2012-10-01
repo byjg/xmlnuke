@@ -1,3 +1,5 @@
-XMLNuke is a framework based in PHP/C# to help you to create real MVC-like web applications. XMLNuke clearly separate data from presentation by output natively XML and JSON. All Visual interface is defined by XSL transformations.
+XMLNuke Web Development Framework based in XML/JSON
+
+XMLNuke is a framework for PHP/C# to help you to create real MVC-like web applications. XMLNuke clearly separate data from presentation by output natively XML and JSON. All Visual interface is defined by XSL transformations.
 
 Read more at http://www.xmlnuke.com/

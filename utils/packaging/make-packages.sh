@@ -57,18 +57,18 @@ done;
 
 # CREATE COMMON PACKAGE
 cd $TMPPATH/xmlnuke-common-$VERSION
-checkinstall --type=debian --pkgname=xmlnuke-common --pkgversion=$VERSION --pkgrelease=$RELEASE --maintainer=joao@xmlnuke.com --pkgsource=http://www.xmlnuke.com/ --pkggroup=web $CURDIR/xmlnuke-common/makeit.sh $TMPPATH
+checkinstall --type=debian --pkgname=xmlnuke-common --pkgversion=$VERSION --pkgrelease=$RELEASE --maintainer=joao@xmlnuke.com --pkgsource=http://www.xmlnuke.com/ --pkggroup=web --default $CURDIR/xmlnuke-common/makeit.sh $TMPPATH
 cp $TMPPATH/xmlnuke-common-$VERSION/*.deb $CURDIR/packages
 
 # CREATE DATA PACKAGE
 cd $TMPPATH/xmlnuke-data-$VERSION
-checkinstall --type=debian --pkgname=xmlnuke-data --pkgversion=$VERSION --pkgrelease=$RELEASE --maintainer=joao@xmlnuke.com --pkgsource=http://www.xmlnuke.com/ --requires=xmlnuke-common --pkggroup=web $CURDIR/xmlnuke-data/makeit.sh $TMPPATH
+checkinstall --type=debian --pkgname=xmlnuke-data --pkgversion=$VERSION --pkgrelease=$RELEASE --maintainer=joao@xmlnuke.com --pkgsource=http://www.xmlnuke.com/ --requires=xmlnuke-common --pkggroup=web --default $CURDIR/xmlnuke-data/makeit.sh $TMPPATH
 cp $TMPPATH/xmlnuke-data-$VERSION/*.deb $CURDIR/packages
 
 # CREATE PHP5 PACKAGE
 cp $CURDIR/xmlnuke-php5/create-php5-project $TMPPATH
 cd $TMPPATH/xmlnuke-php5-$VERSION
-checkinstall --type=debian --pkgname=xmlnuke-php5 --pkgversion=$VERSION --pkgrelease=$RELEASE --maintainer=joao@xmlnuke.com --pkgsource=http://www.xmlnuke.com/ --requires=php5-xsl,php5-gd,xmlnuke-common,xmlnuke-data --pkggroup=web --nodoc $CURDIR/xmlnuke-php5/makeit.sh $TMPPATH
+checkinstall --type=debian --pkgname=xmlnuke-php5 --pkgversion=$VERSION --pkgrelease=$RELEASE --maintainer=joao@xmlnuke.com --pkgsource=http://www.xmlnuke.com/ --requires=php5-xsl,php5-gd,xmlnuke-common,xmlnuke-data --pkggroup=web --default $CURDIR/xmlnuke-php5/makeit.sh $TMPPATH
 cp $TMPPATH/xmlnuke-php5-$VERSION/*.deb $CURDIR/packages
 
 echo "$VERSION-$RELEASE" > $CURDIR/packages/LASTBUILD
