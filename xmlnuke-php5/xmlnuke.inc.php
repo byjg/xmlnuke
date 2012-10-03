@@ -136,7 +136,7 @@ function fixbadthingsinphp()
 			}
 			unset($GLOBALS["s_variable_name"]);
 			unset($GLOBALS["m_variable_value"]);
-			echo "<br/><b>Warning</b>: I suppose you do not need enter here. Please deactivate \"register_globals\" directive<br/>";
+			Context::getInstance()->WriteWarningMessage("I suppose you do not need enter here. Please deactivate \"register_globals\" directive");
 		}
 	}
 

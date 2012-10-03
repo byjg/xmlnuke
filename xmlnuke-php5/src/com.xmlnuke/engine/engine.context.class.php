@@ -1533,5 +1533,11 @@ class Context
 	{
 		throw new NotImplementedException("setOutput is not implemented");
 	}
+
+	public function WriteWarningMessage($message)
+	{
+		if ($this->getOutputFormat() == XmlNukeEngine::OUTPUT_TRANSFORMED_DOC)
+			echo "<br/>\n<b>Warning: </b>" . $message . "\n<br/>";
+	}
 }
 ?>

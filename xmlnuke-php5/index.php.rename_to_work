@@ -1,6 +1,6 @@
 <?php
 ## CHECK CONFIG.PHP ##
-if (!file_exists("config.inc.php")) { header("Location: check_install.php"); exit(); } 
+if (!file_exists("config.inc.php")) { header("Location: check_install.php"); exit(); }
 ## CHECK CONFIG.PHP ##
 
 #############################################
@@ -10,21 +10,21 @@ require_once("xmlnuke.inc.php");
 #############################################
 
 ## CHECK CONFIG.PHP ##
-if ($context->ContextValue("xmlnuke.ROOTDIR")=="") 
+if ($context->ContextValue("xmlnuke.ROOTDIR")=="")
 {
-	header("Location: check_install.php"); 
-	exit(); 
+	header("Location: check_install.php");
+	exit();
 }
-else 
+else
 {
 	$perms = fileperms("config.inc.php");
 	if ( ($perms & 0x0080) || ($perms & 0x0010) || ($perms & 0x002) )
 	{
-		echo "\n<br><b>Warning! <font color=red>Security failure</font>!</b> The file 'config.inc.php' must be readonly.<br>\n";
+		Context::getInstance()->WriteWarningMessage("<font color=red>Security failure</font>!</b> The file 'config.inc.php' must be readonly.");
 	}
 	if ( file_exists("check_install.php") )
 	{
-		echo "\n<br><b>Warning! <font color=red>Security failure</font>!</b> You have to delete the file 'check_install.php'.<br>\n";
+		Context::getInstance()->WriteWarningMessage("<font color=red>Security failure</font>!</b> You have to delete the file 'check_install.php'.");
 	}
 }
 ## CHECK CONFIG.PHP ##
@@ -94,14 +94,14 @@ for($i=($count%MAX_COLS);$i<MAX_COLS;$i++)
 
 function getUrlImage($site)
 {
-	return "common/icons/$site.png";	
+	return "common/icons/$site.png";
 }
 
 function getUrlEnterSite($site)
 {
 	global $context;
 
-	$targetPage = $context->UrlXmlNukeEngine() . "?xml=home";	
+	$targetPage = $context->UrlXmlNukeEngine() . "?xml=home";
 	return  $targetPage . "&site=" . $site . "&xsl=page";
 }
 
@@ -109,7 +109,7 @@ function getUrlAdmin($site)
 {
 	global $context;
 	$targetAdmin = $context->UrlXmlNukeAdmin();
-	
+
 	return  $targetAdmin . "?site=" . $site;
 }
 

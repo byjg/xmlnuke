@@ -110,7 +110,7 @@ class CultureInfo
 		}
 		$this->_name = $language;
 		$systemLocale = $this->getIsoName();
-		$this->_cultureActive = setlocale(LC_ALL, $systemLocale . ".UTF8", $systemLocale . ".UTF-8", $systemLocale, $this->_name);
+		$this->_cultureActive = setlocale(LC_ALL, $systemLocale . ".UTF8", $language . ".UTF-8", $systemLocale, $language, $this->_name);
 
 		// Try to load in Windows if failed before
 		$iLang = 0;
@@ -120,6 +120,22 @@ class CultureInfo
 			$iLang++;
 		}
 
+		if (!$this->_cultureActive)
+		{
+			$firstPart = substr ($language, 0, 2);
+			
+			if(FileUtil::isWindowsOS())
+				$complement = "";
+			else
+				$complement = "Only the languages available in 'locale -a' can be setted. On debian try execute 'apt-get install language-pack-$firstPart'.";
+
+			echo "<br/>\n<b>Warning: </b> The culture language '$language' was not found. $complement\n<br/>";
+
+			// I cant call the context here because it's call CultureInfo but the context is not complete yet.
+			//$context = Context::getInstance();
+			//$context->WriteWarningMessage ("");
+		}
+		
 		$this->_localeConv = localeConv();
 		#if (stripos(PHP_OS, 'win') !== false)
 		#{
@@ -174,10 +190,12 @@ class CultureInfo
 
 	public function formatMoney($number, $intlSymbol = false, $truncate = false)
 	{
-		$number = str_replace($this->_localeConv["decimal_point"], ".", $number);
+		if (!is_numeric($number)) 
+			$number = doubleval (str_replace($this->_localeConv["decimal_point"], ".", $number));
+
 		if ($truncate)
 		{
-			$factor = pow(10, intval($this->_localeConv["frac_digits"]));
+			$factor = pow(10, intval($this->_localeConv["frac_digits"] == "" || $this->_localeConv["frac_digits"] > 5 ? 2 : $this->_localeConv["frac_digits"]));
 			$number = intval($number * $factor) / $factor;
 		}
 		if (!$intlSymbol)

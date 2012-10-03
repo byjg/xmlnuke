@@ -45,14 +45,24 @@ class LocaleFactory
 	private function __construct()
 	{
 	}
-	
+
+	protected static $_locales = array();
+
 	/**
-	*@param string $lang - Language Name in the 5 letters format. Example: pt-br, en-us
-	*@return CultureInfo
-	*@desc Static method to Create the CultureInfo and assign it to the CurrentThread
-	*/
-	public static function GetLocale($lang, $context)
+	 * Get a CulturuInfo class from the Language Name in the 5 letters format. Example: pt-br, en-us
+	 * @param string $lang
+	 * @param Context $context
+	 * @return \CultureInfo
+	 */
+	public static function GetLocale($lang, $context = null)
 	{
+		if (array_key_exists($lang, LocaleFactory::$_locales))
+			return LocaleFactory::$_locales[$lang];
+		
+		// Note the Reference for the $context could not be removed only in this section.
+		if (is_null($context))
+			$context = Context::getInstance ();
+		
 		// ***************************
 		// * ATENTION - Dont do it again!!!!!!!
 		// *
@@ -76,10 +86,13 @@ class LocaleFactory
 		}
 		else
 		{
+			$context->WriteWarningMessage("$lang was not found in locale.anydata.xml file");
 			$locale = new CultureInfo($lang);
 			$locale->setLanguage("?");//?????????
 			$locale->setCharSet("utf-8");
 		}
+
+		LocaleFactory::$_locales[$lang] = $locale;
 
 		return $locale;
 	}

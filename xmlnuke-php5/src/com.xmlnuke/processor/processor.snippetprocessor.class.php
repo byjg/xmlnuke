@@ -79,7 +79,7 @@ class SnippetProcessor
 			}
 			catch (Exception $ex)
 			{
-				echo "<br/><b>Warning:</b> I could not write to cache on file '" . basename($this->_fileCacheName) . "'. Switching to nocache=true mode. <br/>";
+				$this->_context->WriteWarningMessage("I could not write to cache on file '" . basename($this->_fileCacheName) . "'. Switching to nocache=true mode.");
 				$this->_fileCacheHandle = null;
 			}
 		}
