@@ -32,6 +32,11 @@
       border: '1px solid #999',
       width: '160px'
     },
+	imgStyle: {
+	  verticalAlign:'middle',
+	  paddingRight:'2px',
+	  margin: '0px'
+	},
     itemStyle: {
       margin: '0px',
       color: '#000',
@@ -75,6 +80,7 @@
       id : id,
       menuStyle: $.extend({}, defaults.menuStyle, options.menuStyle || {}),
       itemStyle: $.extend({}, defaults.itemStyle, options.itemStyle || {}),
+	  imgStyle: $.extend({}, defaults.imgStyle, options.imgStyle || {}),
       itemHoverStyle: $.extend({}, defaults.itemHoverStyle, options.itemHoverStyle || {}),
       bindings: options.bindings || {},
       shadow: options.shadow || options.shadow === false ? options.shadow : defaults.shadow,
@@ -105,7 +111,7 @@
       function(){
         $(this).css(cur.itemStyle);
       }
-    ).find('img').css({verticalAlign:'middle',paddingRight:'2px'});
+    ).find('img').css(cur.imgStyle);
 
     // Send the content to the menu
     menu.html(content);
