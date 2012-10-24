@@ -183,6 +183,41 @@ abstract class BaseDBAccess
 		return $it;
 	}
 
+	protected function getScalar($sql, $param = null)
+	{
+		$this->getDBDataSet();
+
+		$debug = $this->_context->getDebugInModule();
+		$start = 0;
+		if ($debug)
+		{
+			Debug::PrintValue("<hr>");
+			Debug::PrintValue("Class name: " . get_class($this));
+			Debug::PrintValue("SQL: " . $sql);
+			if ($param != null)
+			{
+				$s = "";
+				foreach ($param as $key => $value)
+				{
+					if ($s != "")
+					{
+						$s .= ", ";
+					}
+					$s .= "[$key]=$value";
+				}
+				Debug::PrintValue("Params: $s");
+			}
+			$start = microtime(true);
+		}
+		$scalar = $this->_db->getScalar($sql, $param);
+		if ($debug)
+		{
+			$end = microtime(true);
+			Debug::PrintValue("Execution Time: " . ($end - $start) . " segundos ");
+		}
+		return $scalar;
+	}
+
 	/**
 	 * Get a SQLHelper object
 	 *
