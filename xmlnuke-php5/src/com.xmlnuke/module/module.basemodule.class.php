@@ -234,7 +234,8 @@ abstract class BaseModule implements IModule
 			$str .= $key . "=" . $value . "/";
 		}
 		//Debug::PrintValue($str);
-		$this->_cacheFile = new XMLCacheFilenameProcessor(UsersAnyDataSet::getSHAPassword(strtolower($str)));
+		$anydata = new UsersAnyDataSet($this->_context);
+		$this->_cacheFile = new XMLCacheFilenameProcessor($anydata->getSHAPassword(strtolower($str)));
 
 		// Test if cache exists
 		$fileControl = $this->_cacheFile->FullQualifiedNameAndPath() . ".control";

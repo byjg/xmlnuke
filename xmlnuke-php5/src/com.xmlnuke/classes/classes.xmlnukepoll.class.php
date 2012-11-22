@@ -324,6 +324,12 @@ class XmlnukePoll extends XmlnukeDocumentObject
 
 				if ($srPoll->getField("showresults")=="Y")
 				{
+					$colors = array('#FFF8A3', '#A9CC8F', '#B2C8D9', '#BEA37A', '#F3AA79', '#B5B5A9', '#E6A5A4',
+									'#F8D753', '#5C9746', '#3E75A7', '#7A653E', '#E1662A', '#74796F', '#C4384F',
+									'#F0B400', '#1E6C0B', '#00488C', '#332600', '#D84000', '#434C43', '#B30023',
+									'#FAE16B', '#82B16A', '#779DBF', '#907A52', '#EB8953', '#8A8D82', '#D6707B',
+									'#F3C01C', '#3D8128', '#205F9A', '#63522B', '#DC5313', '#5D645A', '#BC1C39');
+
 					$fldGrp = array();
 					$anyGraph = new AnyDataSet();
 					$anyGraph->appendRow();
@@ -340,9 +346,10 @@ class XmlnukePoll extends XmlnukeDocumentObject
 					$chart->setFrame($this->_width, $this->_height);
 					$chart->setLegend("data", "#444444", "#FFFFFF");
 					$chart->setAreaColor("#000000", "#ddddee");
+					$iColor = 0;
 					foreach ($fldGrp as $key=>$value)
 					{
-						$chart->addSeries($key, $value, '#000000');
+						$chart->addSeries($key, $value, '#000000', $colors[$iColor++]);
 					}
 
 					$chart->generateObject($current);
