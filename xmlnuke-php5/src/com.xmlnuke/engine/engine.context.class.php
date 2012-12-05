@@ -1043,9 +1043,11 @@ class Context
 	*/
 	public function removeSession($name)
 	{
-		unset($_SESSION[strtoupper($name)]);
-		session_unregister(strtoupper($name));
-		unset($this->_config["session." . strtoupper($name)]);
+		if (array_key_exists(strtoupper($name), $_SESSION))
+			unset($_SESSION[strtoupper($name)]);
+
+		if (array_key_exists("session." . strtoupper($name), $_SESSION))
+			unset($this->_config["session." . strtoupper($name)]);
 	}
 
 	/**
