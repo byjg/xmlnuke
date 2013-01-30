@@ -113,6 +113,7 @@ class Context
 
 	private $_contentType = array();
 
+	protected $_PHP_SELF = "PHP_SELF";
 
 	/**
 	* Context construtor. Read data from HttpContext class and assign default values to main arguments (XML, XSL, SITE and LANG) if doesn't exists.
@@ -123,6 +124,9 @@ class Context
 	public function __construct()
 	{
 		$valuesConfig = Config::getValuesConfig();
+
+		if (strpos($_SERVER["SERVER_SOFTWARE"], 'nginx') !== false)
+			$this->_PHP_SELF = 'DOCUMENT_URI';
 		
 		if (!is_array($valuesConfig))
 			throw new InvalidArgumentException ("getValuesConfig() method expects an array. ");
@@ -1244,7 +1248,7 @@ class Context
 	public function getXmlnukeURL()
 	{
 		$protocol = ($this->ContextValue("SERVER_PORT") == 443) ? "https://" : "http://";
-		$url = $protocol . $this->ContextValue("HTTP_HOST") . dirname($this->ContextValue("PHP_SELF"));
+		$url = $protocol . $this->ContextValue("HTTP_HOST") . dirname($this->ContextValue($this->_PHP_SELF));
 		if ($url[strlen($url)-1] != '/')
 		{
 			$url .= "/";
@@ -1261,7 +1265,7 @@ class Context
 	 */
 	public function getVirtualCommand()
 	{
-		$script = $this->ContextValue("PHP_SELF");
+		$script = $this->ContextValue($this->_PHP_SELF);
 		$name = $this->ContextValue("SCRIPT_NAME");
 
 		$command = substr($script, strlen($name) + 1);
