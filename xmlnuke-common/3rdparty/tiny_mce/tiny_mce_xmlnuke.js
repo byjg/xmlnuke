@@ -27,7 +27,7 @@ function initTinyMCE(varElements, editDoc, baseHref)
 		remove_linebreaks : false,
 		spellchecker_languages : "+English=en,Português=pt",
 		inline_styles : false,
-		extended_valid_elements : "iframe[src|width|height|name|align|style|frameborder|marginheight|marginwidth|scrolling],object[width|height|classid|codebase],param[name|value],embed[src|type|width|height|flashvars|wmode]",
+		extended_valid_elements : "iframe[src|width|height|name|align|style|frameborder|marginheight|marginwidth|scrolling],object[width|height|classid|codebase|type|data|id],param[name|value],embed[src|type|width|height|flashvars|wmode]",
 		convert_fonts_to_spans : false,
 		theme_advanced_statusbar_location : "bottom",
 		theme_advanced_resizing : true,
