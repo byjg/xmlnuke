@@ -88,7 +88,7 @@ class UserModule extends BaseModule
 		$p->addXmlnukeObject($editList);
 		*/
 		
-		//$poll = new XmlnukePoll($this->_context, "module:xmlnuke.usermodule", "TESTE");
+		//$poll = new XmlnukePoll("module:xmlnuke.usermodule", "TESTE");
 		//$poll->processVote();
 		//$block->addXmlnukeObject($poll);
 		

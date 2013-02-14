@@ -86,9 +86,9 @@ class XmlnukePoll extends XmlnukeDocumentObject
 	 * @param string $lang
 	 * @return XmlnukePoll
 	 */
-	public function __construct($context, $urlProcess, $poll, $lang = "")
+	public function __construct($urlProcess, $poll, $lang = "")
 	{
-		$this->_context = $context;
+		$this->_context = Context::getInstance();
 		$this->_url = $urlProcess;
 		$this->_poll = $poll;
 		if ($lang != "")
