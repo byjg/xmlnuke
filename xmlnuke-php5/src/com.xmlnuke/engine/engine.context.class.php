@@ -31,13 +31,8 @@
  * Context class get data from HttpContext class and Config.php file and put all in propeties and methods to make easy access their contents
  * @package xmlnuke
  */
-class Context
+class Context extends BaseSingleton
 {
-	/**
-	* @access private
-	* @var Context
-	*/
-	private static $_context = null;
 	/**
 	* @access private
 	* @var string
@@ -121,7 +116,7 @@ class Context
 	* @access public
 	* @return void
 	*/
-	public function __construct()
+	protected function __construct()
 	{
 		$valuesConfig = Config::getValuesConfig();
 
@@ -281,18 +276,6 @@ class Context
 		}
 	}
 	
-	/**
-	 *
-	 * @return Context 
-	 */
-	public static function getInstance()
-	{
-		if (Context::$_context == null)
-			Context::$_context = new Context();
-		
-		return Context::$_context;
-	}
-
 	/**
 	 * Get config debug in module
 	 *

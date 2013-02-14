@@ -42,7 +42,7 @@
 		$_REQUEST[$pair[0]] = $pair[1];
 	}
 	
-	$context = new Context();
+	$context = Context::getInstance();
 
 	/*
 	   You must have pass a parameter called CN.

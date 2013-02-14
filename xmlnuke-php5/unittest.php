@@ -1,7 +1,7 @@
 <?php
 require_once("xmlnuke.inc.php");
 
-$context = new Context();
+$context = Context::getInstance();
 
 echo "<html>";
 echo "<head>";

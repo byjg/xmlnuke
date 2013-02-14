@@ -7,7 +7,7 @@ require_once("xmlnuke.inc.php");
 
 require_once(PHPXMLNUKEDIR . "src/modules/captcha/captcha.class.php");
 
-$context = new Context();
+$context = Context::getInstance();
 
 $cq = ($context->ContextValue("xmlnuke.CAPTCHACHALLENGE")!="easy");
 $c = intval($context->ContextValue("xmlnuke.CAPTCHALETTERS"));

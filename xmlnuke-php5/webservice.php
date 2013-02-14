@@ -7,7 +7,7 @@ require_once("xmlnuke.inc.php");
 
 require_once(PHPXMLNUKEDIR . "src/modules/webservice/webservice.php");
 
-$context = new Context();
+$context = Context::getInstance();
 
 $name = $context->getVirtualCommand();
 

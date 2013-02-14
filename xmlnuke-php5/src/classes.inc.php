@@ -3,6 +3,7 @@ require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.ixmlnukecrud.class
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.ieditlistformatter.class.php");
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.ixmlnukedocument.class.php");
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.ixmlnukedocumentobject.class.php");
+require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.basesingleton.class.php");
 
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.xmlnukecollection.class.php");
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.xmlnukedocumentobject.class.php");
