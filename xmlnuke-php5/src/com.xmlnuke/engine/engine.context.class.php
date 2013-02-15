@@ -275,7 +275,17 @@ class Context extends BaseSingleton
 		       $this->MakeLogout();
 		}
 	}
-	
+
+	/**
+	 * This method is necessary only because PHP 5.2.x or lower does not support the method "get_called_class"
+	 * @deprecated since version 3.5
+	 * @return type
+	 */
+	public static function getInstance()
+	{
+		return self::manageInstances("Context");
+	}
+
 	/**
 	 * Get config debug in module
 	 *

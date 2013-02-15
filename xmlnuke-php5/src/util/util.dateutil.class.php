@@ -179,7 +179,7 @@ class DateUtil
 		}
 	}
 	
-	public function GetDateParts($date, $dateFormat = DATEFORMAT::YMD, $separator="/")
+	public static function GetDateParts($date, $dateFormat = DATEFORMAT::YMD, $separator="/")
 	{
 		$reg = preg_split("/[^0-9]/", $date);
 		while (sizeof($reg) < 6)

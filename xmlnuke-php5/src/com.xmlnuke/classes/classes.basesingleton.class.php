@@ -46,8 +46,11 @@ class BaseSingleton
 
 	public static function getInstance()
 	{
-		$class = get_called_class();
-
+		return self::manageInstances(get_called_class());
+	}
+	
+	protected static function manageInstances($class)
+	{
 		if (!isset(self::$instances[$class]))
 		{
 			self::$instances[$class] = new $class;
