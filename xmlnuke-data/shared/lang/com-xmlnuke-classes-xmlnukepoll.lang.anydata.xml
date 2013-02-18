@@ -15,7 +15,7 @@
       <field name="ERROR_POLLNOTSETUP">Erro! O sistema de enquete não está configurado adequadamente. Contacte com o administrador do sistema para resolver isso.</field>
       <field name="SENDBTN">Votar</field>
       <field name="VIEWRESULTSBTN">Ver resultados</field>
-      <field name="POLLENDED">Esse enquete está finalizada.</field>
+      <field name="POLLENDED">Essa enquete está finalizada.</field>
       <field name="ERROR_POLLEMPTY">Essa enquete está vazia ou não existe.</field>
       <field name="VOTECOMPUTED">Obrigado. Seu voto foi computado.</field>
       <field name="CANNOTSHOWRESULTS">Desculpe, mas não posso mostrar os resultados para você.</field>
