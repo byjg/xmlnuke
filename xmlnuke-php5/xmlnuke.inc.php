@@ -95,10 +95,20 @@ $context = Context::getInstance();
 
 
 /**
- * Fix some bad behaviors in PHP :(
+ * Fix some bad behaviors in PHP existing prior version 5.3.x :(
  */
 function fixbadthingsinphp()
 {
+	if (function_exists("ini_get"))
+	{
+		ini_set("display_errors", 1);
+	}
+	error_reporting(E_ALL & ~(E_NOTICE | E_STRICT));
+	#error_reporting(E_ALL | E_STRICT);
+
+	if (PHP_VERSION_ID >= 50400)
+		return;
+
 	// http://br.php.net/manual/pt_BR/ref.info.php#ini.magic-quotes-runtime
 	/* if magic_quotes_runtime is enabled all functions will return a backslash before a quote */
 	if(get_magic_quotes_runtime())
@@ -139,9 +149,6 @@ function fixbadthingsinphp()
 			Context::getInstance()->WriteWarningMessage("I suppose you do not need enter here. Please deactivate \"register_globals\" directive");
 		}
 	}
-
-	error_reporting(E_ALL ^ E_NOTICE);
-	//error_reporting(E_STRICT);
 }
 
 function remove_magicquotes(&$var)

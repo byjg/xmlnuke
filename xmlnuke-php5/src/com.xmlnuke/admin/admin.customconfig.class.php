@@ -1,6 +1,7 @@
 <?php
+
 /*
- *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  *  Copyright:
  *
  *  XMLNuke: A Web Development Framework based on XML.
@@ -24,7 +25,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
- *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
 /**
@@ -32,24 +33,26 @@
  */
 class CustomConfig extends NewBaseAdminModule
 {
+
 	public function CustomConfig()
 	{
+
 	}
 
 	public function useCache()
 	{
 		return false;
 	}
+
 	public function getAccessLevel()
-        {
-                return AccessLevel::CurrentSiteAndRole;
-        }
+	{
+		return AccessLevel::CurrentSiteAndRole;
+	}
 
-        public function  getRole()
-        {
-               return "MANAGER";
-        }
-
+	public function getRole()
+	{
+		return "MANAGER";
+	}
 
 	public function CreatePage()
 	{
@@ -57,7 +60,7 @@ class CustomConfig extends NewBaseAdminModule
 
 		$myWords = $this->WordCollection();
 
-            $this->setHelp($myWords->Value("DESCRIPTION"));
+		$this->setHelp($myWords->Value("DESCRIPTION"));
 
 		//this.addMenuOption("OK", "admin:ManageGroup?action=aqui");
 		$this->setTitlePage($myWords->Value("TITLE"));
@@ -66,12 +69,12 @@ class CustomConfig extends NewBaseAdminModule
 
 		$action = strtolower($this->_action);
 
-		$block = new XmlBlockCollection($myWords->Value("WORKINGAREA"), BlockPosition::Center );
+		$block = new XmlBlockCollection($myWords->Value("WORKINGAREA"), BlockPosition::Center);
 		/*
-		XmlNode paragraph;
-		XmlNode form;
-		XmlNode boxButton;
-		*/
+		  XmlNode paragraph;
+		  XmlNode form;
+		  XmlNode boxButton;
+		 */
 		if ($action == "update")
 		{
 			$nv = array();
@@ -83,7 +86,7 @@ class CustomConfig extends NewBaseAdminModule
 			$nv["xmlnuke.USERSCLASS"] = $this->_context->ContextValue("usersclass");
 			$nv["xmlnuke.DEBUG"] = $this->_context->ContextValue("txtdebug");
 			$nv["xmlnuke.DETECTMOBILE"] = $this->_context->ContextValue("txtdetectmobile");
-    		$nv["xmlnuke.CAPTCHACHALLENGE"] = $this->_context->ContextValue("captchachallenge");
+			$nv["xmlnuke.CAPTCHACHALLENGE"] = $this->_context->ContextValue("captchachallenge");
 			$nv["xmlnuke.CAPTCHALETTERS"] = $this->_context->ContextValue("captchaletters");
 			$nv["xmlnuke.ENABLEPARAMPROCESSOR"] = $this->_context->ContextValue("enableparamprocessor");
 			$nv["xmlnuke.USEFULLPARAMETER"] = $this->_context->ContextValue("usefullparameter");
@@ -100,7 +103,7 @@ class CustomConfig extends NewBaseAdminModule
 		$form->setJSValidate(true);
 		$form->setFormName("form");
 
-		$truefalse = array(""=>"Use Default", "true"=>"True", "false"=>"False");
+		$truefalse = array("" => "Use Default", "true" => "True", "false" => "False");
 
 		$form->addXmlnukeObject(new XmlInputHidden("action", "update"));
 		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.ROOTDIR", $this->_context->ContextValue("xmlnuke.ROOTDIR")));
@@ -119,8 +122,8 @@ class CustomConfig extends NewBaseAdminModule
 		$form->addXmlnukeObject(new XmlInputTextBox("xmlnuke.USERSCLASS", "usersclass", $this->_context->ContextValue("xmlnuke.USERSCLASS"), 30));
 		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "txtdetectmobile", "xmlnuke.DETECTMOBILE", $truefalse, $this->getStringBool($this->_context->ContextValue("xmlnuke.DETECTMOBILE"))));
 		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "txtdebug", "xmlnuke.DEBUG", $truefalse, $this->getStringBool($this->_context->ContextValue("xmlnuke.DEBUG"))));
-		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "captchachallenge", "xmlnuke.CAPTCHACHALLENGE", array("easy"=>"Easy", "hard"=>"Hard"), $this->_context->ContextValue("xmlnuke.CAPTCHACHALLENGE")));
-		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "captchaletters", "xmlnuke.CAPTCHALETTERS", array("5"=>"5", "6"=>"6", "7"=>"7", "8"=>"8", "9"=>"9", "10"=>"10"), $this->_context->ContextValue("xmlnuke.CAPTCHALETTERS")));
+		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "captchachallenge", "xmlnuke.CAPTCHACHALLENGE", array("easy" => "Easy", "hard" => "Hard"), $this->_context->ContextValue("xmlnuke.CAPTCHACHALLENGE")));
+		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "captchaletters", "xmlnuke.CAPTCHALETTERS", array("5" => "5", "6" => "6", "7" => "7", "8" => "8", "9" => "9", "10" => "10"), $this->_context->ContextValue("xmlnuke.CAPTCHALETTERS")));
 		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "enableparamprocessor", "xmlnuke.ENABLEPARAMPROCESSOR", $truefalse, $this->getStringBool($this->_context->ContextValue("xmlnuke.ENABLEPARAMPROCESSOR"))));
 		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "usefullparameter", "xmlnuke.USEFULLPARAMETER", $truefalse, $this->getStringBool($this->_context->ContextValue("xmlnuke.USEFULLPARAMETER"))));
 		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.CACHESTORAGEMETHOD", $this->_context->ContextValue("xmlnuke.CACHESTORAGEMETHOD")));
@@ -190,7 +193,7 @@ class CustomConfig extends NewBaseAdminModule
 	{
 		$curValueArray = explode("|", $this->_context->ContextValue("xmlnuke.LANGUAGESAVAILABLE"));
 
-		foreach ($curValueArray as $key=>$value)
+		foreach ($curValueArray as $key => $value)
 		{
 			$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "languagesavailable$key", "xmlnuke.LANGUAGESAVAILABLE", $this->getLangArray(), $value));
 		}
@@ -204,9 +207,10 @@ class CustomConfig extends NewBaseAdminModule
 		$key = "languagesavailable";
 		$qty = intval($_POST[$key]);
 		$value = "";
-		for($i=0; $i<=$qty; $i++)
+		for ($i = 0; $i <= $qty; $i++)
 		{
-			if ($_POST[$key . $i] != "") $value .= ($value!="" ? "|" : "") . $_POST[$key . $i];
+			if ($_POST[$key . $i] != "")
+				$value .= ($value != "" ? "|" : "") . $_POST[$key . $i];
 		}
 		return $value;
 	}
@@ -236,12 +240,14 @@ class CustomConfig extends NewBaseAdminModule
 	{
 		if (gettype($var) == "boolean")
 		{
-			return ($var ? "true":"false");
+			return ($var ? "true" : "false");
 		}
 		else
 		{
 			return $var;
 		}
 	}
+
 }
+
 ?>
