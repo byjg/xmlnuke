@@ -63,6 +63,7 @@ if (!defined("AUTOLOAD"))
 	require_once(PHPXMLNUKEDIR . "src/admin.inc.php");
 
 	require_once(PHPXMLNUKEDIR . "src/oauth.inc.php");
+	require_once(PHPXMLNUKEDIR . "src/aws.inc.php");
 
 	require_once(PHPXMLNUKEDIR . "src/modules.inc.php");
 }

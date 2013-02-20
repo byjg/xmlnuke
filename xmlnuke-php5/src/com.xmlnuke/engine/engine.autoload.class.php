@@ -52,6 +52,7 @@ class AutoLoad
 				"src/com.xmlnuke/net/net.",
 				"src/modules/oauthclient/20/",
 				"src/modules/oauthclient/10/",
+				"src/modules/aws/",
 				"src/com.xmlnuke/module/module.",
 				"src/com.xmlnuke/admin/admin."
 			);
