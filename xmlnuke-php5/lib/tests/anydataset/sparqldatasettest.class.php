@@ -27,6 +27,9 @@ class SparQLDatasetTest extends TestCase
 		$this->assert($iterator->Count() == 5, "Count() method must return 5");
 	}
 	
+	/**
+	 * @AssertIfException DatasetException
+	 */
 	function test_wrongSparQLDataSet()
 	{
 		$dataset = new SparQLDataSet("http://localhost/", SparQLDatasetTest::$SPARQL_NS);
@@ -38,7 +41,7 @@ class SparQLDatasetTest extends TestCase
 	}
 
 	/**
-	 * @AssertIfException Exception
+	 * @AssertIfException DatasetException
 	 */
 	function test_wrongSparQLDataSet2()
 	{
