@@ -11,6 +11,7 @@ class TestList
 		$arr[] = "tests.anydataset.jsondatasettest";
 		$arr[] = "tests.anydataset.xmldatasettest";
 		$arr[] = "tests.anydataset.sparqldatasettest";
+		$arr[] = "tests.anydataset.textfiledatasettest";
 		return $arr;
 	}
 }		

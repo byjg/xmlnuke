@@ -147,7 +147,9 @@ class TextFileDataSet
 		}
 		else 
 		{
+			$old = ini_set('auto_detect_line_endings', true);
 			$handle = fopen($this->_source, "r");
+			ini_set('auto_detect_line_endings', $old);
 			if (!$handle)
 			{
 				throw new DatasetException("TextFileDataSet File open error");

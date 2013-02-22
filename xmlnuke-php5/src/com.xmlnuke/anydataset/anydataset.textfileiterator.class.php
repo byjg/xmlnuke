@@ -46,6 +46,8 @@ class TextFileIterator extends GenericIterator
 
 	protected $_current = 0;
 
+	protected $_currentBuffer = "";
+
 	/**
 	*@access public
 	*@return IIterator
@@ -56,6 +58,23 @@ class TextFileIterator extends GenericIterator
 		$this->_fields = $fields;
 		$this->_fieldexpression = $fieldexpression;
 		$this->_handle = $handle;
+
+		$this->readNextLine();
+	}
+
+	protected function readNextLine()
+	{
+		if ($this->hasNext())
+		{
+			$buffer = fgets($this->_handle, 4096);
+			if (trim($buffer) != "")
+			{
+				$this->_current++;
+				$this->_currentBuffer = $buffer;
+			}
+			else
+				$this->readNextLine();
+		}
 	}
 
 	/**
@@ -82,6 +101,7 @@ class TextFileIterator extends GenericIterator
 			if (feof($this->_handle))
 			{
 				fclose($this->_handle);
+				$this->_handle = null;
 				return false;
 			}
 			else
@@ -99,18 +119,22 @@ class TextFileIterator extends GenericIterator
 	{
 		if ($this->hasNext())
 		{
-			$buffer = fgets($this->_handle, 4096);
-			$cols = preg_split($this->_fieldexpression,$buffer,-1,PREG_SPLIT_DELIM_CAPTURE);
+			$cols = preg_split($this->_fieldexpression, $this->_currentBuffer, -1, PREG_SPLIT_DELIM_CAPTURE);
 
 			$sr = new SingleRow();
 
 			for($i=0;($i<sizeof($this->_fields)) && ($i<sizeof($cols)); $i++)
 			{
-				$sr->AddField(strtolower($this->_fields[$i]), $cols[$i]);
+				$column = $cols[$i];
+
+				if (($i>=sizeof($this->_fields)-1) || ($i>=sizeof($cols)-1))
+					$column = preg_replace("/(\r?\n?)$/", "", $column);
+
+				$sr->AddField(strtolower($this->_fields[$i]), $column);
 				//Debug::PrintValue(strtolower($this->_fields[$i]), $cols[$i]);
 			}
 
-			$this->_current++;
+			$this->readNextLine();
 			return 	$sr;
 		}
 		else
