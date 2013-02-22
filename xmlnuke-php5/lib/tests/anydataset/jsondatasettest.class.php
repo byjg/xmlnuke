@@ -68,7 +68,7 @@ class JSONDatasetTest extends TestCase
 	}
 
 	/**
-	 * @AssertIfException Exception
+	 * @AssertIfException DatasetException
 	 */
 	function test_jsonNotWellFormatted()
 	{
@@ -108,7 +108,7 @@ class JSONDatasetTest extends TestCase
 	}
 
 	/**
-	 * @AssertIfException Exception
+	 * @AssertIfException IteratorException
 	 */
 	function test_navigateJSONComplexIteratorWrongPath2()
 	{

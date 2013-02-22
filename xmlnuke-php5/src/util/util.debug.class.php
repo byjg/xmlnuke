@@ -233,6 +233,10 @@ class Debug
 					{
 						$args[] = "object [" . get_class($arg) . "]";
 					}
+					elseif (is_array($arg))
+					{
+							//$args[] = "['" . implode("','", $arg) . "'] ";
+					}
 					else
 					{
 						$args[] = "\"" . $arg . "\"";
