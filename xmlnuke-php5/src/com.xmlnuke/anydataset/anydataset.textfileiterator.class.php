@@ -67,7 +67,9 @@ class TextFileIterator extends GenericIterator
 		if ($this->hasNext())
 		{
 			$buffer = fgets($this->_handle, 4096);
-			if (trim($buffer) != "")
+			$this->_currentBuffer = false;
+
+			if (($buffer !== false) && (trim($buffer) != ""))
 			{
 				$this->_current++;
 				$this->_currentBuffer = $buffer;
@@ -92,7 +94,11 @@ class TextFileIterator extends GenericIterator
 	*/
 	public function hasNext()
 	{
-		if (!$this->_handle)
+		if ($this->_currentBuffer !== false)
+		{
+			return true;
+		}
+		elseif (!$this->_handle)
 		{
 			return false;
 		}

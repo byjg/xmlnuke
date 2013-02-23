@@ -121,27 +121,41 @@ class TextFileDataSet
 			$pat = "/(http|ftp|https):\/\/([\w+|\.]+)/i";
 			$urlParts = preg_split($pat, $this->_source, -1,PREG_SPLIT_DELIM_CAPTURE);	
 				
-			$handle = fsockopen($urlParts[2], 80, $errno, $errstr, 30);
+			$handle = @fsockopen($urlParts[2], 80, $errno, $errstr, 30);
 			if (!$handle)
 			{
 				throw new DatasetException("TextFileDataSet Socket error: $errstr ($errno)");
 			}
 			else 
 			{
-				$out = "GET " . $urlParts[4] . " HTTP/1.1\r\n";
+				$out = "GET " . $urlParts[3] . " HTTP/1.1\r\n";
 				$out .= "Host: " . $urlParts[2] . "\r\n";
 				$out .= "Connection: Close\r\n\r\n";
-				
 				fwrite($handle, $out);
 
 				try 
 				{
+					// Read Http Header
+					$headerLine = fgets($handle, 4096);
+					while ((trim(preg_replace("/(\r?\n?)$/", "", $headerLine)) !="") && ($headerLine !== false))
+					{
+						$status = array();
+						if (preg_match("#HTTP/1\.\d (?<status>\d{3})\s#", $headerLine, $status))
+							if ($status["status"] != "200")
+								throw new DatasetException("Status expected 200 and I got [" . $status["status"] . "]");
+								
+						$headerLine = fgets($handle, 4096);
+					}
+					if ($headerLine === false)
+						throw new DatasetException("Cant get Header File");
+
 					$it = new TextFileIterator($this->_context, $handle, $this->_fields, $this->_fieldexpression);
 					return $it;
 				}
 				catch (Exception $ex)
 				{
 					fclose($handle);
+					throw ($ex);
 				}
 			}
 		}

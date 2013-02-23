@@ -163,6 +163,95 @@ class TextFileDatasetTest extends TestCase
 		$this->assert($count == 2000, "Count records mismatch. Need to process 2000 records.");
 	}
 
+	function test_navigateTextIterator_Remote_Unix()
+	{
+		$txtFile = new TextFileDataset(Context::getInstance(), 'http://www.xmlnuke.com/site/' . basename($this->fileName_Unix), $this->fieldNames, CSVFILE);
+		$txtIterator = $txtFile->getIterator();
+
+		$count = 0;
+		foreach ($txtIterator as $sr)
+		{
+			$this->assertSingleRow($sr, ++$count);
+		}
+
+		$this->assert($count == 2000, "Count records mismatch. Need to process 2000 records and I count $count.");
+	}
+
+	function test_navigateTextIterator_Remote_Windows()
+	{
+		$txtFile = new TextFileDataset(Context::getInstance(), 'http://www.xmlnuke.com/site/' . basename($this->fileName_Windows), $this->fieldNames, CSVFILE);
+		$txtIterator = $txtFile->getIterator();
+
+		$count = 0;
+		foreach ($txtIterator as $sr)
+		{
+			$this->assertSingleRow($sr, ++$count);
+		}
+
+		$this->assert($count == 2000, "Count records mismatch. Need to process 2000 records and I count $count.");
+	}
+
+	/**
+	 * fsockopen and fgets is buggy when read a Mac classic document (\r line ending)
+	 */
+	/*
+	function test_navigateTextIterator_Remote_MacClassic()
+	{
+		$txtFile = new TextFileDataset(Context::getInstance(), 'http://www.xmlnuke.com/site/' . basename($this->fileName_MacClassic), $this->fieldNames, CSVFILE);
+		$txtIterator = $txtFile->getIterator();
+
+		$count = 0;
+		foreach ($txtIterator as $sr)
+		{
+			$this->assertSingleRow($sr, ++$count);
+		}
+
+		$this->assert($count == 2000, "Count records mismatch. Need to process 2000 records and I count $count.");
+	}
+	 *
+	 */
+
+	function test_navigateTextIterator_Remote_BlankLine()
+	{
+		$txtFile = new TextFileDataset(Context::getInstance(), 'http://www.xmlnuke.com/site/' . basename($this->fileName_BlankLine), $this->fieldNames, CSVFILE);
+		$txtIterator = $txtFile->getIterator();
+
+		$count = 0;
+		foreach ($txtIterator as $sr)
+		{
+			$this->assertSingleRow($sr, ++$count);
+		}
+
+		$this->assert($count == 2000, "Count records mismatch. Need to process 2000 records and I count $count.");
+	}
+
+
+	/**
+	 * @AssertIfException NotFoundException
+	 */
+	function test_fileNotFound()
+	{
+		$txtFile = new TextFileDataset(Context::getInstance(), "/tmp/xyz", $this->fieldNames, CSVFILE);
+	}
+
+	/**
+	 * @AssertIfException DatasetException
+	 */
+	function test_remoteFileNotFound()
+	{
+		$txtFile = new TextFileDataset(Context::getInstance(), "http://www.xmlnuke.com/site/notfound-test", $this->fieldNames, CSVFILE);
+		$txtIterator = $txtFile->getIterator();
+	}
+
+	/**
+	 * @AssertIfException DatasetException
+	 */
+	function test_serverNotFound()
+	{
+		$txtFile = new TextFileDataset(Context::getInstance(), "http://notfound-test/alalal", $this->fieldNames, CSVFILE);
+		$txtIterator = $txtFile->getIterator();
+	}
+
 	/**
 	 *
 	 * @param SingleRow $sr
