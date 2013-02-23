@@ -59,18 +59,18 @@ class SparQLDatasetTest extends TestCase
 
 		$sr = $iterator->moveNext();
 		
-		$this->assert($sr->getField("person") == "bb1440100000082", "'person' has to be 'bb1440100000082' and found '" . $sr->getField("person") . "'");
+		$this->assert($sr->getField("person") == "bb1810500000080", "'person' has to be 'bb1810500000080' and found '" . $sr->getField("person") . "'");
 		$this->assert($sr->getField("person.type") == "bnode", "'person.type' has to be 'bnode' and found '" . $sr->getField("person.type") . "'");
-		$this->assert($sr->getField("name") == "snh206", "'name' has to be 'snh206' and found '" . $sr->getField("name") . "'");
+		$this->assert($sr->getField("name") == "das05r", "'name' has to be 'das05r' and found '" . $sr->getField("name") . "'");
 		$this->assert($sr->getField("name.type") == "literal", "'person.type' has to be 'literal' and found '" . $sr->getField("name.type") . "'");
 		$this->assert($sr->getField("name.datatype") == "http://www.w3.org/2001/XMLSchema#string", "'person.datatype' has to be 'http://www.w3.org/2001/XMLSchema#string' and found '" . $sr->getField("name.datatype") . "'");
 
 		$this->assert($iterator->hasNext(), "hasNext() method must be true");
 		$sr = $iterator->moveNext();
 		
-		$this->assert($sr->getField("person") == "bb2440100000080", "'person' has to be 'bb2440100000080' and found '" . $sr->getField("person") . "'");
+		$this->assert($sr->getField("person") == "bb6810500000080", "'person' has to be 'bb6810500000080' and found '" . $sr->getField("person") . "'");
 		$this->assert($sr->getField("person.type") == "bnode", "'person.type' has to be 'bnode' and found '" . $sr->getField("person.type") . "'");
-		$this->assert($sr->getField("name") == "aed", "'name' has to be 'aed' and found '" . $sr->getField("name") . "'");
+		$this->assert($sr->getField("name") == "Sachin Idgunji", "'name' has to be 'Sachin Idgunji' and found '" . $sr->getField("name") . "'");
 		$this->assert($sr->getField("name.type") == "literal", "'person.type' has to be 'literal' and found '" . $sr->getField("name.type") . "'");
 		$this->assert($sr->getField("name.datatype") == "http://www.w3.org/2001/XMLSchema#string", "'person.datatype' has to be 'http://www.w3.org/2001/XMLSchema#string' and found '" . $sr->getField("name.datatype") . "'");
 
