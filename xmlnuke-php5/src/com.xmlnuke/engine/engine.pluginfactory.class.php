@@ -123,29 +123,29 @@ class PluginFactory
 		
 		// Instantiate and Execute Contructor		
 		$class = new ReflectionClass($className);
-		if ($param1 == null)
+		if ($param5 != null)
 		{
-			$plugin = $class->newInstance();	
+			$plugin = $class->newInstance($param1, $param2, $param3, $param4, $param5);
 		}
-		elseif ($param2 == null)
-		{
-			$plugin = $class->newInstance($param1);
-		}
-		elseif ($param3 == null)
-		{
-			$plugin = $class->newInstance($param1, $param2);
-		}
-		elseif ($param4 == null)
-		{
-			$plugin = $class->newInstance($param1, $param2, $param3);
-		}
-		elseif ($param5 == null)
+		elseif ($param4 != null)
 		{
 			$plugin = $class->newInstance($param1, $param2, $param3, $param4);
 		}
+		elseif ($param3 != null)
+		{
+			$plugin = $class->newInstance($param1, $param2, $param3);
+		}
+		elseif ($param2 != null)
+		{
+			$plugin = $class->newInstance($param1, $param2);
+		}
+		elseif ($param1 != null)
+		{
+			$plugin = $class->newInstance($param1);
+		}
 		else
 		{
-			$plugin = $class->newInstance($param1, $param2, $param3, $param4, $param5);
+			$plugin = $class->newInstance();	
 		}
 		
 
