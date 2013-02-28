@@ -7,15 +7,15 @@ http://tinymce.moxiecode.com/
 
 Xmlnuke uses a unchanged version of TinyMCE but some files are removed. 
 The follow files/folder are removed from TinyMCE used in Xmlnuke:
-- Plugin folder was removed (only plugin remaining are paste and spellchecker)
+- Plugin folder was removed (only plugin remaining are: paste and spellchecker)
 - Themes/Simple folder was removed
 - All *_src.js Files was removed
 
-The current TinyMCE edition is 3.4.4
+The current TinyMCE edition is 3.5.8
 
 To use in your XSL you MUST add the follow snippets:
 - HTMLHEADERS inside <head> section
 - HTMLBODY at the end of document
 
-All changes made by João Gilberto Magalhães at 2011-05-25
+All changes made by João Gilberto Magalhães at 2013-02-28
 
