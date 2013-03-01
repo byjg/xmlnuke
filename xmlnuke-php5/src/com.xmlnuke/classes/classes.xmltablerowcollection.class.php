@@ -27,27 +27,30 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+
 /**
  * @package xmlnuke
  */
-class XmlTableCollection extends XmlTableCollectionBase
+class XmlTableRowCollection extends XmlTableCollectionBase
 {
 	public function __construct()
 	{
-		$this->_NODE = "table";
+		$this->_NODE = "tr";
 	}
 
 	/**
 	 *
-	 * @param XmlTableRowCollection $docobj
+	 * @param XmlTableColumnCollection $docobj
 	 */
 	public function addXmlnukeObject($docobj)
 	{
-		if (!($docobj instanceof XmlTableRowCollection))
+		if (!($docobj instanceof XmlTableColumnCollection))
 		{
-			throw new InvalidArgumentException("XmlTableCollecion expects a XmlTableRowCollection");
+			throw new InvalidArgumentException("XmlTableRowCollecion expects a XmlTableColumnCollection");
 		}
 		parent::addXmlnukeObject($docobj);
 	}
+
 }
+
 ?>

@@ -65,7 +65,10 @@ require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.xmlnukestringxml.c
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.xmlnuketabview.class.php");
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.xmlnuketext.class.php");
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.xmlparagraphcollection.class.php");
+require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.xmltablecollectionbase.class.php");
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.xmltablecollection.class.php");
+require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.xmltablerowcollection.class.php");
+require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.xmltablecolumncollection.class.php");
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.xmlnuketreeview.class.php");
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.xmlnukeuialert.class.php");
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/classes/classes.xmlnukemediagallery.class.php");

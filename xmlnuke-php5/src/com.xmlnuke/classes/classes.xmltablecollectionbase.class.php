@@ -30,24 +30,42 @@
 /**
  * @package xmlnuke
  */
-class XmlTableCollection extends XmlTableCollectionBase
+abstract class XmlTableCollectionBase extends XmlnukeCollection implements IXmlnukeDocumentObject
 {
-	public function __construct()
-	{
-		$this->_NODE = "table";
-	}
+	protected $_NODE = "";
+	protected $_genNode = null;
 
-	/**
-	 *
-	 * @param XmlTableRowCollection $docobj
-	 */
-	public function addXmlnukeObject($docobj)
+	protected $_style = "";
+	public function setStyle($value)
 	{
-		if (!($docobj instanceof XmlTableRowCollection))
-		{
-			throw new InvalidArgumentException("XmlTableCollecion expects a XmlTableRowCollection");
-		}
-		parent::addXmlnukeObject($docobj);
+		$this->_style = $value;
+	}
+	public function getStyle()
+	{
+		return $this->_style;
+	}
+	
+	protected $_id = "";
+	public function setId($value)
+	{
+		$this->_id = $value;
+	}
+	public function getId()
+	{
+		return $this->_id;
+	}
+	
+	/**
+	*@desc Generate page, processing yours childs.
+	*@param DOMNode $current
+	*@return void
+	*/
+	public function generateObject($current)
+	{
+		$this->_genNode = XmlUtil::CreateChild($current, $this->_NODE, "");
+		XmlUtil::AddAttribute($this->_genNode, "id", $this->getId());
+		XmlUtil::AddAttribute($this->_genNode, "style", $this->getStyle());
+		parent::generatePage($this->_genNode);
 	}
 }
 ?>

@@ -30,24 +30,44 @@
 /**
  * @package xmlnuke
  */
-class XmlTableCollection extends XmlTableCollectionBase
+class XmlTableColumnCollection extends XmlTableCollectionBase
 {
+	protected $_colspan = "";
+	public function setColspan($value)
+	{
+		$this->_colspan = $value;
+	}
+	public function getColspan()
+	{
+		return $this->_colspan;
+	}
+	
+	protected $_rowspan = "";
+	public function setRowspan($value)
+	{
+		$this->_rowspan = $value;
+	}
+	public function getRowspan()
+	{
+		return $this->_rowspan;
+	}
+	
 	public function __construct()
 	{
-		$this->_NODE = "table";
+		$this->_NODE = "td";
 	}
-
+	
 	/**
-	 *
-	 * @param XmlTableRowCollection $docobj
-	 */
-	public function addXmlnukeObject($docobj)
+	*@desc Generate page, processing yours childs.
+	*@param DOMNode $current
+	*@return void
+	*/
+	public function generateObject($current)
 	{
-		if (!($docobj instanceof XmlTableRowCollection))
-		{
-			throw new InvalidArgumentException("XmlTableCollecion expects a XmlTableRowCollection");
-		}
-		parent::addXmlnukeObject($docobj);
+		parent::generateObject($current);
+		XmlUtil::AddAttribute($this->_genNode, "colspan", $this->getColspan());
+		XmlUtil::AddAttribute($this->_genNode, "rowspan", $this->getRowspan());
 	}
+	
 }
 ?>
