@@ -7,7 +7,7 @@ http://tinymce.moxiecode.com/
 
 Xmlnuke uses a unchanged version of TinyMCE but some files are removed. 
 The follow files/folder are removed from TinyMCE used in Xmlnuke:
-- Plugin folder was removed (only plugin remaining are: paste and spellchecker)
+- Plugin folder was removed (only plugin remaining are: advimage, paste, spellchecker and table)
 - Themes/Simple folder was removed
 - All *_src.js Files was removed
 
