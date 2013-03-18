@@ -217,6 +217,11 @@ class XmlEditList extends XmlnukeDocumentObject
 	*/
 	public function setDataSource($it)
 	{
+		if (is_array($it))
+		{
+			$arrayDS = new ArrayDataSet($it);
+			$it = $arrayDS->getIterator();
+		}
 		$this->_it = $it;
 	}
 	
