@@ -73,15 +73,18 @@ class MailEnvelope
 		{
 			$smtpString = Context::getInstance()->Value("xmlnuke.SMTPSERVER");
 
-			// Define if uses SMTP server or just sendemail
-			if ($smtpString != "")
+			if (($smtpString == "localhost") || ($smtpString == ""))
 			{
-				$pat = "/(smtp|ssl):\/\/(?:(\S+):(\S+)@)?(?:([\w\d\-]+(?:\.[\w\d\-]+)*))(?::([\d]+))?/";
-				MailEnvelope::$_smtpParts = preg_split ( $pat, $smtpString, - 1, PREG_SPLIT_DELIM_CAPTURE );
-				if (count(MailEnvelope::$_smtpParts) >= 5 && !empty(MailEnvelope::$_smtpParts[5]) && MailEnvelope::$_smtpParts[5][0] == "@")
-				{
-					throw new InvalidArgumentException("Wrong SMTP server definition");
-				}
+				$smtpString = "mail://localhost";
+			}
+
+			$pat = "/(?<protocol>smtp|ssl|sendmail|qmail|mail):\/\/(?:(?<user>\S+):(?<pass>\S+)@)?(?:(?<server>[\w\d\-]+(?:\.[\w\d\-]+)*))(?::(?<port>[\d]+))?/";
+			MailEnvelope::$_smtpParts = array();
+			$match = preg_match ( $pat, $smtpString, MailEnvelope::$_smtpParts );
+
+			if (!$match || MailEnvelope::$_smtpParts["server"] == "")
+			{
+				throw new InvalidArgumentException("Wrong SMTP server definition");
 			}
 		}
 	}
@@ -214,26 +217,23 @@ class MailEnvelope
 
 
 		// Define if uses SMTP server or just sendemail
-		if (isset(MailEnvelope::$_smtpParts[1]) && MailEnvelope::$_smtpParts[1] != "sendmail")
+		if (MailEnvelope::$_smtpParts["protocol"] != "mail")
 		{
-			if (MailEnvelope::$_smtpParts[4] != "")
+			$mail->IsSMTP(); // telling the class to use SMTP
+
+			$mail->Host = MailEnvelope::$_smtpParts["server"];
+			$mail->Port = (MailEnvelope::$_smtpParts["port"] != "" ? MailEnvelope::$_smtpParts["port"] : 25);
+
+			if (MailEnvelope::$_smtpParts["user"] != "")
 			{
-				$mail->IsSMTP(); // telling the class to use SMTP
+				$mail->SMTPAuth = true;
+				$mail->Username = MailEnvelope::$_smtpParts["user"]; // SMTP account username
+				$mail->Password = MailEnvelope::$_smtpParts["pass"];        // SMTP account password
+			}
 
-				$mail->Host = MailEnvelope::$_smtpParts[4];
-				$mail->Port = (MailEnvelope::$_smtpParts[5] != "" ? MailEnvelope::$_smtpParts[5] : 25);
-
-				if (MailEnvelope::$_smtpParts[2] != "")
-				{
-					$mail->SMTPAuth = true;
-  					$mail->Username = MailEnvelope::$_smtpParts[2]; // SMTP account username
-  					$mail->Password = MailEnvelope::$_smtpParts[3];        // SMTP account password
-				}
-
-				if (MailEnvelope::$_smtpParts[1]=="ssl")
-				{
-					$mail->SMTPSecure = "ssl";
-				}
+			if (MailEnvelope::$_smtpParts["protocol"]=="ssl")
+			{
+				$mail->SMTPSecure = "ssl";
 			}
 		}
 

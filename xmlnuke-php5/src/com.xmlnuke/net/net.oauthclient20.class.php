@@ -84,6 +84,18 @@ class OAuthClient20
 
 	}
 
+	public static function existsApp($appName)
+	{
+		$oauthFile = new AnydatasetFilenameProcessor("_oauthclient20");
+		$oauthAny = new AnyDataSet($oauthFile);
+
+		$itf = new IteratorFilter();
+		$itf->addRelation("appname", Relation::Equal, $appName);
+		$it = $oauthAny->getIterator($itf);
+
+		return ($it->hasNext());
+	}
+
 	protected function getVar($name)
 	{
 		$name = $this->_appName . '_' . $name;		
