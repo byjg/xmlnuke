@@ -383,6 +383,22 @@ class UnsupportedFeatureException extends XMLNukeException
 	}
 }
 
+
+class PHPException extends XMLNukeException
+{
+	/**
+	 *
+	 * @param type $message
+	 * @param type $code
+	 * @param type $previous
+	 */
+	public function __construct($message = "", $code = null, $previous = null)
+	{
+		parent::__construct($message, $code, $previous);
+		$this->showStackTrace = true;
+	}
+}
+
 class PHPWarning
 {
 	protected static function VerifyArgs($getLast, $backTrace)

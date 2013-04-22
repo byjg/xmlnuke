@@ -48,7 +48,7 @@ class ImageUtil
 		$extern = false;
 		
 		if (! function_exists ( 'imagecreatefrompng' ))
-			return; //GD not available
+			throw new PHPException("GD module is not installed");
 		
 		if (strpos($image_file, "http://") !== false)
 		{
@@ -56,7 +56,7 @@ class ImageUtil
 			$url = $image_file;
 			$image_file = basename($url);
 			$info = pathinfo($image_file);
-			$image_file = tempnam(sys_get_temp_dir(), "srzdimg_") . "." . $info['extension'];
+			$image_file = tempnam(sys_get_temp_dir(), "img_") . "." . $info['extension'];
 			
 			$handle = fopen($image_file, "w");
 			try
@@ -71,10 +71,11 @@ class ImageUtil
 		}
 		
 		if (! file_exists ( $image_file ) or ! is_readable ( $image_file ))
-			return;
+			throw new NotFoundException("File is not found or not is readable. Cannot continue.");
 
 		$this->file_name = $image_file;
 		$img = getimagesize ( $image_file );
+		$image = null;
 
 		//Create the image depending on what kind of file it is.
 		switch ($img ['mime'])
