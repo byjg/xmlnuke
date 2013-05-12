@@ -61,40 +61,26 @@ interface IModule
 	function Setup($xmlModuleName, $customArgs);
 
 	/**
-	 * Check if module result already in cache.
-	 * Return True if already in cache
-	 *
-	 * @return bool
-	 */
-	function hasInCache();
-
-	/**
 	 * Check if module result can be write to cache
-	 * Return True if never use cache
+	 * Return a INT to use a cache and false if never use cache
 	 * 
 	 * @return bool
 	 */
 	function useCache();
 
 	/**
-	 * Get module result from cache.
+	 * Return the Cache engine to set and get modules from cache
+	 *
+	 * @return ICacheEngine
+	 */
+	function getCacheEngine();
+
+	/**
+	 * Return the cache name unique for this module;
 	 *
 	 * @return string
 	 */
-	function getFromCache();
-
-	/**
-	 * Save module result to cache
-	 *
-	 * @param string $content Module output
-	 */
-	function saveToCache($content);
-
-	/**
-	 * Erase cache information
-	 *
-	 */
-	function resetCache();
+	function getCacheId();
 
 	/**
 	 * Check if current module requires authentication.

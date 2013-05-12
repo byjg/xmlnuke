@@ -47,6 +47,7 @@ class AutoLoad
 				"src/com.xmlnuke/database/database.",
 				"src/com.xmlnuke/engine/engine.",
 				"src/com.xmlnuke/international/international.",
+				"src/com.xmlnuke/cache/cache.",
 				"src/util/util.",
 				"src/com.xmlnukedb/",
 				"src/com.xmlnuke/net/net.",

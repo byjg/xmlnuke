@@ -205,9 +205,13 @@ class AnyDataSet
 			{
 				$this->_collection[] = $sr;
 			}
+			elseif (is_array($sr))
+			{
+				$this->_collection[] = new SingleRow($sr);
+			}
 			else
 			{
-				throw new InvalidArgumentException("You must pass a SingleRow object");
+				throw new InvalidArgumentException("You must pass an array or a SingleRow object");
 			}
 		}
 		else

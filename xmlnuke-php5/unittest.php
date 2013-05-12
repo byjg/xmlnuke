@@ -78,7 +78,7 @@ else
 {
 	try
 	{
-		$result = PluginFactory::LoadPlugin($list, "", $context);
+		$result = PluginFactory::LoadPlugin($list);
 		$arr = $result->getList();
 	}
 	catch (Exception $e)
@@ -146,7 +146,7 @@ if($context->ContextValue("submeteu")!="")
 		}
 	}
 
-	$testRunner = new TestRunner();
+	$testRunner = new TestRunner(new PrettyTestResult());
 	$testRunner->run( $mainTestSuite );
 }
 ?>

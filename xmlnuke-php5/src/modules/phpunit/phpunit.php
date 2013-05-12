@@ -529,6 +529,7 @@ class TextTestResult extends TestResult {
   /* Specialize TestResult to produce text/html report */
   function TextTestResult() {
     $this->TestResult();  // call superclass constructor
+	echo "Tests result\n\n";
   }
 
   function report() {
@@ -536,43 +537,41 @@ class TextTestResult extends TestResult {
     $nRun = $this->countTests();
     $nFailures = $this->failureCount();
     $nErrors = $this->errorCount();
-    printf("<p>%s test%s run.<br>\n", $nRun, ($nRun == 1) ? '' : 's');
-    printf("%s failure%s.<br>\n", $nFailures, ($nFailures == 1) ? '' : 's');
-    printf("%s error%s.<br>\n", $nErrors, ($nErrors == 1) ? '' : 's');
+	echo "\n";
+    printf("%s test%s run.\n", $nRun, ($nRun == 1) ? '' : 's');
+    printf("%s failure%s.\n", $nFailures, ($nFailures == 1) ? '' : 's');
+    printf("%s error%s.\n\n", $nErrors, ($nErrors == 1) ? '' : 's');
 
     if ($nFailures > 0) {
-	print("<h2>Failures</h2>");
-	print("<ol>\n");
+	print("** Failures **\n\n");
 	$failures = $this->getFailures();
 	while (list($i, $failure) = each($failures)) {
 	    $failedTestName = $failure->getTestName();
-	    printf("<li>%s\n", $failedTestName);
+	    printf(" - %s\n", $failedTestName);
 
 	    $PHPUNITExceptions = $failure->getPHPUNITExceptions();
-	    print("<ul>");
+	    print("      ");
 	    while (list($na, $PHPUNITException) = each($PHPUNITExceptions))
-		printf("<li>%s\n", $PHPUNITException->getMessage());
-	    print("</ul>");
+		printf("      - %s\n", $PHPUNITException->getMessage());
 	}
-	print("</ol>\n");
+	print("\n\n");
     }
 
     if ($nErrors > 0) {
-	print("<h2>Errors</h2>");
-	print("<ol>\n");
-	reset($this->fErrors);
-	while (list($i, $error) = each($this->fErrors)) {
-	    $erroredTestName = $error->getTestName();
-	    printf("<li>%s\n", $failedTestName);
+		print("** Errors **\n\n");
+		reset($this->fErrors);
+		while (list($i, $error) = each($this->fErrors)) {
+			$erroredTestName = $error->getTestName();
+			printf(" - %s\n", $failedTestName);
 
-	    $PHPUNITException = $error->getPHPUNITException();
-	    print("<ul>");
-	    printf("<li>%s\n", $PHPUNITException->getMessage());
-	    print("</ul>");
-	}
-	print("</ol>\n");
-
+			$PHPUNITException = $error->getPHPUNITException();
+			printf("      - %s\n", $PHPUNITException->getMessage());
+		}
+		print("\n\n");
+		exit(1);
     }
+	else
+		exit(0);
   }
 
   function _startTest($test) {
@@ -582,9 +581,9 @@ class TextTestResult extends TestResult {
 
   function _endTest($test) {
     $outcome = $test->failed()
-       ? "<font color=\"red\">FAIL</font>"
-       : "<font color=\"green\">ok</font>";
-    printf("$outcome<br>\n");
+       ? "[FAIL]"
+       : "[OK]";
+    printf("$outcome\n");
     flush();
   }
 }
@@ -606,12 +605,14 @@ class PrettyTestResult extends TestResult {
 	/**
 	 * Specialize TestResult to produce text/html report.
 	 */
-	function PrettyTestResult() {
+	function __construct()
+	{
 		$this->TestResult();  // call superclass constructor
 		// NOTE: one wonders why the cellspacing,cellpadding,border,width,align when there is a css class??
 		echo '<h2>Tests</h2>',"\n",
 		     '<table cellspacing="1" cellpadding="1" border="0" width="90%" align="center" class="details">',"\n\t",
 			 '<tr><th>Class</th><th>Function</th><th>Success?</th></tr>'."\n";
+
 	}
 	// }}}
 
@@ -662,12 +663,22 @@ class PrettyTestResult extends TestResult {
 }
 
 class TestRunner {
-  /* Run a suite of tests and report results. */
-  function run(&$suite) {
-      $result = new PrettyTestResult();
-      $suite->run($result);
-      $result->report();
-  }
+
+	protected $_outputResult = null;
+
+	function __construct($outputResult)
+	{
+		if (!($outputResult instanceof TestResult))
+			throw new InvalidArgumentException("You have to pass a TestResult instance");
+
+		$this->_outputResult = $outputResult;
+	}
+
+	/* Run a suite of tests and report results. */
+	function run(&$suite) {
+		$suite->run($this->_outputResult);
+		$this->_outputResult->report();
+	}
 }
 
 ?>

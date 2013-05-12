@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://logging.apache.org/log4php/">
+
+	<appender name="null" class="LoggerAppenderNull" />
+
+    <appender name="browser" class="LoggerAppenderEcho">
+        <layout class="LoggerLayoutHtml2">
+            <!--param name="locationInfo" value="true" /-->
+        </layout>
+    </appender>
+
+    <root>
+		<level value="INFO" />
+        <appender_ref ref="null" />
+    </root>
+
+    <logger name="echo">
+		<level value="TRACE" />
+        <appender_ref ref="null" />
+	</logger>
+
+	<logger name="database.basedbaccess">
+		<level value="TRACE" />
+        <appender_ref ref="browser" />
+    </logger>
+
+    <logger name="cache.memcachedengine">
+		<level value="INFO" />
+        <appender_ref ref="null" />
+    </logger>
+
+    <logger name="cache.filesystemcacheengine">
+		<level value="TRACE" />
+        <appender_ref ref="null" />
+    </logger>
+
+    <logger name="cache.dummycacheengine">
+		<level value="TRACE" />
+        <appender_ref ref="null" />
+    </logger>
+
+</configuration>

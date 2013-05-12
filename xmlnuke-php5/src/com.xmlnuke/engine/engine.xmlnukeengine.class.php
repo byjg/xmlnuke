@@ -101,12 +101,15 @@ class XmlNukeEngine
 	{
 		// Creating FileNames will be used in this functions.
 		$xmlCacheFile = new XMLCacheFilenameProcessor($this->_context->getXml());
+		$cacheName = $xmlCacheFile->FullQualifiedNameAndPath();
+
+		$result = FileSystemCacheEngine::getInstance()->get($cacheName, 7200);
 
 		// Check if file cache already exists
 		// If exists read it from there;
-		if (FileUtil::Exists($xmlCacheFile->FullQualifiedNameAndPath()) && !$this->_context->getNoCache() && !$this->_context->getReset() && ($this->_outputResult == XmlNukeEngine::OUTPUT_TRANSFORMED_DOC))
+		if (($this->_outputResult == XmlNukeEngine::OUTPUT_TRANSFORMED_DOC) && ($result !== false))
 		{
-			return FileUtil::QuickFileRead($xmlCacheFile->FullQualifiedNameAndPath());
+			return $result;
 		}
 		// If not exists process XML/XSL file now;
 		else
@@ -119,14 +122,7 @@ class XmlNukeEngine
 			// Save cache file - NOCACHE: Doesn't Save; Otherwise: Allways save
 			if (!$this->_context->getNoCache() && ($this->_outputResult == XmlNukeEngine::OUTPUT_TRANSFORMED_DOC))
 			{
-				try
-				{
-					FileUtil::QuickFileWrite($xmlCacheFile->FullQualifiedNameAndPath(), $result);
-				}
-				catch (Exception $ex)
-				{
-					echo "<br/><b>Warning:</b> I could not write to cache on file '" . basename($xmlCacheFile->FullQualifiedNameAndPath()) . "'. Switching to nocache=true mode. <br/>";					
-				}
+				FileSystemCacheEngine::getInstance()->set($cacheName, $result);
 			}
 
 			return $result;
@@ -140,12 +136,27 @@ class XmlNukeEngine
 	*/
 	public function TransformDocumentFromModule($module)
 	{
-		$useCache = $module->useCache() && !$this->_context->getReset();
-		if (!$useCache || !$module->hasInCache() || ($this->_outputResult != XmlNukeEngine::OUTPUT_TRANSFORMED_DOC))
+		$cacheProc = new XMLCacheFilenameProcessor($module->getCacheId());
+		$cacheName = $cacheProc->FullQualifiedNameAndPath();
+
+		$ttl = $module->useCache();
+
+		$cacheEngine = $module->getCacheEngine();
+		$result = $cacheEngine->get($cacheName, $ttl);
+
+		$getFromCache = ($ttl !== false)
+				&& ($this->_outputResult == XmlNukeEngine::OUTPUT_TRANSFORMED_DOC)
+				&& ($result !== false);
+			;
+
+		if (!$getFromCache)
 		{
+			$cacheEngine->lock($cacheName);
+
 			//IXmlnukeDocument
 			$px = $module->CreatePage();
 			if (is_null($px) || !($px instanceof IXmlnukeDocument)) {
+				$cacheEngine->unlock($cacheName);
 				throw new EngineException("The method CreatePage must return a IXmlnukeDocument", 756);
 			}
 			
@@ -172,16 +183,17 @@ class XmlNukeEngine
 				$result = $this->TransformDocument($xmlDoc, $xslFile);
 			}
 			
-			if ($useCache && ($this->_outputResult == XmlNukeEngine::OUTPUT_TRANSFORMED_DOC))
+			if (($ttl !== false) && ($this->_outputResult == XmlNukeEngine::OUTPUT_TRANSFORMED_DOC))
 			{
-				$module->saveToCache($result);
+				$cacheEngine->set($cacheName, $result);
+				$cacheEngine->unlock($cacheName);
 			}
 			
 			return $result;
 		}
 		else
 		{
-			return $module->getFromCache();
+			return $result;
 		}
 	}
 
@@ -190,22 +202,14 @@ class XmlNukeEngine
 	{
 		$cachename = str_replace(".", "_", "REMOTE-" . UsersBase::getSHAPassword($url));
 		$cacheFile = new XMLCacheFilenameProcessor($cachename);
-		
-		$file = $cacheFile->FullQualifiedNameAndPath();
-		if (file_exists($file))
-		{
-			$horaMod = filemtime($file);
-			$tempo = intval((time()-$horaMod)/60);
-			//Debug::PrintValue($tempo);
-			if ($tempo > 30)
-			{
-				FileUtil::DeleteFileString($file);
-			}
-		}
 
-		if (file_exists($file) && ($this->_context->getReset()==""))
+		$cacheEngine = FileSystemCacheEngine::getInstance();
+		$file = $cacheFile->FullQualifiedNameAndPath();
+
+		$result = $cacheEngine->get($file, 60);
+		if ($result !== false)
 		{
-			return FileUtil::QuickFileRead($file);
+			return $result;
 		}
 		else 
 		{
@@ -223,7 +227,7 @@ class XmlNukeEngine
 
 			$result = preg_replace($search, $replace, $result);
 			
-			FileUtil::QuickFileWrite($file, $result);
+			$cacheEngine->set($file, $result);
 
 			return $result;		
 		}

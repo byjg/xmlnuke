@@ -49,7 +49,7 @@ class ArrayDataSet
 
 		$this->_array = array();
 		
-		if ($array)
+		if (is_array($array))
 		{
 			foreach ($array as $key => $value) 
 			{
@@ -75,6 +75,10 @@ class ArrayDataSet
 					}
 				}
 			}
+		}
+		else
+		{
+			throw new UnexpectedValueException("You need to pass an array");
 		}
 	}
 

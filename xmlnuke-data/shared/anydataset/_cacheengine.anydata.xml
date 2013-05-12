@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<anydataset>
+  <row>
+    <field name="engine">MemCachedEngine</field>
+    <field name="server">127.0.0.1:11211</field>
+	<!--
+    <field name="server">127.0.0.2:11211</field>
+    <field name="option"></field>
+    <field name="option"></field>
+	-->
+  </row>
+</anydataset>

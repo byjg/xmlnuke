@@ -149,19 +149,19 @@ class FileUtil
 	*@param bool $append Adiciona ao final ou nao.
 	*@return void
 	*/
-	public static function QuickFileWrite($file, $content, $append=null)
+	public static function QuickFileWrite($file, $content, $append=false)
 	{
 		if ($file instanceof FilenameProcessor)
 			$filename = $file->FullQualifiedNameAndPath();
 		else
 			$filename = $file;
 		
-		$operacao = "w";
-		if ($append != null)
+		$mode = "w+";
+		if ($append)
 		{
-			$operacao = "a";
+			$mode = "a+";
 		}
-		$handle = FileUtil::OpenFile($filename, $operacao);
+		$handle = FileUtil::OpenFile($filename, $mode);
 		FileUtil::WriteFile($handle, $content);
 		FileUtil::CloseFile($handle);
 	}

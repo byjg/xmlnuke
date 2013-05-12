@@ -2,7 +2,7 @@
 // url: unittest.php?list=tests.anydataset.testlist
 class TestList
 {
-	public function __construct($context)
+	public function __construct()
 	{
 	}
 
@@ -12,6 +12,7 @@ class TestList
 		$arr[] = "tests.anydataset.xmldatasettest";
 		$arr[] = "tests.anydataset.sparqldatasettest";
 		$arr[] = "tests.anydataset.textfiledatasettest";
+		$arr[] = "tests.anydataset.arraydatasettest";
 		return $arr;
 	}
 }		

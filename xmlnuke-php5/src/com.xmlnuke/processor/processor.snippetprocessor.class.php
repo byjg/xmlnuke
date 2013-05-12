@@ -60,58 +60,6 @@ class SnippetProcessor
 		$this->_file = $file;
 	}
 
-	
-	protected $_fileCacheName = "";
-	protected $_fileCacheHandle = null;
-	protected $_fileCacheContent = "";
-	
-	protected function OpenCache($filename)
-	{
-		$this->_fileCacheName = $filename;
-		$this->_fileCacheContent = "";
-		$this->_fileCacheHandle = null;
-		
-		if (!$this->_context->getNoCache())
-		{
-			try
-			{
-				$this->_fileCacheHandle = FileUtil::OpenFile($this->_fileCacheName, "w+");
-			}
-			catch (Exception $ex)
-			{
-				$this->_context->WriteWarningMessage("I could not write to cache on file '" . basename($this->_fileCacheName) . "'. Switching to nocache=true mode.");
-				$this->_fileCacheHandle = null;
-			}
-		}
-		//else
-		//{
-		//	echo "<br/><b>No Cache</b><br/>";
-		//}
-	}
-	protected function WriteToCache($content)
-	{
-		if ($this->_fileCacheHandle)
-		{
-			FileUtil::WriteFile($this->_fileCacheHandle, $content);
-		}
-		else
-		{
-			$this->_fileCacheContent .= $content;
-		}
-	}
-	protected function CloseCache()
-	{
-		if ($this->_fileCacheHandle)
-		{
-			FileUtil::CloseFile($this->_fileCacheHandle);
-			return FileUtil::QuickFileRead($this->_fileCacheName);
-		}
-		else
-		{
-			return $this->_fileCacheContent;
-		}
-	}
-	
 	/**
 	*@param string $xslPath
 	*@return string 
@@ -120,15 +68,24 @@ class SnippetProcessor
 	public function IncludeSnippet($xslPath)
 	{
 		$xslCache = new XSLCacheFilenameProcessor($this->_file->ToString());
+		$xslName = $xslCache->FullQualifiedNameAndPath();
+
+
+		$cacheEngine = FileSystemCacheEngine::getInstance();
+		$result = $cacheEngine->get($xslName, 7200);
+
 		// Create a new stream representing the file to be written to,
 		// and write the stream cache the stream
 		// from the external location to the file (only if doesnt exist)
-		if (!FileUtil::Exists($xslCache->FullQualifiedNameAndPath()) || $this->_context->getNoCache() || $this->_context->getReset())
+		if ($result === false)
 		{
+			$content = "";
+
 			$lines = file($xslPath);
 			try
 			{
-				$this->OpenCache($xslCache->FullQualifiedNameAndPath());
+				$cacheEngine->lock($xslName);
+
 				foreach($lines as $line)
 				{
 					$iStart = strpos($line,"<xmlnuke-");
@@ -143,12 +100,18 @@ class SnippetProcessor
 						$line = substr($line,0,$iStart). self::LF . $sReadSnippet . substr($line,$iEnd+ 1);
 						$iStart = strpos($line,"<xmlnuke-");
 					}
-					$this->WriteToCache($line);
+					$content .= $line;
 				}
-				return $this->CloseCache();
+
+				$cacheEngine->unlock($xslName);
+
+				$cacheEngine->set($xslName, $content);
+
+				return $content;
 			}
 			catch (Exception $ex)
 			{
+				$this->_cacheEngine->unlock($xslName);
 				if (FileUtil::Exists($xslCache->FullQualifiedNameAndPath()))
 				{
 					FileUtil::DeleteFile($xslCache);
@@ -159,7 +122,7 @@ class SnippetProcessor
 		else
 		{
 			// Already in Cache
-			return FileUtil::QuickFileRead($xslCache->FullQualifiedNameAndPath());
+			return $result;
 		}
 	}
 	

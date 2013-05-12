@@ -179,97 +179,6 @@ abstract class BaseModule implements IModule
 	}
 
 	/**
-	 * @return bool
-	 * @desc hasInCache Imodule interface
-	 */
-	public function hasInCache()
-	{
-		return (!$this->_ignoreCache && FileUtil::Exists($this->_cacheFile->FullQualifiedNameAndPath()) && (!$this->_context->getNoCache() || !$this->_context->getReset()));
-	}
-
-	/**
-	 * Routine to determine a name for dynamic caches. If expired the time limit the system reset the cache
-	 *
-	 * @param int $timeInSeconds
-	 */
-	protected function validateDynamicCache($timeInSeconds)
-	{
-		// Retrieve Basic XMLNuke paramenters
-		$chavesXmlnuke = array();
-		$chavesXmlnuke["site"] = $this->_context->getSite();
-		if ($this->_context->getModule() != "")
-		{
-			$chavesXmlnuke["module"] = $this->_context->getModule();
-		}
-		else
-		{
-			$chavesXmlnuke["xml"] = $this->_context->getXml();
-		}
-		$chavesXmlnuke["xsl"] = $this->_context->getXsl();
-		$chavesXmlnuke["lang"] = $this->_context->Language()->getName();
-
-		// Exclude common and random parameteres from request
-		$exclude = array("phpsessid" => 1, "reset" => 1, "debug" => 1, "nocache" => 1, "x" => 1, "y" => 1, "site" => 1, "xml" => 1, "xsl" => 1, "module" => 1, "__clickevent" => 1, "__postback" => 1) + $_COOKIE;
-		$arrRequest = array_diff_key($_REQUEST, $exclude);
-
-		// Create array of parameters from request
-		$chaves = array();
-		foreach ($arrRequest as $key => $value)
-		{
-			$key = strtolower($key);
-			$value = strtolower($value);
-			if ((strpos($key, "imagefield_") === false))
-			{
-				$chaves[$key] = $value;
-			}
-		}
-		arsort($chaves);
-
-		// Create a final set of chaves to determine the cache file name
-		$chaves = $chavesXmlnuke + $chaves;
-
-		$str = "";
-		foreach ($chaves as $key => $value)
-		{
-			$str .= $key . "=" . $value . "/";
-		}
-		//Debug::PrintValue($str);
-		$anydata = new UsersAnyDataSet($this->_context);
-		$this->_cacheFile = new XMLCacheFilenameProcessor($anydata->getSHAPassword(strtolower($str)));
-
-		// Test if cache exists
-		$fileControl = $this->_cacheFile->FullQualifiedNameAndPath() . ".control";
-		if (file_exists($fileControl))
-		{
-			//Debug::PrintValue("Have Control File");
-			$horaMod = filemtime($fileControl);
-			$tempo = intval(time() - $horaMod);
-
-			if ($tempo < 30)
-			{
-				return;
-			}
-		}
-
-		$file = $this->_cacheFile->FullQualifiedNameAndPath();
-		//Debug::PrintValue($file, $this->_cacheFile);
-
-		if (file_exists($file))
-		{
-			//Debug::PrintValue("Exists");
-			$horaMod = filemtime($file);
-			$tempo = intval((time() - $horaMod));
-			//Debug::PrintValue($tempo);
-			if (($tempo > $timeInSeconds) || $this->_context->getReset() || $this->_context->getNoCache())
-			{
-				FileUtil::QuickFileWrite($fileControl, $horaMod);
-				$this->_ignoreCache = true;
-				//Debug::PrintValue("Erased.!");
-			}
-		}
-	}
-
-	/**
 	 * @return bool - Default is True
 	 * @desc useCache Imodule interface
 	 */
@@ -279,49 +188,50 @@ abstract class BaseModule implements IModule
 	}
 
 	/**
+	 *
+	 * @return ICacheEngine
+	 */
+	public function getCacheEngine()
+	{
+		return FileSystemCacheEngine::getInstance();
+	}
+
+	private $_cacheId = "";
+
+	/**
 	 * @return string
-	 * @desc getFromCache Imodule interface. Implement basic read cache file
 	 */
-	public function getFromCache()
+	public function getCacheId()
 	{
-		if ($this->hasInCache())
+		if ($this->_cacheId == "")
 		{
-			return FileUtil::QuickFileRead($this->_cacheFile->FullQualifiedNameAndPath());
-		}
-		else
-		{
-			return "";
-		}
-	}
+			// Starting NAME
+			$id = $this->_context->getModule() . "#" . $this->_context->getSite() . "#" .
+				$this->_context->getXsl() . "#" . $this->_context->Language()->getName();
 
-	/**
-	 * @param string $content - XHtml string to be cached
-	 * @return void
-	 * @desc saveToCache IModule interface. Implements basic save cache file.
-	 */
-	public function saveToCache($content)
-	{
-		FileUtil::QuickFileWrite($this->_cacheFile->FullQualifiedNameAndPath(), $content);
-		$this->deleteControlCache();
-	}
+			// Exclude common and random parameteres from request
+			$exclude = array("phpsessid" => 1, "reset" => 1, "debug" => 1, "nocache" => 1, "x" => 1, "y" => 1, "site" => 1, "xml" => 1, "xsl" => 1, "module" => 1, "__clickevent" => 1, "__postback" => 1) + $_COOKIE;
+			$arrRequest = array_diff_key($_REQUEST, $exclude);
 
-	/**
-	 * @return void
-	 * @desc resetCache IModule interface. saveToCache Implements basic reset cache file.
-	 */
-	public function resetCache()
-	{
-		$this->deleteControlCache();
-		FileUtil::DeleteFile($this->_cacheFile);
-	}
+			// Create array of parameters from request
+			$keys = array();
+			foreach ($arrRequest as $key => $value)
+			{
+				$key = strtolower($key);
+				$value = strtolower($value);
+				if ((strpos($key, "imagefield_") === false))
+				{
+					$keys[] = $key . "=" . $value;
+				}
+			}
+			asort($keys);
 
-	protected function deleteControlCache()
-	{
-		$fileControl = $this->_cacheFile->FullQualifiedNameAndPath() . ".control";
-		if (file_exists($fileControl))
-		{
-			FileUtil::DeleteFile($fileControl);
+			$idParam = implode("/", $keys);
+
+			$this->_cacheId = $id . ":" . md5($idParam);
 		}
+
+		return $this->_cacheId;
 	}
 
 	/**

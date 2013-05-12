@@ -142,6 +142,7 @@
 		}
 		catch (Exception $ex)
 		{
+			$module->getCacheEngine()->unlock($module->getCacheId());
 			Debug::LogError($moduleName, $ex);
 			if ($debug) 
 			{
@@ -164,9 +165,9 @@
 				}
 				catch (Exception $ex)
 				{
+					$module->getCacheEngine()->unlock($module->getCacheId());
 					echo "<b>Fatal Error</b>: [" . get_class($ex) . "] " . $ex->getMessage() . "<br/>File: " . basename($ex->getFile()) . " at " . $ex->getLine();
-				}
-				
+				}		
 			}
 		}		
 	}

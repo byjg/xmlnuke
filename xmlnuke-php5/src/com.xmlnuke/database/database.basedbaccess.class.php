@@ -39,6 +39,8 @@ abstract class BaseDBAccess
 	 */
 	protected $_db = null;
 
+	protected $_cachedDb = null;
+
 	/**
 	 * @var Context
 	 */
@@ -76,17 +78,37 @@ abstract class BaseDBAccess
 	public abstract function getDataBaseName();
 
 	/**
+	 * @return ICacheEngine
+	 */
+	public function getCacheEngine()
+	{
+		throw new NotImplementedException('You have to implement the cache engine in order to use the Cache');
+	}
+
+	/**
 	 * Create a instance of DBDataSet to connect database
 	 * @return DBDataSet
 	 */
-	protected function getDBDataSet()
+	protected function getDBDataSet($cache = false)
 	{
-		if (is_null($this->_db))
+		if (!$cache)
 		{
-			$this->_db = new DBDataSet($this->getDataBaseName(), $this->_context);
-		}
+			if (is_null($this->_db))
+			{
+				$this->_db = new DBDataSet($this->getDataBaseName(), $this->_context);
+			}
 
-		return $this->_db;
+			return $this->_db;
+		}
+		else
+		{
+			if (is_null($this->_cachedDb))
+			{
+				$this->_cachedDb = new CachedDBDataSet($this->getDataBaseName(), $this->getCacheEngine());
+			}
+
+			return $this->_cachedDb;
+		}
 	}
 
 	/**
@@ -103,9 +125,9 @@ abstract class BaseDBAccess
 		$start = 0;
 		if ($debug)
 		{
-			Debug::PrintValue("<hr>");
-			Debug::PrintValue("Class name: " . get_class($this));
-			Debug::PrintValue("SQL: " . $sql);
+			$log = LogWrapper::getLogger("database.basedbaccess");
+			$log->trace("Class name: " . get_class($this));
+			$log->trace("SQL: " . $sql);
 			if ($param != null)
 			{
 				$s = "";
@@ -117,7 +139,7 @@ abstract class BaseDBAccess
 					}
 					$s .= "[$key]=$value";
 				}
-				Debug::PrintValue("Params: $s");
+				$log->trace("Params: $s");
 			}
 			$start = microtime(true);
 		}
@@ -135,7 +157,7 @@ abstract class BaseDBAccess
 		if ($debug)
 		{
 			$end = microtime(true);
-			Debug::PrintValue("Execution time: " . ($end - $start) . " seconds ");
+			$log->trace("Execution time: " . ($end - $start) . " seconds ");
 		}
 
 		return $id;
@@ -148,17 +170,17 @@ abstract class BaseDBAccess
 	 * @param array $param
 	 * @return IIterator
 	 */
-	protected function getIterator($sql, $param = null)
+	protected function getIterator($sql, $param = null, $ttl = -1)
 	{
-		$this->getDBDataSet();
+		$db = $this->getDBDataSet($ttl > 0);
 
 		$debug = $this->_context->getDebugInModule();
 		$start = 0;
 		if ($debug)
 		{
-			Debug::PrintValue("<hr>");
-			Debug::PrintValue("Class name: " . get_class($this));
-			Debug::PrintValue("SQL: " . $sql);
+			$log = LogWrapper::getLogger("database.basedbaccess");
+			$log->trace("Class name: " . get_class($this));
+			$log->trace("SQL: " . $sql);
 			if ($param != null)
 			{
 				$s = "";
@@ -170,15 +192,15 @@ abstract class BaseDBAccess
 					}
 					$s .= "[$key]=$value";
 				}
-				Debug::PrintValue("Params: $s");
+				$log->trace("Params: $s");
 			}
 			$start = microtime(true);
 		}
-		$it	= $this->_db->getIterator($sql, $param);
+		$it	= $db->getIterator($sql, $param, $ttl);
 		if ($debug)
 		{
 			$end = microtime(true);
-			Debug::PrintValue("Execution Time: " . ($end - $start) . " segundos ");
+			$log->trace("Execution Time: " . ($end - $start) . " segundos ");
 		}
 		return $it;
 	}
@@ -191,9 +213,9 @@ abstract class BaseDBAccess
 		$start = 0;
 		if ($debug)
 		{
-			Debug::PrintValue("<hr>");
-			Debug::PrintValue("Class name: " . get_class($this));
-			Debug::PrintValue("SQL: " . $sql);
+			$log = LogWrapper::getLogger("database.basedbaccess");
+			$log->trace("Class name: " . get_class($this));
+			$log->trace("SQL: " . $sql);
 			if ($param != null)
 			{
 				$s = "";
@@ -205,7 +227,7 @@ abstract class BaseDBAccess
 					}
 					$s .= "[$key]=$value";
 				}
-				Debug::PrintValue("Params: $s");
+				$log->trace("Params: $s");
 			}
 			$start = microtime(true);
 		}
@@ -213,7 +235,7 @@ abstract class BaseDBAccess
 		if ($debug)
 		{
 			$end = microtime(true);
-			Debug::PrintValue("Execution Time: " . ($end - $start) . " segundos ");
+			$log->trace("Execution Time: " . ($end - $start) . " segundos ");
 		}
 		return $scalar;
 	}
