@@ -149,9 +149,12 @@ class XmlNukeEngine
 				&& ($result !== false);
 			;
 
+		$saveToCache = (($ttl !== false) && ($this->_outputResult == XmlNukeEngine::OUTPUT_TRANSFORMED_DOC));
+
 		if (!$getFromCache)
 		{
-			$cacheEngine->lock($cacheName);
+			if ($saveToCache)
+				$cacheEngine->lock($cacheName);
 
 			//IXmlnukeDocument
 			$px = $module->CreatePage();
@@ -182,8 +185,8 @@ class XmlNukeEngine
 				$xslFile->UseFileFromAnyLanguage();
 				$result = $this->TransformDocument($xmlDoc, $xslFile);
 			}
-			
-			if (($ttl !== false) && ($this->_outputResult == XmlNukeEngine::OUTPUT_TRANSFORMED_DOC))
+
+			if ($saveToCache)
 			{
 				$cacheEngine->set($cacheName, $result);
 				$cacheEngine->unlock($cacheName);
