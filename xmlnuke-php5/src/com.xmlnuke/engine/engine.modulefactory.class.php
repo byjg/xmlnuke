@@ -62,7 +62,7 @@ class ModuleFactory
 		// <userdir>/lib/<subdir>/<modulename>.class.php
 		//  - or -
 		// <xmlnukedir>/modules/<subdir>/<modulename>.class.php
-
+		
 		$context = Context::getInstance();
 		
 		$modulename = strtolower($modulename);
@@ -108,7 +108,7 @@ class ModuleFactory
 		{
 			$urlSSL = "http://" . $context->ContextValue("HTTP_HOST") . $context->ContextValue("REQUEST_URI");
 		}
-		else if ( ($requireSSL == SSLAccess::ForceSSL) && $isHttps )
+		else if ( ($requireSSL == SSLAccess::ForceSSL) && !$isHttps )
 		{
 			$urlSSL = "https://" . $context->ContextValue("HTTP_HOST") . $context->ContextValue("REQUEST_URI");
 		}
