@@ -8,9 +8,15 @@
             <!--param name="locationInfo" value="true" /-->
         </layout>
     </appender>
+ <appender name="file" class="LoggerAppenderFile">
+        <layout class="LoggerLayoutSimple" />
+        <param name="file" value="/tmp/file.log" />
+        <param name="append" value="true" />
+    </appender>
+
 
     <root>
-		<level value="INFO" />
+    <level value="INFO" />
         <appender_ref ref="null" />
     </root>
 
@@ -29,7 +35,12 @@
         <appender_ref ref="null" />
     </logger>
 
-    <logger name="cache.filesystemcacheengine">
+     <logger name="default">
+		<level value="INFO" />
+        <appender_ref ref="null" />
+    </logger>
+
+   <logger name="cache.filesystemcacheengine">
 		<level value="TRACE" />
         <appender_ref ref="null" />
     </logger>

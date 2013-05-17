@@ -201,7 +201,14 @@ class FileSystemCacheEngine extends BaseSingleton implements ICacheEngine
 
 		$lockFile = $key . ".lock";
 
-		FileUtil::QuickFileWrite($lockFile, date('c'));
+		try
+		{
+			FileUtil::QuickFileWrite($lockFile, date('c'));
+		}
+		catch (Exception $ex)
+		{
+			// Ignoring... Set will cause an error
+		}
 	}
 
 	/**

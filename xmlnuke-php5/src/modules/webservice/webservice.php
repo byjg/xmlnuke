@@ -176,7 +176,7 @@ abstract class Services_Webservice
      * @access public
      * @return null
      */
-    public function __construct($namespace, $description, $options)
+    public function __construct($namespace = "", $description = "", $options = "")
     {
         if (isset($namespace) && $namespace != '') {
             $this->warningNamespace   = false;

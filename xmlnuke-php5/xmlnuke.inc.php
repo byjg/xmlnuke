@@ -51,6 +51,7 @@ if (!defined("AUTOLOAD"))
 {
 	/* Base required files. The most of another required files is in module.basemodule.class.php */
 	require_once(PHPXMLNUKEDIR . "src/enum.inc.php");
+	require_once(PHPXMLNUKEDIR . "src/cache.inc.php");
 	require_once(PHPXMLNUKEDIR . "src/processor.inc.php");
 	require_once(PHPXMLNUKEDIR . "src/engine.inc.php");
 	require_once(PHPXMLNUKEDIR . "src/xmlnukedb.inc.php");

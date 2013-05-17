@@ -9,6 +9,7 @@ require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/processor/processor.anydatasetback
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/processor/processor.anydatasetbackuplogfilenameprocessor.class.php");
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/processor/processor.anydatasetsetupfilenameprocessor.class.php");
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/processor/processor.anydatasetfilenameprocessor.class.php");
+require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/processor/processor.logconfigfilenameprocessor.class.php");
 
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/processor/processor.backupfilenameprocessor.class.php");
 require_once(PHPXMLNUKEDIR . "src/com.xmlnuke/processor/processor.uploadfilenameprocessor.class.php");
