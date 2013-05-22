@@ -94,6 +94,8 @@ class SnippetProcessor
 						$iEnd = strpos($line,">",$iStart + 1);
 						$snippetFile = substr($line, $iStart + 9, $iEnd - $iStart - 10);
 						$snippet = new SnippetFilenameProcessor(trim($snippetFile));
+						if (!FileUtil::Exists($snippet))
+							throw new NotFoundException("Snippet " . $snippet->FullQualifiedNameAndPath () . " not found" );
 						$fStreamSnippet = FileUtil::OpenFile ($snippet->FullQualifiedNameAndPath(), "r");
 						$sReadSnippet = FileUtil::ReadFile($fStreamSnippet, filesize($snippet->FullQualifiedNameAndPath()));
 						FileUtil::CloseFile($fStreamSnippet);

@@ -87,7 +87,6 @@ class FileSystemCacheEngine extends BaseSingleton implements ICacheEngine
 
 			while(true)
 			{
-				sleep(1); // 1 seconds
 				if (!file_exists($lockFile))
 				{
 					$log->trace("[Cache] Lock released for '$key'");
@@ -99,6 +98,7 @@ class FileSystemCacheEngine extends BaseSingleton implements ICacheEngine
 					$this->unlock($key);
 					return false;
 				}
+				sleep(1); // 1 second
 			}
 		}
 

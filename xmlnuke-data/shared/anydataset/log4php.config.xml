@@ -3,51 +3,51 @@
 
 	<appender name="null" class="LoggerAppenderNull" />
 
-    <appender name="browser" class="LoggerAppenderEcho">
-        <layout class="LoggerLayoutHtml2">
-            <!--param name="locationInfo" value="true" /-->
-        </layout>
-    </appender>
- <appender name="file" class="LoggerAppenderFile">
-        <layout class="LoggerLayoutSimple" />
-        <param name="file" value="/tmp/file.log" />
-        <param name="append" value="true" />
-    </appender>
+	<appender name="browser" class="LoggerAppenderEcho">
+		<layout class="LoggerLayoutHtml2">
+			<!--param name="locationInfo" value="true" /-->
+		</layout>
+	</appender>
+	<appender name="file" class="LoggerAppenderFile">
+		<layout class="LoggerLayoutSimple" />
+		<param name="file" value="/tmp/file.log" />
+		<param name="append" value="true" />
+	</appender>
 
 
-    <root>
-    <level value="INFO" />
-        <appender_ref ref="null" />
-    </root>
+	<root>
+		<level value="INFO" />
+		<appender_ref ref="null" />
+	</root>
 
-    <logger name="echo">
+	<logger name="echo">
 		<level value="TRACE" />
-        <appender_ref ref="null" />
+		<appender_ref ref="null" />
 	</logger>
 
 	<logger name="database.basedbaccess">
 		<level value="TRACE" />
-        <appender_ref ref="browser" />
-    </logger>
+		<appender_ref ref="browser" />
+	</logger>
 
-    <logger name="cache.memcachedengine">
+	<logger name="cache.memcachedengine">
 		<level value="INFO" />
-        <appender_ref ref="null" />
-    </logger>
+		<appender_ref ref="null" />
+	</logger>
 
-     <logger name="default">
+	<logger name="default">
 		<level value="INFO" />
-        <appender_ref ref="null" />
-    </logger>
+		<appender_ref ref="null" />
+	</logger>
 
-   <logger name="cache.filesystemcacheengine">
+	<logger name="cache.filesystemcacheengine">
 		<level value="TRACE" />
-        <appender_ref ref="null" />
-    </logger>
+		<appender_ref ref="null" />
+	</logger>
 
-    <logger name="cache.dummycacheengine">
+	<logger name="cache.dummycacheengine">
 		<level value="TRACE" />
-        <appender_ref ref="null" />
-    </logger>
+		<appender_ref ref="null" />
+	</logger>
 
 </configuration>

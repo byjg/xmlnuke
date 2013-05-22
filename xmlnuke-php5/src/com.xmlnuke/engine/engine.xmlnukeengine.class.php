@@ -164,33 +164,41 @@ class XmlNukeEngine
 			}
 			
 			//DOMNode
-			$xmlDoc = $px->makeDomObject();
-			$nodePage = $xmlDoc->getElementsByTagName("page")->item(0);
-
-			$this->addXMLDefault($nodePage);
-
-			if (!($module->isAdmin()))
+			try
 			{
-				if (strpos($this->_context->getXsl(), "admin_page"))
+				$xmlDoc = $px->makeDomObject();
+				$nodePage = $xmlDoc->getElementsByTagName("page")->item(0);
+
+				if ($nodePage != null)
+					$this->addXMLDefault($nodePage);
+
+				if (!($module->isAdmin()))
 				{
-					$this->_context->setXsl($this->_context->ContextValue("xmlnuke.DEFAULTPAGE"));
+					if (strpos($this->_context->getXsl(), "admin_page"))
+					{
+						$this->_context->setXsl($this->_context->ContextValue("xmlnuke.DEFAULTPAGE"));
+					}
+					$result = $this->TransformDocumentFromDOM($xmlDoc);
 				}
-				$result = $this->TransformDocumentFromDOM($xmlDoc);
+				else
+				{
+					$xslFile = new XSLFilenameProcessor("admin" . FileUtil::Slash() . "admin_page");
+					$xslFile->setFilenameLocation(ForceFilenameLocation::PathFromRoot);
+					//Pendente
+					$xslFile->UseFileFromAnyLanguage();
+					$result = $this->TransformDocument($xmlDoc, $xslFile);
+				}
 			}
-			else
+			catch (Exception $ex)
 			{
-				$xslFile = new XSLFilenameProcessor("admin" . FileUtil::Slash() . "admin_page");
-				$xslFile->setFilenameLocation(ForceFilenameLocation::PathFromRoot);
-				//Pendente
-				$xslFile->UseFileFromAnyLanguage();
-				$result = $this->TransformDocument($xmlDoc, $xslFile);
+				$cacheEngine->unlock($cacheName);
+				throw $ex;
 			}
 
+			$cacheEngine->unlock($cacheName);
+			
 			if ($saveToCache)
-			{
 				$cacheEngine->set($cacheName, $result);
-				$cacheEngine->unlock($cacheName);
-			}
 			
 			return $result;
 		}

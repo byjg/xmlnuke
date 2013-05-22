@@ -645,20 +645,28 @@ class XmlUtil
 
 	protected static function mapArray(&$value, $key)
 	{
-		//echo $key . "\n";
+		//echo "Key: " . $key . "\n";
 
 		if ($value instanceof SimpleXMLElement)
 		{
 			$x = array();
 			foreach($value->children() as $k => $v)
 			{
-				$x[$k][] = (array)$v;
+				$text = "".$v;
+				if ($text != "")
+				{
+					$arText = array("_text" => $text);
+				}
+				else
+				{
+					$arText = array();
+				}
+				$x[$k][] = (array)$v + $arText;
 			}
 			$x = (array)$value->attributes() + $x;
 
 
 			$value = $x;
-			//print_r($x);
 			//$value = (array)$value;
 		}
 
@@ -695,7 +703,7 @@ class XmlUtil
 				$attributes = array();
 				foreach ($value["@attributes"] as $k => $v)
 				{
-					$attributes["@$k"] = $v;
+					$attributes["$k"] = $v;
 				}
 				$value = $attributes + $value;
 				unset($value["@attributes"]);
@@ -712,7 +720,7 @@ class XmlUtil
 			}
 			else if (array_key_exists(0, $value) && !array_key_exists(1, $value))
 			{
-				$value["#text"] = $value[0];
+				$value["_text"] = $value[0];
 				unset($value[0]);
 			}
 

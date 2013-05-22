@@ -206,7 +206,7 @@ abstract class BaseModule implements IModule
 		if ($this->_cacheId == "")
 		{
 			// Starting NAME
-			$id = $this->_context->getModule() . "#" . $this->_context->getSite() . "#" .
+			$id = strtolower(get_class($this)) . "#" . $this->_context->getSite() . "#" .
 				$this->_context->getXsl() . "#" . $this->_context->Language()->getName();
 
 			// Exclude common and random parameteres from request
