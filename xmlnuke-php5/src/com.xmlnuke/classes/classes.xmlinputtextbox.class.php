@@ -210,16 +210,16 @@ class XmlInputTextBox extends XmlInputValidate
 	 * The Default parameters expected a json from XMLNuke "select" tag (xpath = //select). The Json looks like to:
 	 *
 	 * {"select":
-	 *		{"@caption":"Foto","@name":"foto1",
+	 *		{"caption":"Foto","name":"foto1",
 	 *			"option":[
-	 *				{"@value":"13","#text":"Flamengo"},
-	 *				{"@value":"2626","#text":"Flamengo (Basquete)"},
-	 *				{"@value":"2597","#text":"Flavio Canto"},
-	 *				{"@value":"332","#text":"Flavio Venturini"},
-	 *				{"@value":"333","#text":"Flea"},
-	 *				{"@value":"334","#text":"Fleetwood Mac"},
-	 *				{"@value":"2441","#text":"Floresta"},
-	 *				{"@value":"12","#text":"Fluminense"}
+	 *				{"value":"13","#text":"Flamengo"},
+	 *				{"value":"2626","#text":"Flamengo (Basquete)"},
+	 *				{"value":"2597","#text":"Flavio Canto"},
+	 *				{"value":"332","#text":"Flavio Venturini"},
+	 *				{"value":"333","#text":"Flea"},
+	 *				{"value":"334","#text":"Fleetwood Mac"},
+	 *				{"value":"2441","#text":"Floresta"},
+	 *				{"value":"12","#text":"Fluminense"}
 	 *			]
 	 *		}
 	 * }
@@ -235,7 +235,7 @@ class XmlInputTextBox extends XmlInputValidate
 	 * @param string $jsonObjValue
 	 * @param string $jsonObjInfo
 	 */
-	public function setAutosuggest($context, $url, $paramReq, $jsCallback="", $jsonArray = "select.option", $jsonObjKey = "@value", $jsonObjValue = "#text", $jsonObjInfo = "#text")
+	public function setAutosuggest($context, $url, $paramReq, $jsCallback="", $jsonArray = "select.option", $jsonObjKey = "value", $jsonObjValue = "_text", $jsonObjInfo = "_text")
 	{
 		$this->_context = $context;
 		$this->_autosuggestUrl = $url;
