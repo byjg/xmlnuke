@@ -48,6 +48,9 @@ class ArrayDataSet
 	{
 
 		$this->_array = array();
+
+		if (!$array)
+			return;
 		
 		if (is_array($array))
 		{
