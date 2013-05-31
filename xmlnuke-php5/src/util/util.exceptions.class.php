@@ -452,7 +452,7 @@ class PHPWarning
 		{
 			echo "<b>" . PHPWarning::ErrorDescription($getLast["type"]) . "</b>: " . $getLast["message"] . " in " . basename($getLast["file"]) . " at line " . $getLast["line"] . " <br>\n";
 			$match = array();
-			if (preg_match("/\sline:\s(?<line>\d+)/", $getLast["message"], $match))
+			if (preg_match("/\sline:\s(?P<line>\d+)/", $getLast["message"], $match))
 			{
 				echo "Code at line " . $match["line"] . ":" . "<br>\n";
 

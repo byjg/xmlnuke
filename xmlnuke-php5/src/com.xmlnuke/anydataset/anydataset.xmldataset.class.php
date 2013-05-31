@@ -82,7 +82,7 @@ class XmlDataSet
 		{
 			$this->_domDocument = XmlUtil::CreateXmlDocumentFromStr($xml);
 		}
-		
+
 		$this->_rowNode = $rowNode;
 		$this->_colNodes = $colNode;
 		$this->_context = $context;
@@ -96,6 +96,9 @@ class XmlDataSet
 	*/
 	public function getIterator()
 	{
+		$x = XmlUtil::selectNodes($this->_domDocument->documentElement, $this->_rowNode);
+		foreach($x as $y)
+		Debug::PrintValue($y);
 		$it = new XmlIterator($this->_context, XmlUtil::selectNodes($this->_domDocument->documentElement, $this->_rowNode), $this->_colNodes);
 		return $it;
 	}

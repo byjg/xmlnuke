@@ -40,6 +40,62 @@ if(!defined('PHP_VERSION_ID'))
 	define('PHP_RELEASE_VERSION',     $version[2]);    
 }
 
+if (PHP_VERSION_ID < 50200) // Several issues
+{
+	if( !function_exists('error_get_last') ) {
+		set_error_handler(
+			create_function(
+				'$errno,$errstr,$errfile,$errline,$errcontext',
+				'
+					global $__error_get_last_retval__;
+					$__error_get_last_retval__ = array(
+						\'type\'        => $errno,
+						\'message\'        => $errstr,
+						\'file\'        => $errfile,
+						\'line\'        => $errline
+					);
+					return false;
+				'
+			)
+		);
+		function error_get_last() {
+			global $__error_get_last_retval__;
+			if( !isset($__error_get_last_retval__) ) {
+				return null;
+			}
+			return $__error_get_last_retval__;
+		}
+	}
+
+	if (!function_exists('spl_object_hash'))
+	{
+		/**
+		 * Returns the hash of the unique identifier for the object.
+		 *
+		 * @param object $object Object
+		 * @author Rafael M. Salvioni
+		 * @return string
+		 */
+		function spl_object_hash($object)
+		{
+			if (is_object($object))
+			{
+				ob_start();
+				var_dump($object);
+				$dump = ob_get_contents();
+				ob_end_clean();
+				if (preg_match('/^object\(([a-z0-9_]+)\)\#(\d)+/i', $dump, $match))
+				{
+					return md5($match[1] . $match[2]);
+				}
+			}
+			trigger_error(__FUNCTION__ . "() expects parameter 1 to be object", E_USER_WARNING);
+			return null;
+		}
+
+	}
+}
+
 /* This main of engine */
 if (!file_exists("config.inc.php"))
 	die("<b>Fatal error:</b> Could not find required 'config.inc.php'");

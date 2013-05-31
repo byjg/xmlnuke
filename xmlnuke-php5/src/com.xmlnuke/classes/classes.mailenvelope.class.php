@@ -78,7 +78,7 @@ class MailEnvelope
 				$smtpString = "mail://localhost";
 			}
 
-			$pat = "/(?<protocol>smtp|ssl|sendmail|qmail|mail):\/\/(?:(?<user>\S+):(?<pass>\S+)@)?(?:(?<server>[\w\d\-]+(?:\.[\w\d\-]+)*))(?::(?<port>[\d]+))?/";
+			$pat = "/(?P<protocol>smtp|ssl|sendmail|qmail|mail):\/\/(?:(?P<user>\S+):(?P<pass>\S+)@)?(?:(?P<server>[\w\d\-]+(?:\.[\w\d\-]+)*))(?::(?P<port>[\d]+))?/";
 			MailEnvelope::$_smtpParts = array();
 			$match = preg_match ( $pat, $smtpString, MailEnvelope::$_smtpParts );
 

@@ -193,12 +193,12 @@ class ConnectionManagement
 		    PARAMETERS (Working: unixsocket and parammodel)
     		*/
 
-			$patDriver = "(?<driver>[\w\.]+)\:\/\/";
-			$patCredentials = "(?<username>[\w\.$!%&\-_]+)(?::(?<password>[\w\.$!%&#\*\+=\[\]\(\)\-_]+))?@";
-			$patHost = "(?<host>[\w\-\.]+)(?::(?<port>\d+))?";
-			$patDatabase = "\/(?<database>[\w\-\.]+)";
-			$patExtra = "(?:\?(?<extraparam>(?:[\w\-\.]+=[\w\-%\.\/]+&?)*))?";
-			$patFile = "(?<path>(?:\w\:)?\/(?:[\w\-\.]+\/?)+)?";
+			$patDriver = "(?P<driver>[\w\.]+)\:\/\/";
+			$patCredentials = "(?P<username>[\w\.$!%&\-_]+)(?::(?P<password>[\w\.$!%&#\*\+=\[\]\(\)\-_]+))?@";
+			$patHost = "(?P<host>[\w\-\.]+)(?::(?P<port>\d+))?";
+			$patDatabase = "\/(?P<database>[\w\-\.]+)";
+			$patExtra = "(?:\?(?P<extraparam>(?:[\w\-\.]+=[\w\-%\.\/]+&?)*))?";
+			$patFile = "(?P<path>(?:\w\:)?\/(?:[\w\-\.]+\/?)+)?";
 
 			// Try to parse the connection string.
 			$pat = "/$patDriver($patCredentials$patHost$patDatabase|$patFile)$patExtra/i";

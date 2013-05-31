@@ -104,8 +104,8 @@ class MailUtil
 	
 	public static function getEmailPair($fullEmail)
 	{
-		$pat = "/[\"'](?<name>[\S\s]*)[\"']\s+<(?<email>.*)>/";
-		$pat2 = "/<(?<email>.*)>/";
+		$pat = "/[\"'](?P<name>[\S\s]*)[\"']\s+<(?P<email>.*)>/";
+		$pat2 = "/<(?P<email>.*)>/";
 
 		$email = $fullEmail;
 		$name = "";

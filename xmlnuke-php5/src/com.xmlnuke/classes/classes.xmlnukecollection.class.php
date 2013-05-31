@@ -124,7 +124,7 @@ class XmlnukeCollection
 	{
 
 		$class = new ReflectionClass(get_class($model));
-		preg_match_all('/@(?<param>\S+)\s*(?<value>\S+)?\r?\n/', $class->getDocComment(), $aux);
+		preg_match_all('/@(?P<param>\S+)\s*(?P<value>\S+)?\r?\n/', $class->getDocComment(), $aux);
 		$classAttributes = XmlnukeCollection::adjustParams($aux);
 
 		#------------

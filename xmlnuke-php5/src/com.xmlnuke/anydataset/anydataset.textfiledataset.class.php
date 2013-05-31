@@ -140,7 +140,7 @@ class TextFileDataSet
 					while ((trim(preg_replace("/(\r?\n?)$/", "", $headerLine)) !="") && ($headerLine !== false))
 					{
 						$status = array();
-						if (preg_match("#HTTP/1\.\d (?<status>\d{3})\s#", $headerLine, $status))
+						if (preg_match("#HTTP/1\.\d (?P<status>\d{3})\s#", $headerLine, $status))
 							if ($status["status"] != "200")
 								throw new DatasetException("Status expected 200 and I got [" . $status["status"] . "]");
 								
