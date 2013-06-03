@@ -1,13 +1,9 @@
-
-<!-- This script and many more are available free online at -->
-
-<!-- The JavaScript Source!! http://javascript.internet.com -->
-
-<!-- Original:  Fred P -->
-
-<!-- Dodification date:  11/23/2005 02:15 am -->
-
-<!-- Begin
+/*
+This script and many more are available free online at 
+The JavaScript Source!! http://javascript.internet.com 
+Original:  Fred P 
+Dodification date:  11/23/2005 02:15 am 
+ */
 
 // Compare two options within a list by VALUES
 

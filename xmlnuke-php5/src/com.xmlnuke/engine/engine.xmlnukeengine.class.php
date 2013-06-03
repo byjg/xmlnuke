@@ -136,10 +136,10 @@ class XmlNukeEngine
 	*/
 	public function TransformDocumentFromModule($module)
 	{
+		$ttl = $module->useCache();
+
 		$cacheProc = new XMLCacheFilenameProcessor($module->getCacheId());
 		$cacheName = $cacheProc->FullQualifiedNameAndPath();
-
-		$ttl = $module->useCache();
 
 		$cacheEngine = $module->getCacheEngine();
 		$result = $cacheEngine->get($cacheName, $ttl);
