@@ -45,7 +45,7 @@
 		<appender_ref ref="null" />
 	</logger>
 
-	<logger name="cache.dummycacheengine">
+	<logger name="cache.arraycacheengine">
 		<level value="TRACE" />
 		<appender_ref ref="null" />
 	</logger>

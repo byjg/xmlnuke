@@ -71,7 +71,7 @@ class SnippetProcessor
 		$xslName = $xslCache->FullQualifiedNameAndPath();
 
 
-		$cacheEngine = FileSystemCacheEngine::getInstance();
+		$cacheEngine = $this->_context->getXSLCacheEngine();
 		$result = $cacheEngine->get($xslName, 7200);
 
 		// Create a new stream representing the file to be written to,

@@ -28,16 +28,8 @@
 */
 
 
-class DummyCacheEngine extends BaseSingleton implements ICacheEngine
+class NoCacheEngine extends BaseSingleton implements ICacheEngine
 {
-	/**
-	 *
-	 * @var Context
-	 */
-	protected $_context = null;
-
-	protected $_L1Cache = array();
-
 	/**
 	 * This method is necessary only because PHP 5.2.x or lower does not support the method "get_called_class"
 	 * @deprecated since version 3.5
@@ -45,7 +37,7 @@ class DummyCacheEngine extends BaseSingleton implements ICacheEngine
 	 */
 	public static function getInstance()
 	{
-		return self::manageInstances("DummyCacheEngine");
+		return self::manageInstances("NoCacheEngine");
 	}
 
 
@@ -61,18 +53,7 @@ class DummyCacheEngine extends BaseSingleton implements ICacheEngine
 	 */
 	public function get($key, $ttl = 0)
 	{
-		$log = LogWrapper::getLogger("cache.dummycacheengine");
-
-		if (array_key_exists($key, $this->_L1Cache))
-		{
-			$log->trace("[Cache] Get '$key' from L1 Cache");
-			return $this->_L1Cache[$key];
-		}
-		else
-		{
-			$log->trace("[Cache] Not found '$key'");
-			return false;
-		}
+		return false;
 	}
 
 	/**
@@ -83,11 +64,6 @@ class DummyCacheEngine extends BaseSingleton implements ICacheEngine
 	 */
 	public function set($key, $object, $ttl = 0)
 	{
-		$log = LogWrapper::getLogger("cache.dummycacheengine");
-		$log->trace("[Cache] Set '$key' in L1 Cache");
-		
-		$this->_L1Cache[$key] = $object;
-
 		return true;
 	}
 
@@ -99,11 +75,6 @@ class DummyCacheEngine extends BaseSingleton implements ICacheEngine
 	 */
 	public function append($key, $str)
 	{
-		$log = LogWrapper::getLogger("cache.dummycacheengine");
-		$log->trace("[Cache] Append '$key' in L1 Cache");
-
-		$this->_L1Cache[$key] = $this->_L1Cache[$key] . $str;
-
 		return true;
 	}
 

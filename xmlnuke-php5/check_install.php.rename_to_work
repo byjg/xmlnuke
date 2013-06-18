@@ -233,7 +233,7 @@ function EditConfig()
 		$configValues["xmlnuke.LOGINMODULE"]="login";
 		$configValues["xmlnuke.URLBASE"]="";
 		$configValues["xmlnuke.DETECTMOBILE"]=true;
-		$configValues["xmlnuke.ALWAYSUSECACHE"]=false;
+		$configValues["xmlnuke.XSLCACHE"]='NoCacheEngine';
 		$configValues["xmlnuke.SHOWCOMPLETEERRORMESSAGES"]=true;
 		$configValues["xmlnuke.LANGUAGESAVAILABLE"]="en-us=English (United States)|pt-br=Português (Brasil)";
 		$configValues["xmlnuke.SMTPSERVER"]="localhost";
@@ -296,6 +296,13 @@ function EditConfig()
 		'zh-cn=Chinese (Simplified)',
 		'zh-tw=Chinese (Traditional)',
 	);
+	
+	$xslCache = array (
+		"NoCacheEngine"=>'NoCacheEngine -> Do Not use cache',
+		"ArrayCacheEngine"=>'ArrayCacheEngine -> Use array as cache (very basic)',
+		"FileSystemCacheEngine"=>'FileSystemCacheEngine -> Use the File System as cache (need write permission)',
+		"MemCachedEngine"=>'MemCachedEngine -> Use the MemCached as cache (requires install memcached)'
+	);
 
 	echo "<form method='post' action='?action=config'>";
 	echo "<table width='600'><tr><td>";
@@ -336,10 +343,10 @@ function EditConfig()
 	writeInputData($configValues, "xmlnuke.DETECTMOBILE",
 		"Enable/Disable detecting mobile client and the switch the mobile XSL.", 2);
 
-	writeInputData($configValues, "xmlnuke.ALWAYSUSECACHE",
-		"Enable/Disable the cache system on XMLNuke. Avoid set this option to false. " .
-		"This option is useful when you cannot change the write permissions, ".
-		"but the system will be slower", 2);
+	writeInputData($configValues, "xmlnuke.XSLCACHE",
+		"Defines the cache engine used to stored the XSL transformations and snippets.  " .
+		"In a development environment set to 'NoCacheEngine' and in production environment set  ".
+		"'FileSystemCacheEngine' at least", 3, $xslCache);
 
 	writeInputData($configValues, "xmlnuke.SHOWCOMPLETEERRORMESSAGES",
 		"Show complete and usefull information for debug. Disable this option in production environments", 2);

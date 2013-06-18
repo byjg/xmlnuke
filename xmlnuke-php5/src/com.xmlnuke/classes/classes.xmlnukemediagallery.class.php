@@ -164,6 +164,8 @@ class XmlnukeMediaGallery extends XmlnukeCollection implements IXmlnukeDocumentO
 		XmlUtil::AddAttribute($mediaGallery, "visible", ($this->_visible ? "true" : "false"));
 		XmlUtil::AddAttribute($mediaGallery, "showthumbcaption", ($this->_showCaptionOnThumb ? "true" : "false"));
 		$this->generatePage($mediaGallery);
+		
+		return $mediaGallery;
 	}
 
 }

@@ -28,21 +28,13 @@
 */
 
 
-class MemCachedEngine extends BaseSingleton implements ICacheEngine
+class ArrayCacheEngine extends BaseSingleton implements ICacheEngine
 {
 	/**
 	 *
 	 * @var Context
 	 */
 	protected $_context = null;
-
-	/**
-	 *
-	 * @var Memcached
-	 */
-	protected $_memCached = null;
-
-	protected $_debug = false;
 
 	protected $_L1Cache = array();
 
@@ -53,39 +45,13 @@ class MemCachedEngine extends BaseSingleton implements ICacheEngine
 	 */
 	public static function getInstance()
 	{
-		return self::manageInstances("MemCachedEngine");
+		return self::manageInstances("ArrayCacheEngine");
 	}
 
 
 	protected function __construct()
 	{
 		$this->_context = Context::getInstance();
-
-		$anyproc = new AnydatasetFilenameProcessor("_cacheengine");
-		$anydata = new AnyDataSet($anyproc);
-
-		$itf = new IteratorFilter();
-		$itf->addRelation("engine", Relation::Equal, get_class($this));
-		$it = $anydata->getIterator($itf);
-
-		if ($it->hasNext())
-		{
-			$this->_memCached = new Memcached();
-
-			$sr = $it->moveNext();
-			$servers = $sr->getFieldArray("server");
-			foreach ($servers as $server)
-			{
-				$data = explode(":", $server);
-				$this->_memCached->addServer($data[0], $data[1]);
-			}
-		}
-		else
-		{
-			throw new InvalidArgumentException("You have to configure the memcache in the file _cacheengine.anydata.xml");
-		}
-
-		$this->_debug = $this->_context->getDebugInModule();
 	}
 
 	/**
@@ -95,38 +61,18 @@ class MemCachedEngine extends BaseSingleton implements ICacheEngine
 	 */
 	public function get($key, $ttl = 0)
 	{
-		$log = LogWrapper::getLogger("cache.memcachedengine");
-		if ($this->_context->getReset())
-		{
-			$log->trace("[Cache] Get $key failed because RESET=true");
-			return false;
-		}
-		
-		if ($this->_context->getNoCache())
-		{
-			$log->trace("[Cache] Failed to get $key because NOCACHE=true");
-			return false;
-		}
+		$log = LogWrapper::getLogger("cache.arraycacheengine");
 
 		if (array_key_exists($key, $this->_L1Cache))
 		{
 			$log->trace("[Cache] Get '$key' from L1 Cache");
 			return $this->_L1Cache[$key];
 		}
-
-		$value = $this->_memCached->get($key);
-		if ($this->_memCached->getResultCode() == Memcached::RES_NOTFOUND)
+		else
 		{
 			$log->trace("[Cache] Not found '$key'");
 			return false;
 		}
-		else
-		{
-			$log->trace("[Cache] Get '$key' from Memcached");
-			$this->_L1Cache[$key] = $value;
-			return $value;
-		}
-		
 	}
 
 	/**
@@ -137,19 +83,12 @@ class MemCachedEngine extends BaseSingleton implements ICacheEngine
 	 */
 	public function set($key, $object, $ttl = 0)
 	{
-		$log = LogWrapper::getLogger("cache.memcachedengine");
+		$log = LogWrapper::getLogger("cache.arraycacheengine");
+		$log->trace("[Cache] Set '$key' in L1 Cache");
+		
+		$this->_L1Cache[$key] = $object;
 
-		if (!$this->_context->getNoCache())
-		{
-			$log->trace("[Cache] Set '$key' in Memcached");
-			$this->_L1Cache[$key] = $object;
-			return $this->_memCached->set($key, $object, $ttl);
-		}
-		else
-		{
-			$log->trace("[Cache] Not Set '$key' because NOCACHE=true");
-			return true;
-		}
+		return true;
 	}
 
 	/**
@@ -160,21 +99,12 @@ class MemCachedEngine extends BaseSingleton implements ICacheEngine
 	 */
 	public function append($key, $str)
 	{
-		$log = LogWrapper::getLogger("cache.memcachedengine");
+		$log = LogWrapper::getLogger("cache.arraycacheengine");
+		$log->trace("[Cache] Append '$key' in L1 Cache");
 
-		if (!$this->_context->getNoCache())
-		{
-			$log->trace("[Cache] Append '$key' in Memcached");
+		$this->_L1Cache[$key] = $this->_L1Cache[$key] . $str;
 
-			$this->_L1Cache[$key] = $this->_L1Cache[$key] . $str;
-
-			return $this->_memCached->append($key, $str);
-		}
-		else
-		{
-			$log->trace("[Cache] Not Set '$key' because NOCACHE=true");
-		}
-			
+		return true;
 	}
 
 	/**

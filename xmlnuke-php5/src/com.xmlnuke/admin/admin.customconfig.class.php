@@ -113,7 +113,7 @@ class CustomConfig extends NewBaseAdminModule
 		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.URLXMLNUKEENGINE", $this->_context->ContextValue("xmlnuke.URLXMLNUKEENGINE")));
 		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.DEFAULTSITE", $this->_context->ContextValue("xmlnuke.DEFAULTSITE")));
 		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.DEFAULTPAGE", $this->_context->ContextValue("xmlnuke.DEFAULTPAGE")));
-		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.ALWAYSUSECACHE", $this->_context->ContextValue("xmlnuke.ALWAYSUSECACHE")));
+		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.XSLCACHE", $this->_context->ContextValue("xmlnuke.XSLCACHE")));
 		$form->addXmlnukeObject(new XmlInputTextBox("xmlnuke.SMTPSERVER", "smtpserver", $this->_context->ContextValue("xmlnuke.SMTPSERVER"), 30));
 		$this->generateLanguageInput($form);
 		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "showcompleterrormessages", "xmlnuke.SHOWCOMPLETEERRORMESSAGES", $truefalse, $this->getStringBool($this->_context->ContextValue("xmlnuke.SHOWCOMPLETEERRORMESSAGES"))));

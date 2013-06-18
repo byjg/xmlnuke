@@ -58,7 +58,25 @@ class PluginFactory
 	 */
 	public static function LoadPlugin($className, $basePath = null, $param1 = null, $param2 = null, $param3 = null, $param4 = null, $param5 = null)
 	{
-		return PluginFactory::LoadPluginInFile($className, "", $basePath, $param1, $param2, $param3, $param4, $param5);
+		if (class_exists($className, defined("AUTOLOAD")))
+		{
+			$reflection = new ReflectionClass($className);
+
+			if ($reflection->isInstantiable())
+			{
+				// Normal Class
+				return new $className();
+			}
+			else 
+			{
+				// Singleton class
+				return call_user_func(array($className, "getInstance"));
+			}
+		}
+		else
+		{
+			return PluginFactory::LoadPluginInFile($className, "", $basePath, $param1, $param2, $param3, $param4, $param5);
+		}
 	}
 	
 	/**

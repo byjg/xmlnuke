@@ -193,7 +193,7 @@ abstract class BaseModule implements IModule
 	 */
 	public function getCacheEngine()
 	{
-		return FileSystemCacheEngine::getInstance();
+		return $this->_context->getXSLCacheEngine();
 	}
 
 	private $_cacheId = "";

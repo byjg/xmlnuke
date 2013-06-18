@@ -160,7 +160,7 @@ class Context extends BaseSingleton
 
 		$this->_xmlnukepath = $this->ContextValue("xmlnuke.ROOTDIR");
 		$this->_reset = ($this->getParameter("reset") != "");
-		$this->_nocache = (($this->getParameter("nocache") != "") || (!$this->ContextValue("xmlnuke.ALWAYSUSECACHE")));
+		$this->_nocache = ($this->getParameter("nocache"));
 
 		$this->AddCollectionToConfig($_REQUEST);
 		$this->AddCollectionToConfig($_SERVER);
@@ -284,6 +284,21 @@ class Context extends BaseSingleton
 	public static function getInstance()
 	{
 		return self::manageInstances("Context");
+	}
+	
+	protected $_xslCacheEngine = null;
+	
+	public function getXSLCacheEngine()
+	{
+		if ($this->_xslCacheEngine == null)
+		{
+			if ($this->Value("xmlnuke.XSLCACHE") == "")
+				$this->_xslCacheEngine = PluginFactory::LoadPlugin("NoCacheEngine");
+			else
+				$this->_xslCacheEngine = PluginFactory::LoadPlugin($this->Value("xmlnuke.XSLCACHE"));
+		}
+		
+		return $this->_xslCacheEngine;
 	}
 
 	/**

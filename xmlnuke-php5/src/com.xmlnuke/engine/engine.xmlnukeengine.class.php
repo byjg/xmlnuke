@@ -103,7 +103,7 @@ class XmlNukeEngine
 		$xmlCacheFile = new XMLCacheFilenameProcessor($this->_context->getXml());
 		$cacheName = $xmlCacheFile->FullQualifiedNameAndPath();
 
-		$result = FileSystemCacheEngine::getInstance()->get($cacheName, 7200);
+		$result = $this->_context->getXSLCacheEngine()->get($cacheName, 7200);
 
 		// Check if file cache already exists
 		// If exists read it from there;
@@ -122,7 +122,7 @@ class XmlNukeEngine
 			// Save cache file - NOCACHE: Doesn't Save; Otherwise: Allways save
 			if (!$this->_context->getNoCache() && ($this->_outputResult == XmlNukeEngine::OUTPUT_TRANSFORMED_DOC))
 			{
-				FileSystemCacheEngine::getInstance()->set($cacheName, $result);
+				$this->_context->getXSLCacheEngine()->set($cacheName, $result);
 			}
 
 			return $result;
@@ -214,7 +214,7 @@ class XmlNukeEngine
 		$cachename = str_replace(".", "_", "REMOTE-" . UsersBase::getSHAPassword($url));
 		$cacheFile = new XMLCacheFilenameProcessor($cachename);
 
-		$cacheEngine = FileSystemCacheEngine::getInstance();
+		$cacheEngine = $this->_context->getXSLCacheEngine();
 		$file = $cacheFile->FullQualifiedNameAndPath();
 
 		$result = $cacheEngine->get($file, 60);
