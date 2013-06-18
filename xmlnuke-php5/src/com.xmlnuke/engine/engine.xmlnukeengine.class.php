@@ -198,7 +198,7 @@ class XmlNukeEngine
 			$cacheEngine->unlock($cacheName);
 			
 			if ($saveToCache)
-				$cacheEngine->set($cacheName, $result);
+				$cacheEngine->set($cacheName, $result, $ttl);
 			
 			return $result;
 		}
