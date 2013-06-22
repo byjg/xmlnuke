@@ -373,7 +373,7 @@ abstract class Services_Webservice
         $disco_contractref = $this->disco->createElement('contractRef');
         $urlBase = $this->protocol . '://'
             . $_SERVER['HTTP_HOST']
-            . $_SERVER['PHP_SELF'];
+            . $this->getSelfUrl();
         $disco_contractref->setAttribute('ref', $urlBase . '?wsdl');
         $disco_contractref->setAttribute('docRef', $urlBase);
         $disco_contractref->setAttribute('xmlns', self::SCHEMA_DISCO_SCL);
@@ -455,7 +455,7 @@ a:hover {
         htmlspecialchars($this->description)
         . '</p></div><p>The following operations are supported. ' .
         'For a formal definition, please review the <a href="' .
-        htmlentities($_SERVER['PHP_SELF']) . '?WSDL">Service Description</a>.</p>
+        htmlentities($this->getSelfUrl()) . '?WSDL">Service Description</a>.</p>
 <ul>';
 
         foreach ($this->wsdlStruct[$this->classname]['method'] as $methodName => $method) {
@@ -488,7 +488,7 @@ a:hover {
             );
         }
         echo '</ul>
-<p><a href="' . htmlentities($_SERVER['PHP_SELF']) . '?DISCO">DISCO</a> makes it possible for clients to reflect against endpoints to discover services and their associated <acronym title="Web Service Description Language">WSDL</acronym> documents.</p>';
+<p><a href="' . htmlentities($this->getSelfUrl()) . '?DISCO">DISCO</a> makes it possible for clients to reflect against endpoints to discover services and their associated <acronym title="Web Service Description Language">WSDL</acronym> documents.</p>';
 
         if ($this->warningNamespace == true
             || $this->namespace == 'http://example.org/'
@@ -508,6 +508,21 @@ For more details on URIs, see <a href="http://www.ietf.org/rfc/rfc2396.txt"><acr
 
         }
         echo '</body></html>';
+    }
+
+    private function getSelfUrl()
+    {
+	$url = $_SERVER['REQUEST_URI'];
+
+	$ipos = strpos($url, '?');
+	if ($ipos !== false)
+	{
+		return substr($url, 0, $ipos);
+	}
+	else
+	{
+		return $url;
+	}
     }
 
     // }}}
@@ -1047,7 +1062,7 @@ For more details on URIs, see <a href="http://www.ietf.org/rfc/rfc2396.txt"><acr
         $adress = $this->wsdl->createElement('soap:address');
         $adress->setAttribute(
             'location',
-            $this->protocol . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']
+            $this->protocol . '://' . $_SERVER['HTTP_HOST'] . $this->getSelfUrl()
         );
         $port->appendChild($adress);
         $service->appendChild($port);
