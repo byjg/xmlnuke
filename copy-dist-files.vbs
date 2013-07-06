@@ -1,6 +1,6 @@
-Const Title = "Rename config Files"
+Const Title = "COPY DIST FILES"
 
-MsgBox "RENAME-CONFIG-FILES" + vbCrLf + "March-2009" + vbCrLf + "by Joao Gilberto Magalhaes" + vbCrLf + vbCrLf + "This batch will rename all config files to their proper names.", 0, Title 
+MsgBox "COPY-DIST-FILES" + vbCrLf + "March-2009" + vbCrLf + "by Joao Gilberto Magalhaes" + vbCrLf + vbCrLf + "This batch will rename all config files to their proper names.", 0, Title 
 
 Dim Result
 Result = ""
