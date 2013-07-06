@@ -49,11 +49,11 @@ if phpDir <> "" then
 		wshshell.run "%COMSPEC% /C copy """ & phpDir & "\imagevalidate.php""  """ & home & """", 6, True
 		wshshell.run "%COMSPEC% /C copy """ & phpDir & "\xmlnukeadmin.php""  """ & home & """", 6, True
 		wshshell.run "%COMSPEC% /C copy """ & phpDir & "\xmlnuke.inc.php""  """ & home & """", 6, True
-		wshshell.run "%COMSPEC% /C copy """ & phpDir & "\check_install.php.rename_to_work""  """ & home & "\check_install.php""", 6, True
-		wshshell.run "%COMSPEC% /C copy """ & phpDir & "\index.php.rename_to_work""  """ & home & "\index.php""", 6, True
+		wshshell.run "%COMSPEC% /C copy """ & phpDir & "\check_install.php.dist""  """ & home & "\check_install.php""", 6, True
+		wshshell.run "%COMSPEC% /C copy """ & phpDir & "\index.php.dist""  """ & home & "\index.php""", 6, True
 		wshshell.run "%COMSPEC% /C copy """ & phpDir & "\xmlnuke.php""  """ & home & """", 6, True
 
-		wshshell.run "%COMSPEC% /C copy """ & phpDir & "\writepage.inc.php.rename_to_work""  """ & home & "\writepage.inc.php""", 6, True
+		wshshell.run "%COMSPEC% /C copy """ & phpDir & "\writepage.inc.php.dist""  """ & home & "\writepage.inc.php""", 6, True
 		wshshell.run "%COMSPEC% /C copy """ & phpDir & "\unittest.php""  """ & home & """", 6, True
 		wshshell.run "%COMSPEC% /C copy """ & phpDir & "\webservice.php""  """ & home & """", 6, True
 		wshshell.run "%COMSPEC% /C copy """ & phpDir & "\chart.php""  """ & home & """", 6, True

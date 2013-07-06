@@ -56,14 +56,14 @@ fi
    chmod -R g+rws /tmp/$XMLNUKEDIR/xmlnuke-csharp/data
    chmod -R a+rw /tmp/$XMLNUKEDIR/xmlnuke-csharp/data
 
-   mv /tmp/$XMLNUKEDIR/xmlnuke-csharp/check_install.aspx.rename_to_work /tmp/$XMLNUKEDIR/xmlnuke-csharp/check_install.aspx
-   mv /tmp/$XMLNUKEDIR/xmlnuke-csharp/web.config.rename_to_work /tmp/$XMLNUKEDIR/xmlnuke-csharp/web.config
-   mv /tmp/$XMLNUKEDIR/xmlnuke-csharp/default.aspx.rename_to_work /tmp/$XMLNUKEDIR/xmlnuke-csharp/default.aspx
-   mv /tmp/$XMLNUKEDIR/xmlnuke-csharp/data/shared/setup/users.anydata.xml.rename_to_work /tmp/$XMLNUKEDIR/xmlnuke-csharp/data/shared/setup/users.anydata.xml
-   mv /tmp/$XMLNUKEDIR/xmlnuke-csharp/data/shared/setup/roles.anydata.xml.rename_to_work /tmp/$XMLNUKEDIR/xmlnuke-csharp/data/shared/setup/roles.anydata.xml
-   mv /tmp/$XMLNUKEDIR/xmlnuke-csharp/data/shared/admin/admin_page.pt-br.xsl.rename_to_work /tmp/$XMLNUKEDIR/xmlnuke-csharp/data/shared/admin/admin_page.pt-br.xsl
-   mv /tmp/$XMLNUKEDIR/xmlnuke-csharp/data/shared/admin/adminmodules.config.xml.rename_to_work /tmp/$XMLNUKEDIR/xmlnuke-csharp/data/shared/admin/adminmodules.config.xml
-   mv /tmp/$XMLNUKEDIR/xmlnuke-csharp/data/shared/admin/adminmodules.lang.anydata.xml.rename_to_work /tmp/$XMLNUKEDIR/xmlnuke-csharp/data/shared/admin/adminmodules.lang.anydata.xml
+   mv /tmp/$XMLNUKEDIR/xmlnuke-csharp/check_install.aspx.dist /tmp/$XMLNUKEDIR/xmlnuke-csharp/check_install.aspx
+   mv /tmp/$XMLNUKEDIR/xmlnuke-csharp/web.config.dist /tmp/$XMLNUKEDIR/xmlnuke-csharp/web.config
+   mv /tmp/$XMLNUKEDIR/xmlnuke-csharp/default.aspx.dist /tmp/$XMLNUKEDIR/xmlnuke-csharp/default.aspx
+   mv /tmp/$XMLNUKEDIR/xmlnuke-csharp/data/shared/setup/users.anydata.xml.dist /tmp/$XMLNUKEDIR/xmlnuke-csharp/data/shared/setup/users.anydata.xml
+   mv /tmp/$XMLNUKEDIR/xmlnuke-csharp/data/shared/setup/roles.anydata.xml.dist /tmp/$XMLNUKEDIR/xmlnuke-csharp/data/shared/setup/roles.anydata.xml
+   mv /tmp/$XMLNUKEDIR/xmlnuke-csharp/data/shared/admin/admin_page.pt-br.xsl.dist /tmp/$XMLNUKEDIR/xmlnuke-csharp/data/shared/admin/admin_page.pt-br.xsl
+   mv /tmp/$XMLNUKEDIR/xmlnuke-csharp/data/shared/admin/adminmodules.config.xml.dist /tmp/$XMLNUKEDIR/xmlnuke-csharp/data/shared/admin/adminmodules.config.xml
+   mv /tmp/$XMLNUKEDIR/xmlnuke-csharp/data/shared/admin/adminmodules.lang.anydata.xml.dist /tmp/$XMLNUKEDIR/xmlnuke-csharp/data/shared/admin/adminmodules.lang.anydata.xml
    
    chmod 666 /tmp/$XMLNUKEDIR/xmlnuke-csharp/web.config
 

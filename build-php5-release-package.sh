@@ -52,13 +52,13 @@ fi
 
    chmod -R g+rws /tmp/$XMLNUKEDIR/xmlnuke-php5/data
    chmod -R a+rw /tmp/$XMLNUKEDIR/xmlnuke-php5/data
-   mv /tmp/$XMLNUKEDIR/xmlnuke-php5/check_install.php.rename_to_work /tmp/$XMLNUKEDIR/xmlnuke-php5/check_install.php
-   mv /tmp/$XMLNUKEDIR/xmlnuke-php5/index.php.rename_to_work /tmp/$XMLNUKEDIR/xmlnuke-php5/index.php
-   mv /tmp/$XMLNUKEDIR/xmlnuke-php5/data/shared/setup/users.anydata.xml.rename_to_work /tmp/$XMLNUKEDIR/xmlnuke-php5/data/shared/setup/users.anydata.xml
-   mv /tmp/$XMLNUKEDIR/xmlnuke-php5/data/shared/setup/roles.anydata.xml.rename_to_work /tmp/$XMLNUKEDIR/xmlnuke-php5/data/shared/setup/roles.anydata.xml
-   mv /tmp/$XMLNUKEDIR/xmlnuke-php5/data/shared/admin/admin_page.pt-br.xsl.rename_to_work /tmp/$XMLNUKEDIR/xmlnuke-php5/data/shared/admin/admin_page.pt-br.xsl
-   mv /tmp/$XMLNUKEDIR/xmlnuke-php5/data/shared/admin/adminmodules.config.xml.rename_to_work /tmp/$XMLNUKEDIR/xmlnuke-php5/data/shared/admin/adminmodules.config.xml
-   mv /tmp/$XMLNUKEDIR/xmlnuke-php5/data/shared/admin/adminmodules.lang.anydata.xml.rename_to_work /tmp/$XMLNUKEDIR/xmlnuke-php5/data/shared/admin/adminmodules.lang.anydata.xml
+   mv /tmp/$XMLNUKEDIR/xmlnuke-php5/check_install.php.dist /tmp/$XMLNUKEDIR/xmlnuke-php5/check_install.php
+   mv /tmp/$XMLNUKEDIR/xmlnuke-php5/index.php.dist /tmp/$XMLNUKEDIR/xmlnuke-php5/index.php
+   mv /tmp/$XMLNUKEDIR/xmlnuke-php5/data/shared/setup/users.anydata.xml.dist /tmp/$XMLNUKEDIR/xmlnuke-php5/data/shared/setup/users.anydata.xml
+   mv /tmp/$XMLNUKEDIR/xmlnuke-php5/data/shared/setup/roles.anydata.xml.dist /tmp/$XMLNUKEDIR/xmlnuke-php5/data/shared/setup/roles.anydata.xml
+   mv /tmp/$XMLNUKEDIR/xmlnuke-php5/data/shared/admin/admin_page.pt-br.xsl.dist /tmp/$XMLNUKEDIR/xmlnuke-php5/data/shared/admin/admin_page.pt-br.xsl
+   mv /tmp/$XMLNUKEDIR/xmlnuke-php5/data/shared/admin/adminmodules.config.xml.dist /tmp/$XMLNUKEDIR/xmlnuke-php5/data/shared/admin/adminmodules.config.xml
+   mv /tmp/$XMLNUKEDIR/xmlnuke-php5/data/shared/admin/adminmodules.lang.anydata.xml.dist /tmp/$XMLNUKEDIR/xmlnuke-php5/data/shared/admin/adminmodules.lang.anydata.xml
    echo "<?php # 'CONFIG.INC.PHP' MUST HAVE WRITE PERMISSION BEFORE RUN XMLNUKE FIRST TIME ?>" > /tmp/$XMLNUKEDIR/xmlnuke-php5/config.inc.php
    chmod 777 /tmp/$XMLNUKEDIR/xmlnuke-php5/config.inc.php
 

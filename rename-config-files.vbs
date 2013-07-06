@@ -14,7 +14,7 @@ Function RenameInsideDir(Path)
 	Set FSO = CreateObject("Scripting.FileSystemObject")
 	Set objFolder = FSO.GetFolder(Path)
 	For Each Files In objFolder.Files
-		If InStr(1,Files.Name,".rename_to_work") > 1 Then
+		If InStr(1,Files.Name,".dist") > 1 Then
 			FileBaseName = FSO.GetBaseName(Files.Name)
 			NewName = FSO.GetBaseName(Files.Name)
 			'WScript.Echo "NewName is ",NewName

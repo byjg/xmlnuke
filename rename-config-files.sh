@@ -23,9 +23,9 @@ else
    CURDIR="`( cd \"$CURDIR\" && pwd )`"  # absolutized and normalized
 
    #Recursively rename some to other
-   for FILE in `find $CURDIR -name '*.rename_to_work'`
+   for FILE in `find $CURDIR -name '*.dist'`
    do
-	NEW=`echo $FILE | sed -e 's/\.rename_to_work//'`
+	NEW=`echo $FILE | sed -e 's/\.dist//'`
 	
 	if [ $1 = "yes" -o ! -f $NEW ]
 	then
