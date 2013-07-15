@@ -43,8 +43,10 @@ You can easily add some requirements to your page without have to care about how
         
         
         /**
-         * useCache determines if the XMLNuke will store your in page in a cache or not.
-         * XMLNuke can store in the StaticArray, FileSystem, MemCached and you can configure other storage.
+         * useCache determines if the XMLNuke will store your page in a cache or not.
+         * By default XMLNuke can store in the StaticArray, FileSystem, MemCached. 
+         * You can configure your own cache strategy by implementing the interface 
+         * ICacheStorage.
          */ 
         public function useCache()
         {
@@ -98,7 +100,7 @@ If you work with models using the classic getter and setter or property you can 
         }
     }
 
-After that you can associate a XSL Snippet to handle this data and produces HTML or whatever you want to procudes by the XSL transformation. You can optionally get the raw data in XML or Json by calling:
+After that you can associate a Snippet XSL to handle this data and produces HTML or whatever you want to produce by the XSL transformation. You can optionally get the raw data in XML or JSON by calling through your web browser:
 
     http://youserver/xmlnuke.php?module=byjg.home&rawxml=true&spath=//myclass
     
@@ -125,7 +127,7 @@ See the Wiki for more examples;
 
 ## Installing
 
-XMLNuke was developed using PHP 5.3 but it was testes with PHP 5.x or higher. 
+XMLNuke was developed using PHP 5.3 but it was tested with PHP 5.x or higher. 
 
 ### Web Install
 
