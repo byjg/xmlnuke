@@ -66,8 +66,11 @@ else
 			mkdir -p "$HOME/data/xsl"
 			mkdir -p "$HOME/data/snippet"
 			
+			LANGUAGESAVAILABLE=""
 			while [ ! -z "$4" ]
 			do
+				LANGUAGESAVAILABLE="${4}=${4}|${LANGUAGESAVAILABLE}"
+
 				mkdir -p "$HOME/data/xml/$4"
 				cp "$DATADIR/sites/index.xsl.template" "$HOME/data/xsl/index.$4.xsl"
 				cp "$DATADIR/sites/page.xsl.template" "$HOME/data/xsl/page.$4.xsl"
@@ -77,6 +80,7 @@ else
 				echo "xmlnuke\n+home.$4.xml" > "$HOME/data/xml/$4/index.php.btree"
 				shift
 			done
+			LANGUAGESAVAILABLE="${LANGUAGESAVAILABLE%?}"
 
 			chmod 777 -R "$HOME/data"
 
@@ -119,6 +123,7 @@ else
 			echo "\$configValues[\"xmlnuke.DEFAULTSITE\"]='$SITE'; " >> "$HOME/config.default.php"
 			echo "\$configValues[\"xmlnuke.EXTERNALSITEDIR\"] = '$SITE=$HOME/data'; " >> "$HOME/config.default.php"
 			echo "\$configValues[\"xmlnuke.PHPLIBDIR\"] = '${PROJECT_FILE}=$HOME/lib'; " >> "$HOME/config.default.php"
+			echo "\$configValues[\"xmlnuke.LANGUAGESAVAILABLE\"] = '$LANGUAGESAVAILABLE'; " >> "$HOME/config.default.php"
 			echo "\$configValues[\"xmlnuke.PHPXMLNUKEDIR\"] = '$PHPDIR'; " >> "$HOME/config.default.php"
 			echo "?>" >> "$HOME/config.default.php"
 		

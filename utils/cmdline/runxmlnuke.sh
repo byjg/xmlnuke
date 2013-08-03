@@ -36,6 +36,13 @@ then
 	echo 
 	echo "runxmlnuke.sh script [path_to_your_site] [arguments]"
 	echo
+	echo "SCRIPTS AVAILABLE:"
+	
+	for SCR in `ls $BASEROOT/*.cmd.php`
+	do
+		echo " - `basename $SCR | cut -d. -f 1`"
+	done
+	echo
 	echo "EXAMPLE:"
 	echo
 	echo runxmlnuke.sh xmlnuke site=sample xml=home lang=en-us
