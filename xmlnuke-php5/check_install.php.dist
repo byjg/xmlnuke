@@ -251,9 +251,9 @@ function EditConfig()
 		$configValues["xmlnuke.PHPLIBDIR"] = "";
 		$configValues["xmlnuke.PHPXMLNUKEDIR"] = "";
 
-		if (file_exists("config.default.php"))
+		if (file_exists("config.inc-dist.php"))
 		{
-		        include_once("config.default.php");
+		        include_once("config.inc-dist.php");
 		}
 
 	}
