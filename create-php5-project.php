@@ -29,6 +29,17 @@ if (PHP_SAPI == 'cli')
 		try
 		{
 			call_user_func_array( array( 'CreatePhp5Project', 'Run' ), $argv );
+
+			echo "Done.\n";
+			echo "\n";
+			echo "You must do some configurations manualy:\n";
+			echo "  - Create an alias \"/common\" pointing to \"$XMLNUKE/xmlnuke-common\" \n";
+			echo "  - Point the document root on your Web Server to \"$HOME\" \n";
+			echo "\n";
+			echo "After this you can play with these URLs:\n";
+			echo "http://localhost/xmlnuke.php?xml=home\n";
+			echo "http://localhost/xmlnuke.php?module=${PROJECT_FILE}.home\n";
+			echo "\n";
 		}
 		catch (Exception $ex)
 		{
@@ -45,6 +56,7 @@ class CreatePhp5Project
 		if (func_num_args() < 5)
 			throw new Exception('I expected at least 5 parameters: file, homepath, sitename, projectname and language ');
 
+		$argc = func_num_args();
 		$argv = func_get_args();
 
 		$HOME = $argv[1];
@@ -70,37 +82,16 @@ class CreatePhp5Project
 			if ( file_exists($HOME) )
 			{
 
-				$gitIgnore = array("# Xmlnuke Files - Start");
-
-				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/imagevalidate.php",  "$HOME/") );
-				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/xmlnukeadmin.php", "$HOME/") );
-				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/xmlnuke.inc.php", "$HOME/") );
-				//$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/check_install.php.dist", "$HOME/check_install.php") );
-				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/index.php.dist", "$HOME/index.php") );
-				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/xmlnuke.php", "$HOME/") );
-
-				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/writepage.inc.php.dist", "$HOME/writepage.inc.php") );
-				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/unittest.php", "$HOME/") );
-				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/webservice.php", "$HOME/") );
-				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/chart.php", "$HOME/") );
-
-				$gitIgnore[] = "config.inc.php";
-				$gitIgnore[] = "# Xmlnuke Files - End";
-				$gitIgnore[] = "";
-
-				CreatePhp5Project::writeToFile("$HOME/.gitignore", $gitIgnore);
-				touch("$HOME/config.inc.php");
-				touch("$HOME/config.inc-dist.php");
-
-				mkdir( "$HOME/static" );
-				mkdir( "$HOME/data" );
-				mkdir( "$HOME/data/anydataset" );
-				mkdir( "$HOME/data/cache" );
-				mkdir( "$HOME/data/lang" );
-				mkdir( "$HOME/data/offline" );
-				mkdir( "$HOME/data/xml" );
-				mkdir( "$HOME/data/xsl" );
-				mkdir( "$HOME/data/snippet" );
+				# Creating the Folders
+				@mkdir( "$HOME/static" );
+				@mkdir( "$HOME/data" );
+				@mkdir( "$HOME/data/anydataset" );
+				@mkdir( "$HOME/data/cache" );
+				@mkdir( "$HOME/data/lang" );
+				@mkdir( "$HOME/data/offline" );
+				@mkdir( "$HOME/data/xml" );
+				@mkdir( "$HOME/data/xsl" );
+				@mkdir( "$HOME/data/snippet" );
 
 				$LANGUAGESAVAILABLE="";
 				$langs = array();
@@ -109,7 +100,7 @@ class CreatePhp5Project
 				{
 					$langs[] = $argv[$i] . '=' . $argv[$i];
 
-					mkdir( "$HOME/data/xml/" . $argv[$i] );
+					@mkdir( "$HOME/data/xml/" . $argv[$i] );
 					copy( "$DATADIR/sites/index.xsl.template", "$HOME/data/xsl/index." . $argv[$i] . ".xsl" );
 					copy( "$DATADIR/sites/page.xsl.template", "$HOME/data/xsl/page." . $argv[$i] . ".xsl" );
 					copy( "$DATADIR/sites/index.xml.template", "$HOME/data/xml/" . $argv[$i] . "/index." . $argv[$i] . ".xml" );
@@ -122,13 +113,13 @@ class CreatePhp5Project
 
 				$LANGUAGESAVAILABLE = implode("|", $langs);
 
-				mkdir( "$HOME/lib" );
+				@mkdir( "$HOME/lib" );
 				CreatePhp5Project::writeTemplate( "$DATADIR/sites/_includelist.php.template", "$HOME/lib/_includelist.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
 
-				mkdir( "$HOME/lib/modules" );
+				@mkdir( "$HOME/lib/modules" );
 				CreatePhp5Project::writeTemplate( "$DATADIR/sites/module.php.template", "$HOME/lib/modules/home.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
 
-				mkdir( "$HOME/lib/base" );
+				@mkdir( "$HOME/lib/base" );
 				CreatePhp5Project::writeTemplate( "$DATADIR/sites/adminbasemodule.php.template", "$HOME/lib/base/${PROJECT_FILE}adminbasemodule.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
 				CreatePhp5Project::writeTemplate( "$DATADIR/sites/basedbaccess.php.template", "$HOME/lib/base/${PROJECT_FILE}basedbaccess.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
 				CreatePhp5Project::writeTemplate( "$DATADIR/sites/basemodel.php.template", "$HOME/lib/base/${PROJECT_FILE}basemodel.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
@@ -171,17 +162,31 @@ class CreatePhp5Project
 				$aux .= "?>\n" ;
 				CreatePhp5Project::writeTemplate( $aux, "$HOME/config.inc-dist.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
 
-				echo "Done.\n";
-				echo "\n";
-				echo "You must do some configurations manualy:\n";
-				echo "  - Create an alias \"/common\" pointing to \"$XMLNUKE/xmlnuke-common\" \n";
-				echo "  - Point the document root on your Web Server to \"$HOME\" \n";
-				echo "\n";
-				echo "After this you can play with these URLs:\n";
-				echo "http://localhost/xmlnuke.php?xml=home\n";
-				echo "http://localhost/xmlnuke.php?module=${PROJECT_FILE}.home\n";
-				echo "\n";
+				# Finishing XMLNuke installation!
+				$gitIgnore = array("# Xmlnuke Files - Start");
 
+				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/imagevalidate.php",  "$HOME/") );
+				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/xmlnukeadmin.php", "$HOME/") );
+				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/xmlnuke.inc.php", "$HOME/") );
+				//$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/check_install.php.dist", "$HOME/check_install.php") );
+				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/index.php.dist", "$HOME/index.php") );
+				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/xmlnuke.php", "$HOME/") );
+
+				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/writepage.inc.php.dist", "$HOME/writepage.inc.php") );
+				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/unittest.php", "$HOME/") );
+				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/webservice.php", "$HOME/") );
+				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/chart.php", "$HOME/") );
+
+				$gitIgnore[] = "config.inc.php";
+				$gitIgnore[] = "# Xmlnuke Files - End";
+				$gitIgnore[] = "";
+
+				CreatePhp5Project::writeToFile("$HOME/.gitignore", $gitIgnore);
+				touch("$HOME/config.inc.php");
+				touch("$HOME/config.inc-dist.php");
+
+
+				return true;
 			}
 			else
 			{
