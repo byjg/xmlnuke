@@ -1,7 +1,48 @@
-INSTALL.txt
-LICENSE.txt
-README.txt
-demos/
-extras/documentation
-
+# Netbeans
 /nbproject/private/
+
+# XMLNuke distro files
+xmlnuke-data/shared/admin/admin_page.pt-br.xsl
+xmlnuke-data/shared/admin/adminmodules.lang.anydata.xml
+xmlnuke-data/shared/admin/adminmodules.config.xml
+xmlnuke-data/shared/setup/users.anydata.xml
+xmlnuke-data/shared/setup/roles.anydata.xml
+xmlnuke-csharp/check_install.aspx
+xmlnuke-csharp/web.config
+xmlnuke-csharp/default.aspx
+xmlnuke-php5/writepage.inc.php
+xmlnuke-php5/check_install.php
+xmlnuke-php5/index.php
+
+# XMLNuke produced files
+*.cache.*
+
+# CSharp
+*.exe
+*.dll
+*.obj
+*.user
+*.pdb
+*.suo
+*.pdb
+*.mdb
+*.shv
+*.bak
+makefile*
+*.userprefs
+*.usertasks
+obj/*
+bin/*
+*.pidb
+*.csi
+
+# Other files
+.project
+.buildpath
+.settings
+*.deb
+*.tgz
+.projs
+.parent
+Thumbs.db
+
