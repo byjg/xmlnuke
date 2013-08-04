@@ -143,7 +143,7 @@ else
 			$aux .= "\$configValues[\"xmlnuke.LANGUAGESAVAILABLE\"] = '$LANGUAGESAVAILABLE'; \n" ;
 			$aux .= "\$configValues[\"xmlnuke.PHPXMLNUKEDIR\"] = '$PHPDIR'; \n" ;
 			$aux .= "?>\n" ;
-			writeTemplate( $aux, "$HOME/config.default.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
+			writeTemplate( $aux, "$HOME/config.inc-dist.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
 		
 			echo "Done.\n";
 			echo "\n";
