@@ -159,7 +159,7 @@ Run at your terminal:
 Choose and create a folder for your project. This folder must be accessible through your web broswer. 
 
     mkdir /var/www/my-project
-    /opt/xmlnuke/create-php5-project.sh /var/www/my-project default myproject en-us pt-br
+    php /opt/xmlnuke/create-php5-project.php /var/www/my-project default myproject en-us pt-br
     ln -s /opt/xmlnuke/xmlnuke-common /var/www/my-project/common
     
 Now, just test it:
