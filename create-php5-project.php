@@ -28,17 +28,17 @@ if (PHP_SAPI == 'cli')
 	{
 		try
 		{
-			call_user_func_array( array( 'CreatePhp5Project', 'Run' ), $argv );
+			$result = call_user_func_array( array( 'CreatePhp5Project', 'Run' ), $argv );
 
 			echo "Done.\n";
 			echo "\n";
 			echo "You must do some configurations manualy:\n";
-			echo "  - Create an alias \"/common\" pointing to \"$XMLNUKE/xmlnuke-common\" \n";
-			echo "  - Point the document root on your Web Server to \"$HOME\" \n";
+			echo "  - Create an alias \"/common\" pointing to \"{$result['XMLNUKE']}/xmlnuke-common\" \n";
+			echo "  - Point the document root on your Web Server to \"{$result['HOME']}\" \n";
 			echo "\n";
 			echo "After this you can play with these URLs:\n";
 			echo "http://localhost/xmlnuke.php?xml=home\n";
-			echo "http://localhost/xmlnuke.php?module=${PROJECT_FILE}.home\n";
+			echo "http://localhost/xmlnuke.php?module={$result['PROJECT_FILE']}.home\n";
 			echo "\n";
 		}
 		catch (Exception $ex)
@@ -186,7 +186,15 @@ class CreatePhp5Project
 				touch("$HOME/config.inc-dist.php");
 
 
-				return true;
+				return  array(
+					'HOME' => $HOME,
+					'SITE' => $SITE,
+					'PROJECT' => $PROJECT,
+					'PROJECT_FILE' => $PROJECT_FILE,
+					'XMLNUKE' => $XMLNUKE,
+					'PHPDIR' => $PHPDIR,
+					'DATADIR' => $DATADIR
+				);
 			}
 			else
 			{
