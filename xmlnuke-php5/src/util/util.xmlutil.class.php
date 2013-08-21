@@ -655,7 +655,7 @@ class XmlUtil
 				$text = "".$v;
 				if ($text != "")
 				{
-					$arText = array("_text" => $text);
+					$arText = array($text);
 				}
 				else
 				{
