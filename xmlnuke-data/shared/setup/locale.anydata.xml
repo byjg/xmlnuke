@@ -213,7 +213,7 @@
 <field name="name">English - Australia</field>
 <field name="shortname">en-au</field>
 <field name="lcid">3081</field>
-<field name="langstr">australia</field>
+<field name="langstr">australian</field>
 <field name="langstr">ena</field>
 <field name="langstr">english-aus</field>
 </row>
@@ -486,7 +486,7 @@
 <field name="lcid">1086</field>
 </row>
 <row>
-<field name="name">Malay – Brunei</field>
+<field name="name">Malay ï¿½ Brunei</field>
 <field name="shortname">ms-bn</field>
 <field name="lcid">2110</field>
 </row>
@@ -501,7 +501,7 @@
 <field name="lcid">1102</field>
 </row>
 <row>
-<field name="name">Norwegian - Bokmål</field>
+<field name="name">Norwegian - Bokmï¿½l</field>
 <field name="shortname">no-no</field>
 <field name="lcid">1044</field>
 <field name="langstr">nor</field>
@@ -527,14 +527,14 @@
 <field name="name">Portuguese - Portugal</field>
 <field name="shortname">pt-pt</field>
 <field name="lcid">2070</field>
-<field name="langstr">portuguese</field>
+<field name="langstr">portuguese_portugal</field>
 <field name="langstr">ptg</field>
 </row>
 <row>
 <field name="name">Portuguese - Brazil</field>
 <field name="shortname">pt-br</field>
 <field name="lcid">1046</field>
-<field name="langstr">portuguese-brazil</field>
+<field name="langstr">portuguese_brazil</field>
 <field name="langstr">ptb</field>
 </row>
 <row>
@@ -608,90 +608,81 @@
 <field name="shortname">es-es</field>
 <field name="lcid">1034</field>
 <field name="langstr">esp</field>
-<field name="langstr">spanish</field>
 <field name="langstr">esn</field>
+<field name="langstr">spanish</field>
 <field name="langstr">spanish-modern</field>
 </row>
 <row>
 <field name="name">Spanish - Argentina</field>
 <field name="shortname">es-ar</field>
 <field name="lcid">11274</field>
-<field name="langstr">esp</field>
+<field name="langstr">ess</field>
+<field name="langstr">spanish-argentina</field>
 <field name="langstr">spanish</field>
-<field name="langstr">esn</field>
-<field name="langstr">spanish-modern</field>
 </row>
 <row>
 <field name="name">Spanish - Bolivia</field>
 <field name="shortname">es-bo</field>
 <field name="lcid">16394</field>
-<field name="langstr">esp</field>
+<field name="langstr">spanish-bolivia</field>
+<field name="langstr">esb</field>
 <field name="langstr">spanish</field>
-<field name="langstr">esn</field>
-<field name="langstr">spanish-modern</field>
 </row>
 <row>
 <field name="name">Spanish - Chile</field>
 <field name="shortname">es-cl</field>
 <field name="lcid">13322</field>
-<field name="langstr">esp</field>
+<field name="langstr">esl</field>
+<field name="langstr">spanish-chile</field>
 <field name="langstr">spanish</field>
-<field name="langstr">esn</field>
-<field name="langstr">spanish-modern</field>
 </row>
 <row>
 <field name="name">Spanish - Colombia</field>
 <field name="shortname">es-co</field>
 <field name="lcid">9226</field>
-<field name="langstr">esp</field>
+<field name="langstr">eso</field>
+<field name="langstr">spanish-colombia</field>
 <field name="langstr">spanish</field>
-<field name="langstr">esn</field>
-<field name="langstr">spanish-modern</field>
 </row>
 <row>
 <field name="name">Spanish - Costa Rica</field>
 <field name="shortname">es-cr</field>
 <field name="lcid">5130</field>
-<field name="langstr">esp</field>
+<field name="langstr">esc</field>
 <field name="langstr">spanish</field>
-<field name="langstr">esn</field>
 <field name="langstr">spanish-modern</field>
 </row>
 <row>
 <field name="name">Spanish - Dominican Republic</field>
 <field name="shortname">es-do</field>
 <field name="lcid">7178</field>
-<field name="langstr">esp</field>
+<field name="langstr">esd</field>
 <field name="langstr">spanish</field>
-<field name="langstr">esn</field>
 <field name="langstr">spanish-modern</field>
 </row>
 <row>
 <field name="name">Spanish - Ecuador</field>
 <field name="shortname">es-ec</field>
 <field name="lcid">12298</field>
-<field name="langstr">esp</field>
+<field name="langstr">esf</field>
+<field name="langstr">spanish-ecuador</field>
 <field name="langstr">spanish</field>
-<field name="langstr">esn</field>
-<field name="langstr">spanish-modern</field>
 </row>
 <row>
 <field name="name">Spanish - Guatemala</field>
 <field name="shortname">es-gt</field>
 <field name="lcid">4106</field>
-<field name="langstr">esp</field>
+<field name="langstr">esg</field>
+<field name="langstr">spanish-guatemala</field>
 <field name="langstr">spanish</field>
-<field name="langstr">esn</field>
-<field name="langstr">spanish-modern</field>
 </row>
 <row>
 <field name="name">Spanish - Honduras</field>
 <field name="shortname">es-hn</field>
 <field name="lcid">18442</field>
-<field name="langstr">esp</field>
+<field name="langstr">esh</field>
+<field name="langstr">spanish-honduras</field>
 <field name="langstr">spanish</field>
-<field name="langstr">esn</field>
-<field name="langstr">spanish-modern</field>
 </row>
 <row>
 <field name="name">Spanish - Mexico</field>
@@ -699,80 +690,72 @@
 <field name="lcid">2058</field>
 <field name="langstr">esm</field>
 <field name="langstr">spanish-mexican</field>
-<field name="langstr">esn</field>
-<field name="langstr">spanish-modern</field>
+<field name="langstr">spanish</field>
 </row>
 <row>
 <field name="name">Spanish - Nicaragua</field>
 <field name="shortname">es-ni</field>
 <field name="lcid">19466</field>
-<field name="langstr">esp</field>
+<field name="langstr">esi</field>
+<field name="langstr">spanish-nicaragua</field>
 <field name="langstr">spanish</field>
-<field name="langstr">esn</field>
-<field name="langstr">spanish-modern</field>
 </row>
 <row>
 <field name="name">Spanish - Panama</field>
 <field name="shortname">es-pa</field>
 <field name="lcid">6154</field>
-<field name="langstr">esp</field>
+<field name="langstr">esa</field>
+<field name="langstr">spanish-panama</field>
 <field name="langstr">spanish</field>
 <field name="langstr">esn</field>
-<field name="langstr">spanish-modern</field>
 </row>
 <row>
 <field name="name">Spanish - Peru</field>
 <field name="shortname">es-pe</field>
 <field name="lcid">10250</field>
-<field name="langstr">esp</field>
+<field name="langstr">esr</field>
+<field name="langstr">spanish-peru</field>
 <field name="langstr">spanish</field>
-<field name="langstr">esn</field>
-<field name="langstr">spanish-modern</field>
 </row>
 <row>
 <field name="name">Spanish - Puerto Rico</field>
 <field name="shortname">es-pr</field>
 <field name="lcid">20490</field>
-<field name="langstr">esp</field>
+<field name="langstr">esu</field>
+<field name="langstr">spanish-puertorico</field>
 <field name="langstr">spanish</field>
-<field name="langstr">esn</field>
-<field name="langstr">spanish-modern</field>
 </row>
 <row>
 <field name="name">Spanish - Paraguay</field>
 <field name="shortname">es-py</field>
 <field name="lcid">15370</field>
-<field name="langstr">esp</field>
+<field name="langstr">esy</field>
+<field name="langstr">spanish-paraguay</field>
 <field name="langstr">spanish</field>
-<field name="langstr">esn</field>
-<field name="langstr">spanish-modern</field>
 </row>
 <row>
 <field name="name">Spanish - El Salvador</field>
 <field name="shortname">es-sv</field>
 <field name="lcid">17418</field>
-<field name="langstr">esp</field>
+<field name="langstr">ese</field>
 <field name="langstr">spanish</field>
-<field name="langstr">esn</field>
 <field name="langstr">spanish-modern</field>
 </row>
 <row>
 <field name="name">Spanish - Uruguay</field>
 <field name="shortname">es-uy</field>
 <field name="lcid">14346</field>
-<field name="langstr">esp</field>
+<field name="langstr">esy</field>
+<field name="langstr">spanish-uruguay</field>
 <field name="langstr">spanish</field>
-<field name="langstr">esn</field>
-<field name="langstr">spanish-modern</field>
 </row>
 <row>
 <field name="name">Spanish - Venezuela</field>
 <field name="shortname">es-ve</field>
 <field name="lcid">8202</field>
-<field name="langstr">esp</field>
+<field name="langstr">esv</field>
+<field name="langstr">spanish-venezuela</field>
 <field name="langstr">spanish</field>
-<field name="langstr">esn</field>
-<field name="langstr">spanish-modern</field>
 </row>
 <row>
 <field name="name">Sutu</field>
