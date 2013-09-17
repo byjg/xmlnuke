@@ -135,6 +135,17 @@ else
 	require_once PHPXMLNUKEDIR . "src/util/util.conversion.class.php";
 	require_once PHPXMLNUKEDIR . "src/util/util.exceptions.class.php";
 
+	// Error Handler
+	$whoops = new Whoops\Run();
+	$whoops->pushHandler(new Whoops\Handler\JsonResponseHandler());
+	
+	if (Context::getInstance()->getDevelopmentStatus())
+		$whoops->pushHandler(new Whoops\Handler\PrettyPageHandler());
+	else
+		$whoops->pushHandler(new Whoops\Handler\MinimalHandler());
+
+	// Set Whoops as the default error and exception handler used by PHP:
+	$whoops->register(); 	
 }
 
 /* Fix bad things in PHP */

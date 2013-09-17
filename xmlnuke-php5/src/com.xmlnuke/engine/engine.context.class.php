@@ -330,6 +330,11 @@ class Context extends BaseSingleton
 		$this->_debug = $debug;
 	}
 
+	public function getDevelopmentStatus()
+	{
+		return isset($this->_config['XMLNUKE.DEVELOPMENT']) ? $this->_config['XMLNUKE.DEVELOPMENT'] : false;
+	}
+	
 	/**
 	* Return a randon number
 	* @access public

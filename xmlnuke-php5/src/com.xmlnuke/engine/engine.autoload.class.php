@@ -64,12 +64,18 @@ class AutoLoad
 		{
 			$filename = PHPXMLNUKEDIR . $prefix . strtolower($className) . ".class.php";
 
-			if (file_exists($filename))
+			if (is_readable($filename))
 			{
 				require_once $filename;
-				break;
+				return;
 			}
 		}
+		
+		// PSR-0 Classes
+		// convert namespace to full file path
+		$class = PHPXMLNUKEDIR . 'src/modules/' . str_replace('\\', '/', $className) . '.php';
+		if (is_readable($class))
+			require_once($class);
     }
 	
 }
