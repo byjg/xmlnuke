@@ -109,6 +109,8 @@
 		try
 		{
 			$module = ModuleFactory::GetModule($moduleName);
+			
+			writePage($engine->TransformDocumentFromModule($module));
 		}
 		catch (NotAuthenticatedException $ex)
 		{
@@ -118,58 +120,6 @@
 			// Não deixe espaços em branco no início ou fim dos módulos
 			$context->redirectUrl( $url );
 		}
-		catch (Exception $ex)
-		{
-			if ($debug) 
-			{
-				Debug::LogError($moduleName, $ex);
-				untreatedError($ex);
-				exit();
-			}
-			else
-			{
-				$ex->moduleName = $moduleName;
-				$module = ModuleFactory::GetModule("LoadError", $ex );
-			}
-		}
-
-			
-		// Try to execute modules
-		// Catch errors from execute
-		try
-		{
-			writePage($engine->TransformDocumentFromModule($module));
-		}
-		catch (Exception $ex)
-		{
-			$module->getCacheEngine()->unlock($module->getCacheId());
-			Debug::LogError($moduleName, $ex);
-			if ($debug) 
-			{
-				untreatedError($ex);
-			}
-			else
-			{
-				if ($ex instanceof PDOException)
-				{
-					$ex->showStackTrace = true;
-				}
-				
-				$ex->moduleName = $moduleName;
-				$firstError = $ex;
-				
-				try
-				{
-					$module = ModuleFactory::GetModule("LoadError", $ex );
-					writePage($engine->TransformDocumentFromModule($module));
-				}
-				catch (Exception $ex)
-				{
-					$module->getCacheEngine()->unlock($module->getCacheId());
-					echo "<b>Fatal Error</b>: [" . get_class($ex) . "] " . $ex->getMessage() . "<br/>File: " . basename($ex->getFile()) . " at " . $ex->getLine();
-				}		
-			}
-		}		
 	}
 
 	/**
@@ -247,16 +197,5 @@
 		}
 		
 		echo substr($buffer, $posi);
-	}
-
-	function untreatedError($ex)
-	{
-		echo "<b>" . $ex->getMessage() . "<b> in " . $ex->getFile() . " at " . $ex->getLine() . "<hr/>";
-		echo "<pre>";
-		echo $ex->getTraceAsString();
-		echo "</pre><hr/>";
-
-		Context::getInstance()->Debug();
-
 	}
 ?>
