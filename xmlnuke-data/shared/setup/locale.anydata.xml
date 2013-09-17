@@ -486,7 +486,7 @@
 <field name="lcid">1086</field>
 </row>
 <row>
-<field name="name">Malay � Brunei</field>
+<field name="name">Malay - Brunei</field>
 <field name="shortname">ms-bn</field>
 <field name="lcid">2110</field>
 </row>
@@ -501,7 +501,7 @@
 <field name="lcid">1102</field>
 </row>
 <row>
-<field name="name">Norwegian - Bokm�l</field>
+<field name="name">Norwegian - Bokmål</field>
 <field name="shortname">no-no</field>
 <field name="lcid">1044</field>
 <field name="langstr">nor</field>
