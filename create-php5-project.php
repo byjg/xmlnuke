@@ -65,14 +65,14 @@ class CreatePhp5Project
 		$PROJECT_FILE = strtolower($PROJECT);
 		$XMLNUKE = dirname(__FILE__);
 
-		$PHPDIR = "$XMLNUKE/xmlnuke-php5";
-		$DATADIR = "$XMLNUKE/xmlnuke-data";
+		$PHPDIR = "$XMLNUKE" . DIRECTORY_SEPARATOR . "xmlnuke-php5";
+		$DATADIR = "$XMLNUKE" . DIRECTORY_SEPARATOR . "xmlnuke-data";
 
 		if ( file_exists($PHPDIR) )
 		{
 			if ( ! file_exists($DATADIR) )
 			{
-				$DATADIR = "$PHPDIR/data";
+				$DATADIR = "$PHPDIR" . DIRECTORY_SEPARATOR . "data";
 				if ( ! file_exists( $DATADIR ) )
 				{
 					throw new Exception("XMLNuke release not found!!! Cannot continue.");
@@ -155,8 +155,8 @@ class CreatePhp5Project
 				$aux .= "\$configValues[\"xmlnuke.ROOTDIR\"]='$DATADIR'; \n" ;
 				$aux .= "\$configValues[\"xmlnuke.USEABSOLUTEPATHSROOTDIR\"] = true; \n" ;
 				$aux .= "\$configValues[\"xmlnuke.DEFAULTSITE\"]='$SITE'; \n" ;
-				$aux .= "\$configValues[\"xmlnuke.EXTERNALSITEDIR\"] = '$SITE=$HOME/data'; \n" ;
-				$aux .= "\$configValues[\"xmlnuke.PHPLIBDIR\"] = '$PROJECT_FILE=$HOME/lib'; \n" ;
+				$aux .= "\$configValues[\"xmlnuke.EXTERNALSITEDIR\"] = '$SITE=$HOME" . DIRECTORY_SEPARATOR . "data'; \n" ;
+				$aux .= "\$configValues[\"xmlnuke.PHPLIBDIR\"] = '$PROJECT_FILE=$HOME" . DIRECTORY_SEPARATOR . "lib'; \n" ;
 				$aux .= "\$configValues[\"xmlnuke.LANGUAGESAVAILABLE\"] = '$LANGUAGESAVAILABLE'; \n" ;
 				$aux .= "\$configValues[\"xmlnuke.PHPXMLNUKEDIR\"] = '$PHPDIR'; \n" ;
 				$aux .= "?>\n" ;
@@ -217,9 +217,9 @@ class CreatePhp5Project
 		{
 			case "ln -sf":
 				if ($isWindows)
-					$final = "copy " . $params[0] . " " . $params[1];
+					$final = "copy \"" . str_replace('/', DIRECTORY_SEPARATOR, $params[0]) . "\" \"" . str_replace('/', DIRECTORY_SEPARATOR, $params[1]) . "\"";
 				else
-					$final = $cmd . " " . $params[0] . " " . $params[1];
+					$final = $cmd . " \"" . str_replace('\\', DIRECTORY_SEPARATOR, $params[0]) . "\" " . str_replace('\\', DIRECTORY_SEPARATOR, $params[1]) . "\"";
 
 				$retorno = basename($params[0]);
 				break;
