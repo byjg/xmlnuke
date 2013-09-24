@@ -43,6 +43,7 @@ class DBSQLRelayDriver
 	/** Used for SQL Relay connections **/
 	protected $_conn;
 	
+	protected $_transaction = false;
 
 	public function __construct($connMngt)
 	{	
@@ -57,6 +58,8 @@ class DBSQLRelayDriver
 				0, 
 				1 
 			);
+		
+		sqlrcon_autoCommitOn($this->_conn);
 	}
 	
 	public function __destruct() 
@@ -137,13 +140,42 @@ class DBSQLRelayDriver
 	}
 	
 	public function beginTransaction()
-	{ }
+	{ 
+		$this->_transaction = true;
+		sqlrcon_autoCommitOff($this->_conn);
+	}
 	
 	public function commitTransaction()
-	{ }
+	{ 
+		if ($this->_transaction)
+		{
+			$this->_transaction = false;
+
+			$ret = sqlrcon_commit($this->_conn);
+			if ($ret === 0)
+				throw new DatabaseException ('Commit failed');
+			else if ($ret === -1)
+				throw new DatabaseException ('An error occurred. Commit failed');
+			
+			sqlrcon_autoCommitOn($this->_conn);
+		}
+	}
 	
 	public function rollbackTransaction()
-	{ }
+	{ 
+		if ($this->_transaction)
+		{
+			$this->_transaction = false;
+
+			$ret = sqlrcon_rollback($this->_conn);
+			if ($ret === 0)
+				throw new DatabaseException ('Commit failed');
+			else if ($ret === -1)
+				throw new DatabaseException ('An error occurred. Commit failed');
+
+			sqlrcon_autoCommitOn($this->_conn);
+		}
+	}
 	
 	public function executeSql($sql, $array = null) 
 	{
