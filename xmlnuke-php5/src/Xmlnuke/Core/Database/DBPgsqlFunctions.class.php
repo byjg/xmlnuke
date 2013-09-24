@@ -190,6 +190,18 @@ class DbPGSqlFunctions extends DbBaseFunctions
 		return parent::fromDate($date, $dateFormat, $hour);
 	}
 	
+	function executeAndGetInsertedId($dbdataset, $sql, $param, $sequence = null)
+	{
+		$id = parent::executeAndGetInsertedId($dbdataset, $sql, $param);
+		$it = $dbdataset->getIterator("select currval('" . $sequence . "') id");
+		if ($it->hasNext())
+		{
+			$sr = $it->moveNext();
+			$id = $sr->getField("id");
+		}
+
+		return $id;
+	}	
 }
 
 ?>

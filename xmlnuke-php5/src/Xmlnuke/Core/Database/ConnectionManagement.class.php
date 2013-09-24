@@ -192,7 +192,11 @@ class ConnectionManagement
 			DSN=DRIVER://C:/PATH[?PARAMETERS]
 
 			------------------
-		    PARAMETERS (Working: unixsocket and parammodel)
+		    PARAMETERS ARE Working: 
+			    unixsocket - for SQLRelayDriver
+				parammodel - ALL
+			    protocol - OCI8Driver
+			    codepage - OCI8Driver
     		*/
 
 			$patDriver = "(?P<driver>[\w\.]+)\:\/\/";

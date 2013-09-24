@@ -34,15 +34,8 @@ namespace Xmlnuke\Core\AnyDataset;
 
 class DBDataSet 
 {
-	/**
-	 * @var PDO
-	 */
-	protected $_db = null;
 	
 	protected $_context = null;
-	
-	/** Used for SQL Relay connections **/
-	protected $_conn;
 	
 	/**
 	 * Enter description here...
@@ -50,6 +43,12 @@ class DBDataSet
 	 * @var ConnectionManagement
 	 */
 	protected $_connectionManagement;
+
+	/**
+	 *
+	 * @var IDBDriver
+	 */
+	protected $_dbDriver = null;
 	
 	/**
 	 *@param string $dbname - Name of file without '_db' and extention '.xml'. 
@@ -66,80 +65,11 @@ class DBDataSet
 		$this->_connectionManagement = new ConnectionManagement ( $dbname );
 		
 		if ($this->_connectionManagement->getDriver () == "sqlrelay") 
-		{
-			$this->_conn = sqlrcon_alloc ( 
-					$this->_connectionManagement->getServer(), 
-					$this->_connectionManagement->getPort(), 
-					$this->_connectionManagement->getExtraParam("unixsocket"), 
-					$this->_connectionManagement->getUsername(), 
-					$this->_connectionManagement->getPassword(), 
-					0, 
-					1 
-				);
-		}
+			$this->_dbDriver = new DBSQLRelayDriver ($this->_connectionManagement);
+		elseif ($this->_connectionManagement->getDriver () == "oci8") 
+			$this->_dbDriver = new DBOci8Driver ($this->_connectionManagement);
 		else
-		{
-			if ($this->_connectionManagement->getDriver () == "literal")
-			{
-				$strcnn = $this->_connectionManagement->getDbConnectionString();
-			}
-			else if ($this->_connectionManagement->getDriver () == "odbc")
-			{
-				$strcnn = $this->_connectionManagement->getDriver () . ":" . $this->_connectionManagement->getServer ();
-			}
-			else 
-			{
-				if ($this->_connectionManagement->getFilePath() != "")
-					$strcnn = $this->_connectionManagement->getDriver () . ":" . $this->_connectionManagement->getFilePath ();
-				else
-				{
-					$strcnn = $this->_connectionManagement->getDriver () . ":dbname=" . $this->_connectionManagement->getDatabase ();
-					if ($this->_connectionManagement->getExtraParam("unixsocket") != "")
-						$strcnn .= ";unix_socket=" . $this->_connectionManagement->getExtraParam("unixsocket");
-					else
-					{
-						$strcnn .= ";host=" . $this->_connectionManagement->getServer ();
-						if ($this->_connectionManagement->getPort() != "")
-							$strcnn .= ";port=" . $this->_connectionManagement->getPort ();
-					}
-				}
-			}
-
-			// Create Connection
-			$this->_db = new PDO ( $strcnn, $this->_connectionManagement->getUsername (), $this->_connectionManagement->getPassword () );
-			$this->_connectionManagement->setDriver($this->_db->getAttribute(PDO::ATTR_DRIVER_NAME));
-			
-			// Set Specific Attributes
-			$this->_db->setAttribute ( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-			if ($this->_connectionManagement->getDriver() == "mysql")
-			{
-				$this->_db->setAttribute ( PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true );
-				if ((PHP_VERSION_ID < 50300) || (PHP_VERSION_ID > 50301))
-				{
-					$this->_db->setAttribute ( PDO::MYSQL_ATTR_INIT_COMMAND, "SET NAMES utf8" );
-				}
-			}
-			if (($this->_connectionManagement->getDriver() != "dblib") && ($this->_connectionManagement->getDriver() != "odbc"))
-			{
-				if ( defined( 'PDO::ATTR_EMULATE_PREPARES' ) ) {
-					$this->_db->setAttribute ( PDO::ATTR_EMULATE_PREPARES, true );
-				}
-			}
-			// Solve the error:
-			// SQLSTATE[HY000]: General error: 1934 General SQL Server error: Check messages from the SQL Server [1934] (severity 16) [(null)]
-			// http://gullele.wordpress.com/2010/12/15/accessing-xml-column-of-sql-server-from-php-pdo/
-			// http://stackoverflow.com/questions/5499128/error-when-using-xml-in-stored-procedure-pdo-ms-sql-2008
-			if ($this->_connectionManagement->getDriver() == "dblib")
-			{
-				$this->_db->exec('SET QUOTED_IDENTIFIER ON');
-				$this->_db->exec('SET ANSI_WARNINGS ON');
-				$this->_db->exec('SET ANSI_PADDING ON');
-				$this->_db->exec('SET ANSI_NULLS ON');
-				$this->_db->exec('SET CONCAT_NULL_YIELDS_NULL ON');
-				//$this->execSql('SET NUMERIC_ROUNDABORT OFF');
-				//$this->execSql('set dateformat ymd');
-			}
-		}
+			$this->_dbDriver = new DBPDODriver($this->_connectionManagement);
 	}
 	
 	public function getDbType() 
@@ -152,20 +82,11 @@ class DBDataSet
 		return $this->_connectionManagement->getDbConnectionString ();
 	}
 	
-	public function TestConnection() 
+	public function testConnection() 
 	{
 		return true;
 	}
-	
-	public function __destruct() 
-	{
-		$this->_db = null;
-		if (! is_null ( $this->_conn )) 
-		{
-			sqlrcon_free ( $this->_conn );
-		}
-	}
-	
+		
 	/**
 	 * @access public
 	 * @param string $sql
@@ -174,110 +95,12 @@ class DBDataSet
 	 */
 	public function getIterator($sql, $array = null) 
 	{
-		if ($this->_connectionManagement->getDriver () == "sqlrelay") 
-			return $this->getSQLRelayIterator ( $sql, $array );
-		else
-			return $this->getDBIterator ( $sql, $array );
+		return $this->_dbDriver->getIterator($sql, $array);
 	}
 
 	public function getScalar($sql, $array = null)
 	{
-		if ($this->_connectionManagement->getDriver () == "sqlrelay")
-			return $this->getSQLRelayScalar ( $sql, $array );
-		else
-			return $this->getDBScalar ( $sql, $array );
-	}
-
-	/**
-	 *
-	 * @param string $sql
-	 * @param array $array
-	 * @return PDOStatement
-	 */
-	protected function getDBStatement($sql, $array = null)
-	{
-		if ($array)
-		{
-			$sql = XmlnukeProviderFactory::ParseSQL ( $this->_connectionManagement, $sql, $array );
-			$stmt = $this->_db->prepare ( $sql );
-			foreach ( $array as $key => $value )
-			{
-				$stmt->bindValue ( ":" . XmlnukeProviderFactory::KeyAdj ( $key ), $value );
-			}
-		}
-		else
-			$stmt = $this->_db->prepare ( $sql );
-
-		return $stmt;
-	}
-	
-	protected function getDBIterator($sql, $array = null) 
-	{
-		$stmt = $this->getDBStatement($sql, $array);
-		$stmt->execute();
-		$it = new DBIterator ( $stmt, $this->_context );
-		return $it;
-	}
-
-	protected function getDBScalar($sql, $array = null)
-	{
-		$stmt = $this->getDBStatement($sql, $array);
-		$stmt->execute();
-
-		$scalar = $stmt->fetchColumn();
-
-        $stmt->closeCursor();
-
-		return $scalar;
-	}
-
-
-	protected function getSQLRelayCursor($sql, $array = null)
-	{
-		$cur = sqlrcur_alloc ( $this->_conn );
-		$success = true;
-
-		if ($array)
-		{
-			$sql = XmlnukeProviderFactory::ParseSQL ( $this->_connectionManagement, $sql, $array );
-
-			sqlrcur_prepareQuery ( $cur, $sql );
-			$bindCount = 1;
-			foreach ( $array as $key => $value )
-			{
-				$field = strval ( $bindCount ++ );
-				sqlrcur_inputBind ( $cur, $field, $value );
-			}
-			$success = sqlrcur_executeQuery ( $cur );
-			sqlrcon_endSession ( $this->_conn );
-		}
-		else
-		{
-			$success = sqlrcur_sendQuery ( $cur, $sql );
-			sqlrcon_endSession ( $this->_conn );
-		}
-		if (!$success)
-		{
-			throw new DatasetException(sqlrcur_errorMessage($cur));
-		}
-
-		return $cur;
-	}
-
-	protected function getSQLRelayIterator($sql, $array = null) 
-	{
-		$cur = $this->getSQLRelayCursor($sql, $array);
-		$it = new SQLRelayIterator ( $cur, $this->_context );
-		return $it;
-	}
-	
-	protected function getSQLRelayScalar($sql, $array = null)
-	{
-		$cur = $this->getSQLRelayCursor($sql, $array);
-		$scalar = sqlrcur_getField($cur,0,0);
-		sqlrcur_free($cur);
-
-		return $scalar;
+		return $this->_dbDriver->getScalar($sql, $array);
 	}
 
 	/**
@@ -287,46 +110,7 @@ class DBDataSet
 	 */
 	public function getAllFields($tablename) 
 	{
-		if ($this->_connectionManagement->getDriver () == "sqlrelay") {
-			return $this->getSQLRelayAllFields($tablename);
-		} else {
-			return $this->getDBAllFields($tablename);
-		}
-	}
-	
-	protected function getDBAllFields($tablename)
-	{
-		$fields = array ();
-		$rs = $this->_db->query ( "select * from " . $tablename . " where 0=1" );
-		$fieldLength = $rs->columnCount ();
-		for($i = 0; $i < $fieldsLength; $i ++) 
-		{
-			$fld = $rs->getColumnMeta ( $i );
-			$fields [] = strtolower ( $fld ["name"] );
-			//Debug::PrintValue("<xmp>".strtolower($fld->name)." => ".$this->_rs->fields[$i]."</xmp>");
-		}
-		return $fields;
-	}
-	
-	protected function getSQLRelayAllFields($tablename)
-	{
-		$cur=sqlrcur_alloc($this->_conn);
-
-		$success = sqlrcur_sendQuery($cur,"select * from " . $tablename);
-		sqlrcon_endSession($con);
-		
-		if (!$success)
-		{
-			throw new DatasetException(sqlrcur_errorMessage($cur));
-		}
-
-		$fields = array ();
-		for ($col=0; $col<sqlrcur_colCount($cur); $col++) 
-		{
-			$fields[] = strtolower(sqlrcur_getColumnName($cur, $col));
-		}
-
-		sqlrcur_free($cur);
+		return $this->_dbDriver->getAllFields($tablename);
 	}
 	
 	/**
@@ -337,42 +121,24 @@ class DBDataSet
 	 */
 	public function execSQL($sql, $array = null) 
 	{
-		if ($this->_connectionManagement->getDriver () == "sqlrelay") {
-			return $this->execSQLRelayQuery($sql, $array);
-		} else {
-			return $this->execDBQuery($sql, $array);
-		}
+		$this->_dbDriver->executeSql($sql, $array);
 	}
 	
 	public function beginTransaction()
-	{
-		$this->_db->beginTransaction();
+	{ 
+		$this->_dbDriver->beginTransaction();
 	}
 	
 	public function commitTransaction()
-	{
-		$this->_db->commit();
+	{ 
+		$this->_dbDriver->commitTransaction();
 	}
 	
 	public function rollbackTransaction()
-	{
-		$this->_db->rollBack();
+	{ 
+		$this->_dbDriver->rollbackTransaction();
 	}
-	
-	protected function execDBQuery($sql, $array = null)
-	{
-		$stmt = $this->getDBStatement($sql, $array);
-		$result = $stmt->execute ();
-		return $result;
-	}
-
-	protected function execSQLRelayQuery($sql, $array = null)
-	{
-		$cur = $this->getSQLRelayCursor($sql, $array);
-		sqlrcur_free($cur);
-		return true;
-	}
-	
+		
 	/**
 	 *@access public
 	 *@param Iterator $it
@@ -398,7 +164,7 @@ class DBDataSet
 	 */
 	public function getDBConnection() 
 	{
-		return $this->_db;
+		return $this->_dbDriver->getDbConnection();
 	}
 	
 	/**
