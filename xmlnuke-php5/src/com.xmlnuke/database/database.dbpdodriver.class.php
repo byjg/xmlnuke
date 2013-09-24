@@ -31,7 +31,7 @@
 /**
  * @package xmlnuke
  */
-class DBPDODriver
+class DBPDODriver implements IDBDriver
 {	
 	/**
 	 * @var PDO
