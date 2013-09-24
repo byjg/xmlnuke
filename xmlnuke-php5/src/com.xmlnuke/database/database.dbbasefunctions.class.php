@@ -131,7 +131,7 @@ abstract class DbBaseFunctions implements IDbFunctions
 	 * @param array $param
 	 * @return int
 	 */
-	function executeAndGetInsertedId($dbdataset, $sql, $param)
+	function executeAndGetInsertedId($dbdataset, $sql, $param, $sequence = null)
 	{
 		$dbdataset->execSQL($sql, $param);
 		return -1;
