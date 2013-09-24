@@ -68,8 +68,11 @@ class XmlnukeProviderFactory
 	 * @param array $param
 	 * @return string
 	 */
-	public static function ParseSQL($connData, $SQL, $params)
+	public static function ParseSQL($connData, $SQL, $params = null)
 	{
+		if ($params == null)
+			return $SQL;
+		
 		$paramSubstName = XmlnukeProviderFactory::GetParamModel ( $connData );
 		foreach ( $params as $key => $value )
 		{

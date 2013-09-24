@@ -64,6 +64,8 @@ class DBDataSet
 		
 		if ($this->_connectionManagement->getDriver () == "sqlrelay") 
 			$this->_dbDriver = new DBSQLRelayDriver ($this->_connectionManagement);
+		elseif ($this->_connectionManagement->getDriver () == "oci8") 
+			$this->_dbDriver = new DBOci8Driver ($this->_connectionManagement);
 		else
 			$this->_dbDriver = new DBPDODriver($this->_connectionManagement);
 	}
@@ -91,7 +93,7 @@ class DBDataSet
 	 */
 	public function getIterator($sql, $array = null) 
 	{
-		$this->_dbDriver->getIterator($sql, $array);
+		return $this->_dbDriver->getIterator($sql, $array);
 	}
 
 	public function getScalar($sql, $array = null)
