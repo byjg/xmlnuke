@@ -31,7 +31,7 @@
 /**
  * @package xmlnuke
  */
-class DBSQLRelayDriver
+class DBSQLRelayDriver implements IDBDriver
 {
 	/**
 	 * Enter description here...

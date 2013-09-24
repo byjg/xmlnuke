@@ -31,7 +31,7 @@
 /**
  * @package xmlnuke
  */
-class DBOci8Driver
+class DBOci8Driver implements IDBDriver
 {
 	/**
 	 * Enter description here...
