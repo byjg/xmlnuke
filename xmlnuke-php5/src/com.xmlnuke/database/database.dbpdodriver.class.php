@@ -169,11 +169,10 @@ class DBPDODriver implements IDBDriver
 		$fields = array ();
 		$rs = $this->_db->query ( "select * from " . $tablename . " where 0=1" );
 		$fieldLength = $rs->columnCount ();
-		for($i = 0; $i < $fieldsLength; $i ++) 
+		for($i = 0; $i < $fieldLength; $i++) 
 		{
 			$fld = $rs->getColumnMeta ( $i );
 			$fields [] = strtolower ( $fld ["name"] );
-			//Debug::PrintValue("<xmp>".strtolower($fld->name)." => ".$this->_rs->fields[$i]."</xmp>");
 		}
 		return $fields;
 	}
