@@ -57,6 +57,10 @@ class DBPDODriver implements IDBDriver
 		{
 			$strcnn = $this->_connectionManagement->getDriver () . ":" . $this->_connectionManagement->getServer ();
 		}
+		else if ($this->_connectionManagement->getDriver () == "oci")
+		{
+			$strcnn = $this->_connectionManagement->getDriver () . ":dbname=" . DBOci8Driver::getTnsString($this->_connectionManagement);
+		}
 		else 
 		{
 			if ($this->_connectionManagement->getFilePath() != "")

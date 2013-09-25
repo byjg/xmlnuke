@@ -56,24 +56,10 @@ class DBOci8Driver implements IDBDriver
 	{	
 		$this->_connectionManagement = $connMngt;
 		
-		$protocol = $this->_connectionManagement->getExtraParam("protocol");
-		$protocol = ($protocol == "") ? 'TCP' : $protocol;
-		
-		$port = $this->_connectionManagement->getPort();
-		$port = ($port == "") ? 1521 : $port;
-		
-		$svcName = $this->_connectionManagement->getDatabase();
-		
-		$host = $this->_connectionManagement->getServer();
-		
 		$codePage = $this->_connectionManagement->getExtraParam("codepage");
 		$codePage = ($codePage == "") ? 'UTF8' : $codePage;
-		
-		$tns = 
-			"(DESCRIPTION = " .
-			"	(ADDRESS = (PROTOCOL = $protocol)(HOST = $host)(PORT = $port)) " .
-			"		(CONNECT_DATA = (SERVICE_NAME = $svcName)) " .
-			")";
+
+		$tns = DBOci8Driver::getTnsString($connMngt);
 		
 		$this->_conn = oci_connect(
 				$this->_connectionManagement->getUsername(), 
@@ -86,6 +72,32 @@ class DBOci8Driver implements IDBDriver
 			$e = oci_error();
 			throw new DataBaseException($e['message']);
 		}		
+	}
+	
+	/**
+	 * 
+	 * @param ConnectionManagement $connMngt
+	 * @return string
+	 */
+	public static function getTnsString($connMngt)
+	{
+		$protocol = $connMngt->getExtraParam("protocol");
+		$protocol = ($protocol == "") ? 'TCP' : $protocol;
+		
+		$port = $connMngt->getPort();
+		$port = ($port == "") ? 1521 : $port;
+		
+		$svcName = $connMngt->getDatabase();
+		
+		$host = $connMngt->getServer();
+		
+		$tns = 
+			"(DESCRIPTION = " .
+			"	(ADDRESS = (PROTOCOL = $protocol)(HOST = $host)(PORT = $port)) " .
+			"		(CONNECT_DATA = (SERVICE_NAME = $svcName)) " .
+			")";
+		
+		return $tns;
 	}
 	
 	public function __destruct() 
