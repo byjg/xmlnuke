@@ -99,6 +99,7 @@ class DBSQLRelayDriver implements IDBDriver
 			throw new DatasetException(sqlrcur_errorMessage($cur));
 		}
 
+		sqlrcur_lowerCaseColumnNames($cur);
 		return $cur;
 	}
 
