@@ -88,6 +88,7 @@ class Oci8Iterator extends GenericIterator
 			$row = oci_fetch_array($this->_cursor, OCI_ASSOC+OCI_RETURN_NULLS);
 			if ($row)
 			{
+				$row = array_change_key_case($row, CASE_LOWER);
 				$sr = new SingleRow($row); // ForceUTF8\Encoding::toUtf8($row);
 
 				$this->_currentRow++;

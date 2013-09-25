@@ -81,6 +81,7 @@ class DBPDODriver implements IDBDriver
 
 		// Set Specific Attributes
 		$this->_db->setAttribute ( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+		$this->_db->setAttribute ( PDO::ATTR_CASE, PDO::CASE_LOWER );
 		if ($this->_connectionManagement->getDriver() == "mysql")
 		{
 			$this->_db->setAttribute ( PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true );
