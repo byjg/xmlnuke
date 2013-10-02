@@ -27,6 +27,11 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+namespace Xmlnuke\Core\Admin;
+
+use Xmlnuke\Core\Enum\MenuGroup;
+use Xmlnuke\Core\Module\BaseModule;
+
 /**
  * Template pattern for xmlnuke administration modules 
  * @package xmlnuke

@@ -35,7 +35,9 @@
  */
 namespace Xmlnuke\Core\Classes;
 
-class  XmlnukeCollection
+use Xmlnuke\Core\Enum\XMLTransform;
+
+class XmlnukeCollection
 {
 	/**
 	 * @var array

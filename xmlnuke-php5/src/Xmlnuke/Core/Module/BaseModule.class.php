@@ -33,6 +33,9 @@ namespace Xmlnuke\Core\Module;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Processor\XMLCacheFilenameProcessor;
 use Xmlnuke\Core\Classes\XmlnukeDocument;
+use Xmlnuke\Core\Classes\XmlnukeManageUrl;
+use Xmlnuke\Core\Enum\URLTYPE;
+use Xmlnuke\Core\Enum\SSLAccess;
 
 /**
  * BaseModule class is the base for custom module implementation.

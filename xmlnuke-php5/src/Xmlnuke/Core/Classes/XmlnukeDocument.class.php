@@ -38,7 +38,9 @@
  */
 namespace Xmlnuke\Core\Classes;
 
-class  XmlnukeDocument extends XmlnukeCollection implements IXmlnukeDocument 
+use Xmlnuke\Core\Enum\MenuGroup;
+
+class XmlnukeDocument extends XmlnukeCollection implements IXmlnukeDocument 
 {
 	/**
 	@var string
