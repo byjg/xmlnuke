@@ -27,10 +27,12 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+namespace Xmlnuke\Core\AnyDataset;
+
 /**
  * @package xmlnuke
  */
-abstract class GenericIterator implements IIterator, Iterator
+abstract class GenericIterator implements IIterator, \Iterator
 {
 	public function hasNext()
 	{

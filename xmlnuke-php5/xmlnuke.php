@@ -28,19 +28,19 @@
 	require_once("xmlnuke.inc.php");
 	#############################################
 
-	$context = Context::getInstance();
+	$context = Xmlnuke\Core\Engine\Context::getInstance();
 
 	$selectNodes = $context->ContextValue("xpath");
 	$alternateFilename = str_replace(".", "_", ($context->ContextValue("fn") != "" ? $context->ContextValue("fn") : ($context->getModule() != "" ? $context->getModule() : $context->getXml())));
 	$extraParam = array();
 	$output = $context->getOutputFormat();
 
-	if ($output == XmlNukeEngine::OUTPUT_XML)
+	if ($output == Xmlnuke\Core\Engine\XmlNukeEngine::OUTPUT_XML)
 	{
 		header("Content-Type: text/xml; charset=utf-8");
 		header("Content-Disposition: inline; filename=\"{$alternateFilename}.xml\";");
 	}
-	elseif ($output == XmlNukeEngine::OUTPUT_JSON)
+	elseif ($output == Xmlnuke\Core\Engine\XmlNukeEngine::OUTPUT_JSON)
 	{
 		$extraParam["json_function"] = $context->Value("jsonfn");
 		header("Content-Type: application/json; charset=utf-8");
@@ -70,7 +70,7 @@
 		}
 	}
 	
-	$engine = new XmlNukeEngine($context, $output, $selectNodes, $extraParam);
+	$engine = new Xmlnuke\Core\Engine\XmlNukeEngine($context, $output, $selectNodes, $extraParam);
 	if ($context->ContextValue("remote")!="")
 	{
 		echo $engine->TransformDocumentRemote($context->ContextValue("remote"));
@@ -91,7 +91,7 @@
 	
 	function processModule($engine)
 	{
-		$context = Context::getInstance();
+		$context = Xmlnuke\Core\Engine\Context::getInstance();
 		
 		//IModule
 		$module = null;

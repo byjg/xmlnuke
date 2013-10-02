@@ -31,6 +31,8 @@
 /**
  * @package xmlnuke
  */
+namespace Xmlnuke\Core\AnyDataset;
+
 class Oci8Iterator extends GenericIterator
 {
 	const RECORD_BUFFER = 50;

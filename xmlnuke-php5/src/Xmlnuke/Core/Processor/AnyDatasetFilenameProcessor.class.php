@@ -28,12 +28,14 @@
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+namespace Xmlnuke\Core\Processor;
+
+use Xmlnuke\Util\FileUtil;
+
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Processor;
-
-class AnydatasetFilenameProcessor extends AnydatasetBaseFilenameProcessor
+class AnyDatasetFilenameProcessor extends AnyDatasetBaseFilenameProcessor
 {
 	/**
 	 *

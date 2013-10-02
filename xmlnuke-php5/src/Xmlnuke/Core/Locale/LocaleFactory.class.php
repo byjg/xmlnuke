@@ -36,6 +36,11 @@
  */
 namespace Xmlnuke\Core\Locale;
 
+use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use Xmlnuke\Util\FileUtil;
+use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use Xmlnuke\Core\Enum\Relation;
+
 class LocaleFactory
 {
 	

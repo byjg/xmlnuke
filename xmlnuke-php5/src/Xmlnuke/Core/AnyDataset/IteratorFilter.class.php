@@ -33,6 +33,8 @@
  */
 namespace Xmlnuke\Core\AnyDataset;
 
+use Xmlnuke\Core\Enum\Relation;
+
 class IteratorFilter
 {
 
