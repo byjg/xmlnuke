@@ -27,6 +27,11 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+namespace Xmlnuke\Core\Engine;
+
+use Xmlnuke\Util\FileUtil;
+use Xmlnuke\Core\Processor\XMLFilenameProcessor;
+
 /**
  * Locate and create custom user modules.
  * All modules must follow these rules:
@@ -39,8 +44,6 @@
  * 
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Engine;
-
 class ModuleFactory
 {
 	/**

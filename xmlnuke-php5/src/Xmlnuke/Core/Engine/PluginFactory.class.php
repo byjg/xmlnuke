@@ -62,7 +62,7 @@ class PluginFactory
 	{
 		if (class_exists($className, defined("AUTOLOAD")))
 		{
-			$reflection = new ReflectionClass($className);
+			$reflection = new \ReflectionClass($className);
 
 			if ($reflection->isInstantiable())
 			{
@@ -142,7 +142,7 @@ class PluginFactory
 		}
 		
 		// Instantiate and Execute Contructor		
-		$class = new ReflectionClass($className);
+		$class = new \ReflectionClass($className);
 		if ($param5 != null)
 		{
 			$plugin = $class->newInstance($param1, $param2, $param3, $param4, $param5);
