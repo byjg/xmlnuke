@@ -28,6 +28,8 @@
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+namespace Xmlnuke\Core\Module;
+
 /**
  * BaseModule class is the base for custom module implementation.
  * This class uses cache, save to disk and other functionalities.
