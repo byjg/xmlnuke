@@ -33,6 +33,8 @@
  */
 namespace Xmlnuke\Core\Engine;
 
+use Xmlnuke\Core\Processor\XMLCacheFilenameProcessor;
+
 class XmlNukeEngine
 {
 	const OUTPUT_TRANSFORMED_DOC = "-";

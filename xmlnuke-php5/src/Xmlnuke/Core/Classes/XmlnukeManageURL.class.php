@@ -32,22 +32,6 @@
  */
 namespace Xmlnuke\Core\Classes;
 
-class  URLTYPE
-{
-	const ADMINENGINE = 'admin:engine';
-	const ADMIN = 'admin:';
-	const ENGINE = 'engine:xmlnuke';
-	const MODULE = 'module:';
-	const HTTP = 'http://';
-	const FTP = 'ftp://';
-	const JAVASCRIPT = 'javascript:';
-}
-
-/**
- * @package xmlnuke
- */
-namespace Xmlnuke\Core\Classes;
-
 class  XmlnukeManageUrl
 {
 	/**
