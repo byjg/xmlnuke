@@ -27,17 +27,19 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-/**
-* Generic functions to manipulate XML nodes.
-* Note: This classes didn't inherits from DOMDocument or DOMNode
-*/
+namespace Xmlnuke\Util;
+
 define('XMLUTIL_OPT_DONT_PRESERVE_WHITESPACE', 0x01);
 define('XMLUTIL_OPT_FORMAT_OUTPUT', 0x02);
 define('XMLUTIL_OPT_DONT_FIX_AMPERSAND', 0x04);
-	
-	
-namespace Xmlnuke\Util;
 
+use Xmlnuke\Core\Exception\XmlUtilException;
+use Xmlnuke\Core\Exception\PHPWarning;
+
+/**
+* Generic functions to manipulate XML nodes.
+* Note: This classes didn't inherits from \DOMDocument or \DOMNode
+*/
 class XmlUtil
 {
 	/**
@@ -56,11 +58,11 @@ class XmlUtil
 	/**
 	* Create an empty XmlDocument object with some default parameters
 	*
-	* @return DOMDocument object
+	* @return \DOMDocument object
 	*/
 	public static function CreateXmlDocument($docOptions = 0)
 	{
-		$xmldoc = new DOMDocument(self::XML_VERSION , self::XML_ENCODING );
+		$xmldoc = new \DOMDocument(self::XML_VERSION , self::XML_ENCODING );
 		$xmldoc->preserveWhiteSpace = ($docOptions & XMLUTIL_OPT_DONT_PRESERVE_WHITESPACE) != XMLUTIL_OPT_DONT_PRESERVE_WHITESPACE;
 		if (($docOptions & XMLUTIL_OPT_FORMAT_OUTPUT) == XMLUTIL_OPT_FORMAT_OUTPUT)
 		{
@@ -74,7 +76,7 @@ class XmlUtil
 	/**
 	* Create a XmlDocument object from a file saved on disk.
 	* @param string $filename
-	* @return DOMDocument
+	* @return \DOMDocument
 	*/
 	public static function CreateXmlDocumentFromFile($filename, $docOptions = XMLUTIL_OPT_DONT_FIX_AMPERSAND)
 	{
@@ -87,9 +89,9 @@ class XmlUtil
 	}
 
 	/**
-	* Create XML DOMDocument from a string
+	* Create XML \DOMDocument from a string
 	* @param string $xml - XML string document
-	* @return DOMDocument
+	* @return \DOMDocument
 	*/
 	public static function CreateXmlDocumentFromStr($xml, $checkUTF8 = true, $docOptions = XMLUTIL_OPT_DONT_FIX_AMPERSAND)
 	{
@@ -107,9 +109,9 @@ class XmlUtil
 	}
 
 	/**
-	* Create a DOMDocumentFragment from a node
-	* @param DOMNode $node
-	* @return DOMDocument
+	* Create a \DOMDocumentFragment from a node
+	* @param \DOMNode $node
+	* @return \DOMDocument
 	*/
 	public static function CreateDocumentFromNode($node, $docOptions = 0)
 	{
@@ -128,7 +130,7 @@ class XmlUtil
 		$root = $doc->documentElement;
 
 		#-- 
-		$xpath = new DOMXPath($doc);
+		$xpath = new \DOMXPath($doc);
 		foreach( $xpath->query('namespace::*', $root) as $node ) 
 		{
 			XmlUtil::$XMLNSPrefix[$hash][$node->prefix] = $node->nodeValue;
@@ -186,15 +188,15 @@ class XmlUtil
 
 	/**
 	 *
-	 * @param DOMDocument $document
+	 * @param \DOMDocument $document
 	 * @param string $filename
 	 * @throws XmlUtilException
 	 */
 	public static function SaveXmlDocument($document, $filename)
 	{
-		if (!($document instanceof DOMDocument))
+		if (!($document instanceof \DOMDocument))
 		{
-			throw new XmlUtilException("Object isn't a DOMDocument.", 255); // Document não é um documento XML
+			throw new XmlUtilException("Object isn't a \DOMDocument.", 255); // Document não é um documento XML
 		}
 		else
 		{
@@ -210,7 +212,7 @@ class XmlUtil
 	/**
 	 * Get document without xml parameters
 	 *
-	 * @param DOMDocument $xml
+	 * @param \DOMDocument $xml
 	 * @return string
 	 */
 	public static function GetFormattedDocument($xml)
@@ -251,7 +253,7 @@ class XmlUtil
 	/**
 	* Add node to specific XmlNode from file existing on disk
 	*
-	* @param DOMNode $rootNode XmlNode receives node
+	* @param \DOMNode $rootNode XmlNode receives node
 	* @param FilenameProcessor $filename File to import node
 	* @param string $nodetoadd Node to be added
 	*/
@@ -268,7 +270,7 @@ class XmlUtil
 
 		try
 		{
-			//DOMDocument
+			// \DOMDocument
 			$source = $filename->getContext()->getXMLDataBase()->getDocument($filename->FullQualifiedName(),null);
 
 			$nodes = $source->getElementsByTagName($nodetoadd)->item(0)->childNodes;
@@ -288,8 +290,8 @@ class XmlUtil
 	/**
 	* Attention: NODE MUST BE AN ELEMENT NODE!!!
 	*
-	* @param DOMElement $source
-	* @param DOMElement $nodeToAdd
+	* @param \DOMElement $source
+	* @param \DOMElement $nodeToAdd
 	*/
 	public static function AddNodeFromNode($source, $nodeToAdd)
 	{
@@ -309,10 +311,10 @@ class XmlUtil
 	/**
 	* Append child node from specific node and add text
 	*
-	* @param DOMNode $rootNode Parent node
+	* @param \DOMNode $rootNode Parent node
 	* @param string $nodeName Node to add string
 	* @param string $nodeText Text to add string
-	* @return DOMElement
+	* @return \DOMElement
 	*/
 	public static function CreateChild($rootNode, $nodeName, $nodeText="", $uri="")
 	{
@@ -328,10 +330,10 @@ class XmlUtil
 	/**
 	* Create child node on the top from specific node and add text
 	*
-	* @param DOMNode $rootNode Parent node
+	* @param \DOMNode $rootNode Parent node
 	* @param string $nodeName Node to add string
 	* @param string $nodeText Text to add string
-	* @return DOMElement
+	* @return \DOMElement
 	*/
 	public static function CreateChildBefore($rootNode, $nodeName, $nodeText, $position = 0)
 	{
@@ -350,7 +352,7 @@ class XmlUtil
 	/**
 	* Add text to node
 	*
-	* @param DOMNode $rootNode Parent node
+	* @param \DOMNode $rootNode Parent node
 	* @param string $text Text to add String
 	* @param bool $escapeChars (True create CData instead Text node)
 	*/
@@ -374,10 +376,10 @@ class XmlUtil
 	/**
 	* Add a attribute to specific node
 	*
-	* @param DOMElement $rootNode Node to receive attribute
+	* @param \DOMElement $rootNode Node to receive attribute
 	* @param string $name Attribute name string
 	* @param string $value Attribute value string
-	* @return DOMElement
+	* @return \DOMElement
 	*/
 	public static function AddAttribute($rootNode, $name, $value)
 	{
@@ -391,12 +393,12 @@ class XmlUtil
 	}
 	
 	/**
-	 * Returns a DOMNodeList from a relative xPath from other DOMNode
+	 * Returns a \DOMNodeList from a relative xPath from other \DOMNode
 	 *
 	 * @param node $pNode
 	 * @param string $xPath
 	 * @param array $arNamespace
-	 * @return DOMNodeList
+	 * @return \DOMNodeList
 	 */
 	public static function selectNodes($pNode, $xPath, $arNamespace = null) // <- Retorna N&#65533;!
 	{
@@ -406,7 +408,7 @@ class XmlUtil
 		}
 
 		$owner = XmlUtil::getOwnerDocument($pNode);
-		$xp = new DOMXPath($owner);
+		$xp = new \DOMXPath($owner);
 		XmlUtil::registerNamespaceForFilter($xp, $arNamespace);
 		$rNodeList = $xp->query($xPath, $pNode);
 
@@ -414,12 +416,12 @@ class XmlUtil
 	}
 
 	/**
-	 * Returns a DOMElement from a relative xPath from other DOMNode
+	 * Returns a \DOMElement from a relative xPath from other \DOMNode
 	 * 
-	 * @param DOMElement $pNode
+	 * @param \DOMElement $pNode
 	 * @param string $xPath - xPath string format
 	 * @param array $arNamespace
-	 * @return DOMElement
+	 * @return \DOMElement
 	 */
 	public static function selectSingleNode($pNode, $xPath, $arNamespace = null) // <- Retorna
 	{
@@ -430,13 +432,13 @@ class XmlUtil
 		if($pNode->nodeType != XML_DOCUMENT_NODE)
 		{
 			$owner = XmlUtil::getOwnerDocument($pNode);
-			$xp = new DOMXPath($owner);
+			$xp = new \DOMXPath($owner);
 			XmlUtil::registerNamespaceForFilter($xp, $arNamespace);
 			$rNodeList = $xp->query("$xPath", $pNode);
 		}
 		else
 		{
-			$xp = new DOMXPath($pNode);
+			$xp = new \DOMXPath($pNode);
 			XmlUtil::registerNamespaceForFilter($xp, $arNamespace);
 			$rNodeList = $xp->query("//$xPath");
 		}
@@ -446,7 +448,7 @@ class XmlUtil
 	
 	/**
 	 *
-	 * @param DOMXPath $xpath
+	 * @param \DOMXPath $xpath
 	 * @param array $arNamespace 
 	 */
 	public static function registerNamespaceForFilter($xpath, $arNamespace)
@@ -462,9 +464,9 @@ class XmlUtil
 
 	/**
 	* Concat a xml string in the node
-	* @param DOMNode $node
+	* @param \DOMNode $node
 	* @param string $xmlstring
-	* @return DOMNode
+	* @return \DOMNode
 	*/
 	public static function innerXML($node, $xmlstring)
 	{
@@ -518,8 +520,8 @@ class XmlUtil
 
 	/**
 	* Return the tree nodes in a simple text
-	* @param DOMNode $node
-	* @return DOMNode
+	* @param \DOMNode $node
+	* @return \DOMNode
 	*/
 	public static function innerText($node)
 	{
@@ -529,8 +531,8 @@ class XmlUtil
 
 	/**
 	* Return the tree nodes in a simple text
-	* @param DOMNode $node
-	* @return DOMNode
+	* @param \DOMNode $node
+	* @return \DOMNode
 	*/
 	public static function CopyChildNodesFromNodeToString($node)
 	{
@@ -554,7 +556,7 @@ class XmlUtil
 
 	/**
 	* Return the part node in xml document
-	* @param DOMNode $node
+	* @param \DOMNode $node
 	* @return string
 	*/
 	public static function SaveXmlNodeToString($node)
@@ -587,7 +589,7 @@ class XmlUtil
 	/**
 	 * Remove a specific node
 	 *
-	 * @param DOMNode $node
+	 * @param \DOMNode $node
 	 */
 	public static function removeNode($node)
 	{
@@ -596,9 +598,9 @@ class XmlUtil
 	}
 	
 	/**
-	 * Remove a node specified by your tag name. You must pass a DOMDocument ($node->ownerDocument);
+	 * Remove a node specified by your tag name. You must pass a \DOMDocument ($node->ownerDocument);
 	 *
-	 * @param DOMDocument $domdocument
+	 * @param \DOMDocument $domdocument
 	 * @param string $tagname
 	 * @return bool 
 	 */
@@ -624,7 +626,7 @@ class XmlUtil
 			return XmlUtil::xml2Array((array)$arr, $func);
 		}
 		
-		if (($arr instanceof DOMElement) || ($arr instanceof DOMDocument))
+		if (($arr instanceof \DOMElement) || ($arr instanceof \DOMDocument))
 		{
 			return XmlUtil::xml2Array((array)simplexml_import_dom($arr), $func);
 		}
@@ -635,7 +637,7 @@ class XmlUtil
 			foreach($arr AS $key => $value) 
 			{ 
 				$newArr[$key] = 
-					(is_array($value) || ($value instanceof DOMElement) || ($value instanceof DOMDocument) || ($value instanceof SimpleXMLElement) ? XmlUtil::xml2Array($value, $func) : (
+					(is_array($value) || ($value instanceof \DOMElement) || ($value instanceof \DOMDocument) || ($value instanceof SimpleXMLElement) ? XmlUtil::xml2Array($value, $func) : (
 							!empty($func) ? $func($value) : $value
 						)
 					); 
@@ -734,14 +736,14 @@ class XmlUtil
 
 	/**
 	 *
-	 * @param DOMNode $domnode
+	 * @param \DOMNode $domnode
 	 * @param type $jsonFunction
 	 * @return type
 	 */
 	public static function xml2json($domnode, $jsonFunction = "")
 	{
-		if (!($domnode instanceof DOMNode))
-			throw new InvalidArgumentException("xml2json requires a DOMNode descendant");
+		if (!($domnode instanceof \DOMNode))
+			throw new InvalidArgumentException("xml2json requires a \DOMNode descendant");
 
 		$xml = simplexml_import_dom($domnode);
 		
@@ -764,18 +766,18 @@ class XmlUtil
 
 	/**
 	 *
-	 * @param DOMNode $node
-	 * @return DOMDocument
+	 * @param \DOMNode $node
+	 * @return \DOMDocument
 	 * @throws XmlUtilException
 	 */
 	protected static function getOwnerDocument( $node )
 	{
-		if (!($node instanceof DOMNode))
+		if (!($node instanceof \DOMNode))
 		{
-			throw new XmlUtilException("Object isn't a DOMNode. Found object class type: " . get_class($node), 257);
+			throw new XmlUtilException("Object isn't a \DOMNode. Found object class type: " . get_class($node), 257);
 		}
 
-		if ($node instanceof DOMDocument)
+		if ($node instanceof \DOMDocument)
 			return $node;
 		else
 			return $node->ownerDocument;
@@ -783,7 +785,7 @@ class XmlUtil
 
 	/**
 	 *
-	 * @param DOMNode $node
+	 * @param \DOMNode $node
 	 * @param string $name
 	 * @param string $uri
 	 * @return type
@@ -813,7 +815,7 @@ class XmlUtil
 
 		if($newnode === false)
 		{
-			throw new XmlUtilException("Failed to create DOMElement.", 258);
+			throw new XmlUtilException("Failed to create \DOMElement.", 258);
 		}
 		return $newnode;
 	}

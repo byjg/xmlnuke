@@ -30,6 +30,8 @@
 /**
  * @package xmlnuke
  */
+namespace Xmlnuke\Core\Database;
+
 interface IDbFunctions
 {
 

@@ -31,6 +31,8 @@
 /**
  * @package xmlnuke
  */
+namespace Xmlnuke\Core\Database;
+
 class DBPDODriver
 {	
 	/**

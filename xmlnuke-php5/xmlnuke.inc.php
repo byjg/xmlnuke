@@ -13,6 +13,9 @@
 # xdebug_enable();
 ##########################
 
+use Xmlnuke\Core\Engine\AutoLoad;
+use Xmlnuke\Core\Engine\Context;
+
 ob_start();
 session_start();
 
@@ -103,50 +106,25 @@ if (!file_exists("config.inc.php"))
 require_once("config.inc.php");
 if (!class_exists('config')) { header("Location: check_install.php"); exit(); }
 
-if (!defined("AUTOLOAD"))
-{
-	/* Base required files. The most of another required files is in module.basemodule.class.php */
-	require_once(PHPXMLNUKEDIR . "src/enum.inc.php");
-	require_once(PHPXMLNUKEDIR . "src/cache.inc.php");
-	require_once(PHPXMLNUKEDIR . "src/processor.inc.php");
-	require_once(PHPXMLNUKEDIR . "src/engine.inc.php");
-	require_once(PHPXMLNUKEDIR . "src/xmlnukedb.inc.php");
-	require_once(PHPXMLNUKEDIR . "src/anydataset.inc.php");
-	require_once(PHPXMLNUKEDIR . "src/international.inc.php");
+// Activate AutoLoad
+require_once PHPXMLNUKEDIR . "src/Xmlnuke/Core/Engine/Autoload.class.php";
+$autoload = new AutoLoad();
 
-	require_once(PHPXMLNUKEDIR . "src/classes.inc.php");
-	require_once(PHPXMLNUKEDIR . "src/database.inc.php");
-	require_once(PHPXMLNUKEDIR . "src/util.inc.php");
-	require_once(PHPXMLNUKEDIR . "src/admin.inc.php");
+// Start Generic Classes
+require_once PHPXMLNUKEDIR . "src/Xmlnuke/Util/Conversion.class.php";
 
-	require_once(PHPXMLNUKEDIR . "src/oauth.inc.php");
-	require_once(PHPXMLNUKEDIR . "src/aws.inc.php");
+// Error Handler
+$whoops = new Whoops\Run();
+$whoops->pushHandler(new Whoops\Handler\JsonResponseHandler());
 
-	require_once(PHPXMLNUKEDIR . "src/modules.inc.php");
-}
+if (Context::getInstance()->getDevelopmentStatus())
+	$whoops->pushHandler(new Whoops\Handler\PrettyPageHandler());
 else
-{
-	// Activate AutoLoad
-	require_once PHPXMLNUKEDIR . "src/com.xmlnuke/engine/engine.autoload.class.php";
-	$autoload = new AutoLoad();
+	$whoops->pushHandler(new Whoops\Handler\MinimalHandler());
 
-	// Start Generic Classes
-	require_once PHPXMLNUKEDIR . "src/com.xmlnuke/enum/enum.class.php";
-	require_once PHPXMLNUKEDIR . "src/util/util.conversion.class.php";
-	require_once PHPXMLNUKEDIR . "src/util/util.exceptions.class.php";
+// Set Whoops as the default error and exception handler used by PHP:
+$whoops->register(); 	
 
-	// Error Handler
-	$whoops = new Whoops\Run();
-	$whoops->pushHandler(new Whoops\Handler\JsonResponseHandler());
-	
-	if (Context::getInstance()->getDevelopmentStatus())
-		$whoops->pushHandler(new Whoops\Handler\PrettyPageHandler());
-	else
-		$whoops->pushHandler(new Whoops\Handler\MinimalHandler());
-
-	// Set Whoops as the default error and exception handler used by PHP:
-	$whoops->register(); 	
-}
 
 /* Fix bad things in PHP */
 fixbadthingsinphp();

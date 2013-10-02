@@ -27,6 +27,11 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
+namespace Xmlnuke\Core\AnyDataset;
+
+use Xmlnuke\Util\FileUtil;
+use Xmlnuke\Util\XmlUtil;
+
 /**
  * AnyDataSet is a simple way to store data using only XML file.
  * Your structure is hierarquical and each "row" contains "fields" but these structure can vary for each row.
@@ -59,9 +64,6 @@
  * @package xmlnuke
  *
  */
-
-namespace Xmlnuke\Core\AnyDataset;
-
 class AnyDataSet
 {
 	/**

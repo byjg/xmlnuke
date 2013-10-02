@@ -27,9 +27,10 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
-/**
- * @package xmlnuke
- */
+namespace Xmlnuke\Core\Processor;
+
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Util\FileUtil;
 
 /**
  * FilenameProcessor is the class who process the Single argument filename (example: home or page)

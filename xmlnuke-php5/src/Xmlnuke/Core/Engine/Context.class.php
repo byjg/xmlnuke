@@ -35,6 +35,14 @@ namespace Xmlnuke\Core\Engine;
 
 use Xmlnuke\Core\Classes\BaseSingleton;
 use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Util\FileUtil;
+use Xmlnuke\Core\Locale\LocaleFactory;
+use Xmlnuke\XmlFS\XmlNukeDB;
+use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
+use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use Xmlnuke\Core\Enum\Relation;
+use Xmlnuke\Core\Processor\AnydatasetSetupFilenameProcessor;
 
 class Context extends BaseSingleton
 {
@@ -123,7 +131,7 @@ class Context extends BaseSingleton
 	*/
 	protected function __construct()
 	{
-		$valuesConfig = Config::getValuesConfig();
+		$valuesConfig = \config::getValuesConfig();
 
 		if (strpos($_SERVER["SERVER_SOFTWARE"], 'nginx') !== false)
 			$this->_PHP_SELF = 'DOCUMENT_URI';

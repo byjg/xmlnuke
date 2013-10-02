@@ -1,12 +1,11 @@
 <?php
-
 /*
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  *  Copyright:
  *
  *  XMLNuke: A Web Development Framework based on XML.
  *
- *  Main Specification and Implementation: Joao Gilberto Magalhaes, joao at byjg dot com
+ *  Main Specification: Joao Gilberto Magalhaes, joao at byjg dot com
  *
  *  This file is part of XMLNuke project. Visit http://www.xmlnuke.com
  *  for more information.
@@ -28,20 +27,20 @@
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+namespace Xmlnuke\Core\Enum;
+
 /**
+ * Structure to represent the users in XMLNuke
  * @package xmlnuke
  */
-interface IDBDriver
+class UserTable
 {
-	function getIterator($sql, $array = null);
-	function getScalar($sql, $array = null);
-	function getAllFields($tablename);	
-	function executeSql($sql, $array = null);
-	
-	function beginTransaction();
-	function commitTransaction();
-	function rollbackTransaction();
-	
-	function getDbConnection();
-	
+	public $Table;
+	public $Id;
+	public $Name ;
+	public $Email;
+	public $Username ;
+	public $Password ;
+	public $Created;
+	public $Admin ;
 }
