@@ -119,7 +119,7 @@ class  XmlInputCheck extends XmlnukeDocumentObject
 
 	/**
 	*@desc Contains specific instructions to generate all XML informations-> This method is processed only one time-> Usually is the last method processed->
-	*@param DOMNode $current
+	*@param \DOMNode $current
 	*@return void
 	*/
 	public function generateObject($current)

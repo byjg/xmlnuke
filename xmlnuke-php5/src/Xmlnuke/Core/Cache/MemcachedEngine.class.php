@@ -30,7 +30,11 @@
 
 namespace Xmlnuke\Core\Cache;
 
-class  MemCachedEngine extends BaseSingleton implements ICacheEngine
+use Xmlnuke\Core\Classes\BaseSingleton;
+use Xmlnuke\Core\Engine\Context;
+
+
+class  MemcachedEngine extends BaseSingleton implements ICacheEngine
 {
 	/**
 	 *

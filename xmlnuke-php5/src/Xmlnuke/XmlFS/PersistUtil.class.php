@@ -228,7 +228,7 @@ class PersistUtil
 
 	}
 
-	//Parameters : string $documentName, DOMDocument $xml, BTree $btree
+	//Parameters : string $documentName, \DOMDocument $xml, BTree $btree
 	public function saveDocument($documentName, $xml, $btree)
 	{	
 		$btree = BTreeUtil::navigateNodes($xml->documentElement, $documentName."#/", $btree);

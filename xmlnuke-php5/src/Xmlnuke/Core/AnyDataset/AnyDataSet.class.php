@@ -152,7 +152,7 @@ class AnyDataSet
 
 	/**
 	 *@access public
-	 *@return DOMDocument - XmlDocument object
+	 *@return \DOMDocument - XmlDocument object
 	 *@desc Returns the AnyDataSet XmlDocument representive object
 	 */
 	public function getDomObject()

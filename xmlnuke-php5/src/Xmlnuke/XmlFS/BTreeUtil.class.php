@@ -178,7 +178,7 @@ class BTreeUtil
 	}
 
 	/**
-	*@param DOMNode $node
+	*@param \DOMNode $node
 	*@param string $xpath
 	*@param BTree $btree
 	*@return BTree

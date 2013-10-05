@@ -50,7 +50,7 @@ class  XmlInputLabelObjects extends XmlnukeCollection implements IXmlnukeDocumen
 	
 	/**
 	*@desc Generate page, processing yours childs.
-	*@param DOMNode $current
+	*@param \DOMNode $current
 	*@return void
 	*/
 	public function generateObject($current)

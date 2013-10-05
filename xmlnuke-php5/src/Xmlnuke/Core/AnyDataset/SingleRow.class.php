@@ -36,8 +36,8 @@ namespace Xmlnuke\Core\AnyDataset;
 class SingleRow
 {
 	/**
-	 * DOMNode represents a SingleRow
-	 * @var DOMNode
+	 * \DOMNode represents a SingleRow
+	 * @var \DOMNode
 	 */
 	private $_node = null;
 
@@ -235,8 +235,8 @@ class SingleRow
 	}
 
 	/**
-	* Get the DOMNode row objet
-	* @return DOMNode
+	* Get the \DOMNode row objet
+	* @return \DOMNode
 	*/
 	public function getDomObject()
 	{

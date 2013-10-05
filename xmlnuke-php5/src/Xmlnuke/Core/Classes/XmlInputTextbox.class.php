@@ -255,7 +255,7 @@ class  XmlInputTextBox extends XmlInputValidate
 	}
 	/**
 	*@desc Generate page, processing yours childs.
-	*@param DOMNode $current
+	*@param \DOMNode $current
 	*@return function
 	*/
 	public function generateObject($current)

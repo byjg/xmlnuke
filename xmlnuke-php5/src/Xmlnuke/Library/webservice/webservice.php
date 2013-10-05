@@ -344,7 +344,7 @@ abstract class Services_Webservice
     private function handleWSDL()
     {
         header('Content-Type: text/xml');
-        $this->wsdl = new DOMDocument('1.0', 'utf-8');
+        $this->wsdl = new \DOMDocument('1.0', 'utf-8');
         $this->createWSDL_definitions();
         $this->createWSDL_types();
         $this->createWSDL_messages();
@@ -365,7 +365,7 @@ abstract class Services_Webservice
     private function handleDISCO()
     {
         header('Content-Type: text/xml');
-        $this->disco = new DOMDocument('1.0', 'utf-8');
+        $this->disco = new \DOMDocument('1.0', 'utf-8');
         $disco_discovery = $this->disco->createElement('discovery');
         $disco_discovery->setAttribute('xmlns:xsi', self::SOAP_XML_SCHEMA_INSTANCE);
         $disco_discovery->setAttribute('xmlns:xsd', self::SOAP_XML_SCHEMA_VERSION);

@@ -52,7 +52,7 @@ class AnyIterator extends GenericIterator
 
 	/**
 	*@access public
-	*@param DOMNodeList $list DOMNodeList
+	*@param \DOMNodeList $list \DOMNodeList
 	*@return void
 	*@desc Iterator constructor
 	*/

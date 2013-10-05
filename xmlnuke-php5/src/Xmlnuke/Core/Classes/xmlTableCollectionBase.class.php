@@ -57,7 +57,7 @@ abstract class XmlTableCollectionBase extends XmlnukeCollection implements IXmln
 	
 	/**
 	*@desc Generate page, processing yours childs.
-	*@param DOMNode $current
+	*@param \DOMNode $current
 	*@return void
 	*/
 	public function generateObject($current)

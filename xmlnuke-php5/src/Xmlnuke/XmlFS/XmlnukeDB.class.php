@@ -111,7 +111,7 @@ class XmlnukeDB
 	//Parameters : string $documentName, Stream $stream
 	public function saveDocumentStream($documentName, $stream)
 	{
-		$xml = new DOMDocument;
+		$xml = new \DOMDocument;
 		$xmlstr = FileUtil::QuickFileRead($this->_persistUtil->getFullFileName($documentName));
 		$this->saveDocumentStr($documentName, $xmlstr);
 	}
@@ -121,7 +121,7 @@ class XmlnukeDB
 		$xml = XmlUtil::CreateXmlDocumentFromStr($xmlstr);
 		self::saveDocumentXML($documentName, $xml);
 	}
-	//Parameters: string $documentName, DOMDocument $xml
+	//Parameters: string $documentName, \DOMDocument $xml
 	public function saveDocumentXML($documentName, $xml)	
 	{	
 		$this->checkBtreeIsLoaded();

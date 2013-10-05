@@ -39,7 +39,7 @@ class  XmlParagraphCollection extends XmlnukeCollection implements IXmlnukeDocum
 	/**
 	 * Generate page, processing yours childs.
 	 *
-	 * @param DOMNode $current
+	 * @param \DOMNode $current
 	 */
 	public function generateObject($current)
 	{

@@ -33,7 +33,7 @@
  */
 namespace Xmlnuke\Core\Classes;
 
-class  BaseSingleton
+class BaseSingleton
 {
 
 	protected static $instances;

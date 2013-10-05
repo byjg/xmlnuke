@@ -44,7 +44,7 @@ class  XmlnukeMediaItem extends XmlnukeCollection implements IXmlnukeDocumentObj
 
 	/**
 	*@desc Generate page, processing yours childs.
-	*@param DOMNode $current
+	*@param \DOMNode $current
 	*@return void
 	*/
 	protected function XmlnukeMediaItem($src, $thumb="", $title = "", $caption="", $width="", $height="")

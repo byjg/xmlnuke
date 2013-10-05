@@ -823,7 +823,7 @@ abstract class XmlnukeCrudBase extends XmlnukeDocumentObject implements IXmlnuke
 
 	/**
 	*@desc Contains specific instructions to generate all XML informations-> This method is processed only one time-> Usually is the last method processed->
-	*@param DOMNode $current DOMNode where the XML will be created->
+	*@param \DOMNode $current \DOMNode where the XML will be created->
 	*@return void
 	*/
 	public function generateObject($current)

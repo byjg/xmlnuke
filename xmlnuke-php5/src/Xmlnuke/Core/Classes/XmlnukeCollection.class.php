@@ -83,7 +83,7 @@ class XmlnukeCollection
 
 	/**
 	 * @desc Method for process all XMLNukedocumentObjects in array.
-	 * @param DOMNode $current
+	 * @param \DOMNode $current
 	 * @return void
 	 * @internal IXmlnukeDocumentObject $item
 	 */
@@ -122,7 +122,7 @@ class XmlnukeCollection
 	 *
 	 * @param type $current
 	 * @param type $model
-	 * @return DOMNode
+	 * @return \DOMNode
 	 */
 	protected static function CreateObjectFromModel($current, $model, $config)
 	{

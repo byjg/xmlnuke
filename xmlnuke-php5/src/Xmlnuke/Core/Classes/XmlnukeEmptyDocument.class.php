@@ -55,7 +55,7 @@ class  XmlnukeEmptyDocument extends XmlnukeCollection implements IXmlnukeDocumen
 		
 	/**
 	*@desc Generate page, processing yours childs using the parent.
-	*@return DOMDocument
+	*@return \DOMDocument
 	*/
 	public function makeDomObject()
 	{
