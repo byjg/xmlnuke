@@ -211,7 +211,11 @@ class ModuleFactory
 			if ( (empty($_SESSION["SESS_XMLNUKE_PHPLIBDIR"])) || ($context->getNoCache()) || ($context->getReset()) )
 			{
 				$phpLibDir = $context->ContextValue("xmlnuke.PHPLIBDIR");
-				if ($phpLibDir != "")
+				if (is_array($phpLibDir))
+				{
+					ModuleFactory::$_phpLibDir = $phpLibDir;
+				}
+				else if ($phpLibDir != "")
 				{
 					$phpLibDirArray = explode("|", $phpLibDir);
 					foreach ($phpLibDirArray as $phpLibItem)

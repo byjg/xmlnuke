@@ -791,7 +791,11 @@ class Context extends BaseSingleton
 		{
 			$this->_externalSiteArray = array();
 			$externalSiteDir = $this->ContextValue("xmlnuke.EXTERNALSITEDIR");
-			if ($externalSiteDir != "")
+			if (is_array($externalSiteDir))
+			{
+				$this->_externalSiteArray = $externalSiteDir;
+			}
+			else if ($externalSiteDir != "")
 			{
 				$externalSiteDirArray = explode("|", $externalSiteDir);
 				foreach ($externalSiteDirArray as $siteItem)
