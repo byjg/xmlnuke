@@ -138,7 +138,7 @@ class ParamProcessor
 		{
 			case "engine":
 				if ($arResult["host"][0] == "xmlnuke")
-					$result = $this->_context->UrlXmlNukeEngine() . $arResult["port"][0];
+					$result = $this->_context->UrlXmlnukeEngine() . $arResult["port"][0];
 				else
 					$result = "Unknow Engine " . $arResult["host"][0]; 
 				break;

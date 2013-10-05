@@ -272,7 +272,7 @@ namespace com.xmlnuke.admin
 			{
 				sitePath += util.FileUtil.Slash();
 			}
-			com.xmlnuke.db.XmlNukeDB repositorio = new com.xmlnuke.db.XmlNukeDB(hashedDir, sitePath + "xml", language, true);
+			com.xmlnuke.db.XmlnukeDB repositorio = new com.xmlnuke.db.XmlnukeDB(hashedDir, sitePath + "xml", language, true);
 			processor.XMLFilenameProcessor processorFile = new processor.XMLFilenameProcessor("index", context);
 			string index = processorFile.FullName("index", "", language) + processorFile.Extension();
 			string home = processorFile.FullName("home", "", language) + processorFile.Extension();

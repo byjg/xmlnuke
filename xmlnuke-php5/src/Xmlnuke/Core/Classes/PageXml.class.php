@@ -60,7 +60,7 @@ class  PageXml implements IXmlnukeDocument
 	*@return void
 	*@desc 
 	*PageXml Constructor. Empty page. and PageXml Constructor. Create from XML.
-	*PageXml Constructor. Create from file name and path. Do not use with XmlNukeDB repository.
+	*PageXml Constructor. Create from file name and path. Do not use with XmlnukeDB repository.
 	*/
 	public function PageXml($xmlfilename=null,$path=null, $strfilename=null)
 	{

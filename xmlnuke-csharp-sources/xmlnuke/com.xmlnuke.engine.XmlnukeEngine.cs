@@ -47,9 +47,9 @@ namespace com.xmlnuke.engine
     }
 
 	/// <summary>
-	/// XmlNukeEngine class use a Facade Design Pattern. This class call all of other xmlnuke classes and return the XML/XSL processed
+	/// XmlnukeEngine class use a Facade Design Pattern. This class call all of other xmlnuke classes and return the XML/XSL processed
 	/// </summary>
-	public class XmlNukeEngine
+	public class XmlnukeEngine
 	{
 		private engine.Context _context = null;
 
@@ -63,15 +63,15 @@ namespace com.xmlnuke.engine
 		/// ParamProcessor constructor. 
 		/// </summary>
 		/// <param name="context">The com.xmlnuke.engine.Context class</param>
-		public XmlNukeEngine(engine.Context context)
+		public XmlnukeEngine(engine.Context context)
 			: this(context, OutputResult.XHtml, "", "xmlnuke")
 		{ }
 
-		public XmlNukeEngine(engine.Context context, OutputResult outputResult, string extractNodes)
+		public XmlnukeEngine(engine.Context context, OutputResult outputResult, string extractNodes)
 			: this(context, outputResult, extractNodes, "xmlnuke")
 		{ }
 
-		public XmlNukeEngine(engine.Context context, OutputResult outputResult, string extractNodes, string extractNodesRoot)
+		public XmlnukeEngine(engine.Context context, OutputResult outputResult, string extractNodes, string extractNodesRoot)
 		{
 			this._context = context;
 			this._outputResult = outputResult;
@@ -435,12 +435,12 @@ namespace com.xmlnuke.engine
 			}
 		}
 
-		public static string ProcessModule(com.xmlnuke.engine.Context context, com.xmlnuke.engine.XmlNukeEngine engine)
+		public static string ProcessModule(com.xmlnuke.engine.Context context, com.xmlnuke.engine.XmlnukeEngine engine)
 		{
-			return XmlNukeEngine.ProcessModule(context, engine, context.Module);
+			return XmlnukeEngine.ProcessModule(context, engine, context.Module);
 		}
 
-		public static string ProcessModule(com.xmlnuke.engine.Context context, com.xmlnuke.engine.XmlNukeEngine engine, string moduleName)
+		public static string ProcessModule(com.xmlnuke.engine.Context context, com.xmlnuke.engine.XmlnukeEngine engine, string moduleName)
 		{
 			com.xmlnuke.module.IModule module = null;
 			try

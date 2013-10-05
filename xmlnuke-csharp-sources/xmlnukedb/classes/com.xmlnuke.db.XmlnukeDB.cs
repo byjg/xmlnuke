@@ -14,7 +14,7 @@ namespace com.xmlnuke.db
 	/// 	created by - Administrator
 	/// 	created on - 07/12/2003 17:42:08
 	/// </remarks>
-	public class XmlNukeDB  {
+	public class XmlnukeDB  {
 		
 		private BTree _btree;
 		private string _btreeDir;
@@ -24,10 +24,10 @@ namespace com.xmlnuke.db
 		/// <summary>
 		/// Default constructor - initializes all fields to default values
 		/// </summary>
-		public XmlNukeDB(bool hashedDir, string repositoryDir, string lang) : this(hashedDir, repositoryDir, lang, false)
+		public XmlnukeDB(bool hashedDir, string repositoryDir, string lang) : this(hashedDir, repositoryDir, lang, false)
 		{}
 		
-		public XmlNukeDB(bool hashedDir, string repositoryDir, string lang, bool createPath)
+		public XmlnukeDB(bool hashedDir, string repositoryDir, string lang, bool createPath)
 		{
 			this._persistUtil = new PersistUtil(repositoryDir, lang, createPath);
             this._persistUtil.HashedDir = hashedDir;

@@ -247,7 +247,7 @@ class ManageXML extends BaseAdminModule
 			{
 				if ($key != strtolower($this->_context->Language()->getName()));
 				{
-					$repositorio = 	new XmlNukeDB($this->_context->XmlHashedDir(), $this->_context->XmlPath(), $key);
+					$repositorio = 	new XmlnukeDB($this->_context->XmlHashedDir(), $this->_context->XmlPath(), $key);
 					$fileToCheck = $processorFile->FullName($id, "", $key) . $processorFile->Extension();
 					if ($repositorio->existsDocument($fileToCheck))
 					{

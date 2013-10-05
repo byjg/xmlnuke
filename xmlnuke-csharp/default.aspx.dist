@@ -49,7 +49,7 @@
 
 	string getUrlEnterSite(object site) 
 	{
-		string targetPage = context.UrlXmlNukeEngine + "?xml=home";
+		string targetPage = context.UrlXmlnukeEngine + "?xml=home";
 
 		return  targetPage + "&site=" + site;
 	}

@@ -29,7 +29,7 @@
 
 namespace Xmlnuke\XmlFS;
 
-class XmlNukeDB
+class XmlnukeDB
 {
 	private $_btree;
 	private $_btreeDir;
@@ -47,9 +47,9 @@ class XmlNukeDB
 	 * @param string $repositoryDir
 	 * @param string $lang
 	 * @param bool $createdir
-	 * @return XmlNukeDB
+	 * @return XmlnukeDB
 	 */
-	public function XmlNukeDB($hashedDir, $repositoryDir, $lang, $createdir = false)
+	public function XmlnukeDB($hashedDir, $repositoryDir, $lang, $createdir = false)
 	{
 		$this->_persistUtil = new PersistUtil($repositoryDir, $lang, $createdir);
 		$this->_persistUtil->setHashedDir($hashedDir);

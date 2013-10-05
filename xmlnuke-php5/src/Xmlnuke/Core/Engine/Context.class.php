@@ -37,7 +37,7 @@ use Xmlnuke\Core\Classes\BaseSingleton;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Util\FileUtil;
 use Xmlnuke\Core\Locale\LocaleFactory;
-use Xmlnuke\XmlFS\XmlNukeDB;
+use Xmlnuke\XmlFS\XmlnukeDB;
 use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
 use Xmlnuke\Core\AnyDataset\AnyDataSet;
 use Xmlnuke\Core\AnyDataset\IteratorFilter;
@@ -93,7 +93,7 @@ class Context extends BaseSingleton
 	private $_nocache = false;
 	/**
 	* @access private
-	* @var XmlNukeDB
+	* @var XmlnukeDB
 	*/
 	private $_xmlnukedb;
 	/**
@@ -280,7 +280,7 @@ class Context extends BaseSingleton
 		// Adjusts to Run with XMLNukeDB
 		$this->_appNameInMemory = "db_".$this->getSite()."_".strtolower($this->Language()->getName());
 
-		$this->_xmlnukedb = new XmlNukeDB($this->XmlHashedDir(), $this->XmlPath(), strtolower($this->Language()->getName()));
+		$this->_xmlnukedb = new XmlnukeDB($this->XmlHashedDir(), $this->XmlPath(), strtolower($this->Language()->getName()));
 		//$this->_xmlnukedb->loadIndex();
 
 		if ($this->ContextValue("logout") != "")
@@ -566,7 +566,7 @@ class Context extends BaseSingleton
 	* @access public
 	* @return string Return the virtual path from xmlnuke.URLXMLNUKEENGINE param from Config.php file.
 	*/
-	public function UrlXmlNukeEngine()
+	public function UrlXmlnukeEngine()
 	{
 		return $this->joinUrlBase($this->ContextValue("xmlnuke.URLXMLNUKEENGINE"));
 	}
@@ -1186,7 +1186,7 @@ class Context extends BaseSingleton
 		if(empty($lang))
 			$lang = strtolower($this->Language()->getName());
 
-		return $this->UrlXmlNukeEngine()."?site=".$site."&xml=".$xml."&xsl=".$xsl."&lang=".$lang;
+		return $this->UrlXmlnukeEngine()."?site=".$site."&xml=".$xml."&xsl=".$xsl."&lang=".$lang;
 	}
 
 	/**
@@ -1534,15 +1534,15 @@ class Context extends BaseSingleton
 		{
 			if ($this->Value("rawxml")!="")
 			{
-				$output = XmlNukeEngine::OUTPUT_XML;
+				$output = XmlnukeEngine::OUTPUT_XML;
 			}
 			elseif (($this->ContextValue("rawjson")!="") || ($this->Value("CONTENT_TYPE") == "application/json"))
 			{
-				$output = XmlNukeEngine::OUTPUT_JSON;
+				$output = XmlnukeEngine::OUTPUT_JSON;
 			}
 			else
 			{
-				$output = XmlNukeEngine::OUTPUT_TRANSFORMED_DOC;
+				$output = XmlnukeEngine::OUTPUT_TRANSFORMED_DOC;
 			}
 
 			$this->putValue("xmlnuke.OUTPUT_FORMAT", $output);
@@ -1558,7 +1558,7 @@ class Context extends BaseSingleton
 
 	public function WriteWarningMessage($message)
 	{
-		if ($this->getOutputFormat() == XmlNukeEngine::OUTPUT_TRANSFORMED_DOC)
+		if ($this->getOutputFormat() == XmlnukeEngine::OUTPUT_TRANSFORMED_DOC)
 			echo "<br/>\n<b>Warning: </b>" . $message . "\n<br/>";
 	}
 }

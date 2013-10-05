@@ -264,7 +264,7 @@ class ManageSites extends NewBaseAdminModule
 	//Parameters: string sitePath, string language, engine.Context context
 	public static function createRepositoryForSite($hashedDir, $xslTemplate, $sitePath, $language, $context)
 	{
-		$repositorio = 	new XmlNukeDB($hashedDir, $sitePath . FileUtil::Slash() . "xml" . FileUtil::Slash(), $language, true);
+		$repositorio = 	new XmlnukeDB($hashedDir, $sitePath . FileUtil::Slash() . "xml" . FileUtil::Slash(), $language, true);
 		$processorFile = new XMLFilenameProcessor("index");
 		$index = $processorFile->FullName("index", "", $language) . $processorFile->Extension();
 		$home = $processorFile->FullName("home", "", $language) . $processorFile->Extension();
