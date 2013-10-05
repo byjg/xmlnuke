@@ -70,6 +70,17 @@ class MinimalHandler extends Handler
     public function handle()
     {
         $exception = $this->getException();
+		echo trim(
+		"<style>
+			body {
+				font-size: 1.2em;
+				font-family: sans-serif;
+			}
+			h2 {
+				font-size: 2em;
+				margin-bottom: 12px;
+			}
+		</style>");
 
         echo '<h2>' . get_class($exception). '</h2>';
 		echo $exception->getMessage();
