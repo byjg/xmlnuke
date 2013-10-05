@@ -101,7 +101,7 @@ function getUrlEnterSite($site)
 {
 	global $context;
 
-	$targetPage = $context->UrlXmlNukeEngine() . "?xml=home";
+	$targetPage = $context->UrlXmlnukeEngine() . "?xml=home";
 	return  $targetPage . "&site=" . $site . "&xsl=page";
 }
 

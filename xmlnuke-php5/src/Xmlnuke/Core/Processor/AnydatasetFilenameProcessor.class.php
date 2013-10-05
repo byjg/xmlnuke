@@ -35,7 +35,7 @@ use Xmlnuke\Util\FileUtil;
 /**
  * @package xmlnuke
  */
-class AnyDatasetFilenameProcessor extends AnyDatasetBaseFilenameProcessor
+class AnyDatasetFilenameProcessor extends AnydatasetBaseFilenameProcessor
 {
 	/**
 	 *

@@ -105,7 +105,7 @@
     <Compile Include="com.xmlnuke.anydataset.IteratorFilter.cs" />
     <Compile Include="com.xmlnuke.anydataset.SingleRow.cs" />
     <Compile Include="com.xmlnuke.engine.Context.cs" />
-    <Compile Include="com.xmlnuke.engine.XmlNukeEngine.cs" />
+    <Compile Include="com.xmlnuke.engine.XmlnukeEngine.cs" />
     <Compile Include="com.xmlnuke.exception.cs" />
     <Compile Include="com.xmlnuke.international.LanguageCollection.cs" />
     <Compile Include="com.xmlnuke.international.LocaleFactory.cs" />

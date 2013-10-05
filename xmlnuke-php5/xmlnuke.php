@@ -35,12 +35,12 @@
 	$extraParam = array();
 	$output = $context->getOutputFormat();
 
-	if ($output == Xmlnuke\Core\Engine\XmlNukeEngine::OUTPUT_XML)
+	if ($output == Xmlnuke\Core\Engine\XmlnukeEngine::OUTPUT_XML)
 	{
 		header("Content-Type: text/xml; charset=utf-8");
 		header("Content-Disposition: inline; filename=\"{$alternateFilename}.xml\";");
 	}
-	elseif ($output == Xmlnuke\Core\Engine\XmlNukeEngine::OUTPUT_JSON)
+	elseif ($output == Xmlnuke\Core\Engine\XmlnukeEngine::OUTPUT_JSON)
 	{
 		$extraParam["json_function"] = $context->Value("jsonfn");
 		header("Content-Type: application/json; charset=utf-8");
@@ -70,7 +70,7 @@
 		}
 	}
 	
-	$engine = new Xmlnuke\Core\Engine\XmlNukeEngine($context, $output, $selectNodes, $extraParam);
+	$engine = new Xmlnuke\Core\Engine\XmlnukeEngine($context, $output, $selectNodes, $extraParam);
 	if ($context->ContextValue("remote")!="")
 	{
 		echo $engine->TransformDocumentRemote($context->ContextValue("remote"));

@@ -108,7 +108,7 @@ namespace com.xmlnuke.classes
 		}
 
 		/// <summary>
-		/// PageXml Constructor. Create from file name and path. Do not use with XmlNukeDB repository.
+		/// PageXml Constructor. Create from file name and path. Do not use with XmlnukeDB repository.
 		/// </summary>
 		/// <param name="path">Path</param>
 		/// <param name="filename">Filename</param>

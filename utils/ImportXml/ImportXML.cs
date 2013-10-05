@@ -78,7 +78,7 @@ namespace com.xmlnuke.db
 				}
 				string startPath;
 				string destPath = convtool.newRootDir + PersistUtil.getSlash() + convtool.site + PersistUtil.getSlash() + "xml";
-				XmlNukeDB repositorio = new XmlNukeDB(true, destPath, convtool.language, true);
+				XmlnukeDB repositorio = new XmlnukeDB(true, destPath, convtool.language, true);
 				if (!convtool.config_generic)
 				{
 					startPath = convtool.oldRootDir + PersistUtil.getSlash() + convtool.site + PersistUtil.getSlash() + "xml";
