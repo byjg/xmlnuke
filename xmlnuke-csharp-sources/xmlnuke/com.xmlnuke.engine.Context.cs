@@ -57,7 +57,7 @@ namespace com.xmlnuke.engine
 		private string _module = "";
 		private bool _reset = false;
 		private bool _nocache = false;
-		private db.XmlNukeDB _xmlnukedb;
+		private db.XmlnukeDB _xmlnukedb;
 		private string _appNameInMemory;
 		/// <summary>It is necessary, because the Random value was returned the same value (because uses the same seed).</summary>
 		private Random rnd;
@@ -245,12 +245,12 @@ namespace com.xmlnuke.engine
 			_appNameInMemory = "db_" + this.Site + "_" + this.Language.Name.ToLower();
 			if (HttpContext.Current.Application.Get(_appNameInMemory) == null)
 			{
-				_xmlnukedb = new com.xmlnuke.db.XmlNukeDB(this.XmlHashedDir(), this.XmlPath, this.Language.Name.ToLower());
+				_xmlnukedb = new com.xmlnuke.db.XmlnukeDB(this.XmlHashedDir(), this.XmlPath, this.Language.Name.ToLower());
 				_xmlnukedb.loadIndex();
 			}
 			else
 			{
-				_xmlnukedb = (db.XmlNukeDB)HttpContext.Current.Application.Get(_appNameInMemory);
+				_xmlnukedb = (db.XmlnukeDB)HttpContext.Current.Application.Get(_appNameInMemory);
 			}
 
 			rnd = new Random();
@@ -485,7 +485,7 @@ namespace com.xmlnuke.engine
 		/// <summary>
 		/// Return the virtual path from xmlnuke.URLXMLNUKEENGINE param from Web.Config file.
 		/// </summary>
-		public string UrlXmlNukeEngine
+		public string UrlXmlnukeEngine
 		{
 			get
 			{
@@ -821,7 +821,7 @@ namespace com.xmlnuke.engine
 			}
 		}
 
-		public db.XmlNukeDB getXMLDataBase()
+		public db.XmlnukeDB getXMLDataBase()
 		{
 			return _xmlnukedb;
 		}
@@ -995,7 +995,7 @@ namespace com.xmlnuke.engine
 
 		public string bindXmlnukeUrl(string site, string xml, string xsl, string lang)
 		{
-			return this.UrlXmlNukeEngine + "?site=" + site + "&xml=" + xml + "&xsl=" + xsl + "&lang=" + lang;
+			return this.UrlXmlnukeEngine + "?site=" + site + "&xml=" + xml + "&xsl=" + xsl + "&lang=" + lang;
 		}
 
 		public void updateCustomConfig(NameValueCollection options)

@@ -123,7 +123,7 @@ namespace com.xmlnuke.processor
 			int iPosScript = strHref.IndexOf("engine:xmlnuke");
 			if (iPosScript >= 0)
 			{
-				sResult = sResult.Substring(0, iPosScript) + this._context.UrlXmlNukeEngine + sResult.Substring(("engine:xmlnuke").Length + iPosScript);
+				sResult = sResult.Substring(0, iPosScript) + this._context.UrlXmlnukeEngine + sResult.Substring(("engine:xmlnuke").Length + iPosScript);
 			}
 			else
 			{

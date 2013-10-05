@@ -54,7 +54,7 @@
     <Compile Include="classes\com.xmlnuke.db.BTreeUtil.cs" />
     <Compile Include="classes\com.xmlnuke.db.IBTreeNode.cs" />
     <Compile Include="classes\com.xmlnuke.db.PersistUtil.cs" />
-    <Compile Include="classes\com.xmlnuke.db.XmlNukeDB.cs" />
+    <Compile Include="classes\com.xmlnuke.db.XmlnukeDB.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
