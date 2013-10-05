@@ -224,7 +224,7 @@ namespace com.xmlnuke.admin
 				{
 					if (key != this._context.Language.Name.ToLower())
 					{
-						com.xmlnuke.db.XmlNukeDB repositorio = new com.xmlnuke.db.XmlNukeDB(this._context.XmlHashedDir(), this._context.XmlPath, key);
+						com.xmlnuke.db.XmlnukeDB repositorio = new com.xmlnuke.db.XmlnukeDB(this._context.XmlHashedDir(), this._context.XmlPath, key);
 						string fileToCheck = processorFile.FullName(id, "", key) + processorFile.Extension();
 						if (repositorio.existsDocument(fileToCheck))
 						{
