@@ -49,7 +49,7 @@ class XmlDataSet
 	private $_colNodes = null;
 	
 	/**
-	 * @var DOMDocument
+	 * @var \DOMDocument
 	 */
 	private $_domDocument;
 	
@@ -76,7 +76,7 @@ class XmlDataSet
 			throw new DatasetException("XmlDataSet constructor: Column nodes must be an array.");
 		}
 		
-		if ($xml instanceof DOMDocument)
+		if ($xml instanceof \DOMDocument)
 		{
 			$this->_domDocument = $xml;
 		}

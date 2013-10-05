@@ -30,6 +30,10 @@
 
 namespace Xmlnuke\Core\Cache;
 
+use Xmlnuke\Core\Classes\BaseSingleton;
+use Xmlnuke\Core\Engine\Context;
+
+
 class  FileSystemCacheEngine extends BaseSingleton implements ICacheEngine
 {
 	/**

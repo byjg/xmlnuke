@@ -269,7 +269,7 @@ class  XmlEditList extends XmlnukeDocumentObject
 	/**
 	 * Render Column
 	 *
-	 * @param DOMNode $column
+	 * @param \DOMNode $column
 	 * @param SingleRow $row
 	 * @param EditListField $field
 	 */
@@ -326,7 +326,7 @@ class  XmlEditList extends XmlnukeDocumentObject
 
 	/**
 	*@desc Generate $page, processing yours childs.
-	*@param DOMNode $current
+	*@param \DOMNode $current
 	*@return void
 	*/
 	public function generateObject($current)
@@ -424,7 +424,7 @@ class  XmlEditList extends XmlnukeDocumentObject
 			}
 
 			if ($started)
-			{   //DOMNode
+			{   //\DOMNode
 				$row = XmlUtil::CreateChild($nodeWorking, "row", "");
 				$currentNode = null;
 				if (is_null($this->_fields))

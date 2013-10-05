@@ -74,7 +74,7 @@ class ManageGroup extends BaseAdminModule
 
 		// Open Index File
 		$indexFile = new XMLFilenameProcessor("index");
-		//DOMDocument
+		//\DOMDocument
 		$index = $this->_context->getXMLDataBase()->getDocument($indexFile->FullQualifiedName(), null);
 		// Delete a Group Node
 		if ($action == "delete")

@@ -353,7 +353,7 @@ class FileUtil
 	 * Not implemented
 	 * @ignore This function. To do nothing.
 	 *
-	 * @param DOMDocument $document
+	 * @param \DOMDocument $document
 	 */
 	public static function CheckUTF8Decode($document)
 	{
@@ -564,7 +564,7 @@ class FileUtil
 	/**
 	* Get a remote document and transform to DomXMLDocument
 	* @param string $url
-	* @return handle DOMDocument
+	* @return handle \DOMDocument
 	*/
 	public static function GetRemoteXMLDocument($url)
 	{

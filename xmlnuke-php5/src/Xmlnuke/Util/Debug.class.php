@@ -159,12 +159,12 @@ class Debug
 			{
 				echo get_class($var) . ", ";
 				//echo $var;
-				if ($var instanceof DOMDocument)
+				if ($var instanceof \DOMDocument)
 				{
 					$value->formatOutput = true;
 					echo "<pre>\n". htmlentities($var->saveXML()) . "\n</pre>";
 				}
-				elseif ( ($var instanceof DOMElement) || ($var instanceof DOMNode) )
+				elseif ( ($var instanceof \DOMElement) || ($var instanceof \DOMNode) )
 				{
 					echo "<pre>\n";
 					echo htmlentities('[' . $var->nodeName . "]");

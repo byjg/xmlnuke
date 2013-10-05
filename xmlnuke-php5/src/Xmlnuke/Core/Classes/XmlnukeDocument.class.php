@@ -238,7 +238,7 @@ class XmlnukeDocument extends XmlnukeCollection implements IXmlnukeDocument
 	
 	/**
 	*@desc Generate page, processing yours childs using the parent.
-	*@return DOMDocument
+	*@return \DOMDocument
 	*/
 	public function makeDomObject()
 	{

@@ -35,7 +35,7 @@ namespace Xmlnuke\Core\Classes;
 interface IXmlnukeDocument
 {
 	/**
-	* @return DOMDocument
+	* @return \DOMDocument
 	*/
 	public function makeDomObject();
 }

@@ -53,7 +53,7 @@ class ParamProcessor
 	}
 
 	/**
-	*@param DOMDocument $xmlDom - XmlDocument to be parsed
+	*@param \DOMDocument $xmlDom - XmlDocument to be parsed
 	*@param string $tagName - Tag to be looked for
 	*@param string $attribute - Attribute within tag to be looked for
 	*@return void
@@ -219,7 +219,7 @@ class ParamProcessor
 	}
 
 	/**
-	*@param DOMDocument $xmlDom
+	*@param \DOMDocument $xmlDom
 	*@return void
 	*@desc Process XHTML file and replace the tags [param:...] to XMLNuke context values
 	*/
@@ -243,7 +243,7 @@ class ParamProcessor
 	}
 
 	/**
-	*@param DOMNode $node
+	*@param \DOMNode $node
 	*@param int $depth
 	*@return void
 	*@desc 
@@ -326,7 +326,7 @@ class ParamProcessor
 		}
 		if (($node->nodeType == XML_ELEMENT_NODE ) || ($node->nodeType == XML_TEXT_NODE))
 		{
-			//DOMNode nodeworking;
+			//\DOMNode nodeworking;
 			if ($node->hasChildNodes())
 			{
 				$nodeworking = $node->firstChild;

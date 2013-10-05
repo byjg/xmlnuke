@@ -87,7 +87,7 @@ class  XmlListCollection extends XmlnukeCollection implements IXmlnukeDocumentOb
 	/**
 	 * Generate page, processing yours childs.
 	 *
-	 * @param DOMNode $current
+	 * @param \DOMNode $current
 	 */
 	protected function generatePage($current)
 	{
@@ -107,7 +107,7 @@ class  XmlListCollection extends XmlnukeCollection implements IXmlnukeDocumentOb
 	/**
 	 * Generate page, processing yours childs.
 	 *
-	 * @param DOMNode $current
+	 * @param \DOMNode $current
 	 */
 	public function generateObject($current)
 	{

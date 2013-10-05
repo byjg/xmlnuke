@@ -57,7 +57,7 @@ class  XmlAnchorCollection extends XmlnukeCollection implements IXmlnukeDocument
 
 	/**
 	*@desc Generate page, processing yours childs.
-	*@param DOMNode $current
+	*@param \DOMNode $current
 	*@return void
 	*/
 	public function generateObject($current)

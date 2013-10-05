@@ -83,7 +83,7 @@ class PHPWarning
 
 		//PHPWarning::VerifyArgs($getLast, $backTrace);
 
-		if (($backTrace["function"] == $expectedFunction) && (strpos($getLast["message"], "DOMDocument::loadXML()") !== false))
+		if (($backTrace["function"] == $expectedFunction) && (strpos($getLast["message"], "\DOMDocument::loadXML()") !== false))
 		{
 			echo "<b>" . PHPWarning::ErrorDescription($getLast["type"]) . "</b>: " . $getLast["message"] . " in " . basename($getLast["file"]) . " at line " . $getLast["line"] . " <br>\n";
 			$match = array();

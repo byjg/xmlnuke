@@ -277,7 +277,7 @@ class Search extends BaseModule
 	 * Get Node
 	 *
 	 * @param Array $list
-	 * @param DOMDocument $doc
+	 * @param \DOMDocument $doc
 	 * @return null
 	 */
 	private function getNode($list, $doc)

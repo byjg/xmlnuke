@@ -38,15 +38,15 @@ abstract class BaseAdminModule extends BaseModule
 	*/
 	protected $_px;
 	/**
-	*@var DOMNode
+	*@var \DOMNode
 	*/
 	protected $_mainBlock;
 	/**
-	*@var DOMNode
+	*@var \DOMNode
 	*/
 	private $_help;
 	/**
-	*@var DOMNode
+	*@var \DOMNode
 	*/
 	private $_menu;
 	/**
@@ -125,7 +125,7 @@ abstract class BaseAdminModule extends BaseModule
 	*/
 	protected function setTitlePage($strTitle)
 	{
-		//DOMNode
+		//\DOMNode
 		$tit = XMLUtil::SelectSingleNode($this->_px->getDomObject()->documentElement,"blockcenter[title='Menu']/title");
 		$this->_px->setTitle($this->_px->getTitle() . " - " . $strTitle);
 		$this->_px->setAbstract($this->_px->getTitle());

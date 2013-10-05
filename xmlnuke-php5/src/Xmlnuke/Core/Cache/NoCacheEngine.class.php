@@ -30,19 +30,12 @@
 
 namespace Xmlnuke\Core\Cache;
 
+use Xmlnuke\Core\Classes\BaseSingleton;
+use Xmlnuke\Core\Engine\Context;
+
+
 class  NoCacheEngine extends BaseSingleton implements ICacheEngine
 {
-	/**
-	 * This method is necessary only because PHP 5.2.x or lower does not support the method "get_called_class"
-	 * @deprecated since version 3.5
-	 * @return type
-	 */
-	public static function getInstance()
-	{
-		return self::manageInstances("NoCacheEngine");
-	}
-
-
 	protected function __construct()
 	{
 		$this->_context = Context::getInstance();

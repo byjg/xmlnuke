@@ -34,6 +34,8 @@
 namespace Xmlnuke\Core\Engine;
 
 use Xmlnuke\Core\Processor\XMLCacheFilenameProcessor;
+use Xmlnuke\Core\Processor\XMLFilenameProcessor;
+use Xmlnuke\Core\Processor\ForceFilenameLocation;
 
 class XmlnukeEngine
 {
@@ -99,7 +101,7 @@ class XmlnukeEngine
 
 	/**
 	*@desc Transform XML/XSL documents from the current XMLNuke Context.
-	*@return DOMDocument - Return the XHTML result
+	*@return \DOMDocument - Return the XHTML result
 	*/
 	public function TransformDocumentNoArgs()
 	{
@@ -136,7 +138,7 @@ class XmlnukeEngine
 	/**
 	*@desc Transform XML/XSL documents from the user module process result.
 	*@param IModule $module User module interface
-	*@return DOMDocument - Return the XHTML result
+	*@return \DOMDocument - Return the XHTML result
 	*/
 	public function TransformDocumentFromModule($module)
 	{
@@ -167,7 +169,7 @@ class XmlnukeEngine
 				throw new EngineException("The method CreatePage must return a IXmlnukeDocument", 756);
 			}
 			
-			//DOMNode
+			//\DOMNode
 			try
 			{
 				$xmlDoc = $px->makeDomObject();
@@ -253,7 +255,7 @@ class XmlnukeEngine
 	*@desc Get a xml node element to return ajax component
 	*@param IModule $module User module interface
 	*@param string $element Element name
-	*@return DOMDocument - Return the XHTML result
+	*@return \DOMDocument - Return the XHTML result
 	*/
 	public function getDocumentElement($module, $element = "", $id = "")
 	{
@@ -267,7 +269,7 @@ class XmlnukeEngine
 			return XmlUtil::SaveXmlNodeToString($px->getRootNode());
 		}
 		
-		//DOMNode
+		//\DOMNode
 		$nodePage = $px->getRootNode();
 		if ($element == "") {
 			$element = "blockcenter";
@@ -278,7 +280,7 @@ class XmlnukeEngine
 
 	/**
 	*@desc Private method used to add accessories XML (_all and index) into current XML file. Runtime only.
-	*@param DOMNode $nodePage
+	*@param \DOMNode $nodePage
 	*@return void
 	*/
 	private function addXMLDefault($nodePage)
@@ -294,8 +296,8 @@ class XmlnukeEngine
 
 	/**
 	*@desc Transform XML/XSL documents from custom XmlDocument.
-	*@param DOMDocument $xml
-	*@return DOMDocument - Return the XHTML result
+	*@param \DOMDocument $xml
+	*@return \DOMDocument - Return the XHTML result
 	*/
 	public function TransformDocumentFromDOM($xml)
 	{
@@ -306,7 +308,7 @@ class XmlnukeEngine
 
 	/**
 	*@desc Transform an XMLDocument object with an XSLFile
-	*@param DOMDocument $xml
+	*@param \DOMDocument $xml
 	*@param XSLFilenameProcessor $xslFile XSL File
 	*@return string - The transformation string
 	*/
@@ -428,7 +430,7 @@ class XmlnukeEngine
 			throw new EngineException("Cannot load XSL cache file. The following error occured: ". $ex->getMessage(), 752);
 		}
 		$xsl = FileUtil::CheckUTF8Encode($xsl);
-		$xslDom = new DOMDocument();
+		$xslDom = new \DOMDocument();
 		@$xslDom->loadXML($xsl);
 		PHPWarning::LoadXml("TransformDocument", $xsl);
 		$xslTran->importStyleSheet($xslDom);
@@ -445,7 +447,7 @@ class XmlnukeEngine
 		
 		//Transform and output		
 		$xtw = $xslTran->transformToXML($xml);	
-		$xhtml = new DOMDocument();		
+		$xhtml = new \DOMDocument();		
 		@$xhtml->loadXML($xtw);
 		PHPWarning::LoadXml("TransformDocument", $xtw);
 
@@ -479,14 +481,14 @@ class XmlnukeEngine
 	/**
 	*@desc Get a XMLDocument from a XMLFile
 	*@param XMLFilenameProcessor $xmlFile XML File
-	*@return DOMDocument
+	*@return \DOMDocument
 	*/
 	public function getXmlDocument( $xmlFile )
 	{		
 		$this->_context->setXml($xmlFile->ToString());
 
 		// Load XMLDocument and add ALL and INDEX nodes
-		$xmlDoc =  new DOMDocument;
+		$xmlDoc =  new \DOMDocument;
 		try
 		{
 			if (!($xmlFile->getFilenameLocation() == ForceFilenameLocation::PathFromRoot)) // Get From Repository...

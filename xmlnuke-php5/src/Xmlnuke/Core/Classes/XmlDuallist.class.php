@@ -268,7 +268,7 @@ class  XmlDualList extends XmlnukeDocumentObject
 		
 	/**
 	*@desc Generate $page, processing yours childs.
-	*@param DOMNode $current
+	*@param \DOMNode $current
 	*@return void
 	*/
 	public function generateObject($current)
@@ -376,7 +376,7 @@ class  XmlDualList extends XmlnukeDocumentObject
 	/**
 	 * Build Dual lista data
 	 *
-	 * @param DOMNode $list
+	 * @param \DOMNode $list
 	 * @param array $arr
 	 */
 	private function buildListItens($list, $arr)
@@ -394,7 +394,7 @@ class  XmlDualList extends XmlnukeDocumentObject
 	 *
 	 * @param DualListButton $button
 	 * @param string $name
-	 * @param DOMNode $duallist
+	 * @param \DOMNode $duallist
 	 * @param string $from
 	 * @param string $to
 	 * @param string $all
