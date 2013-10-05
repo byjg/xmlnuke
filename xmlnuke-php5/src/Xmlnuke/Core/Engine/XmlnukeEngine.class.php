@@ -35,7 +35,13 @@ namespace Xmlnuke\Core\Engine;
 
 use Xmlnuke\Core\Processor\XMLCacheFilenameProcessor;
 use Xmlnuke\Core\Processor\XMLFilenameProcessor;
+use Xmlnuke\Core\Processor\XSLFilenameProcessor;
 use Xmlnuke\Core\Processor\ForceFilenameLocation;
+use Xmlnuke\Core\Processor\SnippetProcessor;
+use Xmlnuke\Core\Processor\ParamProcessor;
+use Xmlnuke\Util\XmlUtil;
+use Xmlnuke\Util\FileUtil;
+use Xmlnuke\Core\Exception\PHPWarning;
 
 class XmlnukeEngine
 {
@@ -408,7 +414,7 @@ class XmlnukeEngine
 		$this->_context->setXsl($xslFile->ToString());
 		// Set up a transform object with the XSLT file
 		//XslTransform xslTran = new XslTransform();
-		$xslTran = new XSLTProcessor();
+		$xslTran = new \XSLTProcessor();
 		$snippetProcessor = new SnippetProcessor($xslFile);
 		//Uri
 		try

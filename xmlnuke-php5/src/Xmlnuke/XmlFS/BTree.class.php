@@ -62,7 +62,7 @@ class BTree
 	*  be valid until further initialization has been carried out.
 	*@param IBTreeNode $value = null
 	*/
-	private function BTree($value = null)
+	private function __construct($value = null)
 	{
 		if($value==null)
 		{

@@ -32,6 +32,8 @@
  */
 namespace Xmlnuke\Core\Processor;
 
+use Xmlnuke\Util\FileUtil;
+
 class SnippetFilenameProcessor extends FilenameProcessor
 {
 	/**

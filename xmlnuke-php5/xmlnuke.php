@@ -108,7 +108,7 @@
 		// Catch errors from permissions and so on.
 		try
 		{
-			$module = ModuleFactory::GetModule($moduleName);
+			$module = \Xmlnuke\Core\Engine\ModuleFactory::GetModule($moduleName);
 			
 			writePage($engine->TransformDocumentFromModule($module));
 		}

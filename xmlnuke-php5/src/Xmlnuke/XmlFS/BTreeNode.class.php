@@ -44,7 +44,7 @@ class BTreeNode implements IBTreeNode
 	*@param string $key
 	*@param string $value
 	*/
-	public function  BTreeNode($key, $value = null)
+	public function __construct($key, $value = null)
 	{
 		$this->_key = strtolower($key);
 		if ($value == null)
