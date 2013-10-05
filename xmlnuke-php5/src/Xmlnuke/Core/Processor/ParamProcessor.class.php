@@ -35,6 +35,9 @@
 */
 namespace Xmlnuke\Core\Processor;
 
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Util\XmlUtil;
+
 class ParamProcessor
 {
 	/**
@@ -62,7 +65,7 @@ class ParamProcessor
 	*/
 	public function AdjustToFullLink($xmlDom,$tagName,$attribute)
 	{
-		$xpath = new DOMXPath($xmlDom);
+		$xpath = new \DOMXPath($xmlDom);
 		XmlUtil::registerNamespaceForFilter($xpath, array('x' => 'http://www.w3.org/1999/xhtml'));
 		$nodeList = $xpath->query("//".strtolower($tagName)." | //".strtoupper($tagName) . " | //x:".strtolower($tagName)." | //x:".strtoupper($tagName));
 

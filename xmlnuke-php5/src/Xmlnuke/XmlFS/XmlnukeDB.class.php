@@ -29,6 +29,8 @@
 
 namespace Xmlnuke\XmlFS;
 
+use Xmlnuke\Core\Exception\NotFoundException;
+
 class XmlnukeDB
 {
 	private $_btree;
@@ -49,7 +51,7 @@ class XmlnukeDB
 	 * @param bool $createdir
 	 * @return XmlnukeDB
 	 */
-	public function XmlnukeDB($hashedDir, $repositoryDir, $lang, $createdir = false)
+	public function __construct($hashedDir, $repositoryDir, $lang, $createdir = false)
 	{
 		$this->_persistUtil = new PersistUtil($repositoryDir, $lang, $createdir);
 		$this->_persistUtil->setHashedDir($hashedDir);

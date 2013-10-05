@@ -29,6 +29,9 @@
 
 namespace Xmlnuke\XmlFS;
 
+use Xmlnuke\Core\Exception\NotFoundException;
+use Xmlnuke\Util\XmlUtil;
+
 class PersistUtil
 {
 
@@ -49,7 +52,7 @@ class PersistUtil
 	/// Default constructor - initializes all fields to default values
 	/// </summary>
 	//Parameters : String
-	public function PersistUtil($repositoryDir, $lang, $createdir = false)
+	public function __construct($repositoryDir, $lang, $createdir = false)
 	{
 		$this->_repositoryDir = $repositoryDir;
 		$this->_lang = $lang;
@@ -169,7 +172,7 @@ class PersistUtil
 			$doc = XmlUtil::CreateXmlDocumentFromStr("< $rootNode />", false);
 			$source = XmlUtil::CreateXmlDocumentFromFile($documentName);
 			
-			$DocXpath = new DOMXPath($source);
+			$DocXpath = new \DOMXPath($source);
 			$nodes = $DocXpath->query($xpath);
 
 			foreach ($nodes as $node)

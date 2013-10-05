@@ -32,6 +32,8 @@
 */
 namespace Xmlnuke\Util;
 
+use Xmlnuke\Core\Processor\FilenameProcessor;
+
 class FileUtil
 {
 	/**

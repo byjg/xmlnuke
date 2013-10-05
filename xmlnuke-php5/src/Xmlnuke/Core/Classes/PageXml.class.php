@@ -83,7 +83,7 @@ class  PageXml implements IXmlnukeDocument
 			"</group>\r\n".
 			"</page>";
 			$this->_xmlDoc = XmlUtil::CreateXmlDocumentFromStr($auxStr);
-			$xpath = new DOMXPath($this->_xmlDoc);
+			$xpath = new \DOMXPath($this->_xmlDoc);
 			$this->_nodePage = $this->_xmlDoc->getElementsByTagName("page")->item(0);
 			$this->_nodeGroup = $xpath->query("/page/group")->item(0);
 
@@ -108,7 +108,7 @@ class  PageXml implements IXmlnukeDocument
 	*/
 	public function setTitle($value)//ok
 	{
-		$xpath = new DOMXPath($this->_xmlDoc);
+		$xpath = new \DOMXPath($this->_xmlDoc);
 		$xpath->query("/page/meta/title")->item(0)->nodeValue = $value ;
 	}
 	/**
@@ -117,7 +117,7 @@ class  PageXml implements IXmlnukeDocument
 	*/
 	public function getTitle()//ok
 	{
-		$xpath = new DOMXPath($this->_xmlDoc);
+		$xpath = new \DOMXPath($this->_xmlDoc);
 		return 	$xpath->query("/page/meta/title")->item(0)->nodeValue;
 	}
 
@@ -131,7 +131,7 @@ class  PageXml implements IXmlnukeDocument
 	
 	public function setAbstract($value)
 	{
-		$xpath = new DOMXPath($this->_xmlDoc);
+		$xpath = new \DOMXPath($this->_xmlDoc);
 		$xpath->query("/page/meta/abstract")->item(0)->nodeValue= $value ;
 
 	}
@@ -143,7 +143,7 @@ class  PageXml implements IXmlnukeDocument
 	
 	public function getAbstract()
 	{
-		$xpath = new DOMXPath($this->_xmlDoc);
+		$xpath = new \DOMXPath($this->_xmlDoc);
 		return 	$xpath->query("/page/meta/abstract")->item(0)->nodeValue;
 	}
 
@@ -159,7 +159,7 @@ class  PageXml implements IXmlnukeDocument
 	
 	public function setGroupKeyword($value)
 	{
-		$xpath = new DOMXPath($this->_xmlDoc);
+		$xpath = new \DOMXPath($this->_xmlDoc);
 		$xpath->query("/page/meta/groupkeyword")->item(0)->nodeValue= $value ;
 
 	}
@@ -171,7 +171,7 @@ class  PageXml implements IXmlnukeDocument
 	
 	public function getGroupKeyword()
 	{
-		$xpath = new DOMXPath($this->_xmlDoc);
+		$xpath = new \DOMXPath($this->_xmlDoc);
 		return 	$xpath->query("/page/meta/groupkeyword")->item(0)->nodeValue;
 	}
 
@@ -184,7 +184,7 @@ class  PageXml implements IXmlnukeDocument
 	
 	private function setModified()
 	{
-		$xpath = new DOMXPath($this->_xmlDoc);
+		$xpath = new \DOMXPath($this->_xmlDoc);
 		$xpath->query("/page/meta/modified")->item(0)->nodeValue= date("D M j Y G:i:s");
 	}
 
@@ -196,7 +196,7 @@ class  PageXml implements IXmlnukeDocument
 		
 	public function Created()
 	{
-		$xpath = new DOMXPath($this->_xmlDoc);
+		$xpath = new \DOMXPath($this->_xmlDoc);
 		return 	$xpath->query("/page/meta/created")->item(0)->nodeValue;
 	}
 
