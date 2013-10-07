@@ -33,6 +33,8 @@
  */
 namespace Xmlnuke\Core\AnyDataset;
 
+use Xmlnuke\Core\Processor\FilenameProcessor;
+
 class FixedTextFileDataSet
 {
 	protected $_context = null;

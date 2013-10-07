@@ -33,6 +33,13 @@
  */
 namespace Xmlnuke\Core\Locale;
 
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Processor\AnydatasetLangFilenameProcessor;
+use Xmlnuke\Core\Processor\ForceFilenameLocation;
+use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use Xmlnuke\Core\Enum\Relation;
+
 class LanguageCollection
 {
 

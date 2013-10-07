@@ -621,7 +621,7 @@ class XmlUtil
 
 	public static function xml2Array($arr, $func = "") 
 	{
-		if ($arr instanceof SimpleXMLElement)
+		if ($arr instanceof \SimpleXMLElement)
 		{
 			return XmlUtil::xml2Array((array)$arr, $func);
 		}
@@ -637,7 +637,7 @@ class XmlUtil
 			foreach($arr AS $key => $value) 
 			{ 
 				$newArr[$key] = 
-					(is_array($value) || ($value instanceof \DOMElement) || ($value instanceof \DOMDocument) || ($value instanceof SimpleXMLElement) ? XmlUtil::xml2Array($value, $func) : (
+					(is_array($value) || ($value instanceof \DOMElement) || ($value instanceof \DOMDocument) || ($value instanceof \SimpleXMLElement) ? XmlUtil::xml2Array($value, $func) : (
 							!empty($func) ? $func($value) : $value
 						)
 					); 
@@ -651,7 +651,7 @@ class XmlUtil
 	{
 		//echo "Key: " . $key . "\n";
 
-		if ($value instanceof SimpleXMLElement)
+		if ($value instanceof \SimpleXMLElement)
 		{
 			$x = array();
 			foreach($value->children() as $k => $v)

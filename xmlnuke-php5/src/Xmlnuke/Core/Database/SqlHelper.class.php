@@ -34,6 +34,9 @@
  */
 namespace Xmlnuke\Core\Database;
 
+use Xmlnuke\Core\AnyDataset\SingleRow;
+use Xmlnuke\Core\AnyDataset\DBDataSet;
+
 class SQLHelper
 {
 	/**

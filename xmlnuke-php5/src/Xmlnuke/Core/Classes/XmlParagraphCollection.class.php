@@ -34,6 +34,8 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use Xmlnuke\Util\XmlUtil;
+
 class  XmlParagraphCollection extends XmlnukeCollection implements IXmlnukeDocumentObject 
 {
 	/**

@@ -36,6 +36,8 @@ use Xmlnuke\Core\Classes\XmlnukeDocument;
 use Xmlnuke\Core\Classes\XmlnukeManageUrl;
 use Xmlnuke\Core\Enum\URLTYPE;
 use Xmlnuke\Core\Enum\SSLAccess;
+use Xmlnuke\Core\Locale\LanguageFactory;
+use Xmlnuke\Core\Enum\LanguageFileTypes;
 
 /**
  * BaseModule class is the base for custom module implementation.

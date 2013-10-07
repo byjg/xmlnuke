@@ -39,6 +39,7 @@
 namespace Xmlnuke\Core\Classes;
 
 use Xmlnuke\Core\Enum\MenuGroup;
+use Xmlnuke\Util\XmlUtil;
 
 class XmlnukeDocument extends XmlnukeCollection implements IXmlnukeDocument 
 {

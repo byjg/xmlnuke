@@ -43,6 +43,9 @@ use Xmlnuke\Core\AnyDataset\AnyDataSet;
 use Xmlnuke\Core\AnyDataset\IteratorFilter;
 use Xmlnuke\Core\Enum\Relation;
 use Xmlnuke\Core\Processor\AnydatasetSetupFilenameProcessor;
+use Xmlnuke\Core\Processor\IProcessParameter;
+use Xmlnuke\Core\Processor\UploadFilenameProcessor;
+use Xmlnuke\Core\Admin\IUsersBase;
 
 class Context extends BaseSingleton
 {

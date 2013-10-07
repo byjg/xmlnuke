@@ -32,6 +32,8 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use Xmlnuke\Util\XmlUtil;
+
 class  XmlnukeText extends XmlnukeDocumentObject 
 {
 

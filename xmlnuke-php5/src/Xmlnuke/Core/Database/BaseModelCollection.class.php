@@ -30,6 +30,10 @@
 
 namespace Xmlnuke\Core\Database;
 
+use Xmlnuke\Core\AnyDataset\IIterator;
+use Xmlnuke\Core\Database\BaseModel;
+use Xmlnuke\Core\AnyDataset\GenericIterator;
+
 /**
  * @package xmlnuke
  */

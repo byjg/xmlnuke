@@ -32,19 +32,8 @@
  */
 namespace Xmlnuke\Core\Locale;
 
-class LanguageFileTypes
-{
-	const ADMINMODULE = 1;
-	const ADMININTERNAL = 2;
-	const MODULE = 3;
-	const OBJECT = 4;
-	const INTERNAL = 999;
-}
-
-/**
- * @package xmlnuke
- */
-namespace Xmlnuke\Core\Locale;
+use Xmlnuke\Core\Enum\LanguageFileTypes;
+use Xmlnuke\Core\Processor\AnydatasetLangFilenameProcessor;
 
 class LanguageFactory
 {

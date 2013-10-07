@@ -29,6 +29,10 @@
 
 namespace Xmlnuke\Core\Database;
 
+use Xmlnuke\Core\AnyDataset\SingleRow;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\AnyDataset\IIterator;
+
 /**
  * @package xmlnuke
  */
