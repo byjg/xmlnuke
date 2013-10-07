@@ -42,6 +42,10 @@ use Xmlnuke\Core\Processor\ParamProcessor;
 use Xmlnuke\Util\XmlUtil;
 use Xmlnuke\Util\FileUtil;
 use Xmlnuke\Core\Exception\PHPWarning;
+use Xmlnuke\Core\Exception\EngineException;
+use Xmlnuke\Core\Classes\IXmlnukeDocument;
+use Xmlnuke\Core\Classes\IXmlnukeDocumentObject;
+use Xmlnuke\Core\Classes\PageXml;
 
 class XmlnukeEngine
 {

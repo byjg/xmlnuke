@@ -37,6 +37,8 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use Xmlnuke\Core\AnyDataset\IIterator;
+
 class  XmlEasyList extends XmlnukeDocumentObject
 {
 	/**

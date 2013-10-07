@@ -37,6 +37,8 @@ define("CSVFILE_COMMA",  '/[,](?=(?:[^"]*"[^"]*")*(?![^"]*"))/');
  */
 namespace Xmlnuke\Core\AnyDataset;
 
+use Xmlnuke\Core\Processor\FilenameProcessor;
+
 class TextFileDataSet
 {	
 	protected $_context = null;

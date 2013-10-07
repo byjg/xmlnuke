@@ -32,6 +32,9 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use Xmlnuke\Core\Enum\BlockPosition;
+use Xmlnuke\Util\XmlUtil;
+
 class  XmlBlockCollection extends XmlnukeCollection implements IXmlnukeDocumentObject 
 {
 	/**

@@ -27,6 +27,7 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+namespace Xmlnuke\Core\Processor;
 
 interface IProcessParameter
 {

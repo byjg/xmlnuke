@@ -32,6 +32,8 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use Xmlnuke\Core\Engine\Context;
+
 class  XmlnukeAjaxCallback extends XmlnukeDocumentObject 
 {
 	protected $_context;

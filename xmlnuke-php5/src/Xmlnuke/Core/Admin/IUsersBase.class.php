@@ -27,6 +27,8 @@
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+namespace Xmlnuke\Core\Admin;
+
 /**
  * IUsersBase is a Interface to Store and Retrive USERS from an AnyDataSet or a DBDataSet structure.
  * @package xmlnuke

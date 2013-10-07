@@ -33,6 +33,8 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use Xmlnuke\Core\Engine\Context;
+
 class  XmlInputGroup extends XmlnukeCollection implements IXmlnukeDocumentObject 
 {
 	/**

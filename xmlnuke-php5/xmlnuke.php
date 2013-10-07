@@ -176,7 +176,7 @@
 	
 	function writePage($buffer)
 	{
-		$context = Context::getInstance();
+		$context = Xmlnuke\Core\Engine\Context::getInstance();
 		
 		@include("writepage.inc.php");
 

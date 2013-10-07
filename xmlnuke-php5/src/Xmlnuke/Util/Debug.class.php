@@ -33,6 +33,14 @@
 */
 namespace Xmlnuke\Util;
 
+use Xmlnuke\Core\AnyDataset\SingleRow;
+use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use Xmlnuke\Core\AnyDataset\IIterator;
+use Xmlnuke\Core\AnyDataset\AnyIterator;
+use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use Xmlnuke\Core\Processor\FilenameProcessor;
+use Xmlnuke\Core\Locale\LanguageCollection;
+
 class Debug
 {
 	/**
@@ -260,7 +268,7 @@ class Debug
 	 */
 	public static function LogError($module, $error)
 	{
-		if ($error instanceof Exception)
+		if ($error instanceof \Exception)
 		{
 			$chamada = get_class($error);
 			$mensagem = $error->getMessage();

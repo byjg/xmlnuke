@@ -30,6 +30,8 @@
 
 namespace Xmlnuke\Core\Database;
 
+use Xmlnuke\Core\Engine\Context;
+
 /**
  * @package xmlnuke
  */
