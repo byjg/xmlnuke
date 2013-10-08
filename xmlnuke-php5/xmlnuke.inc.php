@@ -108,10 +108,7 @@ if (!class_exists('config')) { header("Location: check_install.php"); exit(); }
 
 // Activate AutoLoad
 require_once PHPXMLNUKEDIR . "src/Xmlnuke/Core/Engine/Autoload.class.php";
-$autoload = new AutoLoad();
-
-// Start Generic Classes
-require_once PHPXMLNUKEDIR . "src/Xmlnuke/Util/Conversion.class.php";
+$autoload = AutoLoad::getInstance();
 
 // Error Handler
 $whoops = new Whoops\Run();

@@ -32,27 +32,47 @@
  */
 namespace Xmlnuke\Core\Engine;
 
-class AutoLoad
+// It is necessary this include, because autoload was not initiated :(
+require_once(PHPXMLNUKEDIR . 'src/Xmlnuke/Core/Classes/BaseSingleton.class.php');
+
+class AutoLoad extends \Xmlnuke\Core\Classes\BaseSingleton
 {
-	public function __construct()
+	const FRAMEWORK_XMLNUKE = 'FRAMEWORK_XMLNUKE';
+	const USER_PROJECTS = 'USER_PROJECTS';
+	
+	protected function __construct()
 	{
-		spl_autoload_register(array($this, "splAutoLoad"));
+		spl_autoload_register(array($this, "autoLoad_XmlnukeFramework"));
+		spl_autoload_register(array($this, "autoLoad_UserProjects"));
+		
+		$this->registrUserProject('Xmlnuke', PHPXMLNUKEDIR . 'src/Xmlnuke');
 	}
 
-
-	protected static $arrayNameSpace =
-			array
-			(
-				"src/",
-				"src/Xmlnuke/Library/",
-				"src/modules/oauthclient/20/",
-				"src/modules/oauthclient/10/",
-				"src/modules/aws/"
-			);
-
-	protected function splAutoLoad($className)
+	public function registrUserProject($name, $path)
 	{
-		foreach (AutoLoad::$arrayNameSpace as $prefix)
+		$path = str_replace('\\', '/', $path);
+		AutoLoad::$_folders[AutoLoad::USER_PROJECTS][$name] = 
+			(substr($path, -strlen('/')) === '/' ? substr($path, 0, strlen($path)-1) : $path);
+	}
+	
+	protected static $_folders =
+		array(
+			AutoLoad::FRAMEWORK_XMLNUKE =>
+				array
+				(
+					"src/",
+					"src/Xmlnuke/Library/",
+					"src/modules/oauthclient/20/",
+					"src/modules/oauthclient/10/",
+					"src/modules/aws/"
+				),
+			AutoLoad::USER_PROJECTS => array()
+		);
+
+	// Auto Load method for Core Xmlnuke and 3rd Party
+	protected function autoLoad_XmlnukeFramework($className)
+	{
+		foreach (AutoLoad::$_folders[AutoLoad::FRAMEWORK_XMLNUKE] as $prefix)
 		{
 			// PSR-0 Classes
 			// convert namespace to full file path
@@ -77,6 +97,40 @@ class AutoLoad
 			}
 		}
     }
+	
+	// Auto Load method for User Projects (defined in config.inc.php)
+	// MODULES HAVE AN SPECIAL WAY OF LOAD.
+	protected function autoLoad_UserProjects($className)
+	{
+		$class = str_replace('\\', '/', ($className[0] == '\\' ? substr($className, 1) : $className));
+		$classAr = explode('/', $class);
+		
+		$tmp = $path = array_pop($classAr);
+		while (!is_null($tmp))
+		{
+			foreach (AutoLoad::$_folders[AutoLoad::USER_PROJECTS] as $libName => $libDir)
+			{
+				$tmpNS = implode('.', $classAr);
+				if ($tmpNS == $libName)
+				{
+					$file = $libDir . '/' . $path;
+					if (is_readable($file . '.class.php'))
+					{
+						if (count(glob($file . '.*')) == 0)
+							throw new \Xmlnuke\Core\Exception\EngineException('The file name and the module "' . $className . '" you are called differing uppercase and lowercase. Your operating system supports this behavior, but does not accept Xmlnuke to ensure your code will run on all platforms.');
+
+						require_once $file . '.class.php';
+						return;
+					}
+				}
+			}			
+			
+			$tmp = array_pop($classAr);
+			$path = $tmp . '/' . $path;
+		}
+		
+		return;
+	}
 	
 }
 

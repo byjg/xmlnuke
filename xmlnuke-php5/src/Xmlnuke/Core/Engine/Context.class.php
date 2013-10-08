@@ -206,7 +206,7 @@ class Context extends BaseSingleton
 			$this->putContextValue("module", $this->_module);
 		}
 
-		ModuleFactory::PhpLibDir($this);
+		ModuleFactory::registerUserLibDir($this);
 
 		$lang = strtolower($this->getParameter("lang"));
 
