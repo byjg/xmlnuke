@@ -72,12 +72,17 @@ class ModuleFactory
 		
 		$context = Context::getInstance();
 		
-		$modulename = strtolower($modulename);
-		$loaded = false;
-
+		$modulename = preg_replace('/^(xmlnuke\.)(.*)$/i', 'Xmlnuke.Modules.\2', $modulename);
+		
 		$basePath = "";
-		$className = $modulename;
+		$classNameAr = explode('.', $modulename);
+		if (strpos($modulename, '.Modules.') === false)
+			array_splice( $classNameAr, count($classNameAr)-1, 0, array('Modules') );
+		$className = '\\' . implode('\\', $classNameAr);
+		
+		$result = new $className;
 
+		/* TODO
 		// ------------------------------------------------------------------------------------
 		// Try to Load a XMLNuke module
 		if ( (strpos($modulename, ".") === false) || (substr($modulename,0,6) == "admin.") )
@@ -103,7 +108,8 @@ class ModuleFactory
 		}
 
 		$result = PluginFactory::LoadPlugin($className, $basePath);
-
+		*/
+		
 		$xml = new XMLFilenameProcessor($modulename);
 		$result->Setup($xml, $o);
 
@@ -158,60 +164,13 @@ class ModuleFactory
 	}
 
 
-
-
-	/**
-	 * Try include module class library to load it
-	 *
-	 * @param string $pathRoot
-	 * @param string $module
-	 * @return bool
-	 */
-	private static function tryLoadModule($pathRoot, $module)
-	{
-		$moduleToLoad = "$pathRoot$module.class.php";
-
-		$found = file_exists($moduleToLoad);
-		if ($found)
-		{
-			include_once($moduleToLoad);
-		}
-		return $found;
-	}
-
 	private static $_phpLibDir = array();
 
-	protected static function GetLibDir($key)
-	{
-		if (ModuleFactory::$_phpLibDir != "")
-		{
-			if (array_key_exists($key, ModuleFactory::$_phpLibDir))
-			{
-				return ModuleFactory::$_phpLibDir[$key];
-			}
-			else
-			{
-				return false;
-			}
-		}
-		else
-		{
-			return "??";
-		}
-	}
-
-	protected static function SetLibDir($key, $path)
-	{
-		ModuleFactory::$_phpLibDir[$key] = $path;
-		$_SESSION["SESS_XMLNUKE_PHPLIBDIR"] = ModuleFactory::$_phpLibDir;
-	}
-
 	/**
 	 *
-	 * @param Context $context
 	 * @return array()
 	 */
-	public static function PhpLibDir($context)
+	public static function registerUserLibDir($context)
 	{
 		if (ModuleFactory::$_phpLibDir == null)
 		{
@@ -234,82 +193,11 @@ class ModuleFactory
 			{
 				ModuleFactory::$_phpLibDir = $_SESSION["SESS_XMLNUKE_PHPLIBDIR"];
 			}
+			
+			foreach(ModuleFactory::$_phpLibDir as $lib => $path)
+				AutoLoad::getInstance()->registrUserProject($lib, $path);
 		}
 		return ModuleFactory::$_phpLibDir;
-	}
-
-
-	public static function LibPath($namespaceBase, $path = "")
-	{
-		if ($path == "")
-		{
-			$i = strrpos($namespaceBase, ".");
-			if ($i !== false)
-			{
-				$path = substr($namespaceBase, $i+1) . ".class.php";
-				$namespaceBase = substr($namespaceBase, 0, $i);
-			}
-		}
-
-		if (ModuleFactory::$_phpLibDir != null)
-		{
-			if (ModuleFactory::GetLibDir($namespaceBase))
-			{
-				$filePath = ModuleFactory::GetLibDir($namespaceBase);
-				if ($filePath[strlen($filePath)-1] != FileUtil::Slash())
-				{
-					$filePath .= FileUtil::Slash();
-					ModuleFactory::SetLibDir($namespaceBase, $filePath);
-				}
-			}
-			else
-			{
-				$namespacePath = ModuleFactory::GetLibDir($namespaceBase);
-					
-				if ($namespacePath != "")
-				{
-					$filePath = $namespacePath . FileUtil::Slash() . implode(FileUtil::Slash(), $auxArBase) . (sizeof($auxArBase) > 0 ? FileUtil::Slash() : "");
-					ModuleFactory::SetLibDir($namespaceBase, $filePath);
-					break;
-				}
-				else
-				{
-					$auxArBase = explode(".", $namespaceBase);
-					
-					if (count($auxArBase) > 1)
-					{
-						$path = array_pop($auxArBase) . FileUtil::Slash() . $path;
-					
-						$namespace = implode(".", $auxArBase);
-						return ModuleFactory::LibPath($namespace, $path);
-					}
-				
-				}
-									
-			}
-		}
-
-		if ($filePath == "")
-		{
-			$filePath = "lib" . FileUtil::Slash() . str_replace(".", FileUtil::Slash(), $namespaceBase) . FileUtil::Slash();
-			ModuleFactory::SetLibDir($namespaceBase, $filePath);
-		}
-		
-		return $filePath . $path;
-	}
-
-	public static function IncludePhp($namespaceBase, $path = "")
-	{
-		$filePath = ModuleFactory::LibPath($namespaceBase, $path);
-
-		if (file_exists($filePath))
-		{
-			include_once($filePath);
-		}
-		else
-		{
-			throw new NotFoundException("Include file '$filePath' does not found. Namespace: $namespaceBase. Can't continue.");
-		}
 	}
 }
 ?>

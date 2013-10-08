@@ -26,19 +26,14 @@
 *
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
-
-require_once("module.loginbase.class.php");
-
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Module;
+namespace Xmlnuke\Modules;
 
 class ModuleActionLogin extends ModuleAction 
 {
 	const LOGIN = 'action.LOGIN';
-	const NEWUSER = 'action.NEWUSER';
-	const NEWUSERCONFIRM = 'action.NEWUSERCONFIRM';
 	const FORGOTPASSWORD = 'action.FORGOTPASSWORD';
 	const FORGOTPASSWORDCONFIRM = 'action.FORGOTPASSWORDCONFIRM';
 }
@@ -47,11 +42,15 @@ class ModuleActionLogin extends ModuleAction
  * Login is a default module descendant from BaseModule class.
  * This class shows/edit the profile from the current user.
  * 
- * @package xmlnuke
+ * @see module.IModule.class.php
+ * @see module.BaseModule.class.php
+ * @subpackage xmlnuke.modules
  */
-namespace Xmlnuke\Core\Module;
+namespace Xmlnuke\Modules;
 
-class Login extends LoginBase
+use Xmlnuke\Core\Module\LoginBase;
+
+class LoginBasic extends LoginBase
 {
 	/**
 	 * Users
@@ -59,13 +58,13 @@ class Login extends LoginBase
 	 * @var UsersAnyDataSet
 	 */
 	protected $_users;
-		
+	
 	/**
 	 * Module
 	 *
 	 * @var String
 	 */
-	private  $_module = "login";
+	private  $_module = "loginbasic";
 	
 	/**
 	 * BlockCenter
@@ -81,6 +80,37 @@ class Login extends LoginBase
 	 */
 	public function Login()
 	{}
+
+	/**
+	 * Return the LanguageCollection used in this module
+	 *
+	 * @return LanguageCollection
+	 */
+	public function WordCollection()
+	{
+		$myWords = parent::WordCollection();
+
+		if (!$myWords->loadedFromFile())
+		{
+			// English Words
+			$myWords->addText("en-us", "TITLE", "Module Login");
+
+			// Portuguese Words
+			$myWords->addText("pt-br", "TITLE", "Módulo de Login");
+		}
+
+		return $myWords;
+	}
+
+	/**
+	 * Returns if use cache
+	 *
+	 * @return bool
+	 */
+	public function useCache()
+	{
+		return false;
+	}
 
 	/**
 	 * Create Page
@@ -110,12 +140,6 @@ class Login extends LoginBase
 				break;
 			case ModuleActionLogin::FORGOTPASSWORDCONFIRM :
 				$this->ForgotPasswordConfirm();
-				break;
-			case ModuleActionLogin::NEWUSER :
-				$this->CreateNewUser();
-				break;
-			case ModuleActionLogin::NEWUSERCONFIRM :
-				$this->CreateNewUserConfirm();
 				break;
 			default:
 				$this->FormLogin();
@@ -178,24 +202,15 @@ class Login extends LoginBase
 		
 		$button = new XmlInputButtons();
 		$button->addSubmit($myWords->Value("TXT_LOGIN"), 'submit_button');
-		$form->addXmlnukeObject($button);
+		$form->addXmlnukeObject($button);		
 		
+		$label = new XmlInputLabelObjects($myWords->Value("LOGINPROBLEMSMESSAGE"));
 		$url = new XmlnukeManageUrl(URLTYPE::MODULE, $this->_module);
 		$url->addParam('action', ModuleActionLogin::FORGOTPASSWORD);
 		$url->addParam('ReturnUrl', $this->_urlReturn);
 		
-		$label = new XmlInputLabelObjects($myWords->Value("LOGINPROBLEMSMESSAGE"));
 		$link = new XmlAnchorCollection($url->getUrl(), null);
 		$link->addXmlnukeObject(new XmlnukeText($myWords->Value("LOGINFORGOTMESSAGE")));
-		$label->addXmlnukeObject($link);
-		$label->addXmlnukeObject(new XmlnukeBreakLine());
-		
-		$url = new XmlnukeManageUrl(URLTYPE::MODULE, $this->_module);
-		$url->addParam('action', ModuleActionLogin::NEWUSER);
-		$url->addParam('ReturnUrl', $this->_urlReturn);
-		
-		$link = new XmlAnchorCollection($url->getUrl(), null);
-		$link->addXmlnukeObject(new XmlnukeText($myWords->Value("LOGINCREATEUSERMESSAGE")));
 		$label->addXmlnukeObject($link);
 		$form->addXmlnukeObject($label);
 	}
@@ -259,86 +274,5 @@ class Login extends LoginBase
 			$this->FormLogin();
 		}
 	}
-
-	/**
-	 * Create New User
-	 *
-	 */
-	protected function CreateNewUser()
-	{
-		$myWords = $this->WordCollection();
-		
-		$paragraph = new XmlParagraphCollection();
-		$this->_blockCenter->addXmlnukeObject($paragraph);
-		
-		$url = new XmlnukeManageUrl(URLTYPE::MODULE, $this->_module);
-		$url->addParam('action', ModuleActionLogin::NEWUSERCONFIRM);
-		$url->addParam('ReturnUrl', $this->_urlReturn);
-		
-		$form = new XmlFormCollection($this->_context, $url->getUrl() , $myWords->Value("CREATEUSERTITLE"));
-		$form->setDisableAutoComplete(true);
-		$paragraph->addXmlnukeObject($form);
-		
-		$textbox = new XmlInputTextBox($myWords->Value("LABEL_LOGIN"), 'newloguser', $this->_context->ContextValue("newloguser"), 20);
-		$textbox->setInputTextBoxType(InputTextBoxType::TEXT );
-		$textbox->setMaxLength(20);
-		$textbox->setDataType(INPUTTYPE::TEXT);
-		$textbox->setRequired(true);
-		$form->addXmlnukeObject($textbox);
-		
-		$textbox = new XmlInputTextBox($myWords->Value("LABEL_NAME"), 'name', $this->_context->ContextValue("name"), 40);
-		$textbox->setInputTextBoxType(InputTextBoxType::TEXT );
-		$textbox->setDataType(INPUTTYPE::TEXT);
-		$textbox->setRequired(true);
-		$form->addXmlnukeObject($textbox);
-		
-		$textbox = new XmlInputTextBox($myWords->Value("LABEL_EMAIL"), 'email', $this->_context->ContextValue("email"), 30);
-		$textbox->setInputTextBoxType(InputTextBoxType::TEXT );
-		$textbox->setDataType(INPUTTYPE::EMAIL);
-		$textbox->setRequired(true);
-		$form->addXmlnukeObject($textbox);
-		
-		$label = new XmlInputLabelField("", $myWords->Value("CREATEUSERPASSWORDMSG"));
-		$form->addXmlnukeObject($label);
-		$form->addXmlnukeObject(new XmlInputImageValidate($myWords->Value("TYPETEXTFROMIMAGE")));
-		$button = new XmlInputButtons();
-		$button->addSubmit($myWords->Value("CREATEUSERBUTTON"), 'submit_button');
-		$form->addXmlnukeObject($button);
-	}
-
-	/**
-	 * Confirm New user
-	 *
-	 */
-	protected function CreateNewUserConfirm()
-	{
-		$myWords = $this->WordCollection();
-		$container = new XmlnukeUIAlert($this->_context, UIAlert::BoxAlert);
-		$container->setAutoHide(5000);
-		$this->_blockCenter->addXmlnukeObject($container);
-		$newpassword = $this->getRandomPassword();
-		
-		if (!XmlInputImageValidate::validateText($this->_context))
-		{
-			$container->addXmlnukeObject(new XmlnukeText($myWords->Value("OBJECTIMAGEINVALID"), true));
-			$this->CreateNewUser();
-		}
-		else 
-		{
-			if (!$this->_users->addUser( $this->_context->ContextValue("name"), $this->_context->ContextValue("newloguser"), $this->_context->ContextValue("email"), $newpassword ) )
-			{
-				$container->addXmlnukeObject(new XmlnukeText($myWords->Value("CREATEUSERFAIL"), true));
-				$this->CreateNewUser($block);
-			}
-			else
-			{
-				$this->sendWelcomeMessage($myWords, $this->_context->ContextValue("name"), $this->_context->ContextValue("newloguser"), $this->_context->ContextValue("email"), $newpassword );
-				$this->_users->Save();
-				$container->addXmlnukeObject(new XmlnukeText($myWords->Value("CREATEUSEROK"), true));
-				$container->setUIAlertType(UIAlert::BoxInfo);
-				$this->FormLogin($block);
-			}
-		}
-	}	
 }
 ?>
