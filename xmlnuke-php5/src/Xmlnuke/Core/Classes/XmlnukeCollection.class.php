@@ -35,7 +35,14 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use DOMNode;
+use Exception;
+use InvalidArgumentException;
+use ReflectionClass;
+use ReflectionProperty;
+use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\XMLTransform;
+use Xmlnuke\Util\XmlUtil;
 
 class XmlnukeCollection
 {
@@ -83,7 +90,7 @@ class XmlnukeCollection
 
 	/**
 	 * @desc Method for process all XMLNukedocumentObjects in array.
-	 * @param \DOMNode $current
+	 * @param DOMNode $current
 	 * @return void
 	 * @internal IXmlnukeDocumentObject $item
 	 */
@@ -122,7 +129,7 @@ class XmlnukeCollection
 	 *
 	 * @param type $current
 	 * @param type $model
-	 * @return \DOMNode
+	 * @return DOMNode
 	 */
 	protected static function CreateObjectFromModel($current, $model, $config)
 	{

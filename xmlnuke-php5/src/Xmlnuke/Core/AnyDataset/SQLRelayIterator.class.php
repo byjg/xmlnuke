@@ -33,6 +33,11 @@
  */
 namespace Xmlnuke\Core\AnyDataset;
 
+use PDOStatement;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Exception\IteratorException;
+use Xmlnuke\Util\FileUtil;
+
 class SQLRelayIterator extends GenericIterator
 {
 	const RECORD_BUFFER = 50;

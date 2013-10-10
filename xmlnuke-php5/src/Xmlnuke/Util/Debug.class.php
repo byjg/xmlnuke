@@ -33,13 +33,20 @@
 */
 namespace Xmlnuke\Util;
 
-use Xmlnuke\Core\AnyDataset\SingleRow;
+use DOMDocument;
+use DOMElement;
+use DOMNode;
+use Exception;
+use ReflectionClass;
+use ReflectionMethod;
+use ReflectionProperty;
 use Xmlnuke\Core\AnyDataset\AnyDataSet;
-use Xmlnuke\Core\AnyDataset\IIterator;
 use Xmlnuke\Core\AnyDataset\AnyIterator;
+use Xmlnuke\Core\AnyDataset\IIterator;
 use Xmlnuke\Core\AnyDataset\IteratorFilter;
-use Xmlnuke\Core\Processor\FilenameProcessor;
+use Xmlnuke\Core\AnyDataset\SingleRow;
 use Xmlnuke\Core\Locale\LanguageCollection;
+use Xmlnuke\Core\Processor\FilenameProcessor;
 
 class Debug
 {
@@ -167,12 +174,12 @@ class Debug
 			{
 				echo get_class($var) . ", ";
 				//echo $var;
-				if ($var instanceof \DOMDocument)
+				if ($var instanceof DOMDocument)
 				{
 					$value->formatOutput = true;
 					echo "<pre>\n". htmlentities($var->saveXML()) . "\n</pre>";
 				}
-				elseif ( ($var instanceof \DOMElement) || ($var instanceof \DOMNode) )
+				elseif ( ($var instanceof DOMElement) || ($var instanceof DOMNode) )
 				{
 					echo "<pre>\n";
 					echo htmlentities('[' . $var->nodeName . "]");
@@ -263,12 +270,12 @@ class Debug
 
 	/**
 	 * @param string $module
-	 * @param exception $error
+	 * @param Exception $error
 	 * @return void
 	 */
 	public static function LogError($module, $error)
 	{
-		if ($error instanceof \Exception)
+		if ($error instanceof Exception)
 		{
 			$chamada = get_class($error);
 			$mensagem = $error->getMessage();

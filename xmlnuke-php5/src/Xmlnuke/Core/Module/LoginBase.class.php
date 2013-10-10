@@ -29,6 +29,12 @@
 
 namespace Xmlnuke\Core\Module;
 
+use Xmlnuke\Core\Classes\MailEnvelope;
+use Xmlnuke\Core\Classes\XmlnukeManageUrl;
+use Xmlnuke\Core\Locale\LanguageCollection;
+use Xmlnuke\Modules\Login;
+use Xmlnuke\Util\MailUtil;
+
 /**
  * Login is a default module descendant from BaseModule class.
  * This class shows/edit the profile from the current user.

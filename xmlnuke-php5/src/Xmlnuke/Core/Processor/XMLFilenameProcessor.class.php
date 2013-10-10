@@ -34,6 +34,8 @@
  */
 namespace Xmlnuke\Core\Processor;
 
+use Xmlnuke\Util\FileUtil;
+
 class XMLFilenameProcessor extends FilenameProcessor
 {
 	/**

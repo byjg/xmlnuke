@@ -49,6 +49,26 @@ class ModuleActionLogin extends ModuleAction
  */
 namespace Xmlnuke\Modules;
 
+use Xmlnuke\Core\Admin\UsersAnyDataSet;
+use Xmlnuke\Core\Classes\PageXml;
+use Xmlnuke\Core\Classes\XmlAnchorCollection;
+use Xmlnuke\Core\Classes\XmlBlockCollection;
+use Xmlnuke\Core\Classes\XmlFormCollection;
+use Xmlnuke\Core\Classes\XmlInputButtons;
+use Xmlnuke\Core\Classes\XmlInputImageValidate;
+use Xmlnuke\Core\Classes\XmlInputLabelField;
+use Xmlnuke\Core\Classes\XmlInputLabelObjects;
+use Xmlnuke\Core\Classes\XmlInputTextBox;
+use Xmlnuke\Core\Classes\XmlnukeBreakLine;
+use Xmlnuke\Core\Classes\XmlnukeManageUrl;
+use Xmlnuke\Core\Classes\XmlnukeText;
+use Xmlnuke\Core\Classes\XmlnukeUIAlert;
+use Xmlnuke\Core\Classes\XmlParagraphCollection;
+use Xmlnuke\Core\Enum\BlockPosition;
+use Xmlnuke\Core\Enum\InputTextBoxType;
+use Xmlnuke\Core\Enum\INPUTTYPE;
+use Xmlnuke\Core\Enum\UIAlert;
+use Xmlnuke\Core\Enum\URLTYPE;
 use Xmlnuke\Core\Module\LoginBase;
 
 class Login extends LoginBase

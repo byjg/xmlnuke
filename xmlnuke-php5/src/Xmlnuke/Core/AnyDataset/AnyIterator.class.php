@@ -1,4 +1,7 @@
 <?php
+
+use Xmlnuke\Core\AnyDataset\GenericIterator;
+use Xmlnuke\Core\AnyDataset\SingleRow;
 /*
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 *  Copyright:

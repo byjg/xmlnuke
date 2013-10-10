@@ -27,6 +27,16 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+namespace Xmlnuke\Core\Classes;
+
+use DateTime;
+use DOMDocument;
+use InvalidArgumentException;
+use Xmlnuke\Core\Enum\MenuGroup;
+use Xmlnuke\Core\Enum\Menus;
+use Xmlnuke\Core\Enum\Script;
+use Xmlnuke\Util\XmlUtil;
+
 /**
  * Implements a XMLNuke Document. 
  * 
@@ -36,11 +46,6 @@
  * 
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Classes;
-
-use Xmlnuke\Core\Enum\MenuGroup;
-use Xmlnuke\Util\XmlUtil;
-
 class XmlnukeDocument extends XmlnukeCollection implements IXmlnukeDocument 
 {
 	/**
@@ -239,7 +244,7 @@ class XmlnukeDocument extends XmlnukeCollection implements IXmlnukeDocument
 	
 	/**
 	*@desc Generate page, processing yours childs using the parent.
-	*@return \DOMDocument
+	*@return DOMDocument
 	*/
 	public function makeDomObject()
 	{

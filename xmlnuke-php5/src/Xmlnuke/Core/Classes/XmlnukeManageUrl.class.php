@@ -27,11 +27,15 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
+namespace Xmlnuke\Core\Classes;
+
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Enum\URLTYPE;
+use Xmlnuke\Core\Processor\ParamProcessor;
+
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Classes;
-
 class  XmlnukeManageUrl
 {
 	/**

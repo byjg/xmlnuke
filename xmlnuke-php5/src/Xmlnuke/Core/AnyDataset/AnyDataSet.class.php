@@ -29,6 +29,10 @@
 
 namespace Xmlnuke\Core\AnyDataset;
 
+use DOMDocument;
+use InvalidArgumentException;
+use Xmlnuke\Core\Exception\DataBaseException;
+use Xmlnuke\Core\Processor\AnydatasetBaseFilenameProcessor;
 use Xmlnuke\Util\FileUtil;
 use Xmlnuke\Util\XmlUtil;
 
@@ -152,7 +156,7 @@ class AnyDataSet
 
 	/**
 	 *@access public
-	 *@return \DOMDocument - XmlDocument object
+	 *@return DOMDocument - XmlDocument object
 	 *@desc Returns the AnyDataSet XmlDocument representive object
 	 */
 	public function getDomObject()

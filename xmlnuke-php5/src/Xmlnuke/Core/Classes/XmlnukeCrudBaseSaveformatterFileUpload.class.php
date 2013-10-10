@@ -33,6 +33,12 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Processor\ForceFilenameLocation;
+use Xmlnuke\Core\Processor\UploadFilenameProcessor;
+use Xmlnuke\Util\FileUtil;
+use Xmlnuke\Util\ImageUtil;
+
 class  XmlnukeCrudBaseSaveFormatterFileUpload implements IEditListFormatter
 {
 	/**

@@ -33,6 +33,10 @@
  */
 namespace Xmlnuke\Core\AnyDataset;
 
+use InvalidArgumentException;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Exception\IteratorException;
+
 class JSONIterator extends GenericIterator
 {
 	/**

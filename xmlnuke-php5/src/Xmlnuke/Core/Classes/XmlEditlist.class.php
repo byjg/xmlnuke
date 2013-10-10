@@ -32,6 +32,20 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use DOMNode;
+use InvalidArgumentException;
+use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use Xmlnuke\Core\AnyDataset\ArrayDataSet;
+use Xmlnuke\Core\AnyDataset\IIterator;
+use Xmlnuke\Core\AnyDataset\SingleRow;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Enum\CustomButtons;
+use Xmlnuke\Core\Enum\EditListFieldSummary;
+use Xmlnuke\Core\Enum\EditListFieldType;
+use Xmlnuke\Core\Enum\SelectType;
+use Xmlnuke\Core\Processor\ParamProcessor;
+use Xmlnuke\Util\XmlUtil;
+
 class  XmlEditList extends XmlnukeDocumentObject
 {
 	/**
@@ -269,7 +283,7 @@ class  XmlEditList extends XmlnukeDocumentObject
 	/**
 	 * Render Column
 	 *
-	 * @param \DOMNode $column
+	 * @param DOMNode $column
 	 * @param SingleRow $row
 	 * @param EditListField $field
 	 */
@@ -326,7 +340,7 @@ class  XmlEditList extends XmlnukeDocumentObject
 
 	/**
 	*@desc Generate $page, processing yours childs.
-	*@param \DOMNode $current
+	*@param DOMNode $current
 	*@return void
 	*/
 	public function generateObject($current)

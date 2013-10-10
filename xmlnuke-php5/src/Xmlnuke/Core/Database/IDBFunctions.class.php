@@ -32,7 +32,10 @@
  */
 namespace Xmlnuke\Core\Database;
 
-interface IDbFunctions
+use Xmlnuke\Core\AnyDataset\DBDataSet;
+use Xmlnuke\Core\Enum\DATEFORMAT;
+
+interface IDBFunctions
 {
 
 	/**

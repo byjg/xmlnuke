@@ -32,6 +32,9 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use DOMNode;
+use Xmlnuke\Util\XmlUtil;
+
 class  XmlTableColumnCollection extends XmlTableCollectionBase
 {
 	protected $_colspan = "";
@@ -61,7 +64,7 @@ class  XmlTableColumnCollection extends XmlTableCollectionBase
 	
 	/**
 	*@desc Generate page, processing yours childs.
-	*@param \DOMNode $current
+	*@param DOMNode $current
 	*@return void
 	*/
 	public function generateObject($current)

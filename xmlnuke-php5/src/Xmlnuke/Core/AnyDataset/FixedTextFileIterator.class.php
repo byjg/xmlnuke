@@ -33,6 +33,9 @@
  */
 namespace Xmlnuke\Core\AnyDataset;
 
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Exception\IteratorException;
+
 class FixedTextFileIterator extends GenericIterator
 {
 	/**

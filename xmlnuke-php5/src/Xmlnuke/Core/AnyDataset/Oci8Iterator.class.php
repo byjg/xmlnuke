@@ -33,6 +33,10 @@
  */
 namespace Xmlnuke\Core\AnyDataset;
 
+use PDOStatement;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Exception\IteratorException;
+
 class Oci8Iterator extends GenericIterator
 {
 	const RECORD_BUFFER = 50;

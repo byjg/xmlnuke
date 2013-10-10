@@ -33,6 +33,9 @@
  */
 namespace Xmlnuke\Core\Processor;
 
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Util\FileUtil;
+
 class ImageFilenameProcessor extends FilenameProcessor
 {
 	/**

@@ -16,6 +16,8 @@
 
 namespace Xmlnuke\Util;
 
+use Exception;
+
 class Thread
 {
     public function __construct($callback)

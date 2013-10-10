@@ -27,6 +27,30 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+namespace Xmlnuke\Core\Classes;
+
+use DOMNode;
+use Exception;
+use Xmlnuke\Core\AnyDataset\ArrayDataSet;
+use Xmlnuke\Core\AnyDataset\IIterator;
+use Xmlnuke\Core\AnyDataset\SingleRow;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Enum\CustomButtons;
+use Xmlnuke\Core\Enum\DATEFORMAT;
+use Xmlnuke\Core\Enum\EasyListType;
+use Xmlnuke\Core\Enum\EditListFieldType;
+use Xmlnuke\Core\Enum\InputTextBoxType;
+use Xmlnuke\Core\Enum\INPUTTYPE;
+use Xmlnuke\Core\Enum\LanguageFileTypes;
+use Xmlnuke\Core\Enum\MultipleSelectType;
+use Xmlnuke\Core\Enum\UIAlert;
+use Xmlnuke\Core\Enum\URLTYPE;
+use Xmlnuke\Core\Enum\XmlInputObjectType;
+use Xmlnuke\Core\Exception\XMLNukeException;
+use Xmlnuke\Core\Locale\LanguageCollection;
+use Xmlnuke\Core\Locale\LanguageFactory;
+use Xmlnuke\Util\DateUtil;
+
 /**
  * Basic CRUD.
  * @package xmlnuke
@@ -823,7 +847,7 @@ abstract class XmlnukeCrudBase extends XmlnukeDocumentObject implements IXmlnuke
 
 	/**
 	*@desc Contains specific instructions to generate all XML informations-> This method is processed only one time-> Usually is the last method processed->
-	*@param \DOMNode $current \DOMNode where the XML will be created->
+	*@param DOMNode $current \DOMNode where the XML will be created->
 	*@return void
 	*/
 	public function generateObject($current)

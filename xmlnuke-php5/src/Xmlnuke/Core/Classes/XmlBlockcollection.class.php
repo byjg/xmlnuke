@@ -32,6 +32,8 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use DOMNode;
+use InvalidArgumentException;
 use Xmlnuke\Core\Enum\BlockPosition;
 use Xmlnuke\Util\XmlUtil;
 
@@ -65,7 +67,7 @@ class  XmlBlockCollection extends XmlnukeCollection implements IXmlnukeDocumentO
 	
 	/**
 	*@desc Generate page, processing yours childs.
-	*@param \DOMNode $current
+	*@param DOMNode $current
 	*@return void
 	*/
 	public function generateObject($current)

@@ -28,11 +28,13 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+namespace Xmlnuke\Core\Classes;
+
+use Xmlnuke\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Classes;
-
 class  XmlNukeFlash extends XmlnukeCollection implements IXmlnukeDocumentObject 
 {
 	protected $_movie = "";

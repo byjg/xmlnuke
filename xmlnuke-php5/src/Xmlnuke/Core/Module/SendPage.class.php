@@ -27,11 +27,30 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+namespace Xmlnuke\Core\Module;
+
+use Xmlnuke\Core\Classes\PageXml;
+use Xmlnuke\Core\Classes\XmlAnchorCollection;
+use Xmlnuke\Core\Classes\XmlBlockCollection;
+use Xmlnuke\Core\Classes\XmlFormCollection;
+use Xmlnuke\Core\Classes\XmlInputButtons;
+use Xmlnuke\Core\Classes\XmlInputCaption;
+use Xmlnuke\Core\Classes\XmlInputHidden;
+use Xmlnuke\Core\Classes\XmlInputImageValidate;
+use Xmlnuke\Core\Classes\XmlInputMemo;
+use Xmlnuke\Core\Classes\XmlInputTextBox;
+use Xmlnuke\Core\Classes\XmlnukeDocument;
+use Xmlnuke\Core\Classes\XmlnukeText;
+use Xmlnuke\Core\Classes\XmlParagraphCollection;
+use Xmlnuke\Core\Enum\BlockPosition;
+use Xmlnuke\Core\Enum\INPUTTYPE;
+use Xmlnuke\Core\Locale\LanguageCollection;
+use Xmlnuke\Core\Processor\XMLFilenameProcessor;
+use Xmlnuke\Util\MailUtil;
+
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Module;
-
 class SendPage extends BaseModule 
 {
 	/**

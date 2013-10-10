@@ -46,6 +46,9 @@ class  XmlListType
  */
 namespace Xmlnuke\Core\Classes;
 
+use DOMNode;
+use Xmlnuke\Util\XmlUtil;
+
 class  XmlListCollection extends XmlnukeCollection implements IXmlnukeDocumentObject 
 {
 	/**
@@ -87,7 +90,7 @@ class  XmlListCollection extends XmlnukeCollection implements IXmlnukeDocumentOb
 	/**
 	 * Generate page, processing yours childs.
 	 *
-	 * @param \DOMNode $current
+	 * @param DOMNode $current
 	 */
 	protected function generatePage($current)
 	{
@@ -107,7 +110,7 @@ class  XmlListCollection extends XmlnukeCollection implements IXmlnukeDocumentOb
 	/**
 	 * Generate page, processing yours childs.
 	 *
-	 * @param \DOMNode $current
+	 * @param DOMNode $current
 	 */
 	public function generateObject($current)
 	{

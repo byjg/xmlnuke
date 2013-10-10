@@ -33,6 +33,8 @@
  */
 namespace Xmlnuke\Core\Processor;
 
+use Xmlnuke\Util\FileUtil;
+
 class AnydatasetBackupFilenameProcessor extends AnydatasetBaseFilenameProcessor
 {
 	/**

@@ -32,6 +32,11 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use DOMNode;
+use Xmlnuke\Core\Enum\ButtonType;
+use Xmlnuke\Core\Enum\InputButton;
+use Xmlnuke\Util\XmlUtil;
+
 class  XmlInputButtons extends XmlnukeDocumentObject
 {
 	/**
@@ -144,7 +149,7 @@ class  XmlInputButtons extends XmlnukeDocumentObject
 
 	/**
 	*@desc Contains specific instructions to generate all XML informations-> This method is processed only one time-> Usually is the last method processed->
-	*@param \DOMNode $current
+	*@param DOMNode $current
 	*@return void
 	*/
 	public function generateObject($current)

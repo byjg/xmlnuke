@@ -30,6 +30,8 @@
 
 namespace Xmlnuke\Core\Module;
 
+use Xmlnuke\Core\Exception\NotImplementedException;
+
 /**
  * BaseModule class is the base for custom module implementation.
  * This class uses cache, save to disk and other functionalities.

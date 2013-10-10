@@ -29,10 +29,10 @@
 
 namespace Xmlnuke\Core\Engine;
 
-use Xmlnuke\Util\FileUtil;
-use Xmlnuke\Core\Processor\XMLFilenameProcessor;
 use Xmlnuke\Core\Enum\SSLAccess;
-use Xmlnuke\Core\Exception\NotFoundException;
+use Xmlnuke\Core\Exception\NotAuthenticatedException;
+use Xmlnuke\Core\Module\IModule;
+use Xmlnuke\Core\Processor\XMLFilenameProcessor;
 
 /**
  * Locate and create custom user modules.

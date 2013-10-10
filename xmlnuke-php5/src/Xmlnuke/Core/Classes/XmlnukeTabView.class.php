@@ -27,11 +27,15 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+namespace Xmlnuke\Core\Classes;
+
+use DOMNode;
+use InvalidArgumentException;
+use Xmlnuke\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Classes;
-
 class  XmlnukeTabView extends XmlnukeDocumentObject 
 {
 	protected $_tabs = array();
@@ -40,7 +44,7 @@ class  XmlnukeTabView extends XmlnukeDocumentObject
 	
 	/**
 	*@desc Generate page, processing yours childs.
-	*@param \DOMNode $current
+	*@param DOMNode $current
 	*@return void
 	*/
 	public function __construct()

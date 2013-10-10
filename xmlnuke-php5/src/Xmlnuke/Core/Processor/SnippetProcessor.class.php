@@ -34,7 +34,10 @@
 */
 namespace Xmlnuke\Core\Processor;
 
+use Exception;
 use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Exception\EngineException;
+use Xmlnuke\Core\Exception\NotFoundException;
 use Xmlnuke\Util\FileUtil;
 
 class SnippetProcessor

@@ -27,17 +27,21 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 	
+namespace Xmlnuke\Core\Processor;
+
+use DOMDocument;
+use DOMNode;
+use DOMXPath;
+use Exception;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Util\XmlUtil;
+
 /**
 *ParamProcessor can process the XSL transform result (or xhtml cache) and replace the [PARAM:...] 
 *and Adjust Links to Full XMLNuke link (when is possible).
 *<P><b>Only uses this class after XML/XSL Transform and with XHTML files</b></P>
  * @package xmlnuke
 */
-namespace Xmlnuke\Core\Processor;
-
-use Xmlnuke\Core\Engine\Context;
-use Xmlnuke\Util\XmlUtil;
-
 class ParamProcessor
 {
 	/**
@@ -56,7 +60,7 @@ class ParamProcessor
 	}
 
 	/**
-	*@param \DOMDocument $xmlDom - XmlDocument to be parsed
+	*@param DOMDocument $xmlDom - XmlDocument to be parsed
 	*@param string $tagName - Tag to be looked for
 	*@param string $attribute - Attribute within tag to be looked for
 	*@return void
@@ -65,7 +69,7 @@ class ParamProcessor
 	*/
 	public function AdjustToFullLink($xmlDom,$tagName,$attribute)
 	{
-		$xpath = new \DOMXPath($xmlDom);
+		$xpath = new DOMXPath($xmlDom);
 		XmlUtil::registerNamespaceForFilter($xpath, array('x' => 'http://www.w3.org/1999/xhtml'));
 		$nodeList = $xpath->query("//".strtolower($tagName)." | //".strtoupper($tagName) . " | //x:".strtolower($tagName)." | //x:".strtoupper($tagName));
 
@@ -222,7 +226,7 @@ class ParamProcessor
 	}
 
 	/**
-	*@param \DOMDocument $xmlDom
+	*@param DOMDocument $xmlDom
 	*@return void
 	*@desc Process XHTML file and replace the tags [param:...] to XMLNuke context values
 	*/
@@ -246,7 +250,7 @@ class ParamProcessor
 	}
 
 	/**
-	*@param \DOMNode $node
+	*@param DOMNode $node
 	*@param int $depth
 	*@return void
 	*@desc 

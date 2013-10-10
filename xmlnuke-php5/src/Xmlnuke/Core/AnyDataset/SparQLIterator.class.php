@@ -33,6 +33,11 @@
  */
 namespace Xmlnuke\Core\AnyDataset;
 
+use InvalidArgumentException;
+use sparql_result;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Exception\IteratorException;
+
 class SparQLIterator extends GenericIterator
 {
 	/**

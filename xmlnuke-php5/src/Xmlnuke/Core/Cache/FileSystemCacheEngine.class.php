@@ -30,9 +30,11 @@
 
 namespace Xmlnuke\Core\Cache;
 
+use Exception;
 use Xmlnuke\Core\Classes\BaseSingleton;
 use Xmlnuke\Core\Engine\Context;
-
+use Xmlnuke\Util\FileUtil;
+use Xmlnuke\Util\LogWrapper;
 
 class  FileSystemCacheEngine extends BaseSingleton implements ICacheEngine
 {

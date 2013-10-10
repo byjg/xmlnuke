@@ -32,8 +32,11 @@
  */
 namespace Xmlnuke\Core\Locale;
 
+use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\LanguageFileTypes;
+use Xmlnuke\Core\Processor\AdminModulesLangFilenameProcessor;
 use Xmlnuke\Core\Processor\AnydatasetLangFilenameProcessor;
+use Xmlnuke\Util\FileUtil;
 
 class LanguageFactory
 {

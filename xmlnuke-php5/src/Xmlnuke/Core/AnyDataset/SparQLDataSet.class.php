@@ -35,6 +35,9 @@ require_once(PHPXMLNUKEDIR . "src/modules/sparql/sparqllib.php");
  */
 namespace Xmlnuke\Core\AnyDataset;
 
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Exception\DatasetException;
+
 class SparQLDataSet
 {
 	/**

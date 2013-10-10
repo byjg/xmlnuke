@@ -33,6 +33,9 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use DOMNode;
+use Xmlnuke\Util\XmlUtil;
+
 class  XmlContainerCollection extends XmlnukeCollection implements IXmlnukeDocumentObject 
 {
 	protected $_class = "";
@@ -47,7 +50,7 @@ class  XmlContainerCollection extends XmlnukeCollection implements IXmlnukeDocum
 	
 	/**
 	*@desc Generate page, processing yours childs.
-	*@param \DOMNode $current
+	*@param DOMNode $current
 	*@return void
 	*/
 	public function __construct($id = "")

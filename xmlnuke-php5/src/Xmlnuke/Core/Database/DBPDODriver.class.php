@@ -33,6 +33,10 @@
  */
 namespace Xmlnuke\Core\Database;
 
+use PDO;
+use PDOStatement;
+use Xmlnuke\Core\AnyDataset\DBIterator;
+
 class DBPDODriver implements IDBDriver
 {	
 	/**

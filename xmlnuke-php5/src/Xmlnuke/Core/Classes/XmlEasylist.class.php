@@ -37,7 +37,12 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use DOMNode;
+use InvalidArgumentException;
 use Xmlnuke\Core\AnyDataset\IIterator;
+use Xmlnuke\Core\Database\BaseDBAccess;
+use Xmlnuke\Core\Enum\EasyListType;
+use Xmlnuke\Util\XmlUtil;
 
 class  XmlEasyList extends XmlnukeDocumentObject
 {
@@ -207,7 +212,7 @@ class  XmlEasyList extends XmlnukeDocumentObject
 	 *  This method is processed only one time
 	 *  Usually is the last method processed
 	 *
-	 * @param \DOMNode $current
+	 * @param DOMNode $current
 	 */
 	public function generateObject($current)
 	{

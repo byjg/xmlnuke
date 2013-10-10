@@ -34,6 +34,7 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use DOMNode;
 use Xmlnuke\Util\XmlUtil;
 
 class  XmlParagraphCollection extends XmlnukeCollection implements IXmlnukeDocumentObject 
@@ -41,7 +42,7 @@ class  XmlParagraphCollection extends XmlnukeCollection implements IXmlnukeDocum
 	/**
 	 * Generate page, processing yours childs.
 	 *
-	 * @param \DOMNode $current
+	 * @param DOMNode $current
 	 */
 	public function generateObject($current)
 	{

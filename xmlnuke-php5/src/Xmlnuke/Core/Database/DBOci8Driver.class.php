@@ -33,6 +33,9 @@
  */
 namespace Xmlnuke\Core\Database;
 
+use Xmlnuke\Core\AnyDataset\Oci8Iterator;
+use Xmlnuke\Core\Exception\DataBaseException;
+
 class DBOci8Driver implements IDBDriver
 {
 	/**

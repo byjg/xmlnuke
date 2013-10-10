@@ -124,6 +124,15 @@ class  SeriesNotes
  */
 namespace Xmlnuke\Core\Classes;
 
+use chart;
+use DOMNode;
+use InvalidArgumentException;
+use Xmlnuke\Core\AnyDataset\IIterator;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Enum\URLTYPE;
+use Xmlnuke\Util\ConvertFromUTF8;
+use Xmlnuke\Util\XmlUtil;
+
 class  XmlChart extends XmlnukeDocumentObject
 {
 	const MAXCHARTSERIESNAME = 30;
@@ -260,7 +269,7 @@ class  XmlChart extends XmlnukeDocumentObject
 	
 	/**
 	*@desc Generate page, processing yours childs.
-	*@param \DOMNode $current
+	*@param DOMNode $current
 	*@return void
 	*/
 	public function generateObject($current)

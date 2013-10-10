@@ -32,7 +32,9 @@
  */
 namespace Xmlnuke\Core\Database;
 
-class DbPGSqlFunctions extends DbBaseFunctions
+use Xmlnuke\Core\Enum\DATEFORMAT;
+
+class DBPGSqlFunctions extends DBBaseFunctions
 {
 
 	function Concat($s1, $s2 = null)

@@ -32,6 +32,9 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use DOMNode;
+use Xmlnuke\Util\XmlUtil;
+
 class  XmlnukeCode extends XmlnukeDocumentObject 
 {
 
@@ -86,7 +89,7 @@ class  XmlnukeCode extends XmlnukeDocumentObject
 
 	/**
 	*@desc Generate page, processing yours childs.
-	*@param \DOMNode $current
+	*@param DOMNode $current
 	*@return void
 	*/
 	public function generateObject($current)

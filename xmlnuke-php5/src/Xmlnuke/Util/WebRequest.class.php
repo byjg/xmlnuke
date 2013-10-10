@@ -34,6 +34,11 @@
  */
 namespace Xmlnuke\Util;
 
+use Exception;
+use SoapClient;
+use SoapParam;
+use Xmlnuke\Core\Engine\Context;
+
 class WebRequest
 {
 	protected $_url;

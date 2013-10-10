@@ -29,10 +29,13 @@
 
 namespace Xmlnuke\Core\AnyDataset;
 
+use Iterator;
+use Xmlnuke\Core\Exception\NotImplementedException;
+
 /**
  * @package xmlnuke
  */
-abstract class GenericIterator implements IIterator, \Iterator
+abstract class GenericIterator implements IIterator, Iterator
 {
 	public function hasNext()
 	{

@@ -37,7 +37,13 @@ define("CSVFILE_COMMA",  '/[,](?=(?:[^"]*"[^"]*")*(?![^"]*"))/');
  */
 namespace Xmlnuke\Core\AnyDataset;
 
+use Exception;
+use InvalidArgumentException;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Exception\DatasetException;
+use Xmlnuke\Core\Exception\NotFoundException;
 use Xmlnuke\Core\Processor\FilenameProcessor;
+use Xmlnuke\Util\FileUtil;
 
 class TextFileDataSet
 {	

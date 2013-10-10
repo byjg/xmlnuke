@@ -30,7 +30,13 @@
 
 namespace Xmlnuke\Core\Database;
 
+use InvalidArgumentException;
+use Xmlnuke\Core\AnyDataset\DBDataSet;
+use Xmlnuke\Core\AnyDataset\IIterator;
+use Xmlnuke\Core\Cache\ICacheEngine;
 use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Exception\NotImplementedException;
+use Xmlnuke\Util\LogWrapper;
 
 /**
  * @package xmlnuke

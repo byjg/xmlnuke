@@ -32,6 +32,12 @@
  */
 namespace Xmlnuke\Core\Engine;
 
+use Exception;
+use ReflectionClass;
+use Xmlnuke\Core\Exception\NotFoundException;
+use Xmlnuke\Core\Module\IModule;
+use Xmlnuke\Util\FileUtil;
+
 class ChartFactory
 {
 	/**

@@ -32,6 +32,14 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use DOMNode;
+use InvalidArgumentException;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Enum\InputTextBoxType;
+use Xmlnuke\Core\Enum\INPUTTYPE;
+use Xmlnuke\Core\Enum\URLTYPE;
+use Xmlnuke\Util\XmlUtil;
+
 class  XmlInputTextBox extends XmlInputValidate 
 {
 	/**
@@ -255,7 +263,7 @@ class  XmlInputTextBox extends XmlInputValidate
 	}
 	/**
 	*@desc Generate page, processing yours childs.
-	*@param \DOMNode $current
+	*@param DOMNode $current
 	*@return function
 	*/
 	public function generateObject($current)

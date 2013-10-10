@@ -28,6 +28,15 @@
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+namespace Xmlnuke\Core\Database;
+
+use InvalidArgumentException;
+use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Enum\Relation;
+use Xmlnuke\Core\Exception\DataBaseException;
+
 /**
  * @package xmlnuke
  */
@@ -36,8 +45,6 @@
  * Enter description here...
  *
  */
-namespace Xmlnuke\Core\Database;
-
 class ConnectionManagement
 {
 	protected $_dbtype;

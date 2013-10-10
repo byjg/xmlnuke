@@ -29,13 +29,15 @@
 
 namespace Xmlnuke\Core\Classes;
 
+use DOMDocument;
+
 /**
  * @package xmlnuke
  */
 interface IXmlnukeDocument
 {
 	/**
-	* @return \DOMDocument
+	* @return DOMDocument
 	*/
 	public function makeDomObject();
 }

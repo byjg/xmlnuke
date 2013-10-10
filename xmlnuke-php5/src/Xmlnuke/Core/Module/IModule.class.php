@@ -29,6 +29,12 @@
 
 namespace Xmlnuke\Core\Module;
 
+use Xmlnuke\Core\Cache\ICacheEngine;
+use Xmlnuke\Core\Classes\IXmlnukeDocument;
+use Xmlnuke\Core\Enum\AccessLevel;
+use Xmlnuke\Core\Locale\LanguageCollection;
+use Xmlnuke\Core\Processor\XMLFilenameProcessor;
+
 /**
  * IModule is a generic interface used to create custom user modules. 
  * 

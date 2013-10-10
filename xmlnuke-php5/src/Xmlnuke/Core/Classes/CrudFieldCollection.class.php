@@ -33,6 +33,10 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use ArrayObject;
+use InvalidArgumentException;
+use Xmlnuke\Core\Enum\XmlInputObjectType;
+
 class  CrudFieldCollection
 {
 	/**

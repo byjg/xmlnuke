@@ -33,6 +33,12 @@
  */
 namespace Xmlnuke\Core\AnyDataset;
 
+use PDO;
+use PDOStatement;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Exception\IteratorException;
+use Xmlnuke\Util\FileUtil;
+
 class DBIterator extends GenericIterator
 {
 	const RECORD_BUFFER = 50;

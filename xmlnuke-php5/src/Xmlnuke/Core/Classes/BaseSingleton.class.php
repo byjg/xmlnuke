@@ -33,6 +33,8 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use Exception;
+
 class BaseSingleton
 {
 

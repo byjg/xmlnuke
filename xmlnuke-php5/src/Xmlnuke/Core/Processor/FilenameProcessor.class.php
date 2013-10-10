@@ -29,6 +29,7 @@
 
 namespace Xmlnuke\Core\Processor;
 
+use InvalidArgumentException;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Util\FileUtil;
 

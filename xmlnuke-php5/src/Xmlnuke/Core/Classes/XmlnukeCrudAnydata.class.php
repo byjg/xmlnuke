@@ -26,6 +26,19 @@
  *
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
+
+namespace Xmlnuke\Core\Classes;
+
+use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use Xmlnuke\Core\AnyDataset\IIterator;
+use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use Xmlnuke\Core\AnyDataset\SingleRow;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Enum\Relation;
+use Xmlnuke\Core\Enum\XmlInputObjectType;
+use Xmlnuke\Core\Processor\AnydatasetBaseFilenameProcessor;
+use XmlnukeCrudBase;
+
 /**
  * Basic CRUD based on XmlEditList, XmlFormCollection and AnyDataSet classes. 
  * 
@@ -85,8 +98,6 @@
  * 
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Classes;
-
 class  XmlnukeCrudAnydata extends XmlnukeCrudBase
 {
 	/**

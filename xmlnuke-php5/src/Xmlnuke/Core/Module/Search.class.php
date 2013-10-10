@@ -32,6 +32,27 @@
  */
 namespace Xmlnuke\Core\Module;
 
+use DOMDocument;
+use Exception;
+use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use Xmlnuke\Core\Classes\PageXml;
+use Xmlnuke\Core\Classes\XmlAnchorCollection;
+use Xmlnuke\Core\Classes\XmlBlockCollection;
+use Xmlnuke\Core\Classes\XmlFormCollection;
+use Xmlnuke\Core\Classes\XmlInputButtons;
+use Xmlnuke\Core\Classes\XmlInputCheck;
+use Xmlnuke\Core\Classes\XmlInputTextBox;
+use Xmlnuke\Core\Classes\XmlnukeBreakLine;
+use Xmlnuke\Core\Classes\XmlnukeDocument;
+use Xmlnuke\Core\Classes\XmlnukeText;
+use Xmlnuke\Core\Classes\XmlParagraphCollection;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Enum\BlockPosition;
+use Xmlnuke\Core\Locale\LanguageCollection;
+use Xmlnuke\Core\Processor\FilenameProcessor;
+use Xmlnuke\Core\Processor\XMLFilenameProcessor;
+use Xmlnuke\Util\XmlUtil;
+
 class Search extends BaseModule
 {
 	/**
@@ -277,7 +298,7 @@ class Search extends BaseModule
 	 * Get Node
 	 *
 	 * @param Array $list
-	 * @param \DOMDocument $doc
+	 * @param DOMDocument $doc
 	 * @return null
 	 */
 	private function getNode($list, $doc)

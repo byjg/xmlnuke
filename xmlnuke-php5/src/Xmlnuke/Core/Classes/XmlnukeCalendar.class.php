@@ -35,6 +35,8 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use Xmlnuke\Util\XmlUtil;
+
 class  XmlnukeCalendar extends XmlnukeDocumentObject 
 {
 	/**

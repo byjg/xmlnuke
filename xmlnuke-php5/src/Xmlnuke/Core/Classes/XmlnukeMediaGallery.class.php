@@ -29,11 +29,15 @@
  */
 
 
+namespace Xmlnuke\Core\Classes;
+
+use InvalidArgumentException;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Classes;
-
 class  XmlnukeMediaGallery extends XmlnukeCollection implements IXmlnukeDocumentObject
 {
 	/**

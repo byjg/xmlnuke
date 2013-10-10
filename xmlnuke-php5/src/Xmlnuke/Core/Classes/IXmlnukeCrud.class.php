@@ -29,6 +29,9 @@
 
 namespace Xmlnuke\Core\Classes;
 
+use Xmlnuke\Core\AnyDataset\IIterator;
+use Xmlnuke\Core\AnyDataset\SingleRow;
+
 /**
  * @package xmlnuke
  */

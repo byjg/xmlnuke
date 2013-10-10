@@ -32,6 +32,10 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use DOMNode;
+use Xmlnuke\Core\Enum\INPUTTYPE;
+use Xmlnuke\Util\XmlUtil;
+
 class  XmlInputValidate extends XmlnukeDocumentObject 
 {
 	/**
@@ -135,7 +139,7 @@ class  XmlInputValidate extends XmlnukeDocumentObject
 	
 	/**
 	*@desc Generate page, processing yours childs.
-	*@param \DOMNode $current
+	*@param DOMNode $current
 	*@return void
 	*/
 	public function generateObject($current)

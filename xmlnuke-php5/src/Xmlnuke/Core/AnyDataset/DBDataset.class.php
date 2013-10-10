@@ -32,6 +32,17 @@
  */
 namespace Xmlnuke\Core\AnyDataset;
 
+use IteratorIterator;
+use PDO;
+use Xmlnuke\Core\Database\ConnectionManagement;
+use Xmlnuke\Core\Database\DBOci8Driver;
+use Xmlnuke\Core\Database\DBPDODriver;
+use Xmlnuke\Core\Database\DBSQLRelayDriver;
+use Xmlnuke\Core\Database\IDBDriver;
+use Xmlnuke\Core\Database\IDbFunctions;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Engine\PluginFactory;
+
 class DBDataSet 
 {
 	

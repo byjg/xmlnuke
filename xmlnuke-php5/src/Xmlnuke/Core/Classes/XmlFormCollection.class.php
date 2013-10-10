@@ -32,6 +32,12 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use DOMNode;
+use InvalidArgumentException;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Enum\DATEFORMAT;
+use Xmlnuke\Util\XmlUtil;
+
 class  XmlFormCollection extends XmlnukeCollection implements IXmlnukeDocumentObject
 {
 	/**
@@ -171,7 +177,7 @@ class  XmlFormCollection extends XmlnukeCollection implements IXmlnukeDocumentOb
 	
 	/**
 	*@desc Generate page, processing yours childs.
-	*@param \DOMNode $current
+	*@param DOMNode $current
 	*@return void
 	*/
 	public function generateObject($current)

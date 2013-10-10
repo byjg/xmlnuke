@@ -32,6 +32,7 @@ namespace Xmlnuke\Core\Cache;
 
 use Xmlnuke\Core\Classes\BaseSingleton;
 use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Util\LogWrapper;
 
 
 class  ArrayCacheEngine extends BaseSingleton implements ICacheEngine

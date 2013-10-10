@@ -55,6 +55,21 @@ class  FileBrowserEditListType
  */
 namespace Xmlnuke\Core\Classes;
 
+use DOMNode;
+use Exception;
+use Xmlnuke\Core\AnyDataset\ArrayDataSet;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Enum\CustomButtons;
+use Xmlnuke\Core\Enum\LanguageFileTypes;
+use Xmlnuke\Core\Enum\MultipleSelectType;
+use Xmlnuke\Core\Enum\UIAlert;
+use Xmlnuke\Core\Exception\NotFoundException;
+use Xmlnuke\Core\Locale\LanguageCollection;
+use Xmlnuke\Core\Locale\LanguageFactory;
+use Xmlnuke\Core\Processor\ForceFilenameLocation;
+use Xmlnuke\Core\Processor\UploadFilenameProcessor;
+use Xmlnuke\Util\FileUtil;
+
 class  XmlFileBrowser extends XmlnukeDocumentObject
 {
 	/**
@@ -251,7 +266,7 @@ class  XmlFileBrowser extends XmlnukeDocumentObject
 	 * Contains specific instructions to generate all XML informations. 
 	 * This method is processed only one time. Usually is the last method processed.
 	 *
-	 * @param \DOMNode $current
+	 * @param DOMNode $current
 	 */
 	public function generateObject($current)
 	{

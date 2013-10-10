@@ -33,7 +33,9 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use InvalidArgumentException;
 use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Util\XmlUtil;
 
 class  XmlInputGroup extends XmlnukeCollection implements IXmlnukeDocumentObject 
 {

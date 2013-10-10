@@ -27,13 +27,27 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
  
+namespace Xmlnuke\Core\Module;
+
+use Xmlnuke\Core\Classes\PageXml;
+use Xmlnuke\Core\Classes\XmlAnchorCollection;
+use Xmlnuke\Core\Classes\XmlBlockCollection;
+use Xmlnuke\Core\Classes\XmlListCollection;
+use Xmlnuke\Core\Classes\XmlListType;
+use Xmlnuke\Core\Classes\XmlnukeDocument;
+use Xmlnuke\Core\Classes\XmlnukeSpanCollection;
+use Xmlnuke\Core\Classes\XmlnukeText;
+use Xmlnuke\Core\Classes\XmlParagraphCollection;
+use Xmlnuke\Core\Enum\BlockPosition;
+use Xmlnuke\Core\Locale\LanguageCollection;
+use Xmlnuke\Core\Processor\XSLFilenameProcessor;
+use Xmlnuke\Util\FileUtil;
+
 /**
  * XSLTheme is a default module descendant from BaseModule class.
  * 
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Module;
-
 class XSLTheme extends BaseModule
 {
 	/**

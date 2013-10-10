@@ -34,18 +34,26 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use DOMDocument;
+use DOMElement;
+use DOMNode;
+use DOMXPath;
+use Xmlnuke\Core\Processor\XMLFilenameProcessor;
+use Xmlnuke\Util\FileUtil;
+use Xmlnuke\Util\XmlUtil;
+
 class  PageXml implements IXmlnukeDocument 
 {
 	/**
-	*@var \DOMDocument
+	*@var DOMDocument
 	*/
 	private $_xmlDoc;
 	/**
-	*@var \DOMNode
+	*@var DOMNode
 	*/
 	private $_nodePage;
 	/**
-	*@var \DOMNode
+	*@var DOMNode
 	*/
 	protected $_nodeGroup;
 	/**
@@ -83,7 +91,7 @@ class  PageXml implements IXmlnukeDocument
 			"</group>\r\n".
 			"</page>";
 			$this->_xmlDoc = XmlUtil::CreateXmlDocumentFromStr($auxStr);
-			$xpath = new \DOMXPath($this->_xmlDoc);
+			$xpath = new DOMXPath($this->_xmlDoc);
 			$this->_nodePage = $this->_xmlDoc->getElementsByTagName("page")->item(0);
 			$this->_nodeGroup = $xpath->query("/page/group")->item(0);
 
@@ -108,7 +116,7 @@ class  PageXml implements IXmlnukeDocument
 	*/
 	public function setTitle($value)//ok
 	{
-		$xpath = new \DOMXPath($this->_xmlDoc);
+		$xpath = new DOMXPath($this->_xmlDoc);
 		$xpath->query("/page/meta/title")->item(0)->nodeValue = $value ;
 	}
 	/**
@@ -117,7 +125,7 @@ class  PageXml implements IXmlnukeDocument
 	*/
 	public function getTitle()//ok
 	{
-		$xpath = new \DOMXPath($this->_xmlDoc);
+		$xpath = new DOMXPath($this->_xmlDoc);
 		return 	$xpath->query("/page/meta/title")->item(0)->nodeValue;
 	}
 
@@ -131,7 +139,7 @@ class  PageXml implements IXmlnukeDocument
 	
 	public function setAbstract($value)
 	{
-		$xpath = new \DOMXPath($this->_xmlDoc);
+		$xpath = new DOMXPath($this->_xmlDoc);
 		$xpath->query("/page/meta/abstract")->item(0)->nodeValue= $value ;
 
 	}
@@ -143,7 +151,7 @@ class  PageXml implements IXmlnukeDocument
 	
 	public function getAbstract()
 	{
-		$xpath = new \DOMXPath($this->_xmlDoc);
+		$xpath = new DOMXPath($this->_xmlDoc);
 		return 	$xpath->query("/page/meta/abstract")->item(0)->nodeValue;
 	}
 
@@ -159,7 +167,7 @@ class  PageXml implements IXmlnukeDocument
 	
 	public function setGroupKeyword($value)
 	{
-		$xpath = new \DOMXPath($this->_xmlDoc);
+		$xpath = new DOMXPath($this->_xmlDoc);
 		$xpath->query("/page/meta/groupkeyword")->item(0)->nodeValue= $value ;
 
 	}
@@ -171,7 +179,7 @@ class  PageXml implements IXmlnukeDocument
 	
 	public function getGroupKeyword()
 	{
-		$xpath = new \DOMXPath($this->_xmlDoc);
+		$xpath = new DOMXPath($this->_xmlDoc);
 		return 	$xpath->query("/page/meta/groupkeyword")->item(0)->nodeValue;
 	}
 
@@ -184,7 +192,7 @@ class  PageXml implements IXmlnukeDocument
 	
 	private function setModified()
 	{
-		$xpath = new \DOMXPath($this->_xmlDoc);
+		$xpath = new DOMXPath($this->_xmlDoc);
 		$xpath->query("/page/meta/modified")->item(0)->nodeValue= date("D M j Y G:i:s");
 	}
 
@@ -196,7 +204,7 @@ class  PageXml implements IXmlnukeDocument
 		
 	public function Created()
 	{
-		$xpath = new \DOMXPath($this->_xmlDoc);
+		$xpath = new DOMXPath($this->_xmlDoc);
 		return 	$xpath->query("/page/meta/created")->item(0)->nodeValue;
 	}
 
@@ -256,7 +264,7 @@ class  PageXml implements IXmlnukeDocument
 	
 	/**
 	*@param string $title
-	*@return \DOMNode
+	*@return DOMNode
 	*@desc Add a single blockcenter.
 	*<code><blockcenter><title></title><body></body></blockcenter></code>
 	*<returns>Return the BODY element from Block</returns>
@@ -297,8 +305,8 @@ class  PageXml implements IXmlnukeDocument
 	//Parameter: \DOMNode // Return: \DOMNode
 	
 	/**
-	*@param \DOMNode $objBlockCenter
-	*@return \DOMNode
+	*@param DOMNode $objBlockCenter
+	*@return DOMNode
 	*@desc A single paragraph into Body element.
 	*<code><blockcenter><title></title><body></body></blockcenter></code>
 	*<returns>Return the BODY element from Block</returns>
@@ -310,8 +318,8 @@ class  PageXml implements IXmlnukeDocument
 	}
 	
 	/**
-	*@param \DOMNode $code
-	*@param \DOMNode $objParagraph
+	*@param DOMNode $code
+	*@param DOMNode $objParagraph
 	*/
 	public function addCode($objParagraph,$code)
 	{
@@ -327,7 +335,7 @@ class  PageXml implements IXmlnukeDocument
 	
 	/**
 	*@param string $strText
-	*@param \DOMNode $objParagraph	
+	*@param DOMNode $objParagraph	
 	*@desc Add text to a paragraph structure
 	*<param name="objParagraph">Paragraph structure</param>
 	*<param name="strText">Text to be added</param>
@@ -351,7 +359,7 @@ class  PageXml implements IXmlnukeDocument
 	
 	/**
 	*@param string $strText
-	*@param \DOMNode $objParagraph	
+	*@param DOMNode $objParagraph	
 	*@desc Add Italic text to a paragraph structure
 	*<param name="objParagraph">Paragraph structure</param>
 	*<param name="strText">Text to be added</param>
@@ -375,7 +383,7 @@ class  PageXml implements IXmlnukeDocument
 	
 	/**
 	*@param string $strText
-	*@param \DOMNode $objParagraph	
+	*@param DOMNode $objParagraph	
 	*@desc Add bold text to a paragraph structure
 	*<param name="objParagraph">Paragraph structure</param>
 	*<param name="strText">Text to be added</param>
@@ -422,7 +430,7 @@ class  PageXml implements IXmlnukeDocument
 	/// <param name="intHeight">Height</param>int
 	
 	/**
-	*@param \DOMNode $objParagraph Paragragh structure
+	*@param DOMNode $objParagraph Paragragh structure
 	*@param string $strSrc SRC tag
 	*@param string $strAlt ALT tag
 	*@param int $intWidth Width
@@ -454,7 +462,7 @@ class  PageXml implements IXmlnukeDocument
 	///Parameters: \DOMNode $objParagraph, string $link, string $text, string $target
 	
 	/**
-	*@param \DOMNode $objParagraph
+	*@param DOMNode $objParagraph
 	*@param string $link
 	*@param string $text
 	*@param string $target
@@ -516,8 +524,8 @@ class  PageXml implements IXmlnukeDocument
 	/// <returns>\DOMNode</returns>
 	
 	/**
-	*@return \DOMNode
-	*@param \DOMNode $objBlockCenter Blockcenter structure
+	*@return DOMNode
+	*@param DOMNode $objBlockCenter Blockcenter structure
 	*@param string $action Form Action
 	*@param string $title Titile
 	*@param string $decimalseparator Decimal separator
@@ -559,7 +567,7 @@ class  PageXml implements IXmlnukeDocument
 	/// <param name="text">Text label</param>string
 	
 	/**
-	*@param \DOMNode $objForm Form Structure
+	*@param DOMNode $objForm Form Structure
 	*@param string $text Text label
 	*@desc Add a label/caption to Form Structure
 	*/
@@ -578,7 +586,7 @@ class  PageXml implements IXmlnukeDocument
 	/// Parameters: \DOMNode $objForm, string $name, string $value
 	
 	/**
-	*@param \DOMNode $objForm Form structure
+	*@param DOMNode $objForm Form structure
 	*@param  string $name Name
 	*@param string $value Value
 	*@desc Add hidden object to Form structure
@@ -612,7 +620,7 @@ class  PageXml implements IXmlnukeDocument
 */
 
 	/**
-	*@param \DOMNode $objForm Form structure
+	*@param DOMNode $objForm Form structure
 	*@param  string $caption Caption
 	*@param string $name name
 	*@param string $value Value
@@ -677,7 +685,7 @@ class  PageXml implements IXmlnukeDocument
 	///  Parameters: \DOMNode $objForm, string $caption, string $name, int $size
 	
 	/**
-	*@param \DOMNode $objForm Form structure
+	*@param DOMNode $objForm Form structure
 	*@param string $caption Caption
 	*@param string $name name
 	*@param int $size Max size
@@ -707,7 +715,7 @@ class  PageXml implements IXmlnukeDocument
 	//TEXTAREA
 	
 	/**
-	*@param \DOMNode $objForm Form structure
+	*@param DOMNode $objForm Form structure
 	*@param string $caption Caption
 	*@param string $name name
 	*@param string $value Value
@@ -740,7 +748,7 @@ class  PageXml implements IXmlnukeDocument
 	/// Parameters: \DOMNode objForm, string caption, string name, string value
 	
 	/**
-	*@param \DOMNode $objForm Form structure
+	*@param DOMNode $objForm Form structure
 	*@param string $caption Caption
 	*@param string $name name
 	*@param string $value Value
@@ -765,7 +773,7 @@ class  PageXml implements IXmlnukeDocument
 	/// Parameters: \DOMNode objForm, string caption, string name, string value
 	
 	/**
-	*@param \DOMNode $objForm Form structure
+	*@param DOMNode $objForm Form structure
 	*@param string $caption Caption
 	*@param string $name name
 	*@param string $value Value
@@ -792,8 +800,8 @@ class  PageXml implements IXmlnukeDocument
 	/// Parameters: \DOMNode objForm, string caption, string name // Return:\DOMNode
 	
 	/**
-	*@return \DOMNode 
-	*@param \DOMNode $objForm Form structure
+	*@return DOMNode 
+	*@param DOMNode $objForm Form structure
 	*@param string $caption Caption
 	*@param string $name name
 	*@desc  Add a Select object to Form Structure
@@ -864,7 +872,7 @@ class  PageXml implements IXmlnukeDocument
 	/// Parameters: \DOMNode objSelect, string caption, string value, bool selected
 	
 	/**
-	*@param \DOMNode $objSelect Select Object
+	*@param DOMNode $objSelect Select Object
 	*@param string $caption Caption
 	*@param string $value Value
 	*@param bool $selected 
@@ -894,8 +902,8 @@ class  PageXml implements IXmlnukeDocument
 	/// Parameter: \DOMNode objForm // return: \DOMNode
 	
 	/**
-	*@return \DOMNode
-	*@param \DOMNode $objForm Form Object
+	*@return DOMNode
+	*@param DOMNode $objForm Form Object
 	*@desc  Add a Box option to a form Object
 	*/
 	
@@ -914,7 +922,7 @@ class  PageXml implements IXmlnukeDocument
 	/// Parameters: \DOMNode objBoxButtons, string name, string caption, string onclick
 	
 	/**
-	*@param \DOMNode objBoxButtons Box Button Object
+	*@param DOMNode objBoxButtons Box Button Object
 	*@param string $name name
 	*@param string $caption Caption
 	*@param string $onclick Onclick javascript
@@ -937,7 +945,7 @@ class  PageXml implements IXmlnukeDocument
 	/// <param name="caption">Caption</param>
 	
 	/**
-	*@param \DOMNode objBoxButtons Box Button Object
+	*@param DOMNode objBoxButtons Box Button Object
 	*@param string $name name
 	*@param string $caption Caption
 	*@desc Add a submit button to a Box Button Object
@@ -959,7 +967,7 @@ class  PageXml implements IXmlnukeDocument
 	/// Parameters: \DOMNode objBoxButtons, string name, string caption
 	
 	/**
-	*@param \DOMNode $objBoxButtons Box Button Object
+	*@param DOMNode $objBoxButtons Box Button Object
 	*@param string $name name
 	*@param string $caption Caption
 	*@desc Add a reset button to a Box Button Object
@@ -980,8 +988,8 @@ class  PageXml implements IXmlnukeDocument
 	/// Parameter: \DOMNode objForm // return: \DOMNode
 	
 	/**
-	*@return \DOMNode
-	*@param \DOMNode $objForm Form Object
+	*@return DOMNode
+	*@param DOMNode $objForm Form Object
 	*@desc Add a Box option to a form Object
 	*/
 	
@@ -1002,8 +1010,8 @@ class  PageXml implements IXmlnukeDocument
 	/// Parameters: \DOMNode objBoxButtons, string name, string caption, string onclick
 	
 	/**
-	*@return \DOMNode
-	*@param \DOMNode $objBoxButtons Box Button Object
+	*@return DOMNode
+	*@param DOMNode $objBoxButtons Box Button Object
 	*@param string $name Name
 	*@param string $caption Caption
 	*@param string onclick Onclick javascript
@@ -1116,7 +1124,7 @@ class  PageXml implements IXmlnukeDocument
 
 	/**
 	*@desc Generate page, processing yours childs using the parent.
-	*@return \DOMDocument
+	*@return DOMDocument
 	*/
 	public function makeDomObject()
 	{
@@ -1157,7 +1165,7 @@ class  PageXml implements IXmlnukeDocument
 	//Parameters: \DOMNode objParagraph, string sourceXml, XmlException ex
 	
 	/**
-	*@param \DOMNode $objParagraph
+	*@param DOMNode $objParagraph
 	*@param string $sourceXml
 	*@param XmlException $ex
 	*/
@@ -1171,7 +1179,7 @@ class  PageXml implements IXmlnukeDocument
 	
 	/**
 	* @param IXmlnukeDocumentObject $object
-	* @param \DOMElement $node
+	* @param DOMElement $node
 	* @return void
 	* @desc Add a Xmlnuke Object in Element PageXml or in page. If $node is null the object target will be the page
 	*/

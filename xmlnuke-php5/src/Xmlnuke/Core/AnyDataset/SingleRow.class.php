@@ -33,11 +33,16 @@
  */
 namespace Xmlnuke\Core\AnyDataset;
 
+use DOMNode;
+use ReflectionClass;
+use ReflectionProperty;
+use Xmlnuke\Util\XmlUtil;
+
 class SingleRow
 {
 	/**
 	 * \DOMNode represents a SingleRow
-	 * @var \DOMNode
+	 * @var DOMNode
 	 */
 	private $_node = null;
 
@@ -236,7 +241,7 @@ class SingleRow
 
 	/**
 	* Get the \DOMNode row objet
-	* @return \DOMNode
+	* @return DOMNode
 	*/
 	public function getDomObject()
 	{

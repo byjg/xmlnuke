@@ -27,6 +27,22 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+namespace Xmlnuke\Core\Classes;
+
+use Exception;
+use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use Xmlnuke\Core\AnyDataset\DBDataSet;
+use Xmlnuke\Core\AnyDataset\IIterator;
+use Xmlnuke\Core\AnyDataset\SingleRow;
+use Xmlnuke\Core\Database\SQLHelper;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Enum\EditListFieldType;
+use Xmlnuke\Core\Enum\INPUTTYPE;
+use Xmlnuke\Core\Enum\SQLFieldType;
+use Xmlnuke\Core\Enum\SQLType;
+use Xmlnuke\Core\Enum\XmlInputObjectType;
+use Xmlnuke\Util\Debug;
+
 /**
  * Basic CRUD based on XmlEditList, XmlFormCollection and DBDataSet classes
  * 
@@ -86,8 +102,6 @@
  * 
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Classes;
-
 class  XmlnukeCrudDB extends XmlnukeCrudBase
 {
 	/**

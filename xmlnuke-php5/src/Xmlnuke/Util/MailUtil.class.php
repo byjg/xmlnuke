@@ -31,6 +31,12 @@ require_once(PHPXMLNUKEDIR . "src/modules/phpmailer/class.phpmailer.php");
 
 namespace Xmlnuke\Util;
 
+use PHPMailer;
+use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use Xmlnuke\Core\Classes\MailEnvelope;
+use Xmlnuke\Core\Enum\Relation;
+
 class MailUtil
 {
 	/**

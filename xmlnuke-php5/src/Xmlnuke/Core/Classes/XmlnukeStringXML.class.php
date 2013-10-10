@@ -27,11 +27,16 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+namespace Xmlnuke\Core\Classes;
+
+use DOMNode;
+use Exception;
+use InvalidArgumentException;
+use Xmlnuke\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Classes;
-
 class  XmlnukeStringXML extends XmlnukeDocumentObject
 {
 	protected $_xml;
@@ -47,7 +52,7 @@ class  XmlnukeStringXML extends XmlnukeDocumentObject
 	
 	/**
     *@desc Contains specific instructions to generate all XML informations. This method is processed only one time. Usually is the last method processed.
-    *@param \DOMNode $current
+    *@param DOMNode $current
     *@return void
     */
     public function generateObject($current)

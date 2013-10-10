@@ -27,13 +27,31 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
+namespace Xmlnuke\Core\Module;
+
+use UserProfile;
+use Xmlnuke\Core\Classes\PageXml;
+use Xmlnuke\Core\Classes\XmlBlockCollection;
+use Xmlnuke\Core\Classes\XmlEasyList;
+use Xmlnuke\Core\Classes\XmlFormCollection;
+use Xmlnuke\Core\Classes\XmlInputButtons;
+use Xmlnuke\Core\Classes\XmlInputHidden;
+use Xmlnuke\Core\Classes\XmlInputLabelField;
+use Xmlnuke\Core\Classes\XmlInputTextBox;
+use Xmlnuke\Core\Classes\XmlnukeDocument;
+use Xmlnuke\Core\Classes\XmlnukeText;
+use Xmlnuke\Core\Classes\XmlParagraphCollection;
+use Xmlnuke\Core\Enum\BlockPosition;
+use Xmlnuke\Core\Enum\EasyListType;
+use Xmlnuke\Core\Enum\InputTextBoxType;
+use Xmlnuke\Core\Enum\UserProperty;
+use Xmlnuke\Core\Locale\LanguageCollection;
+
 /**
  * UserProfile is a default module descendant from BaseModule class.
  *
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Module;
-
 class UserProfile extends BaseModule
 {
 	/**

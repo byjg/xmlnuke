@@ -32,6 +32,9 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use DOMNode;
+use Xmlnuke\Util\XmlUtil;
+
 class  XmlInputHidden extends XmlnukeDocumentObject
 {
 	/**
@@ -56,7 +59,7 @@ class  XmlInputHidden extends XmlnukeDocumentObject
 	
 	/**
 	*@desc Generate page, processing yours childs.
-	*@param \DOMNode $current
+	*@param DOMNode $current
 	*@return void
 	*/
 	public function generateObject($current)

@@ -27,11 +27,14 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+namespace Xmlnuke\Core\Classes;
+
+use DOMNode;
+use Xmlnuke\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Classes;
-
 class  XmlnukeImage extends XmlnukeDocumentObject 
 {
 	/**
@@ -113,7 +116,7 @@ class  XmlnukeImage extends XmlnukeDocumentObject
 	
 	/**
 	*@desc Generate page, processing yours childs.
-	*@param \DOMNode $current
+	*@param DOMNode $current
 	*@return void
 	*/
 	public function generateObject($current)

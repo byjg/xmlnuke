@@ -32,6 +32,75 @@
  */
 namespace Xmlnuke\Core\Module;
 
+use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use Xmlnuke\Core\AnyDataset\ArrayDataSet;
+use Xmlnuke\Core\AnyDataset\DBDataSet;
+use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use Xmlnuke\Core\AnyDataset\TextFileDataSet;
+use Xmlnuke\Core\AnyDataset\XmlDataSet;
+use Xmlnuke\Core\Classes\ChartOutput;
+use Xmlnuke\Core\Classes\ChartSeriesFormat;
+use Xmlnuke\Core\Classes\CrudField;
+use Xmlnuke\Core\Classes\CrudFieldCollection;
+use Xmlnuke\Core\Classes\EditListField;
+use Xmlnuke\Core\Classes\PageXml;
+use Xmlnuke\Core\Classes\TreeViewActionType;
+use Xmlnuke\Core\Classes\XmlAnchorCollection;
+use Xmlnuke\Core\Classes\XmlBlockCollection;
+use Xmlnuke\Core\Classes\XmlChart;
+use Xmlnuke\Core\Classes\XmlContainerCollection;
+use Xmlnuke\Core\Classes\XmlDualList;
+use Xmlnuke\Core\Classes\XmlEasyList;
+use Xmlnuke\Core\Classes\XmlEditList;
+use Xmlnuke\Core\Classes\XmlFormCollection;
+use Xmlnuke\Core\Classes\XmlInputButtons;
+use Xmlnuke\Core\Classes\XmlInputCaption;
+use Xmlnuke\Core\Classes\XmlInputCheck;
+use Xmlnuke\Core\Classes\XmlInputDateTime;
+use Xmlnuke\Core\Classes\XmlInputFile;
+use Xmlnuke\Core\Classes\XmlInputHidden;
+use Xmlnuke\Core\Classes\XmlInputLabelField;
+use Xmlnuke\Core\Classes\XmlInputMemo;
+use Xmlnuke\Core\Classes\XmlInputSortableList;
+use Xmlnuke\Core\Classes\XmlInputTextBox;
+use Xmlnuke\Core\Classes\XmlListCollection;
+use Xmlnuke\Core\Classes\XmlListType;
+use Xmlnuke\Core\Classes\XmlnukeAjaxCallback;
+use Xmlnuke\Core\Classes\XmlnukeBreakLine;
+use Xmlnuke\Core\Classes\XmlnukeCalendar;
+use Xmlnuke\Core\Classes\XmlnukeCalendarEvent;
+use Xmlnuke\Core\Classes\XmlnukeCode;
+use Xmlnuke\Core\Classes\XmlnukeCrudDB;
+use Xmlnuke\Core\Classes\XmlnukeDocument;
+use Xmlnuke\Core\Classes\XmlnukeFaq;
+use Xmlnuke\Core\Classes\XmlnukeImage;
+use Xmlnuke\Core\Classes\XmlnukeManageUrl;
+use Xmlnuke\Core\Classes\XmlnukeMediaGallery;
+use Xmlnuke\Core\Classes\XmlnukeSpanCollection;
+use Xmlnuke\Core\Classes\XmlnukeTabView;
+use Xmlnuke\Core\Classes\XmlnukeText;
+use Xmlnuke\Core\Classes\XmlnukeTreeview;
+use Xmlnuke\Core\Classes\XmlnukeTreeViewFolder;
+use Xmlnuke\Core\Classes\XmlnukeTreeViewLeaf;
+use Xmlnuke\Core\Classes\XmlnukeUIAlert;
+use Xmlnuke\Core\Classes\XmlParagraphCollection;
+use Xmlnuke\Core\Enum\BlockPosition;
+use Xmlnuke\Core\Enum\CustomButtons;
+use Xmlnuke\Core\Enum\DATEFORMAT;
+use Xmlnuke\Core\Enum\EasyListType;
+use Xmlnuke\Core\Enum\INPUTTYPE;
+use Xmlnuke\Core\Enum\Relation;
+use Xmlnuke\Core\Enum\SortableListItemState;
+use Xmlnuke\Core\Enum\UIAlert;
+use Xmlnuke\Core\Enum\UIAlertOpenAction;
+use Xmlnuke\Core\Enum\URLTYPE;
+use Xmlnuke\Core\Enum\XmlInputObjectType;
+use Xmlnuke\Core\Locale\LanguageCollection;
+use Xmlnuke\Core\Processor\ForceFilenameLocation;
+use Xmlnuke\Core\Processor\UploadFilenameProcessor;
+use Xmlnuke\Util\Debug;
+use Xmlnuke\Util\FileUtil;
+
 class Sample extends BaseModule
 {
 	/**

@@ -33,6 +33,11 @@
  */
 namespace Xmlnuke\Core\AnyDataset;
 
+use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use Xmlnuke\Core\AnyDataset\GenericIterator;
+use Xmlnuke\Core\AnyDataset\IIterator;
+use Xmlnuke\Core\AnyDataset\SingleRow;
+
 class ArrayIIterator extends GenericIterator
 {
 	/**

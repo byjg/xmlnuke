@@ -33,6 +33,9 @@
  */
 namespace Xmlnuke\Core\AnyDataset;
 
+use InvalidArgumentException;
+use Xmlnuke\Core\Cache\ICacheEngine;
+
 class CachedDBDataset extends DBDataSet
 {
 
@@ -44,7 +47,7 @@ class CachedDBDataset extends DBDataSet
 
 	/**
 	 *
-	 * @param type $dbname
+	 * @param string $dbname
 	 * @param ICacheEngine $cacheEngine
 	 * @throws InvalidArgumentException
 	 */

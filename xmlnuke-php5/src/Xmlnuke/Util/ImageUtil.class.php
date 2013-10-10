@@ -19,12 +19,21 @@ class StampPosition
 	const Random = 999;
 }
 
+namespace Xmlnuke\Util;
+
 class TextAligment
 {
 	const Left = 1;
 	const Right = 2;
 	const Center = 3;
 }
+
+namespace Xmlnuke\Util;
+
+use Exception;
+use Xmlnuke\Core\Exception\ImageUtilException;
+use Xmlnuke\Core\Exception\NotFoundException;
+use Xmlnuke\Core\Exception\PHPException;
 
 /**
  * A Wrapper for GD library in PHP. GD must be installed in your system for this to work.

@@ -33,6 +33,8 @@
  */
 namespace Xmlnuke\Core\AnyDataset;
 
+use Xmlnuke\Core\Engine\Context;
+
 class TextFileIterator extends GenericIterator
 {
 	/**

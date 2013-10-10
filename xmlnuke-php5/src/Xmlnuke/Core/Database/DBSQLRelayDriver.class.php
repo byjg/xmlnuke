@@ -33,6 +33,9 @@
  */
 namespace Xmlnuke\Core\Database;
 
+use Xmlnuke\Core\AnyDataset\SQLRelayIterator;
+use Xmlnuke\Core\Exception\DatasetException;
+
 class DBSQLRelayDriver implements IDBDriver
 {
 	/**

@@ -30,6 +30,8 @@
 
 namespace Xmlnuke\Core\Cache;
 
+use Xmlnuke\Core\Engine\PluginFactory;
+
 class  CacheFactory
 {
 

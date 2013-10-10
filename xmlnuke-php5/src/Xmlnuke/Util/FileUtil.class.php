@@ -32,6 +32,9 @@
 */
 namespace Xmlnuke\Util;
 
+use DOMDocument;
+use Exception;
+use Xmlnuke\Core\Exception\FileUtilException;
 use Xmlnuke\Core\Processor\FilenameProcessor;
 
 class FileUtil
@@ -355,7 +358,7 @@ class FileUtil
 	 * Not implemented
 	 * @ignore This function. To do nothing.
 	 *
-	 * @param \DOMDocument $document
+	 * @param DOMDocument $document
 	 */
 	public static function CheckUTF8Decode($document)
 	{

@@ -33,6 +33,13 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use DOMNode;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Enum\DATEFORMAT;
+use Xmlnuke\Core\Enum\INPUTTYPE;
+use Xmlnuke\Util\DateUtil;
+use Xmlnuke\Util\XmlUtil;
+
 class  XmlInputDateTime extends XmlnukeDocumentObject
 {
 
@@ -151,7 +158,7 @@ class  XmlInputDateTime extends XmlnukeDocumentObject
 
 	/**
 	 * @desc Generate page, processing yours childs.
-	 * @param \DOMNode $current
+	 * @param DOMNode $current
 	 * @return void
 	 */
 	public function generateObject($current)

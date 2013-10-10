@@ -27,6 +27,11 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
+namespace Xmlnuke\Core\Locale;
+
+use Xmlnuke\Core\Enum\DATEFORMAT;
+use Xmlnuke\Util\FileUtil;
+
 /** 
  * Get the Culture Info based in the context
  *
@@ -43,8 +48,6 @@
  *
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Locale;
-
 class CultureInfo
 {
 	private $_name;

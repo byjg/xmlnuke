@@ -30,14 +30,28 @@
 
 namespace Xmlnuke\Core\Module;
 
-use Xmlnuke\Core\Engine\Context;
-use Xmlnuke\Core\Processor\XMLCacheFilenameProcessor;
+use ReflectionClass;
+use ReflectionMethod;
+use ReflectionProperty;
+use Xmlnuke\Core\Admin\IUsersBase;
+use Xmlnuke\Core\Cache\ICacheEngine;
+use Xmlnuke\Core\Classes\PageXml;
 use Xmlnuke\Core\Classes\XmlnukeDocument;
 use Xmlnuke\Core\Classes\XmlnukeManageUrl;
-use Xmlnuke\Core\Enum\URLTYPE;
-use Xmlnuke\Core\Enum\SSLAccess;
-use Xmlnuke\Core\Locale\LanguageFactory;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Enum\AccessLevel;
 use Xmlnuke\Core\Enum\LanguageFileTypes;
+use Xmlnuke\Core\Enum\SSLAccess;
+use Xmlnuke\Core\Enum\URLTYPE;
+use Xmlnuke\Core\Enum\UserProperty;
+use Xmlnuke\Core\Exception\EngineException;
+use Xmlnuke\Core\Exception\InsufficientPrivilegeException;
+use Xmlnuke\Core\Exception\NotImplementedException;
+use Xmlnuke\Core\Locale\LanguageCollection;
+use Xmlnuke\Core\Locale\LanguageFactory;
+use Xmlnuke\Core\Processor\XMLCacheFilenameProcessor;
+use Xmlnuke\Core\Processor\XMLFilenameProcessor;
+use Xmlnuke\Util\Debug;
 
 /**
  * BaseModule class is the base for custom module implementation.

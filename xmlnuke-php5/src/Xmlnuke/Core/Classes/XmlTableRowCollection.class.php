@@ -33,6 +33,8 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use InvalidArgumentException;
+
 class  XmlTableRowCollection extends XmlTableCollectionBase
 {
 	public function __construct()

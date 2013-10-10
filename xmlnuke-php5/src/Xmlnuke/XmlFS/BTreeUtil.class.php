@@ -29,6 +29,8 @@
 
 namespace Xmlnuke\XmlFS;
 
+use DOMNode;
+
 class BTreeUtil
 {
 	public static $COM_ACENTO = 
@@ -178,7 +180,7 @@ class BTreeUtil
 	}
 
 	/**
-	*@param \DOMNode $node
+	*@param DOMNode $node
 	*@param string $xpath
 	*@param BTree $btree
 	*@return BTree

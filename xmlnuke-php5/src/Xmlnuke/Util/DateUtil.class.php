@@ -30,6 +30,10 @@
 
 namespace Xmlnuke\Util;
 
+use Xmlnuke\Core\Enum\DATEFORMAT;
+use Xmlnuke\Core\Enum\DateParts;
+use Xmlnuke\Core\Exception\DateUtilException;
+
 class DateUtil
 {
 	/**

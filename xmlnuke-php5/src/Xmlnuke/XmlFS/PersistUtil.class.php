@@ -29,7 +29,9 @@
 
 namespace Xmlnuke\XmlFS;
 
+use DOMXPath;
 use Xmlnuke\Core\Exception\NotFoundException;
+use Xmlnuke\Util\FileUtil;
 use Xmlnuke\Util\XmlUtil;
 
 class PersistUtil
@@ -172,7 +174,7 @@ class PersistUtil
 			$doc = XmlUtil::CreateXmlDocumentFromStr("< $rootNode />", false);
 			$source = XmlUtil::CreateXmlDocumentFromFile($documentName);
 			
-			$DocXpath = new \DOMXPath($source);
+			$DocXpath = new DOMXPath($source);
 			$nodes = $DocXpath->query($xpath);
 
 			foreach ($nodes as $node)

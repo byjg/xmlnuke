@@ -27,6 +27,12 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+namespace Xmlnuke\Core\Classes;
+
+use DOMDocument;
+use InvalidArgumentException;
+use Xmlnuke\Util\XmlUtil;
+
 /**
  * Implements a XMLNuke Document. 
  * 
@@ -36,8 +42,6 @@
  * 
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Classes;
-
 class  XmlnukeEmptyDocument extends XmlnukeCollection implements IXmlnukeDocument
 {
 
@@ -55,7 +59,7 @@ class  XmlnukeEmptyDocument extends XmlnukeCollection implements IXmlnukeDocumen
 		
 	/**
 	*@desc Generate page, processing yours childs using the parent.
-	*@return \DOMDocument
+	*@return DOMDocument
 	*/
 	public function makeDomObject()
 	{

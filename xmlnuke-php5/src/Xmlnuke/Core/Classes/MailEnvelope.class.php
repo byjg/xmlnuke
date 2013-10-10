@@ -35,6 +35,14 @@ require_once(PHPXMLNUKEDIR . "src/modules/phpmailer/class.phpmailer.php");
 
 namespace Xmlnuke\Core\Classes;
 
+use Exception;
+use InvalidArgumentException;
+use PHPMailer;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Exception\ModuleException;
+use Xmlnuke\Util\ConvertFromUTF8;
+use Xmlnuke\Util\MailUtil;
+
 class  MailEnvelope
 {
 	protected $_from = "";

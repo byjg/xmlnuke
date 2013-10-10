@@ -30,6 +30,8 @@
 
 namespace Xmlnuke\Core\Processor;
 
+use Xmlnuke\Core\Engine\Context;
+
 /**
  * @package xmlnuke
  */

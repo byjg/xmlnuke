@@ -33,6 +33,10 @@
  */
 namespace Xmlnuke\Core\AnyDataset;
 
+use Xmlnuke\Core\AnyDataset\ArrayDataSet;
+use Xmlnuke\Core\AnyDataset\ArrayIIterator;
+use Xmlnuke\Core\AnyDataset\IIterator;
+
 class ArrayDataSet
 {
 	/**

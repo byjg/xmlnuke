@@ -33,6 +33,12 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use Captcha;
+use DOMNode;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Enum\BlockPosition;
+use Xmlnuke\Util\XmlUtil;
+
 class  XmlInputImageValidate extends XmlnukeDocumentObject 
 {
 	protected $_caption;
@@ -61,7 +67,7 @@ class  XmlInputImageValidate extends XmlnukeDocumentObject
 
 	/**
 	*@desc Generate page, processing yours childs.
-	*@param \DOMNode $current
+	*@param DOMNode $current
 	*@return void
 	*/
 	public function generateObject($current)

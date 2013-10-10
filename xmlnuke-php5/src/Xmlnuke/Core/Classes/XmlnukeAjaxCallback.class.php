@@ -32,7 +32,9 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use DOMNode;
 use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Util\XmlUtil;
 
 class  XmlnukeAjaxCallback extends XmlnukeDocumentObject 
 {
@@ -45,7 +47,7 @@ class  XmlnukeAjaxCallback extends XmlnukeDocumentObject
 	protected $_id = "";
 	/**
 	*@desc Generate page, processing yours childs.
-	*@param \DOMNode $current
+	*@param DOMNode $current
 	*@return void
 	*/
 	public function __construct($context = null)

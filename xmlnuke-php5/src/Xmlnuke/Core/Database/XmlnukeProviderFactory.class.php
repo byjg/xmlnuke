@@ -28,6 +28,8 @@
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+namespace Xmlnuke\Core\Database;
+
 /**
  * @package xmlnuke
  */
@@ -36,7 +38,6 @@
  * Class to create and manipulate Several Data Types
  *
  */
-namespace Xmlnuke\Core\Database;
 
 class XmlnukeProviderFactory
 {

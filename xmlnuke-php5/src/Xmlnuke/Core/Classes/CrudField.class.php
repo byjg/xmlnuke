@@ -32,6 +32,9 @@
  */
 namespace Xmlnuke\Core\Classes;
 
+use Xmlnuke\Core\Enum\INPUTTYPE;
+use Xmlnuke\Core\Enum\XmlInputObjectType;
+
 class  CrudField
 {
 	/**

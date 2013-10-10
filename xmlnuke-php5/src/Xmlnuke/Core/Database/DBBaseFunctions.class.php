@@ -27,10 +27,16 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+namespace Xmlnuke\Core\Database;
+
+use Xmlnuke\Core\AnyDataset\DBDataSet;
+use Xmlnuke\Core\Enum\DATEFORMAT;
+use Xmlnuke\Util\DateUtil;
+
 /**
  * @package xmlnuke
  */
-abstract class DbBaseFunctions implements IDbFunctions
+abstract class DBBaseFunctions implements IDBFunctions
 {
 
 	/**

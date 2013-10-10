@@ -28,11 +28,15 @@
  */
 
 
+namespace Xmlnuke\Core\Classes;
+
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Enum\UIAlert;
+use Xmlnuke\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Classes;
-
 class  XmlnukeProgressBar extends XmlnukeDocumentObject
 {
 	/**

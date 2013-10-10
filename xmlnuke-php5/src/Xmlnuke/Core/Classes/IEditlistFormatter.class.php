@@ -29,6 +29,8 @@
 
 namespace Xmlnuke\Core\Classes;
 
+use Xmlnuke\Core\AnyDataset\SingleRow;
+
 /**
  * @package xmlnuke
  */

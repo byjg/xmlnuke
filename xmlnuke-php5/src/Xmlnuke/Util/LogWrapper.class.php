@@ -32,6 +32,9 @@ require_once(PHPXMLNUKEDIR . 'src/modules/log4php/Logger.php');
 
 namespace Xmlnuke\Util;
 
+use LoggerPatternConverterLogger;
+use Xmlnuke\Core\Processor\LogConfigFilenameProcessor;
+
 class LogWrapper
 {
 	/**

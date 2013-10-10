@@ -32,7 +32,10 @@
  */
 namespace Xmlnuke\Core\Database;
 
-class DbMySQLFunctions extends DbBaseFunctions
+use Xmlnuke\Core\AnyDataset\DBDataSet;
+use Xmlnuke\Core\Enum\DATEFORMAT;
+
+class DBMySQLFunctions extends DBBaseFunctions
 {
     private $sysTimeStamp = 'NOW()';
 

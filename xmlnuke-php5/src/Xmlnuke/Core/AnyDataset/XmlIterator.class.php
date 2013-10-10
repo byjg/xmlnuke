@@ -33,6 +33,12 @@
  */
 namespace Xmlnuke\Core\AnyDataset;
 
+use DOMNodeList;
+use InvalidArgumentException;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Exception\IteratorException;
+use Xmlnuke\Util\XmlUtil;
+
 class XmlIterator extends GenericIterator
 {
 	/**
@@ -45,7 +51,7 @@ class XmlIterator extends GenericIterator
 	/**
 	 * Enter description here...
 	 *
-	 * @var \DOMNodeList
+	 * @var DOMNodeList
 	 */
 	private $_nodeList = null;
 
@@ -71,7 +77,7 @@ class XmlIterator extends GenericIterator
 
 	public function __construct($context, $nodeList, $colNodes)
 	{
-		if (!($nodeList instanceof \DOMNodeList))
+		if (!($nodeList instanceof DOMNodeList))
 		{
 			throw new InvalidArgumentException("XmlIterator: Wrong node list type");
 		}

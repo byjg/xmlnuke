@@ -27,13 +27,21 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
+namespace Xmlnuke\Core\Module;
+
+use Xmlnuke\Core\Classes\PageXml;
+use Xmlnuke\Core\Classes\XmlBlockCollection;
+use Xmlnuke\Core\Classes\XmlnukeDocument;
+use Xmlnuke\Core\Classes\XmlnukeText;
+use Xmlnuke\Core\Classes\XmlParagraphCollection;
+use Xmlnuke\Core\Enum\BlockPosition;
+use Xmlnuke\Core\Locale\LanguageCollection;
+
 /**
  * NotFound is a default module descendant from BaseModule class.
  * This class runs only if the requested module not found.
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Module;
-
 class NotFound extends BaseModule
 {
 	/**

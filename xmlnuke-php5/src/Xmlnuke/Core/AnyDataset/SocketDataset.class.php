@@ -40,6 +40,9 @@
  */
 namespace Xmlnuke\Core\AnyDataset;
 
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Exception\DatasetException;
+
 class SocketDataSet
 {
 	private $_server = null;

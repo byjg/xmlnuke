@@ -27,12 +27,16 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+namespace Xmlnuke\Core\Database;
+
+use Xmlnuke\Core\AnyDataset\DBDataSet;
+use Xmlnuke\Core\Enum\DATEFORMAT;
+use Xmlnuke\Core\Exception\UnsupportedFeatureException;
+
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Database;
-
-class DBDBLibfunctions extends DbBaseFunctions
+class DBDblibFunctions extends DBBaseFunctions
 {
 	function Concat($s1, $s2 = null)
 	{

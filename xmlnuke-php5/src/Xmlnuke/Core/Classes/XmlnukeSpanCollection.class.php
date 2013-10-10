@@ -27,11 +27,13 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+namespace Xmlnuke\Core\Classes;
+
+use DOMNode;
+
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Classes;
-
 class  XmlnukeSpanCollection extends XmlnukeCollection implements IXmlnukeDocumentObject 
 {
 	public function __construct()
@@ -39,7 +41,7 @@ class  XmlnukeSpanCollection extends XmlnukeCollection implements IXmlnukeDocume
 	
 	/**
 	*@desc Contains specific instructions to generate all XML informations. This method is processed only one time. Usually is the last method processed.
-	*@param \DOMNode $current
+	*@param DOMNode $current
 	*@return void
 	*/
 	public function generateObject($current)

@@ -29,7 +29,10 @@
 
 namespace Xmlnuke\XmlFS;
 
+use DOMDocument;
 use Xmlnuke\Core\Exception\NotFoundException;
+use Xmlnuke\Util\FileUtil;
+use Xmlnuke\Util\XmlUtil;
 
 class XmlnukeDB
 {
@@ -113,7 +116,7 @@ class XmlnukeDB
 	//Parameters : string $documentName, Stream $stream
 	public function saveDocumentStream($documentName, $stream)
 	{
-		$xml = new \DOMDocument;
+		$xml = new DOMDocument;
 		$xmlstr = FileUtil::QuickFileRead($this->_persistUtil->getFullFileName($documentName));
 		$this->saveDocumentStr($documentName, $xmlstr);
 	}

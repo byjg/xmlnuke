@@ -28,11 +28,14 @@
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+namespace Xmlnuke\Core\Classes;
+
+use DOMNode;
+use Xmlnuke\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Classes;
-
 class  XmlnukeMediaItem extends XmlnukeCollection implements IXmlnukeDocumentObject
 {
 	protected $_src;
@@ -44,7 +47,7 @@ class  XmlnukeMediaItem extends XmlnukeCollection implements IXmlnukeDocumentObj
 
 	/**
 	*@desc Generate page, processing yours childs.
-	*@param \DOMNode $current
+	*@param DOMNode $current
 	*@return void
 	*/
 	protected function XmlnukeMediaItem($src, $thumb="", $title = "", $caption="", $width="", $height="")
