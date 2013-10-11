@@ -116,8 +116,12 @@ class AutoLoad extends \Xmlnuke\Core\Classes\BaseSingleton
 					$file = $libDir . '/' . $path;
 					if (is_readable($file . '.class.php'))
 					{
-						if (count(glob($file . '.*')) == 0)
-							throw new \Xmlnuke\Core\Exception\EngineException('The file name and the module "' . $className . '" you are called differing uppercase and lowercase. Your operating system supports this behavior, but does not accept Xmlnuke to ensure your code will run on all platforms.');
+						if (\Xmlnuke\Util\FileUtil::isWindowsOS() && (count(glob($file . '.*')) == 0))
+							throw new \Xmlnuke\Core\Exception\EngineException(
+								'The module file name "' . $className . '" does not match uppercase and lowercase. ' . 
+								'Your operating system supports this behavior, ' . 
+								'but Xmlnuke does not accept to ensure your code will run on any platform.'
+							);
 
 						require_once $file . '.class.php';
 						return;
