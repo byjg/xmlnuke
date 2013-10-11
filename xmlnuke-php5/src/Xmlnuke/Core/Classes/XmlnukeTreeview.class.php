@@ -111,6 +111,12 @@ class  XmlnukeTreeview extends XmlnukeDocumentObject
 
 namespace Xmlnuke\Core\Classes;
 
+use DOMNode;
+use InvalidArgumentException;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Util\XmlUtil;
+use Xmlnuke\Core\Processor\ParamProcessor;
+
 class  XmlnukeTreeViewLeaf extends XmlnukeDocumentObject
 {
 	/**
@@ -185,7 +191,7 @@ class  XmlnukeTreeViewLeaf extends XmlnukeDocumentObject
 	
 	/**
 	*@desc Generate page, processing yours childs.
-	*@param \DOMNode $current
+	*@param DOMNode $current
 	*@return void
 	*/
 	public function generateObject($current)
@@ -244,6 +250,11 @@ class  XmlnukeTreeViewLeaf extends XmlnukeDocumentObject
 
 
 namespace Xmlnuke\Core\Classes;
+
+use DOMNode;
+use InvalidArgumentException;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Util\XmlUtil;
 
 class  XmlnukeTreeViewFolder extends XmlnukeTreeViewLeaf
 {

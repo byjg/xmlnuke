@@ -98,6 +98,7 @@ use Xmlnuke\Core\Enum\URLTYPE;
 use Xmlnuke\Core\Enum\XmlInputObjectType;
 use Xmlnuke\Core\Locale\LanguageCollection;
 use Xmlnuke\Core\Module\BaseModule;
+use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
 use Xmlnuke\Core\Processor\ForceFilenameLocation;
 use Xmlnuke\Core\Processor\UploadFilenameProcessor;
 use Xmlnuke\Util\Debug;
@@ -119,6 +120,12 @@ class Sample extends BaseModule
 	 */
 	protected $_myWords;
 
+	/**
+	 *
+	 * @var string
+	 */
+	protected $_url;
+	
 	/**
 	 * Default constructor
 	 *
@@ -166,30 +173,30 @@ class Sample extends BaseModule
 
 		$this->_document = new XmlnukeDocument($this->_myWords->Value("TITLE"), $this->_myWords->Value("ABSTRACT"));
 
-		$linkModule = "url://module:sample";
+		$this->_url = "module:Xmlnuke.Sample";
 
 		$this->_document->setMenuTitle($this->_myWords->Value("OPTIONMODULE"));
 
-		$this->_document->addMenuItem($linkModule."?op=1", $this->_myWords->Value("OBJECT"), $this->_myWords->Value("DESCOBJECT"));
-		$this->_document->addMenuItem($linkModule."?op=2", $this->_myWords->Value("FORM"), $this->_myWords->Value("DESCFORM"));
-		$this->_document->addMenuItem($linkModule."?op=3", $this->_myWords->Value("EDITLIST"), $this->_myWords->Value("DESCEDITLIST"));
-		$this->_document->addMenuItem($linkModule."?op=4", $this->_myWords->Value("ANYDATASET"), $this->_myWords->Value("DESCANYDATASET"));
-		$this->_document->addMenuItem($linkModule."?op=5", $this->_myWords->Value("DATABASE"), $this->_myWords->Value("DESCDATABASE"));
-		$this->_document->addMenuItem($linkModule."?op=6", $this->_myWords->Value("UPLOAD"), $this->_myWords->Value("DESCUPLOAD"));
-		$this->_document->addMenuItem($linkModule."?op=7", $this->_myWords->Value("XMLDATASET"), $this->_myWords->Value("DESCXMLDATASET"));
-		$this->_document->addMenuItem($linkModule."?op=8", $this->_myWords->Value("TEXTFILEDATASET"), $this->_myWords->Value("DESTEXTFILEDATASET"));
-		$this->_document->addMenuItem($linkModule."?op=9", $this->_myWords->Value("XMLCHART"), $this->_myWords->Value("DESCXMLCHART"));
-		$this->_document->addMenuItem($linkModule."?op=10",$this->_myWords->Value("TABVIEW"), $this->_myWords->Value("DESCTABVIEW"));
-		$this->_document->addMenuItem($linkModule."?op=11",$this->_myWords->Value("DUALLIST"), $this->_myWords->Value("DESCDUALLIST"));
-		$this->_document->addMenuItem($linkModule."?op=12",$this->_myWords->Value("FAQ"), $this->_myWords->Value("DESCFAQ"));
-		$this->_document->addMenuItem($linkModule."?op=13",$this->_myWords->Value("AJAXPOST"), $this->_myWords->Value("DESCAJAXPOST"));
-		$this->_document->addMenuItem($linkModule."?op=14",$this->_myWords->Value("AUTOSUGGEST"), $this->_myWords->Value("DESCAUTOSUGGEST"));
-		$this->_document->addMenuItem($linkModule."?op=15",$this->_myWords->Value("TREEVIEW"), $this->_myWords->Value("DESCTREEVIEW"));
-		$this->_document->addMenuItem($linkModule."?op=16",$this->_myWords->Value("SORTABLE"), $this->_myWords->Value("DESCSORTABLE"));
-		$this->_document->addMenuItem($linkModule."?op=20",$this->_myWords->Value("PORTLET"), $this->_myWords->Value("PORTLET"));
-		$this->_document->addMenuItem($linkModule."?op=17",$this->_myWords->Value("CALENDAR"), $this->_myWords->Value("DESCCALENDAR"));
-		$this->_document->addMenuItem($linkModule."?op=18",$this->_myWords->Value("UIALERT"), $this->_myWords->Value("DESCUIALERT"));
-		$this->_document->addMenuItem($linkModule."?op=19",$this->_myWords->Value("MEDIAGALLERY"), $this->_myWords->Value("DESCMEDIAGALLERY"));
+		$this->_document->addMenuItem($this->_url."?op=1", $this->_myWords->Value("OBJECT"), $this->_myWords->Value("DESCOBJECT"));
+		$this->_document->addMenuItem($this->_url."?op=2", $this->_myWords->Value("FORM"), $this->_myWords->Value("DESCFORM"));
+		$this->_document->addMenuItem($this->_url."?op=3", $this->_myWords->Value("EDITLIST"), $this->_myWords->Value("DESCEDITLIST"));
+		$this->_document->addMenuItem($this->_url."?op=4", $this->_myWords->Value("ANYDATASET"), $this->_myWords->Value("DESCANYDATASET"));
+		$this->_document->addMenuItem($this->_url."?op=5", $this->_myWords->Value("DATABASE"), $this->_myWords->Value("DESCDATABASE"));
+		$this->_document->addMenuItem($this->_url."?op=6", $this->_myWords->Value("UPLOAD"), $this->_myWords->Value("DESCUPLOAD"));
+		$this->_document->addMenuItem($this->_url."?op=7", $this->_myWords->Value("XMLDATASET"), $this->_myWords->Value("DESCXMLDATASET"));
+		$this->_document->addMenuItem($this->_url."?op=8", $this->_myWords->Value("TEXTFILEDATASET"), $this->_myWords->Value("DESTEXTFILEDATASET"));
+		$this->_document->addMenuItem($this->_url."?op=9", $this->_myWords->Value("XMLCHART"), $this->_myWords->Value("DESCXMLCHART"));
+		$this->_document->addMenuItem($this->_url."?op=10",$this->_myWords->Value("TABVIEW"), $this->_myWords->Value("DESCTABVIEW"));
+		$this->_document->addMenuItem($this->_url."?op=11",$this->_myWords->Value("DUALLIST"), $this->_myWords->Value("DESCDUALLIST"));
+		$this->_document->addMenuItem($this->_url."?op=12",$this->_myWords->Value("FAQ"), $this->_myWords->Value("DESCFAQ"));
+		$this->_document->addMenuItem($this->_url."?op=13",$this->_myWords->Value("AJAXPOST"), $this->_myWords->Value("DESCAJAXPOST"));
+		$this->_document->addMenuItem($this->_url."?op=14",$this->_myWords->Value("AUTOSUGGEST"), $this->_myWords->Value("DESCAUTOSUGGEST"));
+		$this->_document->addMenuItem($this->_url."?op=15",$this->_myWords->Value("TREEVIEW"), $this->_myWords->Value("DESCTREEVIEW"));
+		$this->_document->addMenuItem($this->_url."?op=16",$this->_myWords->Value("SORTABLE"), $this->_myWords->Value("DESCSORTABLE"));
+		$this->_document->addMenuItem($this->_url."?op=20",$this->_myWords->Value("PORTLET"), $this->_myWords->Value("PORTLET"));
+		$this->_document->addMenuItem($this->_url."?op=17",$this->_myWords->Value("CALENDAR"), $this->_myWords->Value("DESCCALENDAR"));
+		$this->_document->addMenuItem($this->_url."?op=18",$this->_myWords->Value("UIALERT"), $this->_myWords->Value("DESCUIALERT"));
+		$this->_document->addMenuItem($this->_url."?op=19",$this->_myWords->Value("MEDIAGALLERY"), $this->_myWords->Value("DESCMEDIAGALLERY"));
 
 		$block = new XmlBlockCollection($this->_myWords->Value("MODULE"), BlockPosition::Center);
 
@@ -379,7 +386,7 @@ class Sample extends BaseModule
 
 		$paragraph->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("FORMTEXT")));
 
-		$form = new XmlFormCollection($this->_context, "module:sample", $this->_myWords->Value("FORMEDIT"));
+		$form = new XmlFormCollection($this->_context, $this->_url, $this->_myWords->Value("FORMEDIT"));
 		$paragraph->addXmlnukeObject($form);
 
 		$form->setJSValidate(true);
@@ -442,7 +449,7 @@ class Sample extends BaseModule
 		$iterator = $guestbook->getIterator();
 
 		$thirdParagraph = new XmlParagraphCollection();
-		$editList = new XmlEditList($this->_context, $this->_myWords->Value("CONTENTBOOK"), "module:sample");
+		$editList = new XmlEditList($this->_context, $this->_myWords->Value("CONTENTBOOK"), $this->_url);
 		$editList->setDataSource($iterator);
 		$editList->addParameter("op", "3");
 
@@ -469,7 +476,7 @@ class Sample extends BaseModule
 		$customButton->action = "acaocustomizada";
 		$customButton->enabled = true;
 		$customButton->alternateText = "Texto alternativo da ação";
-		$url = new XmlnukeManageUrl(URLTYPE::MODULE , "sample");
+		$url = new XmlnukeManageUrl(URLTYPE::MODULE , "Xmlnuke.Sample");
 		$url->addParam("op", 3);
 		$customButton->url = $url->getUrlFull();
 		$customButton->icon = "common/editlist/ic_custom.gif";
@@ -574,7 +581,7 @@ class Sample extends BaseModule
 			        $this->_context,
 			        $pageField,
 			        $this->_myWords->Value("EDITDB"),
-			        "module:sample?op=4",
+			        $this->_url . "?op=4",
 			        null,
 			        new AnydatasetFilenameProcessor("sample"));
 		$crud->setPageSize(3, 0);
@@ -602,7 +609,7 @@ class Sample extends BaseModule
 		$secop = $this->_context->ContextValue("secop");
 
 		// Menu
-		$form = new XmlFormCollection($this->_context, "module:sample?op=5", "Menu");
+		$form = new XmlFormCollection($this->_context, $this->_url . "?op=5", "Menu");
 		$optionlist = array();
 		$optionlist[""] = "-- Selecione --";
 		$optionlist["setup"] = "Configurar a Conexão";
@@ -622,7 +629,7 @@ class Sample extends BaseModule
 		{
 			case "setup":
 				{
-					$formsetup = new XmlFormCollection($this->_context, "module:sample?op=5", "Editar Conexão");
+					$formsetup = new XmlFormCollection($this->_context, $this->_url . "?op=5", "Editar Conexão");
 					$formsetup->addXmlnukeObject(new XmlInputHidden("secop", "setupconf"));
 
 					$text = new XmlInputTextBox("Connection String", "connection", "adodriver://username:password@server/datasource");
@@ -710,7 +717,7 @@ class Sample extends BaseModule
 								$this->_context,
 								$pageFields,
 								"Edição teste usando Banco de Dados",
-								"module:sample?op=5", null,
+								$this->_url . "?op=5", null,
 								"sample",
 								"sampledb");
 					$crud->setPageSize(3, 0);
@@ -747,7 +754,7 @@ class Sample extends BaseModule
 
 			default:
 				$paragraph->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("DESCUPLOADTEXT2")));
-				$url = new XmlnukeManageUrl(URLTYPE::MODULE, 'sample');
+				$url = new XmlnukeManageUrl(URLTYPE::MODULE, $this->_url);
 				$url->addParam('op', '6');
 				$url->addParam('action', 'add');
 
@@ -786,7 +793,7 @@ class Sample extends BaseModule
 
 			$dataset = new XmlDataSet($this->_context, $xmlstr, $rowNode, $colNode);
 			//$para1->addXmlnukeObject(new XmlnukeText(""));
-			$editlist = new XmlEditList($this->_context, "XML Flat", "module:sample?op=7");
+			$editlist = new XmlEditList($this->_context, "XML Flat", $this->_url . "?op=7");
 			$editlist->setReadOnly(true);
 			$editlist->setDataSource($dataset->getIterator());
 			$para1->addXmlnukeObject($editlist);
@@ -806,7 +813,7 @@ class Sample extends BaseModule
 		}
 
 		// Cria um Formulário
-		$form = new XmlFormCollection($this->_context, "module:sample", "Formulário de Edição");
+		$form = new XmlFormCollection($this->_context, $this->_url, "Formulário de Edição");
 
 		$form->addXmlnukeObject(new XmlInputHidden("op", "7"));
 		$memo = new XmlInputMemo("XML", "xmlstr", $xmlstr);
@@ -848,7 +855,7 @@ class Sample extends BaseModule
 			FileUtil::QuickFileWrite($processor->PathSuggested() . "sample.csv", $txtstr);
 			$dataset = new TextFileDataSet($this->_context, $processor->PathSuggested() . "sample.csv", $colNodeStr, $regexp);
 			//$para1->addXmlnukeObject(new XmlnukeText(""));
-			$editlist = new XmlEditList($this->_context, "Text Flat", "module:sample?op=8");
+			$editlist = new XmlEditList($this->_context, "Text Flat", $this->_url . "?op=8");
 			$editlist->setReadOnly(true);
 			$editlist->setDataSource($dataset->getIterator());
 			$para1->addXmlnukeObject($editlist);
@@ -869,7 +876,7 @@ class Sample extends BaseModule
 		}
 
 		// Cria um Formulário
-		$form = new XmlFormCollection($this->_context, "module:sample", "Formulário de Edição");
+		$form = new XmlFormCollection($this->_context, $this->_url, "Formulário de Edição");
 
 		$form->addXmlnukeObject(new XmlInputHidden("op", "8"));
 		$memo = new XmlInputMemo("Text", "txtstr", $txtstr);
@@ -915,7 +922,7 @@ class Sample extends BaseModule
 		$dataset = new TextFileDataSet($this->_context, $processor->PathSuggested() . "sample.csv", $colNodeStr);
 
 		//$para1->addXmlnukeObject(new XmlnukeText(""));
-		$editlist = new XmlEditList($this->_context, "Text Flat", "module:sample?op=9");
+		$editlist = new XmlEditList($this->_context, "Text Flat", $this->_url . "?op=9");
 		$editlist->setReadOnly(true);
 		$editlist->setDataSource($dataset->getIterator());
 		$para1->addXmlnukeObject($editlist);
@@ -982,7 +989,7 @@ class Sample extends BaseModule
 		}
 
 
-		$form = new XmlFormCollection($this->_context, "module:sample?op=11", "Formulário com Um Dual List");
+		$form = new XmlFormCollection($this->_context, $this->_url . "?op=11", "Formulário com Um Dual List");
 
 		// Create DualList Object
 		$duallist = new XmlDualList($this->_context, "frmdual", "Não Selecionado", "Selecionado");
@@ -1049,7 +1056,7 @@ class Sample extends BaseModule
 		$block->addXmlnukeObject($para);
 
 		// First Create the FORM
-		$form = new XmlFormCollection($this->_context, "xmlnuke.php?site=sample&amp;xsl=preview", "Ajax Post");
+		$form = new XmlFormCollection($this->_context, $this->_url . "?xsl=preview", "Ajax Post");
 
 		$txt = new XmlInputTextBox("Algum Texto", "name", "");
 		$txt->setRequired(true);
@@ -1132,13 +1139,13 @@ class Sample extends BaseModule
 		$folder1->setAction(TreeViewActionType::ExecuteJS, "document.getElementById('here').style.display='none';");
 
 		$leaf = new XmlnukeTreeViewLeaf($this->_context, "Leaf 1", "empty_doc.gif");
-		$leaf->setAction(TreeViewActionType::OpenUrl, "module:sample?op=1");
+		$leaf->setAction(TreeViewActionType::OpenUrl, $this->_url . "?op=1");
 		$folder1->addChild( $leaf );
 		$leaf = new XmlnukeTreeViewLeaf($this->_context, "Leaf 2", "empty_doc.gif");
-		$leaf->setAction(TreeViewActionType::OpenInNewWindow, "module:sample?op=2");
+		$leaf->setAction(TreeViewActionType::OpenInNewWindow, $this->_url . "?op=2");
 		$folder1->addChild( $leaf );
 		$leaf = new XmlnukeTreeViewLeaf($this->_context, "Leaf 3", "document.gif");
-		$leaf->setAction(TreeViewActionType::OpenUrlInsideContainer, "module:sample?op=3&xsl=blank", "here");
+		$leaf->setAction(TreeViewActionType::OpenUrlInsideContainer, $this->_url . "?op=3&xsl=blank", "here");
 		$folder1->addChild( $leaf );
 		$treeview->addChild($folder1);
 
@@ -1226,12 +1233,12 @@ class Sample extends BaseModule
 					break;
 				case 3:
 					$uialert = new XmlnukeUIAlert($this->_context, UIAlert::ModalDialog, "Isso é um teste");
-					$uialert->addRedirectButton("Ok", "module:sample");
+					$uialert->addRedirectButton("Ok", $this->_url);
 					$uialert->addCloseButton("Cancel");
 					break;
 				case 4:
 					$uialert = new XmlnukeUIAlert($this->_context, UIAlert::ModalDialog, "Isso é um teste");
-					$uialert->addRedirectButton("Ok, proceed!", "module:sample");
+					$uialert->addRedirectButton("Ok, proceed!", $this->_url);
 					$uialert->addCloseButton("Cancel");
 					$uialert->setOpenAction(UIAlertOpenAction::Button, "Clique me");
 					break;
@@ -1248,12 +1255,12 @@ class Sample extends BaseModule
 		}
 
 		$list = array();
-		$list["module:sample?op=18&type=1"] = "Caixa de Diálogo";
-		$list["module:sample?op=18&type=2"] = "Caixa de Diálogo Modal";
-		$list["module:sample?op=18&type=3"] = "Caixa de Diálogo Modal com botão de fechar";
-		$list["module:sample?op=18&type=4"] = "Caixa de Diálogo Modal com botões de confirmação e abrir personalizado";
-		$list["module:sample?op=18&type=5"] = "Box de Informação com auto hide";
-		$list["module:sample?op=18&type=6"] = "Box de Alerta";
+		$list[$this->_url . "?op=18&type=1"] = "Caixa de Diálogo";
+		$list[$this->_url . "?op=18&type=2"] = "Caixa de Diálogo Modal";
+		$list[$this->_url . "?op=18&type=3"] = "Caixa de Diálogo Modal com botão de fechar";
+		$list[$this->_url . "?op=18&type=4"] = "Caixa de Diálogo Modal com botões de confirmação e abrir personalizado";
+		$list[$this->_url . "?op=18&type=5"] = "Box de Informação com auto hide";
+		$list[$this->_url . "?op=18&type=6"] = "Box de Alerta";
 
 		$listElement = new XmlListCollection(XmlListType::UnorderedList, "Opções");
 		foreach ($list as $key=>$value)
@@ -1297,7 +1304,7 @@ class Sample extends BaseModule
 		$para->addXmlnukeObject(new XmlnukeText("IFrame"));
 
 		$gallery = new XmlnukeMediaGallery($this->_context);
-		$gallery->addIFrame("module:sample", 480, 204, "", "IFrame");
+		$gallery->addIFrame($this->_url, 480, 204, "", "IFrame");
 		$para->addXmlnukeObject($gallery);
 		$block->addXmlnukeObject($para);
 

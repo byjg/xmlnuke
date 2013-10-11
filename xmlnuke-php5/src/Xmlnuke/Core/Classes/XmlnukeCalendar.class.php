@@ -122,6 +122,8 @@ class  XmlnukeCalendar extends XmlnukeDocumentObject
 
 namespace Xmlnuke\Core\Classes;
 
+use Xmlnuke\Util\XmlUtil;
+
 class  XmlnukeCalendarEvent extends XmlnukeCollection implements IXmlnukeDocumentObject
 {
 	protected  $_day;

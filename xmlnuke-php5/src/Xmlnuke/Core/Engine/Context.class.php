@@ -524,7 +524,7 @@ class Context extends BaseSingleton
 	public function CurrentSitePath()
 	{
 		$externalSiteArray = $this->getExternalSiteDir();
-		$externalSite = $externalSiteArray[$this->getSite()];
+		$externalSite = isset($externalSiteArray[$this->getSite()]) ? $externalSiteArray[$this->getSite()] : "";
 
 		if ($externalSite != "")
 		{
