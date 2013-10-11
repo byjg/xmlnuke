@@ -27,9 +27,8 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-namespace Xmlnuke\Core\Module;
+namespace Xmlnuke\Modules;
 
-use UserProfile;
 use Xmlnuke\Core\Classes\PageXml;
 use Xmlnuke\Core\Classes\XmlBlockCollection;
 use Xmlnuke\Core\Classes\XmlEasyList;
@@ -46,6 +45,7 @@ use Xmlnuke\Core\Enum\EasyListType;
 use Xmlnuke\Core\Enum\InputTextBoxType;
 use Xmlnuke\Core\Enum\UserProperty;
 use Xmlnuke\Core\Locale\LanguageCollection;
+use Xmlnuke\Core\Module\BaseModule;
 
 /**
  * UserProfile is a default module descendant from BaseModule class.

@@ -27,6 +27,22 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
+namespace Xmlnuke\Core\Admin;
+
+use Xmlnuke\Core\AnyDataset\IIterator;
+use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use Xmlnuke\Core\AnyDataset\SingleRow;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Enum\CustomTable;
+use Xmlnuke\Core\Enum\Relation;
+use Xmlnuke\Core\Enum\RolesTable;
+use Xmlnuke\Core\Enum\UserProperty;
+use Xmlnuke\Core\Enum\UserTable;
+use Xmlnuke\Core\Exception\NotAuthenticatedException;
+use Xmlnuke\Core\Exception\NotFoundException;
+use Xmlnuke\Core\Exception\NotImplementedException;
+use Xmlnuke\Util\FileUtil;
+
 /**
  * Base implementation to search and handle users in XMLNuke.
  * @package xmlnuke

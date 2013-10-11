@@ -82,7 +82,7 @@ class LoginBasic extends LoginBase
 	 *
 	 * @var String
 	 */
-	private  $_module = "loginbasic";
+	private  $_module = "Xmlnuke.LoginBasic";
 	
 	/**
 	 * BlockCenter

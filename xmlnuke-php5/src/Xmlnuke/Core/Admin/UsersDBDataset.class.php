@@ -34,6 +34,14 @@
  */
 namespace Xmlnuke\Core\Admin;
 
+use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use Xmlnuke\Core\AnyDataset\DBDataSet;
+use Xmlnuke\Core\AnyDataset\IIterator;
+use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use Xmlnuke\Core\AnyDataset\SingleRow;
+use Xmlnuke\Core\Enum\UserProperty;
+use Xmlnuke\Core\Exception\DatasetException;
+
 class UsersDBDataSet extends UsersBase
 {
 	/**

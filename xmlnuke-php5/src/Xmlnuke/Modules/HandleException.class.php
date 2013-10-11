@@ -27,7 +27,7 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-namespace Xmlnuke\Core\Module;
+namespace Xmlnuke\Modules;
 
 use Xmlnuke\Core\Classes\PageXml;
 use Xmlnuke\Core\Classes\XmlBlockCollection;
@@ -36,13 +36,14 @@ use Xmlnuke\Core\Classes\XmlnukeText;
 use Xmlnuke\Core\Classes\XmlParagraphCollection;
 use Xmlnuke\Core\Enum\BlockPosition;
 use Xmlnuke\Core\Locale\LanguageCollection;
+use Xmlnuke\Core\Module\BaseModule;
 
 /**
  * NotFound is a default module descendant from BaseModule class.
  * This class runs only if the requested module not found.
  * @package xmlnuke
  */
-class NotFound extends BaseModule
+class HandleException extends BaseModule
 {
 	/**
 	 * Error message
@@ -52,21 +53,14 @@ class NotFound extends BaseModule
 	private $_ErrorMessage;
 
 	/**
-	 * Default Constructor
-	 *
-	 * @return NotFound
-	 */
-	public function NotFound()
-	{}
-
-	/**
 	 * This method receive a external error message and show it.
 	 *
 	 * @param Object $customArg
 	 */
-	public function CustomSetup($customArg)
+	public function Setup($xmlModuleName, $customArgs)
 	{
-		$this->_ErrorMessage = $customArg;
+		parent::Setup($xmlModuleName, $customArgs);
+		$this->_ErrorMessage = $customArgs;
 	}
 
 	/**
@@ -112,13 +106,13 @@ class NotFound extends BaseModule
 
 		$this->defaultXmlnukeDocument = new XmlnukeDocument($myWords->Value("TITLE"),"");
 		
-		$blockcenter = new XmlBlockCollection($myWords->Value("TITLE"), BlockPosition::Center );
+		$blockcenter = new XmlBlockCollection($this->_ErrorMessage['MESSAGE'], BlockPosition::Center );
 		$this->defaultXmlnukeDocument->addXmlnukeObject($blockcenter);
 		
 		$paragraph = new XmlParagraphCollection();
 		$blockcenter->addXmlnukeObject($paragraph);
 		
-		$paragraph->addXmlnukeObject(new XmlnukeText($myWords->ValueArgs("MESSAGE", array($this->_ErrorMessage) )));
+		$paragraph->addXmlnukeObject($this->_ErrorMessage['TYPE'] . ' ' . $this->_ErrorMessage['OBJECT']);
 
 		return $this->defaultXmlnukeDocument->generatePage();
 	}

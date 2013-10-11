@@ -1,4 +1,12 @@
 <?php
+
+use Xmlnuke\Core\Classes\XmlnukeManageUrl;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Engine\ModuleFactory;
+use Xmlnuke\Core\Engine\XmlnukeEngine;
+use Xmlnuke\Core\Exception\NotAuthenticatedException;
+use Xmlnuke\Core\Exception\NotFoundException;
+
 /**
  * This file contains the minimum requirements to run a website based on XMLNuke.
  * 
@@ -28,19 +36,19 @@
 	require_once("xmlnuke.inc.php");
 	#############################################
 
-	$context = Xmlnuke\Core\Engine\Context::getInstance();
+	$context = Context::getInstance();
 
 	$selectNodes = $context->ContextValue("xpath");
 	$alternateFilename = str_replace(".", "_", ($context->ContextValue("fn") != "" ? $context->ContextValue("fn") : ($context->getModule() != "" ? $context->getModule() : $context->getXml())));
 	$extraParam = array();
 	$output = $context->getOutputFormat();
 
-	if ($output == Xmlnuke\Core\Engine\XmlnukeEngine::OUTPUT_XML)
+	if ($output == XmlnukeEngine::OUTPUT_XML)
 	{
 		header("Content-Type: text/xml; charset=utf-8");
 		header("Content-Disposition: inline; filename=\"{$alternateFilename}.xml\";");
 	}
-	elseif ($output == Xmlnuke\Core\Engine\XmlnukeEngine::OUTPUT_JSON)
+	elseif ($output == XmlnukeEngine::OUTPUT_JSON)
 	{
 		$extraParam["json_function"] = $context->Value("jsonfn");
 		header("Content-Type: application/json; charset=utf-8");
@@ -70,7 +78,7 @@
 		}
 	}
 	
-	$engine = new Xmlnuke\Core\Engine\XmlnukeEngine($context, $output, $selectNodes, $extraParam);
+	$engine = new XmlnukeEngine($context, $output, $selectNodes, $extraParam);
 	if ($context->ContextValue("remote")!="")
 	{
 		echo $engine->TransformDocumentRemote($context->ContextValue("remote"));
@@ -91,7 +99,7 @@
 	
 	function processModule($engine)
 	{
-		$context = Xmlnuke\Core\Engine\Context::getInstance();
+		$context = Context::getInstance();
 		
 		//IModule
 		$module = null;
@@ -108,8 +116,18 @@
 		// Catch errors from permissions and so on.
 		try
 		{
-			$module = \Xmlnuke\Core\Engine\ModuleFactory::GetModule($moduleName);
-			
+			$module = ModuleFactory::GetModule($moduleName);			
+			writePage($engine->TransformDocumentFromModule($module));
+		}
+		catch (NotFoundException $ex)
+		{
+			$module = ModuleFactory::GetModule('Xmlnuke.HandleException', 
+				array(
+					'TYPE' => 'NOTFOUND',
+					'MESSAGE' => 'The module "' . $moduleName . '" was not found.',
+					'OBJECT' => $moduleName
+				)
+			);
 			writePage($engine->TransformDocumentFromModule($module));
 		}
 		catch (NotAuthenticatedException $ex)
@@ -176,7 +194,7 @@
 	
 	function writePage($buffer)
 	{
-		$context = Xmlnuke\Core\Engine\Context::getInstance();
+		$context = Context::getInstance();
 		
 		@include("writepage.inc.php");
 

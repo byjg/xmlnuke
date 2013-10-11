@@ -30,7 +30,7 @@
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Module;
+namespace Xmlnuke\Modules;
 
 use Xmlnuke\Core\AnyDataset\AnyDataSet;
 use Xmlnuke\Core\AnyDataset\ArrayDataSet;
@@ -70,6 +70,7 @@ use Xmlnuke\Core\Classes\XmlnukeBreakLine;
 use Xmlnuke\Core\Classes\XmlnukeCalendar;
 use Xmlnuke\Core\Classes\XmlnukeCalendarEvent;
 use Xmlnuke\Core\Classes\XmlnukeCode;
+use Xmlnuke\Core\Classes\XmlnukeCrudAnydata;
 use Xmlnuke\Core\Classes\XmlnukeCrudDB;
 use Xmlnuke\Core\Classes\XmlnukeDocument;
 use Xmlnuke\Core\Classes\XmlnukeFaq;
@@ -96,6 +97,7 @@ use Xmlnuke\Core\Enum\UIAlertOpenAction;
 use Xmlnuke\Core\Enum\URLTYPE;
 use Xmlnuke\Core\Enum\XmlInputObjectType;
 use Xmlnuke\Core\Locale\LanguageCollection;
+use Xmlnuke\Core\Module\BaseModule;
 use Xmlnuke\Core\Processor\ForceFilenameLocation;
 use Xmlnuke\Core\Processor\UploadFilenameProcessor;
 use Xmlnuke\Util\Debug;

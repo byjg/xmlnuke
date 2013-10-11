@@ -32,7 +32,7 @@
  */
 namespace Xmlnuke\Modules;
 
-class ModuleActionLogin extends ModuleAction 
+class ModuleActionLogin extends \Xmlnuke\Core\Enum\ModuleAction 
 {
 	const LOGIN = 'action.LOGIN';
 	const NEWUSER = 'action.NEWUSER';
@@ -85,7 +85,7 @@ class Login extends LoginBase
 	 *
 	 * @var String
 	 */
-	private  $_module = "login";
+	private  $_module = "Xmlnuke.Login";
 	
 	/**
 	 * BlockCenter

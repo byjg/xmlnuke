@@ -72,15 +72,16 @@ class ModuleFactory
 		
 		$context = Context::getInstance();
 		
-		$modulename = preg_replace('/^(xmlnuke\.)(.*)$/i', 'Xmlnuke.Modules.\2', $modulename);
-		
 		$basePath = "";
 		$classNameAr = explode('.', $modulename);
 		if (strpos($modulename, '.Modules.') === false)
 			array_splice( $classNameAr, count($classNameAr)-1, 0, array('Modules') );
 		$className = '\\' . implode('\\', $classNameAr);
 		
-		$result = new $className;
+		if (class_exists($className, true))
+			$result = new $className;
+		else
+			throw new \Xmlnuke\Core\Exception\NotFoundException("Module \"$modulename\" not found");
 
 		/* TODO
 		// ------------------------------------------------------------------------------------
