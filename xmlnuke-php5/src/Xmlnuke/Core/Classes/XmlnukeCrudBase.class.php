@@ -196,7 +196,7 @@ abstract class XmlnukeCrudBase extends XmlnukeDocumentObject implements IXmlnuke
 
 		$this->_decimalSeparator = $this->_context->Language()->getDecimalPoint();
 		$this->_dateFormat = $this->_context->Language()->getDateFormat();
-		$this->_lang = LanguageFactory::GetLanguageCollection(LanguageFileTypes::OBJECT, "com.xmlnuke.classes.XmlnukeCrudBase");
+		$this->_lang = LanguageFactory::GetLanguageCollection(__CLASS__);
 	}
 
 	/**

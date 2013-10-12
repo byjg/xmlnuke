@@ -333,7 +333,7 @@ class XmlnukeEngine
 	{
 		// Add a custom XML based on attribute xmlobjet inside root
 		// Example:
-		// <page include="base.namespace, file.php" xmlobject="plugin.name[param1, param2]">
+		// <page xmlobject="plugin.name[param1, param2]">
 		$pattern = "/(?P<plugin>((\w+)\.)+\w+)\[(?P<param>([#']?[\w]+[#']?\s*,?\s*)+)\]/";
 		$xmlRoot = $xml->documentElement;
 		$xmlRootAttributes = $xmlRoot->attributes;
@@ -341,19 +341,7 @@ class XmlnukeEngine
 		{
 			foreach ($xmlRootAttributes as $attr)
 			{
-				if ($attr->nodeName == "include")
-				{
-					$param = explode(",", $attr->nodeValue);
-					if (count($param) == 1)
-					{
-						ModuleFactory::IncludePhp(trim($param[0]));
-					}
-					else
-					{
-						ModuleFactory::IncludePhp(trim($param[0]), trim($param[1]));
-					}
-				}
-				elseif ($attr->nodeName == "xmlobject")
+				if ($attr->nodeName == "xmlobject")
 				{
 					$match = preg_match_all($pattern, $attr->value, $matches);
 					for($iCount=0;$iCount<$match;$iCount++)
@@ -374,7 +362,8 @@ class XmlnukeEngine
 								$param[$i] = trim($param[$i]);
 							}
 						}
-						$plugin = PluginFactory::LoadPlugin($matches["plugin"][$iCount], "", $param[0], $param[1], $param[2], $param[3], $param[4]);
+						$className = $matches["plugin"][$iCount];
+						$plugin = new $className($param[0], $param[1], $param[2], $param[3], $param[4]);
 						if (!($plugin instanceof IXmlnukeDocumentObject))
 						{
 							throw new InvalidArgumentException("The attribute in XMLNuke need to implement IXmlnukeDocumentObject interface");

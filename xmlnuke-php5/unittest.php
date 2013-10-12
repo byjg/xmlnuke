@@ -78,7 +78,7 @@ else
 {
 	try
 	{
-		$result = PluginFactory::LoadPlugin($list);
+		$result = new $list();
 		$arr = $result->getList();
 	}
 	catch (Exception $e)
@@ -134,7 +134,8 @@ if($context->ContextValue("submeteu")!="")
 	{
 		if ($context->ContextValue("check$i")!="")
 		{
-			$testPlugin = PluginFactory::LoadPlugin($arr[$i]);
+			$class = $arr[$i];
+			$testPlugin = new $class();
 			if ($testPlugin instanceof TestCase)
 			{
 				$mainTestSuite->addTest(new TestSuite( get_class($testPlugin) ));

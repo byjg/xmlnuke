@@ -55,21 +55,18 @@ class ModuleFactory
 	{}
 
 	/**
-		* Locate and create custom module if exists. Otherwise throw exception.
-		*
-		* @param string $modulename
-		* @param object $o
-		* @return IModule
-		*/
+	 * Locate and create custom module if exists. Otherwise throw exception.
+	 *
+	 * Important:
+	 *   A module must reside on a folder named 'Modules'.
+	 *   You can call a module by \namespace\Modules\ModuleName or just \namespace\ModuleName
+	 *
+	 * @param string $modulename
+	 * @param object $o
+	 * @return IModule
+	 */
 	public static function GetModule($modulename, $o = null)
-	{
-		// Module name options:
-		// <xmlnukedir>/src/com.xmlnuke/module/module.<modulename>.class.php
-		//  - or -
-		// <userdir>/lib/<subdir>/<modulename>.class.php
-		//  - or -
-		// <xmlnukedir>/modules/<subdir>/<modulename>.class.php
-		
+	{		
 		$context = Context::getInstance();
 		
 		$basePath = "";
@@ -83,34 +80,13 @@ class ModuleFactory
 		else
 			throw new \Xmlnuke\Core\Exception\NotFoundException("Module \"$modulename\" not found");
 
-		/* TODO
-		// ------------------------------------------------------------------------------------
-		// Try to Load a XMLNuke module
-		if ( (strpos($modulename, ".") === false) || (substr($modulename,0,6) == "admin.") )
-		{
-			if (substr($modulename,0,6) == "admin.")
-			{
-				$basePath = "admin";
-				$className = substr($modulename, 6);
-			}
-			else
-			{
-				$basePath = "module";
-				$className = $modulename;
-			}
-		}
-		// ------------------------------------------------------------------------------------
-		// Try to Load a user generated module
-		else
-		{
-			$r = strrpos($modulename, ".");
-			$className = substr($modulename, 0, $r) . ".modules" . substr($modulename, $r);
-			$basePath = "";
-		}
+		if (!($result instanceof IModule))
+			throw new \InvalidArgumentException('Class "' . $className . '" is not a IModule object');
 
-		$result = PluginFactory::LoadPlugin($className, $basePath);
-		*/
-		
+		// ----------------------------------------------------------
+		// Activate the Module
+		// ----------------------------------------------------------
+
 		$xml = new XMLFilenameProcessor($modulename);
 		$result->Setup($xml, $o);
 
@@ -194,9 +170,10 @@ class ModuleFactory
 			{
 				ModuleFactory::$_phpLibDir = $_SESSION["SESS_XMLNUKE_PHPLIBDIR"];
 			}
-			
+
+			$autoLoad = AutoLoad::getInstance();
 			foreach(ModuleFactory::$_phpLibDir as $lib => $path)
-				AutoLoad::getInstance()->registrUserProject($lib, $path);
+				$autoLoad->registrUserProject($lib, $path);
 		}
 		return ModuleFactory::$_phpLibDir;
 	}

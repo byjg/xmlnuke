@@ -39,7 +39,9 @@ if ($svcname == "")
 	die("Error: Paramenter 'service' is required and must contain a full namespace for the class\n");
 }
 
-$service = PluginFactory::LoadPlugin($svcname);
+$svcname = str_replace('.', '\\', $svcname);
+
+$service = new $svcname();
 $continue = true;
 
 echo "Service " . $svcname . " started at " . date('c') . "\n";

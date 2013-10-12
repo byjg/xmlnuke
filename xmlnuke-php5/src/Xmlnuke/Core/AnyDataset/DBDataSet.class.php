@@ -192,9 +192,10 @@ class DBDataSet
 	{
 		if ($this->_dbFunction == null)
 		{
-			$this->_dbFunction = PluginFactory::LoadPlugin("db" . $this->_connectionManagement->getDriver() . "functions", "database");
+			$dbFunc = "\\Xmlnuke\\Core\\Database\\DB" . $this->_connectionManagement->getDriver() . "Functions";
+			$this->_dbFunction = new $dbFunc();
 		}
-		
+
 		return $this->_dbFunction;
 	}
 }

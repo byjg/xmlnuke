@@ -305,10 +305,11 @@ class Context extends BaseSingleton
 	{
 		if ($this->_xslCacheEngine == null)
 		{
-			if ($this->Value("xmlnuke.XSLCACHE") == "")
-				$this->_xslCacheEngine = PluginFactory::LoadPlugin("NoCacheEngine");
+			$cache = $this->Value("xmlnuke.XSLCACHE");
+			if ($cache == "")
+				$this->_xslCacheEngine = \Xmlnuke\Core\Cache\NoCacheEngine::getInstance();
 			else
-				$this->_xslCacheEngine = PluginFactory::LoadPlugin($this->Value("xmlnuke.XSLCACHE"));
+				$this->_xslCacheEngine = $cache::getInstance();
 		}
 		
 		return $this->_xslCacheEngine;
@@ -1519,7 +1520,7 @@ class Context extends BaseSingleton
 			$conn = $this->ContextValue("xmlnuke.USERSDATABASE");
 			if ($class != "")
 			{
-				$this->__userdb = PluginFactory::LoadPlugin($class, "", $this, $conn);
+				$this->__userdb = new $class(this, $conn);
 				if (!($this->__userdb instanceof IUsersBase))
 				{
 					throw new InvalidArgumentException("Authentication class '$class' must implement IUsersBase interface");
