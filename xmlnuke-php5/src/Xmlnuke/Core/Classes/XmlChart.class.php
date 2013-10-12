@@ -132,6 +132,7 @@ use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\URLTYPE;
 use Xmlnuke\Util\ConvertFromUTF8;
 use Xmlnuke\Util\XmlUtil;
+use Xmlnuke\Core\Classes\XmlnukeFlash;
 
 class  XmlChart extends XmlnukeDocumentObject
 {
@@ -292,7 +293,7 @@ class  XmlChart extends XmlnukeDocumentObject
 				$url->addParam("xcrt", "flash");
 				$link = $this->_context->joinUrlBase($url->getUrl());
 				
-				$flash = new XmlNukeFlash();
+				$flash = new XmlnukeFlash();
 				$flash->setMovie($this->_context->joinUrlBase("common/swfchart/charts.swf"));
 				$flash->addParam("library_path", $this->_context->joinUrlBase("common/swfchart/charts_library"));
 				$flash->addParam("xml_source", $link);

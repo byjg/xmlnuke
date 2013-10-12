@@ -35,7 +35,7 @@ use Xmlnuke\Util\XmlUtil;
 /**
  * @package xmlnuke
  */
-class  XmlNukeFlash extends XmlnukeCollection implements IXmlnukeDocumentObject 
+class  XmlnukeFlash extends XmlnukeCollection implements IXmlnukeDocumentObject
 {
 	protected $_movie = "";
 	

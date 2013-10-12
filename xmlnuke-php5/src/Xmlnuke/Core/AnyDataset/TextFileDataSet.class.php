@@ -28,14 +28,11 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
+namespace Xmlnuke\Core\AnyDataset;
+
 define("CSVFILE",  '/[|,;](?=(?:[^"]*"[^"]*")*(?![^"]*"))/');
 define("CSVFILE_SEMICOLON",  '/[;](?=(?:[^"]*"[^"]*")*(?![^"]*"))/');
 define("CSVFILE_COMMA",  '/[,](?=(?:[^"]*"[^"]*")*(?![^"]*"))/');
-
-/**
- * @package xmlnuke
- */
-namespace Xmlnuke\Core\AnyDataset;
 
 use Exception;
 use InvalidArgumentException;
@@ -45,6 +42,9 @@ use Xmlnuke\Core\Exception\NotFoundException;
 use Xmlnuke\Core\Processor\FilenameProcessor;
 use Xmlnuke\Util\FileUtil;
 
+/**
+ * @package xmlnuke
+ */
 class TextFileDataSet
 {	
 	protected $_context = null;
