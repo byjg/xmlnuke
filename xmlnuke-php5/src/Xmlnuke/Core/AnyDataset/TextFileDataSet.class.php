@@ -30,10 +30,6 @@
 
 namespace Xmlnuke\Core\AnyDataset;
 
-define("CSVFILE",  '/[|,;](?=(?:[^"]*"[^"]*")*(?![^"]*"))/');
-define("CSVFILE_SEMICOLON",  '/[;](?=(?:[^"]*"[^"]*")*(?![^"]*"))/');
-define("CSVFILE_COMMA",  '/[,](?=(?:[^"]*"[^"]*")*(?![^"]*"))/');
-
 use Exception;
 use InvalidArgumentException;
 use Xmlnuke\Core\Engine\Context;
@@ -47,6 +43,10 @@ use Xmlnuke\Util\FileUtil;
  */
 class TextFileDataSet
 {	
+	const CSVFILE = '/[|,;](?=(?:[^"]*"[^"]*")*(?![^"]*"))/';
+	const CSVFILE_SEMICOLON = '/[;](?=(?:[^"]*"[^"]*")*(?![^"]*"))/';
+	const CSVFILE_COMMA = '/[,](?=(?:[^"]*"[^"]*")*(?![^"]*"))/';
+
 	protected $_context = null;
 	
 	protected $_source;
@@ -67,8 +67,11 @@ class TextFileDataSet
 	 * @param string $fieldexpression
 	 * @return TextFileDataSet
 	 */
-	public function __construct($context, $source, $fields, $fieldexpression = CSVFILE)
+	public function __construct($context, $source, $fields, $fieldexpression = null)
 	{
+		if (is_null($fieldexpression))
+			$fieldexpression = TextFileDataSet::CSVFILE;
+
 		if (!is_array($fields))
 		{
 			throw new InvalidArgumentException("You must define an array of fields.");
@@ -100,9 +103,9 @@ class TextFileDataSet
 		$this->_context = $context;		
 		$this->_fields = $fields;
 		
-		if ($fieldexpression == CSVFILE)
+		if ($fieldexpression == 'CSVFILE')
 		{
-			$this->_fieldexpression = CSVFILE;
+			$this->_fieldexpression = TextFileDataSet::CSVFILE;
 		}
 		else
 		{

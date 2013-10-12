@@ -864,7 +864,7 @@ class Sample extends BaseModule
 		{
 			$processor = new AnydatasetFilenameProcessor("sample");
 			$txtstr = FileUtil::QuickFileRead($processor->PathSuggested() . "sample.csv");
-			$regexp = CSVFILE;
+			$regexp = TextFileDataSet::CSVFILE;
 			$colNodeStr = array();
 			$colNodeStr[] = "category";
 			$colNodeStr[] = "title";
@@ -882,7 +882,7 @@ class Sample extends BaseModule
 		$memo = new XmlInputMemo("Text", "txtstr", $txtstr);
 		$form->addXmlnukeObject($memo);
 
-		$text = new XmlInputTextBox("Regular Expression", "regexp", $regexp);
+		$text = new XmlInputTextBox("Regular Expression", "regexp", $regexp, 40);
 		$text->setRequired(true);
 		$form->addXmlnukeObject($text);
 

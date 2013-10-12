@@ -2,7 +2,7 @@
 /**
  * NOTE: The class name must end with "Test" suffix.
  */
-class TextFileDatasetTest extends TestCase
+class TextFileDataSetTest extends TestCase
 {
 	protected $fieldNames;
 
@@ -61,7 +61,7 @@ class TextFileDatasetTest extends TestCase
 
 	function test_createTextFileData_Unix()
 	{
-		$txtFile = new TextFileDataset($this->_context, $this->fileName_Unix, $this->fieldNames, CSVFILE);
+		$txtFile = new TextFileDataSet($this->_context, $this->fileName_Unix, $this->fieldNames, TextFileDataSet::CSVFILE);
 		$txtIterator = $txtFile->getIterator();
 
 		$this->assert($txtIterator instanceof IIterator, "Resultant object must be an interator");
@@ -73,7 +73,7 @@ class TextFileDatasetTest extends TestCase
 
 	function test_createTextFileData_Windows()
 	{
-		$txtFile = new TextFileDataset(Context::getInstance(), $this->fileName_Windows, $this->fieldNames, CSVFILE);
+		$txtFile = new TextFileDataSet(Context::getInstance(), $this->fileName_Windows, $this->fieldNames, TextFileDataSet::CSVFILE);
 		$txtIterator = $txtFile->getIterator();
 
 		$this->assert($txtIterator instanceof IIterator, "Resultant object must be an interator");
@@ -85,7 +85,7 @@ class TextFileDatasetTest extends TestCase
 
 	function test_createTextFileData_MacClassic()
 	{
-		$txtFile = new TextFileDataset(Context::getInstance(), $this->fileName_MacClassic, $this->fieldNames, CSVFILE);
+		$txtFile = new TextFileDataSet(Context::getInstance(), $this->fileName_MacClassic, $this->fieldNames, TextFileDataSet::CSVFILE);
 		$txtIterator = $txtFile->getIterator();
 
 		$this->assert($txtIterator instanceof IIterator, "Resultant object must be an interator");
@@ -97,7 +97,7 @@ class TextFileDatasetTest extends TestCase
 
 	function test_createTextFileData_BlankLine()
 	{
-		$txtFile = new TextFileDataset(Context::getInstance(), $this->fileName_BlankLine, $this->fieldNames, CSVFILE);
+		$txtFile = new TextFileDataSet(Context::getInstance(), $this->fileName_BlankLine, $this->fieldNames, TextFileDataSet::CSVFILE);
 		$txtIterator = $txtFile->getIterator();
 
 		$this->assert($txtIterator instanceof IIterator, "Resultant object must be an interator");
@@ -109,7 +109,7 @@ class TextFileDatasetTest extends TestCase
 
 	function test_navigateTextIterator_Unix()
 	{
-		$txtFile = new TextFileDataset(Context::getInstance(), $this->fileName_Windows, $this->fieldNames, CSVFILE);
+		$txtFile = new TextFileDataSet(Context::getInstance(), $this->fileName_Windows, $this->fieldNames, TextFileDataSet::CSVFILE);
 		$txtIterator = $txtFile->getIterator();
 
 		$count = 0;
@@ -123,7 +123,7 @@ class TextFileDatasetTest extends TestCase
 
 	function test_navigateTextIterator_Windows()
 	{
-		$txtFile = new TextFileDataset(Context::getInstance(), $this->fileName_Windows, $this->fieldNames, CSVFILE);
+		$txtFile = new TextFileDataSet(Context::getInstance(), $this->fileName_Windows, $this->fieldNames, TextFileDataSet::CSVFILE);
 		$txtIterator = $txtFile->getIterator();
 
 		$count = 0;
@@ -137,7 +137,7 @@ class TextFileDatasetTest extends TestCase
 
 	function test_navigateTextIterator_MacClassic()
 	{
-		$txtFile = new TextFileDataset(Context::getInstance(), $this->fileName_Windows, $this->fieldNames, CSVFILE);
+		$txtFile = new TextFileDataSet(Context::getInstance(), $this->fileName_Windows, $this->fieldNames, TextFileDataSet::CSVFILE);
 		$txtIterator = $txtFile->getIterator();
 
 		$count = 0;
@@ -151,7 +151,7 @@ class TextFileDatasetTest extends TestCase
 
 	function test_navigateTextIterator_BlankLine()
 	{
-		$txtFile = new TextFileDataset(Context::getInstance(), $this->fileName_BlankLine, $this->fieldNames, CSVFILE);
+		$txtFile = new TextFileDataSet(Context::getInstance(), $this->fileName_BlankLine, $this->fieldNames, TextFileDataSet::CSVFILE);
 		$txtIterator = $txtFile->getIterator();
 
 		$count = 0;
@@ -165,7 +165,7 @@ class TextFileDatasetTest extends TestCase
 
 	function test_navigateTextIterator_Remote_Unix()
 	{
-		$txtFile = new TextFileDataset(Context::getInstance(), 'http://www.xmlnuke.com/site/' . basename($this->fileName_Unix), $this->fieldNames, CSVFILE);
+		$txtFile = new TextFileDataSet(Context::getInstance(), 'http://www.xmlnuke.com/site/' . basename($this->fileName_Unix), $this->fieldNames, TextFileDataSet::CSVFILE);
 		$txtIterator = $txtFile->getIterator();
 
 		$count = 0;
@@ -179,7 +179,7 @@ class TextFileDatasetTest extends TestCase
 
 	function test_navigateTextIterator_Remote_Windows()
 	{
-		$txtFile = new TextFileDataset(Context::getInstance(), 'http://www.xmlnuke.com/site/' . basename($this->fileName_Windows), $this->fieldNames, CSVFILE);
+		$txtFile = new TextFileDataSet(Context::getInstance(), 'http://www.xmlnuke.com/site/' . basename($this->fileName_Windows), $this->fieldNames, TextFileDataSet::CSVFILE);
 		$txtIterator = $txtFile->getIterator();
 
 		$count = 0;
@@ -197,7 +197,7 @@ class TextFileDatasetTest extends TestCase
 	/*
 	function test_navigateTextIterator_Remote_MacClassic()
 	{
-		$txtFile = new TextFileDataset(Context::getInstance(), 'http://www.xmlnuke.com/site/' . basename($this->fileName_MacClassic), $this->fieldNames, CSVFILE);
+		$txtFile = new TextFileDataSet(Context::getInstance(), 'http://www.xmlnuke.com/site/' . basename($this->fileName_MacClassic), $this->fieldNames, TextFileDataSet::CSVFILE);
 		$txtIterator = $txtFile->getIterator();
 
 		$count = 0;
@@ -213,7 +213,7 @@ class TextFileDatasetTest extends TestCase
 
 	function test_navigateTextIterator_Remote_BlankLine()
 	{
-		$txtFile = new TextFileDataset(Context::getInstance(), 'http://www.xmlnuke.com/site/' . basename($this->fileName_BlankLine), $this->fieldNames, CSVFILE);
+		$txtFile = new TextFileDataSet(Context::getInstance(), 'http://www.xmlnuke.com/site/' . basename($this->fileName_BlankLine), $this->fieldNames, TextFileDataSet::CSVFILE);
 		$txtIterator = $txtFile->getIterator();
 
 		$count = 0;
@@ -231,7 +231,7 @@ class TextFileDatasetTest extends TestCase
 	 */
 	function test_fileNotFound()
 	{
-		$txtFile = new TextFileDataset(Context::getInstance(), "/tmp/xyz", $this->fieldNames, CSVFILE);
+		$txtFile = new TextFileDataSet(Context::getInstance(), "/tmp/xyz", $this->fieldNames, TextFileDataSet::CSVFILE);
 	}
 
 	/**
@@ -239,7 +239,7 @@ class TextFileDatasetTest extends TestCase
 	 */
 	function test_remoteFileNotFound()
 	{
-		$txtFile = new TextFileDataset(Context::getInstance(), "http://www.xmlnuke.com/site/notfound-test", $this->fieldNames, CSVFILE);
+		$txtFile = new TextFileDataSet(Context::getInstance(), "http://www.xmlnuke.com/site/notfound-test", $this->fieldNames, TextFileDataSet::CSVFILE);
 		$txtIterator = $txtFile->getIterator();
 	}
 
@@ -248,7 +248,7 @@ class TextFileDatasetTest extends TestCase
 	 */
 	function test_serverNotFound()
 	{
-		$txtFile = new TextFileDataset(Context::getInstance(), "http://notfound-test/alalal", $this->fieldNames, CSVFILE);
+		$txtFile = new TextFileDataSet(Context::getInstance(), "http://notfound-test/alalal", $this->fieldNames, TextFileDataSet::CSVFILE);
 		$txtIterator = $txtFile->getIterator();
 	}
 
