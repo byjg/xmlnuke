@@ -37,7 +37,7 @@ use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\Relation;
 use Xmlnuke\Core\Enum\XmlInputObjectType;
 use Xmlnuke\Core\Processor\AnydatasetBaseFilenameProcessor;
-use XmlnukeCrudBase;
+use Xmlnuke\Core\Classes\XmlnukeCrudBase;
 
 /**
  * Basic CRUD based on XmlEditList, XmlFormCollection and AnyDataSet classes. 

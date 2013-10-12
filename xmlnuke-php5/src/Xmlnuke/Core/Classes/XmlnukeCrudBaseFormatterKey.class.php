@@ -1,5 +1,7 @@
 <?php
 
+use Xmlnuke\Core\Classes\IEditListFormatter;
+
 /*
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  *  Copyright:
@@ -28,11 +30,11 @@
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+namespace Xmlnuke\Core\Classes;
+
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Classes;
-
 class  XmlnukeCrudBaseFormatterKey implements IEditListFormatter
 {
 	public function Format($row, $fieldname, $value)

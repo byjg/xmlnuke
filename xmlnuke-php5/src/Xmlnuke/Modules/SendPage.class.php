@@ -27,7 +27,7 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
-namespace Xmlnuke\Core\Module;
+namespace Xmlnuke\Modules;
 
 use Xmlnuke\Core\Classes\PageXml;
 use Xmlnuke\Core\Classes\XmlAnchorCollection;

@@ -27,7 +27,7 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
  
-namespace Xmlnuke\Core\Module;
+namespace Xmlnuke\Modules;
 
 use Xmlnuke\Core\Classes\PageXml;
 use Xmlnuke\Core\Classes\XmlAnchorCollection;
@@ -40,6 +40,7 @@ use Xmlnuke\Core\Classes\XmlnukeText;
 use Xmlnuke\Core\Classes\XmlParagraphCollection;
 use Xmlnuke\Core\Enum\BlockPosition;
 use Xmlnuke\Core\Locale\LanguageCollection;
+use Xmlnuke\Core\Module\BaseModule;
 use Xmlnuke\Core\Processor\XSLFilenameProcessor;
 use Xmlnuke\Util\FileUtil;
 
@@ -110,7 +111,7 @@ class XSLTheme extends BaseModule
 		$filelist = FileUtil::RetrieveFilesFromFolder($xsl->PrivatePath(), $xsl->Extension());
 		$this->generateList($myWords->Value("LISTPERSONAL"), $paragraph, $filelist, $xslUsed, $xsl);
 
-		$filelist = FileUtil::RetrieveFilesFromFolder($xsl->SharedPath(), $xsl->Extension());	
+		$filelist = FileUtil::RetrieveFilesFromFolder($xsl->SharedPath(), $xsl->Extension());
 		$this->generateList($myWords->Value("LISTGENERIC"), $paragraph, $filelist, $xslUsed, $xsl);
 		
 		return $this->defaultXmlnukeDocument->generatePage();
@@ -150,7 +151,7 @@ class XSLTheme extends BaseModule
 				}
 				else
 				{
-					$anchor = new XmlAnchorCollection("module:XSLTheme?xsl=" . $xslname);
+					$anchor = new XmlAnchorCollection("module:Xmlnuke.XSLTheme?xsl=" . $xslname);
 					$anchor->addXmlnukeObject(new XmlnukeText($xslname,true));
 					$objectList->addXmlnukeObject($anchor);
 				}

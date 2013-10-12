@@ -147,7 +147,7 @@ class UserProfile extends BaseModule
 	public function CreatePage()
 	{
 		$this->_myWords = $this->WordCollection();
-		
+
 		$title = $this->_myWords->Value("TITLE", $this->_context->ContextValue("SERVER_NAME") );
 		$abstract = $this->_myWords->Value("ABSTRACT", $this->_context->ContextValue("SERVER_NAME") );
 		$document = new XmlnukeDocument($title, $abstract);

@@ -48,34 +48,14 @@ class LanguageFactory
 	 * @param string $name
 	 * @return LanguageCollection
 	 */
-	public static function GetLanguageCollection($type, $name)
+	public static function GetLanguageCollection($className, $deprecated = "")
 	{
-		switch ($type) 
-		{
-			case LanguageFileTypes::ADMINMODULE:
-				$name = "com-xmlnuke-".str_replace(".","-",strtolower($name));
-				$langFile = new AnydatasetLangFilenameProcessor($name);
-				break;
-		
-			case LanguageFileTypes::ADMININTERNAL:
-				$langFile = new AdminModulesLangFilenameProcessor();
-				break;
-		
-			case LanguageFileTypes::MODULE:
-				$name = str_replace(".","-",strtolower($name));
-				$langFile = new AnydatasetLangFilenameProcessor($name);
-				break;
-				
-			case LanguageFileTypes::OBJECT:
-				$name = str_replace(".class.php", "", basename($name));
-				$name = str_replace(FileUtil::Slash(),"-",str_replace(".","-",strtolower($name)));
-				$langFile = new AnydatasetLangFilenameProcessor($name);
-				break;
-				
-			default:
-				$langFile = new AnydatasetLangFilenameProcessor($name);
-				break;
-		}
+		if ($deprecated != "")
+			throw new \Xmlnuke\Core\Exception\UnsupportedFeatureException('Please fix call to GetLanguageCollection');
+
+		$langName = str_replace("\\","-", $className);
+		$langFile = new AnydatasetLangFilenameProcessor($langName);
+
 		$lang = new LanguageCollection();
 		$lang->LoadLanguages($langFile);
 		return $lang;

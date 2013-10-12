@@ -30,7 +30,7 @@
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Module;
+namespace Xmlnuke\Modules;
 
 use DOMDocument;
 use Exception;
