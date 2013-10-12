@@ -50,7 +50,7 @@ class  XmlnukeMediaItem extends XmlnukeCollection implements IXmlnukeDocumentObj
 	*@param DOMNode $current
 	*@return void
 	*/
-	protected function XmlnukeMediaItem($src, $thumb="", $title = "", $caption="", $width="", $height="")
+	public function __construct($src, $thumb="", $title = "", $caption="", $width="", $height="")
 	{
 		$this->_src = $src;
 		$this->_thumb = $thumb;
