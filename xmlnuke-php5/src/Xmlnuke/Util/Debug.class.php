@@ -45,11 +45,14 @@ use Xmlnuke\Core\AnyDataset\AnyIterator;
 use Xmlnuke\Core\AnyDataset\IIterator;
 use Xmlnuke\Core\AnyDataset\IteratorFilter;
 use Xmlnuke\Core\AnyDataset\SingleRow;
+use Xmlnuke\Core\Engine\ErrorHandler;
 use Xmlnuke\Core\Locale\LanguageCollection;
 use Xmlnuke\Core\Processor\FilenameProcessor;
 
 class Debug
 {
+	protected static $count = 1;
+
 	/**
 	 * Assist your to debug vars. Accept n vars parameters
 	 * Included Debug on ARRAY an IIterator Object
@@ -60,15 +63,18 @@ class Debug
 	 */
 	public static function PrintValue($arg1, $arg2 = null)
 	{
-		if (array_key_exists("rawxml", $_REQUEST) && ($_REQUEST["rawxml"] == "true"))
-		{
-			return;
-		}
-
 		for ($i = 0, $numArgs = func_num_args(); $i < $numArgs ; $i++)
 		{
-			echo "<b><font color='red'>Debug</font></b>: ";
 			$var = func_get_arg($i);
+			ErrorHandler::getInstance()->addExtraInfo('DEBUG_' . (Debug::$count++), $var);
+
+			if (array_key_exists("rawxml", $_REQUEST) && ($_REQUEST["rawxml"] == "true"))
+			{
+				continue;
+			}
+
+			echo "<b><font color='red'>Debug</font></b>: ";
+
 			if (is_array($var))
 			{
 				foreach ($var as $key=>$value)
