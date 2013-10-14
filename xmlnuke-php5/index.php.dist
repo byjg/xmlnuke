@@ -1,4 +1,8 @@
 <?php
+
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Util\FileUtil;
+
 ## CHECK CONFIG.PHP ##
 if (!file_exists("config.inc.php")) { header("Location: check_install.php"); exit(); }
 ## CHECK CONFIG.PHP ##
@@ -8,6 +12,8 @@ if (!file_exists("config.inc.php")) { header("Location: check_install.php"); exi
 #
 require_once("xmlnuke.inc.php");
 #############################################
+
+$context = Context::getInstance();
 
 ## CHECK CONFIG.PHP ##
 if ($context->ContextValue("xmlnuke.ROOTDIR")=="")
@@ -54,7 +60,6 @@ define("MAX_COLS", 3);
 	</tr>
 	<tr>
 <?php
-$context = Context::getInstance();
 $arr = $context->ExistingSites();
 $count = 0;
 
@@ -99,24 +104,20 @@ function getUrlImage($site)
 
 function getUrlEnterSite($site)
 {
-	global $context;
-
-	$targetPage = $context->UrlXmlnukeEngine() . "?xml=home";
+	$targetPage = Context::getInstance()->UrlXmlNukeEngine() . "?xml=home";
 	return  $targetPage . "&site=" . $site . "&xsl=page";
 }
 
 function getUrlAdmin($site)
 {
-	global $context;
-	$targetAdmin = $context->UrlXmlNukeAdmin();
+	$targetAdmin = Context::getInstance()->UrlXmlNukeAdmin();
 
 	return  $targetAdmin . "?site=" . $site;
 }
 
 function getVersion()
 {
-	global $context;
-	return $context->XmlNukeVersion();
+	return Context::getInstance()->XmlNukeVersion();
 }
 
 
