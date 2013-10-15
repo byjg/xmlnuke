@@ -33,8 +33,8 @@
  */
 namespace Xmlnuke\Core\Classes;
 
-use Captcha;
 use DOMNode;
+use Captcha\Captcha;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\BlockPosition;
 use Xmlnuke\Util\XmlUtil;

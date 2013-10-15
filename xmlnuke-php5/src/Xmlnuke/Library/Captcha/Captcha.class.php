@@ -7,6 +7,12 @@
  * @see http://www.moraga.com.br/89/captcha-em-php
  */
 
+namespace Captcha;
+
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Enum\LanguageFileTypes;
+use Xmlnuke\Core\Locale\LanguageFactory;
+
 class Captcha {
 
 	private $text;
@@ -20,16 +26,18 @@ class Captcha {
 	 */
 	public function __construct($context, $useQuestion = true, $characters=5)
 	{
-		$mywords = LanguageFactory::GetLanguageCollection(LanguageFileTypes::OBJECT, "captcha");
+		$mywords = LanguageFactory::GetLanguageCollection(__CLASS__);
 
 		if ($characters < 5) $characters = 5;
 
+		$basePath = dirname(__FILE__);
+
 		$font = array();
-		$font[] = PHPXMLNUKEDIR . 'src/modules/captcha/arial_black.ttf';
-		$font[] = PHPXMLNUKEDIR . 'src/modules/captcha/elephant.ttf';
-		$font[] = PHPXMLNUKEDIR . 'src/modules/captcha/distress.ttf';
-		$font[] = PHPXMLNUKEDIR . 'src/modules/captcha/dsmoster.ttf';
-		$font2 = PHPXMLNUKEDIR . 'src/modules/captcha/arial.ttf';
+		$font[] = $basePath . '/arial_black.ttf';
+		$font[] = $basePath . '/elephant.ttf';
+		$font[] = $basePath . '/distress.ttf';
+		$font[] = $basePath . '/dsmoster.ttf';
+		$font2 = $basePath . '/arial.ttf';
 
 		$pos_ini = 20;
 		$font_len = 32+rand(-3, 3);

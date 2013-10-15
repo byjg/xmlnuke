@@ -72,8 +72,7 @@ class ErrorHandler extends BaseSingleton
 		else
 		{
 			$this->_handler = new PrettyPageHandler();
-			
-			if (Context::getInstance()->getDevelopmentStatus())
+			if (!Context::getInstance()->getDevelopmentStatus())
 			{
 				$this->_handler->setPageTemplate('minimal-template');
 				$this->_handler->setPageCss('minimal-page');

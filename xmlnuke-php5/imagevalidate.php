@@ -1,11 +1,13 @@
 <?php
+
+use Captcha\Captcha;
+use Xmlnuke\Core\Engine\Context;
+
 #############################################
 # To create a XMLNuke capable PHP5 page
 #
 require_once("xmlnuke.inc.php");
 #############################################
-
-require_once(PHPXMLNUKEDIR . "src/modules/captcha/captcha.class.php");
 
 $context = Context::getInstance();
 
