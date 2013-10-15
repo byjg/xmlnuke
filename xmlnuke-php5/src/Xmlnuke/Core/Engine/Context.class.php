@@ -39,6 +39,7 @@ use Xmlnuke\Core\Admin\UsersAnyDataSet;
 use Xmlnuke\Core\Admin\UsersDBDataSet;
 use Xmlnuke\Core\AnyDataset\AnyDataSet;
 use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use Xmlnuke\Core\Cache\NoCacheEngine;
 use Xmlnuke\Core\Classes\BaseSingleton;
 use Xmlnuke\Core\Enum\Relation;
 use Xmlnuke\Core\Exception\NotImplementedException;
@@ -307,7 +308,7 @@ class Context extends BaseSingleton
 		{
 			$cache = $this->Value("xmlnuke.XSLCACHE");
 			if ($cache == "")
-				$this->_xslCacheEngine = \Xmlnuke\Core\Cache\NoCacheEngine::getInstance();
+				$this->_xslCacheEngine = NoCacheEngine::getInstance();
 			else
 				$this->_xslCacheEngine = $cache::getInstance();
 		}
@@ -715,23 +716,26 @@ class Context extends BaseSingleton
 		$this->putValue($key, $value);
 	}
 
+	protected $_langAvail = null;
 	/**
 	* @access public
 	* @return array Return the languages available from xmlnuke.LANGUAGESAVAILABLE from Config.php file.
 	*/
 	public function LanguagesAvailable()
 	{
-		$value = $this->ContextValue("xmlnuke.LANGUAGESAVAILABLE");
-		$pairs = explode("|",$value);
+		if (!is_null($this->_langAvail))
+			return $this->_langAvail;
 
-		$result = array();
+		$temp = $this->ContextValue("xmlnuke.LANGUAGESAVAILABLE");
+		if (!is_array($temp))
+			throw new \InvalidArgumentException('Config "xmlnuke.LANGUAGESAVAILABLE" requires an associative array');
 
-		foreach ($pairs as $pair)
-		{
-			$values = explode('=',$pair);
-			$result[strtolower($values[0])] = $values[1];
-		}
-		return $result;
+		$this->_langAvail = array();
+		
+		foreach ($temp as $key=>$value)
+			$this->_langAvail[strtolower($key)] = $value;
+
+		return $this->_langAvail;
 	}
 
 	/**
@@ -740,8 +744,7 @@ class Context extends BaseSingleton
 	*/
 	public function LanguagesAvailableMajor()
 	{
-		$value = $this->ContextValue("xmlnuke.LANGUAGESAVAILABLE");
-		$pairs = explode("|",$value);
+		$pairs = $this->LanguagesAvailable();
 
 		$result = array();
 
@@ -803,17 +806,10 @@ class Context extends BaseSingleton
 	{
 		if ($this->_externalSiteArray == null)
 		{
-			$this->_externalSiteArray = array();
-			$externalSiteDir = $this->ContextValue("xmlnuke.EXTERNALSITEDIR");
-			if ($externalSiteDir != "")
-			{
-				$externalSiteDirArray = explode("|", $externalSiteDir);
-				foreach ($externalSiteDirArray as $siteItem)
-				{
-					$siteArray = explode("=", $siteItem);
-					$this->_externalSiteArray[$siteArray[0]] = $siteArray[1];
-				}
-			}
+			if (!is_array($this->ContextValue("xmlnuke.EXTERNALSITEDIR")))
+				throw new \InvalidArgumentException('Config "xmlnuke.EXTERNALSITEDIR" requires an associative array');
+
+			$this->_externalSiteArray = $this->ContextValue("xmlnuke.EXTERNALSITEDIR");
 		}
 		return $this->_externalSiteArray;
 	}

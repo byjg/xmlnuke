@@ -153,17 +153,10 @@ class ModuleFactory
 		{
 			if ( (empty($_SESSION["SESS_XMLNUKE_PHPLIBDIR"])) || ($context->getNoCache()) || ($context->getReset()) )
 			{
-				$phpLibDir = $context->ContextValue("xmlnuke.PHPLIBDIR");
-				if ($phpLibDir != "")
-				{
-					$phpLibDirArray = explode("|", $phpLibDir);
-					foreach ($phpLibDirArray as $phpLibItem)
-					{
-						$phpLib = explode("=", $phpLibItem);
-						ModuleFactory::$_phpLibDir[$phpLib[0]] = $phpLib[1];
-						//set_include_path(get_include_path() . PATH_SEPARATOR . $phpLib[1]);
-					}
-				}
+				if (!is_array($context->ContextValue("xmlnuke.PHPLIBDIR")))
+					throw new \InvalidArgumentException('Config "xmlnuke.PHPLIBDIR" requires an associative array');
+
+				ModuleFactory::$_phpLibDir = $context->ContextValue("xmlnuke.PHPLIBDIR");
 				$_SESSION["SESS_XMLNUKE_PHPLIBDIR"] = ModuleFactory::$_phpLibDir;
 			}
 			else
