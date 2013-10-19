@@ -103,9 +103,9 @@ class DBIterator extends GenericIterator
       			{
       				$row[$key] = "[OBJECT]";
       			}
-      			elseif (!FileUtil::is_utf8($value))
+      			else
 				{
-					$row[$key] = utf8_encode($value);
+					$row[$key] = FileUtil::fixUTF8($value);
 				}
 			}
 			$sr = new SingleRow($row);

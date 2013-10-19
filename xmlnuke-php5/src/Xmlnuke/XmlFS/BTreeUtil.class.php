@@ -145,15 +145,7 @@ class BTreeUtil
 			{
 				foreach($bnode->values()as $s)
 				{
-					$aux = @$resultAux[$s];
-					if (($aux == null) || ($aux == ""))
-					{
-						$resultAux[$s] = "1";
-					}
-					else
-					{
-						$resultAux[$s] = (intval($aux) + 1);
-					}
+					$resultAux[$s] = isset($resultAux[$s]) ? (intval($resultAux[$s]) + 1) : 1;
 				}
 
 			}

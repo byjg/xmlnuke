@@ -109,11 +109,7 @@ class SQLRelayIterator extends GenericIterator
       			}
 				else
 				{
-					if (!FileUtil::is_utf8($value))
-					{
-						$value = utf8_encode($value);
-					}
-
+					$value = FileUtil::fixUTF8($value);
 					$sr->AddField($fieldName, $value);
 				}
 			}

@@ -41,7 +41,6 @@ use DOMXPath;
 use InvalidArgumentException;
 use SimpleXMLElement;
 use Xmlnuke\Core\Exception\NotFoundException;
-use Xmlnuke\Core\Exception\PHPWarning;
 use Xmlnuke\Core\Exception\XmlUtilException;
 use Xmlnuke\Core\Processor\FilenameProcessor;
 
@@ -105,13 +104,12 @@ class XmlUtil
 	public static function CreateXmlDocumentFromStr($xml, $checkUTF8 = true, $docOptions = XMLUTIL_OPT_DONT_FIX_AMPERSAND)
 	{
 		$xmldoc = self::CreateXmlDocument($docOptions);
-		if ($checkUTF8)	$xml = FileUtil::CheckUTF8Encode($xml);
+		if ($checkUTF8)	$xml = FileUtil::fixUTF8($xml);
 		$xml = XmlUtil::FixXMLHeader($xml);
 		if (($docOptions & XMLUTIL_OPT_DONT_FIX_AMPERSAND) != XMLUTIL_OPT_DONT_FIX_AMPERSAND)
 			$xml = str_replace("&amp;", "&", $xml);
 
-		@$xmldoc->loadXML($xml);
-		PHPWarning::LoadXml("CreateXmlDocumentFromStr", $xml);
+		$xmldoc->loadXML($xml);
 
 		XmlUtil::extractNameSpaces($xmldoc);
 		return $xmldoc;
@@ -209,7 +207,7 @@ class XmlUtil
 		}
 		else
 		{
-			$ret = @$document->save($filename);
+			$ret = $document->save($filename);
 			if ($ret === false)
 			{
 				throw new XmlUtilException("Cannot save XML Document in $filename.", 256); // Não foi possível gravar o arquivo: PERMISSÂO ou CAMINHO não existe;

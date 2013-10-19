@@ -41,7 +41,6 @@ use Xmlnuke\Core\Classes\IXmlnukeDocument;
 use Xmlnuke\Core\Classes\IXmlnukeDocumentObject;
 use Xmlnuke\Core\Classes\PageXml;
 use Xmlnuke\Core\Exception\EngineException;
-use Xmlnuke\Core\Exception\PHPWarning;
 use Xmlnuke\Core\Exception\XMLNukeException;
 use Xmlnuke\Core\Module\IModule;
 use Xmlnuke\Core\Processor\ForceFilenameLocation;
@@ -435,10 +434,9 @@ class XmlnukeEngine
 		{
 			throw new EngineException("Cannot load XSL cache file. The following error occured: ". $ex->getMessage(), 752);
 		}
-		$xsl = FileUtil::CheckUTF8Encode($xsl);
+		$xsl = FileUtil::fixUTF8($xsl);
 		$xslDom = new DOMDocument();
-		@$xslDom->loadXML($xsl);
-		PHPWarning::LoadXml("TransformDocument", $xsl);
+		$xslDom->loadXML($xsl);
 		$xslTran->importStyleSheet($xslDom);
 
 		// Create Argument List
@@ -454,8 +452,7 @@ class XmlnukeEngine
 		//Transform and output		
 		$xtw = $xslTran->transformToXML($xml);	
 		$xhtml = new DOMDocument();		
-		@$xhtml->loadXML($xtw);
-		PHPWarning::LoadXml("TransformDocument", $xtw);
+		$xhtml->loadXML($xtw);
 
 		// Reload XHTML result to process PARAM and HREFs
 		$paramProcessor = new ParamProcessor();
@@ -476,11 +473,11 @@ class XmlnukeEngine
 		$arrCt = $this->_context->getSuggestedContentType();
 		if ($arrCt["content-type"] == "text/html")
 		{
-			return FileUtil::CheckUTF8Encode(strtr($xhtml->saveHTML(), array("></br>"=>"/>")));
+			return FileUtil::fixUTF8(strtr($xhtml->saveHTML(), array("></br>"=>"/>")));
 		}
 		else 
 		{
-			return FileUtil::CheckUTF8Encode($xhtml->saveXML());
+			return FileUtil::fixUTF8($xhtml->saveXML());
 		}
 	}
 

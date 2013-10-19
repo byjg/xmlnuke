@@ -95,14 +95,13 @@ class LanguageCollection
 	*/
 	public function Value($key, $param = "")
 	{
-		$retword = @$this->_collection[$key];
-		if ($retword == null)
+		if (!isset($this->_collection[$key]))
 		{
 			$retword = "[".$key."?]";
 		}
 		else
 		{
-			$retword = str_replace("\\n",""."\n",$retword);
+			$retword = str_replace("\\n",""."\n", $this->_collection[$key]);
 		}
 		
 		if (is_array($param)) 
@@ -206,7 +205,7 @@ class LanguageCollection
 			}
 			catch (Exception $e)
 			{
-				throw new EngineException('Can\'t load language file "' . $langFile->FullQualifiedName() . '"!! Maybe Invalid Format.', 800); // 2005-10-19 12:15
+				throw new EngineException('Can\'t load language file "' . $langFile->FullQualifiedName() . '"! ' . $e->getMessage());
 			}
 			
 			$itf = new IteratorFilter();
