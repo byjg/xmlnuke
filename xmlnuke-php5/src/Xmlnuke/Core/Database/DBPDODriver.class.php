@@ -154,7 +154,7 @@ class DBPDODriver implements IDBDriver
 	{
 		$stmt = $this->getDBStatement($sql, $array);
 		$stmt->execute();
-		$it = new DBIterator ( $stmt, $this->_context );
+		$it = new DBIterator ( $stmt );
 		return $it;
 	}
 	

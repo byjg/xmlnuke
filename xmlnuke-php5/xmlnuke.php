@@ -133,7 +133,7 @@ use Xmlnuke\Core\Exception\NotFoundException;
 		catch (NotAuthenticatedException $ex)
 		{
 			$s = XmlnukeManageUrl::encodeParam( $_SERVER["REQUEST_URI"] );
-			$url = $context->bindModuleUrl($context->ContextValue("xmlnuke.LOGINMODULE"))."&ReturnUrl=".$s;
+			$url = $context->bindModuleUrl($context->Value("xmlnuke.LOGINMODULE"))."&ReturnUrl=".$s;
 			// Do not leave empty spaces at begin or end of modules
 			// Não deixe espaços em branco no início ou fim dos módulos
 			$context->redirectUrl( $url );

@@ -61,9 +61,12 @@ class DBIterator extends GenericIterator
 	*@param Context $context
 	*@return void
 	*/
-	public function __construct($recordset, $context)
+	public function __construct($recordset, $context = null)
 	{
-		$this->_context = $context;
+		if ($context == null)
+			$this->_context = Context::getInstance();
+		else
+			$this->_context = $context;
 		$this->_rs = $recordset;
 		$this->_rowBuffer = array();
 	}

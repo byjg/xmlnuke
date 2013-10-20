@@ -77,6 +77,18 @@ abstract class UsersBase implements IUsersBase
 	 */
 	public function getUserTable()
 	{
+		if ($this->_UserTable == null)
+		{
+			$this->_UserTable = new UserTable();
+			$this->_UserTable->Table = "user";
+			$this->_UserTable->Id = "userid";
+			$this->_UserTable->Name = "name";
+			$this->_UserTable->Email= "email";
+			$this->_UserTable->Username = "username";
+			$this->_UserTable->Password = "password";
+			$this->_UserTable->Created = "created";
+			$this->_UserTable->Admin = "admin";
+		}
 		return $this->_UserTable;
 	}
 
@@ -86,6 +98,15 @@ abstract class UsersBase implements IUsersBase
 	 */
 	public function getCustomTable()
 	{
+		if ($this->_CustomTable == null)
+		{
+			$this->_CustomTable = new CustomTable();
+			$this->_CustomTable->Table = "custom";
+			$this->_CustomTable->Id = "customid";
+			$this->_CustomTable->Name = "name";
+			$this->_CustomTable->Value = "value";
+			// Table "CUSTOM" must have [$this->_UserTable->Id = "userid"].
+		}
 		return $this->_CustomTable;
 	}
 
@@ -95,6 +116,13 @@ abstract class UsersBase implements IUsersBase
 	 */
 	public function getRolesTable()
 	{
+		if ($this->_RolesTable == null)
+		{
+			$this->_RolesTable = new RolesTable();
+			$this->_RolesTable->Table = "roles";
+			$this->_RolesTable->Site  = "site";
+			$this->_RolesTable->Role = "role";
+		}
 		return $this->_RolesTable;
 	}
 
@@ -346,35 +374,6 @@ abstract class UsersBase implements IUsersBase
 	* */
 	public function removePropertyValueFromAllUsers($propValue, $userProp)
 	{
-	}
-
-	/**
-	 * Config default name of the tables fields
-	 *
-	 */
-	protected function configTableNames()
-	{
-		$this->_UserTable = new UserTable();
-		$this->_UserTable->Table = "user";
-		$this->_UserTable->Id = "userid";
-		$this->_UserTable->Name = "name";
-		$this->_UserTable->Email= "email";
-		$this->_UserTable->Username = "username";
-		$this->_UserTable->Password = "password";
-		$this->_UserTable->Created = "created";
-		$this->_UserTable->Admin = "admin";
-
-		$this->_CustomTable = new CustomTable();
-		$this->_CustomTable->Table = "custom";
-		$this->_CustomTable->Id = "customid";
-		$this->_CustomTable->Name = "name";
-		$this->_CustomTable->Value = "value";
-		// Table "CUSTOM" must have [$this->_UserTable->Id = "userid"].
-
-		$this->_RolesTable = new RolesTable();
-		$this->_RolesTable->Table = "roles";
-		$this->_RolesTable->Site  = "site";
-		$this->_RolesTable->Role = "role";
 	}
 
 	/**

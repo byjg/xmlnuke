@@ -1101,7 +1101,9 @@ class Context extends BaseSingleton
 	public function bindModuleUrl($modulename, $xsl="", $site="",  $lang="")
 	{
 		$queryStart = strpos($modulename, "?");
-		if (!($queryStart===false))
+		$queryString = "";
+		
+		if ($queryStart!==false)
 		{
 			$queryString = "&" . substr($modulename, $queryStart+1);
 			$modulename = substr($modulename, 0, $queryStart);

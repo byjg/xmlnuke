@@ -151,18 +151,10 @@ class ModuleFactory
 	{
 		if (ModuleFactory::$_phpLibDir == null)
 		{
-			if ( (empty($_SESSION["SESS_XMLNUKE_PHPLIBDIR"])) || ($context->getNoCache()) || ($context->getReset()) )
-			{
-				if (!is_array($context->ContextValue("xmlnuke.PHPLIBDIR")))
-					throw new \InvalidArgumentException('Config "xmlnuke.PHPLIBDIR" requires an associative array');
+			if (!is_array($context->Value("xmlnuke.PHPLIBDIR")))
+				throw new \InvalidArgumentException('Config "xmlnuke.PHPLIBDIR" requires an associative array');
 
-				ModuleFactory::$_phpLibDir = $context->ContextValue("xmlnuke.PHPLIBDIR");
-				$_SESSION["SESS_XMLNUKE_PHPLIBDIR"] = ModuleFactory::$_phpLibDir;
-			}
-			else
-			{
-				ModuleFactory::$_phpLibDir = $_SESSION["SESS_XMLNUKE_PHPLIBDIR"];
-			}
+			ModuleFactory::$_phpLibDir = $context->Value("xmlnuke.PHPLIBDIR");
 
 			$autoLoad = AutoLoad::getInstance();
 			foreach(ModuleFactory::$_phpLibDir as $lib => $path)

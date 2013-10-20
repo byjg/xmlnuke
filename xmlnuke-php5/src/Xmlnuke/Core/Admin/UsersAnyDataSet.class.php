@@ -71,8 +71,6 @@ class UsersAnyDataSet extends UsersBase
 		$this->_context = $context;
 		$this->_usersFile = new AnydatasetSetupFilenameProcessor("users");
 		$this->_anyDataSet = new AnyDataSet($this->_usersFile);
-		$this->configTableNames();
-		$this->getUserTable()->Id = $this->getUserTable()->Username;
 	}
 
 	/**
@@ -330,6 +328,16 @@ class UsersAnyDataSet extends UsersBase
 			$sr->removeFieldName($role);
 		}
 		$roleDataSet->Save();
+	}
+
+	public function getUserTable()
+	{
+		if ($this->_UserTable == null)
+		{
+			parent::getUserTable();
+			$this->_UserTable->Id = $this->_UserTable->Username;
+		}
+		return $this->_UserTable;
 	}
 
 }

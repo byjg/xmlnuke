@@ -56,11 +56,10 @@ class UsersDBDataSet extends UsersBase
 	/**
 	  * DBDataSet constructor
 	  */
-	public function UsersDBDataSet($context, $dataBase)
+	public function __construct($context, $dataBase)
 	{
 		$this->_context = $context;
 		$this->_DB = new DBDataSet($dataBase, $context);
-		$this->configTableNames();
 	}
 
 	/**
@@ -155,7 +154,7 @@ class UsersDBDataSet extends UsersBase
 	{
 		$sql = "";
 		$param = array();
-		if (is_object($filter) && get_class($filter) == "IteratorFilter")
+		if ($filter instanceof IteratorFilter)
 		{
 			$sql = $filter->getSql($this->getUserTable()->Table, $param);
 		}
@@ -424,14 +423,34 @@ class UsersDBDataSet extends UsersBase
 		$this->_DB->execSQL($sql, $param);
 	}
 
-	protected function configTableNames()
+	public function getUserTable()
 	{
-		parent::configTableNames();
-
-		$this->_UserTable->Table = "xmlnuke_users";
-		$this->_CustomTable->Table = "xmlnuke_custom";
-		$this->_RolesTable->Table = "xmlnuke_roles";
+		if ($this->_UserTable == null)
+		{
+			parent::getUserTable();
+			$this->_UserTable->Table = "xmlnuke_users";
+		}
+		return $this->_UserTable;
 	}
 
+	public function getCustomTable()
+	{
+		if ($this->_CustomTable == null)
+		{
+			parent::getCustomTable();
+			$this->_CustomTable->Table = "xmlnuke_custom";
+		}
+		return $this->_CustomTable;
+	}
+
+	public function getRolesTable()
+	{
+		if ($this->_RolesTable == null)
+		{
+			parent::getRolesTable();
+			$this->_RolesTable->Table = "xmlnuke_roles";
+		}
+		return $this->_RolesTable;
+	}
 }
 ?>
