@@ -91,12 +91,12 @@ class ManageSites extends NewBaseAdminModule
 				break;
 			case ManageSitesAction::View :
 				$url = new XmlnukeManageUrl(URLTYPE::ENGINE);
-				$url->addParam('site', $this->_context->ContextValue('valueid'));
+				$url->addParam('site', $this->_context->get('valueid'));
 				$this->_context->redirectUrl($url->getUrlFull());
 				break;
 			case ManageSitesAction::Edit :
 				$url = new XmlnukeManageUrl(URLTYPE::ADMIN, "admin:ManageSites");
-				$url->addParam('site', $this->_context->ContextValue('valueid'));
+				$url->addParam('site', $this->_context->get('valueid'));
 				$this->_context->redirectUrl($url->getUrlFull());
 				break;
 			default:
@@ -157,8 +157,8 @@ class ManageSites extends NewBaseAdminModule
 	protected function ActionCreate($paragraph)
 	{
 		$myWords = $this->WordCollection();
-		$newSiteName = strtolower($this->_context->ContextValue("newsite"));
-		$xslTemplate = $this->_context->ContextValue("xsltemplate");
+		$newSiteName = strtolower($this->_context->get("newsite"));
+		$xslTemplate = $this->_context->get("xsltemplate");
 		$newSitePath = $this->_context->SiteRootPath() . $newSiteName ;
 		FileUtil::ForceDirectories($newSitePath , 0777 );
 		FileUtil::ForceDirectories($newSitePath . FileUtil::Slash() . "xsl", 0777 );
@@ -187,7 +187,7 @@ class ManageSites extends NewBaseAdminModule
 	{
 		$complete = false;
 		$myWords = $this->WordCollection();
-		$SiteName = $this->_context->ContextValue("valueid");
+		$SiteName = $this->_context->get("valueid");
 		$removeSitePath = $this->_context->SiteRootPath() . $SiteName ;
 		try 
 		{

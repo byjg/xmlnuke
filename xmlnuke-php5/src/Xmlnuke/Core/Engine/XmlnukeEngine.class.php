@@ -198,7 +198,7 @@ class XmlnukeEngine
 				{
 					if (strpos($this->_context->getXsl(), "admin_page"))
 					{
-						$this->_context->setXsl($this->_context->ContextValue("xmlnuke.DEFAULTPAGE"));
+						$this->_context->setXsl($this->_context->get("xmlnuke.DEFAULTPAGE"));
 					}
 					$result = $this->TransformDocumentFromDOM($xmlDoc);
 				}
@@ -446,7 +446,7 @@ class XmlnukeEngine
 		$xslTran->setParameter("", "lang", $this->_context->Language()->getName());
 		$xslTran->setParameter("", "module", $this->_context->getModule());
 		$xslTran->setParameter("", "transformdate", date("Y-m-d H:i:s") );
-		$xslTran->setParameter("", "urlbase", $this->_context->ContextValue("xmlnuke.URLBASE"));
+		$xslTran->setParameter("", "urlbase", $this->_context->get("xmlnuke.URLBASE"));
 		$xslTran->setParameter("", "engine", "PHP");
 		
 		//Transform and output		
@@ -460,7 +460,7 @@ class XmlnukeEngine
 		$paramProcessor->AdjustToFullLink($xhtml, "FORM", "ACTION");
 		$paramProcessor->AdjustToFullLink($xhtml, "AREA", "HREF");
 		$paramProcessor->AdjustToFullLink($xhtml, "LINK", "HREF");
-		if ($this->_context->ContextValue("xmlnuke.ENABLEPARAMPROCESSOR"))
+		if ($this->_context->get("xmlnuke.ENABLEPARAMPROCESSOR"))
 		{
 			$paramProcessor->ProcessParameters($xhtml);
 		}

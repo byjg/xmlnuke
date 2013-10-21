@@ -139,16 +139,16 @@ class SendPage extends BaseModule
 	{
 		parent::Setup($xmlModuleName, $customArgs);
 
-		$this->_link = $this->_context->ContextValue("link");
-		$this->_toName = $this->_context->ContextValue("toname");
-		$this->_toEmail = $this->_context->ContextValue("tomail");
-		$this->_fromName = $this->_context->ContextValue("fromname");
-		$this->_fromEmail = $this->_context->ContextValue("frommail");
-		$this->_customMessage = $this->_context->ContextValue("custommessage");
+		$this->_link = $this->_context->get("link");
+		$this->_toName = $this->_context->get("toname");
+		$this->_toEmail = $this->_context->get("tomail");
+		$this->_fromName = $this->_context->get("fromname");
+		$this->_fromEmail = $this->_context->get("frommail");
+		$this->_customMessage = $this->_context->get("custommessage");
 		if ($this->_link == "")
 		{
-			//$this->_link = str_replace("&","Z",$this->_context->ContextValue("HTTP_REFERER"));
-			$this->_link = urlencode($this->_context->ContextValue("HTTP_REFERER"));
+			//$this->_link = str_replace("&","Z",$this->_context->get("HTTP_REFERER"));
+			$this->_link = urlencode($this->_context->get("HTTP_REFERER"));
 			if (stripos($this->_link,"sendpage")> 0)
 			{
 				$this->_link = "";
@@ -188,7 +188,7 @@ class SendPage extends BaseModule
 	{
 		$this->_myWords = $this->WordCollection();
 
-		$this->_document = new XmlnukeDocument($this->_myWords->Value("TITLE", $this->_context->ContextValue("SERVER_NAME")),$this->_myWords->Value("ABSTRACT", $this->_context->ContextValue("SERVER_NAME")));
+		$this->_document = new XmlnukeDocument($this->_myWords->Value("TITLE", $this->_context->get("SERVER_NAME")),$this->_myWords->Value("ABSTRACT", $this->_context->get("SERVER_NAME")));
 
 		if ($this->_link == "")
 		{

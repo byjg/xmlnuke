@@ -182,7 +182,7 @@ class  XmlInputSortableList extends XmlnukeDocumentObject
 	{
 		$context = Context::getInstance();
 		
-		$cols = $context->Value($sortableName. "_columns");
+		$cols = $context->get($sortableName. "_columns");
 		
 		if ($cols == "")
 			return null;
@@ -193,7 +193,7 @@ class  XmlInputSortableList extends XmlnukeDocumentObject
 		
 		foreach($arCols as $col)
 		{
-			$value = $context->Value($sortableName. "_" . $col);
+			$value = $context->get($sortableName. "_" . $col);
 			$ret[$col] = explode("|", $value);
 		}
 		

@@ -88,7 +88,7 @@ class  XmlInputImageValidate extends XmlnukeDocumentObject
 	public static function validateText($context)
 	{
 		require_once(PHPXMLNUKEDIR . "src/modules/captcha/captcha.class.php");
-		return Captcha::TextIsValid($context->ContextValue("imagevalidate"));
+		return Captcha::TextIsValid($context->get("imagevalidate"));
 	}
 
 }

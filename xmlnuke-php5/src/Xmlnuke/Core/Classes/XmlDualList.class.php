@@ -367,7 +367,7 @@ class  XmlDualList extends XmlnukeDocumentObject
 	 */
 	public static function Parse($context, $duallistaname)
 	{
-		$val = $context->ContextValue($duallistaname);
+		$val = $context->get($duallistaname);
 		if ($val != "")
 		{
 			return explode(",", $val);

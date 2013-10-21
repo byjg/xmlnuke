@@ -168,10 +168,10 @@ abstract class BaseModule implements IModule
 		$this->_xmlModuleName = $xmlModuleName;
 		$this->_context = Context::getInstance();
 		$this->_cacheFile = new XMLCacheFilenameProcessor($this->_xmlModuleName->ToString());
-		$this->_action = $this->_context->ContextValue("action");
+		$this->_action = $this->_context->get("action");
 		if ($this->_action == "")
 		{
-			$this->_action = $this->_context->ContextValue("acao");
+			$this->_action = $this->_context->get("acao");
 		}
 
 		$this->CustomSetup($customArgs);
@@ -464,12 +464,12 @@ abstract class BaseModule implements IModule
 	 */
 	public function processEvent()
 	{
-		if ($this->isPostBack() && ($this->_context->ContextValue("__clickevent") != ""))
+		if ($this->isPostBack() && ($this->_context->get("__clickevent") != ""))
 		{
-			$events = explode("|", $this->_context->ContextValue("__clickevent"));
+			$events = explode("|", $this->_context->get("__clickevent"));
 			foreach ($events as $eventName)
 			{
-				if ($this->_context->ContextValue($eventName) != "")
+				if ($this->_context->get($eventName) != "")
 				{
 					$method = new ReflectionMethod(get_class($this), $eventName . "_Event");
 
@@ -506,14 +506,14 @@ abstract class BaseModule implements IModule
 				}
 
 				// If exists value, set it;
-				if ($this->_context->ContextValue($propName) != "")
+				if ($this->_context->get($propName) != "")
 				{
 					if ($prop->isPublic())
-						$prop->setValue($obj, $this->_context->ContextValue($propName));
+						$prop->setValue($obj, $this->_context->get($propName));
 					else
 					{
 						$method = new ReflectionMethod(get_class($obj), "set" . ucfirst($propName));
-						$method->invokeArgs($obj, array($this->_context->ContextValue($propName)));
+						$method->invokeArgs($obj, array($this->_context->get($propName)));
 					}
 				}
 			}
@@ -522,7 +522,7 @@ abstract class BaseModule implements IModule
 
 	public function isPostBack()
 	{
-		return ( $this->_context->ContextValue("__postback") != "" );
+		return ( $this->_context->get("__postback") != "" );
 	}
 
 	public function requiresSSL()

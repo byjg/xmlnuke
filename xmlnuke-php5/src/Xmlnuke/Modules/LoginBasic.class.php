@@ -146,7 +146,7 @@ class LoginBasic extends LoginBase
 		$this->_blockCenter = new XmlBlockCollection( $myWords->Value("TITLELOGIN"), BlockPosition::Center );
 		$this->defaultXmlnukeDocument->addXmlnukeObject($this->_blockCenter);
 		
-		$this->_urlReturn = $this->_context->ContextValue("ReturnUrl");
+		$this->_urlReturn = $this->_context->get("ReturnUrl");
 		
 		switch ($this->_action) 
 		{
@@ -173,7 +173,7 @@ class LoginBasic extends LoginBase
 	protected function MakeLogin()
 	{
 		$myWords = $this->WordCollection();
-		$user = $this->_users->validateUserName($this->_context->ContextValue("loguser"), $this->_context->ContextValue("password"));
+		$user = $this->_users->validateUserName($this->_context->get("loguser"), $this->_context->get("password"));
 		if ($user == null)
 		{
 			$container = new XmlnukeUIAlert($this->_context, UIAlert::BoxAlert);
@@ -208,7 +208,7 @@ class LoginBasic extends LoginBase
 		$form->setJSValidate(true);
 		$paragraph->addXmlnukeObject($form);
 		
-		$textbox = new XmlInputTextBox($myWords->Value("LABEL_NAME"), 'loguser', $this->_context->ContextValue("loguser"), 20);
+		$textbox = new XmlInputTextBox($myWords->Value("LABEL_NAME"), 'loguser', $this->_context->get("loguser"), 20);
 		$textbox->setInputTextBoxType(InputTextBoxType::TEXT );
 		$textbox->setRequired(true);
 		$form->addXmlnukeObject($textbox);
@@ -252,7 +252,7 @@ class LoginBasic extends LoginBase
 		$form->setDisableAutoComplete(true);
 		$paragraph->addXmlnukeObject($form);
 		
-		$textbox = new XmlInputTextBox($myWords->Value("LABEL_EMAIL"), 'email', $this->_context->ContextValue("email"), 40);
+		$textbox = new XmlInputTextBox($myWords->Value("LABEL_EMAIL"), 'email', $this->_context->get("email"), 40);
 		$textbox->setInputTextBoxType(InputTextBoxType::TEXT );
 		$textbox->setDataType(INPUTTYPE::EMAIL);
 		$textbox->setRequired(true);
@@ -275,7 +275,7 @@ class LoginBasic extends LoginBase
 		$container->setAutoHide(5000);
 		$this->_blockCenter->addXmlnukeObject($container);
 		
-		$user = $this->_users->getUserEMail( $this->_context->ContextValue("email") );
+		$user = $this->_users->getUserEMail( $this->_context->get("email") );
 		
 		if (is_null($user))
 		{

@@ -60,7 +60,7 @@ class ManageXSL extends BaseAdminModule
 		$deleteMode = false;
 
 		$action = strtolower($this->_action);
-		$id = $this->_context->ContextValue("id");
+		$id = $this->_context->get("id");
 		$contents = "";
 		$myWords = $this->WordCollection();
 		$this->setHelp($myWords->Value("DESCRIPTION"));
@@ -80,7 +80,7 @@ class ManageXSL extends BaseAdminModule
 		// --------------------------------------			
 		if ( ($action == "edit") || ($action == "new") )
 		{
-			$contents = $this->_context->ContextValue("contents");
+			$contents = $this->_context->get("contents");
 			$contents = stripslashes($contents);
 			try
 			{
@@ -107,14 +107,14 @@ class ManageXSL extends BaseAdminModule
 		if ($action == "delete")
 		{
 			$paragraph = $this->_px->addParagraph($block);
-			$this->_px->addHref($paragraph, "admin:ManageXSL?id=" . $this->_context->ContextValue("id") . "&action=confirmdelete", $myWords->Value("CONFIRMDELETE", $this->_context->ContextValue("id")) , null);
+			$this->_px->addHref($paragraph, "admin:ManageXSL?id=" . $this->_context->get("id") . "&action=confirmdelete", $myWords->Value("CONFIRMDELETE", $this->_context->get("id")) , null);
 			$deleteMode = true;
 		}
 
 		if ($action == "confirmdelete")
 		{
 			$paragraph = $this->_px->addParagraph($block);
-			FileUtil::DeleteFile(new XSLFilenameProcessor($this->_context->ContextValue("id")));
+			FileUtil::DeleteFile(new XSLFilenameProcessor($this->_context->get("id")));
 			$this->_px->addBold($paragraph, $myWords->Value("DELETED"));
 			$deleteMode = true;
 		}

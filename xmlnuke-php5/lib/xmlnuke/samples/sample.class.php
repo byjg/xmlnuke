@@ -10,7 +10,7 @@ class Sample
 	
 	public function getScriptName()
 	{
-		return basename($this->_context->ContextValue("SCRIPT_NAME"));
+		return basename($this->_context->get("SCRIPT_NAME"));
 	}
 	
 	public function getVersion()

@@ -275,9 +275,9 @@ class  XmlChart extends XmlnukeDocumentObject
 	*/
 	public function generateObject($current)
 	{
-		if ($this->_context->ContextValue("xcrt") == "")
+		if ($this->_context->get("xcrt") == "")
 		{
-			$url = new XmlnukeManageUrl(URLTYPE::HTTP, $this->_context->ContextValue("SELFURL"));
+			$url = new XmlnukeManageUrl(URLTYPE::HTTP, $this->_context->get("SELFURL"));
 			foreach ($this->_context->getPostVariables() as $key=>$value) 
 			{
 				$url->addParam($key, $value);
@@ -338,7 +338,7 @@ class  XmlChart extends XmlnukeDocumentObject
 				}
 			}
 				
-			if ($this->_context->ContextValue("xcrt") == "image")
+			if ($this->_context->get("xcrt") == "image")
 			{
 				require_once(PHPXMLNUKEDIR . "src/modules/panachart/panachart.php");
 	
@@ -379,7 +379,7 @@ class  XmlChart extends XmlnukeDocumentObject
 				Header("Content-Type: image/png");
 				exit();
 			}
-			elseif ($this->_context->ContextValue("xcrt") == "flash")
+			elseif ($this->_context->get("xcrt") == "flash")
 			{
 				$doc = XmlUtil::CreateXmlDocumentFromStr("<chart/>", false);
 				$root = $doc->documentElement;

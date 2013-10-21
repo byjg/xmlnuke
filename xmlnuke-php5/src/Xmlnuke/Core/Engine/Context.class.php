@@ -155,7 +155,7 @@ class Context extends BaseSingleton
 		$this->_xsl = $this->getParameter("xsl");
 		if ($this->_xsl == "")
 		{
-			$this->_xsl = $this->ContextValue("xmlnuke.DEFAULTPAGE");
+			$this->_xsl = $this->get("xmlnuke.DEFAULTPAGE");
 		}
 		else
 		{
@@ -175,14 +175,14 @@ class Context extends BaseSingleton
 		$this->_site = $this->getParameter("site");
 		if ($this->_site == "")
 		{
-			$this->_site = $this->ContextValue("xmlnuke.DEFAULTSITE");
+			$this->_site = $this->get("xmlnuke.DEFAULTSITE");
 		}
 		else
 		{
 			$this->_site = htmlentities($this->_site);
 		}
 
-		$this->_xmlnukepath = $this->ContextValue("xmlnuke.ROOTDIR");
+		$this->_xmlnukepath = $this->get("xmlnuke.ROOTDIR");
 		$this->_reset = ($this->getParameter("reset") != "");
 		$this->_nocache = ($this->getParameter("nocache"));
 
@@ -191,23 +191,23 @@ class Context extends BaseSingleton
 		$this->AddSessionToConfig($_SESSION);
 		$this->AddCookieToConfig($_COOKIE);
 
-		$this->AddPairToConfig("SELFURLREAL", $_SERVER["SCRIPT_NAME"]."?".$_SERVER["QUERY_STRING"]."&");
-		$this->AddPairToConfig("SELFURL", $_SERVER["REQUEST_URI"]);
-		$this->AddPairToConfig("ROOTDIR", $this->_xmlnukepath."/".$this-> _site);
-		$this->AddPairToConfig("SITE", $this->_site);
-		$this->AddPairToConfig("XMLNUKE", $this->_XmlNukeVersion);
-		//$this->AddPairToConfig("USERNAME", $this->authenticatedUser());
-		//$this->AddPairToConfig("USERID", $this->authenticatedUserId());
-		$this->AddPairToConfig("ENGINEEXTENSION", "php");
+		$this->addPairToConfig("SELFURLREAL", $_SERVER["SCRIPT_NAME"]."?".$_SERVER["QUERY_STRING"]."&");
+		$this->addPairToConfig("SELFURL", $_SERVER["REQUEST_URI"]);
+		$this->addPairToConfig("ROOTDIR", $this->_xmlnukepath."/".$this-> _site);
+		$this->addPairToConfig("SITE", $this->_site);
+		$this->addPairToConfig("XMLNUKE", $this->_XmlNukeVersion);
+		//$this->addPairToConfig("USERNAME", $this->authenticatedUser());
+		//$this->addPairToConfig("USERID", $this->authenticatedUserId());
+		$this->addPairToConfig("ENGINEEXTENSION", "php");
 
 		$this->readCustomConfig();
-		$this->_debug = $this->ContextValue("xmlnuke.DEBUG");
+		$this->_debug = $this->get("xmlnuke.DEBUG");
 		if (gettype($this->_debug) != "boolean")
 		{
 			$this->_debug = ($this->_debug == "true");
 		}
 
-		$this->_module = $this->ContextValue("module");
+		$this->_module = $this->get("module");
 		if ($this->_module != "")
 		{
 			$this->_module = htmlentities($this->_module);
@@ -278,15 +278,15 @@ class Context extends BaseSingleton
 
 		$this->_lang = LocaleFactory::GetLocale($lang, $this);
 		$this->_lang->setLanguage($langAvail[$this->_lang->getName()]);
-		$this->AddPairToConfig("LANGUAGE", $this->_lang->getName());
-		$this->AddPairToConfig("LANGUAGENAME", $this->_lang->getLanguage());
+		$this->addPairToConfig("LANGUAGE", $this->_lang->getName());
+		$this->addPairToConfig("LANGUAGENAME", $this->_lang->getLanguage());
 
 		$langStr = "";
 		foreach (array_keys($langAvail) as $key)
 		{
 			$langStr =$langStr."<a href='".$this->bindXmlnukeUrl( $this->getXml(), $this->getXsl(), $this->getSite(), $key )."'>".$langAvail[$key]."</a> | ";
 		}
-		$this->AddPairToConfig("LANGUAGESELECTOR", str_replace("&", "&amp;", substr($langStr,0,strlen($langStr)-2)));
+		$this->addPairToConfig("LANGUAGESELECTOR", str_replace("&", "&amp;", substr($langStr,0,strlen($langStr)-2)));
 
 		// Adjusts to Run with XMLNukeDB
 		$this->_appNameInMemory = "db_".$this->getSite()."_".strtolower($this->Language()->getName());
@@ -294,7 +294,7 @@ class Context extends BaseSingleton
 		$this->_xmlnukedb = new XmlnukeDB($this->XmlHashedDir(), $this->XmlPath(), strtolower($this->Language()->getName()));
 		//$this->_xmlnukedb->loadIndex();
 
-		if ($this->ContextValue("logout") != "")
+		if ($this->get("logout") != "")
 		{
 		       $this->MakeLogout();
 		}
@@ -306,7 +306,7 @@ class Context extends BaseSingleton
 	{
 		if ($this->_xslCacheEngine == null)
 		{
-			$cache = $this->Value("xmlnuke.XSLCACHE");
+			$cache = $this->get("xmlnuke.XSLCACHE");
 			if ($cache == "")
 				$this->_xslCacheEngine = NoCacheEngine::getInstance();
 			else
@@ -324,7 +324,7 @@ class Context extends BaseSingleton
 	public function getDebugInModule()
 	{
 		$configDebug = $this->_debug;
-		if ($this->ContextValue("debug") == "true")
+		if ($this->get("debug") == "true")
 		{
 			$requestDebug = true;
 		}
@@ -490,7 +490,7 @@ class Context extends BaseSingleton
 	*/
 	private function XmlNukePath()
 	{
-		if ($this->ContextValue("xmlnuke.USEABSOLUTEPATHSROOTDIR"))
+		if ($this->get("xmlnuke.USEABSOLUTEPATHSROOTDIR"))
 		{
 			return FileUtil::AdjustSlashes($this->_xmlnukepath).FileUtil::Slash();
 		}
@@ -580,7 +580,7 @@ class Context extends BaseSingleton
 	*/
 	public function UrlXmlnukeEngine()
 	{
-		return $this->joinUrlBase($this->ContextValue("xmlnuke.URLXMLNUKEENGINE"));
+		return $this->joinUrlBase($this->get("xmlnuke.URLXMLNUKEENGINE"));
 	}
 
 	/**
@@ -589,7 +589,7 @@ class Context extends BaseSingleton
 	*/
 	public function UrlModule()
 	{
-		return $this->joinUrlBase($this->ContextValue("xmlnuke.URLMODULE"));
+		return $this->joinUrlBase($this->get("xmlnuke.URLMODULE"));
 	}
 
 	/**
@@ -598,12 +598,12 @@ class Context extends BaseSingleton
 	*/
 	public function UrlXmlNukeAdmin()
 	{
-		return $this->joinUrlBase($this->ContextValue("xmlnuke.URLXMLNUKEADMIN"));
+		return $this->joinUrlBase($this->get("xmlnuke.URLXMLNUKEADMIN"));
 	}
 
 	public function UrlBase()
 	{
-		return $this->ContextValue("xmlnuke.URLBASE");
+		return $this->get("xmlnuke.URLBASE");
 	}
 
 	public function joinUrlBase($url)
@@ -659,7 +659,7 @@ class Context extends BaseSingleton
 	* @access public
 	* @return string
 	*/
-	public function Value($key)
+	public function get($key)
 	{
 		$key = strtoupper($key);
 		if (array_key_exists($key, $this->_config))
@@ -690,30 +690,9 @@ class Context extends BaseSingleton
 	 * @param type $key
 	 * @param type $value 
 	 */
-	public function putValue($key, $value)
+	public function put($key, $value)
 	{
-		$this->AddPairToConfig($key, $value);
-	}
-
-	/**
-	 * @deprecated since version 3.6. use Value() instead.
-	 * @param type $key 
-	 * @return string
-	 */
-	public function ContextValue($key)
-	{
-		return $this->Value($key);
-	}
-	
-	/**
-	 *
-	 * @deprecated since version 3.6. use putValue() instead.
-	 * @param type $key
-	 * @param type $value 
-	 */
-	public function putContextValue($key, $value)
-	{
-		$this->putValue($key, $value);
+		$this->addPairToConfig($key, $value);
 	}
 
 	protected $_langAvail = null;
@@ -726,7 +705,7 @@ class Context extends BaseSingleton
 		if (!is_null($this->_langAvail))
 			return $this->_langAvail;
 
-		$temp = $this->ContextValue("xmlnuke.LANGUAGESAVAILABLE");
+		$temp = $this->get("xmlnuke.LANGUAGESAVAILABLE");
 		if (!is_array($temp))
 			throw new \InvalidArgumentException('Config "xmlnuke.LANGUAGESAVAILABLE" requires an associative array');
 
@@ -806,10 +785,10 @@ class Context extends BaseSingleton
 	{
 		if ($this->_externalSiteArray == null)
 		{
-			if (!is_array($this->ContextValue("xmlnuke.EXTERNALSITEDIR")))
+			if (!is_array($this->get("xmlnuke.EXTERNALSITEDIR")))
 				throw new \InvalidArgumentException('Config "xmlnuke.EXTERNALSITEDIR" requires an associative array');
 
-			$this->_externalSiteArray = $this->ContextValue("xmlnuke.EXTERNALSITEDIR");
+			$this->_externalSiteArray = $this->get("xmlnuke.EXTERNALSITEDIR");
 		}
 		return $this->_externalSiteArray;
 	}
@@ -824,7 +803,7 @@ class Context extends BaseSingleton
 		return
 		   (
 			($this->getSession(SESSION_XMLNUKE_AUTHUSER) != "") &&
-			($this->getSession(SESSION_XMLNUKE_USERCONTEXT) == $this->ContextValue("xmlnuke.USERSDATABASE"))
+			($this->getSession(SESSION_XMLNUKE_USERCONTEXT) == $this->get("xmlnuke.USERSDATABASE"))
 		   );
 	}
 
@@ -867,7 +846,7 @@ class Context extends BaseSingleton
 	{
 		$this->setSession(SESSION_XMLNUKE_AUTHUSER, $user);
 		$this->setSession(SESSION_XMLNUKE_AUTHUSERID, $id);
-		$this->setSession(SESSION_XMLNUKE_USERCONTEXT, $this->ContextValue("xmlnuke.USERSDATABASE"));
+		$this->setSession(SESSION_XMLNUKE_USERCONTEXT, $this->get("xmlnuke.USERSDATABASE"));
 	}
 
 	/**
@@ -890,7 +869,7 @@ class Context extends BaseSingleton
 	{
 		foreach(array_keys($collection) as $key)
 		{
-			$this->AddPairToConfig($key, $collection[$key]);
+			$this->addPairToConfig($key, $collection[$key]);
 		}
 	}
 
@@ -906,7 +885,7 @@ class Context extends BaseSingleton
 		{
 			foreach($collection as $key => $value)
 			{
-				$this->AddPairToConfig('session.' . $key, $value);
+				$this->addPairToConfig('session.' . $key, $value);
 			}
 		}
 	}
@@ -921,7 +900,7 @@ class Context extends BaseSingleton
 	{
 		foreach($collection as $key => $value)
 		{
-			$this->AddPairToConfig('cookie.' . $key, $value);
+			$this->addPairToConfig('cookie.' . $key, $value);
 		}
 	}
 
@@ -932,7 +911,7 @@ class Context extends BaseSingleton
 	* @param array $value
 	* @return void
 	*/
-	private function AddPairToConfig($key, $value)
+	private function addPairToConfig($key, $value)
 	{
 		$this->_config[strtoupper($key)] = $value;
 	}
@@ -978,7 +957,7 @@ class Context extends BaseSingleton
 		// IIS running CGI mode has a bug related to POST and header(LOCATION) to the SAME script.
 		// In this environment the behavior expected causes a loop to the same page
 		// To reproduce this behavior comment the this and try use any processpage state class
-		$isBugVersion = stristr(PHP_OS, "win") && stristr($this->ContextValue("GATEWAY_INTERFACE"), "cgi") && stristr($this->ContextValue("SERVER_SOFTWARE"), "iis");
+		$isBugVersion = stristr(PHP_OS, "win") && stristr($this->get("GATEWAY_INTERFACE"), "cgi") && stristr($this->get("SERVER_SOFTWARE"), "iis");
 
 		ob_clean();
 		if (!$isBugVersion)
@@ -1022,7 +1001,7 @@ class Context extends BaseSingleton
 			$expire = time() + $expire;
 		}
 		setcookie($name, $value, $expire, $path, $domain);
-		$this->AddPairToConfig("cookie." . $name, $value);
+		$this->addPairToConfig("cookie." . $name, $value);
 	}
 
 	/**
@@ -1046,7 +1025,7 @@ class Context extends BaseSingleton
 	*/
 	public function getCookie($name)
 	{
-		return $this->ContextValue("cookie." . $name);
+		return $this->get("cookie." . $name);
 	}
 
 	/**
@@ -1059,7 +1038,7 @@ class Context extends BaseSingleton
 	public function setSession($name, $value)
 	{
 		$_SESSION[strtoupper($name)] = $value;
-		$this->AddPairToConfig("session." . $name, $value);
+		$this->addPairToConfig("session." . $name, $value);
 	}
 
 	/**
@@ -1085,7 +1064,7 @@ class Context extends BaseSingleton
 	*/
 	public function getSession($name)
 	{
-		return $this->ContextValue("session." . strtoupper($name));
+		return $this->get("session." . strtoupper($name));
 	}
 
 
@@ -1122,7 +1101,7 @@ class Context extends BaseSingleton
 		{
 			if ($this->getXsl()=="index")
 			{
-				$xsl = 	$this->ContextValue("xmlnuke.DEFAULTPAGE");
+				$xsl = 	$this->get("xmlnuke.DEFAULTPAGE");
 
 			}
 			else
@@ -1138,14 +1117,14 @@ class Context extends BaseSingleton
 			$lang = strtolower($this->Language()->getName());
 
 
-		$fullLink = $this->ContextValue("xmlnuke.USEFULLPARAMETER");
+		$fullLink = $this->get("xmlnuke.USEFULLPARAMETER");
 		if (!$fullLink)
 		{
-			if ($site == $this->ContextValue("xmlnuke.DEFAULTSITE"))
+			if ($site == $this->get("xmlnuke.DEFAULTSITE"))
 			{
 				$site = "";
 			}
-			if ($xsl == $this->ContextValue("xmlnuke.DEFAULTPAGE"))
+			if ($xsl == $this->get("xmlnuke.DEFAULTPAGE"))
 			{
 				$xsl = "";
 			}
@@ -1222,7 +1201,7 @@ class Context extends BaseSingleton
 		{
 			if (trim($options[$key]) != "")
 			{
-				$this->AddPairToConfig($key, $options[$key]);
+				$this->addPairToConfig($key, $options[$key]);
 				$config->addField($key, $options[$key]);
 			}
 		}
@@ -1254,7 +1233,7 @@ class Context extends BaseSingleton
 				{
 					if ($sr->getField($field) != "")
 					{
-						$this->AddPairToConfig($field, $sr->getField($field));
+						$this->addPairToConfig($field, $sr->getField($field));
 					}
 				}
 			}
@@ -1272,8 +1251,8 @@ class Context extends BaseSingleton
 
 	public function getXmlnukeURL()
 	{
-		$protocol = ($this->ContextValue("SERVER_PORT") == 443) ? "https://" : "http://";
-		$url = $protocol . $this->ContextValue("HTTP_HOST") . dirname($this->ContextValue($this->_PHP_SELF));
+		$protocol = ($this->get("SERVER_PORT") == 443) ? "https://" : "http://";
+		$url = $protocol . $this->get("HTTP_HOST") . dirname($this->get($this->_PHP_SELF));
 		if ($url[strlen($url)-1] != '/')
 		{
 			$url .= "/";
@@ -1290,8 +1269,8 @@ class Context extends BaseSingleton
 	 */
 	public function getVirtualCommand()
 	{
-		$script = $this->ContextValue($this->_PHP_SELF);
-		$name = $this->ContextValue("SCRIPT_NAME");
+		$script = $this->get($this->_PHP_SELF);
+		$name = $this->get("SCRIPT_NAME");
 
 		$command = substr($script, strlen($name) + 1);
 		return $command;
@@ -1408,7 +1387,7 @@ class Context extends BaseSingleton
 			$this->_contentType["content-type"] = "text/html";
 			$this->_contentType["content-disposition"] = "";
 			$this->_contentType["extension"] = "";
-			if ($this->ContextValue("xmlnuke.CHECKCONTENTTYPE"))
+			if ($this->get("xmlnuke.CHECKCONTENTTYPE"))
 			{
 				$filename = new AnydatasetFilenameProcessor("contenttype");
 				$anydataset = new AnyDataSet($filename);
@@ -1490,12 +1469,12 @@ class Context extends BaseSingleton
 
     public function CacheHashedDir()
     {
-        return (strtoupper($this->ContextValue("xmlnuke.CACHESTORAGEMETHOD")) == "HASHED");
+        return (strtoupper($this->get("xmlnuke.CACHESTORAGEMETHOD")) == "HASHED");
     }
 
     public function XmlHashedDir()
     {
-        return (strtoupper($this->ContextValue("xmlnuke.XMLSTORAGEMETHOD")) == "HASHED");
+        return (strtoupper($this->get("xmlnuke.XMLSTORAGEMETHOD")) == "HASHED");
     }
 
     public function getPostVariables()
@@ -1514,8 +1493,8 @@ class Context extends BaseSingleton
     {
 		if ($this->__userdb == null)
 		{
-			$class = $this->ContextValue("xmlnuke.USERSCLASS");
-			$conn = $this->ContextValue("xmlnuke.USERSDATABASE");
+			$class = $this->get("xmlnuke.USERSCLASS");
+			$conn = $this->get("xmlnuke.USERSDATABASE");
 			if ($class != "")
 			{
 				$this->__userdb = new $class(this, $conn);
@@ -1539,13 +1518,13 @@ class Context extends BaseSingleton
 
 	public function getOutputFormat()
 	{
-		if ($this->Value("xmlnuke.OUTPUT_FORMAT") == "")
+		if ($this->get("xmlnuke.OUTPUT_FORMAT") == "")
 		{
-			if ($this->Value("rawxml")!="")
+			if ($this->get("rawxml")!="")
 			{
 				$output = XmlnukeEngine::OUTPUT_XML;
 			}
-			elseif (($this->ContextValue("rawjson")!="") || ($this->Value("CONTENT_TYPE") == "application/json"))
+			elseif (($this->get("rawjson")!="") || ($this->get("CONTENT_TYPE") == "application/json"))
 			{
 				$output = XmlnukeEngine::OUTPUT_JSON;
 			}
@@ -1557,7 +1536,7 @@ class Context extends BaseSingleton
 			$this->putValue("xmlnuke.OUTPUT_FORMAT", $output);
 		}
 
-		return $this->Value("xmlnuke.OUTPUT_FORMAT");
+		return $this->get("xmlnuke.OUTPUT_FORMAT");
 	}
 
 	public function setOutputFormat($value)

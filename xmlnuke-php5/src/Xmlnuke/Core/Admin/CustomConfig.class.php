@@ -80,19 +80,19 @@ class CustomConfig extends NewBaseAdminModule
 		if ($action == "update")
 		{
 			$nv = array();
-			$nv["xmlnuke.SMTPSERVER"] = $this->_context->ContextValue("smtpserver");
+			$nv["xmlnuke.SMTPSERVER"] = $this->_context->get("smtpserver");
 			$nv["xmlnuke.LANGUAGESAVAILABLE"] = $this->createLanguageString();
-			$nv["xmlnuke.SHOWCOMPLETEERRORMESSAGES"] = $this->_context->ContextValue("showcompleterrormessages");
-			$nv["xmlnuke.LOGINMODULE"] = $this->_context->ContextValue("loginmodule");
-			$nv["xmlnuke.USERSDATABASE"] = $this->_context->ContextValue("usersdatabase");
-			$nv["xmlnuke.USERSCLASS"] = $this->_context->ContextValue("usersclass");
-			$nv["xmlnuke.DEBUG"] = $this->_context->ContextValue("txtdebug");
-			$nv["xmlnuke.DETECTMOBILE"] = $this->_context->ContextValue("txtdetectmobile");
-			$nv["xmlnuke.CAPTCHACHALLENGE"] = $this->_context->ContextValue("captchachallenge");
-			$nv["xmlnuke.CAPTCHALETTERS"] = $this->_context->ContextValue("captchaletters");
-			$nv["xmlnuke.ENABLEPARAMPROCESSOR"] = $this->_context->ContextValue("enableparamprocessor");
-			$nv["xmlnuke.USEFULLPARAMETER"] = $this->_context->ContextValue("usefullparameter");
-			$nv["xmlnuke.PHPLIBDIR"] = $this->_context->ContextValue("phplibdir"); # PHP SPECIFIC
+			$nv["xmlnuke.SHOWCOMPLETEERRORMESSAGES"] = $this->_context->get("showcompleterrormessages");
+			$nv["xmlnuke.LOGINMODULE"] = $this->_context->get("loginmodule");
+			$nv["xmlnuke.USERSDATABASE"] = $this->_context->get("usersdatabase");
+			$nv["xmlnuke.USERSCLASS"] = $this->_context->get("usersclass");
+			$nv["xmlnuke.DEBUG"] = $this->_context->get("txtdebug");
+			$nv["xmlnuke.DETECTMOBILE"] = $this->_context->get("txtdetectmobile");
+			$nv["xmlnuke.CAPTCHACHALLENGE"] = $this->_context->get("captchachallenge");
+			$nv["xmlnuke.CAPTCHALETTERS"] = $this->_context->get("captchaletters");
+			$nv["xmlnuke.ENABLEPARAMPROCESSOR"] = $this->_context->get("enableparamprocessor");
+			$nv["xmlnuke.USEFULLPARAMETER"] = $this->_context->get("usefullparameter");
+			$nv["xmlnuke.PHPLIBDIR"] = $this->_context->get("phplibdir"); # PHP SPECIFIC
 
 			$this->_context->updateCustomConfig($nv);
 
@@ -108,30 +108,30 @@ class CustomConfig extends NewBaseAdminModule
 		$truefalse = array("" => "Use Default", "true" => "True", "false" => "False");
 
 		$form->addXmlnukeObject(new XmlInputHidden("action", "update"));
-		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.ROOTDIR", $this->_context->ContextValue("xmlnuke.ROOTDIR")));
-		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.USEABSOLUTEPATHSROOTDIR", $this->_context->ContextValue("xmlnuke.USEABSOLUTEPATHSROOTDIR")));
-		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.URLMODULE", $this->_context->ContextValue("xmlnuke.URLMODULE")));
-		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.URLXMLNUKEADMIN", $this->_context->ContextValue("xmlnuke.URLXMLNUKEADMIN")));
-		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.URLXMLNUKEENGINE", $this->_context->ContextValue("xmlnuke.URLXMLNUKEENGINE")));
-		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.DEFAULTSITE", $this->_context->ContextValue("xmlnuke.DEFAULTSITE")));
-		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.DEFAULTPAGE", $this->_context->ContextValue("xmlnuke.DEFAULTPAGE")));
-		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.XSLCACHE", $this->_context->ContextValue("xmlnuke.XSLCACHE")));
-		$form->addXmlnukeObject(new XmlInputTextBox("xmlnuke.SMTPSERVER", "smtpserver", $this->_context->ContextValue("xmlnuke.SMTPSERVER"), 30));
+		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.ROOTDIR", $this->_context->get("xmlnuke.ROOTDIR")));
+		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.USEABSOLUTEPATHSROOTDIR", $this->_context->get("xmlnuke.USEABSOLUTEPATHSROOTDIR")));
+		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.URLMODULE", $this->_context->get("xmlnuke.URLMODULE")));
+		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.URLXMLNUKEADMIN", $this->_context->get("xmlnuke.URLXMLNUKEADMIN")));
+		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.URLXMLNUKEENGINE", $this->_context->get("xmlnuke.URLXMLNUKEENGINE")));
+		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.DEFAULTSITE", $this->_context->get("xmlnuke.DEFAULTSITE")));
+		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.DEFAULTPAGE", $this->_context->get("xmlnuke.DEFAULTPAGE")));
+		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.XSLCACHE", $this->_context->get("xmlnuke.XSLCACHE")));
+		$form->addXmlnukeObject(new XmlInputTextBox("xmlnuke.SMTPSERVER", "smtpserver", $this->_context->get("xmlnuke.SMTPSERVER"), 30));
 		$this->generateLanguageInput($form);
-		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "showcompleterrormessages", "xmlnuke.SHOWCOMPLETEERRORMESSAGES", $truefalse, $this->getStringBool($this->_context->ContextValue("xmlnuke.SHOWCOMPLETEERRORMESSAGES"))));
-		$form->addXmlnukeObject(new XmlInputTextBox("xmlnuke.LOGINMODULE", "loginmodule", $this->_context->ContextValue("xmlnuke.LOGINMODULE"), 30));
-		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "usersdatabase", "xmlnuke.USERSDATABASE", $this->getStringConnectionsArray(), $this->_context->ContextValue("xmlnuke.USERSDATABASE")));
-		$form->addXmlnukeObject(new XmlInputTextBox("xmlnuke.USERSCLASS", "usersclass", $this->_context->ContextValue("xmlnuke.USERSCLASS"), 30));
-		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "txtdetectmobile", "xmlnuke.DETECTMOBILE", $truefalse, $this->getStringBool($this->_context->ContextValue("xmlnuke.DETECTMOBILE"))));
-		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "txtdebug", "xmlnuke.DEBUG", $truefalse, $this->getStringBool($this->_context->ContextValue("xmlnuke.DEBUG"))));
-		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "captchachallenge", "xmlnuke.CAPTCHACHALLENGE", array("easy" => "Easy", "hard" => "Hard"), $this->_context->ContextValue("xmlnuke.CAPTCHACHALLENGE")));
-		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "captchaletters", "xmlnuke.CAPTCHALETTERS", array("5" => "5", "6" => "6", "7" => "7", "8" => "8", "9" => "9", "10" => "10"), $this->_context->ContextValue("xmlnuke.CAPTCHALETTERS")));
-		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "enableparamprocessor", "xmlnuke.ENABLEPARAMPROCESSOR", $truefalse, $this->getStringBool($this->_context->ContextValue("xmlnuke.ENABLEPARAMPROCESSOR"))));
-		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "usefullparameter", "xmlnuke.USEFULLPARAMETER", $truefalse, $this->getStringBool($this->_context->ContextValue("xmlnuke.USEFULLPARAMETER"))));
-		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.CACHESTORAGEMETHOD", $this->_context->ContextValue("xmlnuke.CACHESTORAGEMETHOD")));
-		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.XMLSTORAGEMETHOD", $this->_context->ContextValue("xmlnuke.XMLSTORAGEMETHOD")));
-		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.EXTERNALSITEDIR", $this->_context->ContextValue("xmlnuke.EXTERNALSITEDIR")));
-		$form->addXmlnukeObject(new XmlInputTextBox("xmlnuke.PHPLIBDIR", "phplibdir", $this->_context->ContextValue("xmlnuke.PHPLIBDIR"), 30));
+		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "showcompleterrormessages", "xmlnuke.SHOWCOMPLETEERRORMESSAGES", $truefalse, $this->getStringBool($this->_context->get("xmlnuke.SHOWCOMPLETEERRORMESSAGES"))));
+		$form->addXmlnukeObject(new XmlInputTextBox("xmlnuke.LOGINMODULE", "loginmodule", $this->_context->get("xmlnuke.LOGINMODULE"), 30));
+		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "usersdatabase", "xmlnuke.USERSDATABASE", $this->getStringConnectionsArray(), $this->_context->get("xmlnuke.USERSDATABASE")));
+		$form->addXmlnukeObject(new XmlInputTextBox("xmlnuke.USERSCLASS", "usersclass", $this->_context->get("xmlnuke.USERSCLASS"), 30));
+		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "txtdetectmobile", "xmlnuke.DETECTMOBILE", $truefalse, $this->getStringBool($this->_context->get("xmlnuke.DETECTMOBILE"))));
+		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "txtdebug", "xmlnuke.DEBUG", $truefalse, $this->getStringBool($this->_context->get("xmlnuke.DEBUG"))));
+		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "captchachallenge", "xmlnuke.CAPTCHACHALLENGE", array("easy" => "Easy", "hard" => "Hard"), $this->_context->get("xmlnuke.CAPTCHACHALLENGE")));
+		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "captchaletters", "xmlnuke.CAPTCHALETTERS", array("5" => "5", "6" => "6", "7" => "7", "8" => "8", "9" => "9", "10" => "10"), $this->_context->get("xmlnuke.CAPTCHALETTERS")));
+		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "enableparamprocessor", "xmlnuke.ENABLEPARAMPROCESSOR", $truefalse, $this->getStringBool($this->_context->get("xmlnuke.ENABLEPARAMPROCESSOR"))));
+		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "usefullparameter", "xmlnuke.USEFULLPARAMETER", $truefalse, $this->getStringBool($this->_context->get("xmlnuke.USEFULLPARAMETER"))));
+		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.CACHESTORAGEMETHOD", $this->_context->get("xmlnuke.CACHESTORAGEMETHOD")));
+		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.XMLSTORAGEMETHOD", $this->_context->get("xmlnuke.XMLSTORAGEMETHOD")));
+		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.EXTERNALSITEDIR", $this->_context->get("xmlnuke.EXTERNALSITEDIR")));
+		$form->addXmlnukeObject(new XmlInputTextBox("xmlnuke.PHPLIBDIR", "phplibdir", $this->_context->get("xmlnuke.PHPLIBDIR"), 30));
 
 		$boxButton = new XmlInputButtons();
 		$boxButton->addSubmit($myWords->Value("TXT_SAVE"));
@@ -193,7 +193,7 @@ class CustomConfig extends NewBaseAdminModule
 	 */
 	protected function generateLanguageInput($form)
 	{
-		$curValueArray = explode("|", $this->_context->ContextValue("xmlnuke.LANGUAGESAVAILABLE"));
+		$curValueArray = explode("|", $this->_context->get("xmlnuke.LANGUAGESAVAILABLE"));
 
 		foreach ($curValueArray as $key => $value)
 		{

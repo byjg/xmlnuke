@@ -167,7 +167,7 @@ abstract class BaseModel
 				}
 				elseif ($object instanceof Context)
 				{
-					$propValue = $object->ContextValue($propName);
+					$propValue = $object->get($propName);
 				}
 				else
 				{

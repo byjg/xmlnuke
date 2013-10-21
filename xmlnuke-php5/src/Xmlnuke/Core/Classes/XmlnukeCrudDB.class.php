@@ -282,7 +282,7 @@ class  XmlnukeCrudDB extends XmlnukeCrudBase
 			$anyCurInfo->appendRow();
 			foreach ($this->_fields as $field)
 			{
-				$anyCurInfo->addField($field->fieldName, $this->_context->ContextValue($field->fieldName));
+				$anyCurInfo->addField($field->fieldName, $this->_context->get($field->fieldName));
 			}
 			$itCurInfo = $anyCurInfo->getIterator();
 			$srCurInfo = $itCurInfo->moveNext();
@@ -292,7 +292,7 @@ class  XmlnukeCrudDB extends XmlnukeCrudBase
 			{
 				if ($field->editable)
 				{
-					$value = $this->preProcessValue($field->fieldName, $field->dataType, $this->_context->ContextValue($field->fieldName));
+					$value = $this->preProcessValue($field->fieldName, $field->dataType, $this->_context->get($field->fieldName));
 					if ($field->fieldXmlInput == XmlInputObjectType::FILEUPLOAD)
 					{
 						$files = $this->_context->getUploadFileNames();

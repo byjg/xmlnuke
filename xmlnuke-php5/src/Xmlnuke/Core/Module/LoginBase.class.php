@@ -149,14 +149,14 @@ abstract class LoginBase extends BaseModule
 	 */
 	protected function sendWelcomeMessage($myWords, $name, $user, $email, $password)
 	{
-		$path = $this->_context->ContextValue("SCRIPT_NAME");
+		$path = $this->_context->get("SCRIPT_NAME");
 		$path = substr($path,0,strrpos($path,"/")+1);
-		$url = "http://" . $this->_context->ContextValue("SERVER_NAME").$path;
-		$body = $myWords->ValueArgs("WELCOMEMESSAGE", array($name, $this->_context->ContextValue("SERVER_NAME"), $user, $password, $url.$this->_context->bindModuleUrl("UserProfile")));
+		$url = "http://" . $this->_context->get("SERVER_NAME").$path;
+		$body = $myWords->ValueArgs("WELCOMEMESSAGE", array($name, $this->_context->get("SERVER_NAME"), $user, $password, $url.$this->_context->bindModuleUrl("UserProfile")));
 
 		$envelope = new MailEnvelope(
 			MailUtil::getFullEmailName($name, $email),
-			$myWords->Value("SUBJECTMESSAGE", "[" . $this->_context->ContextValue("SERVER_NAME") . "]"),
+			$myWords->Value("SUBJECTMESSAGE", "[" . $this->_context->get("SERVER_NAME") . "]"),
 			$body
 		);
 		$envelope->Send();

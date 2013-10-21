@@ -81,7 +81,7 @@ class FileManagement extends NewBaseAdminModule
 		
 		
 		//get the current folder
-		$root = $this->_context->ContextValue("folder");
+		$root = $this->_context->get("folder");
 		
 		$browser = new XmlFileBrowser($root, $this->_action, $this->_context);
 		

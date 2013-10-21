@@ -65,7 +65,7 @@ class ManageUsers extends NewBaseAdminModule
 		//anydataset.SingleRow user;
 
 		$action = strtolower($this->_action);
-		$uid = $this->_context->ContextValue("valueid");
+		$uid = $this->_context->get("valueid");
 
 		$this->myWords = $this->WordCollection();
 		$this->setTitlePage($this->myWords->Value("TITLE"));
@@ -84,7 +84,7 @@ class ManageUsers extends NewBaseAdminModule
 
 			if ( $action == "newuser" )
 			{
-				if (!$users->addUser( $this->_context->ContextValue("name"), $this->_context->ContextValue("login"), $this->_context->ContextValue("email"), $this->_context->ContextValue("password") ) )
+				if (!$users->addUser( $this->_context->get("name"), $this->_context->get("login"), $this->_context->get("email"), $this->_context->get("password") ) )
 				{
 					$message->addXmlnukeObject(new XmlnukeText($this->myWords->Value("USEREXIST"), true ));
 				}
@@ -92,8 +92,8 @@ class ManageUsers extends NewBaseAdminModule
 				{
 					if ($this->isUserAdmin())
 					{
-						$user = $users->getUserName( $this->_context->ContextValue("login") );
-						$user->setField( $users->getUserTable()->Admin, $this->_context->ContextValue("admin") );
+						$user = $users->getUserName( $this->_context->get("login") );
+						$user->setField( $users->getUserTable()->Admin, $this->_context->get("admin") );
 						$users->Save();
 					}
 					$message->addXmlnukeObject(new XmlnukeText($this->myWords->Value("CREATED"), true ));
@@ -104,11 +104,11 @@ class ManageUsers extends NewBaseAdminModule
 			if ( $action == "update" )
 			{
 				$user = $users->getUserId( $uid );
-				$user->setField($users->getUserTable()->Name, $this->_context->ContextValue("name") );
-				$user->setField($users->getUserTable()->Email, $this->_context->ContextValue("email") );
+				$user->setField($users->getUserTable()->Name, $this->_context->get("name") );
+				$user->setField($users->getUserTable()->Email, $this->_context->get("email") );
 				if ($this->isUserAdmin())
 				{
-					$user->setField($users->getUserTable()->Admin, $this->_context->ContextValue("admin") );
+					$user->setField($users->getUserTable()->Admin, $this->_context->get("admin") );
 				}
 				$users->Save();
 				$message->addXmlnukeObject(new XmlnukeText($this->myWords->Value("UPDATE"), true ));
@@ -118,7 +118,7 @@ class ManageUsers extends NewBaseAdminModule
 			if ( $action == "changepassword" )
 			{
 				$user = $users->getUserId( $uid );
-				$user->setField($users->getUserTable()->Password, $users->getSHAPassword($this->_context->ContextValue("password")) );
+				$user->setField($users->getUserTable()->Password, $users->getSHAPassword($this->_context->get("password")) );
 				$users->Save();
 				$message->addXmlnukeObject(new XmlnukeText($this->myWords->Value("CHANGEPASSWORD"), true ));
 				$exec = true;
@@ -142,7 +142,7 @@ class ManageUsers extends NewBaseAdminModule
 			if ( $action == "addsite" )
 			{
 
-				$users->addPropertyValueToUser( $uid, $this->_context->ContextValue("sites"), UserProperty::Site );
+				$users->addPropertyValueToUser( $uid, $this->_context->get("sites"), UserProperty::Site );
 				$users->Save();
 				$message->addXmlnukeObject(new XmlnukeText($this->myWords->Value("SITEADDED"), true ));
 				$exec = true;
@@ -150,8 +150,8 @@ class ManageUsers extends NewBaseAdminModule
 
 			if ( $action == "removesite" )
 			{
-				//echo "SITE: ".$this->_context->ContextValue("sites");
-				$users->removePropertyValueFromUser( $uid, $this->_context->ContextValue("sites"), UserProperty::Site );
+				//echo "SITE: ".$this->_context->get("sites");
+				$users->removePropertyValueFromUser( $uid, $this->_context->get("sites"), UserProperty::Site );
 				$users->Save();
 				$message->addXmlnukeObject(new XmlnukeText($this->myWords->Value("SITEREMOVED"), true ));
 				$exec = true;
@@ -159,7 +159,7 @@ class ManageUsers extends NewBaseAdminModule
 
 			if ( $action == "addrole" )
 			{
-				$users->addPropertyValueToUser( $uid, $this->_context->ContextValue("role"), UserProperty::Role );
+				$users->addPropertyValueToUser( $uid, $this->_context->get("role"), UserProperty::Role );
 				$users->Save();
 				$message->addXmlnukeObject(new XmlnukeText($this->myWords->Value("ROLEADDED"), true ));
 				$exec = true;
@@ -167,21 +167,21 @@ class ManageUsers extends NewBaseAdminModule
 
 			if ( $action == "removerole" )
 			{
-				$users->removePropertyValueFromUser( $uid, $this->_context->ContextValue("role"), UserProperty::Role );
+				$users->removePropertyValueFromUser( $uid, $this->_context->get("role"), UserProperty::Role );
 				$users->Save();
 				$message->addXmlnukeObject(new XmlnukeText($this->myWords->Value("ROLEREMOVED"), true ));
 				$exec = true;
 			}
             if ( $action == "addcustomvalue" )
             {
-				$users->addPropertyValueToUser( $uid, $this->_context->ContextValue("customvalue"), $this->_context->ContextValue("customfield") );
+				$users->addPropertyValueToUser( $uid, $this->_context->get("customvalue"), $this->_context->get("customfield") );
 				$users->Save();
 				$message->addXmlnukeObject(new XmlnukeText($this->myWords->Value("CUSTOMFIELDUPDATED"), true ));
 				$exec = true;
             }
             if ( $action == "removecustomvalue" )
         	{
-				$users->removePropertyValueFromUser( $uid, $this->_context->ContextValue("customvalue"),  $this->_context->ContextValue("customfield"));
+				$users->removePropertyValueFromUser( $uid, $this->_context->get("customvalue"),  $this->_context->get("customfield"));
 				$users->Save();
 				$message->addXmlnukeObject(new XmlnukeText($this->myWords->Value("CUSTOMFIELDREMOVED"), true ));
 				$exec = true;
@@ -206,19 +206,19 @@ class ManageUsers extends NewBaseAdminModule
 		{
 			$itf->addRelation("admin", Relation::NotEqual, "yes");
 		}
-		if ($this->_context->ContextValue("pesquser") != "")
+		if ($this->_context->get("pesquser") != "")
 		{
 			$itf->startGroup();
-			$itf->addRelationOr($users->getUserTable()->Username, Relation::Contains, $this->_context->ContextValue("pesquser"));
-                        $itf->addRelationOr($users->getUserTable()->Name, Relation::Contains, $this->_context->ContextValue("pesquser"));
-                        $itf->addRelationOr($users->getUserTable()->Email, Relation::Contains, $this->_context->ContextValue("pesquser"));
+			$itf->addRelationOr($users->getUserTable()->Username, Relation::Contains, $this->_context->get("pesquser"));
+                        $itf->addRelationOr($users->getUserTable()->Name, Relation::Contains, $this->_context->get("pesquser"));
+                        $itf->addRelationOr($users->getUserTable()->Email, Relation::Contains, $this->_context->get("pesquser"));
 			$itf->endGroup();
 		}
 		$it = $users->getIterator($itf);
 
 		$formpesq = new XmlFormCollection($this->_context, $this->url, $this->myWords->Value("TITLEPESQUSER")); 
 		$formpesq->setFormName("form-label-top");
-                $textbox = new XmlInputTextBox($this->myWords->Value("PESQUSER"), "pesquser", $this->_context->ContextValue("pesquser"));
+                $textbox = new XmlInputTextBox($this->myWords->Value("PESQUSER"), "pesquser", $this->_context->get("pesquser"));
                 $textbox->setDataType(INPUTTYPE::TEXT);
                 $formpesq->addXmlnukeObject($textbox);
                 $textbox->setRequired(true);
@@ -283,7 +283,7 @@ class ManageUsers extends NewBaseAdminModule
 		$form =  new XmlFormCollection($this->_context, $this->url, "");
 		$form->setJSValidate(true);
 		$form->addXmlnukeObject(new XmlInputHidden("action", "newuser"));
-		$form->addXmlnukeObject(new XmlInputHidden("curpage", $this->_context->ContextValue("curpage")));
+		$form->addXmlnukeObject(new XmlInputHidden("curpage", $this->_context->get("curpage")));
 
 		$textbox = new XmlInputTextBox($this->myWords->Value("LABEL_LOGIN"), "login", "");
 		$textbox->setDataType(INPUTTYPE::TEXT);
@@ -340,7 +340,7 @@ class ManageUsers extends NewBaseAdminModule
 		$form =  new XmlFormCollection($this->_context, $this->url, "");
 		$form->setJSValidate(true);
 		$form->addXmlnukeObject(new XmlInputHidden("action", "update"));
-		$form->addXmlnukeObject(new XmlInputHidden("curpage", $this->_context->ContextValue("curpage")));
+		$form->addXmlnukeObject(new XmlInputHidden("curpage", $this->_context->get("curpage")));
 		$form->addXmlnukeObject(new XmlInputHidden("valueid", $uid));
 		$textbox = new XmlInputTextBox($this->myWords->Value("LABEL_LOGIN"), "login", $user->getField($users->getUserTable()->Username));
 		$textbox->setDataType(INPUTTYPE::TEXT);
@@ -371,7 +371,7 @@ class ManageUsers extends NewBaseAdminModule
 		$form =  new XmlFormCollection($this->_context, $this->url, "");
 		$form->setJSValidate(true);
 		$form->addXmlnukeObject(new XmlInputHidden("action", "changepassword"));
-		$form->addXmlnukeObject(new XmlInputHidden("curpage", $this->_context->ContextValue("curpage")));
+		$form->addXmlnukeObject(new XmlInputHidden("curpage", $this->_context->get("curpage")));
 		$form->addXmlnukeObject(new XmlInputHidden("valueid", $uid));
 		$textbox = new XmlInputTextBox($this->myWords->Value("FORMNEWPASSWORD"), "password", "");
 		$textbox->setInputTextBoxType(InputTextBoxType::PASSWORD);
@@ -388,7 +388,7 @@ class ManageUsers extends NewBaseAdminModule
 		$form =  new XmlFormCollection($this->_context, $this->url, "");
 		$form->setJSValidate(true);
 		$form->addXmlnukeObject(new XmlInputHidden("action", "delete"));
-		$form->addXmlnukeObject(new XmlInputHidden("curpage", $this->_context->ContextValue("curpage")));
+		$form->addXmlnukeObject(new XmlInputHidden("curpage", $this->_context->get("curpage")));
 		$form->addXmlnukeObject(new XmlInputHidden("valueid", $uid));
 		$boxButton = new XmlInputButtons();
 		$boxButton->addSubmit($this->myWords->Value("BUTTONREMOVE"), "");
@@ -401,7 +401,7 @@ class ManageUsers extends NewBaseAdminModule
 		$form =  new XmlFormCollection($this->_context, $this->url, $this->myWords->Value("FORMEDITSITES"));
 		$form->setJSValidate(true);
 		$form->addXmlnukeObject(new XmlInputHidden("action", "removesite"));
-		$form->addXmlnukeObject(new XmlInputHidden("curpage", $this->_context->ContextValue("curpage")));
+		$form->addXmlnukeObject(new XmlInputHidden("curpage", $this->_context->get("curpage")));
 		$form->addXmlnukeObject(new XmlInputHidden("valueid", $uid));
 		$usersites = $users->returnUserProperty($uid, UserProperty::Site);
 		$usersites = is_null($usersites)?array():$usersites;
@@ -421,7 +421,7 @@ class ManageUsers extends NewBaseAdminModule
 		$form =  new XmlFormCollection($this->_context, $this->url, "");
 		$form->setJSValidate(true);
 		$form->addXmlnukeObject(new XmlInputHidden("action", "addsite"));
-		$form->addXmlnukeObject(new XmlInputHidden("curpage", $this->_context->ContextValue("curpage")));
+		$form->addXmlnukeObject(new XmlInputHidden("curpage", $this->_context->get("curpage")));
 		$form->addXmlnukeObject(new XmlInputHidden("valueid", $uid));
 		$existingSites = $this->_context->ExistingSites();
 		//for(int i=0;i<existingSites.Length;i++)
@@ -447,7 +447,7 @@ class ManageUsers extends NewBaseAdminModule
 		$form =  new XmlFormCollection($this->_context, $this->url, $this->myWords->Value("FORMEDITROLES"));
 		$form->setJSValidate(true);
 		$form->addXmlnukeObject(new XmlInputHidden("action", "removerole"));
-		$form->addXmlnukeObject(new XmlInputHidden("curpage", $this->_context->ContextValue("curpage")));
+		$form->addXmlnukeObject(new XmlInputHidden("curpage", $this->_context->get("curpage")));
 		$form->addXmlnukeObject(new XmlInputHidden("valueid", $uid));
 		$userroles = $users->returnUserProperty($uid, UserProperty::Role);
 		$userroles = is_null($userroles)?array():$userroles;
@@ -467,7 +467,7 @@ class ManageUsers extends NewBaseAdminModule
 		$form =  new XmlFormCollection($this->_context, $this->url, "");
 		$form->setJSValidate(true);
 		$form->addXmlnukeObject(new XmlInputHidden("action", "addrole"));
-		$form->addXmlnukeObject(new XmlInputHidden("curpage", $this->_context->ContextValue("curpage")));
+		$form->addXmlnukeObject(new XmlInputHidden("curpage", $this->_context->get("curpage")));
 		$form->addXmlnukeObject(new XmlInputHidden("valueid", $uid));
 //		$textbox = new XmlInputTextBox($this->myWords->Value("FORMROLES"), "role", "", 10);
 //		$textbox->setInputTextBoxType(InputTextBoxType::TEXT);
@@ -556,7 +556,7 @@ class ManageUsers extends NewBaseAdminModule
 		$form =  new XmlFormCollection($this->_context, $this->url, $this->myWords->Value("GRIDVALUE"));
 		$form->setJSValidate(true);
 		$form->addXmlnukeObject(new XmlInputHidden("action", "addcustomvalue"));
-		$form->addXmlnukeObject(new XmlInputHidden("curpage", $this->_context->ContextValue("curpage")));
+		$form->addXmlnukeObject(new XmlInputHidden("curpage", $this->_context->get("curpage")));
 		$form->addXmlnukeObject(new XmlInputHidden("valueid", $uid));
 		$textbox = new XmlInputTextBox($this->myWords->Value("FORMFIELD"), "customfield", "", 20);
 		$textbox->setInputTextBoxType(InputTextBoxType::TEXT);

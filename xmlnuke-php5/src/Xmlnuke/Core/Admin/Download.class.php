@@ -61,14 +61,14 @@ class Download extends NewBaseAdminModule
 		$forceReset = false;
 
 		// Get parameters to define type of edit
-		$catId = $this->_context->ContextValue("ci");
-		$type = $this->_context->ContextValue("t");
+		$catId = $this->_context->get("ci");
+		$type = $this->_context->get("t");
 		if ($type == "") 
 		{
 			if ($this->_action == XmlnukeCrudBase::ACTION_VIEW)
 			{
 				$type = "FILE";
-				$catId = $this->_context->ContextValue("valueid");
+				$catId = $this->_context->get("valueid");
 				$catIdAr = explode("|", $catId);
 				$catId = $catIdAr[1];
 				$forceReset = true;

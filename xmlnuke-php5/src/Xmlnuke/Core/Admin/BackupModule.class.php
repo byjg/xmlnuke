@@ -122,7 +122,7 @@ class BackupModule extends NewBaseAdminModule
 		$this->defaultXmlnukeDocument->addMenuItem("admin:backupmodule?op=" . self::OP_MANAGEBACKUP, $this->_myWords->Value("MENU_BACKUP"),"");
 		$this->defaultXmlnukeDocument->addMenuItem("admin:backupmodule", $this->_myWords->Value("MENU_HOME"),"");
 
-		$op = $this->_context->ContextValue("op");
+		$op = $this->_context->get("op");
 
 		//Debug::PrintValue($this->_action);
 		//Debug::PrintValue($op);
@@ -183,21 +183,21 @@ class BackupModule extends NewBaseAdminModule
 		switch ($this->_action)
 		{
 			case self::AC_EDIT_CONF :
-				$projectName = $this->_context->ContextValue("projname");
-				$this->createProject($projectName, $this->_context->ContextValue("projdir"), $this->_context->ContextValue("projfiles"), $this->_context->ContextValue("projsetup"));
+				$projectName = $this->_context->get("projname");
+				$this->createProject($projectName, $this->_context->get("projdir"), $this->_context->get("projfiles"), $this->_context->get("projsetup"));
 
 			case self::AC_VIEW :
 				$readonly = ($this->_action == self::AC_VIEW) ;
 
 			case self::AC_EDIT :
 				if ($projectName == "")
-					$projectName = $projectList[$this->_context->ContextValue("valueid")];
+					$projectName = $projectList[$this->_context->get("valueid")];
 
 			case self::AC_NEW :
 				$block = new XmlBlockCollection($this->_myWords->Value("BLOCK_EDITPROJECT", $projectName), BlockPosition::Center );
 				$form = new XmlFormCollection($this->_context, "admin:backupmodule?action=" . self::AC_EDIT_CONF, $this->_myWords->Value("FORM_EDITPROJECT"));
 				$form->addXmlnukeObject(new XmlInputHidden("op", self::OP_EDITPROJECT));
-				$form->addXmlnukeObject(new XmlInputHidden("valueid", $this->_context->ContextValue("valueid")));
+				$form->addXmlnukeObject(new XmlInputHidden("valueid", $this->_context->get("valueid")));
 
 				$inputProjName = new XmlInputTextBox($this->_myWords->Value("INPUT_PROJECTNAME"), "projname", $projectName);
 				$inputProjName->setReadOnly(($this->_action != self::AC_NEW) || $readonly);
@@ -235,7 +235,7 @@ class BackupModule extends NewBaseAdminModule
 				break;
 
 			case self::AC_DELETE :
-				$projectName = $projectList[$this->_context->ContextValue("valueid")];
+				$projectName = $projectList[$this->_context->get("valueid")];
 				$project = new AnydatasetBackupFilenameProcessor($projectName);
 				if (FileUtil::Exists($project->FullQualifiedNameAndPath()))
 				{
@@ -671,7 +671,7 @@ class BackupModule extends NewBaseAdminModule
 
 	protected function downloadPackage()
 	{
-		$bkp = $this->_context->ContextValue("bkp");
+		$bkp = $this->_context->get("bkp");
 		$backupFile = new BackupFilenameProcessor($bkp);
 		FileUtil::ResponseCustomContentFromFile("application/x-compressed", $backupFile->FullQualifiedNameAndPath());
 	}
@@ -755,7 +755,7 @@ class BackupModule extends NewBaseAdminModule
 		$block = new XmlBlockCollection($this->_myWords->Value("TITLE_CREATEBACKUP"), BlockPosition::Center );
 		$this->defaultXmlnukeDocument->addXmlnukeObject($block);
 
-		$projectName = $this->getProjectName($this->_context->ContextValue("valueid"));
+		$projectName = $this->getProjectName($this->_context->get("valueid"));
 
 		$anyDataSet = $this->openProject($projectName);
 
@@ -853,7 +853,7 @@ class BackupModule extends NewBaseAdminModule
 	 */
 	public function viewBackup ()
 	{
-		$backupName = $this->_context->ContextValue("bkp");
+		$backupName = $this->_context->get("bkp");
 
 		$block = new XmlBlockCollection($this->_myWords->Value("TITLE_BACKUPCONTENTS", $backupName), BlockPosition::Center);
 		$this->defaultXmlnukeDocument->addXmlnukeObject($block);
@@ -882,7 +882,7 @@ class BackupModule extends NewBaseAdminModule
 	 */
 	public function viewBackupLog ()
 	{
-		$backupName = $this->_context->ContextValue("bkp");
+		$backupName = $this->_context->get("bkp");
 
 		$block = new XmlBlockCollection($this->_myWords->Value("TITLE_BACKUPLOGCONTENTS", $backupName), BlockPosition::Center);
 		$this->defaultXmlnukeDocument->addXmlnukeObject($block);
@@ -954,7 +954,7 @@ class BackupModule extends NewBaseAdminModule
 	 */
 	public function installBackup ()
 	{
-		$backupName = $this->_context->ContextValue("bkp");
+		$backupName = $this->_context->get("bkp");
 
 		$block = new XmlBlockCollection($this->_myWords->Value("TITLE_INSTALLBACKUP", $backupName), BlockPosition::Center);
 		$this->defaultXmlnukeDocument->addXmlnukeObject($block);
@@ -1102,7 +1102,7 @@ class BackupModule extends NewBaseAdminModule
 	 */
 	public function uninstallBackup()
 	{
-		$projectName = $this->_context->ContextValue("bkp");
+		$projectName = $this->_context->get("bkp");
 
 		$block = new XmlBlockCollection($this->_myWords->Value("TITLE_UNINSTALLBACKUP", $projectName), BlockPosition::Center);
 		$this->defaultXmlnukeDocument->addXmlnukeObject($block);

@@ -75,8 +75,8 @@ class EditLanguage extends NewBaseAdminModule
 		$block = new XmlBlockCollection($this->myWords->Value("WORKINGAREA"), BlockPosition::Center);
 		$this->defaultXmlnukeDocument->addXmlnukeObject($block);
 
-		$op = $this->_context->ContextValue("op");
-		$ed = $this->_context->ContextValue("ed");
+		$op = $this->_context->get("op");
+		$ed = $this->_context->get("ed");
 		$langDir = new AnydatasetLangFilenameProcessor("");
 
 		if ($op == "")
@@ -113,11 +113,11 @@ class EditLanguage extends NewBaseAdminModule
 		{
 			if ($ed == 1)
 			{
-				$file = $this->_context->ContextValue("file");
+				$file = $this->_context->get("file");
 			}
 			else
 			{
-				$file = $this->_context->ContextValue("valueid");
+				$file = $this->_context->get("valueid");
 			}
 
 			$langDir = new AnydatasetLangFilenameProcessor($file);
@@ -171,12 +171,12 @@ class EditLanguage extends NewBaseAdminModule
 		}
 		elseif ($this->_action == ModuleAction::CreateConfirm)
 		{
-			$file = $this->_context->ContextValue("newfile");
+			$file = $this->_context->get("newfile");
 			$langDir = new AnydatasetLangFilenameProcessor($file);
 			$langDir->setFilenameLocation(($op == "" ? ForceFilenameLocation::PrivatePath : ForceFilenameLocation::SharedPath));
 			$anydata = new AnyDataSet($langDir);
 
-			$fields = explode("\r\n", $this->_context->ContextValue("fields"));
+			$fields = explode("\r\n", $this->_context->get("fields"));
 
 			$langs = $this->_context->LanguagesAvailable();
 			foreach ($langs as $lang=>$dummy)
@@ -193,8 +193,8 @@ class EditLanguage extends NewBaseAdminModule
 		}
 
 
-		$langfile = $this->_context->ContextValue("langfile");
-		$contents = $this->_context->ContextValue("contents");
+		$langfile = $this->_context->get("langfile");
+		$contents = $this->_context->get("contents");
 		$contents = stripslashes($contents);
 
 		return $this->defaultXmlnukeDocument;

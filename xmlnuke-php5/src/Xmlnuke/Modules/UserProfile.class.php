@@ -148,8 +148,8 @@ class UserProfile extends BaseModule
 	{
 		$this->_myWords = $this->WordCollection();
 
-		$title = $this->_myWords->Value("TITLE", $this->_context->ContextValue("SERVER_NAME") );
-		$abstract = $this->_myWords->Value("ABSTRACT", $this->_context->ContextValue("SERVER_NAME") );
+		$title = $this->_myWords->Value("TITLE", $this->_context->get("SERVER_NAME") );
+		$abstract = $this->_myWords->Value("ABSTRACT", $this->_context->get("SERVER_NAME") );
 		$document = new XmlnukeDocument($title, $abstract);
 		
 		$this->_url = "module:UserProfile";
@@ -165,7 +165,7 @@ class UserProfile extends BaseModule
 		$this->_paragraph = new XmlParagraphCollection();
 		$blockcenter->addXmlnukeObject($this->_paragraph);
 
-		$action = $this->_context->ContextValue("action");
+		$action = $this->_context->get("action");
 
 		switch ($action)
 		{
@@ -192,8 +192,8 @@ class UserProfile extends BaseModule
 	 */
 	protected function update()
 	{
-		$this->_user->setField($this->_users->getUserTable()->Name, $this->_context->ContextValue("name") );
-		$this->_user->setField($this->_users->getUserTable()->Email, $this->_context->ContextValue("email") );
+		$this->_user->setField($this->_users->getUserTable()->Name, $this->_context->get("name") );
+		$this->_user->setField($this->_users->getUserTable()->Email, $this->_context->get("email") );
 		$this->_paragraph->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("UPDATEOK"), true));
 		$this->_users->Save();
 	}
@@ -204,19 +204,19 @@ class UserProfile extends BaseModule
 	 */
 	protected function changePWD()
 	{
-		if ($this->_user->getField($this->_users->getUserTable()->Password) != $this->_users->getSHAPassword($this->_context->ContextValue("oldpassword")))
+		if ($this->_user->getField($this->_users->getUserTable()->Password) != $this->_users->getSHAPassword($this->_context->get("oldpassword")))
 		{
 			$this->_paragraph->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("CHANGEPASSOLDPASSFAILED") , true));
 		}
 		else
 		{
-			if ($this->_context->ContextValue("newpassword") != $this->_context->ContextValue("newpassword2"))
+			if ($this->_context->get("newpassword") != $this->_context->get("newpassword2"))
 			{
 				$this->_paragraph->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("CHANGEPASSNOTMATCH"), true));
 			}
 			else
 			{
-				$this->_user->setField($this->_users->getUserTable()->Password, $this->_users->getSHAPassword($this->_context->ContextValue("newpassword")) );
+				$this->_user->setField($this->_users->getUserTable()->Password, $this->_users->getSHAPassword($this->_context->get("newpassword")) );
 				$this->_paragraph->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("CHANGEPASSOK"), true));
 				$this->_users->Save();
 			}

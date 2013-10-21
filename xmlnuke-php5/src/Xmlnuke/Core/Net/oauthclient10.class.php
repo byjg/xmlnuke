@@ -150,7 +150,7 @@ class OAuthClient10
 		$state = $this->getVar('oauth_state');
 		
 		/* If oauth_token is missing get it */
-		if ($this->_context->ContextValue('oauth_token') != "" && $state === 'start')
+		if ($this->_context->get('oauth_token') != "" && $state === 'start')
 		{/*{{{*/
 			$this->setVar('oauth_state', 'returned');
 			$state = 'returned';

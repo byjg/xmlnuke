@@ -59,7 +59,7 @@ class ListXML extends NewBaseAdminModule
 	{
 		parent::CreatePage();
 		
-		$onlyGroup = ($this->_context->ContextValue("onlygroup") != "");
+		$onlyGroup = ($this->_context->get("onlygroup") != "");
 		$urlXml = "admin:ManageXML";
 		$urlGrp = "admin:ManageGroup";
 

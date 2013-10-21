@@ -181,7 +181,7 @@ class OAuthClient20
 		// Try to Handle the Authentication Process
 		if ($accessToken == "")
 		{
-			$code = $this->_context->ContextValue("code");
+			$code = $this->_context->get("code");
 			
 			// If not received the "Code" Parameter, initiate the autorization request
 			if ($code == "")

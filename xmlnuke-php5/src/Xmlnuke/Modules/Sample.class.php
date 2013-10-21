@@ -208,7 +208,7 @@ class Sample extends BaseModule
 		$block->addXmlnukeObject($paragraph);
 		$this->_document->addXmlnukeObject($block);
 
-		$option = $this->_context->ContextValue("op");
+		$option = $this->_context->get("op");
 
 		switch ($option)
 		{
@@ -490,7 +490,7 @@ class Sample extends BaseModule
 		$secondParagraph->addXmlnukeObject(new XmlnukeText($this->_action));
 		$secondParagraph->addXmlnukeObject($breakLine);
 		$secondParagraph->addXmlnukeObject(new XmlnukeText("Valor selecionado: ", true, false, false));
-		$secondParagraph->addXmlnukeObject(new XmlnukeText($this->_context->ContextValue("valueid")));
+		$secondParagraph->addXmlnukeObject(new XmlnukeText($this->_context->get("valueid")));
 
 		$blockCenter->addXmlnukeObject($firstParagraph);
 		$blockCenter->addXmlnukeObject($thirdParagraph);
@@ -606,7 +606,7 @@ class Sample extends BaseModule
 		$paragraph->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("DATABASETEXT")));
 		$paragraph->addXmlnukeObject($breakline);
 
-		$secop = $this->_context->ContextValue("secop");
+		$secop = $this->_context->get("secop");
 
 		// Menu
 		$form = new XmlFormCollection($this->_context, $this->_url . "?op=5", "Menu");
@@ -653,14 +653,14 @@ class Sample extends BaseModule
 					{
 						$sr = $it->moveNext();
 						$sr->setField("dbtype", "dsn");
-						$sr->setField("dbconnectionstring", $this->_context->ContextValue("connection"));
+						$sr->setField("dbconnectionstring", $this->_context->get("connection"));
 					}
 					else
 					{
 						$anydata->appendRow();
 						$anydata->addField("dbname", "sampledb");
 						$anydata->addField("dbtype", "dsn");
-						$anydata->addField("dbconnectionstring", $this->_context->ContextValue("connection"));
+						$anydata->addField("dbconnectionstring", $this->_context->get("connection"));
 					}
 					$anydata->Save();
 					$paragraph->addXmlnukeObject(new XmlnukeText("Updated!", true));
@@ -779,9 +779,9 @@ class Sample extends BaseModule
 
 		$para1 = new XmlParagraphCollection();
 
-		$xmlstr = $this->_context->ContextValue("xmlstr");
-		$rowNode = $this->_context->ContextValue("rownode");
-		$colNodeStr = preg_split("/\n/", $this->_context->ContextValue("cols"));
+		$xmlstr = $this->_context->get("xmlstr");
+		$rowNode = $this->_context->get("rownode");
+		$colNodeStr = preg_split("/\n/", $this->_context->get("cols"));
 		if ($xmlstr != "")
 		{
 			$colNode = array();
@@ -846,9 +846,9 @@ class Sample extends BaseModule
 
 		$para1 = new XmlParagraphCollection();
 
-		$txtstr = $this->_context->ContextValue("txtstr");
-		$regexp = $this->_context->ContextValue("regexp");
-		$colNodeStr = preg_split("/\n/", $this->_context->ContextValue("cols"));
+		$txtstr = $this->_context->get("txtstr");
+		$regexp = $this->_context->get("regexp");
+		$colNodeStr = preg_split("/\n/", $this->_context->get("cols"));
 		if ($txtstr != "")
 		{
 			$processor = new AnydatasetFilenameProcessor("sample");
@@ -1220,9 +1220,9 @@ class Sample extends BaseModule
 		$para->addXmlnukeObject(new XmlnukeText("Esse exemplo mostra como mostrar uma mensagem de alert no cliente"));
 		$block->addXmlnukeObject($para);
 
-		if ($this->_context->ContextValue("type") != "")
+		if ($this->_context->get("type") != "")
 		{
-			switch ($this->_context->ContextValue("type"))
+			switch ($this->_context->get("type"))
 			{
 				case 1:
 					$uialert = new XmlnukeUIAlert($this->_context, UIAlert::Dialog, "Isso é um teste");

@@ -64,7 +64,7 @@ class ControlPanel extends NewBaseAdminModule
 
 	public function CreatePage() 
 	{
-		if ($this->_context->ContextValue("logout") != "")
+		if ($this->_context->get("logout") != "")
 		{
 			$this->_context->redirectUrl("admin:controlpanel");
 		}

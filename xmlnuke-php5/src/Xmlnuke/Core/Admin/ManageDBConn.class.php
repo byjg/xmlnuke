@@ -154,7 +154,7 @@ class ManageDBConn extends NewBaseAdminModule
 		else
 		{
 			$p = new XmlParagraphCollection();
-			$db = $this->_context->ContextValue("valueid");
+			$db = $this->_context->get("valueid");
 			if ($db == "")
 			{
 				$p->addXmlnukeObject(new XmlnukeText($this->myWords->Value("ERRORDBEMPTY")));

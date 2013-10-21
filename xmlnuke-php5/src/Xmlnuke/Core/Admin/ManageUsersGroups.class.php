@@ -139,8 +139,8 @@ class ManageUsersGroups extends NewBaseAdminModule
 	
 	protected function actionEdit()
 	{
-		$selectedRole = $this->_context->ContextValue("valueid");
-		$selectedSite = $this->_context->ContextValue("editsite");
+		$selectedRole = $this->_context->get("valueid");
+		$selectedSite = $this->_context->get("editsite");
 		$it = $this->user->getRolesIterator($selectedSite, $selectedRole);
 		$sr = $it->moveNext();
 		$selectedSite = $sr->getField($this->user->getRolesTable()->Site);
@@ -166,9 +166,9 @@ class ManageUsersGroups extends NewBaseAdminModule
 	{
 		$this->_mainBlock = new XmlBlockCollection($this->myWords->Value("BLOCK_TITLE_EDIT"), BlockPosition::Center );
 		$para = new XmlParagraphCollection();
-		$selectedRole = $this->_context->ContextValue("valueid");
-		$selectedSite = $this->_context->ContextValue("editsite");
-		$newRole = strtoupper($this->_context->ContextValue("textbox_role"));
+		$selectedRole = $this->_context->get("valueid");
+		$selectedSite = $this->_context->get("editsite");
+		$newRole = strtoupper($this->_context->get("textbox_role"));
 		try
 		{
 			$this->user->editRolePublic($selectedSite, $selectedRole, $newRole);
@@ -187,8 +187,8 @@ class ManageUsersGroups extends NewBaseAdminModule
 	{
 		$this->_mainBlock = new XmlBlockCollection($this->myWords->Value("BLOCK_TITLE_DELETE"), BlockPosition::Center );
 		$para = new XmlParagraphCollection();
-		$selectedRole = $this->_context->ContextValue("valueid");
-		$selectedSite = $this->_context->ContextValue("editsite");
+		$selectedRole = $this->_context->get("valueid");
+		$selectedSite = $this->_context->get("editsite");
 		$it = $this->user->getRolesIterator($selectedSite, $selectedRole);
 		$sr = $it->moveNext();
 		$selectedSite = $sr->getField($this->user->getRolesTable()->Site);
@@ -203,11 +203,11 @@ class ManageUsersGroups extends NewBaseAdminModule
 	{
 		$this->_mainBlock = new XmlBlockCollection($this->myWords->Value("BLOCK_TITLE_NEW"), BlockPosition::Center );
 		$para = new XmlParagraphCollection();
-		$newRole = strtoupper($this->_context->ContextValue("textbox_role"));
+		$newRole = strtoupper($this->_context->get("textbox_role"));
 		
 		try 
 		{
-			$this->user->addRolePublic($this->_context->ContextValue("select_sites"), $newRole);
+			$this->user->addRolePublic($this->_context->get("select_sites"), $newRole);
 			$para->addXmlnukeObject(new XmlnukeText( $this->myWords->Value("MSG_CREATE") , true));
 		}
 		catch (Exception $ex)

@@ -118,7 +118,7 @@ class Login extends LoginBase
 		$this->_blockCenter = new XmlBlockCollection( $myWords->Value("TITLELOGIN"), BlockPosition::Center );
 		$this->defaultXmlnukeDocument->addXmlnukeObject($this->_blockCenter);
 		
-		$this->_urlReturn = $this->_context->ContextValue("ReturnUrl");
+		$this->_urlReturn = $this->_context->get("ReturnUrl");
 		
 		switch ($this->_action) 
 		{
@@ -151,7 +151,7 @@ class Login extends LoginBase
 	protected function MakeLogin()
 	{
 		$myWords = $this->WordCollection();
-		$user = $this->_users->validateUserName($this->_context->ContextValue("loguser"), $this->_context->ContextValue("password"));
+		$user = $this->_users->validateUserName($this->_context->get("loguser"), $this->_context->get("password"));
 		if ($user == null)
 		{
 			$container = new XmlnukeUIAlert($this->_context, UIAlert::BoxAlert);
@@ -186,7 +186,7 @@ class Login extends LoginBase
 		$form->setJSValidate(true);
 		$paragraph->addXmlnukeObject($form);
 		
-		$textbox = new XmlInputTextBox($myWords->Value("LABEL_NAME"), 'loguser', $this->_context->ContextValue("loguser"), 20);
+		$textbox = new XmlInputTextBox($myWords->Value("LABEL_NAME"), 'loguser', $this->_context->get("loguser"), 20);
 		$textbox->setInputTextBoxType(InputTextBoxType::TEXT );
 		$textbox->setRequired(true);
 		$form->addXmlnukeObject($textbox);
@@ -239,7 +239,7 @@ class Login extends LoginBase
 		$form->setDisableAutoComplete(true);
 		$paragraph->addXmlnukeObject($form);
 		
-		$textbox = new XmlInputTextBox($myWords->Value("LABEL_EMAIL"), 'email', $this->_context->ContextValue("email"), 40);
+		$textbox = new XmlInputTextBox($myWords->Value("LABEL_EMAIL"), 'email', $this->_context->get("email"), 40);
 		$textbox->setInputTextBoxType(InputTextBoxType::TEXT );
 		$textbox->setDataType(INPUTTYPE::EMAIL);
 		$textbox->setRequired(true);
@@ -262,7 +262,7 @@ class Login extends LoginBase
 		$container->setAutoHide(5000);
 		$this->_blockCenter->addXmlnukeObject($container);
 		
-		$user = $this->_users->getUserEMail( $this->_context->ContextValue("email") );
+		$user = $this->_users->getUserEMail( $this->_context->get("email") );
 		
 		if (is_null($user))
 		{
@@ -299,20 +299,20 @@ class Login extends LoginBase
 		$form->setDisableAutoComplete(true);
 		$paragraph->addXmlnukeObject($form);
 		
-		$textbox = new XmlInputTextBox($myWords->Value("LABEL_LOGIN"), 'newloguser', $this->_context->ContextValue("newloguser"), 20);
+		$textbox = new XmlInputTextBox($myWords->Value("LABEL_LOGIN"), 'newloguser', $this->_context->get("newloguser"), 20);
 		$textbox->setInputTextBoxType(InputTextBoxType::TEXT );
 		$textbox->setMaxLength(20);
 		$textbox->setDataType(INPUTTYPE::TEXT);
 		$textbox->setRequired(true);
 		$form->addXmlnukeObject($textbox);
 		
-		$textbox = new XmlInputTextBox($myWords->Value("LABEL_NAME"), 'name', $this->_context->ContextValue("name"), 40);
+		$textbox = new XmlInputTextBox($myWords->Value("LABEL_NAME"), 'name', $this->_context->get("name"), 40);
 		$textbox->setInputTextBoxType(InputTextBoxType::TEXT );
 		$textbox->setDataType(INPUTTYPE::TEXT);
 		$textbox->setRequired(true);
 		$form->addXmlnukeObject($textbox);
 		
-		$textbox = new XmlInputTextBox($myWords->Value("LABEL_EMAIL"), 'email', $this->_context->ContextValue("email"), 30);
+		$textbox = new XmlInputTextBox($myWords->Value("LABEL_EMAIL"), 'email', $this->_context->get("email"), 30);
 		$textbox->setInputTextBoxType(InputTextBoxType::TEXT );
 		$textbox->setDataType(INPUTTYPE::EMAIL);
 		$textbox->setRequired(true);
@@ -345,14 +345,14 @@ class Login extends LoginBase
 		}
 		else 
 		{
-			if (!$this->_users->addUser( $this->_context->ContextValue("name"), $this->_context->ContextValue("newloguser"), $this->_context->ContextValue("email"), $newpassword ) )
+			if (!$this->_users->addUser( $this->_context->get("name"), $this->_context->get("newloguser"), $this->_context->get("email"), $newpassword ) )
 			{
 				$container->addXmlnukeObject(new XmlnukeText($myWords->Value("CREATEUSERFAIL"), true));
 				$this->CreateNewUser($block);
 			}
 			else
 			{
-				$this->sendWelcomeMessage($myWords, $this->_context->ContextValue("name"), $this->_context->ContextValue("newloguser"), $this->_context->ContextValue("email"), $newpassword );
+				$this->sendWelcomeMessage($myWords, $this->_context->get("name"), $this->_context->get("newloguser"), $this->_context->get("email"), $newpassword );
 				$this->_users->Save();
 				$container->addXmlnukeObject(new XmlnukeText($myWords->Value("CREATEUSEROK"), true));
 				$container->setUIAlertType(UIAlert::BoxInfo);

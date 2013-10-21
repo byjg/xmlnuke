@@ -158,12 +158,12 @@ class Search extends BaseModule
 	{		
 		$myWords = $this->WordCollection();		
 
-		$this->_titlePage = $myWords->Value("TITLE", $this->_context->ContextValue("SERVER_NAME") );
-		$this->_abstractPage = $myWords->Value("ABSTRACT", $this->_context->ContextValue("SERVER_NAME") );
+		$this->_titlePage = $myWords->Value("TITLE", $this->_context->get("SERVER_NAME") );
+		$this->_abstractPage = $myWords->Value("ABSTRACT", $this->_context->get("SERVER_NAME") );
 		
 		$this->_document = new XmlnukeDocument($this->_titlePage, $this->_abstractPage);
 		
-		$this->txtSearch = $this->_context->ContextValue("txtSearch");
+		$this->txtSearch = $this->_context->get("txtSearch");
 
 		if ($this->txtSearch != "")
 		{
@@ -204,7 +204,7 @@ class Search extends BaseModule
 		$form->addXmlnukeObject($textbox);
 		
 		$checkbox = new XmlInputCheck($myWords->Value("chkAll"), "checkAll", "all");
-		$checkbox->setChecked($this->_context->ContextValue("checkAll"));
+		$checkbox->setChecked($this->_context->get("checkAll"));
 		$form->addXmlnukeObject($checkbox);
 		
 		$button = new XmlInputButtons();
@@ -223,7 +223,7 @@ class Search extends BaseModule
 		
 		$xmlnukeDB = $this->_context->getXMLDataBase();
 		
-		$arr = $xmlnukeDB->searchDocuments($this->txtSearch, $this->_context->ContextValue("checkAll") != "");
+		$arr = $xmlnukeDB->searchDocuments($this->txtSearch, $this->_context->get("checkAll") != "");
 
 		$blockCenter = new XmlBlockCollection($myWords->Value("BLOCKRESULT"), BlockPosition::Center);
 		$this->_document->addXmlnukeObject($blockCenter);

@@ -102,18 +102,18 @@ class ManagePoll extends NewBaseAdminModule
 				return $this->defaultXmlnukeDocument->generatePage();
 			}
 			
-			if ($this->_context->ContextValue("op") == "")
+			if ($this->_context->get("op") == "")
 			{
 				$this->ListPoll($block);
 			}
-			elseif ($this->_context->ContextValue("op") == "answer")
+			elseif ($this->_context->get("op") == "answer")
 			{
-				$polldata = explode("|", $this->_context->ContextValue("valueid"));
+				$polldata = explode("|", $this->_context->get("valueid"));
 				$this->ListAnswers($block, $polldata[0], $polldata[1]);
 			}
-			elseif ($this->_context->ContextValue("op") == "answernav")
+			elseif ($this->_context->get("op") == "answernav")
 			{
-				$this->ListAnswers($block, $this->_context->ContextValue("curpoll"), $this->_context->ContextValue("curlang"));
+				$this->ListAnswers($block, $this->_context->get("curpoll"), $this->_context->get("curlang"));
 			}
 		}
 
@@ -132,16 +132,16 @@ class ManagePoll extends NewBaseAdminModule
 		if ($this->_action == ModuleAction::CreateConfirm)
 		{
 			$p = new XmlParagraphCollection();
-			if ($this->_context->ContextValue("type")!="-anydata-")
+			if ($this->_context->get("type")!="-anydata-")
 			{
 				try 
 				{
-					$tblpoll = $this->_context->ContextValue("tbl_poll");
-					$tblanswer = $this->_context->ContextValue("tbl_answer");
-					$tbllastip = $this->_context->ContextValue("tbl_lastip");
-					$suffix = $this->_context->ContextValue("tablesuffix");
+					$tblpoll = $this->_context->get("tbl_poll");
+					$tblanswer = $this->_context->get("tbl_answer");
+					$tbllastip = $this->_context->get("tbl_lastip");
+					$suffix = $this->_context->get("tablesuffix");
 					
-					$dbdata = new DBDataSet($this->_context->ContextValue("type"), $this->_context);
+					$dbdata = new DBDataSet($this->_context->get("type"), $this->_context);
 					$results = array();
 					$results[] = $this->CreateTable($dbdata, "create table $tblpoll", "create table $tblpoll (name varchar(15), lang char(5), question varchar(150), multiple char(1), showresults char(1), active char(1)) $suffix");
 					$results[] = $this->CreateTable($dbdata, "create table $tblanswer", "create table $tblanswer (name varchar(15), lang char(5), code int, short varchar(10), answer varchar(50), votes int) $suffix");
@@ -159,7 +159,7 @@ class ManagePoll extends NewBaseAdminModule
 					
 					$anypoll = new AnyDataSet(new AnydatasetFilenameProcessor("_poll"));
 					$anypoll->appendRow();
-					$anypoll->addField("dbname", $this->_context->ContextValue("type"));
+					$anypoll->addField("dbname", $this->_context->get("type"));
 					$anypoll->addField("tbl_poll", $tblpoll);
 					$anypoll->addField("tbl_answer", $tblanswer);
 					$anypoll->addField("tbl_lastip", $tbllastip);

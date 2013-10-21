@@ -318,7 +318,7 @@ class XmlnukeCollection
 		$context = Context::getInstance();
 
 		# Host
-		$host = $context->UrlBase() != "" ? $context->UrlBase() : ($context->Value("SERVER_PORT") == 443 ? "https://" : "http://") . $context->Value("HTTP_HOST");
+		$host = $context->UrlBase() != "" ? $context->UrlBase() : ($context->get("SERVER_PORT") == 443 ? "https://" : "http://") . $context->get("HTTP_HOST");
 
 		# Replace Part One
 		$text = preg_replace(array("/\{[hH][oO][sS][tT]\}/", "/\{[cC][lL][aA][sS][sS]\}/"), array($host, $name), $text);

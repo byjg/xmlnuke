@@ -91,21 +91,21 @@ class ModuleFactory
 		$result->Setup($xml, $o);
 
 		$urlSSL = "";
-		$isHttps = ( ($context->Value("HTTPS") == "on") || ($context->Value("HTTP_X_FORWARDED_PROTO") == "https") );
+		$isHttps = ( ($context->get("HTTPS") == "on") || ($context->get("HTTP_X_FORWARDED_PROTO") == "https") );
 		$requireSSL = $result->requiresSSL();
 
 		if ( ($requireSSL == SSLAccess::ForcePlain) && $isHttps )
 		{
-			$urlSSL = "http://" . $context->ContextValue("HTTP_HOST") . $context->ContextValue("REQUEST_URI");
+			$urlSSL = "http://" . $context->get("HTTP_HOST") . $context->get("REQUEST_URI");
 		}
 		else if ( ($requireSSL == SSLAccess::ForceSSL) && !$isHttps )
 		{
-			$urlSSL = "https://" . $context->ContextValue("HTTP_HOST") . $context->ContextValue("REQUEST_URI");
+			$urlSSL = "https://" . $context->get("HTTP_HOST") . $context->get("REQUEST_URI");
 		}
 
 		if (strlen($urlSSL) > 0)
 		{
-			if ($context->ContextValue("REQUEST_METHOD") == "GET")
+			if ($context->get("REQUEST_METHOD") == "GET")
 				$context->redirectUrl($urlSSL);
 			else
 			{
@@ -151,10 +151,10 @@ class ModuleFactory
 	{
 		if (ModuleFactory::$_phpLibDir == null)
 		{
-			if (!is_array($context->Value("xmlnuke.PHPLIBDIR")))
+			if (!is_array($context->get("xmlnuke.PHPLIBDIR")))
 				throw new \InvalidArgumentException('Config "xmlnuke.PHPLIBDIR" requires an associative array');
 
-			ModuleFactory::$_phpLibDir = $context->Value("xmlnuke.PHPLIBDIR");
+			ModuleFactory::$_phpLibDir = $context->get("xmlnuke.PHPLIBDIR");
 
 			$autoLoad = AutoLoad::getInstance();
 			foreach(ModuleFactory::$_phpLibDir as $lib => $path)

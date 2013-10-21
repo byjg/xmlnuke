@@ -62,12 +62,12 @@ class ManageXML extends BaseAdminModule
 		
 		//Strings
 		$action = strtolower($this->_action);
-		$id = $this->_context->ContextValue("id");
-		$group = $this->_context->ContextValue("group");
+		$id = $this->_context->get("id");
+		$group = $this->_context->get("group");
 		$contents = "";
-		$titleIndex = $this->_context->ContextValue("titleIndex");		
-		$summaryIndex = $this->_context->ContextValue("summaryIndex");
-		$groupKeyword = $this->_context->ContextValue("groupKeyword");
+		$titleIndex = $this->_context->get("titleIndex");		
+		$summaryIndex = $this->_context->get("summaryIndex");
+		$groupKeyword = $this->_context->get("groupKeyword");
 
 		$myWords = $this->WordCollection();
 		$this->setHelp($myWords->Value("DESCRIPTION"));
@@ -97,7 +97,7 @@ class ManageXML extends BaseAdminModule
 		
 		if ( ($action == "edit") || ($action == "new") )
 		{
-			$contents = $this->_context->ContextValue("contents");				
+			$contents = $this->_context->get("contents");				
 			$contents = stripslashes($contents);
 			$this->_context->setSession("texto", $contents); 
 			
@@ -207,7 +207,7 @@ class ManageXML extends BaseAdminModule
 		if ($action == "delete")
 		{
 			$paragraph = $this->_px->addParagraph($block);
-			$this->_px->addHref($paragraph, "admin:ManageXML?id=" . $this->_context->ContextValue("id") . "&action=confirmdelete", $myWords->Value("CONFIRMDELETE", $this->_context->ContextValue("id")), null);
+			$this->_px->addHref($paragraph, "admin:ManageXML?id=" . $this->_context->get("id") . "&action=confirmdelete", $myWords->Value("CONFIRMDELETE", $this->_context->get("id")), null);
 			$deleteMode = true;
 		}
 
@@ -223,7 +223,7 @@ class ManageXML extends BaseAdminModule
 			}
 			
 			$this->_context->getXMLDataBase()->saveDocumentXML($indexFile->FullQualifiedName(), $index);
-			//util.FileUtil.DeleteFile(new processor.XMLFilenameProcessor(_context.ContextValue("id"), this._context));
+			//util.FileUtil.DeleteFile(new processor.XMLFilenameProcessor(_context.get("id"), this._context));
 			$this->_context->getXMLDataBase()->saveIndex();
 			$this->_px->addBold($paragraph, $myWords->Value("DELETED"));
 			$deleteMode = true;

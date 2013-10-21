@@ -177,7 +177,7 @@ abstract class XmlnukeCrudBase extends XmlnukeDocumentObject implements IXmlnuke
 		$this->_delete = true;
 		$this->_edit = true;
 
-		$this->_currentAction = $this->_context->ContextValue("acao");
+		$this->_currentAction = $this->_context->get("acao");
 
 		for($i=0, $fieldsLength = sizeof($this->_fields); $i<$fieldsLength; $i++)
 		{
@@ -188,11 +188,11 @@ abstract class XmlnukeCrudBase extends XmlnukeDocumentObject implements IXmlnuke
 		}
 
 		$this->_parameter = array();
-		//$this->_filter = $this->_context->ContextValue("filter"); //encoded
-		//$this->_sort = $this->_context->ContextValue("sort"); // encoded
-		$this->_valueId = $this->_context->ContextValue("valueid");
-		$this->_curPage = $this->_context->ContextValue("curpage");
-		$this->_qtdRows = $this->_context->ContextValue("offset");
+		//$this->_filter = $this->_context->get("filter"); //encoded
+		//$this->_sort = $this->_context->get("sort"); // encoded
+		$this->_valueId = $this->_context->get("valueid");
+		$this->_curPage = $this->_context->get("curpage");
+		$this->_qtdRows = $this->_context->get("offset");
 
 		$this->_decimalSeparator = $this->_context->Language()->getDecimalPoint();
 		$this->_dateFormat = $this->_context->Language()->getDateFormat();
@@ -356,7 +356,7 @@ abstract class XmlnukeCrudBase extends XmlnukeDocumentObject implements IXmlnuke
 		{
 //			CrudFieldCollection $field
 			$field = $this->_fields[$i];
-			$curValue = $this->_context->ContextValue($this->_fields[$i]->fieldName);
+			$curValue = $this->_context->get($this->_fields[$i]->fieldName);
 
 			if ($field->editable)
 			{
@@ -562,7 +562,7 @@ abstract class XmlnukeCrudBase extends XmlnukeDocumentObject implements IXmlnuke
 	 */
 	protected function showResultMessage()
 	{
-		$msg = $this->_context->ContextValue(self::PARAM_MSG);
+		$msg = $this->_context->get(self::PARAM_MSG);
 
 		if ($msg == self::ACTION_NEW_CONFIRM)
 		{
@@ -866,7 +866,7 @@ abstract class XmlnukeCrudBase extends XmlnukeDocumentObject implements IXmlnuke
 		}
 
 		// Checkings!
-		if ($this->_context->ContextValue(self::PARAM_CANCEL) != "")
+		if ($this->_context->get(self::PARAM_CANCEL) != "")
 		{
 			$this->listAllRecords()->generateObject($current);
 		}

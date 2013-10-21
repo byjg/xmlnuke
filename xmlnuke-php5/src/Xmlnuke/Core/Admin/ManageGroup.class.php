@@ -63,9 +63,9 @@ class ManageGroup extends BaseAdminModule
 
 		//Strings
 		$action = strtolower($this->_action);
-		$id = $this->_context->ContextValue("id");
-		$title = $this->_context->ContextValue("title");
-		$keyword = $this->_context->ContextValue("keyword");
+		$id = $this->_context->get("id");
+		$title = $this->_context->get("title");
+		$keyword = $this->_context->get("keyword");
 
 		//XmlNodes
 		$block = $this->_px->addBlockCenter($myWords->Value("WORKINGAREA"));
@@ -102,7 +102,7 @@ class ManageGroup extends BaseAdminModule
 		// Edit or Insert a new Group!
 		if ($title != "")
 		{
-			if ($this->_context->ContextValue("new") != "")
+			if ($this->_context->get("new") != "")
 			{
 				
 				//$editNode = XmlUtil::SelectSingleNode($index->documentElement,"xmlindex");

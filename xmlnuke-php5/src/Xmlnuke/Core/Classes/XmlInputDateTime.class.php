@@ -132,10 +132,10 @@ class  XmlInputDateTime extends XmlnukeDocumentObject
 
 	public static function ParseSubmit($context, $name, $getTime = true)
 	{
-		$date = $context->ContextValue($name);
+		$date = $context->get($name);
 		if ($getTime)
 		{
-			$date .= " " . $context->ContextValue($name . "_hour") . ":" . $context->ContextValue($name . "_minute");
+			$date .= " " . $context->get($name . "_hour") . ":" . $context->get($name . "_minute");
 		}
 		return $date;
 	}

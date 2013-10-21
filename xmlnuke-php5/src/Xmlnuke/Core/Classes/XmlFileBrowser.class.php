@@ -688,7 +688,7 @@ class  XmlFileBrowser extends XmlnukeDocumentObject
 	 */
 	private function formNew()
 	{	
-		$type = $this->_context->ContextValue("type");
+		$type = $this->_context->get("type");
 		
 		if ($type == FileBrowserEditListType::SUBFOLDER)
 		{	
@@ -696,7 +696,7 @@ class  XmlFileBrowser extends XmlnukeDocumentObject
 			{
 				$form = new XmlFormCollection($this->_context, "module:".$this->_module, $this->_lang->Value("NEWDIRECTORY"));
 				$form->addXmlnukeObject(new XmlInputHidden("action","create"));
-				$form->addXmlnukeObject(new XmlInputHidden("type",$this->_context->ContextValue("type")));
+				$form->addXmlnukeObject(new XmlInputHidden("type",$this->_context->get("type")));
 				$form->addXmlnukeObject(new XmlInputHidden("folder",$this->_currentFolder));
 				
 				$textBox = new XmlInputTextBox($this->_lang->Value("TXT_NAME"),"name","");
@@ -721,7 +721,7 @@ class  XmlFileBrowser extends XmlnukeDocumentObject
 				$form = new XmlFormCollection($this->_context, "module:".$this->_module, $this->_lang->Value("NEWFILE"));
 				
 				$form->addXmlnukeObject(new XmlInputHidden("action","create"));
-				$form->addXmlnukeObject(new XmlInputHidden("type",$this->_context->ContextValue("type")));
+				$form->addXmlnukeObject(new XmlInputHidden("type",$this->_context->get("type")));
 				$form->addXmlnukeObject(new XmlInputHidden("folder",$this->_currentFolder));
 				
 				$textBox = new XmlInputTextBox($this->_lang->Value("TXT_NAME"),"filename","",40);
@@ -821,9 +821,9 @@ class  XmlFileBrowser extends XmlnukeDocumentObject
 	 */
 	private function createNew()
 	{
-		$type = $this->_context->ContextValue("type");
-		$id = $this->_context->ContextValue("valueid");
-		$name = $this->_context->ContextValue("name");
+		$type = $this->_context->get("type");
+		$id = $this->_context->get("valueid");
+		$name = $this->_context->get("name");
 		
 		if ($type == FileBrowserEditListType::SUBFOLDER ) //SUBFOLDERS
 		{
@@ -844,8 +844,8 @@ class  XmlFileBrowser extends XmlnukeDocumentObject
 		}
 		else //CREATE FILE
 		{
-			$filename = $this->_context->ContextValue("filename");
-			$filecontent = $this->_context->ContextValue("filecontent");
+			$filename = $this->_context->get("filename");
+			$filecontent = $this->_context->get("filecontent");
 			$filePath = $this->_currentFolder . FileUtil::Slash();
 			
 			try 
@@ -870,11 +870,11 @@ class  XmlFileBrowser extends XmlnukeDocumentObject
 	 */
 	private function formEdit()
 	{	
-		$id = $this->_context->ContextValue("valueid");
+		$id = $this->_context->get("valueid");
 		if (!$id)
 			$id = 0;
 		
-		$type = $this->_context->ContextValue("type");
+		$type = $this->_context->get("type");
 		
 		if ($type == FileBrowserEditListType::SUBFOLDER)
 		{
@@ -922,7 +922,7 @@ class  XmlFileBrowser extends XmlnukeDocumentObject
 					$form = new XmlFormCollection($this->_context, "module:".$this->_module, $this->_lang->Value("EDITFILE"));
 					
 					$form->addXmlnukeObject(new XmlInputHidden("action","confirmedit"));
-					$form->addXmlnukeObject(new XmlInputHidden("type",$this->_context->ContextValue("type")));
+					$form->addXmlnukeObject(new XmlInputHidden("type",$this->_context->get("type")));
 					$form->addXmlnukeObject(new XmlInputHidden("folder",$this->_currentFolder));
 					
 					$filename = $this->getSingleName($filesrc);
@@ -974,14 +974,14 @@ class  XmlFileBrowser extends XmlnukeDocumentObject
 	 */
 	private function confirmEdit()
 	{			
-		$type = $this->_context->ContextValue("type");
+		$type = $this->_context->get("type");
 		
-		$old_name = $this->_currentFolder . FileUtil::Slash() . $this->_context->ContextValue("old_name");
+		$old_name = $this->_currentFolder . FileUtil::Slash() . $this->_context->get("old_name");
 		$old_name = $this->realPathName($old_name);
 
-		$new_name = dirname($old_name) . FileUtil::Slash() . $this->_context->ContextValue("new_name");
+		$new_name = dirname($old_name) . FileUtil::Slash() . $this->_context->get("new_name");
 
-		$filecontent = $this->_context->ContextValue("filecontent");	
+		$filecontent = $this->_context->get("filecontent");	
 		
 		try 
 		{
@@ -1015,8 +1015,8 @@ class  XmlFileBrowser extends XmlnukeDocumentObject
 	 */
 	private function view()
 	{	
-		$id = $this->_context->ContextValue("valueid");
-		$type = $this->_context->ContextValue("type");
+		$id = $this->_context->get("valueid");
+		$type = $this->_context->get("type");
 		
 		
 		if ($type == FileBrowserEditListType::SUBFOLDER )
@@ -1143,8 +1143,8 @@ class  XmlFileBrowser extends XmlnukeDocumentObject
 	 */
 	private function delete()
 	{
-		$type = $this->_context->ContextValue("type");
-		$id = $this->_context->ContextValue("valueid");
+		$type = $this->_context->get("type");
+		$id = $this->_context->get("valueid");
 		
 		if (!$id)
 			$id = 0;

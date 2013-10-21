@@ -172,15 +172,15 @@ class ParamProcessor
 		$arParam = array();
 		$xmlnukeParam = array();
 		
-		$fullLink = ($this->_context->ContextValue("xmlnuke.USEFULLPARAMETER") == "true");
+		$fullLink = ($this->_context->get("xmlnuke.USEFULLPARAMETER") == "true");
 		
-		if ($fullLink || $this->_context->getSite()!= $this->_context->ContextValue("xmlnuke.DEFAULTSITE"))
+		if ($fullLink || $this->_context->getSite()!= $this->_context->get("xmlnuke.DEFAULTSITE"))
 		{
 			$xmlnukeParam["site"] = $this->_context->getSite();
 		}
-		if ($fullLink || $this->_context->getXsl()!= $this->_context->ContextValue("xmlnuke.DEFAULTPAGE"))
+		if ($fullLink || $this->_context->getXsl()!= $this->_context->get("xmlnuke.DEFAULTPAGE"))
 		{
-			$xmlnukeParam["xsl"] = ($this->_context->getXsl() == "index" ? $this->_context->ContextValue("xmlnuke.DEFAULTPAGE") : $this->_context->getXsl());
+			$xmlnukeParam["xsl"] = ($this->_context->getXsl() == "index" ? $this->_context->get("xmlnuke.DEFAULTPAGE") : $this->_context->getXsl());
 		}
 		if ($fullLink)
 		{
@@ -366,7 +366,7 @@ class ParamProcessor
 			{
 				$iEnd = strpos($param,"]",$iStart+1);
 				$paramDesc = substr($param,$iStart + 7, $iEnd - $iStart - 7);
-				$param = substr($param, 0, $iStart). str_replace("&", "&amp;", $this->_context->ContextValue($paramDesc)) . substr($param,$iEnd+ 1);
+				$param = substr($param, 0, $iStart). str_replace("&", "&amp;", $this->_context->get($paramDesc)) . substr($param,$iEnd+ 1);
 				$iStart = strpos($param,"[param:");
 				
 			}

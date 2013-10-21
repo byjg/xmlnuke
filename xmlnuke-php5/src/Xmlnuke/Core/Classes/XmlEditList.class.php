@@ -151,9 +151,9 @@ class  XmlEditList extends XmlnukeDocumentObject
 		$this->_name = "EL" . $this->_context->getRandomNumber(100000); 
 		$this->_extraParam = array(); 
 
-		$this->_curPage = $this->_context->ContextValue("curpage");
+		$this->_curPage = $this->_context->get("curpage");
 
-		$this->_qtdRows = $this->_context->ContextValue("offset"); 
+		$this->_qtdRows = $this->_context->get("offset"); 
 		
 		$this->_enablePages = ($this->_qtdRows > 0) && ($this->_curPage > 0); 
 	}

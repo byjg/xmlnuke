@@ -139,21 +139,21 @@ class SendEmail extends BaseModule
 	public function Setup($xmlModuleName, $customArgs)
 	{
 		parent::Setup($xmlModuleName, $customArgs);
-		$this->_toName_ID = $this->_context->ContextValue("toname_id");
-		$this->_fromName = $this->_context->ContextValue("name");
-		$this->_fromEmail = $this->_context->ContextValue("email");
-		$this->_subject = $this->_context->ContextValue("subject");
-		$this->_message = $this->_context->ContextValue("message");
-		$this->_redirect = $this->_context->ContextValue("redirect");
+		$this->_toName_ID = $this->_context->get("toname_id");
+		$this->_fromName = $this->_context->get("name");
+		$this->_fromEmail = $this->_context->get("email");
+		$this->_subject = $this->_context->get("subject");
+		$this->_message = $this->_context->get("message");
+		$this->_redirect = $this->_context->get("redirect");
 		$this->_extraMessage = "";
-		$aux = $this->_context->ContextValue("extra_fields");
+		$aux = $this->_context->get("extra_fields");
 		if ($aux != "")
 		{
 			$fields = explode(";", $aux);
 			foreach($fields as $key=>$field)
 			{
 				$detail = explode("=", $field);
-				$valor = $this->_context->ContextValue($detail[0]);
+				$valor = $this->_context->get($detail[0]);
 				$this->_extraMessage .= $detail[1] . ": " . $valor . "\n";
 			}
 		}
@@ -227,18 +227,18 @@ class SendEmail extends BaseModule
 		}
 		elseif (!XmlInputImageValidate::validateText($this->_context))
 		{
-			$document = new XmlnukeDocument($myWords->ValueArgs("TITLE", array( $this->_context->ContextValue("SERVER_NAME")) ), $myWords->ValueArgs("ABSTRACT", array( $this->_context->ContextValue("SERVER_NAME")) ));
+			$document = new XmlnukeDocument($myWords->ValueArgs("TITLE", array( $this->_context->get("SERVER_NAME")) ), $myWords->ValueArgs("ABSTRACT", array( $this->_context->get("SERVER_NAME")) ));
 			$blockcenter = new XmlBlockCollection($myWords->Value("MSGERROR"), BlockPosition::Center );
 			$document->addXmlnukeObject($blockcenter);
 			
 			$form = new XmlFormCollection($this->_context, "module:sendemail", $myWords->Value("MSGERROR"));
 			$form->addXmlnukeObject(new XmlInputCaption($myWords->Value("RETRYVALIDATE")));
-			$form->addXmlnukeObject(new XmlInputHidden("toname_id", $this->_context->ContextValue("toname_id")));
-			$form->addXmlnukeObject(new XmlInputHidden("name", $this->_context->ContextValue("name")));
-			$form->addXmlnukeObject(new XmlInputHidden("email", $this->_context->ContextValue("email")));
-			$form->addXmlnukeObject(new XmlInputHidden("subject", $this->_context->ContextValue("subject")));
-			$form->addXmlnukeObject(new XmlInputHidden("message", $this->_extraMessage . $this->_context->ContextValue("message")));
-			$form->addXmlnukeObject(new XmlInputHidden("redirect", $this->_context->ContextValue("redirect")));
+			$form->addXmlnukeObject(new XmlInputHidden("toname_id", $this->_context->get("toname_id")));
+			$form->addXmlnukeObject(new XmlInputHidden("name", $this->_context->get("name")));
+			$form->addXmlnukeObject(new XmlInputHidden("email", $this->_context->get("email")));
+			$form->addXmlnukeObject(new XmlInputHidden("subject", $this->_context->get("subject")));
+			$form->addXmlnukeObject(new XmlInputHidden("message", $this->_extraMessage . $this->_context->get("message")));
+			$form->addXmlnukeObject(new XmlInputHidden("redirect", $this->_context->get("redirect")));
 			$form->addXmlnukeObject(new XmlInputImageValidate(""));
 			$buttons = new XmlInputButtons();
 			$buttons->addSubmit($myWords->Value("RETRY"), "");
@@ -283,7 +283,7 @@ class SendEmail extends BaseModule
 	{
 		$myWords = $this->WordCollection();
 		
-		$document = new XmlnukeDocument($myWords->ValueArgs("TITLE", array( $this->_context->ContextValue("SERVER_NAME")) ), $myWords->ValueArgs("ABSTRACT", array( $this->_context->ContextValue("SERVER_NAME")) ));
+		$document = new XmlnukeDocument($myWords->ValueArgs("TITLE", array( $this->_context->get("SERVER_NAME")) ), $myWords->ValueArgs("ABSTRACT", array( $this->_context->get("SERVER_NAME")) ));
 		
 		$blockcenter = new XmlBlockCollection($myWords->Value("TITRESP"), BlockPosition::Center );
 		$document->addXmlnukeObject($blockcenter);

@@ -71,7 +71,7 @@ class SelectLanguage extends BaseAdminModule
 
 		if ($this->_action == "createrepo")
 		{
-			//ManageSites::createRepositoryForSite($this->_context->XmlHashedDir(), $this->_context->CurrentSitePath(), $this->_context->ContextValue("destlang"), $this->_context);
+			//ManageSites::createRepositoryForSite($this->_context->XmlHashedDir(), $this->_context->CurrentSitePath(), $this->_context->get("destlang"), $this->_context);
 			$paragraph = $this->_px->addParagraph($block);
 			$this->_px->addBold($paragraph, $myWords->Value("CREATED"));
 		}
