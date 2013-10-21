@@ -38,8 +38,8 @@ use Xmlnuke\Core\Exception\NotFoundException;
 
 	$context = Context::getInstance();
 
-	$selectNodes = $context->ContextValue("xpath");
-	$alternateFilename = str_replace(".", "_", ($context->ContextValue("fn") != "" ? $context->ContextValue("fn") : ($context->getModule() != "" ? $context->getModule() : $context->getXml())));
+	$selectNodes = $context->get("xpath");
+	$alternateFilename = str_replace(".", "_", ($context->get("fn") != "" ? $context->get("fn") : ($context->getModule() != "" ? $context->getModule() : $context->getXml())));
 	$extraParam = array();
 	$output = $context->getOutputFormat();
 
@@ -50,7 +50,7 @@ use Xmlnuke\Core\Exception\NotFoundException;
 	}
 	elseif ($output == XmlnukeEngine::OUTPUT_JSON)
 	{
-		$extraParam["json_function"] = $context->Value("jsonfn");
+		$extraParam["json_function"] = $context->get("jsonfn");
 		header("Content-Type: application/json; charset=utf-8");
 		header("Content-Disposition: inline; filename=\"{$alternateFilename}.json\";");
 	}
@@ -79,9 +79,9 @@ use Xmlnuke\Core\Exception\NotFoundException;
 	}
 	
 	$engine = new XmlnukeEngine($context, $output, $selectNodes, $extraParam);
-	if ($context->ContextValue("remote")!="")
+	if ($context->get("remote")!="")
 	{
-		echo $engine->TransformDocumentRemote($context->ContextValue("remote"));
+		echo $engine->TransformDocumentRemote($context->get("remote"));
 	}
 	elseif ($context->getModule()=="")
 	{
@@ -133,7 +133,7 @@ use Xmlnuke\Core\Exception\NotFoundException;
 		catch (NotAuthenticatedException $ex)
 		{
 			$s = XmlnukeManageUrl::encodeParam( $_SERVER["REQUEST_URI"] );
-			$url = $context->bindModuleUrl($context->Value("xmlnuke.LOGINMODULE"))."&ReturnUrl=".$s;
+			$url = $context->bindModuleUrl($context->get("xmlnuke.LOGINMODULE"))."&ReturnUrl=".$s;
 			// Do not leave empty spaces at begin or end of modules
 			// Não deixe espaços em branco no início ou fim dos módulos
 			$context->redirectUrl( $url );
@@ -149,7 +149,7 @@ use Xmlnuke\Core\Exception\NotFoundException;
 	{
 		global $context;
 
-		if (!$context->ContextValue("xmlnuke.DETECTMOBILE"))
+		if (!$context->get("xmlnuke.DETECTMOBILE"))
 		{
 			return false;
 		}
@@ -208,7 +208,7 @@ use Xmlnuke\Core\Exception\NotFoundException;
 			$tamparam = $if-$i-8;
 			$var = substr($buffer, $i+7, $tamparam);
 			
-			echo $context->ContextValue($var);
+			echo $context->get($var);
 			
 			$posi = $if + $tamparam + 9;
 			$i = strpos($buffer, "<param-", $posi);
