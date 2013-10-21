@@ -45,13 +45,13 @@ class AutoLoad extends \Xmlnuke\Core\Classes\BaseSingleton
 		spl_autoload_register(array($this, "autoLoad_XmlnukeFramework"));
 		spl_autoload_register(array($this, "autoLoad_UserProjects"));
 		
-		$this->registrUserProject('Xmlnuke', PHPXMLNUKEDIR . 'src/Xmlnuke');
+		$this->registrUserProject(PHPXMLNUKEDIR . 'src'); // For Xmlnuke.Modules.
 	}
 
-	public function registrUserProject($name, $path)
+	public function registrUserProject($path)
 	{
 		$path = str_replace('\\', '/', $path);
-		AutoLoad::$_folders[AutoLoad::USER_PROJECTS][$name] = 
+		AutoLoad::$_folders[AutoLoad::USER_PROJECTS][] = 
 			(substr($path, -strlen('/')) === '/' ? substr($path, 0, strlen($path)-1) : $path);
 	}
 	
@@ -103,36 +103,24 @@ class AutoLoad extends \Xmlnuke\Core\Classes\BaseSingleton
 	protected function autoLoad_UserProjects($className)
 	{
 		$class = str_replace('\\', '/', ($className[0] == '\\' ? substr($className, 1) : $className));
-		$classAr = explode('/', $class);
-		
-		$tmp = $path = array_pop($classAr);
-		while (!is_null($tmp))
-		{
-			foreach (AutoLoad::$_folders[AutoLoad::USER_PROJECTS] as $libName => $libDir)
-			{
-				$tmpNS = implode('.', $classAr);
-				if ($tmpNS == $libName)
-				{
-					$file = $libDir . '/' . $path;
-					if (is_readable($file . '.class.php'))
-					{
-						if (\Xmlnuke\Util\FileUtil::isWindowsOS() && (count(glob($file . '.*')) == 0))
-							throw new \Xmlnuke\Core\Exception\EngineException(
-								'The module file name "' . $className . '" does not match uppercase and lowercase. ' . 
-								'Your operating system supports this behavior, ' . 
-								'but Xmlnuke does not accept to ensure your code will run on any platform.'
-							);
 
-						require_once $file . '.class.php';
-						return;
-					}
-				}
-			}			
-			
-			$tmp = array_pop($classAr);
-			$path = $tmp . '/' . $path;
+		foreach (AutoLoad::$_folders[AutoLoad::USER_PROJECTS] as $libName => $libDir)
+		{
+			$file = $libDir . '/' . $class;
+			if (is_readable($file . '.class.php'))
+			{
+				if (\Xmlnuke\Util\FileUtil::isWindowsOS() && (count(glob($file . '.*')) == 0))
+					throw new \Xmlnuke\Core\Exception\EngineException(
+						'The module file name "' . $className . '" does not match uppercase and lowercase. ' .
+						'Your operating system supports this behavior, ' .
+						'but Xmlnuke does not accept to ensure your code will run on any platform.'
+					);
+
+				require_once $file . '.class.php';
+				return;
+			}
 		}
-		
+
 		return;
 	}
 	

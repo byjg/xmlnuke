@@ -158,7 +158,7 @@ class ModuleFactory
 
 			$autoLoad = AutoLoad::getInstance();
 			foreach(ModuleFactory::$_phpLibDir as $lib => $path)
-				$autoLoad->registrUserProject($lib, $path);
+				$autoLoad->registrUserProject($path);
 		}
 		return ModuleFactory::$_phpLibDir;
 	}
