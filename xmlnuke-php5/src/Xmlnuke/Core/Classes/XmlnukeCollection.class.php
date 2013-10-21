@@ -140,17 +140,17 @@ class XmlnukeCollection
 
 		#------------
 		# Define Class Attributes
-		$_name = $classAttributes["$config:nodename"] != "" ? $classAttributes["$config:nodename"] : get_class($model);
-		$_getter = $classAttributes["$config:getter"] != "" ? $classAttributes["$config:getter"] : "get";
-		$_propertyPattern = $classAttributes["$config:propertypattern"] != "" ? eval($classAttributes["$config:propertypattern"]) : array('/([^a-zA-Z0-9])/', '');
-		$_writeEmpty = $classAttributes["$config:writeempty"] == "true";
-		$_docType = $classAttributes["$config:doctype"] != "" ? strtolower($classAttributes["$config:doctype"]) : "xml";
-		$_rdfType = XmlnukeCollection::replaceVars($model, $_name, $classAttributes["$config:rdftype"] != "" ? $classAttributes["$config:rdftype"] : "{HOST}/rdf/class/{CLASS}");
-		$_rdfAbout = XmlnukeCollection::replaceVars($model, $_name, $classAttributes["$config:rdfabout"] != "" ? $classAttributes["$config:rdfabout"] : "{HOST}/rdf/instance/{CLASS}/{GetID()}");
-		$_defaultPrefix = $classAttributes["$config:defaultprefix"] != "" ? $classAttributes["$config:defaultprefix"] . ":" : "";
+		$_name = isset($classAttributes["$config:nodename"]) ? $classAttributes["$config:nodename"] : get_class($model);
+		$_getter = isset($classAttributes["$config:getter"]) ? $classAttributes["$config:getter"] : "get";
+		$_propertyPattern = isset($classAttributes["$config:propertypattern"]) ? eval($classAttributes["$config:propertypattern"]) : array('/([^a-zA-Z0-9])/', '');
+		$_writeEmpty = (isset($classAttributes["$config:writeempty"]) ? $classAttributes["$config:writeempty"] : "false") == "true";
+		$_docType = isset($classAttributes["$config:doctype"]) ? strtolower($classAttributes["$config:doctype"]) : "xml";
+		$_rdfType = XmlnukeCollection::replaceVars($model, $_name, isset($classAttributes["$config:rdftype"]) ? $classAttributes["$config:rdftype"] : "{HOST}/rdf/class/{CLASS}");
+		$_rdfAbout = XmlnukeCollection::replaceVars($model, $_name, isset($classAttributes["$config:rdfabout"]) ? $classAttributes["$config:rdfabout"] : "{HOST}/rdf/instance/{CLASS}/{GetID()}");
+		$_defaultPrefix = isset($classAttributes["$config:defaultprefix"]) ? $classAttributes["$config:defaultprefix"] . ":" : "";
 		$_isRDF = ($_docType == "rdf");
 		$_ignoreAllClass = array_key_exists("$config:ignore", $classAttributes);
-		$_namespace = $classAttributes["$config:namespace"];
+		$_namespace = isset($classAttributes["$config:namespace"]) ? $classAttributes["$config:namespace"] : "";
 		$_dontCreateClassNode = array_key_exists("$config:dontcreatenode", $classAttributes);
 		if (!is_array($_namespace) && !empty($_namespace)) $_namespace = array($_namespace);
 
@@ -229,10 +229,10 @@ class XmlnukeCollection
 
 				# Define Properties
 				$_ignore = array_key_exists("$config:ignore", $propAttributes);
-				$_propName = $propAttributes["$config:nodename"] != "" ? $propAttributes["$config:nodename"] : $propName;
+				$_propName = isset($propAttributes["$config:nodename"]) ? $propAttributes["$config:nodename"] : $propName;
 				if (strpos($_propName, ":") === false) $_propName = $_defaultPrefix . $_propName;
-				$_attributeOf = $_isRDF ? "" : $propAttributes["$config:isattributeof"];
-				$_isBlankNode = $_isRDF ? $propAttributes["$config:isblanknode"] : "";
+				$_attributeOf = $_isRDF ? "" : (isset($propAttributes["$config:isattributeof"]) ? $propAttributes["$config:isattributeof"] : "");
+				$_isBlankNode = $_isRDF ? (isset($propAttributes["$config:isblanknode"]) ? $propAttributes["$config:isblanknode"] : "") : "";
 				$_isResourceUri = $_isRDF && array_key_exists("$config:isresourceuri", $propAttributes); // Valid Only Inside BlankNode
 				$_isClassAttr = $_isRDF ? false : array_key_exists("$config:isclassattribute", $propAttributes);
 				$_dontCreatePropNode = array_key_exists("$config:dontcreatenode", $propAttributes);

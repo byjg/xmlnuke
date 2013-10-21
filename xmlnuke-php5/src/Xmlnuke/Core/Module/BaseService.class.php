@@ -46,13 +46,13 @@ abstract class BaseService extends BaseModule implements IService
 	{
 		parent::Setup($xmlModuleName, $customArgs);
 
-		//if ($this->_context->Value("CONTENT_TYPE") == "application/json")
+		//if ($this->_context->get("CONTENT_TYPE") == "application/json")
 		//	$this->
 	}
 
 	public function CreatePage()
 	{
-		$method = strtoupper($this->_context->Value("REQUEST_METHOD"));
+		$method = strtoupper($this->_context->get("REQUEST_METHOD"));
 
 		switch ($method)
 		{

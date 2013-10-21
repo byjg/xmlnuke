@@ -201,7 +201,7 @@ class OAuthClient20
 			}
 			
 			// Request the Access Token
-			if ($this->_context->Value("state") == $this->getVar("state"))
+			if ($this->_context->get("state") == $this->getVar("state"))
 			{
 				$params = array(
 					"client_id" => $this->_client_id,

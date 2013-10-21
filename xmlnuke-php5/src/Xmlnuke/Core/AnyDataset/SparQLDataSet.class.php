@@ -28,16 +28,16 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-require_once(PHPXMLNUKEDIR . "src/modules/sparql/sparqllib.php");
-
-/**
- * @package xmlnuke
- */
 namespace Xmlnuke\Core\AnyDataset;
+
+require_once(PHPXMLNUKEDIR . "src/Xmlnuke/Library/sparql/sparqllib.php"); // Non-PSR-0 Compliant
 
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Exception\DatasetException;
 
+/**
+ * @package xmlnuke
+ */
 class SparQLDataSet
 {
 	/**

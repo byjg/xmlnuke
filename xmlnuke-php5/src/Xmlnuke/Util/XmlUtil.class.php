@@ -807,7 +807,7 @@ class XmlUtil
 
 		if ($uri == "")
 		{
-			$newnode = $owner->createElement($name);
+			$newnode = $owner->createElement(preg_replace('/[^\w:]/', '_', $name));
 		}
 		else
 		{
