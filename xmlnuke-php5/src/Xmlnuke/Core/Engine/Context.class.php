@@ -152,35 +152,9 @@ class Context extends BaseSingleton
 		
 		$this->AddCollectionToConfig($valuesConfig);
 
-		$this->_xsl = $this->getParameter("xsl");
-		if ($this->_xsl == "")
-		{
-			$this->_xsl = $this->get("xmlnuke.DEFAULTPAGE");
-		}
-		else
-		{
-			$this->_xsl = htmlentities($this->_xsl);
-		}
-
-		$this->_xml = $this->getParameter("xml");
-		if ($this->_xml == "")
-		{
-			$this->_xml = "home";
-		}
-		else
-		{
-			$this->_xml = htmlentities($this->_xml);
-		}
-
-		$this->_site = $this->getParameter("site");
-		if ($this->_site == "")
-		{
-			$this->_site = $this->get("xmlnuke.DEFAULTSITE");
-		}
-		else
-		{
-			$this->_site = htmlentities($this->_site);
-		}
+		$this->setXsl();
+		$this->setXml();
+		$this->setSite();
 
 		$this->_xmlnukepath = $this->get("xmlnuke.ROOTDIR");
 		$this->_reset = ($this->getParameter("reset") != "");
@@ -216,72 +190,10 @@ class Context extends BaseSingleton
 
 		ModuleFactory::registerUserLibDir($this);
 
-		$lang = strtolower($this->getParameter("lang"));
-
-		$langAvail = $this->LanguagesAvailable();
-		$langAvailMajor = $this->LanguagesAvailableMajor();
-
-		if ($lang == "")
-		{
-
-			$httpAcceptLanguage = $_SERVER["HTTP_ACCEPT_LANGUAGE"];
-			if ($httpAcceptLanguage != null)
-			{
-				$langOpt = preg_split("/[,;]/", $httpAcceptLanguage);
-				$i=0;
-				$lang = null;
-				$langOptLength = count($langOpt);
-				while (($lang == null) && ($i<$langOptLength))
-				{
-					$langTmp = strtolower($langOpt[$i++]);
-
-					if (array_key_exists($langTmp, $langAvail))
-						$lang = $langTmp;
-					else
-					{
-						$langAux = explode("-",$langTmp);
-						$langMajor = $langAux[0];
-
-						if (array_key_exists($langMajor, $langAvailMajor))
-							$lang = $langAvailMajor[$langMajor];
-					}
-				}
-			}
-
-			// If not found, use Default language. Default language is the FIRST Parameter!
-			if ($lang == null)
-			{
-				$langAux = array_keys($langAvail);
-				$lang = $langAux[0];
-			}
-
-		}
-		else
-		{
-			$langAux = explode("-", $lang);
-			$langMajor = $langAux[0];
-
-			// if the current language isnt exists, then select the FIRST Parameter.
-			if (!array_key_exists($lang, $langAvail))
-			{
-				if (array_key_exists($langMajor, $langAvailMajor))
-				{
-					$lang = $langAvailMajor[$langMajor];
-				}
-				else
-				{
-					$langAux = array_keys($langAvail);
-					$lang = $langAux[0];
-				}
-			}
-		}
-
-		$this->_lang = LocaleFactory::GetLocale($lang, $this);
-		$this->_lang->setLanguage($langAvail[$this->_lang->getName()]);
-		$this->addPairToConfig("LANGUAGE", $this->_lang->getName());
-		$this->addPairToConfig("LANGUAGENAME", $this->_lang->getLanguage());
+		$this->setLocale();
 
 		$langStr = "";
+		$langAvail = $this->LanguagesAvailable();
 		foreach (array_keys($langAvail) as $key)
 		{
 			$langStr =$langStr."<a href='".$this->bindXmlnukeUrl( $this->getXml(), $this->getXsl(), $this->getSite(), $key )."'>".$langAvail[$key]."</a> | ";
@@ -394,9 +306,22 @@ class Context extends BaseSingleton
 	* @param string $value Value to XML page argument
 	* @return void
 	*/
-	public function setXml($value)
+	public function setXml($value = null)
 	{
-		$this->_xml = $value;
+		if (is_null($value))
+		{
+			$this->_xml = $this->getParameter("xml");
+			if ($this->_xml == "")
+			{
+				$this->_xml = "home";
+			}
+			else
+			{
+				$this->_xml = htmlentities($this->_xml);
+			}
+		}
+		else
+			$this->_xml = $value;
 	}
 	/**
 	* @access public
@@ -411,9 +336,22 @@ class Context extends BaseSingleton
 	* @param string $value Value to XSL page argument
 	* @return void
 	*/
-	public function setXsl($value)
+	public function setXsl($value = null)
 	{
-		$this->_xsl = $value;
+		if (is_null($value))
+		{
+			$this->_xsl = $this->getParameter("xsl");
+			if ($this->_xsl == "")
+			{
+				$this->_xsl = $this->get("xmlnuke.DEFAULTPAGE");
+			}
+			else
+			{
+				$this->_xsl = htmlentities($this->_xsl);
+			}
+		}
+		else
+			$this->_xsl = $value;
 	}
 	/**
 	* @access public
@@ -428,9 +366,22 @@ class Context extends BaseSingleton
 	* @param string $value Value to SITE page argument
 	* @return void
 	*/
-	public function setSite($value)
+	public function setSite($value = null)
 	{
-		$this->_site = $value;
+		if (is_null($value))
+		{
+			$this->_site = $this->getParameter("site");
+			if ($this->_site == "")
+			{
+				$this->_site = $this->get("xmlnuke.DEFAULTSITE");
+			}
+			else
+			{
+				$this->_site = htmlentities($this->_site);
+			}
+		}
+		else
+			$this->_site = $value;
 	}
 
 	public function getModule()
@@ -448,6 +399,56 @@ class Context extends BaseSingleton
 		return $this->_lang;
 
 	}
+
+	public function setLocale($str = "")
+	{
+		$lang = strtolower($str == "" ? $this->getParameter("lang") : $str);
+
+		$langAvail = $this->LanguagesAvailable();
+
+		// Check if it uses the Language set by the user OR from HTTP_ACCEPT_LANGUAGE
+		if (($str == "") && ($lang == ""))
+			$matches = array( array('xx-xx') );
+		elseif ($lang != "")
+			$matches = array(
+				array($lang, substr($lang, 0, 2))
+			);
+		else
+		{
+			$matches = array();
+			preg_match_all('/(\w{2}\-\w{2}|\w{2})/', $_SERVER['HTTP_ACCEPT_LANGUAGE'], $matches);
+		}
+
+		// Get the proper language
+		$defaultLang = null;
+		$curLang = null;
+		foreach ($matches[0] as $acceptLang)
+		{
+			foreach($langAvail as $configLang => $dummy)
+			{
+				if (is_null($defaultLang))
+					$defaultLang = strtolower($configLang);
+
+				if (strpos(strtolower($configLang), strtolower($acceptLang)) !== false)
+				{
+					$curLang = strtolower($configLang);
+					break;
+				}
+			}
+
+			if (!is_null($curLang))
+				break;
+		}
+
+		if (is_null($curLang))
+			$curLang = $defaultLang;
+
+		$this->_lang = LocaleFactory::GetLocale($curLang, $this);
+		$this->_lang->setLanguage($langAvail[$this->_lang->getName()]);
+		$this->addPairToConfig("LANGUAGE", $this->_lang->getName());
+		$this->addPairToConfig("LANGUAGENAME", $this->_lang->getLanguage());
+	}
+
 	/**
 	* @access public
 	* @return string Return the current Reset page argument

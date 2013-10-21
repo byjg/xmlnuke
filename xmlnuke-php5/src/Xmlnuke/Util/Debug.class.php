@@ -88,7 +88,7 @@ class Debug
 					}
 					else
 					{
-						echo "$value <br>";
+						echo print_r($value, true) . "<br>";
 					}
 				}
 			}

@@ -119,7 +119,7 @@ class CultureInfo
 
 		// Try to load in Windows if failed before
 		$iLang = 0;
-		while (!$this->_cultureActive && ($iLang < sizeof($langstr)))
+		while (!$this->_cultureActive && ($iLang < count($langstr)))
 		{
 			$this->_cultureActive = setlocale(LC_ALL, $langstr[$iLang]);
 			$iLang++;
