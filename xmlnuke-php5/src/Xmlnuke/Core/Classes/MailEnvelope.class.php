@@ -27,13 +27,13 @@
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+namespace Xmlnuke\Core\Classes;
+
 /**
  * @package xmlnuke
  */
 
-require_once(PHPXMLNUKEDIR . "src/modules/phpmailer/class.phpmailer.php");
-
-namespace Xmlnuke\Core\Classes;
+require_once(PHPXMLNUKEDIR . "src/Xmlnuke/Library/phpmailer/class.phpmailer.php");
 
 use Exception;
 use InvalidArgumentException;
@@ -81,7 +81,7 @@ class  MailEnvelope
 
 		if (MailEnvelope::$_smtpParts == null)
 		{
-			$smtpString = Context::getInstance()->Value("xmlnuke.SMTPSERVER");
+			$smtpString = Context::getInstance()->get("xmlnuke.SMTPSERVER");
 
 			if (($smtpString == "localhost") || ($smtpString == ""))
 			{

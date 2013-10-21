@@ -39,7 +39,7 @@ namespace Xmlnuke\Core\Exception;
  * @package xmlnuke
  * @subpackage xmlnuke.kernel
  */
-class NotFoundException extends XMLNukeException
+class NotFoundException extends \Exception
 {
 
 	/**
@@ -51,7 +51,6 @@ class NotFoundException extends XMLNukeException
 	public function __construct($message = "", $code = null, $previous = null)
 	{
 		parent::__construct($message, $code, $previous);
-		$this->showStackTrace = false;
 	}
 
 }

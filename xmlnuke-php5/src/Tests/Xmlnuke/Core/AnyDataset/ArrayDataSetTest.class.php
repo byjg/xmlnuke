@@ -1,8 +1,12 @@
 <?php
+
+use Xmlnuke\Core\AnyDataset\ArrayDataSet;
+use Xmlnuke\Core\AnyDataset\IIterator;
+use Xmlnuke\Core\AnyDataset\SingleRow;
 /**
  * NOTE: The class name must end with "Test" suffix.
  */
-class ArrayDatasetTest extends TestCase
+class ArrayDataSetTest extends PHPUnit_Framework_TestCase
 {
 	protected $fieldNames;
 
@@ -24,41 +28,42 @@ class ArrayDatasetTest extends TestCase
 	}
 
 	/**
-	 * @AssertIfException UnexpectedValueException
+	 * @expectedException UnexpectedValueException
 	 */
 	function test_InvalidConstructor()
 	{
-		$arrayDataset = new ArrayDataset('aaa');
+		$arrayDataset = new ArrayDataSet('aaa');
 	}
 
 	function test_createArrayIteratorSample1()
 	{
-		$arrayDataset = new ArrayDataset($this->SAMPLE1);
+		$arrayDataset = new ArrayDataSet($this->SAMPLE1);
 		$arrayIterator = $arrayDataset->getIterator();
 
-		$this->assert($arrayIterator instanceof IIterator, "Resultant object must be an interator");
-		$this->assert($arrayIterator->hasNext(), "hasNext() method must be true");
-		$this->assert($arrayIterator->Count() == 3, "Count() method must return 3");
+
+		$this->assertTrue($arrayIterator instanceof IIterator); //, "Resultant object must be an interator");
+		$this->assertTrue($arrayIterator->hasNext()); //, "hasNext() method must be true");
+		$this->assertEquals($arrayIterator->Count(), 3) ; //, "Count() method must return 3");
 	}
 
 	function test_createArrayIteratorSample2()
 	{
-		$arrayDataset = new ArrayDataset($this->SAMPLE2);
+		$arrayDataset = new ArrayDataSet($this->SAMPLE2);
 		$arrayIterator = $arrayDataset->getIterator();
 
-		$this->assert($arrayIterator instanceof IIterator, "Resultant object must be an interator");
-		$this->assert($arrayIterator->hasNext(), "hasNext() method must be true");
-		$this->assert($arrayIterator->Count() == 3, "Count() method must return 3");
+		$this->assertTrue($arrayIterator instanceof IIterator); // "Resultant object must be an interator");
+		$this->assertTrue($arrayIterator->hasNext()); // "hasNext() method must be true");
+		$this->assertEquals($arrayIterator->Count(), 3); //, "Count() method must return 3");
 	}
 
 	function test_createArrayIteratorSample3()
 	{
-		$arrayDataset = new ArrayDataset($this->SAMPLE3);
+		$arrayDataset = new ArrayDataSet($this->SAMPLE3);
 		$arrayIterator = $arrayDataset->getIterator();
 
-		$this->assert($arrayIterator instanceof IIterator, "Resultant object must be an interator");
-		$this->assert($arrayIterator->hasNext(), "hasNext() method must be true");
-		$this->assert($arrayIterator->Count() == 3, "Count() method must return 3");
+		$this->assertTrue($arrayIterator instanceof IIterator); // "Resultant object must be an interator");
+		$this->assertTrue($arrayIterator->hasNext()); // "hasNext() method must be true");
+		$this->assertEquals($arrayIterator->Count(), 3); //, "Count() method must return 3");
 	}
 
 
@@ -93,8 +98,8 @@ class ArrayDatasetTest extends TestCase
 			$this->assertField($sr, $count, "value", 'ProdC');
 			$count++;
 		}
-		$this->assert(!$arrayIterator->hasNext(), 'I did not expected more records');
-		$this->assert($count == 3, "Count records mismatch. Need to process 3 records.");
+		$this->assertTrue(!$arrayIterator->hasNext()); //, 'I did not expected more records');
+		$this->assertEquals($count, 3); //, "Count records mismatch. Need to process 3 records.");
 	}
 
 	function test_navigateArrayIteratorSample2()
@@ -128,8 +133,8 @@ class ArrayDatasetTest extends TestCase
 			$this->assertField($sr, $count, "value", 'ProdC');
 			$count++;
 		}
-		$this->assert(!$arrayIterator->hasNext(), 'I did not expected more records');
-		$this->assert($count == 3, "Count records mismatch. Need to process 3 records.");
+		$this->assertTrue(!$arrayIterator->hasNext()); //, 'I did not expected more records');
+		$this->assertEquals($count, 3); //, "Count records mismatch. Need to process 3 records.");
 	}
 
 	function test_navigateArrayIteratorSample3()
@@ -166,8 +171,8 @@ class ArrayDatasetTest extends TestCase
 			$this->assertField($sr, $count, "name", 'ProdC');
 			$count++;
 		}
-		$this->assert(!$arrayIterator->hasNext(), 'I did not expected more records');
-		$this->assert($count == 3, "Count records mismatch. Need to process 3 records.");
+		$this->assertTrue(!$arrayIterator->hasNext()); //, 'I did not expected more records');
+		$this->assertEquals($count, 3); //, "Count records mismatch. Need to process 3 records.");
 	}
 
 	/**
@@ -176,14 +181,14 @@ class ArrayDatasetTest extends TestCase
 	 */
 	function assertField($sr, $line, $field, $value)
 	{
-		$this->assert($sr->getField($field) === $value, "At line $line field '$field' I expected '" . $value . "' but I got '" . $sr->getField($field) . "'");
+		$this->assertEquals($sr->getField($field), $value); //, "At line $line field '$field' I expected '" . $value . "' but I got '" . $sr->getField($field) . "'");
 	}
 
 	function assertSingleRow2($sr, $count)
 	{
-		$this->assert($sr->getField("id") == $this->arrTest2[$count]["id"], "At line $count field 'id' I expected '" . $this->arrTest2[$count]["id"] . "' but I got '" . $sr->getField("id") . "'");
+		$this->assertEquals($sr->getField("id"), $this->arrTest2[$count]["id"]); //, "At line $count field 'id' I expected '" . $this->arrTest2[$count]["id"] . "' but I got '" . $sr->getField("id") . "'");
 		if ($count > 0)
-			$this->assert($sr->getField("label") == $this->arrTest2[$count]["label"], "At line $count field 'label' I expected '" . $this->arrTest2[$count]["label"] . "' but I got '" . $sr->getField("label") . "'");
+			$this->assertEquals($sr->getField("label"), $this->arrTest2[$count]["label"]); //, "At line $count field 'label' I expected '" . $this->arrTest2[$count]["label"] . "' but I got '" . $sr->getField("label") . "'");
 	}
 
 }

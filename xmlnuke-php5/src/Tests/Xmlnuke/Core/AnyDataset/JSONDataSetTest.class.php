@@ -1,8 +1,14 @@
 <?php
+
+use Xmlnuke\Core\AnyDataset\IIterator;
+use Xmlnuke\Core\AnyDataset\JSONDataSet;
+use Xmlnuke\Core\AnyDataset\SingleRow;
+use Xmlnuke\Core\Exception\DatasetException;
+use Xmlnuke\Core\Exception\IteratorException;
 /**
  * NOTE: The class name must end with "Test" suffix.
  */
-class JSONDatasetTest extends TestCase
+class JSONDataSetTest extends PHPUnit_Framework_TestCase
 {
 	const JSON_OK = '[{"name":"Joao","surname":"Magalhaes","age":"38"},{"name":"John","surname":"Doe","age":"20"},{"name":"Jane","surname":"Smith","age":"18"}]';
 	const JSON_NOTOK = '"name":"Joao","surname":"Magalhaes","age":"38"}]';
@@ -34,9 +40,9 @@ class JSONDatasetTest extends TestCase
 		$jsonDataset = new JSONDataSet(JSONDatasetTest::JSON_OK);
 		$jsonIterator = $jsonDataset->getIterator();
 
-		$this->assert($jsonIterator instanceof IIterator, "Resultant object must be an interator");
-		$this->assert($jsonIterator->hasNext(), "hasNext() method must be true");
-		$this->assert($jsonIterator->Count() == 3, "Count() method must return 3");
+		$this->assertTrue($jsonIterator instanceof IIterator); //, "Resultant object must be an interator");
+		$this->assertTrue($jsonIterator->hasNext()); // "hasNext() method must be true");
+		$this->assertEquals($jsonIterator->Count(),  3); //, "Count() method must return 3");
 	}
 	
 	function test_navigateJSONIterator()
@@ -50,7 +56,7 @@ class JSONDatasetTest extends TestCase
 			$this->assertSingleRow($jsonIterator->moveNext(), $count++);
 		}
 
-		$this->assert($count == 3, "Count records mismatch. Need to process 3 records.");		
+		$this->assertEquals($jsonIterator->Count(),  3); //, "Count() method must return 3");
 	}
 
 	function test_navigateJSONIterator2()
@@ -64,11 +70,11 @@ class JSONDatasetTest extends TestCase
 			$this->assertSingleRow($sr, $count++);
 		}
 		
-		$this->assert($count == 3, "Count records mismatch. Need to process 3 records.");
+		$this->assertEquals($jsonIterator->Count(),  3); //, "Count() method must return 3");
 	}
 
 	/**
-	 * @AssertIfException DatasetException
+	 * @expectedException \Xmlnuke\Core\Exception\DatasetException
 	 */
 	function test_jsonNotWellFormatted()
 	{
@@ -77,7 +83,7 @@ class JSONDatasetTest extends TestCase
 	
 	function navigateJSONComplex($path)
 	{
-		$jsonDataset = new JSONDataSet(JSONDatasetTest::JSON_OK2);		
+		$jsonDataset = new JSONDataSet(JSONDatasetTest::JSON_OK2);
 		$jsonIterator = $jsonDataset->getIterator($path);
 
 		$count = 0;
@@ -86,7 +92,7 @@ class JSONDatasetTest extends TestCase
 			$this->assertSingleRow2($sr, $count++);
 		}
 		
-		$this->assert($count == 2, "Count records mismatch. Need to process 2 records.");				
+		$this->assertEquals($jsonIterator->Count(),  2); //, "Count() method must return 3");
 	}
 
 	function test_navigateJSONComplexIterator()
@@ -101,18 +107,18 @@ class JSONDatasetTest extends TestCase
 
 	function test_navigateJSONComplexIteratorWrongPath()
 	{
-		$jsonDataset = new JSONDataSet(JSONDatasetTest::JSON_OK2);		
+		$jsonDataset = new JSONDataSet(JSONDatasetTest::JSON_OK2);
 		$jsonIterator = $jsonDataset->getIterator("/menu/wrong");
 		
-		$this->assert($jsonIterator->Count() == 0, "Without throw error");
+		$this->assertEquals($jsonIterator->Count(), 0); //, "Without throw error");
 	}
 
 	/**
-	 * @AssertIfException IteratorException
+	 * @expectedException \Xmlnuke\Core\Exception\IteratorException
 	 */
 	function test_navigateJSONComplexIteratorWrongPath2()
 	{
-		$jsonDataset = new JSONDataSet(JSONDatasetTest::JSON_OK2);		
+		$jsonDataset = new JSONDataSet(JSONDatasetTest::JSON_OK2);
 		$jsonIterator = $jsonDataset->getIterator("/menu/wrong", true);
 	}
 	
@@ -122,16 +128,16 @@ class JSONDatasetTest extends TestCase
 	 */
 	function assertSingleRow($sr, $count)
 	{
-		$this->assert($sr->getField("name") == $this->arrTest[$count]["name"], "At line $count field 'name' I expected '" . $this->arrTest[$count]["name"] . "' but I got '" . $sr->getField("name") . "'");
-		$this->assert($sr->getField("surname") == $this->arrTest[$count]["surname"], "At line $count field 'surname' I expected '" . $this->arrTest[$count]["surname"] . "' but I got '" . $sr->getField("surname") . "'");
-		$this->assert($sr->getField("age") == $this->arrTest[$count]["age"], "At line $count field 'age' I expected '" . $this->arrTest[$count]["age"] . "' but I got '" . $sr->getField("age") . "'");
+		$this->assertEquals($sr->getField("name"), $this->arrTest[$count]["name"]);
+		$this->assertEquals($sr->getField("surname"), $this->arrTest[$count]["surname"]);
+		$this->assertEquals($sr->getField("age"), $this->arrTest[$count]["age"]);
 	}
 
 	function assertSingleRow2($sr, $count)
 	{
-		$this->assert($sr->getField("id") == $this->arrTest2[$count]["id"], "At line $count field 'id' I expected '" . $this->arrTest2[$count]["id"] . "' but I got '" . $sr->getField("id") . "'");
+		$this->assertEquals($sr->getField("id"), $this->arrTest2[$count]["id"]);
 		if ($count > 0)
-			$this->assert($sr->getField("label") == $this->arrTest2[$count]["label"], "At line $count field 'label' I expected '" . $this->arrTest2[$count]["label"] . "' but I got '" . $sr->getField("label") . "'");
+			$this->assertEquals($sr->getField("label"), $this->arrTest2[$count]["label"]);
 	}
 	
 }

@@ -73,14 +73,14 @@ class SparQLDataSet
 			{
 				$this->_db->ns( $key, $value );
 			}
-		}		
+		}
+
+		$cache = \Xmlnuke\Util\FileUtil::GetTempDir() . "/caps." . sha1($url) . ".db";
+		$this->_db->capabilityCache( $cache );
 	}
 	
 	public function getCapabilities()
 	{
-		$cache = $this->_context->CachePath() . "caps.db";		
-		$this->_db->capabilityCache( $cache );
-
 		$return = array();
 		
 		foreach( $this->_db->capabilityCodes() as $code )

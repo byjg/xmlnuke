@@ -27,15 +27,16 @@
 *
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
-require_once(PHPXMLNUKEDIR . "src/modules/phpmailer/class.phpmailer.php");
-
 namespace Xmlnuke\Util;
+
+require_once(PHPXMLNUKEDIR . "src/Xmlnuke/Library/phpmailer/class.phpmailer.php");
 
 use PHPMailer;
 use Xmlnuke\Core\AnyDataset\AnyDataSet;
 use Xmlnuke\Core\AnyDataset\IteratorFilter;
 use Xmlnuke\Core\Classes\MailEnvelope;
 use Xmlnuke\Core\Enum\Relation;
+use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
 
 class MailUtil
 {
@@ -137,7 +138,8 @@ class MailUtil
 
 	public static function isValidEmail($email)
 	{
-		return PHPMailer::ValidateAddress($email);
+		$ret = PHPMailer::ValidateAddress($email);
+		return (is_numeric($ret) ? $ret == 1 : $ret);
 	}
 }
 

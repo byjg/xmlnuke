@@ -34,7 +34,7 @@
  */
 namespace Xmlnuke\Core\Exception;
 
-class IteratorException extends XMLNukeException
+class IteratorException extends \Exception
 {
 	/**
 	 *
@@ -45,6 +45,5 @@ class IteratorException extends XMLNukeException
 	public function __construct($message = "", $code = null, $previous = null)
 	{
 		parent::__construct($message, $code, $previous);
-		$this->showStackTrace = true;
 	}
 }

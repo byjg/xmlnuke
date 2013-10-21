@@ -1,8 +1,15 @@
 <?php
+
+use Xmlnuke\Core\AnyDataset\IIterator;
+use Xmlnuke\Core\AnyDataset\SingleRow;
+use Xmlnuke\Core\AnyDataset\XmlDataSet;
+use Xmlnuke\Core\Engine\Context;
+use Whoops\Exception\ErrorException;
+
 /**
  * NOTE: The class name must end with "Test" suffix.
  */
-class XMLDatasetTest extends TestCase
+class XMLDatasetTest extends PHPUnit_Framework_TestCase
 {
 	const XML_OK = '<?xml version="1.0" encoding="UTF-8"?>
 		<bookstore>
@@ -56,9 +63,9 @@ class XMLDatasetTest extends TestCase
 		$xmlDataset = new XmlDataSet(Context::getInstance(), XMLDatasetTest::XML_OK, $this->rootNode, $this->arrColumn);
 		$xmlIterator = $xmlDataset->getIterator();
 
-		$this->assert($xmlIterator instanceof IIterator, "Resultant object must be an interator");
-		$this->assert($xmlIterator->hasNext(), "hasNext() method must be true");
-		$this->assert($xmlIterator->Count() == 3, "Count() method must return 3");
+		$this->assertTrue($xmlIterator instanceof IIterator);
+		$this->assertTrue($xmlIterator->hasNext());
+		$this->assertEquals($xmlIterator->Count(), 3);
 	}
 	
 	function test_navigateXMLIterator()
@@ -72,7 +79,7 @@ class XMLDatasetTest extends TestCase
 			$this->assertSingleRow($xmlIterator->moveNext(), $count++);
 		}
 
-		$this->assert($count == 3, "Count records mismatch. Need to process 3 records.");		
+		$this->assertEquals($count, 3);
 	}
 
 	function test_navigateXMLIterator2()
@@ -86,11 +93,11 @@ class XMLDatasetTest extends TestCase
 			$this->assertSingleRow($sr, $count++);
 		}
 		
-		$this->assert($count == 3, "Count records mismatch. Need to process 3 records.");
+		$this->assertEquals($count, 3);
 	}
 
 	/**
-	 * @AssertIfException XmlUtilException
+	 * @expectedException \Whoops\Exception\ErrorException
 	 */
 	function test_xmlNotWellFormatted()
 	{
@@ -102,7 +109,7 @@ class XMLDatasetTest extends TestCase
 		$xmlDataset = new XmlDataSet(Context::getInstance(), XMLDatasetTest::XML_OK, "wrong", $this->arrColumn);
 		$xmlIterator = $xmlDataset->getIterator();
 
-		$this->assert($xmlIterator->Count() == 0, "Count records mismatch. Need to process 0 records.");
+		$this->assertEquals($xmlIterator->Count(), 0);
 	}
 
 	function test_wrongColumn()
@@ -110,7 +117,7 @@ class XMLDatasetTest extends TestCase
 		$xmlDataset = new XmlDataSet(Context::getInstance(), XMLDatasetTest::XML_OK, $this->rootNode, array("title"=>"aaaa"));
 		$xmlIterator = $xmlDataset->getIterator();
 
-		$this->assert($xmlIterator->Count() == 3, "Count records mismatch. Need to process 3 records.");
+		$this->assertEquals($xmlIterator->Count(), 3); 
 	}
 
 	/**
@@ -119,16 +126,16 @@ class XMLDatasetTest extends TestCase
 	 */
 	function assertSingleRow($sr, $count)
 	{
-		$this->assert($sr->getField("category") == $this->arrTest[$count]["category"], "At line $count field 'category' I expected '" . $this->arrTest[$count]["category"] . "' but I got '" . $sr->getField("category") . "'");
-		$this->assert($sr->getField("title") == $this->arrTest[$count]["title"], "At line $count field 'title' I expected '" . $this->arrTest[$count]["title"] . "' but I got '" . $sr->getField("title") . "'");
-		$this->assert($sr->getField("lang") == $this->arrTest[$count]["lang"], "At line $count field 'lang' I expected '" . $this->arrTest[$count]["lang"] . "' but I got '" . $sr->getField("lang") . "'");
+		$this->assertEquals($sr->getField("category"), $this->arrTest[$count]["category"]);
+		$this->assertEquals($sr->getField("title"), $this->arrTest[$count]["title"]);
+		$this->assertEquals($sr->getField("lang"), $this->arrTest[$count]["lang"]);
 	}
 
 	function assertSingleRow2($sr, $count)
 	{
-		$this->assert($sr->getField("id") == $this->arrTest2[$count]["id"], "At line $count field 'id' I expected '" . $this->arrTest2[$count]["id"] . "' but I got '" . $sr->getField("id") . "'");
+		$this->assertEquals($sr->getField("id"), $this->arrTest2[$count]["id"]);
 		if ($count > 0)
-			$this->assert($sr->getField("label") == $this->arrTest2[$count]["label"], "At line $count field 'label' I expected '" . $this->arrTest2[$count]["label"] . "' but I got '" . $sr->getField("label") . "'");
+			$this->assertEquals($sr->getField("label"), $this->arrTest2[$count]["label"]); 
 	}
 	
 }

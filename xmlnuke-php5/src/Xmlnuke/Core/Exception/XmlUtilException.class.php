@@ -34,13 +34,15 @@
  */
 namespace Xmlnuke\Core\Exception;
 
+use Exception;
+
 /**
  * This Xml Util exception type
  * Range code error: 250 to 399
  * @package xmlnuke
  * @subpackage xmlnuke.kernel
  */
-class XmlUtilException extends XMLNukeException
+class XmlUtilException extends Exception
 {
 
 	/**
@@ -52,6 +54,5 @@ class XmlUtilException extends XMLNukeException
 	public function __construct($message = "", $code = null, $previous = null)
 	{
 		parent::__construct($message, $code, $previous);
-		$this->showStackTrace = true;
 	}
 }
