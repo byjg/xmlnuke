@@ -211,7 +211,7 @@ class Context extends BaseSingleton
 		if ($this->_module != "")
 		{
 			$this->_module = htmlentities($this->_module);
-			$this->putContextValue("module", $this->_module);
+			$this->set("module", $this->_module);
 		}
 
 		ModuleFactory::registerUserLibDir($this);
@@ -690,7 +690,7 @@ class Context extends BaseSingleton
 	 * @param type $key
 	 * @param type $value 
 	 */
-	public function put($key, $value)
+	public function set($key, $value)
 	{
 		$this->addPairToConfig($key, $value);
 	}
@@ -1533,7 +1533,7 @@ class Context extends BaseSingleton
 				$output = XmlnukeEngine::OUTPUT_TRANSFORMED_DOC;
 			}
 
-			$this->putValue("xmlnuke.OUTPUT_FORMAT", $output);
+			$this->set("xmlnuke.OUTPUT_FORMAT", $output);
 		}
 
 		return $this->get("xmlnuke.OUTPUT_FORMAT");

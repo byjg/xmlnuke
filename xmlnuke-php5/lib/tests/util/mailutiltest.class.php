@@ -81,7 +81,7 @@ class MailUtilTest extends TestCase
 		
 		foreach ($smtp as $key=>$value)
 		{
-			Context::getInstance()->putValue("xmlnuke.SMTPSERVER", $key);
+			Context::getInstance()->set("xmlnuke.SMTPSERVER", $key);
 			try
 			{
 				$mail = new MailEnvelopeMock();
