@@ -10,9 +10,9 @@ class MailUtilTest extends PHPUnit_Framework_TestCase
 {
 	const EMAIL_OK = 'joao@byjg.com.br';
 	const EMAIL_NOK_1 = 'joao@byjg.com.';
-	const EMAIL_NOK_2 = 'joao@byjg. com';
-	const EMAIL_NOK_3 = 'joao@local';
-	const EMAIL_NOK_4 = 'joao@byjg.111';
+	const EMAIL_NOK_2 = 'joao@byjg@com';
+	const EMAIL_NOK_3 = 'joao @ local-';
+	const EMAIL_NOK_4 = 'joao@byjg(.111';
 	const EMAIL_NOK_5 = 'joao-byjg.com';
 	
 
@@ -70,34 +70,37 @@ class MailUtilTest extends PHPUnit_Framework_TestCase
 	function test_SmtpParts()
 	{
 		$smtp = array(
-			"localhost" => array("localhost"),
-			"smtp://host.com.br" => array( "", "smtp", "", "", "host.com.br", ""),
-			"smtp://host.com.br:45" => array( "", "smtp", "", "", "host.com.br", "45"),
-			"smtp://user@host.com.br:45" => array( "Wrong SMTP server definition"),
-			"smtp://user:pass@host.com.br:45" => array( "", "smtp", "user", "pass", "host.com.br", "45"),
-			"smtp://us#$%er:pa!*&\$ss@host.com.br:45" => array( "", "smtp", "us#$%er", "pa!*&\$ss", "host.com.br", "45"),
-			"ssl://host.com.br" => array( "", "ssl", "", "", "host.com.br", ""),
-			"ssl://host.com.br:45" => array( "", "ssl", "", "", "host.com.br", "45"),
-			"ssl://user@host.com.br:45" => array( "Wrong SMTP server definition"),
-			"ssl://user:pass@host.com.br:45" => array( "", "ssl", "user", "pass", "host.com.br", "45"),
-			"ssl://us#$%er:pa!*&\$ss@host.com.br:45" => array( "", "ssl", "us#$%er", "pa!*&\$ss", "host.com.br", "45"),
+			"localhost" => array( "protocol" => "mail", "server" => "localhost"),
+			"smtp://host-test" => array( "protocol" => "smtp", "server" => "host-test"),
+			"smtp://host.com.br" => array( "protocol" => "smtp", "server" => "host.com.br"),
+			"smtp://host.com.br:45" => array( "protocol" => "smtp", "server" => "host.com.br", "port" => "45"),
+			"smtp://user@host.com.br:45" => array( "InvalidArgumentException" ),
+			"smtp://user:pass@host.com.br:45" => array( "server" => "smtp", "user" => "user", "pass" => "pass", "server" => "host.com.br", "port" => "45"),
+			"smtp://us#$%er:pa!*&\$ss@host.com.br:45" => array( "protocol" => "smtp", "user" => "us#$%er", "pass" => "pa!*&\$ss", "server" => "host.com.br", "port" => "45"),
+			"smtp://us:er:pass@host.com.br:45" => array( "protocol" => "smtp", "user" => "us:er", "pass" => "pass", "server" => "host.com.br", "port" => "45"),
+			"ssl://host.com.br" => array( "protocol" => "ssl", "server" => "host.com.br"),
+			"ssl://host.com.br:45" => array( "protocol" => "ssl", "server" => "host.com.br", "port" => "45"),
+			"ssl://user@host.com.br:45" => array( "InvalidArgumentException" ),
+			"ssl://user:pass@host.com.br:45" => array( "protocol" => "ssl", "user" => "user", "pass" => "pass", "server" => "host.com.br", "port" => "45"),
+			"ssl://us#$%er:pa!*&\$ss@host.com.br:45" => array( "protocol" => "ssl", "user" => "us#$%er", "pass" => "pa!*&\$ss", "server" => "host.com.br", "port" => "45"),
 		);
 		
-		foreach ($smtp as $key=>$value)
+		foreach ($smtp as $tested=>$expected)
 		{
-			Context::getInstance()->set("xmlnuke.SMTPSERVER", $key);
+			Context::getInstance()->set("xmlnuke.SMTPSERVER", $tested);
 			try
 			{
 				$mail = new MailEnvelopeMock();
 				$parts = MailEnvelopeMock::getSmtpParts();
-				for($i=0;$i<count($value);$i++)
+
+				foreach ($expected as $key => $value)
 				{
-					$this->assertEquals($value[$i], $parts[$i]);
+					$this->assertEquals($value, $parts[$key]);
 				}
 			}
 			catch (Exception $ex)
 			{
-				$this->assertEquals($ex->getMessage(), $value[0]);
+				$this->assertEquals(get_class($ex), $expected[0]);
 			}
 		}
 	}

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<!-- see http://www.phpunit.de/wiki/Documentation -->
+
+<phpunit colors="true"
+	bootstrap="bootstrap.php"
+	convertErrorsToExceptions="true"
+	convertNoticesToExceptions="true"
+	convertWarningsToExceptions="true"
+	stopOnFailure="false">
+
+	<testsuites>
+		<testsuite name="Xmlnuke">
+		  <directory>Xmlnuke</directory>
+		</testsuite>
+	</testsuites>
+
+</phpunit>
