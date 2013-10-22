@@ -3,10 +3,12 @@
 ###############################
 # Christopher Gutteridge 2010
 #  cjg@ecs.soton.ac.uk
-#  LGPL License 
+#  LGPL License
 #  http://graphite.ecs.soton.ac.uk/sparqllib/
 #  https://github.com/cgutteridge/PHP-SPARQL-Lib
 ###############################
+
+# to document: CGIParams
 
 function sparql_connect( $endpoint ) { return new sparql_connection( $endpoint ); }
 
@@ -22,13 +24,13 @@ function sparql_field_name( $result, $i ) { return $result->field_name( $i ); }
 
 function sparql_fetch_all( $result ) { return $result->fetch_all(); }
 
-function sparql_get( $endpoint, $sparql ) 
-{ 
+function sparql_get( $endpoint, $sparql )
+{
 	$db = sparql_connect( $endpoint );
 	if( !$db ) { return; }
 	$result = $db->query( $sparql );
 	if( !$result ) { return; }
-	return $result->fetch_all(); 
+	return $result->fetch_all();
 }
 
 function _sparql_a_connection( $db )
@@ -45,7 +47,7 @@ function _sparql_a_connection( $db )
 	}
 	return $db;
 }
-		
+
 
 #	$timeout = 20;
 #	$old = ini_set('default_socket_timeout', $timeout);
@@ -57,6 +59,7 @@ class sparql_connection
 	var $errno = null;
 	var $error = null;
 	var $ns = array();
+	var $params = null;
 	# capabilities are either true, false or null if not yet tested.
 
 	function __construct( $endpoint )
@@ -74,33 +77,63 @@ class sparql_connection
 	function errno() { return $this->errno; }
 	function error() { return $this->error; }
 
-	function query( $query )
-	{	
+	function cgiParams( $params = null )
+	{
+		if( $params === null ) { return $this->params; }
+		if( $params === "" ) { $this->params = null; return; }
+		$this->params = $params;
+	}
+
+	function query( $query, $timeout=null )
+	{
 		$prefixes = "";
 		foreach( $this->ns as $k=>$v )
 		{
 			$prefixes .= "PREFIX $k: <$v>\n";
 		}
-		$output = $this->dispatchQuery( $prefixes.$query );
+		$output = $this->dispatchQuery( $prefixes.$query, $timeout );
 		if( $this->errno ) { return; }
 		$parser = new xx_xml($output, 'contents');
+		if( $parser->error() )
+		{
+			$this->errno = -1; # to not clash with CURLOPT return; }
+			$this->error = $parser->error();
+			return;
+		}
 		return new sparql_result( $this, $parser->rows, $parser->fields );
 	}
 
-	function dispatchQuery( $sparql )
+	function alive( $timeout=3 )
+	{
+		$result = $this->query( "SELECT * WHERE { ?s ?p ?o } LIMIT 1", $timeout );
+
+		if( $this->errno ) { return false; }
+
+		return true;
+	}
+
+	function dispatchQuery( $sparql, $timeout=null )
 	{
 		$url = $this->endpoint."?query=".urlencode( $sparql );
-		if( $this->debug ) { print "<div class='debug'><a href='".htmlspecialchars($url)."'>".htmlspecialchars($sparql)."</a></div>\n"; }
+		if( $this->params !== null )
+		{
+			$url .= "&".$this->params;
+		}
+		if( $this->debug ) { print "<div class='debug'><a href='".htmlspecialchars($url)."'>".htmlspecialchars($prefixes.$query)."</a></div>\n"; }
 		$this->errno = null;
 		$this->error = null;
 		$ch = curl_init($url);
 		#curl_setopt($ch, CURLOPT_HEADER, 1);
+		if( $timeout !== null )
+		{
+			curl_setopt($ch, CURLOPT_TIMEOUT, $timeout );
+		}
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_HTTPHEADER,array (
 			"Accept: application/sparql-results+xml"
 		));
 
-		$output = curl_exec($ch);      
+		$output = curl_exec($ch);
 		$info = curl_getinfo($ch);
 		if(curl_errno($ch))
 		{
@@ -114,7 +147,7 @@ class sparql_connection
 			$this->error = 'URL returned no data';
 			return;
 		}
-		if( $info['http_code'] != 200) 
+		if( $info['http_code'] != 200)
 		{
 			$this->errno = $info['http_code'];
 			$this->error = 'Bad response, '.$info['http_code'].': '.$output;
@@ -130,7 +163,7 @@ class sparql_connection
 	####################################
 
 	# This section is very limited right now. I plan, in time, to
-	# caching so it can save results to a cache to save re-doing them 
+	# caching so it can save results to a cache to save re-doing them
 	# and many more capability options (suggestions to cjg@ecs.soton.ac.uk)
 
 	var $caps = array();
@@ -142,7 +175,7 @@ class sparql_connection
 		"max"=>"SELECT (MAX(?a) AS ?n) ?b ... GROUP BY ?b",
 		"sample"=>"SELECT (SAMPLE(?a) AS ?n) ?b ... GROUP BY ?b",
 		"load"=>"LOAD <...>",
-	); 
+	);
 
 	var $caps_cache;
 	var $caps_anysubject;
@@ -161,7 +194,7 @@ class sparql_connection
 
 	# return true if the endpoint supports a capability
 	# nb. returns false if connecion isn't authoriased to use the feature, eg LOAD
-	function supports( $code ) 
+	function supports( $code )
 	{
 		if( isset( $this->caps[$code] ) ) { return $this->caps[$code]; }
 		$was_cached = false;
@@ -211,9 +244,9 @@ class sparql_connection
 	{
 		if( !isset( $this->caps_anysubject ) )
 		{
-			$results = $this->query( 
+			$results = $this->query(
 			  "SELECT * WHERE { ?s ?p ?o } LIMIT 1" );
-			if( sizeof($results)) 
+			if( sizeof($results))
 			{
 				$row = $results->fetch_array();
 				$this->caps_anysubject = $row["s"];
@@ -222,62 +255,62 @@ class sparql_connection
 		return $this->caps_anysubject;
 	}
 
-	# return true if the endpoint supports SELECT 
-	function test_select() 
+	# return true if the endpoint supports SELECT
+	function test_select()
 	{
-		$output = $this->dispatchQuery( 
+		$output = $this->dispatchQuery(
 		  "SELECT ?s ?p ?o WHERE { ?s ?p ?o } LIMIT 1" );
 		return !isset( $this->errno );
 	}
 
 	# return true if the endpoint supports AS
-	function test_math_as() 
+	function test_math_as()
 	{
-		$output = $this->dispatchQuery( 
+		$output = $this->dispatchQuery(
 		  "SELECT (1+2 AS ?bar) WHERE { ?s ?p ?o } LIMIT 1" );
 		return !isset( $this->errno );
 	}
 
 	# return true if the endpoint supports AS
-	function test_constant_as() 
+	function test_constant_as()
 	{
-		$output = $this->dispatchQuery( 
+		$output = $this->dispatchQuery(
 		  "SELECT (\"foo\" AS ?bar) WHERE { ?s ?p ?o } LIMIT 1" );
 		return !isset( $this->errno );
 	}
 
-	# return true if the endpoint supports SELECT (COUNT(?x) as ?n) ... GROUP BY 
-	function test_count() 
+	# return true if the endpoint supports SELECT (COUNT(?x) as ?n) ... GROUP BY
+	function test_count()
 	{
 		# assumes at least one rdf:type predicate
 		$s = $this->anySubject();
 		if( !isset($s) ) { return false; }
-		$output = $this->dispatchQuery( 
+		$output = $this->dispatchQuery(
 		  "SELECT (COUNT(?p) AS ?n) ?o WHERE { <$s> ?p ?o } GROUP BY ?o" );
 		return !isset( $this->errno );
 	}
 
-	function test_max() 
+	function test_max()
 	{
 		$s = $this->anySubject();
 		if( !isset($s) ) { return false; }
-		$output = $this->dispatchQuery( 
+		$output = $this->dispatchQuery(
 		  "SELECT (MAX(?p) AS ?max) ?o WHERE { <$s> ?p ?o } GROUP BY ?o" );
 		return !isset( $this->errno );
 	}
 
-	function test_sample() 
+	function test_sample()
 	{
 		$s = $this->anySubject();
 		if( !isset($s) ) { return false; }
-		$output = $this->dispatchQuery( 
+		$output = $this->dispatchQuery(
 		  "SELECT (SAMPLE(?p) AS ?sam) ?o WHERE { <$s> ?p ?o } GROUP BY ?o" );
 		return !isset( $this->errno );
 	}
 
-	function test_load() 
+	function test_load()
 	{
-		$output = $this->dispatchQuery( 
+		$output = $this->dispatchQuery(
 		  "LOAD <http://graphite.ecs.soton.ac.uk/sparqllib/examples/loadtest.rdf>" );
 		return !isset( $this->errno );
 	}
@@ -347,7 +380,7 @@ class sparql_result
 
 
 # class xx_xml adapted code found at http://php.net/manual/en/function.xml-parse.php
-# class is cc-by 
+# class is cc-by
 # hello at rootsy dot co dot uk / 24-May-2008 09:30
 class xx_xml {
 
@@ -359,7 +392,9 @@ class xx_xml {
 	var $stack = array();
 	var $keys;
 	var $path;
-  
+	var $looks_legit = false;
+	var $error;
+
 	// either you pass url atau contents.
 	// Use 'url' or 'contents' for the parameter
 	var $type;
@@ -370,7 +405,9 @@ class xx_xml {
 		$this->url  = $url;
 		$this->parse();
 	}
-  
+
+	function error() { return $this->error; }
+
 	// parse XML data
 	function parse()
 	{
@@ -386,36 +423,42 @@ class xx_xml {
 
 		if ($this->type == 'url') {
 			// if use type = 'url' now we open the XML with fopen
-		  
+
 			if (!($fp = fopen($this->url, 'rb'))) {
 				$this->error("Cannot open {$this->url}");
 			}
 
 			while (($data = fread($fp, 8192))) {
 				if (!xml_parse($this->parser, $data, feof($fp))) {
-					$this->error(sprintf('XML error at line %d column %d',
-					xml_get_current_line_number($this->parser),
-					xml_get_current_column_number($this->parser)));
+					$this->error = sprintf('XML error at line %d column %d',
+						xml_get_current_line_number($this->parser),
+						xml_get_current_column_number($this->parser));
+					return;
 				}
 			}
-	 } else if ($this->type == 'contents') {
-	  // Now we can pass the contents, maybe if you want
+	 	} else if ($this->type == 'contents') {
+	  	// Now we can pass the contents, maybe if you want
 			// to use CURL, SOCK or other method.
 			$lines = explode("\n",$this->url);
 			foreach ($lines as $val) {
 				$data = $val . "\n";
 				if (!xml_parse($this->parser, $data)) {
-					echo $data.'<br />';
-					$this->error(sprintf('XML error at line %d column %d',
-					xml_get_current_line_number($this->parser),
-				 xml_get_current_column_number($this->parser)));
+					$this->error = $data."\n".sprintf('XML error at line %d column %d',
+						xml_get_current_line_number($this->parser),
+				 		xml_get_current_column_number($this->parser));
+					return;
 				}
 			}
 		}
+		if( !$this->looks_legit )
+		{
+			$this->error = "Didn't even see a sparql element, is this really an endpoint?";
+		}
 	}
 
-	function startXML($parser, $name, $attr)	
+	function startXML($parser, $name, $attr)
 	{
+		if( $name == "sparql" ) { $this->looks_legit = true; }
 		if( $name == "result" )
 		{
 			$this->result = array();
@@ -474,12 +517,6 @@ class xx_xml {
 		@$this->chars .= $data;
 	}
 
-	function error($msg)	{
-		echo "<div align=\"center\">
-			<font color=\"red\"><b>Error: $msg</b></font>
-			</div>";
-		exit();
-	}
 }
 
 class sparql_results extends ArrayIterator

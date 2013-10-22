@@ -75,19 +75,23 @@ class SparQLDataSet
 			}
 		}
 
-		$cache = \Xmlnuke\Util\FileUtil::GetTempDir() . "/caps." . sha1($url) . ".db";
-		$this->_db->capabilityCache( $cache );
+		if (function_exists('dba_open')) {
+			$cache = \Xmlnuke\Util\FileUtil::GetTempDir() . "/caps." . sha1($url) . ".db";
+			$this->_db->capabilityCache( $cache );
+		}
 	}
 	
 	public function getCapabilities()
 	{
 		$return = array();
-		
-		foreach( $this->_db->capabilityCodes() as $code )
-		{
-			$return[$code] = array($this->_db->supports( $code ), $this->_db->capabilityDescription($code));
-		}
 
+		if (function_exists('dba_open')) {
+			foreach( $this->_db->capabilityCodes() as $code )
+			{
+				$return[$code] = array($this->_db->supports( $code ), $this->_db->capabilityDescription($code));
+			}
+		}
+		
 		return $return;
 	}
 
