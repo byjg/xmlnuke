@@ -1,6 +1,9 @@
 XMLNuke
 =======
 
+*We are developing a new version full PHP 5.3 or higher compatible. The branch 'php53' is PSR compliant, uses namespaces and the new PHP features.*
+[![Build Status](https://travis-ci.org/byjg/xmlnuke.png?branch=php53)](https://travis-ci.org/byjg/xmlnuke)
+
 XMLNuke is a Web Development Framework focused on the Data. Programming in XMLNuke you'll never more worry about open and close PHP tags and manage *spaghetti code*. All of your code is fully based in objects and all code produces only data in XML or JSON, you choose. 
 
 This is a page in XMLNuke:
