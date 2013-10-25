@@ -30,6 +30,8 @@
 
 namespace Xmlnuke\Core\Module;
 
+use BadMethodCallException;
+use Xmlnuke\Core\Classes\ServiceDocument;
 use Xmlnuke\Core\Exception\NotImplementedException;
 
 /**
@@ -50,52 +52,38 @@ abstract class BaseService extends BaseModule implements IService
 		//	$this->
 	}
 
-	public function CreatePage()
+	public final function CreatePage()
 	{
 		$method = strtoupper($this->_context->get("REQUEST_METHOD"));
 
-		switch ($method)
-		{
-			case "GET":
-				$this->defaultXmlnukeDocument = $this->Get();
-				break;
+		$customAction = strtolower($method) . ucfirst($this->_action);
 
-			case "POST":
-				$this->defaultXmlnukeDocument = $this->Post();
-				break;
+		$this->defaultXmlnukeDocument = new ServiceDocument();
 
-			case "PUT":
-				$this->defaultXmlnukeDocument = $this->Put();
-				break;
-
-			case "DELETE":
-				$this->defaultXmlnukeDocument = $this->Delete();
-				break;
-
-			default:
-				throw new NotImplementedException("Method $method not implemented");
-
-		}
+		if (method_exists($this, $customAction))
+			$this->$customAction($this->getRawRequest(), $this->_context->get("id"));
+		else
+			throw new BadMethodCallException("The method '$customAction' does not exists.");
 
 		return $this->defaultXmlnukeDocument;
 	}
 
-	public function Get()
+	public function Get($postData)
 	{
 		throw new NotImplementedException("Method GET not implemented");
 	}
 
-	public function Post()
+	public function Post($postData)
 	{
 		throw new NotImplementedException("Method POST not implemented");
 	}
 
-	public function Delete()
+	public function Delete($postData)
 	{
 		throw new NotImplementedException("Method DELETE not implemented");
 	}
 
-	public function Put()
+	public function Put($postData)
 	{
 		throw new NotImplementedException("Method PUT not implemented");
 	}

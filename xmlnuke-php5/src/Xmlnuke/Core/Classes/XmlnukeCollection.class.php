@@ -134,7 +134,7 @@ class XmlnukeCollection
 	protected static function CreateObjectFromModel($current, $model, $config)
 	{
 
-		$class = new ReflectionClass(get_class($model));
+		$class = new ReflectionClass($model);
 		preg_match_all('/@(?P<param>\S+)\s*(?P<value>\S+)?\r?\n/', $class->getDocComment(), $aux);
 		$classAttributes = XmlnukeCollection::adjustParams($aux);
 
@@ -191,23 +191,26 @@ class XmlnukeCollection
 
 		#------------
 		# Get all properties
-		$properties = $class->getProperties( ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PRIVATE | ReflectionProperty::IS_PUBLIC );
+		if ($model instanceof \stdClass)
+			$properties = get_object_vars ($model);
+		else
+			$properties = $class->getProperties( ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PRIVATE | ReflectionProperty::IS_PUBLIC );
 
 		if (!is_null($properties))
 		{
-			foreach ($properties as $prop)
+			foreach ($properties as $keyProp => $prop)
 			{
-				$propName = $prop->getName();
+				$propName = ($prop instanceof ReflectionProperty ? $prop->getName() : $keyProp);
 				$propAttributes = array();
 
 				if ($propName == "_propertyPattern") continue;
 
 				# Determine where it located the Property Value --> Getter or inside the property
-				if ($prop->isPublic())
+				if (!($prop instanceof ReflectionProperty) || $prop->isPublic())
 				{
-					preg_match_all('/@(?<param>\S+)\s*(?<value>\S+)?\n/', $prop->getDocComment(), $aux);
+					preg_match_all('/@(?<param>\S+)\s*(?<value>\S+)?\n/', ($prop instanceof ReflectionProperty ? $prop->getDocComment() : ""), $aux);
 					$propAttributes = XmlnukeCollection::adjustParams($aux);
-					$propValue = $prop->getValue($model);
+					$propValue = ($prop instanceof ReflectionProperty ? $prop->getValue($model) : $prop);
 				}
 				else
 				{

@@ -68,7 +68,7 @@ class Debug
 			$var = func_get_arg($i);
 			ErrorHandler::getInstance()->addExtraInfo('DEBUG_' . (Debug::$count++), $var);
 
-			if (array_key_exists("rawxml", $_REQUEST) && ($_REQUEST["rawxml"] == "true"))
+			if (array_key_exists("raw", $_REQUEST))
 			{
 				continue;
 			}

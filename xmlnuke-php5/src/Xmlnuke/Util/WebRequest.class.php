@@ -222,9 +222,9 @@ class WebRequest
 		}
 
 		// Adjust parameters
+		$fields_string = "";
 		if (is_array($fields) && (sizeof($fields) > 0))
 		{
-			$fields_string = "";
 			foreach($fields as $key=>$value)
 			{
 				if (!is_array($value))

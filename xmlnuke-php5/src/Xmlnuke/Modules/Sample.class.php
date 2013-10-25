@@ -1104,7 +1104,7 @@ class Sample extends BaseModule
 		$txt = new XmlInputTextBox("Teste", "Nome", "");
 		$txt->setRequired(true);
 		// and then associate the AutoSuggest
-		$txt->setAutosuggest($this->_context, "engine:xmlnuke?site=sample&xml=forms&rawjson=true&xpath=//select","term");
+		$txt->setAutosuggest($this->_context, "engine:xmlnuke?site=sample&xml=forms&raw=json&xpath=//select","term");
 		$form->addXmlnukeObject($txt);
 
 		$form->addXmlnukeObject(new XmlInputCaption("Auto Suggest com CallBack"));
@@ -1112,7 +1112,7 @@ class Sample extends BaseModule
 		// First Create the the TextBox
 		$txt = new XmlInputTextBox("Teste", "Nome2", "");
 		$txt->setRequired(true);
-		$txt->setAutosuggest($this->_context, "engine:xmlnuke?site=sample&xml=forms&rawjson=true&xpath=//select", "term", "alert(ui.item.id + ' - ' + ui.item.value); $(this).val(ui.item.id); ");
+		$txt->setAutosuggest($this->_context, "engine:xmlnuke?site=sample&xml=forms&raw=json&xpath=//select", "term", "alert(ui.item.id + ' - ' + ui.item.value); $(this).val(ui.item.id); ");
 		$form->addXmlnukeObject($txt);
 
 

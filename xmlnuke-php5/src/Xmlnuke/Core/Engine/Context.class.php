@@ -1521,11 +1521,11 @@ class Context extends BaseSingleton
 	{
 		if ($this->get("xmlnuke.OUTPUT_FORMAT") == "")
 		{
-			if ($this->get("rawxml")!="")
+			if ($this->get("raw")=="xml")
 			{
 				$output = XmlnukeEngine::OUTPUT_XML;
 			}
-			elseif (($this->get("rawjson")!="") || ($this->get("CONTENT_TYPE") == "application/json"))
+			elseif (($this->get("raw")=="json") || ($this->get("CONTENT_TYPE") == "application/json"))
 			{
 				$output = XmlnukeEngine::OUTPUT_JSON;
 			}

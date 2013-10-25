@@ -39,9 +39,9 @@ namespace Xmlnuke\Core\Module;
  */
 interface IService extends IModule
 {
-	function Get();
-	function Post();
-	function Put();
-	function Delete();
+	function Get($postData);
+	function Post($postData);
+	function Put($postData);
+	function Delete($postData);
 }
 ?>

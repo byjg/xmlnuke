@@ -12,10 +12,10 @@ foreach ($argv as $pair)
 
 #$_SERVER["PHP_SELF"] .= $_REQUEST["ws"];
 
-#$_REQUEST["rawxml"] = true;
+#$_REQUEST["raw"] = "xml";
 
-if (!array_key_exists("rawxml", $_REQUEST) && !array_key_exists("rawjson", $_REQUEST))
-	$_REQUEST["rawxml"] = true;
+if (!isset($_REQUEST['raw']))
+	$_REQUEST["raw"] = "xml";
 
 include("xmlnuke.php");
 
