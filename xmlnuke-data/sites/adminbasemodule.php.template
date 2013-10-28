@@ -1,5 +1,9 @@
 <?php
 
+namespace __PROJECT__\Base;
+
+use Xmlnuke\Core\Enum\AccessLevel;
+
 class __PROJECT__AdminBaseModule extends __PROJECT__BaseModule
 {
 	public function CreateDocument($title) 
@@ -22,5 +26,3 @@ class __PROJECT__AdminBaseModule extends __PROJECT__BaseModule
 		return $this->defaultXmlnukeDocument;
 	}
 }
-
-?>

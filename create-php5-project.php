@@ -38,7 +38,7 @@ if (PHP_SAPI == 'cli')
 			echo "\n";
 			echo "After this you can play with these URLs:\n";
 			echo "http://localhost/xmlnuke.php?xml=home\n";
-			echo "http://localhost/xmlnuke.php?module={$result['PROJECT_FILE']}.home\n";
+			echo "http://localhost/xmlnuke.php?module={$result['PROJECT']}.Home\n";
 			echo "\n";
 		}
 		catch (Exception $ex)
@@ -60,7 +60,7 @@ class CreatePhp5Project
 		$argv = func_get_args();
 
 		$HOME = $argv[1];
-		$SITE = $argv[2];
+		$SITE = strtolower($argv[2]);
 		$PROJECT = $argv[3];
 		$PROJECT_FILE = strtolower($PROJECT);
 		$XMLNUKE = dirname(__FILE__);
@@ -93,12 +93,19 @@ class CreatePhp5Project
 				@mkdir( "$HOME/data/xsl" );
 				@mkdir( "$HOME/data/snippet" );
 
-				$LANGUAGESAVAILABLE="";
+				CreatePhp5Project::writeToFile( "$HOME/data/anydataset/.do_not_remove", "-- DO NOT REMOVE THIS DIRECTORY --") ;
+				CreatePhp5Project::writeToFile( "$HOME/data/cache/.do_not_remove", "-- DO NOT REMOVE THIS DIRECTORY --") ;
+				CreatePhp5Project::writeToFile( "$HOME/data/lang/.do_not_remove", "-- DO NOT REMOVE THIS DIRECTORY --") ;
+				CreatePhp5Project::writeToFile( "$HOME/data/offline/.do_not_remove", "-- DO NOT REMOVE THIS DIRECTORY --") ;
+				CreatePhp5Project::writeToFile( "$HOME/data/xml/.do_not_remove", "-- DO NOT REMOVE THIS DIRECTORY --") ;
+				CreatePhp5Project::writeToFile( "$HOME/data/xsl/.do_not_remove", "-- DO NOT REMOVE THIS DIRECTORY --") ;
+				CreatePhp5Project::writeToFile( "$HOME/data/snippet/.do_not_remove", "-- DO NOT REMOVE THIS DIRECTORY --") ;
+
 				$langs = array();
 				$i = 4;
 				while ( $i < $argc )
 				{
-					$langs[] = $argv[$i] . '=' . $argv[$i];
+					$langs[] = "'" . $argv[$i] . "' => '" . $argv[$i] . "'";
 
 					@mkdir( "$HOME/data/xml/" . $argv[$i] );
 					copy( "$DATADIR/sites/index.xsl.template", "$HOME/data/xsl/index." . $argv[$i] . ".xsl" );
@@ -111,56 +118,49 @@ class CreatePhp5Project
 					$i++;
 				}
 
-				$LANGUAGESAVAILABLE = implode("|", $langs);
+				$LANGUAGESAVAILABLE = implode(", \n\t\t\t\t\t", $langs);
 
 				@mkdir( "$HOME/lib" );
-				CreatePhp5Project::writeTemplate( "$DATADIR/sites/_includelist.php.template", "$HOME/lib/_includelist.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
+				@mkdir( "$HOME/lib/$PROJECT" );
 
-				@mkdir( "$HOME/lib/modules" );
-				CreatePhp5Project::writeTemplate( "$DATADIR/sites/module.php.template", "$HOME/lib/modules/home.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
+				@mkdir( "$HOME/lib/$PROJECT/Modules" );
+				CreatePhp5Project::writeTemplate( "$DATADIR/sites/module.php.template", "$HOME/lib/$PROJECT/Modules/Home.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
 
-				@mkdir( "$HOME/lib/base" );
-				CreatePhp5Project::writeTemplate( "$DATADIR/sites/adminbasemodule.php.template", "$HOME/lib/base/${PROJECT_FILE}adminbasemodule.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
-				CreatePhp5Project::writeTemplate( "$DATADIR/sites/basedbaccess.php.template", "$HOME/lib/base/${PROJECT_FILE}basedbaccess.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
-				CreatePhp5Project::writeTemplate( "$DATADIR/sites/basemodel.php.template", "$HOME/lib/base/${PROJECT_FILE}basemodel.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
-				CreatePhp5Project::writeTemplate( "$DATADIR/sites/basemodule.php.template", "$HOME/lib/base/${PROJECT_FILE}basemodule.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
-				CreatePhp5Project::writeTemplate( "$DATADIR/sites/baseuiedit.php.template", "$HOME/lib/base/${PROJECT_FILE}baseuiedit.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
+				@mkdir( "$HOME/lib/$PROJECT/Base" );
+				CreatePhp5Project::writeTemplate( "$DATADIR/sites/adminbasemodule.php.template", "$HOME/lib/$PROJECT/Base/${PROJECT}AdminBaseModule.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
+				CreatePhp5Project::writeTemplate( "$DATADIR/sites/basedbaccess.php.template", "$HOME/lib/$PROJECT/Base/${PROJECT}BaseDBAccess.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
+				CreatePhp5Project::writeTemplate( "$DATADIR/sites/basemodel.php.template", "$HOME/lib/$PROJECT/Base/${PROJECT}BaseModel.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
+				CreatePhp5Project::writeTemplate( "$DATADIR/sites/basemodule.php.template", "$HOME/lib/$PROJECT/Base/${PROJECT}BaseModule.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
+				CreatePhp5Project::writeTemplate( "$DATADIR/sites/baseuiedit.php.template", "$HOME/lib/$PROJECT/Base/${PROJECT}BaseUIEdit.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
+
 
 				$aux = "";
-				$aux .= '<?xml version="1.0" encoding="utf-8"?>\n' ;
-				$aux .= '<anydataset>\n' ;
-				$aux .= '	<row>\n' ;
+				$aux .= "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" ;
+				$aux .= "<anydataset>\n" ;
+				$aux .= "	<row>\n" ;
 				$aux .= "		<field name=\"dbname\">__PROJECT_FILE__</field>\n" ;
-				$aux .= '		<field name="dbtype">dsn</field>\n' ;
+				$aux .= "		<field name=\"dbtype\">dsn</field>\n" ;
 				$aux .= "		<field name=\"dbconnectionstring\">mysql://root@localhost/__PROJECT_FILE__</field>\n" ;
-				$aux .= '	</row>\n' ;
-				$aux .= '</anydataset>\n' ;
+				$aux .= "	</row>\n" ;
+				$aux .= "</anydataset>\n" ;
 				CreatePhp5Project::writeTemplate( $aux, "$HOME/data/anydataset/_db.anydata.xml", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
 
 				$aux = "";
-				$aux .= '<?xml version="1.0" encoding="utf-8"?>\n' ;
-				$aux .= '<anydataset>\n' ;
-				$aux .= '	<row>\n' ;
-				$aux .= '		<field name="destination_id">DEFAULT</field>\n' ;
-				$aux .= '		<field name="email">youremail@provider.com</field>\n' ;
-				$aux .= '		<field name="name">Your Name</field>\n' ;
-				$aux .= '	</row>\n' ;
-				$aux .= '</anydataset>\n' ;
+				$aux .= "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" ;
+				$aux .= "<anydataset>\n" ;
+				$aux .= "	<row>\n" ;
+				$aux .= "		<field name=\"destination_id\">DEFAULT</field>\n" ;
+				$aux .= "		<field name=\"email\">youremail@provider.com</field>\n" ;
+				$aux .= "		<field name=\"name\">Your Name</field>\n" ;
+				$aux .= "	</row>\n" ;
+				$aux .= "</anydataset>\n" ;
 				CreatePhp5Project::writeTemplate( $aux, "$HOME/data/anydataset/_configemail.anydata.xml", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
 
-				$aux = "";
-				$aux .= "<?php\n" ;
-				$aux .= "# This file was generated by create-php5-project.php. \n" ;
-				$aux .= "# You can safely remove this file after you XMLNuke installation is running.\n" ;
-				$aux .= "\$configValues[\"xmlnuke.ROOTDIR\"]='$DATADIR'; \n" ;
-				$aux .= "\$configValues[\"xmlnuke.USEABSOLUTEPATHSROOTDIR\"] = true; \n" ;
-				$aux .= "\$configValues[\"xmlnuke.DEFAULTSITE\"]='$SITE'; \n" ;
-				$aux .= "\$configValues[\"xmlnuke.EXTERNALSITEDIR\"] = '$SITE=$HOME" . DIRECTORY_SEPARATOR . "data'; \n" ;
-				$aux .= "\$configValues[\"xmlnuke.PHPLIBDIR\"] = '$PROJECT_FILE=$HOME" . DIRECTORY_SEPARATOR . "lib'; \n" ;
-				$aux .= "\$configValues[\"xmlnuke.LANGUAGESAVAILABLE\"] = '$LANGUAGESAVAILABLE'; \n" ;
-				$aux .= "\$configValues[\"xmlnuke.PHPXMLNUKEDIR\"] = '$PHPDIR'; \n" ;
-				$aux .= "?>\n" ;
-				CreatePhp5Project::writeTemplate( $aux, "$HOME/config.inc-dist.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
+				# Config
+				CreatePhp5Project::writeTemplate( "$DATADIR/sites/config.php.template", "$HOME/config.inc-dist.php",
+					array('/__DATADIR__/', '/__PHPDIR__/', '/__SITE__/', '/__PROJECT_DATA__/', '/__PROJECT_LIB__/', '/__DATE__/', '/__LANGS__/'),
+					array($DATADIR, $PHPDIR, $SITE, $HOME . '/data', $HOME . '/lib', date('c'), $LANGUAGESAVAILABLE )
+				);
 
 				# Finishing XMLNuke installation!
 				$gitIgnore = array("# Xmlnuke Files - Start");
@@ -182,7 +182,7 @@ class CreatePhp5Project
 				$gitIgnore[] = "";
 
 				CreatePhp5Project::writeToFile("$HOME/.gitignore", $gitIgnore);
-				touch("$HOME/config.inc.php");
+				//touch("$HOME/config.inc.php");
 				touch("$HOME/config.inc-dist.php");
 
 
@@ -219,7 +219,7 @@ class CreatePhp5Project
 				if ($isWindows)
 					$final = "copy \"" . str_replace('/', DIRECTORY_SEPARATOR, $params[0]) . "\" \"" . str_replace('/', DIRECTORY_SEPARATOR, $params[1]) . "\"";
 				else
-					$final = $cmd . " \"" . str_replace('\\', DIRECTORY_SEPARATOR, $params[0]) . "\" " . str_replace('\\', DIRECTORY_SEPARATOR, $params[1]) . "\"";
+					$final = $cmd . " \"" . str_replace('\\', DIRECTORY_SEPARATOR, $params[0]) . "\" \"" . str_replace('\\', DIRECTORY_SEPARATOR, $params[1]) . "\"";
 
 				$retorno = basename($params[0]);
 				break;

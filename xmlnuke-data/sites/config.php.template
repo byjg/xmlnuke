@@ -1,0 +1,49 @@
+<?php
+## CONFIG FILE AUTO-GENERATED on __DATE__
+class config
+{
+	public static function getValuesConfig()
+	{
+		$values = array();
+		$values['xmlnuke.ROOTDIR'] = '__DATADIR__';
+		$values['xmlnuke.PHPXMLNUKEDIR'] = '__PHPDIR__';
+		$values['xmlnuke.USEABSOLUTEPATHSROOTDIR'] = true;
+		$values['xmlnuke.XSLCACHE'] = '\Xmlnuke\Core\Cache\NoCacheEngine';
+		$values['xmlnuke.SMTPSERVER'] = '';
+		$values['xmlnuke.USEFULLPARAMETER'] = true;
+		$values['xmlnuke.USERSDATABASE'] = '';
+		$values['xmlnuke.USERSCLASS'] = '';
+		$values['xmlnuke.LOGINMODULE'] = 'Xmlnuke.Login';
+		$values['xmlnuke.EXTERNALSITEDIR'] =
+				array(
+					'__SITE__' => '__PROJECT_DATA__'
+				);
+		$values['xmlnuke.PHPLIBDIR'] =
+				array(
+					'__PROJECT_LIB__'
+				);
+		$values['xmlnuke.URLXMLNUKEENGINE'] = 'xmlnuke.php';
+		$values['xmlnuke.URLMODULE'] = 'xmlnuke.php';
+		$values['xmlnuke.URLXMLNUKEADMIN'] = 'xmlnukeadmin.php';
+		$values['xmlnuke.DEFAULTSITE'] = '__SITE__';
+		$values['xmlnuke.DEFAULTPAGE'] = 'page';
+		$values['xmlnuke.URLBASE'] = '';
+		$values['xmlnuke.DETECTMOBILE'] = true;
+		$values['xmlnuke.SHOWCOMPLETEERRORMESSAGES'] = true;
+		$values['xmlnuke.LANGUAGESAVAILABLE'] =
+				array(
+					__LANGS__
+				);
+		$values['xmlnuke.DEBUG'] = false;
+		$values['xmlnuke.DEVELOPMENT'] = true;
+		$values['xmlnuke.CAPTCHACHALLENGE'] = 'hard';
+		$values['xmlnuke.CAPTCHALETTERS'] = '5';
+		$values['xmlnuke.ENABLEPARAMPROCESSOR'] = true;
+		$values['xmlnuke.CHECKCONTENTTYPE'] = true;
+		$values['xmlnuke.CACHESTORAGEMETHOD'] = 'PLAIN';
+		$values['xmlnuke.XMLSTORAGEMETHOD'] = 'PLAIN';
+		return $values;
+	}
+}
+define('PHPXMLNUKEDIR', '__PHPDIR__/');
+## END-OF-FILE

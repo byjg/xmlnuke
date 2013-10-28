@@ -1,16 +1,18 @@
 <?php
 
-class __PROJECT__BaseDBAccess extends BaseDBAccess
+namespace __PROJECT__\Base;
+
+use Xmlnuke\Core\Database\BaseDBAccess;
+
+class TesteBaseDBAccess extends BaseDBAccess
 {
 	public static function DatabaseName()
 	{
-		return "__PROJECT_FILE__";		
+		return "__PROJECT_FILE__";
 	}
-	public function getDataBaseName() 
+	public function getDataBaseName()
 	{
 		return __PROJECT__BaseDBAccess::DatabaseName();
 	}
 	//put your code here
 }
-
-?>

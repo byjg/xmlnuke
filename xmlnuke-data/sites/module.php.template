@@ -1,6 +1,12 @@
 <?php
 
-ModuleFactory::IncludePhp("__PROJECT_FILE__", "_includelist.php");
+namespace __PROJECT__\Modules;
+
+use __PROJECT__\Base\__PROJECT__BaseModule;
+use Xmlnuke\Core\Classes\XmlBlockCollection;
+use Xmlnuke\Core\Classes\XmlnukeText;
+use Xmlnuke\Core\Classes\XmlParagraphCollection;
+use Xmlnuke\Core\Enum\BlockPosition;
 
 class Home extends __PROJECT__BaseModule
 {
@@ -10,22 +16,25 @@ class Home extends __PROJECT__BaseModule
 	public function __construct()
 	{}
 
-	public function CreatePage() 
+	public function CreatePage()
 	{
-		$myWords = $this->WordCollection();		
-		
+		$myWords = $this->WordCollection();
+
 		$this->CreateDocument("Template");
-		
+
 		$block = new XmlBlockCollection("Template Block", BlockPosition::Center);
 		$this->defaultXmlnukeDocument->addXmlnukeObject($block);
-					
+
 		$p = new XmlParagraphCollection();
 		$p->addXmlnukeObject(new XmlnukeText("Template Text"));
 		$block->addXmlnukeObject($p);
-		
+
 		return $this->defaultXmlnukeDocument;
 	}
-	
-}
 
-?>
+	public function requiresAuthentication()
+	{
+		return false;
+	}
+
+}

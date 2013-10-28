@@ -1,5 +1,10 @@
 <?php
 
+namespace __PROJECT__\Base;
+
+use Xmlnuke\Core\Classes\XmlnukeDocument;
+use Xmlnuke\Core\Module\BaseModule;
+
 class __PROJECT__BaseModule extends BaseModule
 {
 	public function CreateDocument($title)

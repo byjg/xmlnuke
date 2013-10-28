@@ -1,5 +1,9 @@
 <?php
 
+namespace __PROJECT__\Base;
+
+use Xmlnuke\Core\Database\BaseModel;
+
 class __PROJECT__BaseModel extends BaseModel
 {
 	public function __construct($object=null)
@@ -8,5 +12,3 @@ class __PROJECT__BaseModel extends BaseModel
 		parent::__construct($object);
 	}	
 }
-
-?>

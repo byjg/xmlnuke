@@ -16,7 +16,7 @@ require_once("xmlnuke.inc.php");
 $context = Context::getInstance();
 
 ## CHECK CONFIG.PHP ##
-if ($context->ContextValue("xmlnuke.ROOTDIR")=="")
+if ($context->get("xmlnuke.ROOTDIR")=="")
 {
 	header("Location: check_install.php");
 	exit();

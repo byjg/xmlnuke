@@ -1,7 +1,7 @@
 <?php
 
+namespace __PROJECT__\Base;
+
 class __PROJECT__BaseUIEdit {
 	//put your code here
 }
-
-?>
