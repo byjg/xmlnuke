@@ -91,6 +91,18 @@ class XmlNukeEngine
 		
 		if (array_key_exists("root_node", $this->_extraParams) && $this->_extraParams["root_node"] != null)
 			$this->_extractNodesRoot = $this->_extraParams["root_node"];
+
+		// Check if the access is granted
+		if ($this->_context->Value("xmlnuke.RESTRICTACCESS") != "")
+		{
+			$checkClass = PluginFactory::LoadPlugin($this->_context->Value("xmlnuke.RESTRICTACCESS"));
+
+			if (!($checkClass instanceof ICheckAccess))
+				throw new InvalidArgumentException($this->_context->Value("xmlnuke.RESTRICTACCESS") . ' need to implement ICheckAccess');
+
+			if (!$checkClass->check())
+				throw new Exception ('Access Denied');
+		}
 	}
 
 	/**
