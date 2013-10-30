@@ -42,6 +42,7 @@ class config
 		$values['xmlnuke.CHECKCONTENTTYPE'] = true;
 		$values['xmlnuke.CACHESTORAGEMETHOD'] = 'PLAIN';
 		$values['xmlnuke.XMLSTORAGEMETHOD'] = 'PLAIN';
+		$values['xmlnuke.RESTRICTACCESS'] = '';
 		return $values;
 	}
 }

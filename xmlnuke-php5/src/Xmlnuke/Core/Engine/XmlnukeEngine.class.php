@@ -37,9 +37,11 @@ use DOMDocument;
 use DOMNode;
 use InvalidArgumentException;
 use UsersBase;
+use Xmlnuke\Core\Classes\ICheckAccess;
 use Xmlnuke\Core\Classes\IXmlnukeDocument;
 use Xmlnuke\Core\Classes\IXmlnukeDocumentObject;
 use Xmlnuke\Core\Classes\PageXml;
+use Xmlnuke\Core\Exception\AccessDeniedByRuleException;
 use Xmlnuke\Core\Exception\EngineException;
 use Xmlnuke\Core\Exception\XMLNukeException;
 use Xmlnuke\Core\Module\IModule;
@@ -93,7 +95,7 @@ class XmlnukeEngine
 	 */
 	public function __construct(
 			$context, 
-			$outputResult = XmlnukeEngine::OUTPUT_TRANSFORMED_DOC, 
+			$outputResult = XmlnukeEngine::OUTPUT_TRANSFORMED_DOC,
 			$extractNodes = "", 
 			$extraParams = array()
 	)
@@ -113,6 +115,18 @@ class XmlnukeEngine
 		
 		if (array_key_exists("root_node", $this->_extraParams) && $this->_extraParams["root_node"] != null)
 			$this->_extractNodesRoot = $this->_extraParams["root_node"];
+
+		// Check if the access is granted
+		if ($this->_context->get("xmlnuke.RESTRICTACCESS") != "")
+		{
+			$checkClass = PluginFactory::LoadPlugin($this->_context->get("xmlnuke.RESTRICTACCESS"));
+
+			if (!($checkClass instanceof ICheckAccess))
+				throw new InvalidArgumentException($this->_context->get("xmlnuke.RESTRICTACCESS") . ' need to implement ICheckAccess');
+
+			if (!$checkClass->check())
+				throw new AccessDeniedByRuleException ('Access Denied');
+		}
 	}
 
 	/**
