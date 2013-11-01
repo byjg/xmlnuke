@@ -200,7 +200,7 @@ class Context extends BaseSingleton
 		if ($lang == "")
 		{
 
-			$httpAcceptLanguage = $_SERVER["HTTP_ACCEPT_LANGUAGE"];
+			$httpAcceptLanguage = isset($_SERVER["HTTP_ACCEPT_LANGUAGE"]) ? $_SERVER["HTTP_ACCEPT_LANGUAGE"] : null;
 			if ($httpAcceptLanguage != null)
 			{
 				$langOpt = preg_split("/[,;]/", $httpAcceptLanguage);
@@ -511,7 +511,7 @@ class Context extends BaseSingleton
 	public function CurrentSitePath()
 	{
 		$externalSiteArray = $this->getExternalSiteDir();
-		$externalSite = $externalSiteArray[$this->getSite()];
+		$externalSite = (isset($externalSiteArray[$this->getSite()]) ? $externalSiteArray[$this->getSite()] : "");
 
 		if ($externalSite != "")
 		{
