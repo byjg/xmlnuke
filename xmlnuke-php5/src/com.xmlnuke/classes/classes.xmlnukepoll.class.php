@@ -158,50 +158,36 @@ class XmlnukePoll extends XmlnukeDocumentObject
 				$this->_poll = $this->_context->ContextValue("xmlnuke_poll");
 				$this->_lang = $this->_context->ContextValue("xmlnuke_polllang");
 
-				/*
-				// Try to get the Last IP who vote here.
-				$ok = false;
-				$filelastip = new AnydatasetFilenameProcessor("poll_lastip_" . $this->_poll);
-				$filelastip->setFilenameLocation(ForceFilenameLocation::DefinePath, FileUtil::GetTempDir() . FileUtil::Slash());
-				$anylastip = new AnyDataSet($filelastip);
-				$itlastip = $anylastip->getIterator();
-				if ($itlastip->hasNext())
+				// Check if IP already voted -> Freeze IP for 5 days.
+				if ($this->_isdb)
 				{
-					$sr = $itlastip->moveNext();
-					$arr = $sr->getFieldArray("ip");
+					// Remove Old Entries
+					$dbdata = new DBDataSet($this->_connection, $this->_context);
+					$sql = "delete from " . $this->_tbllastip . " where register < now() - interval 5 day ";
+					$dbdata->execSQL($sql, $param);
 
-					// Is This a New IP?
-					if (array_search($this->_context->ContextValue("REMOTE_ADDR"), $arr) === false)
+					// Check if exists
+					$sql = "select count(1) from " . $this->_tbllastip . " where ip = [[ip]] and name = [[name]] ";
+					$param = array(
+						"ip" => $this->_context->Value("REMOTE_ADDR"),
+						"name" => $this->_poll
+					);
+					$count = $dbdata->getScalar($sql, $param);
+
+					$ok = false;
+					if ($count == 0)
 					{
 						$ok = true;
 
-						// Is The maximum amount of unique IP reached?
-						// If true, I need to remove the excess.
-						if (sizeof($arr) > 20)
-						{
-							array_shift($arr);
-							$arr[] = $this->_context->ContextValue("REMOTE_ADDR");
-
-							$anylastip->removeRow(0);
-							$anylastip->appendRow();
-							foreach ($arr as $value)
-							{
-								$anylastip->addField("ip", $value);
-							}
-							$anylastip->Save();
-						}
+						$sql = "insert into " . $this->_tbllastip . " (ip, name, register) values ([[ip]], [[name]], now()) ";
+						$param = array(
+							"ip" => $this->_context->Value("REMOTE_ADDR"),
+							"name" => $this->_poll
+						);
+						$dbdata->execSQL($sql, $param);
 					}
+
 				}
-				// OK. First time here. I need to add the IP.
-				else
-				{
-					$ok = true;
-					$anylastip->appendRow();
-					$anylastip->addField("ip", $this->_context->ContextValue("REMOTE_ADDR"));
-					$anylastip->Save();
-				}
-				 */
-				$ok = true;
 
 				// Is My IP Unique? If true I can process the vote.
 				// Note if the poll name, lang and code are wrong the system does not do anything.

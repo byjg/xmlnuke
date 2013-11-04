@@ -143,15 +143,14 @@ class ManagePoll extends NewBaseAdminModule
 					$results = array();
 					$results[] = $this->CreateTable($dbdata, "create table $tblpoll", "create table $tblpoll (name varchar(15), lang char(5), question varchar(150), multiple char(1), showresults char(1), active char(1)) $suffix");
 					$results[] = $this->CreateTable($dbdata, "create table $tblanswer", "create table $tblanswer (name varchar(15), lang char(5), code int, short varchar(10), answer varchar(50), votes int) $suffix");
-					//$results[] = $this->CreateTable($dbdata, "create table $tbllastip", "create table $tbllastip (name varchar(15), ip varchar(15)) $suffix");
+					$results[] = $this->CreateTable($dbdata, "create table $tbllastip", "create table $tbllastip (name varchar(15), ip varchar(15), register datetime) $suffix");
 					$results[] = $this->CreateTable($dbdata, "add primary key poll", "alter table $tblpoll add constraint pk_poll primary key (name, lang);");
 					$results[] = $this->CreateTable($dbdata, "add primary key answer", "alter table $tblanswer add constraint pk_answer primary key (name, lang, code)");
-					//$results[] = $this->CreateTable($dbdata, "add primary key lastip", "alter table $tbllastip add constraint pk_lastip primary key (name, ip)");
+					$results[] = $this->CreateTable($dbdata, "add primary key lastip", "alter table $tbllastip add constraint pk_lastip primary key (name, ip)");
 					$results[] = $this->CreateTable($dbdata, "add check poll 1", "alter table $tblpoll add constraint ck_poll_multiple check (multiple in ('Y', 'N'))");
 					$results[] = $this->CreateTable($dbdata, "add check poll 2", "alter table $tblpoll add constraint ck_poll_showresults check (showresults in ('Y', 'N'))");
 					$results[] = $this->CreateTable($dbdata, "add check poll 3", "alter table $tblpoll add constraint ck_poll_active check (active in ('Y', 'N'))");
 					$results[] = $this->CreateTable($dbdata, "add foreign key answer", "alter table $tblanswer add constraint pk_answer_poll foreign key (name) references $tblpoll(name)");
-					//$results[] = $this->CreateTable($dbdata, "add foreign key lastip", "alter table $tbllastip add constraint pk_lastip_poll foreign key (name) references $tblpoll(name)");
 					
 					$block->addXmlnukeObject(new XmlEasyList(EasyListType::UNORDEREDLIST, "", $this->myWords->Value("RESULTSQL"), $results));
 					
