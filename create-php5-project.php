@@ -219,7 +219,7 @@ class CreatePhp5Project
 				if ($isWindows)
 					$final = "copy \"" . str_replace('/', DIRECTORY_SEPARATOR, $params[0]) . "\" \"" . str_replace('/', DIRECTORY_SEPARATOR, $params[1]) . "\"";
 				else
-					$final = $cmd . " \"" . str_replace('\\', DIRECTORY_SEPARATOR, $params[0]) . "\" " . str_replace('\\', DIRECTORY_SEPARATOR, $params[1]) . "\"";
+					$final = $cmd . " \"" . str_replace('\\', DIRECTORY_SEPARATOR, $params[0]) . "\" \"" . str_replace('\\', DIRECTORY_SEPARATOR, $params[1]) . "\"";
 
 				$retorno = basename($params[0]);
 				break;
