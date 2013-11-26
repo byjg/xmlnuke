@@ -183,7 +183,7 @@ class  XmlnukePoll extends XmlnukeDocumentObject
 					$arr = $sr->getFieldArray("ip");
 
 					// Is This a New IP?
-					if (array_search($this->_context->get("REMOTE_ADDR"), $arr) === false)
+					if (array_search($this->_context->getClientIp(), $arr) === false)
 					{
 						$ok = true;
 
@@ -192,7 +192,7 @@ class  XmlnukePoll extends XmlnukeDocumentObject
 						if (sizeof($arr) > 20)
 						{
 							array_shift($arr);
-							$arr[] = $this->_context->get("REMOTE_ADDR");
+							$arr[] = $this->_context->getClientIp();
 
 							$anylastip->removeRow(0);
 							$anylastip->appendRow();
