@@ -1562,5 +1562,30 @@ class Context extends BaseSingleton
 		if ($this->getOutputFormat() == XmlNukeEngine::OUTPUT_TRANSFORMED_DOC)
 			echo "<br/>\n<b>Warning: </b>" . $message . "\n<br/>";
 	}
+
+	/**
+	 * Use this method to get the CLIENT REQUEST IP.
+	 * Note that if you behing a Proxy, the variable REMOTE_ADDR will always have the same IP
+	 * @return string
+	 */
+	public function getClientIp()
+	{
+		$ipaddress = '';
+		if (isset($_SERVER['HTTP_CLIENT_IP']))
+			$ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+		else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+			$ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+		else if(isset($_SERVER['HTTP_X_FORWARDED']))
+			$ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+		else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
+			$ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+		else if(isset($_SERVER['HTTP_FORWARDED']))
+			$ipaddress = $_SERVER['HTTP_FORWARDED'];
+		else if(isset($_SERVER['REMOTE_ADDR']))
+			$ipaddress = $_SERVER['REMOTE_ADDR'];
+		else
+			$ipaddress = 'UNKNOWN';
+
+		return $ipaddress;
+	}
 }
-?>

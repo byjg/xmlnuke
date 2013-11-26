@@ -169,7 +169,7 @@ class XmlnukePoll extends XmlnukeDocumentObject
 					// Check if exists
 					$sql = "select count(1) from " . $this->_tbllastip . " where ip = [[ip]] and name = [[name]] ";
 					$param = array(
-						"ip" => $this->_context->Value("REMOTE_ADDR"),
+						"ip" => $this->_context->getClientIp(),
 						"name" => $this->_poll
 					);
 					$count = $dbdata->getScalar($sql, $param);
@@ -181,7 +181,7 @@ class XmlnukePoll extends XmlnukeDocumentObject
 
 						$sql = "insert into " . $this->_tbllastip . " (ip, name, register) values ([[ip]], [[name]], now()) ";
 						$param = array(
-							"ip" => $this->_context->Value("REMOTE_ADDR"),
+							"ip" => $this->_context->getClientIp(),
 							"name" => $this->_poll
 						);
 						$dbdata->execSQL($sql, $param);
