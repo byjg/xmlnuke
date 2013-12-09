@@ -64,7 +64,7 @@ class CreatePhp5Project
 		$SITE = strtolower($argv[2]);
 		$PROJECT = $argv[3];
 		$PROJECT_FILE = strtolower($PROJECT);
-		$XMLNUKE = dirname(__FILE__);
+		$XMLNUKE = dirname(realpath($_SERVER["SCRIPT_FILENAME"]));
 		$TEMPLATE = "$XMLNUKE/templates/php5";
 
 		$PHPDIR = "$XMLNUKE" . DIRECTORY_SEPARATOR . "xmlnuke-php5";
