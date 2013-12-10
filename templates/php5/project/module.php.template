@@ -2,7 +2,7 @@
 
 namespace __PROJECT__\Modules;
 
-use __PROJECT__\Base\__PROJECT__BaseModule;
+use __PROJECT__\Base\BaseModule as __PROJECT__BaseModule;
 use Xmlnuke\Core\Classes\XmlBlockCollection;
 use Xmlnuke\Core\Classes\XmlnukeText;
 use Xmlnuke\Core\Classes\XmlParagraphCollection;

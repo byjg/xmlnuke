@@ -3,8 +3,9 @@
 namespace __PROJECT__\Base;
 
 use Xmlnuke\Core\Enum\AccessLevel;
+use __PROJECT__\Base\BaseModule as __PROJECT__BaseModule;
 
-class __PROJECT__AdminBaseModule extends __PROJECT__BaseModule
+class AdminBaseModule extends __PROJECT__BaseModule
 {
 	public function CreateDocument($title) 
 	{

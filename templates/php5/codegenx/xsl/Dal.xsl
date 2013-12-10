@@ -6,7 +6,8 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:msxsl="urn:schemas-microsoft-com:xslt" exclude-result-prefixes="msxsl">
 	<xsl:param name="tablename"></xsl:param>
-	<xsl:param name="package"></xsl:param>
+	<xsl:param name="project"></xsl:param>
+	<xsl:param name="xsl"></xsl:param>
 
 
 	<xsl:output method="text"/>
@@ -24,11 +25,18 @@
 //=== Essa classe é gerada automaticamente. 
 //==============================================================================
 
+namespace <xsl:value-of select="$project" />\Classes\<xsl:value-of select="$xsl" />;
 
 //{@@@[//CustomInclude
 //CustomInclude]}@@@
 
-class <xsl:value-of select="$ClassName" />DB extends <xsl:value-of select="$package" />BaseDBAccess
+use <xsl:value-of select="$project" />\Base\BaseDBAccess as <xsl:value-of select="$project" />BaseDBAccess;
+use <xsl:value-of select="$project" />\DatabaseModel\<xsl:value-of select="$ClassName" /> as <xsl:value-of select="$ClassName" />Model;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Enum\SQLFieldType;
+use Xmlnuke\Core\Enum\SQLType;
+
+class <xsl:value-of select="$ClassName" /> extends <xsl:value-of select="$project" />BaseDBAccess
 {
 
 	/**

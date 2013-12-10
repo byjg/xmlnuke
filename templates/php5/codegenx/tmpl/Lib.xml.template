@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extraProperties>
+
+	<!-- $classname.$tablename.$xsl -->
+
+	<allAttributes saveTo="Classes/%xsl" filename="%TableName.class.php">
+		<attribute name="project" defaultValue="__PROJECT__" />
+		<attribute name="xsl" defaultValue="%xsl" />
+	</allAttributes>
+
+	<!--table name="account_trial_balance">
+		<attribute name="package" value="Accounting" />
+	</table-->
+
+	
+</extraProperties>

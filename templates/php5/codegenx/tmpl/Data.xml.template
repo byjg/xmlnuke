@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extraProperties>
+
+	<!-- $classname.$tablename.$xsl -->
+
+	<allAttributes saveTo="data\%xsl" filename="__PROJECT__-Classes-DatabaseModel-%TableName.lang.anydata.xml">
+		<attribute name="package" defaultValue="__PROJECT__" />
+	</allAttributes>
+
+	<!--table name="account_trial_balance">
+		<attribute name="package" value="Accounting" />
+	</table-->
+
+	
+</extraProperties>

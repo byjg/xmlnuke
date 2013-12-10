@@ -2,9 +2,9 @@
 
 namespace __PROJECT__\Base;
 
-use Xmlnuke\Core\Database\BaseDBAccess;
+use Xmlnuke\Core\Database\BaseDBAccess as XmlnukeBaseDBAccess;
 
-class TesteBaseDBAccess extends BaseDBAccess
+class BaseDBAccess extends XmlnukeBaseDBAccess
 {
 	public static function DatabaseName()
 	{

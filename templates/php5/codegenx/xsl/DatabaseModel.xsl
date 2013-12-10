@@ -6,18 +6,15 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:msxsl="urn:schemas-microsoft-com:xslt" exclude-result-prefixes="msxsl">
 	<xsl:param name="tablename"></xsl:param>
-	<xsl:param name="package"></xsl:param>
+	<xsl:param name="project"></xsl:param>
+	<xsl:param name="xsl"></xsl:param>
+	
 	<xsl:output method="text"/>
 	<xsl:template match="database">
 		<xsl:for-each select="table[@name=$tablename]">
 			<xsl:variable name="ClassName">
 				<xsl:call-template name="upperCase">
 					<xsl:with-param name="textToTransform" select="@name" />
-				</xsl:call-template>
-			</xsl:variable>
-			<xsl:variable name="PackageName">
-				<xsl:call-template name="upperCase">
-					<xsl:with-param name="textToTransform" select="$package" />
 				</xsl:call-template>
 			</xsl:variable>&lt;?php
 //==============================================================================
@@ -26,13 +23,17 @@
 //=== Essa classe é gerada automaticamente. 
 //==============================================================================
 
+namespace <xsl:value-of select="$project" />\Classes\<xsl:value-of select="$xsl" />;
+
 //{@@@[//CustomInclude
 //CustomInclude]}@@@
+
+use <xsl:value-of select="$project" />\Base\BaseModel as <xsl:value-of select="$project" />BaseModel;
 
 /**
  * @Xmlnuke:NodeName <xsl:value-of select="$tablename" />
  */
-class <xsl:value-of select="$ClassName" />Model extends <xsl:value-of select="$package" />BaseModel
+class <xsl:value-of select="$ClassName" /> extends <xsl:value-of select="$project" />BaseModel
 {
 
 	const __TABLENAME__ = '<xsl:value-of select="$tablename" />';

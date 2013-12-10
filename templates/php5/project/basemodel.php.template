@@ -2,9 +2,9 @@
 
 namespace __PROJECT__\Base;
 
-use Xmlnuke\Core\Database\BaseModel;
+use Xmlnuke\Core\Database\BaseModel as XmlnukeBaseModel;
 
-class __PROJECT__BaseModel extends BaseModel
+class BaseModel extends XmlnukeBaseModel
 {
 	public function __construct($object=null)
 	{

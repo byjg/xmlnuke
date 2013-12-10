@@ -3,9 +3,9 @@
 namespace __PROJECT__\Base;
 
 use Xmlnuke\Core\Classes\XmlnukeDocument;
-use Xmlnuke\Core\Module\BaseModule;
+use Xmlnuke\Core\Module\BaseModule as XmlnukeBaseModule;
 
-class __PROJECT__BaseModule extends BaseModule
+class BaseModule extends XmlnukeBaseModule
 {
 	public function CreateDocument($title)
 	{

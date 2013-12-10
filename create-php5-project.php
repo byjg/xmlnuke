@@ -141,11 +141,11 @@ class CreatePhp5Project
 				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/module.php.template", "$HOME/lib/$PROJECT/Modules/Home.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
 
 				@mkdir( "$HOME/lib/$PROJECT/Base" );
-				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/adminbasemodule.php.template", "$HOME/lib/$PROJECT/Base/${PROJECT}AdminBaseModule.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
-				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/basedbaccess.php.template", "$HOME/lib/$PROJECT/Base/${PROJECT}BaseDBAccess.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
-				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/basemodel.php.template", "$HOME/lib/$PROJECT/Base/${PROJECT}BaseModel.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
-				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/basemodule.php.template", "$HOME/lib/$PROJECT/Base/${PROJECT}BaseModule.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
-				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/baseuiedit.php.template", "$HOME/lib/$PROJECT/Base/${PROJECT}BaseUIEdit.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
+				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/adminbasemodule.php.template", "$HOME/lib/$PROJECT/Base/AdminBaseModule.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
+				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/basedbaccess.php.template", "$HOME/lib/$PROJECT/Base/BaseDBAccess.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
+				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/basemodel.php.template", "$HOME/lib/$PROJECT/Base/BaseModel.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
+				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/basemodule.php.template", "$HOME/lib/$PROJECT/Base/BaseModule.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
+				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/baseuiedit.php.template", "$HOME/lib/$PROJECT/Base/BaseUIEdit.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
 
 
 				$aux = "";
@@ -175,6 +175,14 @@ class CreatePhp5Project
 					array('/__DATADIR__/', '/__PHPDIR__/', '/__SITE__/', '/__PROJECT_DATA__/', '/__PROJECT_LIB__/', '/__DATE__/', '/__LANGS__/'),
 					array($DATADIR, $PHPDIR, $SITE, "$HOME/data", "$HOME/lib", date('c'), $LANGUAGESAVAILABLE )
 				);
+
+
+				# CodeGenX Generators
+				@mkdir( "$HOME/codegenx" );
+				CreatePhp5Project::writeTemplate( "$TEMPLATE/codegenx/tmpl/Data.codegenx.template", "$HOME/codegenx/{$PROJECT}_Data.codegenx", array('/__XMLNUKE__/', '/__PROJECT__/'), array($XMLNUKE, $PROJECT) );
+				CreatePhp5Project::writeTemplate( "$TEMPLATE/codegenx/tmpl/Data.xml.template", "$HOME/codegenx/{$PROJECT}_Data.xml", array('/__XMLNUKE__/', '/__PROJECT__/'), array($XMLNUKE, $PROJECT) );
+				CreatePhp5Project::writeTemplate( "$TEMPLATE/codegenx/tmpl/Lib.codegenx.template", "$HOME/codegenx/{$PROJECT}_Lib.codegenx", array('/__XMLNUKE__/', '/__PROJECT__/'), array($XMLNUKE, $PROJECT) );
+				CreatePhp5Project::writeTemplate( "$TEMPLATE/codegenx/tmpl/Lib.xml.template", "$HOME/codegenx/{$PROJECT}_Lib.xml", array('/__XMLNUKE__/', '/__PROJECT__/'), array($XMLNUKE, $PROJECT) );
 
 				# Finishing XMLNuke installation!
 				$gitIgnore = array("# Xmlnuke Files - Start");

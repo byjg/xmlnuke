@@ -2,6 +2,6 @@
 
 namespace __PROJECT__\Base;
 
-class __PROJECT__BaseUIEdit {
+class BaseUIEdit {
 	//put your code here
 }

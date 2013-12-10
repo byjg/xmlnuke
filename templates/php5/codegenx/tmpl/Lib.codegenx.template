@@ -1,0 +1,10 @@
+<codegenx>
+  <torqueXml>Torque.xml</torqueXml>
+  <xsl>
+    <item name="__XMLNUKE__/templates/php5/codegenx/xsl/Dal.xsl" />
+    <item name="__XMLNUKE__/templates/php5/codegenx/xsl/DatabaseModel.xsl" />
+    <item name="__XMLNUKE__/templates/php5/codegenx/xsl/UIEdit.xsl" />
+  </xsl>
+  <extraProperties>__PROJECT___Lib.xml</extraProperties>
+  <saveTo>../lib/__PROJECT__</saveTo>
+</codegenx>
