@@ -12,7 +12,7 @@ class BaseDBAccess extends XmlnukeBaseDBAccess
 	}
 	public function getDataBaseName()
 	{
-		return __PROJECT__BaseDBAccess::DatabaseName();
+		return self::DatabaseName();
 	}
 	//put your code here
 }

@@ -163,7 +163,7 @@ abstract class BaseModel
 
 				if ($object instanceof SingleRow)
 				{
-					$propValue = $object->getField($propName);
+					$propValue = $object->getField(strtolower($propName));
 				}
 				elseif ($object instanceof Context)
 				{

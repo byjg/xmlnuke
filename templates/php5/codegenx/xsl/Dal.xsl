@@ -31,7 +31,7 @@ namespace <xsl:value-of select="$project" />\Classes\<xsl:value-of select="$xsl"
 //CustomInclude]}@@@
 
 use <xsl:value-of select="$project" />\Base\BaseDBAccess as <xsl:value-of select="$project" />BaseDBAccess;
-use <xsl:value-of select="$project" />\DatabaseModel\<xsl:value-of select="$ClassName" /> as <xsl:value-of select="$ClassName" />Model;
+use <xsl:value-of select="$project" />\Classes\DatabaseModel\<xsl:value-of select="$ClassName" /> as <xsl:value-of select="$ClassName" />Model;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\SQLFieldType;
 use Xmlnuke\Core\Enum\SQLType;
@@ -83,7 +83,7 @@ class <xsl:value-of select="$ClassName" /> extends <xsl:value-of select="$projec
 	public function obterTodos()
 	{
 		$sql = $this->baseSQLQuery();
-		return $this->getIterator($sql, $param);
+		return $this->getIterator($sql);
 	}
 
 	////// Protected Functions ///////////////////////////////////////////////
@@ -251,8 +251,6 @@ class <xsl:value-of select="$ClassName" /> extends <xsl:value-of select="$projec
 			return true;
 		}
 	}
-
-	// Falta -- Obter Todos + Array
 
 	////// CUSTOM CODE ///////////////////////////////////////////////
 	

@@ -31,7 +31,7 @@ namespace <xsl:value-of select="$project" />\Classes\<xsl:value-of select="$xsl"
 //CustomInclude]}@@@
 
 use <xsl:value-of select="$project" />\Base\BaseUIEdit as <xsl:value-of select="$project" />BaseUIEdit;
-use <xsl:value-of select="$project" />\DatabaseModel\<xsl:value-of select="$ClassName" /> as <xsl:value-of select="$ClassName" />Model;
+use <xsl:value-of select="$project" />\Classes\DatabaseModel\<xsl:value-of select="$ClassName" /> as <xsl:value-of select="$ClassName" />Model;
 use Xmlnuke\Core\Classes\CrudField;
 use Xmlnuke\Core\Classes\EditListField;
 use Xmlnuke\Core\Classes\XmlInputTextBox;
