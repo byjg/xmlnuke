@@ -76,6 +76,44 @@ class <xsl:value-of select="$ClassName" /> extends <xsl:value-of select="$projec
 
 	//-- ---------------------------------------------
 
+	// Dependant Objects
+
+	<xsl:for-each select="//table[foreign-key[@foreignTable=$tablename]]">
+		<xsl:variable name="ForeignClass">
+			<xsl:call-template name="upperCase">
+				<xsl:with-param name="textToTransform" select="@name" />
+			</xsl:call-template>
+		</xsl:variable>
+
+	protected $_<xsl:value-of select="$ForeignClass" />List = array();
+
+	/**
+	 * Add <xsl:value-of select="$ForeignClass" /> to a List
+	 */
+	public function add<xsl:value-of select="$ForeignClass" />($obj)
+	{
+		if (!($obj instanceof <xsl:value-of select="$ForeignClass" />))
+			throw new Exception ('Invalid type');
+		else
+			$this->_<xsl:value-of select="$ForeignClass" />List[] = $obj;
+	}
+
+	/**
+	 * Retrieve an array of <xsl:value-of select="$ForeignClass" /> instance
+	 */
+	public function get<xsl:value-of select="$ForeignClass" />List()
+	{
+		if (count($this->_<xsl:value-of select="$ForeignClass" />List) > 0)
+			return $this->_<xsl:value-of select="$ForeignClass" />List;
+		else
+			return null;
+	}
+
+	</xsl:for-each>
+
+	//-- ---------------------------------------------
+
+
 	<xsl:for-each select="column[(contains(@type, 'char') or contains(@type, 'CHAR')) and @size!='MAX']">
 	const <xsl:value-of select="translate(@name, '&lower;', '&upper;')" />_SIZE = <xsl:value-of select="@size" />;</xsl:for-each>
 
