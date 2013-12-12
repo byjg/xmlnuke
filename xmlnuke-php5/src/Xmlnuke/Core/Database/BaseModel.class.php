@@ -64,6 +64,10 @@ abstract class BaseModel
 		{
 			$this->bindFromContext($object);
 		}
+		else
+		{
+			$this->bindObject($object);
+		}
 	}
 
 
@@ -168,6 +172,15 @@ abstract class BaseModel
 				elseif ($object instanceof Context)
 				{
 					$propValue = $object->get($propName);
+				}
+				elseif (is_object($object) && method_exists($object, $propName))
+				{
+					$propValue = $object->{$propName}();
+				}
+				elseif (is_object($object) && method_exists($object, "get$propName"))
+				{
+					$getPropName = "get$propName";
+					$propValue = $object->{$getPropName}();
 				}
 				else
 				{
