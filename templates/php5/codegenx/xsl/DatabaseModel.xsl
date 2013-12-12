@@ -100,6 +100,7 @@ class <xsl:value-of select="$ClassName" /> extends <xsl:value-of select="$projec
 
 	/**
 	 * Retrieve an array of <xsl:value-of select="$ForeignClass" /> instance
+	 * @Xmlnuke:DontCreateNode
 	 */
 	public function get<xsl:value-of select="$ForeignClass" />List()
 	{
