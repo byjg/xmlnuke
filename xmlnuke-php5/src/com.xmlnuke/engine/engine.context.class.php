@@ -302,19 +302,27 @@ class Context extends BaseSingleton
 	}
 
 	/**
-	 * Get config debug in module
+	 * The Debug mode is enabled by switching two options:
+	 *  1 - Setting TRUE in Debug
+	 *  2 - Setting the Query string "debug=true"
 	 *
 	 * @return bool
 	 */
 	public function getDebugInModule()
 	{
 		$configDebug = $this->_debug;
-		if ($this->ContextValue("debug") == "true")
+		if ($this->ContextValue("debug") == "")
 		{
+			$requestDebug = ($this->getSession("XMLNUKE_DEBUG_MODE") == "true");
+		}
+		elseif ($this->ContextValue("debug") == "true")
+		{
+			$this->setSession("XMLNUKE_DEBUG_MODE", "true");
 			$requestDebug = true;
 		}
 		else
 		{
+			$this->removeSession("XMLNUKE_DEBUG_MODE");
 			$requestDebug = false;
 		}
 		return ($configDebug && $requestDebug);
