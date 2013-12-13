@@ -32,6 +32,7 @@ namespace Xmlnuke\Core\Module;
 
 use BadMethodCallException;
 use Xmlnuke\Core\Classes\ServiceDocument;
+use Xmlnuke\Core\Enum\AuthMode;
 use Xmlnuke\Core\Exception\NotImplementedException;
 
 /**
@@ -123,6 +124,15 @@ abstract class BaseService extends BaseModule implements IService
 	public function Put($postData, $id = "")
 	{
 		throw new NotImplementedException("Method PUT not implemented");
+	}
+
+	/**
+	 *
+	 * @return type
+	 */
+	public function getAuthMode()
+	{
+		return AuthMode::HttpDigest;
 	}
 }
 

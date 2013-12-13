@@ -142,5 +142,9 @@ interface IModule
 	 * Returns the php://input stream
 	 */
 	function getRawRequest();
+	/**
+	 * Returns if the requires authentication will be directed to the Form login OR will use the HTTP DIGEST
+	 */
+	function getAuthMode();
 }
 ?>

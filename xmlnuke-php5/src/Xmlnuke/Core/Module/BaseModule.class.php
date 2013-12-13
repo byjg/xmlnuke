@@ -542,6 +542,11 @@ abstract class BaseModule implements IModule
 		return $this->_rawRequest;
 	}
 
+	public function getAuthMode()
+	{
+		return \Xmlnuke\Core\Enum\AuthMode::Form;
+	}
+
 }
 
 ?>
