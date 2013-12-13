@@ -234,7 +234,7 @@ class <xsl:value-of select="$ClassName" /> extends <xsl:value-of select="$projec
 			//BeforeInsert]}@@@
 
 			$sql = $this->getSQLHelper()->generateSQL(<xsl:value-of select="$ClassName" />Model::__TABLENAME__, $campos, $param, SQLType::SQL_INSERT, "");
-			return $this->executeSql($sql, $param, true);
+			return $this->executeSql($sql, $param<xsl:if test="column[@autoIncrement='true']">, true</xsl:if>);
 		}
 		// Atualiza
 		else 
@@ -248,7 +248,12 @@ class <xsl:value-of select="$ClassName" /> extends <xsl:value-of select="$projec
 
 			$sql = $this->getSQLHelper()->generateSQL(<xsl:value-of select="$ClassName" />Model::__TABLENAME__, $campos, $param, SQLType::SQL_UPDATE, $filter);
 			$this->executeSQL($sql, $param);
+			<xsl:if test="column[@autoIncrement='true']">
+			return $model->get<xsl:call-template name="upperCase"><xsl:with-param name="textToTransform" select="column[@autoIncrement='true']/@name" /></xsl:call-template>();
+			</xsl:if>
+			<xsl:if test="not(column[@autoIncrement='true'])">
 			return true;
+			</xsl:if>
 		}
 	}
 
