@@ -131,7 +131,7 @@ class  CrudField
 	public static function Factory($name, $caption, $dataType, $xmlObject, $size, $maxLength, $visible, $required)
 	{
 		$fieldPage = new CrudField();
-		$fieldPage->fieldName = $name;
+		$fieldPage->fieldName = strtolower($name);
 		$fieldPage->fieldCaption = $caption;
 		$fieldPage->key = false;
 		$fieldPage->dataType = $dataType;

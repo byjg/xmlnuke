@@ -42,7 +42,7 @@ use Xmlnuke\Core\Enum\LanguageFileTypes;
 use Xmlnuke\Core\Locale\LanguageCollection;
 use Xmlnuke\Core\Locale\LanguageFactory;
 
-class <xsl:value-of select="$ClassName" />UIEdit extends <xsl:value-of select="$project" />BaseUIEdit
+class <xsl:value-of select="$ClassName" /> extends <xsl:value-of select="$project" />BaseUIEdit
 {
 	// &lt;editor-fold defaultstate="collapsed" desc="Properties"&gt;
 	/**
@@ -77,7 +77,7 @@ class <xsl:value-of select="$ClassName" />UIEdit extends <xsl:value-of select="$
 		
 		if ($myWords == null)
 		{
-			$myWords = LanguageFactory::GetLanguageCollection($this->_context, LanguageFileTypes::OBJECT, "table_<xsl:value-of select="$tablename" />");
+			$myWords = LanguageFactory::GetLanguageCollection("<xsl:value-of select="$project" />\Classes\DatabaseModel\<xsl:value-of select="$ClassName" />");
 		}
 		$this->_myWords = $myWords;
 		if ($model == null)

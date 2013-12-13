@@ -6,8 +6,8 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:msxsl="urn:schemas-microsoft-com:xslt" exclude-result-prefixes="msxsl">
 	<xsl:param name="tablename"></xsl:param>
-	<xsl:param name="package"></xsl:param>
-	<xsl:param name="include"></xsl:param>
+	<xsl:param name="project"></xsl:param>
+	<xsl:param name="xsl"></xsl:param>
 	<xsl:param name="extends"></xsl:param>
 
 
@@ -26,8 +26,16 @@
 //=== Essa classe é gerada automaticamente. 
 //==============================================================================
 
+namespace <xsl:value-of select="$project" />\<xsl:value-of select="$xsl" />\Modules;
 
-ModuleFactory::IncludePhp("<xsl:value-of select="$include" />", "_includelist.php");
+use <xsl:value-of select="$project" />\Classes\UIEdit\<xsl:value-of select="$ClassName" /> as <xsl:value-of select="$ClassName" />UIEdit;
+use <xsl:value-of select="$project" />\Classes\Dal\<xsl:value-of select="$ClassName" /> as <xsl:value-of select="$ClassName" />Dal;
+use Xmlnuke\Core\Classes\CrudFieldCollection;
+use Xmlnuke\Core\Classes\XmlBlockCollection;
+use Xmlnuke\Core\Classes\XmlnukeCrudDB;
+use Xmlnuke\Core\Enum\AccessLevel;
+use Xmlnuke\Core\Enum\BlockPosition;
+
 //{@@@[//CustomInclude
 //CustomInclude]}@@@
 
@@ -51,9 +59,9 @@ class <xsl:value-of select="$ClassName" /> extends <xsl:value-of select="$extend
 	public function CreatePage()
 	{
 		$this->WordCollection();
-		$this->createXmlnukeDocument("TITLE");
+		$this->CreateDocument("TITLE");
 
-		$op = $this->_context->ContextValue("op");
+		$op = $this->_context->get("op");
 		if ($op == "1")
 		{
 			//
@@ -105,10 +113,10 @@ class <xsl:value-of select="$ClassName" /> extends <xsl:value-of select="$extend
 			"module:" . $this->_moduleName, 
 			null, 
 			'<xsl:value-of select="@name" />', 
-			<xsl:value-of select="$ClassName" />DB::DataBaseName()
+			<xsl:value-of select="$ClassName" />Dal::DataBaseName()
 		);
 		$crud->setPermissions(true, false, true, true);
-		$block->addXmlnukeObject($process);
+		$block->addXmlnukeObject($crud);
 	}
 }
 		</xsl:for-each>

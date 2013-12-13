@@ -1,0 +1,8 @@
+<codegenx>
+  <torqueXml>Torque.xml</torqueXml>
+  <xsl>
+    <item name="__XMLNUKE__/templates/php5/codegenx/xsl/Manage.xsl" />
+  </xsl>
+  <extraProperties>__PROJECT___Manage.xml</extraProperties>
+  <saveTo>../lib/__PROJECT__</saveTo>
+</codegenx>
