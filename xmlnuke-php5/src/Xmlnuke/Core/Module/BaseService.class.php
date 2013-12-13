@@ -52,6 +52,11 @@ abstract class BaseService extends BaseModule implements IService
 		//	$this->
 	}
 
+	/**
+	 * Expected TWO pa
+	 * @return type
+	 * @throws BadMethodCallException
+	 */
 	public final function CreatePage()
 	{
 		$method = strtoupper($this->_context->get("REQUEST_METHOD"));
@@ -68,22 +73,54 @@ abstract class BaseService extends BaseModule implements IService
 		return $this->defaultXmlnukeDocument;
 	}
 
-	public function Get($postData)
+	/**
+	 * Base method for the HTTP Method "GET"
+	 * Usually it is intended for retrieve objects
+	 *
+	 * @param string $postData
+	 * @param integer $id
+	 * @throws NotImplementedException
+	 */
+	public function Get($postData, $id = "")
 	{
 		throw new NotImplementedException("Method GET not implemented");
 	}
 
-	public function Post($postData)
+	/**
+	 * Base method for the HTTP Method "POST"
+	 * Usually it is intended for add or update an object
+	 *
+	 * @param string $postData
+	 * @param integer $id
+	 * @throws NotImplementedException
+	 */
+	public function Post($postData, $id = "")
 	{
 		throw new NotImplementedException("Method POST not implemented");
 	}
 
-	public function Delete($postData)
+	/**
+	 * Base method for the HTTP Method "DELETE"
+	 * Usually it is intended for delete an object
+	 *
+	 * @param string $postData
+	 * @param integer $id
+	 * @throws NotImplementedException
+	 */
+	public function Delete($postData, $id = "")
 	{
 		throw new NotImplementedException("Method DELETE not implemented");
 	}
 
-	public function Put($postData)
+	/**
+	 * Base method for the HTTP Method "PUT"
+	 * Usually it is intended for add an object
+	 *
+	 * @param string $postData
+	 * @param integer $id
+	 * @throws NotImplementedException
+	 */
+	public function Put($postData, $id = "")
 	{
 		throw new NotImplementedException("Method PUT not implemented");
 	}
