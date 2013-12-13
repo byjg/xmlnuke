@@ -192,7 +192,7 @@ class DBDataSet
 	{
 		if ($this->_dbFunction == null)
 		{
-			$dbFunc = "\\Xmlnuke\\Core\\Database\\DB" . $this->_connectionManagement->getDriver() . "Functions";
+			$dbFunc = "\\Xmlnuke\\Core\\Database\\DB" . ucfirst($this->_connectionManagement->getDriver()) . "Functions";
 			$this->_dbFunction = new $dbFunc();
 		}
 
