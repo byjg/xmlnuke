@@ -131,7 +131,7 @@ abstract class BaseDBAccess
 	{
 		$dbfunction = $this->getDbFunctions();
 
-		$debug = $this->_context->getDebugInModule();
+		$debug = $this->_context->getDebugStatus();
 		$start = 0;
 		if ($debug)
 		{
@@ -184,7 +184,7 @@ abstract class BaseDBAccess
 	{
 		$db = $this->getDBDataSet($ttl > 0);
 
-		$debug = $this->_context->getDebugInModule();
+		$debug = $this->_context->getDebugStatus();
 		$start = 0;
 		if ($debug)
 		{
@@ -219,7 +219,7 @@ abstract class BaseDBAccess
 	{
 		$this->getDBDataSet();
 
-		$debug = $this->_context->getDebugInModule();
+		$debug = $this->_context->getDebugStatus();
 		$start = 0;
 		if ($debug)
 		{

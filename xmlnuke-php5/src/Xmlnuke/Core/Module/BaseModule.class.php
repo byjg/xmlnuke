@@ -400,7 +400,7 @@ abstract class BaseModule implements IModule
 	{
 		$this->_end = microtime(true);
 		$result = $this->_end - $this->_start;
-		if ($this->_context->getDebugInModule())
+		if ($this->_context->getDebugStatus())
 		{
 			Debug::PrintValue("Total Execution Time: " . $result . " seconds ");
 		}

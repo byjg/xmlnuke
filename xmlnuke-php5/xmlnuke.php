@@ -110,7 +110,7 @@ use Xmlnuke\Core\Exception\NotFoundException;
 			$moduleName = $context->getVirtualCommand();
 		}
 		$firstError = null;
-		$debug = $context->getDebugInModule();
+		$debug = $context->getDebugStatus();
 		
 		// Try load modules
 		// Catch errors from permissions and so on.

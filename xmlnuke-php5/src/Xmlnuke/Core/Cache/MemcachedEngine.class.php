@@ -97,7 +97,7 @@ class  MemcachedEngine extends BaseSingleton implements ICacheEngine
 			throw new InvalidArgumentException("You have to configure the memcache in the file _cacheengine.anydata.xml");
 		}
 
-		$this->_debug = $this->_context->getDebugInModule();
+		$this->_debug = $this->_context->getDebugStatus();
 	}
 
 	/**

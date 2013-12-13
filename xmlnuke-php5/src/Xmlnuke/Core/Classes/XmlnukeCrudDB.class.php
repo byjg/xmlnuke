@@ -367,7 +367,7 @@ class  XmlnukeCrudDB extends XmlnukeCrudBase
 
 	protected function DebugInfo($sql, $param)
 	{
-		if ($this->_context->getDebugInModule())
+		if ($this->_context->getDebugStatus())
 		{
 			Debug::PrintValue("<hr>");
 			Debug::PrintValue("Class name: " . get_class($this));
