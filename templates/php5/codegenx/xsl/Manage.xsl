@@ -101,7 +101,10 @@ class <xsl:value-of select="$ClassName" /> extends <xsl:value-of select="$extend
 			<xsl:variable name="FieldUpper">
 				<xsl:value-of select="translate(@name, '&lower;', '&upper;')" />
 			</xsl:variable>			
-		$field = $uiedit->crudField<xsl:value-of select="$FieldName" />();
+			<xsl:variable name="fieldname">
+				<xsl:value-of select="@name" />
+			</xsl:variable>
+		$field = $uiedit->crudField<xsl:if test="../foreign-key/reference[@local=$fieldname]">List</xsl:if><xsl:value-of select="$FieldName" />();
 		$fields->addCrudField($field);
 		</xsl:for-each>
 		

@@ -301,7 +301,7 @@ abstract class BaseDBAccess
 		while ($it->hasNext())
 		{
 			$sr = $it->moveNext();
-			$retArray[$sr->getField($key)] = $sr->getField($value);
+			$retArray[$sr->getField(strtolower($key))] = $sr->getField(strtolower($value));
 		}
 		return $retArray;
 	}

@@ -35,6 +35,7 @@ use <xsl:value-of select="$project" />\Classes\DatabaseModel\<xsl:value-of selec
 use Xmlnuke\Core\Classes\CrudField;
 use Xmlnuke\Core\Classes\EditListField;
 use Xmlnuke\Core\Classes\XmlInputTextBox;
+use Xmlnuke\Core\Database\BaseDBAccess;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\DATEFORMAT;
 use Xmlnuke\Core\Enum\INPUTTYPE;
@@ -142,6 +143,9 @@ class <xsl:value-of select="$ClassName" /> extends <xsl:value-of select="$projec
 		<xsl:variable name="FieldUpper">
 			<xsl:value-of select="translate(@name, '&lower;', '&upper;')" />
 		</xsl:variable>
+		<xsl:variable name="fieldname">
+			<xsl:value-of select="@name" />
+		</xsl:variable>
 		<xsl:variable name="ViewSize">
 		<xsl:choose>
 			<xsl:when test="contains(@type, 'date') or contains(@type, 'DATE')">10</xsl:when>
@@ -236,6 +240,24 @@ class <xsl:value-of select="$ClassName" /> extends <xsl:value-of select="$projec
 		return $field;
 	}
 
+	<xsl:if test="../foreign-key/reference[@local=$fieldname]">
+	<xsl:variable name="ForeignClass">
+		<xsl:call-template name="upperCase">
+			<xsl:with-param name="textToTransform" select="../foreign-key/@foreignTable[../reference[@local=$fieldname]]" />
+		</xsl:call-template>
+	</xsl:variable>
+	public function crudFieldList<xsl:value-of select="$FieldName" />($visible = true, $required = <xsl:if test="@required='true'">true</xsl:if><xsl:if test="not(@required='true')">false</xsl:if>, $viewSize = <xsl:value-of select="$ViewSize" />)
+	{
+		$field = $this->crudField<xsl:value-of select="$FieldName" />($visible, $required, $viewSize);
+
+		$dal = new \<xsl:value-of select="$project" />\Classes\Dal\<xsl:value-of select="$ForeignClass" />();
+		$ar = BaseDBAccess::getArrayFromIterator($dal->obterTodos(), "<xsl:value-of select="$FieldName" />", "<xsl:value-of select="$FieldName" />") ;
+
+		$field->arraySelectList = $ar;
+		$field->fieldXmlInput = \Xmlnuke\Core\Enum\XmlInputObjectType::SELECTLIST;
+		return $field;
+	}
+	</xsl:if>
 	/**
 	 * Obter um EditListField de <xsl:value-of select="$FieldName" />
 	 * @return EditListField
