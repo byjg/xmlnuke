@@ -183,9 +183,11 @@ class CreatePhp5Project
 				CreatePhp5Project::writeTemplate( "$TEMPLATE/codegenx/tmpl/Data.xml.template", "$HOME/codegenx/{$PROJECT}_Data.xml", array('/__XMLNUKE__/', '/__PROJECT__/'), array($XMLNUKE, $PROJECT) );
 				CreatePhp5Project::writeTemplate( "$TEMPLATE/codegenx/tmpl/Lib.codegenx.template", "$HOME/codegenx/{$PROJECT}_Lib.codegenx", array('/__XMLNUKE__/', '/__PROJECT__/'), array($XMLNUKE, $PROJECT) );
 				CreatePhp5Project::writeTemplate( "$TEMPLATE/codegenx/tmpl/Lib.xml.template", "$HOME/codegenx/{$PROJECT}_Lib.xml", array('/__XMLNUKE__/', '/__PROJECT__/'), array($XMLNUKE, $PROJECT) );
+				CreatePhp5Project::writeTemplate( "$TEMPLATE/codegenx/tmpl/Manage.codegenx.template", "$HOME/codegenx/{$PROJECT}_Manage.codegenx", array('/__XMLNUKE__/', '/__PROJECT__/'), array($XMLNUKE, $PROJECT) );
+				CreatePhp5Project::writeTemplate( "$TEMPLATE/codegenx/tmpl/Manage.xml.template", "$HOME/codegenx/{$PROJECT}_Manage.xml", array('/__XMLNUKE__/', '/__PROJECT__/'), array($XMLNUKE, $PROJECT) );
 
 				# Finishing XMLNuke installation!
-				$gitIgnore = array("# Xmlnuke Files - Start");
+				$gitIgnore = array("# Xmlnuke Files");
 
 				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/imagevalidate.php",  "$HTTPDOCS/") );
 				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/xmlnukeadmin.php", "$HTTPDOCS/") );
@@ -204,7 +206,11 @@ class CreatePhp5Project
 				$gitIgnore[] = "common";
 				$gitIgnore[] = "data/cache/*.cache.*";
 				$gitIgnore[] = "data/anydataset/_db.anydata.xml   # Create a _db.anydata-dist.xml instead to commit this file";
-				$gitIgnore[] = "# Xmlnuke Files - End";
+				$gitIgnore[] = "";
+				$gitIgnore[] = "# Netbeans Project";
+				$gitIgnore[] = "nbproject/private";
+				$gitIgnore[] = "";
+				$gitIgnore[] = "# User Defined";
 				$gitIgnore[] = "";
 
 				CreatePhp5Project::writeToFile("$HOME/.gitignore", $gitIgnore);
