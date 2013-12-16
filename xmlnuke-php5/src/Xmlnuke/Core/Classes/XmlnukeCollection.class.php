@@ -131,7 +131,7 @@ class XmlnukeCollection
 	 * @param type $model
 	 * @return DOMNode
 	 */
-	protected static function CreateObjectFromModel($current, $model, $config)
+	protected static function CreateObjectFromModel($current, $model, $config, $forcePropName = "")
 	{
 
 		$class = new ReflectionClass($model);
@@ -140,7 +140,7 @@ class XmlnukeCollection
 
 		#------------
 		# Define Class Attributes
-		$_name = isset($classAttributes["$config:nodename"]) ? $classAttributes["$config:nodename"] : get_class($model);
+		$_name = ($forcePropName != "" ? $forcePropName : (isset($classAttributes["$config:nodename"]) ? $classAttributes["$config:nodename"] : get_class($model)));
 		$_getter = isset($classAttributes["$config:getter"]) ? $classAttributes["$config:getter"] : "get";
 		$_propertyPattern = isset($classAttributes["$config:propertypattern"]) ? eval($classAttributes["$config:propertypattern"]) : array('/([^a-zA-Z0-9])/', '');
 		$_writeEmpty = (isset($classAttributes["$config:writeempty"]) ? $classAttributes["$config:writeempty"] : "false") == "true";
@@ -251,7 +251,8 @@ class XmlnukeCollection
 					else
 						$nodeUsed = XmlUtil::CreateChild($node, $_propName);
 
-					$used = XmlnukeCollection::CreateObjectFromModel($nodeUsed, $propValue, $config);
+					$forceName = isset($propAttributes["$config:dontcreatenode"]) ? $propAttributes["$config:dontcreatenode"] : "";
+					$used = XmlnukeCollection::CreateObjectFromModel($nodeUsed, $propValue, $config, $forceName);
 				}
 				elseif (is_array ($propValue))
 				{
@@ -260,14 +261,15 @@ class XmlnukeCollection
 					else
 						$nodeUsed = $used = XmlUtil::CreateChild($node, $_propName);
 
+					$forceName = isset($propAttributes["$config:dontcreatenode"]) ? $propAttributes["$config:dontcreatenode"] : "";
 					foreach ($propValue as $key=>$value)
 					{
 						if (is_object($value))
-							XmlnukeCollection::CreateObjectFromModel($nodeUsed, $value, $config);
+							XmlnukeCollection::CreateObjectFromModel($nodeUsed, $value, $config, $forceName);
 						else
 						{
 							if (is_numeric($key))
-								$key = "item";
+								$key = $forceName != "" ? $forceName : "item";
 							XmlUtil::CreateChild ($nodeUsed, $key, $value);
 						}
 					}
