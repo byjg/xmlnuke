@@ -195,8 +195,8 @@ abstract class BaseModel
 					else
 					{
 						$setName = "set" . ucfirst(preg_replace($this->_propertyPattern[0], $this->_propertyPattern[1], $propName));
-						if (method_exists($object, $setName))
-							$object->{$setName}($propValue);
+						if (method_exists($this, $setName))
+							$this->{$setName}($propValue);
 					}
 				}
 			}
