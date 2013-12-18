@@ -194,8 +194,9 @@ abstract class BaseModel
 						$prop->setValue($object, $propValue);
 					else
 					{
-						$method = new ReflectionMethod(get_class($this), "set" . ucfirst(preg_replace($this->_propertyPattern[0], $this->_propertyPattern[1], $propName)));
-						$method->invokeArgs($this, array($propValue));
+						$setName = "set" . ucfirst(preg_replace($this->_propertyPattern[0], $this->_propertyPattern[1], $propName));
+						if (method_exists($object, $setName))
+							$object->{$setName}($propValue);
 					}
 				}
 			}
