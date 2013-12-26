@@ -85,6 +85,9 @@ class  XmlInputSortableList extends XmlnukeDocumentObject
 	 */
 	public function addSortableItem($key, $docobj, $state = "", $column = 0)
 	{
+		if (is_string($docobj) && !empty($docobj))
+			$docobj = new XmlnukeText ($docobj);
+		
 		if (is_null($docobj) || !($docobj instanceof IXmlnukeDocumentObject)) 
 		{
 			throw new InvalidArgumentException("Object is null or not is IXmlnukeDocumentObject. Found object type: " . get_class($docobj), 853);
