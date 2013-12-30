@@ -35,7 +35,7 @@ namespace Xmlnuke\Core\Enum;
 class ModuleAction
 {
 	const Create = 'new';
-	const CreateConfirm = 'action.CREATECONFIRM';
+	const CreateConfirm = 'action.NEWCONFIRM';
 	const Edit = 'edit';
 	const EditConfirm = 'action.EDITCONFIRM';
 	const Listing = 'action.LIST';
