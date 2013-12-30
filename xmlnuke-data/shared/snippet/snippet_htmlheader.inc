@@ -1,13 +1,13 @@
-<script type="text/javascript" src="common/3rdparty/jquery/jquery-1.6.1.min.js" />
+<script type="text/javascript" src="common/3rdparty/jquery/jquery-1.10.2.min.js" />
 <script type="text/javascript" src="common/js/xmlnuke.js"></script>
 <link type="text/css" href="common/xmlnuke.css" rel="stylesheet" />
 
 <!-- UI JavaScript Object -->
 <xsl:if test="//sortablelist or //calendar or //faq or //datetimebox or //uialert or //mediagallery or //tabview or //progressbar or //textbox[@autosuggesturl]">
 
-	<link type="text/css" href="common/3rdparty/jquery/css/smoothness/jquery-ui-1.8.13.custom.css" rel="stylesheet" />
-	<script type="text/javascript" src="common/3rdparty/jquery/jquery-ui-1.8.13.custom.min.js" />
-	<script type="text/javascript" src="common/3rdparty/jquery/jquery-ui-i18n.min.js" />
+	<link type="text/css" href="common/3rdparty/jquery/css/smoothness/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" />
+	<script type="text/javascript" src="common/3rdparty/jquery/jquery-ui-1.10.3.custom.min.js" />
+	<script type="text/javascript" src="common/3rdparty/jquery/jquery-ui-i18n.js" />
 </xsl:if>
 
 <!-- Include specific JavaScript for Sortable  -->
