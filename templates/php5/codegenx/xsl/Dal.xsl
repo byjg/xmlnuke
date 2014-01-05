@@ -215,14 +215,17 @@ class <xsl:value-of select="$ClassName" /> extends <xsl:value-of select="$projec
 	 *
 	 * @param <xsl:value-of select="$ClassName" />Model $model
 	 */
-	public function gravar<xsl:value-of select="$ClassName" />($model)
+	public function gravar<xsl:value-of select="$ClassName" />($model<xsl:if test="not(column[@autoIncrement='true'])">, $isInsert</xsl:if>)
 	{
 		$param = array();
 		$campos = array();
 		<xsl:for-each select="column[not(@autoIncrement='true')]">
 		$campos[<xsl:value-of select="$ClassName" />Model::<xsl:value-of select="translate(@name, '&lower;', '&upper;')" />] = array(<xsl:call-template name="convert_data_type"><xsl:with-param name="sqltype" select="@type" /></xsl:call-template>, $model->get<xsl:call-template name="upperCase"><xsl:with-param name="textToTransform" select="@name" /></xsl:call-template>());</xsl:for-each>
+
+		<xsl:if test="column[@autoIncrement='true']">
 		
 		$isInsert = <xsl:for-each select="column[@primaryKey='true']"><xsl:if test="position()!=1"> || </xsl:if>($model->get<xsl:call-template name="upperCase"><xsl:with-param name="textToTransform" select="@name" /></xsl:call-template>() == "")<xsl:if test="position()=last()">;</xsl:if></xsl:for-each>
+		</xsl:if>
 
 		//{@@@[//CustomPreProcess
 		//CustomPreProcess]}@@@
