@@ -182,6 +182,10 @@ abstract class BaseModel
 					$getPropName = "get$propName";
 					$propValue = $object->{$getPropName}();
 				}
+				elseif (is_object($object) && $prop->isPublic())
+				{
+					$propValue = $object->{$propName};
+				}
 				else
 				{
 					$propValue = "";
@@ -190,8 +194,8 @@ abstract class BaseModel
 				// If exists value, set it;
 				if ($propValue != "")
 				{
-					if ($prop->isPublic())
-						$prop->setValue($object, $propValue);
+					if (property_exists($this, $propName))
+						$this->{$propName} = $propValue;
 					else
 					{
 						$setName = "set" . ucfirst(preg_replace($this->_propertyPattern[0], $this->_propertyPattern[1], $propName));

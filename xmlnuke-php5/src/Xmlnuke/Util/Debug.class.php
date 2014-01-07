@@ -207,14 +207,29 @@ class Debug
 							echo " ==> ";
 							try
 							{
-								$method = new ReflectionMethod(get_class($var), $met->getName());
-								echo $method->invokeArgs($var, array());
+								echo $var->{$met->getName()}();
 							}
 							catch (Exception $ex)
 							{
 								echo "Error: " . $ex->getMessage();
 							}
 
+						}
+						echo "</li>";
+					}
+					echo "</ul>";
+					echo "Public Property List:<ul>";
+					$properties = $class->getProperties( ReflectionProperty::IS_PUBLIC );
+					foreach ($properties as $prop)
+					{
+						echo "<li>" . $prop->getName() . " => ";
+						try
+						{
+							echo $var->{$prop->getName()};
+						}
+						catch (Exception $ex)
+						{
+							echo "Error: " . $ex->getMessage();
 						}
 						echo "</li>";
 					}
