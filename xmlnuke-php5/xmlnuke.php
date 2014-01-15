@@ -147,7 +147,7 @@ use Xmlnuke\Core\Exception\NotFoundException;
 	 */
 	function detectMobile()
 	{
-		global $context;
+		$context = Context::getInstance();
 
 		if (!$context->get("xmlnuke.DETECTMOBILE"))
 		{

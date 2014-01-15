@@ -74,16 +74,19 @@ class ArrayDataSet
 				}
 				else 
 				{
-					$result = array();
+					$result = array("__class" => get_class($value));
 					$methods = get_class_methods($value);
 					foreach ($methods as $method)
 					{
-						if (strpos($method, "get") == 0)
+						if (strpos($method, "get") === 0)
 						{
 							$met = new ReflectionMethod($value, $method);
 							$result[substr($method,3)] = $met->invoke($value);
 						}
 					}
+					$this->_array[$key] = $result;
+					$props = get_object_vars($value);
+					$this->_array[$key] += $props;
 				}
 			}
 		}

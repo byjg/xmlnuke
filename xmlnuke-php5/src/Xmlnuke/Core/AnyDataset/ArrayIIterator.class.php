@@ -33,6 +33,7 @@
  */
 namespace Xmlnuke\Core\AnyDataset;
 
+use InvalidArgumentException;
 use Xmlnuke\Core\AnyDataset\AnyDataSet;
 use Xmlnuke\Core\AnyDataset\GenericIterator;
 use Xmlnuke\Core\AnyDataset\IIterator;
@@ -78,7 +79,7 @@ class ArrayIIterator extends GenericIterator
 	*/
 	public function Count()
 	{
-		return sizeof($this->_rows);
+		return count($this->_rows);
 	}
 
 	/**
@@ -104,8 +105,8 @@ class ArrayIIterator extends GenericIterator
 
 			$any = new AnyDataSet();
 			$any->appendRow();
-			$any->addField("id", $this->_currentRow);
-			$any->addField("key", $key);
+			$any->addField("__id", $this->_currentRow);
+			$any->addField("__key", $key);
 			foreach ($cols as $key=>$value)
 			{
 				$any->addField(strtolower($key), $value);

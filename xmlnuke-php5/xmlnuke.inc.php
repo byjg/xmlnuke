@@ -33,7 +33,7 @@ define("SESSION_XMLNUKE_AUTHUSERID", "SESSION_XMLNUKE_AUTHUSERID");
 define("SESSION_XMLNUKE_USERCONTEXT", "SESSION_XMLNUKE_USERCONTEXT");
 
 /* This main of engine */
-if (!file_exists("config.inc.php"))
+if (!class_exists('config') && !file_exists("config.inc.php"))
 	die("<b>Fatal error:</b> Could not find required 'config.inc.php'");
 
 require_once("config.inc.php");
