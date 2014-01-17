@@ -228,4 +228,15 @@ class DBOci8Driver implements IDBDriver
 	{
 		return $this->_conn;
 	}
+
+	public function getAttribute($name)
+	{
+		throw new \Xmlnuke\Core\Exception\NotImplementedException('Method not implemented for OCI Driver');
+	}
+
+	public function setAttribute($name, $value)
+	{
+		throw new \Xmlnuke\Core\Exception\NotImplementedException('Method not implemented for OCI Driver');
+	}
+
 }

@@ -198,4 +198,15 @@ class DBSQLRelayDriver implements IDBDriver
 	{
 		return $this->_conn;
 	}
+
+	public function getAttribute($name)
+	{
+		throw new \Xmlnuke\Core\Exception\NotImplementedException('Method not implemented for SQL Relay Driver');
+	}
+
+	public function setAttribute($name, $value)
+	{
+		throw new \Xmlnuke\Core\Exception\NotImplementedException('Method not implemented for SQL Relay Driver');
+	}
+
 }

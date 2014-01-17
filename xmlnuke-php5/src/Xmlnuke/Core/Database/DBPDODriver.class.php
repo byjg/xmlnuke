@@ -213,4 +213,15 @@ class DBPDODriver implements IDBDriver
 	{
 		return $this->_db;
 	}
+
+	public function getAttribute($name)
+	{
+		$this->_db->getAttribute($name);
+	}
+
+	public function setAttribute($name, $value)
+	{
+		$this->_db->setAttribute ( $name, $value );
+	}
+
 }

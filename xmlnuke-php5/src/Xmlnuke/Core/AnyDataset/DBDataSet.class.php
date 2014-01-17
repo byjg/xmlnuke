@@ -198,6 +198,17 @@ class DBDataSet
 
 		return $this->_dbFunction;
 	}
+
+	public function setDriverAttribute($name, $value)
+	{
+		return $this->_dbDriver->setAttribute($name, $value);
+	}
+
+	public function getDriverAttribute($name)
+	{
+		return $this->_dbDriver->getAttribute($name);
+	}
+
 }
 
 ?>

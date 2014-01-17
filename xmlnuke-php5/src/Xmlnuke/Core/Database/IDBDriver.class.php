@@ -45,5 +45,7 @@ interface IDBDriver
 	function rollbackTransaction();
 	
 	function getDbConnection();
-	
+
+	function setAttribute($name, $value);
+	function getAttribute($name);
 }
