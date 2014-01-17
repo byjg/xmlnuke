@@ -83,6 +83,9 @@ class <xsl:value-of select="$ClassName" /> extends <xsl:value-of select="$projec
 	public function obterTodos()
 	{
 		$sql = $this->baseSQLQuery();
+		//{@@@[//CustomObterTodos
+		//CustomObterTodos]}@@@
+		
 		return $this->getIterator($sql);
 	}
 
