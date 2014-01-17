@@ -108,7 +108,14 @@ class XmlnukeCollection
 				}
 
 				# Transform
-				if (($item instanceof IXmlnukeDocumentObject) && ($this->_xmlTransform != XMLTransform::Model))
+				if ($item instanceof \Xmlnuke\Core\AnyDataset\IIterator)
+				{
+					foreach ($item as $singleRow)
+					{
+						XmlUtil::AddNodeFromNode($current, $singleRow->getDomObject());
+					}
+				}
+				elseif (($item instanceof IXmlnukeDocumentObject) && ($this->_xmlTransform != XMLTransform::Model))
 				{
 					$item->generateObject($current);
 				}
@@ -133,6 +140,14 @@ class XmlnukeCollection
 	 */
 	protected static function CreateObjectFromModel($current, $model, $config, $forcePropName = "")
 	{
+		if ($model instanceof \Xmlnuke\Core\AnyDataset\IIterator)
+		{
+			foreach ($model as $singleRow)
+			{
+				XmlUtil::AddNodeFromNode($current, $singleRow->getDomObject());
+			}
+			return $current;
+		}
 
 		$class = new ReflectionClass($model);
 		preg_match_all('/@(?P<param>\S+)\s*(?P<value>\S+)?\r?\n/', $class->getDocComment(), $aux);
