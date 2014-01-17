@@ -115,6 +115,7 @@ class CreatePhp5Project
 				CreatePhp5Project::writeToFile( "$HOME/data/xsl/.do_not_remove", "-- DO NOT REMOVE THIS DIRECTORY --") ;
 				CreatePhp5Project::writeToFile( "$HOME/data/snippet/.do_not_remove", "-- DO NOT REMOVE THIS DIRECTORY --") ;
 
+				# Creating International Static Files
 				$langs = array();
 				$i = 4;
 				while ( $i < $argc )
@@ -134,6 +135,7 @@ class CreatePhp5Project
 
 				$LANGUAGESAVAILABLE = implode(", \n\t\t\t\t\t", $langs);
 
+				# Create Project Related Files
 				@mkdir( "$HOME/lib" );
 				@mkdir( "$HOME/lib/$PROJECT" );
 
@@ -147,7 +149,23 @@ class CreatePhp5Project
 				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/basemodule.php.template", "$HOME/lib/$PROJECT/Base/BaseModule.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
 				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/baseuiedit.php.template", "$HOME/lib/$PROJECT/Base/BaseUIEdit.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
 
+				# Create Project PHPUnit Related Files
+				@mkdir( "$HOME/lib/Tests" );
+				@mkdir( "$HOME/lib/Tests/$PROJECT" );
+				@mkdir( "$HOME/lib/Tests/$PROJECT/Classes" );
+				@mkdir( "$HOME/lib/$PROJECT/Classes" );
+				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/bootstrap.php.template", "$HOME/lib/Tests/bootstrap.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
+				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/configuration.xml.template", "$HOME/lib/Tests/configuration.xml", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
+				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/sample.php.template", "$HOME/lib/$PROJECT/Classes/Sample.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
+				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/sampletest.php.template", "$HOME/lib/Tests/$PROJECT/Classes/SampleTest.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
 
+				# Netbeans project specific
+				@mkdir( "$HOME/nbproject" );
+				@mkdir( "$HOME/nbproject/private" );
+				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/project.properties.template", "$HOME/nbproject/project.properties", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
+				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/project.xml.template", "$HOME/nbproject/project.xml", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
+
+				# Anydataset Files
 				$aux = "";
 				$aux .= "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" ;
 				$aux .= "<anydataset>\n" ;
