@@ -27,6 +27,17 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+namespace Xmlnuke\Core\Admin;
+
+use Xmlnuke\Core\Classes\PageXml;
+use Xmlnuke\Core\Enum\LanguageFileTypes;
+use Xmlnuke\Core\Locale\LanguageCollection;
+use Xmlnuke\Core\Locale\LanguageFactory;
+use Xmlnuke\Core\Module\BaseModule;
+use Xmlnuke\Core\Processor\ForceFilenameLocation;
+use Xmlnuke\Core\Processor\XSLFilenameProcessor;
+use Xmlnuke\Util\FileUtil;
+
 /**
  * Base Admin Modules
  * @package xmlnuke
@@ -38,15 +49,15 @@ abstract class BaseAdminModule extends BaseModule
 	*/
 	protected $_px;
 	/**
-	*@var \DOMNode
+	*@var DOMNode
 	*/
 	protected $_mainBlock;
 	/**
-	*@var \DOMNode
+	*@var DOMNode
 	*/
 	private $_help;
 	/**
-	*@var \DOMNode
+	*@var DOMNode
 	*/
 	private $_menu;
 	/**
@@ -58,7 +69,7 @@ abstract class BaseAdminModule extends BaseModule
 	{}
 	
 	/**
-	*@return LanguageCollection 
+	*@return LanguageCollection
 	*@desc Implements some base XML options used for ALL Admin Modules.
 	*/
 	public function WordCollection()
@@ -69,7 +80,7 @@ abstract class BaseAdminModule extends BaseModule
 	
 	/**
 	*@param 
-	*@return PageXml 
+	*@return PageXml
 	*@desc 
 	*/
 	public function CreatePage() 
@@ -142,6 +153,14 @@ abstract class BaseAdminModule extends BaseModule
 		return true;
 	}
 
+	public function getXsl()
+	{
+		$xslFile = new XSLFilenameProcessor("admin" . FileUtil::Slash() . "admin_page");
+		$xslFile->setFilenameLocation(ForceFilenameLocation::PathFromRoot);
+		//Pendente
+		$xslFile->UseFileFromAnyLanguage();
+		return $xslFile;
+	}
 }
 
 ?>

@@ -208,22 +208,7 @@ class XmlnukeEngine
 				if ($nodePage != null)
 					$this->addXMLDefault($nodePage);
 
-				if (!($module->isAdmin()))
-				{
-					if (strpos($this->_context->getXsl(), "admin_page"))
-					{
-						$this->_context->setXsl($this->_context->get("xmlnuke.DEFAULTPAGE"));
-					}
-					$result = $this->TransformDocumentFromDOM($xmlDoc);
-				}
-				else
-				{
-					$xslFile = new XSLFilenameProcessor("admin" . FileUtil::Slash() . "admin_page");
-					$xslFile->setFilenameLocation(ForceFilenameLocation::PathFromRoot);
-					//Pendente
-					$xslFile->UseFileFromAnyLanguage();
-					$result = $this->TransformDocument($xmlDoc, $xslFile);
-				}
+				$result = $this->TransformDocument($xmlDoc, $module->getXsl());
 			}
 			catch (Exception $ex)
 			{

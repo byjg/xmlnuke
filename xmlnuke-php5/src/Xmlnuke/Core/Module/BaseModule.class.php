@@ -40,7 +40,7 @@ use Xmlnuke\Core\Classes\XmlnukeDocument;
 use Xmlnuke\Core\Classes\XmlnukeManageUrl;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\AccessLevel;
-use Xmlnuke\Core\Enum\LanguageFileTypes;
+use Xmlnuke\Core\Enum\AuthMode;
 use Xmlnuke\Core\Enum\SSLAccess;
 use Xmlnuke\Core\Enum\URLTYPE;
 use Xmlnuke\Core\Enum\UserProperty;
@@ -51,6 +51,7 @@ use Xmlnuke\Core\Locale\LanguageCollection;
 use Xmlnuke\Core\Locale\LanguageFactory;
 use Xmlnuke\Core\Processor\XMLCacheFilenameProcessor;
 use Xmlnuke\Core\Processor\XMLFilenameProcessor;
+use Xmlnuke\Core\Processor\XSLFilenameProcessor;
 use Xmlnuke\Util\Debug;
 
 /**
@@ -544,7 +545,28 @@ abstract class BaseModule implements IModule
 
 	public function getAuthMode()
 	{
-		return \Xmlnuke\Core\Enum\AuthMode::Form;
+		return AuthMode::Form;
+	}
+
+	public function getXsl()
+	{
+		if (strpos($this->_context->getXsl(), "admin_page"))
+		{
+			$this->_context->setXsl($this->_context->get("xmlnuke.DEFAULTPAGE"));
+		}
+
+		// Default XSL (get from parameter or config)
+		$xslFile = new XSLFilenameProcessor($this->_context->getXsl());
+
+		// Forced XSL (used only one time)
+		//$xslFile = new XSLFilenameProcessor("myxsl");
+
+		// Forced XSL (use it from now and then)
+		//$xsl = "myxsl";
+		//$this->_context->setXsl($xsl);
+		//$xslFile = new XSLFilenameProcessor($xsl);
+		
+		return $xslFile;
 	}
 
 }

@@ -146,5 +146,11 @@ interface IModule
 	 * Returns if the requires authentication will be directed to the Form login OR will use the HTTP DIGEST
 	 */
 	function getAuthMode();
+
+	/**
+	 * Return the must be used in this module
+	 * @return \Xmlnuke\Core\Processor\XSLFilenameProcessor File name processor
+	 */
+	function getXsl();
 }
 ?>
