@@ -87,9 +87,9 @@ class SelectLanguage extends BaseAdminModule
 		{
 			$optlist = $this->_px->addOptionList($list);
 			$this->_px->addText($optlist, " [ ");
-			$this->_px->addHref($optlist, "admin:engine?lang=".$key, $myWords->Value("SELECT"), null);
+			$this->_px->addHref($optlist, "module:Xmlnuke.Admin.ControlPanel?lang=".$key, $myWords->Value("SELECT"), null);
 			$this->_px->addText($optlist, " | ");
-			$this->_px->addHref($optlist, "admin:SelectLanguage?destlang=".$key."&action=createrepo", $myWords->Value("CREATEREPOSITORY"), null);
+			$this->_px->addHref($optlist, "module:Xmlnuke.Admin.SelectLanguage?destlang=".$key."&action=createrepo", $myWords->Value("CREATEREPOSITORY"), null);
 			$this->_px->addText($optlist, " ] ");
 			$this->_px->addText($optlist, $key . ": " . $langAvail[$key]);
 		}

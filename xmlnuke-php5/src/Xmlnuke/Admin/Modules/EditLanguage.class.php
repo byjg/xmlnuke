@@ -31,7 +31,31 @@
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Admin;
+namespace Xmlnuke\Admin\Modules;
+
+use Xmlnuke\Core\Admin\NewBaseAdminModule;
+use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use Xmlnuke\Core\AnyDataset\ArrayDataSet;
+use Xmlnuke\Core\AnyDataset\IIterator;
+use Xmlnuke\Core\Classes\CrudField;
+use Xmlnuke\Core\Classes\CrudFieldCollection;
+use Xmlnuke\Core\Classes\EditListField;
+use Xmlnuke\Core\Classes\XmlBlockCollection;
+use Xmlnuke\Core\Classes\XmlEditList;
+use Xmlnuke\Core\Classes\XmlFormCollection;
+use Xmlnuke\Core\Classes\XmlInputButtons;
+use Xmlnuke\Core\Classes\XmlInputHidden;
+use Xmlnuke\Core\Classes\XmlInputMemo;
+use Xmlnuke\Core\Classes\XmlInputTextBox;
+use Xmlnuke\Core\Classes\XmlnukeCrudAnydata;
+use Xmlnuke\Core\Enum\AccessLevel;
+use Xmlnuke\Core\Enum\BlockPosition;
+use Xmlnuke\Core\Enum\ModuleAction;
+use Xmlnuke\Core\Locale\LanguageCollection;
+use Xmlnuke\Core\Processor\AnydatasetLangFilenameProcessor;
+use Xmlnuke\Core\Processor\FilenameProcessor;
+use Xmlnuke\Core\Processor\ForceFilenameLocation;
+use Xmlnuke\Util\FileUtil;
 
 class EditLanguage extends NewBaseAdminModule
 {
@@ -68,9 +92,9 @@ class EditLanguage extends NewBaseAdminModule
 		$this->myWords = $this->WordCollection();
 		$this->setTitlePage($this->myWords->Value("TITLE"));
 		$this->setHelp($this->myWords->Value("DESCRIPTION"));
-		$this->addMenuOption($this->myWords->Value("NEWLANGUAGEFILE"),"admin:EditLanguage?action=new");
-		$this->addMenuOption($this->myWords->Value("VIEWSHAREDFILES"),"admin:EditLanguage?op=1");
-		$this->addMenuOption($this->myWords->Value("VIEWPRIVATEFILES"),"admin:EditLanguage");
+		$this->addMenuOption($this->myWords->Value("NEWLANGUAGEFILE"),"module:Xmlnuke.Admin.EditLanguage?action=new");
+		$this->addMenuOption($this->myWords->Value("VIEWSHAREDFILES"),"module:Xmlnuke.Admin.EditLanguage?op=1");
+		$this->addMenuOption($this->myWords->Value("VIEWPRIVATEFILES"),"module:Xmlnuke.Admin.EditLanguage");
 
 		$block = new XmlBlockCollection($this->myWords->Value("WORKINGAREA"), BlockPosition::Center);
 		$this->defaultXmlnukeDocument->addXmlnukeObject($block);
@@ -91,7 +115,7 @@ class EditLanguage extends NewBaseAdminModule
 
 		if ($this->_action == "")
 		{
-			$editlist = new XmlEditList($this->_context, $this->myWords->Value("FILELIST$op"), "admin:EditLanguage", true, false, true, false);
+			$editlist = new XmlEditList($this->_context, $this->myWords->Value("FILELIST$op"), "module:Xmlnuke.Admin.EditLanguage", true, false, true, false);
 
 			$field = new EditListField();
 			$field->editlistName = "#";
@@ -148,7 +172,7 @@ class EditLanguage extends NewBaseAdminModule
 					$this->_context,
 					$CrudFieldCollection,
 					$this->myWords->Value("EDITLANGUAGE", $file),
-					"module:admin.EditLanguage",
+					"module:Xmlnuke.Admin.EditLanguage",
 					null,
 					$langDir
 				);
@@ -161,7 +185,7 @@ class EditLanguage extends NewBaseAdminModule
 		}
 		elseif ($this->_action == ModuleAction::Create)
 		{
-			$form = new XmlFormCollection($this->_context, "admin:EditLanguage", $this->myWords->Value("NEWLANGUAGEFILE"));
+			$form = new XmlFormCollection($this->_context, "module:Xmlnuke.Admin.EditLanguage", $this->myWords->Value("NEWLANGUAGEFILE"));
 			$form->addXmlnukeObject(new XmlInputHidden("action", ModuleAction::CreateConfirm));
 			$form->addXmlnukeObject(new XmlInputHidden("op", $op));
 			$form->addXmlnukeObject(new XmlInputTextBox($this->myWords->Value("NEWFILE"), "newfile", "", 30));
@@ -189,7 +213,7 @@ class EditLanguage extends NewBaseAdminModule
 				}
 			}
 			$anydata->Save($langDir);
-			$this->_context->redirectUrl("admin:EditLanguage?ed=1&file=$file");
+			$this->_context->redirectUrl("module:Xmlnuke.Admin.EditLanguage?ed=1&file=$file");
 		}
 
 

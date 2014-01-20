@@ -29,14 +29,11 @@
 
 namespace Xmlnuke\Core\Admin;
 
+use DOMNode;
 use Xmlnuke\Core\Classes\PageXml;
-use Xmlnuke\Core\Enum\LanguageFileTypes;
-use Xmlnuke\Core\Locale\LanguageCollection;
-use Xmlnuke\Core\Locale\LanguageFactory;
 use Xmlnuke\Core\Module\BaseModule;
-use Xmlnuke\Core\Processor\ForceFilenameLocation;
 use Xmlnuke\Core\Processor\XSLFilenameProcessor;
-use Xmlnuke\Util\FileUtil;
+use Xmlnuke\Util\XmlUtil;
 
 /**
  * Base Admin Modules
@@ -67,16 +64,6 @@ abstract class BaseAdminModule extends BaseModule
 	*/
 	public function BaseAdminModule()
 	{}
-	
-	/**
-	*@return LanguageCollection
-	*@desc Implements some base XML options used for ALL Admin Modules.
-	*/
-	public function WordCollection()
-	{	
-		$lang = LanguageFactory::GetLanguageCollection(LanguageFileTypes::ADMINMODULE, $this->_xmlModuleName->ToString());
-		return $lang;
-	}
 	
 	/**
 	*@param 
@@ -137,7 +124,7 @@ abstract class BaseAdminModule extends BaseModule
 	protected function setTitlePage($strTitle)
 	{
 		//\DOMNode
-		$tit = XMLUtil::SelectSingleNode($this->_px->getDomObject()->documentElement,"blockcenter[title='Menu']/title");
+		$tit = XmlUtil::SelectSingleNode($this->_px->getDomObject()->documentElement,"blockcenter[title='Menu']/title");
 		$this->_px->setTitle($this->_px->getTitle() . " - " . $strTitle);
 		$this->_px->setAbstract($this->_px->getTitle());
 		$tit->nodeValue = $strTitle;
@@ -155,9 +142,7 @@ abstract class BaseAdminModule extends BaseModule
 
 	public function getXsl()
 	{
-		$xslFile = new XSLFilenameProcessor("admin" . FileUtil::Slash() . "admin_page");
-		$xslFile->setFilenameLocation(ForceFilenameLocation::PathFromRoot);
-		//Pendente
+		$xslFile = new XSLFilenameProcessor("admin");
 		$xslFile->UseFileFromAnyLanguage();
 		return $xslFile;
 	}

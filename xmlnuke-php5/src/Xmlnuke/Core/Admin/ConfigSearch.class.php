@@ -82,7 +82,7 @@ class ConfigSearch extends NewBaseAdminModule
 		$field->maxLength = 500;
 		$fields->addCrudField($field);
 		
-		$processor = new XmlnukeCrudAnydata($this->_context, $fields, $myWords->Value("TITLE"), "module:admin.configsearch", null, $configSearchFile);
+		$processor = new XmlnukeCrudAnydata($this->_context, $fields, $myWords->Value("TITLE"), "module:Xmlnuke.Admin.configsearch", null, $configSearchFile);
 		$block->addXmlnukeObject($processor);
 		
 		$p = new XmlParagraphCollection();

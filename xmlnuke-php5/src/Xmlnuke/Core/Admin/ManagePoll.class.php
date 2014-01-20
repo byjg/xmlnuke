@@ -41,7 +41,7 @@ class ManagePoll extends NewBaseAdminModule
 	protected $_isdb = false;
 	protected $_connection = "";
 
-	protected $_moduleUrl = "admin:managepoll";
+	protected $_moduleUrl = "module:Xmlnuke.Admin.managepoll";
 	
 	public function ManagePoll()
 	{
@@ -74,7 +74,7 @@ class ManagePoll extends NewBaseAdminModule
 		$block = new XmlBlockCollection($this->myWords->Value("TITLE"), BlockPosition::Center);
 		
 		$this->addMenuItem($this->_moduleUrl, $this->myWords->Value("MENULISTPOLLS"), "");
-		$this->addMenuItem("module:admin.managedbconn", $this->myWords->Value("MENUMANAGEDBCONN"), "");
+		$this->addMenuItem("module:Xmlnuke.Admin.managedbconn", $this->myWords->Value("MENUMANAGEDBCONN"), "");
 			
 		// Create a NEW config file and SETUP Database
 		$configfile = new AnydatasetFilenameProcessor("_poll");

@@ -35,7 +35,7 @@ namespace Xmlnuke\Core\Processor;
 
 use Xmlnuke\Util\FileUtil;
 
-class AdminModulesXMLFilenameProcessor extends AnydatasetFilenameProcessor
+class AdminModulesXmlFilenameProcessor extends AnydatasetFilenameProcessor
 {
 	/**
 	 *

@@ -30,7 +30,17 @@
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Admin;
+namespace Xmlnuke\Admin\Modules;
+
+use Xmlnuke\Core\Admin\NewBaseAdminModule;
+use Xmlnuke\Core\Classes\CrudField;
+use Xmlnuke\Core\Classes\CrudFieldCollection;
+use Xmlnuke\Core\Classes\XmlBlockCollection;
+use Xmlnuke\Core\Classes\XmlnukeCrudAnydata;
+use Xmlnuke\Core\Enum\AccessLevel;
+use Xmlnuke\Core\Enum\BlockPosition;
+use Xmlnuke\Core\Enum\INPUTTYPE;
+use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
 
 class ConfigEmail extends NewBaseAdminModule
 {
@@ -83,7 +93,7 @@ class ConfigEmail extends NewBaseAdminModule
 		$field->dataType = INPUTTYPE::EMAIL;
 		$fields->addCrudField($field);
 		
-		$processor = new XmlnukeCrudAnydata($this->_context, $fields, $myWords->Value("TITLE"), "module:admin.configemail", null, $configEmailFile);
+		$processor = new XmlnukeCrudAnydata($this->_context, $fields, $myWords->Value("TITLE"), "module:Xmlnuke.Admin.ConfigEmail", null, $configEmailFile);
 		$block->addXmlnukeObject($processor);
 		
 		return $this->defaultXmlnukeDocument;		

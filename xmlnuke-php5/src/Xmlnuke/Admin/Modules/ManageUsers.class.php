@@ -30,11 +30,41 @@
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Admin;
+namespace Xmlnuke\Admin\Modules;
+
+use Xmlnuke\Core\Admin\NewBaseAdminModule;
+use Xmlnuke\Core\Admin\UsersBase;
+use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use Xmlnuke\Core\Classes\EditListField;
+use Xmlnuke\Core\Classes\XmlAnchorCollection;
+use Xmlnuke\Core\Classes\XmlBlockCollection;
+use Xmlnuke\Core\Classes\XmlEasyList;
+use Xmlnuke\Core\Classes\XmlEditList;
+use Xmlnuke\Core\Classes\XmlFormCollection;
+use Xmlnuke\Core\Classes\XmlInputButtons;
+use Xmlnuke\Core\Classes\XmlInputCheck;
+use Xmlnuke\Core\Classes\XmlInputHidden;
+use Xmlnuke\Core\Classes\XmlInputLabelField;
+use Xmlnuke\Core\Classes\XmlInputTextBox;
+use Xmlnuke\Core\Classes\XmlnukeSpanCollection;
+use Xmlnuke\Core\Classes\XmlnukeTabView;
+use Xmlnuke\Core\Classes\XmlnukeText;
+use Xmlnuke\Core\Classes\XmlParagraphCollection;
+use Xmlnuke\Core\Classes\XmlTableCollection;
+use Xmlnuke\Core\Classes\XmlTableColumnCollection;
+use Xmlnuke\Core\Classes\XmlTableRowCollection;
+use Xmlnuke\Core\Enum\AccessLevel;
+use Xmlnuke\Core\Enum\BlockPosition;
+use Xmlnuke\Core\Enum\EasyListType;
+use Xmlnuke\Core\Enum\InputTextBoxType;
+use Xmlnuke\Core\Enum\INPUTTYPE;
+use Xmlnuke\Core\Enum\Relation;
+use Xmlnuke\Core\Enum\UserProperty;
+use Xmlnuke\Util\FileUtil;
 
 class ManageUsers extends NewBaseAdminModule
 {
-	private $url = "admin:ManageUsers";
+	private $url = "module:Xmlnuke.Admin.ManageUsers";
 
 	public function ManageUsers()
 	{
@@ -72,7 +102,7 @@ class ManageUsers extends NewBaseAdminModule
 		$this->setHelp($this->myWords->Value("DESCRIPTION"));
 
 		$this->addMenuOption($this->myWords->Value("NEWUSER"), $this->url, null);
-		$this->addMenuOption($this->myWords->Value("ADDROLE"), "admin:manageusersgroups", null);
+		$this->addMenuOption($this->myWords->Value("ADDROLE"), "module:Xmlnuke.Admin.manageusersgroups", null);
 
 		// --------------------------------------
 		// CHECK ACTION
@@ -216,7 +246,7 @@ class ManageUsers extends NewBaseAdminModule
 		}
 		$it = $users->getIterator($itf);
 
-		$formpesq = new XmlFormCollection($this->_context, $this->url, $this->myWords->Value("TITLEPESQUSER")); 
+		$formpesq = new XmlFormCollection($this->_context, $this->url, $this->myWords->Value("TITLEPESQUSER"));
 		$formpesq->setFormName("form-label-top");
                 $textbox = new XmlInputTextBox($this->myWords->Value("PESQUSER"), "pesquser", $this->_context->get("pesquser"));
                 $textbox->setDataType(INPUTTYPE::TEXT);
@@ -523,7 +553,7 @@ class ManageUsers extends NewBaseAdminModule
 				$col = new XmlTableColumnCollection();
 				if (($fldName != $users->getUserTable()->Name) && ($fldName != $users->getUserTable()->Username) && ($fldName != $users->getUserTable()->Email) && ($fldName != $users->getUserTable()->Password) && ($fldName != $users->getUserTable()->Created) && ($fldName != $users->getUserTable()->Admin) && ($fldName != $users->getUserTable()->Id))
 				{
-					$href = new XmlAnchorCollection("admin:ManageUsers?action=removecustomvalue&customfield=" . $fldName . "&valueid=".$uid."&customvalue=" . urlencode($value), "");
+					$href = new XmlAnchorCollection("module:Xmlnuke.Admin.ManageUsers?action=removecustomvalue&customfield=" . $fldName . "&valueid=".$uid."&customvalue=" . urlencode($value), "");
 					$href->addXmlnukeObject(new XmlnukeText($this->myWords->Value("TXT_REMOVE")));
 					$col->addXmlnukeObject($href);
 				}

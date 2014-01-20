@@ -118,9 +118,9 @@ class BackupModule extends NewBaseAdminModule
 
 		$this->setHelp($this->_myWords->Value("HELPMODULE"));
 
-		$this->defaultXmlnukeDocument->addMenuItem("admin:backupmodule?op=" . self::OP_EDITPROJECT, $this->_myWords->Value("MENU_PROJECTS"),"");
-		$this->defaultXmlnukeDocument->addMenuItem("admin:backupmodule?op=" . self::OP_MANAGEBACKUP, $this->_myWords->Value("MENU_BACKUP"),"");
-		$this->defaultXmlnukeDocument->addMenuItem("admin:backupmodule", $this->_myWords->Value("MENU_HOME"),"");
+		$this->defaultXmlnukeDocument->addMenuItem("module:Xmlnuke.Admin.backupmodule?op=" . self::OP_EDITPROJECT, $this->_myWords->Value("MENU_PROJECTS"),"");
+		$this->defaultXmlnukeDocument->addMenuItem("module:Xmlnuke.Admin.backupmodule?op=" . self::OP_MANAGEBACKUP, $this->_myWords->Value("MENU_BACKUP"),"");
+		$this->defaultXmlnukeDocument->addMenuItem("module:Xmlnuke.Admin.backupmodule", $this->_myWords->Value("MENU_HOME"),"");
 
 		$op = $this->_context->get("op");
 
@@ -195,7 +195,7 @@ class BackupModule extends NewBaseAdminModule
 
 			case self::AC_NEW :
 				$block = new XmlBlockCollection($this->_myWords->Value("BLOCK_EDITPROJECT", $projectName), BlockPosition::Center );
-				$form = new XmlFormCollection($this->_context, "admin:backupmodule?action=" . self::AC_EDIT_CONF, $this->_myWords->Value("FORM_EDITPROJECT"));
+				$form = new XmlFormCollection($this->_context, "module:Xmlnuke.Admin.backupmodule?action=" . self::AC_EDIT_CONF, $this->_myWords->Value("FORM_EDITPROJECT"));
 				$form->addXmlnukeObject(new XmlInputHidden("op", self::OP_EDITPROJECT));
 				$form->addXmlnukeObject(new XmlInputHidden("valueid", $this->_context->get("valueid")));
 
@@ -241,7 +241,7 @@ class BackupModule extends NewBaseAdminModule
 				{
 					FileUtil::DeleteFile($project);
 				}
-				$this->_context->redirectUrl("admin:backupmodule?op=" . self::OP_EDITPROJECT );
+				$this->_context->redirectUrl("module:Xmlnuke.Admin.backupmodule?op=" . self::OP_EDITPROJECT );
 				break;
 
 			default:
@@ -376,7 +376,7 @@ class BackupModule extends NewBaseAdminModule
 		$arrayDs = new ArrayDataSet($filelist);
 		$arrayIt = $arrayDs->getIterator();
 
-		$editlist = new XmlEditList($this->_context, $caption, "module:admin.backupmodule", $new_button, $view, $edit, $delete);
+		$editlist = new XmlEditList($this->_context, $caption, "module:Xmlnuke.Admin.backupmodule", $new_button, $view, $edit, $delete);
 		$editlist->addParameter("op", $op);
 		$editlist->setDataSource($arrayIt);
 
@@ -604,18 +604,18 @@ class BackupModule extends NewBaseAdminModule
 			$td = new XmlTableColumnCollection();
 			if ($backupProp[0] == "I")
 			{
-				$href = new XmlAnchorCollection("admin:backupmodule?bkp=" . $backupProp[1] . "&amp;op=" . self::OP_MANAGEBACKUP  . "&amp;action=" . self::AC_DELETE);
+				$href = new XmlAnchorCollection("module:Xmlnuke.Admin.backupmodule?bkp=" . $backupProp[1] . "&amp;op=" . self::OP_MANAGEBACKUP  . "&amp;action=" . self::AC_DELETE);
 				$href->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("BACKUP_UNINSTALL")));
 				$td->addXmlnukeObject($href);
 			}
 			else
 			{
-				$href = new XmlAnchorCollection("admin:backupmodule?bkp=" . $backupProp[1] . "&amp;op=" . self::OP_MANAGEBACKUP  . "&amp;action=" . self::AC_VIEW);
+				$href = new XmlAnchorCollection("module:Xmlnuke.Admin.backupmodule?bkp=" . $backupProp[1] . "&amp;op=" . self::OP_MANAGEBACKUP  . "&amp;action=" . self::AC_VIEW);
 				$href->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("BACKUP_INSTALL")));
 				$td->addXmlnukeObject($href);
 			}
 			$td->addXmlnukeObject(new XmlnukeText(" | ", true));
-			$href = new XmlAnchorCollection("admin:backupmodule?bkp=" . $backupProp[1] . "&amp;op=" . self::OP_MANAGEBACKUP  . "&amp;action=" . self::AC_DOWNLOAD);
+			$href = new XmlAnchorCollection("module:Xmlnuke.Admin.backupmodule?bkp=" . $backupProp[1] . "&amp;op=" . self::OP_MANAGEBACKUP  . "&amp;action=" . self::AC_DOWNLOAD);
 			$href->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("BACKUP_DOWNLOAD")));
 			$td->addXmlnukeObject($href);
 			$tr->addXmlnukeObject($td);
@@ -626,7 +626,7 @@ class BackupModule extends NewBaseAdminModule
 		}
 
 		// List form option
-		$form = new XmlFormCollection($this->_context, "module:admin.backupmodule", $this->_myWords->Value("UPLOADBACKUPFILE"));
+		$form = new XmlFormCollection($this->_context, "module:Xmlnuke.Admin.backupmodule", $this->_myWords->Value("UPLOADBACKUPFILE"));
 		$block->addXmlnukeObject($form);
 
 		$file = new XmlInputFile($this->_myWords->Value("CAPTION_FILETOUPLOAD"),"filebackup");
@@ -861,7 +861,7 @@ class BackupModule extends NewBaseAdminModule
 		$backupProcessor = new BackupFilenameProcessor($backupName);
 		$backupProcessor->setFilenameLocation(ForceFilenameLocation::UseWhereExists);
 
-		$form = new XmlFormCollection($this->_context, "admin:backupmodule", "");
+		$form = new XmlFormCollection($this->_context, "module:Xmlnuke.Admin.backupmodule", "");
 		$form->addXmlnukeObject(new XmlInputHidden("op", self::OP_MANAGEBACKUP));
 		$form->addXmlnukeObject(new XmlInputHidden("action", self::AC_NEW));
 		$form->addXmlnukeObject(new XmlInputHidden("bkp", $backupName));
@@ -890,7 +890,7 @@ class BackupModule extends NewBaseAdminModule
 		$backupProcessor = new BackupFilenameProcessor($backupName);
 		$backupProcessor->setFilenameLocation(ForceFilenameLocation::UseWhereExists);
 
-		$form = new XmlFormCollection($this->_context, "admin:backupmodule", "");
+		$form = new XmlFormCollection($this->_context, "module:Xmlnuke.Admin.backupmodule", "");
 		$form->addXmlnukeObject(new XmlInputHidden("op", self::OP_MANAGEBACKUP));
 		$form->addXmlnukeObject(new XmlInputHidden("action", self::AC_DELETE_CONF ));
 		$form->addXmlnukeObject(new XmlInputHidden("bkp", $backupName));

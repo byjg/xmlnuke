@@ -29,8 +29,22 @@
 
 namespace Xmlnuke\Core\Admin;
 
-use Xmlnuke\Core\Enum\MenuGroup;
+use Xmlnuke\Core\AnyDataset\ArrayDataSet;
+use Xmlnuke\Core\AnyDataset\IIterator;
+use Xmlnuke\Core\AnyDataset\XmlDataSet;
+use Xmlnuke\Core\Classes\PageXml;
+use Xmlnuke\Core\Classes\XmlBlockCollection;
+use Xmlnuke\Core\Classes\XmlnukeDocument;
+use Xmlnuke\Core\Classes\XmlnukeText;
+use Xmlnuke\Core\Classes\XmlParagraphCollection;
+use Xmlnuke\Core\Enum\BlockPosition;
+use Xmlnuke\Core\Enum\LanguageFileTypes;
+use Xmlnuke\Core\Locale\LanguageFactory;
 use Xmlnuke\Core\Module\BaseModule;
+use Xmlnuke\Core\Processor\AdminModulesXmlFilenameProcessor;
+use Xmlnuke\Core\Processor\ForceFilenameLocation;
+use Xmlnuke\Core\Processor\XSLFilenameProcessor;
+use Xmlnuke\Util\FileUtil;
 
 /**
  * Template pattern for xmlnuke administration modules 
@@ -62,23 +76,10 @@ abstract class NewBaseAdminModule extends BaseModule
 	*/
 	public function NewBaseAdminModule()
 	{}
-	
-	/**
-	*@return LanguageCollection 
-	*@desc Implements some base XML options used for ALL Admin Modules.
-	*/
-	public function WordCollection()
-	{	
-		if ($this->_words == null)
-		{
-			$this->_words = LanguageFactory::GetLanguageCollection(LanguageFileTypes::ADMINMODULE, $this->_xmlModuleName->ToString());
-		}
-		return $this->_words;
-	}
-	
+		
 	/**
 	*@param 
-	*@return PageXml 
+	*@return PageXml
 	*@desc 
 	*/
 	public function CreatePageOld() 
@@ -92,7 +93,7 @@ abstract class NewBaseAdminModule extends BaseModule
 		$this->_help = $this->_px->addParagraph($this->_mainBlock);
 		$this->_menu =$this->_px->addParagraph($this->_mainBlock);
 		
-		$this->_px->addHref($this->_menu, "admin:engine?site=".$this->_context->getSite() . "&lang=" . $this->_context->Language()->getName(), "Menu", null);
+		$this->_px->addHref($this->_menu, "module:Xmlnuke.Admin.ControlPanel?site=".$this->_context->getSite() . "&lang=" . $this->_context->Language()->getName(), "Menu", null);
 
 		return $this->_px;     
 	}
@@ -241,7 +242,7 @@ abstract class NewBaseAdminModule extends BaseModule
 			$colNode["command"] = "@command";
 
 			// Read from Generic XML
-			$xmlProcessor = new AdminModulesXMLFilenameProcessor();
+			$xmlProcessor = new AdminModulesXmlFilenameProcessor();
 			for($i=0;$i<2;$i++)
 			{
 				if ($i==0)
@@ -292,7 +293,7 @@ abstract class NewBaseAdminModule extends BaseModule
 	protected function CreateMenuAdmin()
 	{
 		// Load Language file for Module Object
-		$lang = LanguageFactory::GetLanguageCollection(LanguageFileTypes::ADMININTERNAL, null);
+		$lang = LanguageFactory::GetLanguageCollection("AdminModules");
 		
 		// Create a Menu Item for GROUPS and MODULES. 
 		// This menu have CP_ before GROUP NAME
@@ -324,7 +325,14 @@ abstract class NewBaseAdminModule extends BaseModule
 		}
 
 		return $lang;
-	}	
+	}
+
+	public function getXsl()
+	{
+		$xslFile = new XSLFilenameProcessor("admin");
+		$xslFile->UseFileFromAnyLanguage();
+		return $xslFile;
+	}
 }
 
 ?>

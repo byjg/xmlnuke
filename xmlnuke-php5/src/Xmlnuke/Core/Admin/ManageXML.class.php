@@ -76,7 +76,7 @@ class ManageXML extends BaseAdminModule
 		//XmlNode 
 		$block = $this->_px->addBlockCenter($myWords->Value("WORKINGAREA"));
 
-		$this->addMenuOption($myWords->Value("TXT_BACK"), "admin:ListXML");
+		$this->addMenuOption($myWords->Value("TXT_BACK"), "module:Xmlnuke.Admin.ListXML");
 		/*
 		XmlNode paragraph;
 		XmlNode form;
@@ -207,7 +207,7 @@ class ManageXML extends BaseAdminModule
 		if ($action == "delete")
 		{
 			$paragraph = $this->_px->addParagraph($block);
-			$this->_px->addHref($paragraph, "admin:ManageXML?id=" . $this->_context->get("id") . "&action=confirmdelete", $myWords->Value("CONFIRMDELETE", $this->_context->get("id")), null);
+			$this->_px->addHref($paragraph, "module:Xmlnuke.Admin.ManageXML?id=" . $this->_context->get("id") . "&action=confirmdelete", $myWords->Value("CONFIRMDELETE", $this->_context->get("id")), null);
 			$deleteMode = true;
 		}
 
@@ -240,7 +240,7 @@ class ManageXML extends BaseAdminModule
 		else
 		{
 			$this->addMenuOption($myWords->Value("PREVIEWMENU"), "engine:xmlnuke?site=[param:site]&xml=" . $id . "&xsl=[param:xsl]&lang=[param:lang]", "preview");
-			$this->addMenuOption($myWords->Value("NEWXMLMENU"), "admin:ManageXML", null);
+			$this->addMenuOption($myWords->Value("NEWXMLMENU"), "module:Xmlnuke.Admin.ManageXML", null);
 			$langAvail = $this->_context->LanguagesAvailable();
 			$processorFile = new XMLFilenameProcessor($id);
 			foreach(array_keys($langAvail) as $key) 				
@@ -251,11 +251,11 @@ class ManageXML extends BaseAdminModule
 					$fileToCheck = $processorFile->FullName($id, "", $key) . $processorFile->Extension();
 					if ($repositorio->existsDocument($fileToCheck))
 					{
-						$this->addMenuOption($myWords->ValueArgs("EDITXMLMENU" ,array($langAvail[$key])), "admin:ManageXML?id=" . $id . "&lang=".$key, null);
+						$this->addMenuOption($myWords->ValueArgs("EDITXMLMENU" ,array($langAvail[$key])), "module:Xmlnuke.Admin.ManageXML?id=" . $id . "&lang=".$key, null);
 					}
 					else
 					{
-						$this->addMenuOption($myWords->ValueArgs("CREATEXMLMENU", array($langAvail[$key])), "admin:ManageXML?id=" . $id . "&lang=".$key, null);
+						$this->addMenuOption($myWords->ValueArgs("CREATEXMLMENU", array($langAvail[$key])), "module:Xmlnuke.Admin.ManageXML?id=" . $id . "&lang=".$key, null);
 					}
 				}
 			}
@@ -271,7 +271,7 @@ class ManageXML extends BaseAdminModule
 			$table = $this->_px->addTable($paragraph);
 			$row = $this->_px->addTableRow($table);
 			$col = $this->_px->addTableColumn($row);
-			$form = $this->_px->addForm($col, "admin:ManageXML", "","form", true );
+			$form = $this->_px->addForm($col, "module:Xmlnuke.Admin.ManageXML", "","form", true );
 
 			$xmlExist = true;
 			if ($id != "")

@@ -2,11 +2,11 @@
 /nbproject/private/
 
 # XMLNuke distro files
-xmlnuke-data/shared/admin/admin_page.pt-br.xsl
-xmlnuke-data/shared/admin/adminmodules.lang.anydata.xml
 xmlnuke-data/shared/admin/adminmodules.config.xml
+xmlnuke-data/shared/lang/AdminModules.lang.anydata.xml
 xmlnuke-data/shared/setup/users.anydata.xml
 xmlnuke-data/shared/setup/roles.anydata.xml
+xmlnuke-data/shared/xsl/admin.pt-br.xsl
 xmlnuke-csharp/check_install.aspx
 xmlnuke-csharp/web.config
 xmlnuke-csharp/default.aspx

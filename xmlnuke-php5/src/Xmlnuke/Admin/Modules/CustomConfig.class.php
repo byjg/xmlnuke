@@ -31,7 +31,23 @@
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Admin;
+namespace Xmlnuke\Admin\Modules;
+
+use Xmlnuke\Core\Admin\NewBaseAdminModule;
+use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use Xmlnuke\Core\Classes\XmlBlockCollection;
+use Xmlnuke\Core\Classes\XmlEasyList;
+use Xmlnuke\Core\Classes\XmlFormCollection;
+use Xmlnuke\Core\Classes\XmlInputButtons;
+use Xmlnuke\Core\Classes\XmlInputHidden;
+use Xmlnuke\Core\Classes\XmlInputLabelField;
+use Xmlnuke\Core\Classes\XmlInputTextBox;
+use Xmlnuke\Core\Classes\XmlnukeText;
+use Xmlnuke\Core\Classes\XmlParagraphCollection;
+use Xmlnuke\Core\Enum\AccessLevel;
+use Xmlnuke\Core\Enum\BlockPosition;
+use Xmlnuke\Core\Enum\EasyListType;
+use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
 
 class CustomConfig extends NewBaseAdminModule
 {
@@ -64,10 +80,10 @@ class CustomConfig extends NewBaseAdminModule
 
 		$this->setHelp($myWords->Value("DESCRIPTION"));
 
-		//this.addMenuOption("OK", "admin:ManageGroup?action=aqui");
+		//this.addMenuOption("OK", "module:Xmlnuke.Admin.ManageGroup?action=aqui");
 		$this->setTitlePage($myWords->Value("TITLE"));
-		//this.addMenuOption("Click here to ERASE ALL cache.", "admin:CustomConfig?action=erase");
-		//this.addMenuOption("Click here to LIST cache.", "admin:CustomConfig?action=list");
+		//this.addMenuOption("Click here to ERASE ALL cache.", "module:Xmlnuke.Admin.CustomConfig?action=erase");
+		//this.addMenuOption("Click here to LIST cache.", "module:Xmlnuke.Admin.CustomConfig?action=list");
 
 		$action = strtolower($this->_action);
 
@@ -101,7 +117,7 @@ class CustomConfig extends NewBaseAdminModule
 			$block->addXmlnukeObject($paragraph);
 		}
 
-		$form = new XmlFormCollection($this->_context, "admin:CustomConfig", $myWords->Value("FORMTITLE"));
+		$form = new XmlFormCollection($this->_context, "module:Xmlnuke.Admin.CustomConfig", $myWords->Value("FORMTITLE"));
 		$form->setJSValidate(true);
 		$form->setFormName("form");
 
@@ -193,7 +209,7 @@ class CustomConfig extends NewBaseAdminModule
 	 */
 	protected function generateLanguageInput($form)
 	{
-		$curValueArray = explode("|", $this->_context->get("xmlnuke.LANGUAGESAVAILABLE"));
+		$curValueArray = $this->_context->get("xmlnuke.LANGUAGESAVAILABLE");
 
 		foreach ($curValueArray as $key => $value)
 		{

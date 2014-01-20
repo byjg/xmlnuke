@@ -1101,10 +1101,6 @@ class Context extends BaseSingleton
 		{
 			$modulename = substr($modulename, 7);
 		}
-		elseif (strpos($modulename, "admin:") !== false)
-		{
-			$modulename = "admin." . substr($modulename, 6);
-		}
 
 		if(empty($xsl))
 		{

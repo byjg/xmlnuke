@@ -30,11 +30,14 @@
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Admin;
+namespace Xmlnuke\Admin\Modules;
 
-class ManageCache extends BaseAdminModule
+use Xmlnuke\Core\Admin\BaseAdminModule;
+use Xmlnuke\Core\Enum\AccessLevel;
+
+class ManageXMLDBIndex extends BaseAdminModule
 {
-	public function ManageCache()
+	public function ManageXMLDBIndex()
 	{
 	}
 
@@ -42,63 +45,45 @@ class ManageCache extends BaseAdminModule
 	{
 		return false;
 	}
-
 	public function  getAccessLevel() 
         { 
-              return AccessLevel::CurrentSiteAndRole; 
+              return AccessLevel::CurrentSiteAndRole;
         } 
 
         public function getRole() 
         { 
                return array("MANAGER", "OPERATOR"); 
         }
-        
+
 	public function CreatePage() 
 	{
 		parent::CreatePage(); // Doesnt necessary get PX, because PX is protected!
 		$myWords = $this->WordCollection();
-		
-		$this->setHelp($myWords->Value("HELP"));
-		//this.addMenuOption("OK", "admin:ManageGroup?action=aqui");
+		$this->setHelp($myWords->Value("DESCRIPTION"));
 		$this->setTitlePage($myWords->Value("TITLE"));
-		$this->addMenuOption($myWords->Value("DELETEBUTTON"), "admin:ManageCache?action=erase", null);
-		$this->addMenuOption($myWords->Value("CACHELIST"), "admin:ManageCache?action=list", null);
 
 		$action = strtolower($this->_action);
 
-		$block = $this->_px->addBlockCenter($myWords->Value("SELECTIONAREA"));
+		$block = $this->_px->addBlockCenter($myWords->Value("WORKINGAREA"));
 		//XmlNode paragraph;
 
-		if ($action == "erase")
+		// Delete a Group Node
+		if ($action == "")
 		{
-			FileUtil::DeleteFilesFromPath($this->_cacheFile);
-			FileUtil::DeleteFilesFromPath(new XSLCacheFilenameProcessor(""));
-			$dirs = FileUtil::RetrieveSubFolders($this->_context->CachePath());
-			foreach ($dirs as $key=>$value)
-			{
-				//FileUtil::DeleteDirectory($value);
-			}
 			$paragraph = $this->_px->addParagraph($block);
-			$this->_px->addBold($paragraph, $myWords->Value("DELETED"));
+			$this->_px->addHref($paragraph, "module:Xmlnuke.Admin.ManageXMLDBIndex?action=recreate", $myWords->Value("LINKRECREATE", strtolower($this->_context->Language()->getName()) ), null);
 		}
 
-		if ($action == "list")
+		if ($action == "recreate")
 		{
-			$filelist = array();
-			$filelist =FileUtil::RetrieveFilesFromFolder($this->_cacheFile->PathSuggested(), null);
-			$paragraph = $this->_px->addUnorderedList($block);
-			//XmlNode item;
-			foreach($filelist as $file)
-			{
-				$item = $this->_px->addOptionList($paragraph);
-				$this->_px->addText($item, FileUtil::ExtractFileName($file));
-			}
+			$this->_context->getXMLDataBase()->recreateIndex();
+			$this->_context->getXMLDataBase()->saveIndex();
+			$paragraph = $this->_px->addParagraph($block);
+			$this->_px->addBold($paragraph, $myWords->Value("RECREATE"));
 		}
 
 		return $this->_px;
 	}
-	
-	
 
 }
 ?>

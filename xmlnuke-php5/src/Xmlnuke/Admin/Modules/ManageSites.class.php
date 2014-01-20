@@ -30,15 +30,40 @@
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Admin;
+namespace Xmlnuke\Admin\Modules;
 
-class ManageSitesAction extends ModuleAction 
+use Exception;
+use Xmlnuke\Core\Admin\NewBaseAdminModule;
+use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use Xmlnuke\Core\AnyDataset\IIterator;
+use Xmlnuke\Core\Classes\EditListField;
+use Xmlnuke\Core\Classes\XmlBlockCollection;
+use Xmlnuke\Core\Classes\XmlEasyList;
+use Xmlnuke\Core\Classes\XmlEditList;
+use Xmlnuke\Core\Classes\XmlFormCollection;
+use Xmlnuke\Core\Classes\XmlInputButtons;
+use Xmlnuke\Core\Classes\XmlInputTextBox;
+use Xmlnuke\Core\Classes\XmlnukeManageUrl;
+use Xmlnuke\Core\Classes\XmlnukeText;
+use Xmlnuke\Core\Classes\XmlParagraphCollection;
+use Xmlnuke\Core\Enum\AccessLevel;
+use Xmlnuke\Core\Enum\BlockPosition;
+use Xmlnuke\Core\Enum\CustomButtons;
+use Xmlnuke\Core\Enum\EasyListType;
+use Xmlnuke\Core\Enum\INPUTTYPE;
+use Xmlnuke\Core\Enum\ModuleAction;
+use Xmlnuke\Core\Enum\URLTYPE;
+use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
+use Xmlnuke\Core\Processor\XMLFilenameProcessor;
+use Xmlnuke\Core\Processor\XSLFilenameProcessor;
+use Xmlnuke\Util\FileUtil;
+use Xmlnuke\XmlFS\XmlnukeDB;
+
+class ManageSitesAction extends ModuleAction
 {
 	const OFFLINE = 'action.OFFLINE';
 	const Save = 'save'; /* Editlist Action */
 }
-
-namespace Xmlnuke\Core\Admin;
 
 class ManageSites extends NewBaseAdminModule
 {
@@ -57,7 +82,7 @@ class ManageSites extends NewBaseAdminModule
 	}
 	public function  getAccessLevel() 
         { 
-              return AccessLevel::CurrentSiteAndRole; 
+              return AccessLevel::CurrentSiteAndRole;
         } 
 
         public function getRole() 
@@ -95,7 +120,7 @@ class ManageSites extends NewBaseAdminModule
 				$this->_context->redirectUrl($url->getUrlFull());
 				break;
 			case ManageSitesAction::Edit :
-				$url = new XmlnukeManageUrl(URLTYPE::ADMIN, "admin:ManageSites");
+				$url = new XmlnukeManageUrl(URLTYPE::ADMIN, "module:Xmlnuke.Admin.ManageSites");
 				$url->addParam('site', $this->_context->get('valueid'));
 				$this->_context->redirectUrl($url->getUrlFull());
 				break;
@@ -122,7 +147,7 @@ class ManageSites extends NewBaseAdminModule
 		
 		$paragraph2 = new XmlParagraphCollection();
 		$this->_block->addXmlnukeObject($paragraph2);
-		$url = new XmlnukeManageUrl(URLTYPE::ADMIN, 'admin:ManageSites');
+		$url = new XmlnukeManageUrl(URLTYPE::ADMIN, 'module:Xmlnuke.Admin.ManageSites');
 		$url->addParam('xsl', 'page');
 		$editList = new XmlEditList($this->_context, $myWords->Value("SITESLIST"), $url->getUrl(), true, true, true);
 		$editList->setDataSource($this->getSiteList());
@@ -211,7 +236,7 @@ class ManageSites extends NewBaseAdminModule
 	*/
 	protected function ActionCreateForm($paragraph)
 	{
-		$url = new XmlnukeManageUrl(URLTYPE::ADMIN, 'admin:ManageSites');
+		$url = new XmlnukeManageUrl(URLTYPE::ADMIN, 'module:Xmlnuke.Admin.ManageSites');
 		$url->addParam('xsl', 'page');
 		$url->addParam('action', ManageSitesAction::Save );
 		$myWords = $this->WordCollection();
@@ -250,7 +275,7 @@ class ManageSites extends NewBaseAdminModule
 		$siteAvail = $this->_context->ExistingSites();
 		foreach($siteAvail as $key )
 		{
-			if (FileUtil::ExtractFileName($key) != 'CVS') 
+			if (FileUtil::ExtractFileName($key) != 'CVS')
 			{
 				$keySite = FileUtil::ExtractFileName($key);
 				$sitesanydata->appendRow();
@@ -273,9 +298,9 @@ class ManageSites extends NewBaseAdminModule
 		//try {
 			if (!$repositorio->existsDocument($index))
 			{
-				$repositorio->saveDocumentStr($index, FileUtil::QuickFileRead($context->SiteRootPath() . "index.xml.template"));								
-				$repositorio->saveDocumentStr($home, FileUtil::QuickFileRead($context->SiteRootPath() . "home.xml.template"));				
-				$repositorio->saveDocumentStr($notfound, FileUtil::QuickFileRead($context->SiteRootPath() . "notfound.xml.template"));								
+				$repositorio->saveDocumentStr($index, FileUtil::QuickFileRead($context->SiteRootPath() . "index.xml.template"));
+				$repositorio->saveDocumentStr($home, FileUtil::QuickFileRead($context->SiteRootPath() . "home.xml.template"));
+				$repositorio->saveDocumentStr($notfound, FileUtil::QuickFileRead($context->SiteRootPath() . "notfound.xml.template"));
 				$repositorio->saveDocumentStr($_all, "<?xml version=\"1.0\" encoding=\"utf-8\"?><page/>");	
 			}
 			else

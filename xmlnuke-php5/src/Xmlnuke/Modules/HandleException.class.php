@@ -116,5 +116,11 @@ class HandleException extends BaseModule
 
 		return $this->defaultXmlnukeDocument->generatePage();
 	}
+
+	public function getXsl()
+	{
+		$xslFile = new \Xmlnuke\Core\Processor\XSLFilenameProcessor("exception");
+		return $xslFile;
+	}
 }
 ?>

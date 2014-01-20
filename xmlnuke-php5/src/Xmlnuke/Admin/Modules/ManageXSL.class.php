@@ -30,7 +30,17 @@
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Admin;
+namespace Xmlnuke\Admin\Modules;
+
+use Exception;
+use Xmlnuke\Core\Admin\BaseAdminModule;
+use Xmlnuke\Core\Enum\AccessLevel;
+use Xmlnuke\Core\Enum\INPUTTYPE;
+use Xmlnuke\Core\Processor\FilenameProcessor;
+use Xmlnuke\Core\Processor\XSLCacheFilenameProcessor;
+use Xmlnuke\Core\Processor\XSLFilenameProcessor;
+use Xmlnuke\Util\FileUtil;
+use Xmlnuke\Util\XmlUtil;
 
 class ManageXSL extends BaseAdminModule
 {
@@ -107,7 +117,7 @@ class ManageXSL extends BaseAdminModule
 		if ($action == "delete")
 		{
 			$paragraph = $this->_px->addParagraph($block);
-			$this->_px->addHref($paragraph, "admin:ManageXSL?id=" . $this->_context->get("id") . "&action=confirmdelete", $myWords->Value("CONFIRMDELETE", $this->_context->get("id")) , null);
+			$this->_px->addHref($paragraph, "module:Xmlnuke.Admin.ManageXSL?id=" . $this->_context->get("id") . "&action=confirmdelete", $myWords->Value("CONFIRMDELETE", $this->_context->get("id")) , null);
 			$deleteMode = true;
 		}
 
@@ -140,16 +150,16 @@ class ManageXSL extends BaseAdminModule
 				//$xslKey = substr($key, strlen($xslFile->PathSuggested()));
 				$xslKey =basename($key);
 				$xslKey = FilenameProcessor::StripLanguageInfo($xslKey);
-				$this->_px->addHref($optlist, "admin:ManageXSL?id=" . $xslKey, $xslKey, null);
+				$this->_px->addHref($optlist, "module:Xmlnuke.Admin.ManageXSL?id=" . $xslKey, $xslKey, null);
 				$this->_px->addText($optlist, " [");
-				$this->_px->addHref($optlist, "admin:ManageXSL?id=" . $xslKey . "&action=delete", $myWords->Value("TXT_DELETE"), null);
+				$this->_px->addHref($optlist, "module:Xmlnuke.Admin.ManageXSL?id=" . $xslKey . "&action=delete", $myWords->Value("TXT_DELETE"), null);
 				$this->_px->addText($optlist, "]");
 			}
 			$action = "new";
 		}
 		else
 		{
-			$this->addMenuOption($myWords->Value("NEWPAGE"), "admin:ManageXSL", null);
+			$this->addMenuOption($myWords->Value("NEWPAGE"), "module:Xmlnuke.Admin.ManageXSL", null);
 			$this->addMenuOption($myWords->Value("PREVIEWPAGE"), "engine:xmlnuke?xml=home&xsl=" . $id . "&lang=" . $this->_context->Language()->getName(), null);
 
 			//array
@@ -158,7 +168,7 @@ class ManageXSL extends BaseAdminModule
 			{
 				if ($key != strtolower($this->_context->Language()->getName()));
 				{
-					$this->addMenuOption($myWords->ValueArgs("EDITXSLMENU", array($value)), "admin:ManageXSL?id=" . $id . "&lang=".$key, null);
+					$this->addMenuOption($myWords->ValueArgs("EDITXSLMENU", array($value)), "module:Xmlnuke.Admin.ManageXSL?id=" . $id . "&lang=".$key, null);
 				}
 			}
 			$action = "edit";
@@ -171,7 +181,7 @@ class ManageXSL extends BaseAdminModule
 			$table = $this->_px->addTable($paragraph);
 			$row = $this->_px->addTableRow($table);
 			$col = $this->_px->addTableColumn($row);
-			$form = $this->_px->addForm($col, "admin:ManageXSL", "","form", true );
+			$form = $this->_px->addForm($col, "module:Xmlnuke.Admin.ManageXSL", "","form", true );
 			if ($action == "new")
 			{
 				$this->_px->addTextBox($form, $myWords->Value("XSLBOX"), "id", "", 20, true, INPUTTYPE::TEXT);

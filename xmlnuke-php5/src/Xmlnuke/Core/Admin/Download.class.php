@@ -156,7 +156,7 @@ class Download extends NewBaseAdminModule
 			}
 			else
 			{
-				$href = new XmlAnchorCollection("module:admin.download");
+				$href = new XmlAnchorCollection("module:Xmlnuke.Admin.download");
 				$href->addXmlnukeObject(new XmlnukeText($myWords->Value("NOTE_FILE", $catId)));
 				$p->addXmlnukeObject($href);
 			}
@@ -171,7 +171,7 @@ class Download extends NewBaseAdminModule
 			$itf->addRelation("cat_id", Relation::Equal, $catId);
 		}
 		
-		$processor = new XmlnukeCrudAnydata($this->_context, $fields, $myWords->Value("TITLE_" . $type, $catId), "module:admin.download", null, $downloadFile, $itf);
+		$processor = new XmlnukeCrudAnydata($this->_context, $fields, $myWords->Value("TITLE_" . $type, $catId), "module:Xmlnuke.Admin.download", null, $downloadFile, $itf);
 		if ($forceReset)
 		{
 			$processor->forceCurrentAction(XmlnukeCrudBase::ACTION_LIST);

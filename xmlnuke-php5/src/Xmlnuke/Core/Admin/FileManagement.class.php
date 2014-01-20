@@ -72,7 +72,7 @@ class FileManagement extends NewBaseAdminModule
 	
 		$this->_myWords = $this->WordCollection();
 		
-		$this->defaultXmlnukeDocument->addMenuItem("module:admin.FileManagement",$this->_myWords->Value("FILEMANAGEMENT"),"");
+		$this->defaultXmlnukeDocument->addMenuItem("module:Xmlnuke.Admin.FileManagement",$this->_myWords->Value("FILEMANAGEMENT"),"");
 		
 		$this->_block = new XmlBlockCollection($this->_myWords->Value("FILEMANAGEMENT"), BlockPosition::Center);
 		$this->setTitlePage($this->_myWords->Value("TITLE"));

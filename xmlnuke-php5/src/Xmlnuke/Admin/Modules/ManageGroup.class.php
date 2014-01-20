@@ -30,7 +30,14 @@
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Admin;
+namespace Xmlnuke\Admin\Modules;
+
+use Xmlnuke\Core\Admin\BaseAdminModule;
+use Xmlnuke\Core\Enum\AccessLevel;
+use Xmlnuke\Core\Enum\INPUTTYPE;
+use Xmlnuke\Core\Processor\XMLFilenameProcessor;
+use Xmlnuke\Util\FileUtil;
+use Xmlnuke\Util\XmlUtil;
 
 class ManageGroup extends BaseAdminModule
 {
@@ -58,7 +65,7 @@ class ManageGroup extends BaseAdminModule
 		parent::CreatePage(); // Doesnt necessary get PX, because PX is protected!
 		$myWords = $this->WordCollection();
 		$this->setHelp($myWords->Value("DESCRIPTION"));
-		//this.addMenuOption("OK", "admin:ManageGroup?action=aqui");
+		//this.addMenuOption("OK", "module:Xmlnuke.Admin.ManageGroup?action=aqui");
 		$this->setTitlePage($myWords->Value("TITLE"));
 
 		//Strings
@@ -70,7 +77,7 @@ class ManageGroup extends BaseAdminModule
 		//XmlNodes
 		$block = $this->_px->addBlockCenter($myWords->Value("WORKINGAREA"));
 
-		$this->addMenuOption($myWords->Value("TXT_BACK"), "admin:ListXML?onlygroup=true");
+		$this->addMenuOption($myWords->Value("TXT_BACK"), "module:Xmlnuke.Admin.ListXML?onlygroup=true");
 
 		// Open Index File
 		$indexFile = new XMLFilenameProcessor("index");
@@ -80,7 +87,7 @@ class ManageGroup extends BaseAdminModule
 		if ($action == "delete")
 		{
 			$paragraph = $this->_px->addParagraph($block);
-			$this->_px->addHref($paragraph, "admin:ManageGroup?id=" . $id . "&action=confirmdelete", $myWords->ValueArgs("CONFIRMDELETE", array($id)) , null);
+			$this->_px->addHref($paragraph, "module:Xmlnuke.Admin.ManageGroup?id=" . $id . "&action=confirmdelete", $myWords->ValueArgs("CONFIRMDELETE", array($id)) , null);
 			return $this->_px;
 		}
 
@@ -108,10 +115,10 @@ class ManageGroup extends BaseAdminModule
 				//$editNode = XmlUtil::SelectSingleNode($index->documentElement,"xmlindex");
 				$editNode = $index->getElementsByTagName("xmlindex")->item(0);
 
-				$newNode = XmlUtil::CreateChild($editNode, "group", "");					
+				$newNode = XmlUtil::CreateChild($editNode, "group", "");
 				XmlUtil::CreateChild($newNode, "id", $id);
 				XmlUtil::CreateChild($newNode, "title", $title);
-				XmlUtil::CreateChild($newNode, "keyword", $keyword);					
+				XmlUtil::CreateChild($newNode, "keyword", $keyword);
 				
 			}
 			else
@@ -146,7 +153,7 @@ class ManageGroup extends BaseAdminModule
 		$table = $this->_px->addTable($paragraph);
 		$row = $this->_px->addTableRow($table);
 		$col = $this->_px->addTableColumn($row);
-		$form = $this->_px->addForm($col, "admin:ManageGroup?xsl=page", "" ,"form", true);
+		$form = $this->_px->addForm($col, "module:Xmlnuke.Admin.ManageGroup?xsl=page", "" ,"form", true);
 		$this->_px->addHidden($form, "new", $idnew);
 		if ($idnew == "")
 		{

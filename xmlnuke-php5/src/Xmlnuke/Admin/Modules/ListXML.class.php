@@ -31,7 +31,21 @@
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Admin;
+namespace Xmlnuke\Admin\Modules;
+
+use Xmlnuke\Core\Admin\NewBaseAdminModule;
+use Xmlnuke\Core\Classes\XmlAnchorCollection;
+use Xmlnuke\Core\Classes\XmlBlockCollection;
+use Xmlnuke\Core\Classes\XmlnukeBreakLine;
+use Xmlnuke\Core\Classes\XmlnukeText;
+use Xmlnuke\Core\Classes\XmlParagraphCollection;
+use Xmlnuke\Core\Classes\XmlTableCollection;
+use Xmlnuke\Core\Classes\XmlTableColumnCollection;
+use Xmlnuke\Core\Classes\XmlTableRowCollection;
+use Xmlnuke\Core\Enum\AccessLevel;
+use Xmlnuke\Core\Enum\BlockPosition;
+use Xmlnuke\Core\Processor\XMLFilenameProcessor;
+use Xmlnuke\Util\XmlUtil;
 
 class ListXML extends NewBaseAdminModule
 {
@@ -60,8 +74,8 @@ class ListXML extends NewBaseAdminModule
 		parent::CreatePage();
 		
 		$onlyGroup = ($this->_context->get("onlygroup") != "");
-		$urlXml = "admin:ManageXML";
-		$urlGrp = "admin:ManageGroup";
+		$urlXml = "module:Xmlnuke.Admin.ManageXML";
+		$urlGrp = "module:Xmlnuke.Admin.ManageGroup";
 
 		$this->myWords = $this->WordCollection();
 		$this->setTitlePage($this->myWords->Value("TITLE"));

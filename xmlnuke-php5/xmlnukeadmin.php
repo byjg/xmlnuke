@@ -3,19 +3,16 @@
 	# If 'module' didnt passed define the ControlPanel
 	#
 	##################################################
-	if (!array_key_exists("module", $_REQUEST))
+	if (!isset($_REQUEST["module"]))
 	{
-		$_GET["module"] = "admin.ControlPanel";
-		$_REQUEST["module"] = $_GET["module"];
-		$GLOBALS["_GET"]["module"] = $_GET["module"];
-		$GLOBALS["_REQUEST"]["module"] = $_GET["module"];
+		$_REQUEST["module"] = "Xmlnuke.Admin.ControlPanel";
 	}
 	
 	#############################################
 	# To create a XMLNuke capable PHP5 page
 	#
 	require_once("xmlnuke.inc.php");
-	require_once($context->ContextValue("xmlnuke.URLMODULE"));
+	require_once(Xmlnuke\Core\Engine\Context::getInstance()->get("xmlnuke.URLMODULE"));
 	#############################################
 
 ?>

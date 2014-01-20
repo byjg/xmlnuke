@@ -31,7 +31,25 @@
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Admin;
+namespace Xmlnuke\Admin\Modules;
+
+use Exception;
+use Xmlnuke\Core\Admin\NewBaseAdminModule;
+use Xmlnuke\Core\AnyDataset\DBDataSet;
+use Xmlnuke\Core\Classes\CrudField;
+use Xmlnuke\Core\Classes\CrudFieldCollection;
+use Xmlnuke\Core\Classes\XmlAnchorCollection;
+use Xmlnuke\Core\Classes\XmlBlockCollection;
+use Xmlnuke\Core\Classes\XmlnukeCrudAnydata;
+use Xmlnuke\Core\Classes\XmlnukeText;
+use Xmlnuke\Core\Classes\XmlParagraphCollection;
+use Xmlnuke\Core\Enum\AccessLevel;
+use Xmlnuke\Core\Enum\BlockPosition;
+use Xmlnuke\Core\Enum\CustomButtons;
+use Xmlnuke\Core\Enum\INPUTTYPE;
+use Xmlnuke\Core\Enum\MultipleSelectType;
+use Xmlnuke\Core\Enum\XmlInputObjectType;
+use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
 
 class ManageDBConn extends NewBaseAdminModule
 {
@@ -139,7 +157,7 @@ class ManageDBConn extends NewBaseAdminModule
 					$this->_context,
 					$processfields,
 					$this->myWords->Value("AVAILABLELANGUAGES"),
-					"module:admin.managedbconn",
+					"module:Xmlnuke.Admin.ManageDBConn",
 					array($buttons),
 					$anydatafile
 				);
@@ -174,7 +192,7 @@ class ManageDBConn extends NewBaseAdminModule
 			}
 			$block->addXmlnukeObject($p);
 			$p = new XmlParagraphCollection();
-			$href = new XmlAnchorCollection("module:admin.managedbconn");
+			$href = new XmlAnchorCollection("module:Xmlnuke.Admin.ManageDBConn");
 			$href->addXmlnukeObject(new XmlnukeText($this->myWords->Value("GOBACK")));
 			$p->addXmlnukeObject($href);
 			$block->addXmlnukeObject($p);

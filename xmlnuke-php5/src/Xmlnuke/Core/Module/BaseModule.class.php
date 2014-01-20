@@ -550,7 +550,7 @@ abstract class BaseModule implements IModule
 
 	public function getXsl()
 	{
-		if (strpos($this->_context->getXsl(), "admin_page"))
+		if (strpos($this->_context->getXsl(), "admin"))
 		{
 			$this->_context->setXsl($this->_context->get("xmlnuke.DEFAULTPAGE"));
 		}

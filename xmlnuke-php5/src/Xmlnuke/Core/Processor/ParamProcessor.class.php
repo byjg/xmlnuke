@@ -160,7 +160,7 @@ class ParamProcessor
 					$result = $this->_context->UrlXmlNukeAdmin() . $arResult["port"][0];
 				else
 				{
-					$result = $this->_context->UrlModule() . $arResult["port"][0] . "?module=" . (strpos ($arResult["host"][0], ".") === false ? "admin." : "") . $arResult["host"][0];
+					$result = $this->_context->UrlModule() . $arResult["port"][0] . "?module=" . (strpos ($arResult["host"][0], ".") === false ? "Xmlnuke.Admin." : "") . $arResult["host"][0];
 					$sep = "&";
 				}
 				break;

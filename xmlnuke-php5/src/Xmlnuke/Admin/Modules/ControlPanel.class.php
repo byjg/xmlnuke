@@ -30,7 +30,16 @@
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Admin;
+namespace Xmlnuke\Admin\Modules;
+
+use Xmlnuke\Core\Admin\NewBaseAdminModule;
+use Xmlnuke\Core\Classes\XmlBlockCollection;
+use Xmlnuke\Core\Classes\XmlnukeStringXML;
+use Xmlnuke\Core\Classes\XmlnukeText;
+use Xmlnuke\Core\Classes\XmlParagraphCollection;
+use Xmlnuke\Core\Enum\AccessLevel;
+use Xmlnuke\Core\Enum\BlockPosition;
+use Xmlnuke\Core\Exception\NotFoundException;
 
 class ControlPanel extends NewBaseAdminModule
 {
@@ -59,14 +68,14 @@ class ControlPanel extends NewBaseAdminModule
 	}
 	public function  getAccessLevel() 
         { 
-              return AccessLevel::OnlyAuthenticated; 
+              return AccessLevel::OnlyAuthenticated;
         } 
 
 	public function CreatePage() 
 	{
 		if ($this->_context->get("logout") != "")
 		{
-			$this->_context->redirectUrl("admin:controlpanel");
+			$this->_context->redirectUrl("module:Xmlnuke.Admin.ControlPanel");
 		}
 		
 		parent::CreatePage();
