@@ -550,22 +550,14 @@ abstract class BaseModule implements IModule
 
 	public function getXsl()
 	{
-		if (strpos($this->_context->getXsl(), "admin"))
+		// Avoid to process standard modules with admin and exception templates
+		if (($this->_context->getXsl() == "admin") || ($this->_context->getXsl() == "admin"))
 		{
 			$this->_context->setXsl($this->_context->get("xmlnuke.DEFAULTPAGE"));
 		}
 
 		// Default XSL (get from parameter or config)
 		$xslFile = new XSLFilenameProcessor($this->_context->getXsl());
-
-		// Forced XSL (used only one time)
-		//$xslFile = new XSLFilenameProcessor("myxsl");
-
-		// Forced XSL (use it from now and then)
-		//$xsl = "myxsl";
-		//$this->_context->setXsl($xsl);
-		//$xslFile = new XSLFilenameProcessor($xsl);
-		
 		return $xslFile;
 	}
 
