@@ -33,13 +33,13 @@
  */
 namespace Xmlnuke\Core\Classes;
 
-use DOMNode;
 use Captcha\Captcha;
+use DOMNode;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\BlockPosition;
 use Xmlnuke\Util\XmlUtil;
 
-class  XmlInputImageValidate extends XmlnukeDocumentObject 
+class  XmlInputImageValidate extends XmlnukeDocumentObject
 {
 	protected $_caption;
 	protected $_chars = "5";
@@ -87,7 +87,6 @@ class  XmlInputImageValidate extends XmlnukeDocumentObject
 	 */
 	public static function validateText($context)
 	{
-		require_once(PHPXMLNUKEDIR . "src/modules/captcha/captcha.class.php");
 		return Captcha::TextIsValid($context->get("imagevalidate"));
 	}
 
