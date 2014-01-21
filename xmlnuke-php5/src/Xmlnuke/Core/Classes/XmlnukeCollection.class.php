@@ -115,6 +115,15 @@ class XmlnukeCollection
 						XmlUtil::AddNodeFromNode($current, $singleRow->getDomObject());
 					}
 				}
+				elseif ($item instanceof \Xmlnuke\Core\Locale\LanguageCollection)
+				{
+					$keys = $item->getCollection();
+					$l10n = XmlUtil::CreateChild($current, "l10n");
+					foreach ($keys as $key=>$value)
+					{
+						XmlUtil::CreateChild($l10n, $key, $value);
+					}
+				}
 				elseif (($item instanceof IXmlnukeDocumentObject) && ($this->_xmlTransform != XMLTransform::Model))
 				{
 					$item->generateObject($current);

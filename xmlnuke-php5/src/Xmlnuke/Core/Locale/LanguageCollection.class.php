@@ -257,6 +257,11 @@ class LanguageCollection
 		Debug::PrintValue($this->_collection);
 	}
 
+	public function getCollection()
+	{
+		return $this->_collection;
+	}
+
 }
 
 ?>
