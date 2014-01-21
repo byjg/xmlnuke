@@ -10,15 +10,23 @@
     <field name="LOGINTITLE">Type in your credentials</field>
     <field name="LOGINFORGOTMESSAGE">I Forgot my password</field>
     <field name="LOGINCREATEUSERMESSAGE">Create user</field>
-    <field name="CREATEUSERTITLE">Create user</field>
+	<field name="LABELUSERNAME">Username</field>
+	<field name="LABELPASSWORD">Password</field>
+	<field name="PLACEHOLDERUSERNAME">Enter your username</field>
+	<field name="PLACEHOLDERPASSWORD">Enter you password</field>
+	<field name="PLACEHOLDEREMAIL">Enter your registered email</field>
+	<field name="PLACEHOLDERENAME">Enter your name</field>
+	<field name="CREATEUSERTITLE">Create user</field>
     <field name="CREATEUSERPASSWORDMSG">Your password will be send to your email.</field>
-    <field name="CREATEUSERBUTTON">Create user</field>
-    <field name="FORGOTPASSTITLE">I Forgot my password</field>
+    <field name="CREATEUSERBUTTON">Register</field>
+    <field name="FORGOTPASSTITLE">Retrieve password</field>
     <field name="FORGOTPASSBUTTON">Send my password to my email address.</field>
     <field name="SUBJECTMESSAGE">{0}: Sign in confirmation</field>
     <field name="WELCOMEMESSAGE">{0},\n\nYou requested to Sign Up at site {1}\n\nYour Login: {2}\nYour Password: {3} (Warning: this password is case-sensitive)\n\nGo to the URL address {4} to sign in and/or change your profile.</field>
-    <field name="TYPETEXTFROMIMAGE">Type Numbers below:</field>
+    <field name="CAPTCHALABEL">Captcha:</field>
+    <field name="CAPTCHAPLACEHOLDER">Enter the characters from image</field>
     <field name="OBJECTIMAGEINVALID">The numbers you types didn't match. You need to type the text correctly.</field>
+	<field name="INCOMPLETEDATA">You must provide a valid email, username and your name.</field>
     <field name="LOGINPROBLEMSMESSAGE">Problems?</field>
   </row>
   <row>
@@ -31,16 +39,25 @@
     <field name="FORGOTUSEROK">Email encontrado. A nova senha foi enviada por email.</field>
     <field name="LOGINTITLE">Digite suas credenciais</field>
     <field name="LOGINFORGOTMESSAGE">Esqueci a minha senha</field>
+	<field name="LABELUSERNAME">Usuário</field>
+	<field name="LABELPASSWORD">Senha</field>
+	<field name="PLACEHOLDERUSERNAME">Digite seu nome de usuário</field>
+	<field name="PLACEHOLDERPASSWORD">Digite a sua senha</field>
+	<field name="PLACEHOLDEREMAIL">Digite o email registrado</field>
+	<field name="PLACEHOLDERENAME">Digite o seu nome</field>
+	<field name="CREATEUSERTITLE">Criar novo usuário</field>
     <field name="LOGINCREATEUSERMESSAGE">Criar Usuário</field>
     <field name="CREATEUSERTITLE">Criar usuário</field>
     <field name="CREATEUSERPASSWORDMSG">A sua senha será enviada por email.</field>
     <field name="CREATEUSERBUTTON">Criar usuário</field>
-    <field name="FORGOTPASSTITLE">Esqueci a minha senha</field>
+    <field name="FORGOTPASSTITLE">Recuperar senha do usuário</field>
     <field name="FORGOTPASSBUTTON">Enviar senha para esse email</field>
     <field name="SUBJECTMESSAGE">{0}: Confirmação de Cadastro</field>
     <field name="WELCOMEMESSAGE">{0},\n\nVocê solicitou o seu cadastramento no site {1}\n\nSeu Login: {2}\nSua Senha: {3} (atenção: a senha é sensível a maiúscula e minúscula)\n\nAcesse o endereço {4} para efetuar o logon e/ou alterar seus dados</field>
-    <field name="TYPETEXTFROMIMAGE">Digite números ao lado: </field>
+    <field name="CAPTCHALABEL">Captcha:</field>
+    <field name="CAPTCHAPLACEHOLDER">Digite os caracteres da imagem</field>
     <field name="OBJECTIMAGEINVALID">O texto que você digitou não confere. Você precisa digitar o texto corretamente para prosseguir. </field>
+	<field name="INCOMPLETEDATA">Você precisa digitar um email válido, um usuário e o seu nome.</field>
     <field name="LOGINPROBLEMSMESSAGE">Problemas?</field>
   </row>
   <row>
@@ -54,6 +71,12 @@
     <field name="LOGINTITLE">Geben Sie Ihre Anmeldedaten ein</field>
     <field name="LOGINFORGOTMESSAGE">Ich habe mein Passwort vergessen</field>
     <field name="LOGINCREATEUSERMESSAGE">Ich möchte mich registrieren</field>
+	<field name="LABELUSERNAME">Benutzernamen</field>
+	<field name="LABELPASSWORD">Passwort</field>
+	<field name="PLACEHOLDERUSERNAME">Geben Sie Ihren Benutzernamen</field>
+	<field name="PLACEHOLDERPASSWORD">Geben Sie Ihren Passwort</field>
+	<field name="PLACEHOLDEREMAIL">Geben Sie Ihre registrierte Email</field>
+	<field name="PLACEHOLDERENAME">Geben Sie Ihren Namen</field>
     <field name="CREATEUSERTITLE">Einen neuen Benutzer anlegen</field>
     <field name="CREATEUSERPASSWORDMSG">Das Passwort wird an Ihre E-Mail-Adresse gesendet.</field>
     <field name="CREATEUSERBUTTON">Registrieren</field>
@@ -61,8 +84,10 @@
     <field name="FORGOTPASSBUTTON">Passwort zusenden</field>
     <field name="SUBJECTMESSAGE">{0}: Registrierungsbestätigung</field>
     <field name="WELCOMEMESSAGE">{0},\n\nSie haben sich bei {1} registriert.\n\nBenutzername: {2}\nPasswort: {3} (Groß-/Kleinschreibung beachten)\n\nGehen Sie zur URL {4} um sich anzumelden und/oder Ihr Profil zu ändern.</field>
-    <field name="TYPETEXTFROMIMAGE">Sicherheitsabfrage:</field>
+    <field name="CAPTCHALABEL">Captcha:</field>
+    <field name="CAPTCHAPLACEHOLDER">Geben Sie die Zeichen aus dem Bild</field>
     <field name="OBJECTIMAGEINVALID">Sie haben die Sicherheitsabfrage nicht oder falsch beantwortet. Bitte überprüfen Sie die Eingabe.</field>
+	<field name="INCOMPLETEDATA">Sie müssen eine gültige E-Mail, Benutzername und Ihren Namen.</field>
     <field name="LOGINPROBLEMSMESSAGE">Sonstiges:</field>
   </row>
   <row>
@@ -76,6 +101,12 @@
     <field name="LOGINTITLE">Tapez vos informations d'identification</field>
     <field name="LOGINFORGOTMESSAGE">J'ai oublié mon mot de passe</field>
     <field name="LOGINCREATEUSERMESSAGE">Créer un utilisateur</field>
+	<field name="LABELUSERNAME">Nom d'utilisateur</field>
+	<field name="LABELPASSWORD">Mot de passe</field>
+	<field name="PLACEHOLDERUSERNAME">Entrez votre nom d'utilisateur</field>
+	<field name="PLACEHOLDERPASSWORD">Entrez votre mot de passe</field>
+	<field name="PLACEHOLDEREMAIL">Entrez votre e-mail enregistrée</field>
+	<field name="PLACEHOLDERENAME">Entrez votre nom</field>
     <field name="CREATEUSERTITLE">Créer un utilisateur</field>
     <field name="CREATEUSERPASSWORDMSG">Votre mot de passe vous sera envoyé à votre courriel.</field>
     <field name="CREATEUSERBUTTON">Créer un utilisateur</field>
@@ -83,8 +114,10 @@
     <field name="FORGOTPASSBUTTON">Envoyez mon mot de passe à mon adresse e-mail.</field>
     <field name="SUBJECTMESSAGE">{0}: S'inscrire dans la confirmation</field>
     <field name="WELCOMEMESSAGE">{0}, \n\nVous priées de s'inscrire sur le site de {1} \n\nVotre Login: {2} \n Password Votre: {3} (Attention: ce mot de passe est sensible à la casse) \n\nONG à l'URL address {4} pour vous connecter et / ou modifier votre profil.</field>
-    <field name="TYPETEXTFROMIMAGE">Tapez des nombres ci-dessous:</field>
+    <field name="CAPTCHALABEL">Captcha:</field>
+    <field name="CAPTCHAPLACEHOLDER">Entrez les caracteres de l'image</field>
     <field name="OBJECTIMAGEINVALID">Les chiffres que vous types ne correspondent pas. Vous devez saisir le texte correctement.</field>
+	<field name="INCOMPLETEDATA">Vous devez fournir une adresse email valide, le nom d'utilisateur et votre nom.</field>
     <field name="LOGINPROBLEMSMESSAGE">Problèmes?</field>
   </row>
   <row>
@@ -98,6 +131,12 @@
     <field name="LOGINTITLE">Skriv in din inloggningsinformation</field>
     <field name="LOGINFORGOTMESSAGE">Jag har glömt mitt lösenord</field>
     <field name="LOGINCREATEUSERMESSAGE">Skapa användare</field>
+	<field name="LABELUSERNAME">Användarnamn</field>
+	<field name="LABELPASSWORD">Lösenord</field>
+	<field name="PLACEHOLDERUSERNAME">Skriv in ditt användarnamn</field>
+	<field name="PLACEHOLDERPASSWORD">Skriv in ditt lösenord</field>
+	<field name="PLACEHOLDEREMAIL">Fyll i din registrerade e-post</field>
+	<field name="PLACEHOLDERENAME">Skriv in ditt namn</field>
     <field name="CREATEUSERTITLE">Skapa användare</field>
     <field name="CREATEUSERPASSWORDMSG">Ditt lösenord kommer att skickas till din e-post.</field>
     <field name="CREATEUSERBUTTON">Skapa användare</field>
@@ -105,8 +144,10 @@
     <field name="FORGOTPASSBUTTON">Skicka mitt lösenord till min e-postadress.</field>
     <field name="SUBJECTMESSAGE">{0}: Logga in bekräftelse</field>
     <field name="WELCOMEMESSAGE">{0} \n\nDu uppmanas att registrera sig på plats {1} \n nDin Login: {2} \nDin Lösenord: {3} (Varning: Detta lösenord är skiftlägeskänsligt) \n\nGå till URL adress {4} för att logga in och / eller ändra din profil.</field>
-    <field name="TYPETEXTFROMIMAGE">Typ nedan:</field>
+    <field name="CAPTCHALABEL">Captcha:</field>
+    <field name="CAPTCHAPLACEHOLDER">Skriv in uppgifterna från bilden</field>
     <field name="OBJECTIMAGEINVALID">Siffrorna du typer matchade inte. Du måste skriva texten på rätt sätt.</field>
+	<field name="INCOMPLETEDATA">Du måste ange en giltig e-postadress, användarnamn och ditt namn.</field>
     <field name="LOGINPROBLEMSMESSAGE">Problem?</field>
   </row>
 </anydataset>
