@@ -54,6 +54,7 @@ use Xmlnuke\Core\Classes\MailEnvelope;
 use Xmlnuke\Core\Classes\PageXml;
 use Xmlnuke\Core\Classes\XmlBlockCollection;
 use Xmlnuke\Core\Classes\XmlInputImageValidate;
+use Xmlnuke\Core\Classes\XmlnukeManageUrl;
 use Xmlnuke\Core\Classes\XmlnukeText;
 use Xmlnuke\Core\Classes\XmlnukeUIAlert;
 use Xmlnuke\Core\Enum\BlockPosition;
@@ -64,7 +65,7 @@ use Xmlnuke\Core\Processor\XSLFilenameProcessor;
 use Xmlnuke\Model\Login as LoginModel;
 use Xmlnuke\Util\MailUtil;
 
-class Login extends \Xmlnuke\Core\Module\BaseModule
+class Login extends BaseModule
 {
 	/**
 	 * Users
@@ -197,6 +198,12 @@ class Login extends \Xmlnuke\Core\Module\BaseModule
 	 */
 	protected function ForgotPassword()
 	{
+		if (!$this->_login->getCanRetrievePassword())
+		{
+			$this->FormLogin();
+			return;
+		}
+
 		$myWords = $this->WordCollection();
 		$this->defaultXmlnukeDocument->setPageTitle($myWords->Value("FORGOTPASSTITLE"));
 
@@ -215,6 +222,11 @@ class Login extends \Xmlnuke\Core\Module\BaseModule
 	 */
 	protected function ForgotPasswordConfirm()
 	{
+		if (!$this->_login->getCanRetrievePassword())
+		{
+			$this->FormLogin();
+			return;
+		}
 		$myWords = $this->WordCollection();
 		
 		$container = new XmlnukeUIAlert($this->_context, UIAlert::BoxInfo);
@@ -245,6 +257,11 @@ class Login extends \Xmlnuke\Core\Module\BaseModule
 	 */
 	protected function CreateNewUser()
 	{
+		if (!$this->_login->getCanRegister())
+		{
+			$this->FormLogin();
+			return;
+		}
 		$myWords = $this->WordCollection();
 		$this->defaultXmlnukeDocument->setPageTitle($myWords->Value("CREATEUSERTITLE"));
 
@@ -263,6 +280,11 @@ class Login extends \Xmlnuke\Core\Module\BaseModule
 	 */
 	protected function CreateNewUserConfirm()
 	{
+		if (!$this->_login->getCanRegister())
+		{
+			$this->FormLogin();
+			return;
+		}
 		$myWords = $this->WordCollection();
 		$container = new XmlnukeUIAlert($this->_context, UIAlert::BoxAlert);
 		$container->setAutoHide(5000);
@@ -300,7 +322,7 @@ class Login extends \Xmlnuke\Core\Module\BaseModule
 
 	/**
 	 * Overrides getXsl() to force to use the LOGIN xsl
-	 * @return \Xmlnuke\Core\Processor\XSLFilenameProcessor
+	 * @return XSLFilenameProcessor
 	 */
 	public function getXsl()
 	{
