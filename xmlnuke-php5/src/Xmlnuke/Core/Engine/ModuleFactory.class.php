@@ -154,7 +154,10 @@ class ModuleFactory
 				$usersDb = $context->getUsersDatabase();
 				$users = $usersDb->getUserName($data['username']);
 				if ($users == null)
+				{
+					header('HTTP/1.1 403 Forbiden');
 					die('Wrong Credentials!');
+				}
 				$userTable = $usersDb->getUserTable();
 				$password = $users->getField($userTable->Password);
 
@@ -164,7 +167,10 @@ class ModuleFactory
 				$valid_response = md5($A1.':'.$data['nonce'].':'.$data['nc'].':'.$data['cnonce'].':'.$data['qop'].':'.$A2);
 
 				if ($data['response'] != $valid_response)
+				{
+					header('HTTP/1.1 403 Forbiden');
 					die('Wrong Credentials!');
+				}
 
 				// ok, valid username & password
 				$context->MakeLogin($users->getField($userTable->Username), $users->getField($userTable->Id));
