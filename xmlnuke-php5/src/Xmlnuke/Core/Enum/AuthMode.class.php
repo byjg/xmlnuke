@@ -35,5 +35,6 @@ namespace Xmlnuke\Core\Enum;
 class AuthMode
 {
 	const Form = 0;
-	const HttpDigest = 1;
+	const HttpBasic = 1;
+	const HttpDigest = 2;
 }

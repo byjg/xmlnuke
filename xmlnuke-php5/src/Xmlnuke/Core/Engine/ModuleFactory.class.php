@@ -132,6 +132,41 @@ class ModuleFactory
 			{
 				throw new NotAuthenticatedException("You need login to access this feature");
 			}
+			elseif ($result->getAuthMode() == AuthMode::HttpBasic)
+			{
+				$realm = 'Restricted area';
+
+				if (empty($_SERVER['PHP_AUTH_USER']))
+				{
+					header('WWW-Authenticate: Basic realm="' . $realm . '"');
+					header('HTTP/1.0 401 Unauthorized');
+					die('You have to provide your credentials before proceed.');
+				}
+				else
+				{
+					$usersDb = $context->getUsersDatabase();
+
+					$users = $usersDb->getUserName($_SERVER['PHP_AUTH_USER']);
+					if ($users == null)
+					{
+						header('HTTP/1.1 403 Forbiden');
+						die('Wrong Credentials!');
+					}
+					$userTable = $usersDb->getUserTable();
+					
+					// Check if Username and plain password is valid. If dont try to check if the SHA1 password is ok
+					if (!$usersDb->validateUserName($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']))
+					{
+						$password = $users->getField($userTable->Password);						
+						if ($password != $_SERVER['PHP_AUTH_PW'])
+						{
+							header('HTTP/1.1 403 Forbiden');
+							die('Wrong Credentials!');							
+						}
+					}
+					$context->MakeLogin($users->getField($userTable->Username), $users->getField($userTable->Id));
+				}
+			}
 			elseif ($result->getAuthMode() == AuthMode::HttpDigest)
 			{
 				$realm = 'Restricted area';
