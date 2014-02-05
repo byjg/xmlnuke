@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration xmlns="http://logging.apache.org/log4php/">
 
+	<!--
+	Priority:
+		"OFF"
+		"FATAL"
+		"ERROR"
+		"WARN"
+		"INFO"
+		"DEBUG"
+		"TRACE"
+		"ALL"
+
+	Copy this file to your anydataset space to implement new loggers
+	-->
+
+
+	<!--  ================================================================
+	APPENDER
+	================================================================== -->
 	<appender name="null" class="LoggerAppenderNull" />
 
 	<appender name="browser" class="LoggerAppenderEcho">
-		<layout class="LoggerLayoutHtml2">
+		<layout class="Log4PhpCustom\Layout\LoggerLayoutHtml2">
 			<!--param name="locationInfo" value="true" /-->
 		</layout>
 	</appender>
@@ -15,6 +33,9 @@
 	</appender>
 
 
+	<!--  ================================================================
+	LOGGER
+	================================================================== -->
 	<root>
 		<level value="INFO" />
 		<appender_ref ref="null" />

@@ -28,32 +28,40 @@
 */
 
 
-require_once(PHPXMLNUKEDIR . 'src/modules/log4php/Logger.php');
-
 namespace Xmlnuke\Util;
 
-use LoggerPatternConverterLogger;
+require_once(PHPXMLNUKEDIR . 'src/Xmlnuke/Library/log4php/Logger.php');
+
+use Xmlnuke\Core\Exception\NotFoundException;
 use Xmlnuke\Core\Processor\LogConfigFilenameProcessor;
 
 class LogWrapper
 {
+
+	protected $_logger = null;
+
 	/**
-	 *
+	 * You can use this method if you want specific customizations to the log.
+	 * Otherwise you can instantiate this class and use the trace, warn, info, etc methods
+	 * 
 	 * @param string $logName
-	 * @return Logger
+	 * @return \Logger
 	 */
 	public static function getLogger($logName = 'default')
 	{
 		$filename = new LogConfigFilenameProcessor('log4php');
 
 		if (!$filename->Exists())
-		{
-
-		}
+			throw new NotFoundException('Log4php config file not found.');
 		else
-			Logger::configure($filename->FullQualifiedNameAndPath());
+			\Logger::configure($filename->FullQualifiedNameAndPath());
 		
-		return Logger::getLogger($logName);
+		return \Logger::getLogger($logName);
+	}
+
+	public function __construct($logName = 'default')
+	{
+		$this->_logger = self::getLogger($logName);
 	}
 
 	public function trace($message)

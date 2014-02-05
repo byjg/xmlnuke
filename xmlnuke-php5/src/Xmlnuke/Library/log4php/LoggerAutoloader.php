@@ -117,7 +117,6 @@ class LoggerAutoloader {
 		
 		// Layouts
 		'LoggerLayoutHtml' => '/layouts/LoggerLayoutHtml.php',
-		'LoggerLayoutHtml2' => '/layouts/LoggerLayoutHtml2.php',
 		'LoggerLayoutPattern' => '/layouts/LoggerLayoutPattern.php',
 		'LoggerLayoutSerialized' => '/layouts/LoggerLayoutSerialized.php',
 		'LoggerLayoutSimple' => '/layouts/LoggerLayoutSimple.php',

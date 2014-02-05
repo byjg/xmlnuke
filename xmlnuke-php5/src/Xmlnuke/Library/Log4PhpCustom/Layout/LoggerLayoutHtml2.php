@@ -1,4 +1,11 @@
 <?php
+
+namespace Log4PhpCustom\Layout;
+
+use LoggerLayout;
+use LoggerLevel;
+use LoggerLoggingEvent;
+
 /**
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -170,7 +177,7 @@ class LoggerLayoutHtml2 extends LoggerLayout {
 	 * @return string Returns the appropriate HTML footers.
 	 */
 	public function getFooter() {
-		$sbuf .= "<br/></div>" . PHP_EOL;
+		$sbuf = "<br/></div>" . PHP_EOL;
 
 		return $sbuf;
 	}
