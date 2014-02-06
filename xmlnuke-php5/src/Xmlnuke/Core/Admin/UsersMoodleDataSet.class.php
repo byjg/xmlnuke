@@ -166,8 +166,6 @@ class UsersMoodleDataSet extends UsersDBDataSet
 
 				$user->AddField("roles", $sr->getField('shortname'));
 			}
-
-			\Xmlnuke\Util\Debug::PrintValue($user); die();
 		}
 
 		return $user;
