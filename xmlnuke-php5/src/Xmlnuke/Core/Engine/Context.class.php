@@ -1502,7 +1502,7 @@ class Context extends BaseSingleton
 			$conn = $this->get("xmlnuke.USERSDATABASE");
 			if ($class != "")
 			{
-				$this->__userdb = new $class(this, $conn);
+				$this->__userdb = new $class($this, $conn);
 				if (!($this->__userdb instanceof IUsersBase))
 				{
 					throw new InvalidArgumentException("Authentication class '$class' must implement IUsersBase interface");
