@@ -148,7 +148,7 @@ class LoggerLayoutHtml2 extends LoggerLayout {
 		}
 
 		$sbuf .= "(" . htmlentities($event->getLoggerName(), ENT_QUOTES);// . ", ";
-		$sbuf .= /*$event->getThreadName() . */"): " . date('c') . ' ' . htmlentities($event->getRenderedMessage(), ENT_QUOTES);
+		$sbuf .= /*$event->getThreadName() . */"): " . date('c') . ' ' . $event->getRenderedMessage();
 
 		if ($event->getNDC() != null) {
 			$sbuf .= PHP_EOL . "<br/>" . "NDC: " . htmlentities($event->getNDC(), ENT_QUOTES);

@@ -15,6 +15,11 @@
 	Copy this file to your anydataset space to implement new loggers
 	-->
 
+	<!--  ================================================================
+	RENDERER
+	================================================================== -->
+	<renderer renderedClass="stdClass" renderingClass="Log4PhpCustom\Renderer\StdClassRenderer" />
+
 
 	<!--  ================================================================
 	APPENDER
@@ -44,6 +49,11 @@
 	<logger name="echo">
 		<level value="TRACE" />
 		<appender_ref ref="null" />
+	</logger>
+
+	<logger name="debug.output">
+		<level value="TRACE" />
+		<appender_ref ref="browser" />
 	</logger>
 
 	<logger name="database.basedbaccess">

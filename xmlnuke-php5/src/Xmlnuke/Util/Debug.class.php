@@ -54,6 +54,23 @@ class Debug
 	protected static $count = 1;
 
 	/**
+	 *
+	 * @var LogWrapper
+	 */
+	protected static $_logger = null;
+
+	protected static function writeLog($title = "", $contents = "", $preserve = false)
+	{
+		$stdClass = new \stdClass();
+		$stdClass->debugXmlnuke = true;
+		$stdClass->title = $title;
+		$stdClass->contents = $contents;
+		$stdClass->preserve = $preserve;
+
+		self::$_logger->debug($stdClass);
+	}
+
+	/**
 	 * Assist your to debug vars. Accept n vars parameters
 	 * Included Debug on ARRAY an IIterator Object
 	 *
@@ -63,6 +80,9 @@ class Debug
 	 */
 	public static function PrintValue($arg1, $arg2 = null)
 	{
+		if (self::$_logger == null)
+			self::$_logger = new LogWrapper('debug.output');
+
 		for ($i = 0, $numArgs = func_num_args(); $i < $numArgs ; $i++)
 		{
 			$var = func_get_arg($i);
@@ -73,180 +93,109 @@ class Debug
 				continue;
 			}
 
-			echo "<b><font color='red'>Debug</font></b>: ";
-
 			if (is_array($var))
 			{
-				foreach ($var as $key=>$value)
-				{
-					echo "[<b>$key</b>] => ";
-					if (is_object($value))
-					{
-						echo "{ ";
-						Debug::PrintValue($value);
-						echo " }<br/>";
-					}
-					else
-					{
-						echo print_r($value, true) . "<br>";
-					}
-				}
+				self::writeLog(null, print_r($var, true), true);
 			}
 			elseif ($var instanceof SingleRow)
 			{
-				echo "<b>SingleRow</b><br>";
-				$arr = $var->getFieldNames();
-				foreach ($arr as $key=>$value)
-				{
-					echo "<b>" . $value."</b>=>".$var->getField($value)."<br>";
-				}
+				self::writeLog('SingleRow', print_r($var->getRawFormat(), true), true);
 			}
 			elseif ($var instanceof AnyDataSet)
 			{
-				echo get_class($var) . "<br>";
 				Debug::PrintValue($var->getIterator());
 			}
 			elseif ( ($var instanceof IIterator) || ($var instanceof AnyIterator) )
 			{
 				$it = $var;
-				echo "<hr>";
 				if (!$it->hasNext())
 				{
-					echo "<b>Nao trouxe Registros</b>";
+					self::writeLog('IIterator', "Não trouxe registros.", false);
 				}
 				else
 				{
-					$i = 0;
+					$result = "<style>.devdebug {border: 1px solid silver; padding: 2px;} table.devdebug {border-collapse:collapse;} th.devdebug {background-color: silver}</style>"
+							. "<table class='devdebug'>";
 					$arr = null;
-					echo "<table border=1>";
 					while ($it->hasNext())
 					{
 						$i++;
 						$sr = $it->moveNext();
 						if ($i>100)
-						{
 							break;
-						}
 
 						if (is_null($arr))
 						{
 							$arr = $sr->getFieldNames();
-							echo "<tr>";
-							foreach ($arr as $key=>$value)
-							{
-								echo "<td bgcolot=silver><b>" . $value . "</b></td>";
-							}
-							echo "</tr>";
+							$result .= '<tr><th class="devdebug">' . implode('</b></th><th class="devdebug">', $arr) . '</th></tr>';
 						}
 
-						echo "<tr>";
-						foreach ($arr as $key=>$value)
-						{
-							echo "<td>" . $sr->getField($value). "</td>";
-						}
-						echo "</tr>";
+						$raw = $sr->getRawFormat();
+						$result .= '<tr><td class="devdebug">' . implode('</b></td><td class="devdebug">', $raw) . '</td></tr>';
 					}
-					echo "</table>";
+					$result .= "</table>";
+					self::writeLog('IIterator', $result, false);
 				}
 			}
 			elseif ($var instanceof IteratorFilter)
 			{
-				echo "<b>" . get_class($var) . "</b><br>";
-				echo "XPath = " . $var->getXPath() . "<br>";
 				$filter = $var->getSql("ANYTABLE", $param, "*");
 				$filter = substr($filter, strpos($filter, "where") + 6);
-				echo "Filter = " . $filter . "<br>";
-				Debug::PrintValue($param);
+				$result = array(
+					"XPath" => $var->getXPath(),
+					"Filter" => $filter
+				) + $param;
 
+				self::writeLog(get_class($var), print_r($result, true), true);
 			}
 			elseif ($var instanceof FilenameProcessor)
 			{
-				echo "<b>" . get_class($var) . "</b><br>";
-				echo "<b>Path Suggested: </b>" . $var->PathSuggested() . "<br>";
-				echo "<b>Private Path: </b>" . $var->PrivatePath() . "<br>";
-				echo "<b>Shared Path: </b>" . $var->SharedPath() . "<br>";
-				echo "<b>Name: </b>" . $var->ToString() . "<br>";
-				echo "<b>Extension: </b>" . $var->Extension() . "<br>";
-				echo "<b>Full Name: </b>" . $var->FullQualifiedName() . "<br>";
-				echo "<b>Full Qualified Name And Path: </b>" . $var->FullQualifiedNameAndPath() . "<br>";
+				$result = array(
+					"PathSuggested()" => $var->PathSuggested(),
+					"PrivatePath()" => $var->PrivatePath(),
+					"SharedPath()" => $var->SharedPath(),
+					"Name" => $var->ToString(),
+					"Extension()" => $var->Extension(),
+					"FullQualifiedName()" => $var->FullQualifiedName(),
+					"FullQualifiedNameAndPath()" => $var->FullQualifiedNameAndPath(),
+					"getFilenameLocation()" =>  $var->getFilenameLocation(),
+					"File Exists?" => file_exists($var->FullQualifiedNameAndPath()) ? "yes" : "no"
+				);
+
+				self::writeLog(get_class($var), print_r($result, true), true);
 			}
 			elseif ($var instanceof LanguageCollection)
 			{
-				echo "<b>" . get_class($var) . "</b><br>";
-				echo "<b>Is Loaded?: </b>" . $var->loadedFromFile() . "<br/>";
-				Debug::PrintValue($var->Debug());
+				self::writeLog("", get_class($var) . ": Is Loaded? " . ($var->loadedFromFile() ? 'yes' : 'no'), false);
+				$var->Debug();
 			}
 			elseif (is_object($var))
 			{
-				echo get_class($var) . ", ";
-				//echo $var;
 				if ($var instanceof DOMDocument)
 				{
-					$value->formatOutput = true;
-					echo "<pre>\n". htmlentities($var->saveXML()) . "\n</pre>";
+					$var->formatOutput = true;
+					self::writeLog(get_class($var), htmlentities($var->saveXML()), true);
 				}
 				elseif ( ($var instanceof DOMElement) || ($var instanceof DOMNode) )
 				{
-					echo "<pre>\n";
-					echo htmlentities('[' . $var->nodeName . "]");
-					echo "\n";
 					$doc = $var->ownerDocument;
 					$doc->formatOutput = true;
 					echo htmlentities($doc->saveXML($var)) . "</pre>";
+					self::writeLog(get_class($var), htmlentities('[' . $var->nodeName . "]") . "\n" . htmlentities($doc->saveXML()), true);
 				}
 				else
 				{
-					echo "object<br>Public Method List:<ul>";
-					$class = new ReflectionClass(get_class($var));
-					$methods = $class->getMethods( ReflectionProperty::IS_PUBLIC );
-					foreach ($methods as $met)
-					{
-						echo "<li>" . $met->getName() . "()";
-						if (!(strpos($met->getName(), "get")===false))
-						{
-							echo " ==> ";
-							try
-							{
-								echo $var->{$met->getName()}();
-							}
-							catch (Exception $ex)
-							{
-								echo "Error: " . $ex->getMessage();
-							}
-
-						}
-						echo "</li>";
-					}
-					echo "</ul>";
-					echo "Public Property List:<ul>";
-					$properties = $class->getProperties( ReflectionProperty::IS_PUBLIC );
-					foreach ($properties as $prop)
-					{
-						echo "<li>" . $prop->getName() . " => ";
-						try
-						{
-							echo $var->{$prop->getName()};
-						}
-						catch (Exception $ex)
-						{
-							echo "Error: " . $ex->getMessage();
-						}
-						echo "</li>";
-					}
-
-					echo "</ul>";
-
+					self::writeLog(get_class($var), print_r($var, true), true);
 				}
 			}
 			elseif (gettype($var) == "boolean")
 			{
-				echo gettype($var) . ": ". ($var ? "true":"false");
+				self::writeLog("", '(boolean) ' . ($var ? "true":"false"), true);
 			}
 			else
 			{
-				echo gettype($var) . ": ". $var;
+				self::writeLog("", gettype($var) . ": ". $var, true);
 			}
-			echo "<br>";
 		}
 	}
 
