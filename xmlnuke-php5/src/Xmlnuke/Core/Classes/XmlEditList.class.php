@@ -407,6 +407,9 @@ class  XmlEditList extends XmlnukeDocumentObject
 		
 		$summaryFields = array();
 
+		if (!($this->_it instanceof IIterator))
+			throw new InvalidArgumentException('You have to pass an IIterator object to the XmlEditList');
+
 		// Generate XML With Data
 		while ($this->_it->hasNext())
 		{
