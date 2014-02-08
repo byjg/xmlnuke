@@ -8,12 +8,12 @@ class config
 		$values['xmlnuke.ROOTDIR'] = '__DATADIR__';
 		$values['xmlnuke.PHPXMLNUKEDIR'] = '__PHPDIR__';
 		$values['xmlnuke.USEABSOLUTEPATHSROOTDIR'] = true;
-		$values['xmlnuke.XSLCACHE'] = '\Xmlnuke\Core\Cache\NoCacheEngine';
-		$values['xmlnuke.SMTPSERVER'] = '';
+		$values['xmlnuke.XSLCACHE'] = '\Xmlnuke\Core\Cache\NoCacheEngine';  #ICacheEngine instance
+		$values['xmlnuke.SMTPSERVER'] = '';                       # [smtp|ssl]://user:pass@server:port
 		$values['xmlnuke.USEFULLPARAMETER'] = true;
-		$values['xmlnuke.USERSDATABASE'] = '';
-		$values['xmlnuke.USERSCLASS'] = '';
-		$values['xmlnuke.LOGINMODULE'] = 'Xmlnuke.Login';
+		$values['xmlnuke.USERSDATABASE'] = '';                    # DBDataset connection ('_db.anydata.xml')
+		$values['xmlnuke.USERSCLASS'] = '';                       # IUsersBase instance
+		$values['xmlnuke.LOGINMODULE'] = 'Xmlnuke.Login';         # IModule instance
 		$values['xmlnuke.EXTERNALSITEDIR'] =
 				array(
 					'__SITE__' => '__PROJECT_DATA__'
@@ -24,7 +24,7 @@ class config
 				);
 		$values['xmlnuke.URLXMLNUKEENGINE'] = 'xmlnuke.php';
 		$values['xmlnuke.URLMODULE'] = 'xmlnuke.php';
-		$values['xmlnuke.URLXMLNUKEADMIN'] = 'xmlnukeadmin.php';
+		$values['xmlnuke.URLXMLNUKEADMIN'] = 'xmlnuke.php?/admin';
 		$values['xmlnuke.DEFAULTSITE'] = '__SITE__';
 		$values['xmlnuke.DEFAULTPAGE'] = 'page';
 		$values['xmlnuke.URLBASE'] = '';
@@ -36,13 +36,15 @@ class config
 				);
 		$values['xmlnuke.DEBUG'] = false;
 		$values['xmlnuke.DEVELOPMENT'] = true;
-		$values['xmlnuke.CAPTCHACHALLENGE'] = 'hard';
+		$values['xmlnuke.CAPTCHACHALLENGE'] = 'hard';              # hard / soft
 		$values['xmlnuke.CAPTCHALETTERS'] = '5';
 		$values['xmlnuke.ENABLEPARAMPROCESSOR'] = true;
 		$values['xmlnuke.CHECKCONTENTTYPE'] = true;
-		$values['xmlnuke.CACHESTORAGEMETHOD'] = 'PLAIN';
-		$values['xmlnuke.XMLSTORAGEMETHOD'] = 'PLAIN';
-		$values['xmlnuke.RESTRICTACCESS'] = '';
+		$values['xmlnuke.CACHESTORAGEMETHOD'] = 'PLAIN';           # PLAIN / HASH
+		$values['xmlnuke.XMLSTORAGEMETHOD'] = 'PLAIN';             # PLAIN / HASH
+		$values['xmlnuke.RESTRICTACCESS'] = '';                    # ICheckAccess instance
+		$values['xmlnuke.OUTPUT_FORMAT'] = '';                     # - / json / xml
+		$values['xmlnuke.POST_PROCESS_RESULT'] = '\Xmlnuke\Core\Processor\BaseProcessResult';               # IProcessResult instance
 		return $values;
 	}
 }

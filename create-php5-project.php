@@ -208,14 +208,11 @@ class CreatePhp5Project
 				$gitIgnore = array("# Xmlnuke Files");
 
 				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/imagevalidate.php",  "$HTTPDOCS/") );
-				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/xmlnukeadmin.php", "$HTTPDOCS/") );
 				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/xmlnuke.inc.php", "$HTTPDOCS/") );
 				//$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/check_install.php.dist", "$HTTPDOCS/check_install.php") );
 				CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/index.php.dist", "$HTTPDOCS/index.php") );
 				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/xmlnuke.php", "$HTTPDOCS/") );
 
-				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/writepage.inc.php.dist", "$HTTPDOCS/writepage.inc.php") );
-				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/unittest.php", "$HTTPDOCS/") );
 				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/webservice.php", "$HTTPDOCS/") );
 				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/chart.php", "$HTTPDOCS/") );
 

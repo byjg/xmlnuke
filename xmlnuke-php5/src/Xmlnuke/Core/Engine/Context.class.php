@@ -876,9 +876,11 @@ class Context extends BaseSingleton
 	*/
 	private function AddCollectionToConfig($collection)
 	{
-		foreach(array_keys($collection) as $key)
+		foreach($collection as $key=>$value)
 		{
-			$this->addPairToConfig($key, $collection[$key]);
+			if ($key[0] == '/')
+				$this->_virtualCommand = str_replace('_', '.', substr($key, 1));
+			$this->addPairToConfig($key, $value);
 		}
 	}
 
@@ -890,7 +892,7 @@ class Context extends BaseSingleton
 	*/
 	private function AddSessionToConfig($collection)
 	{
-		if (!is_null($collection))
+		if (is_array($collection))
 		{
 			foreach($collection as $key => $value)
 			{
@@ -1265,6 +1267,8 @@ class Context extends BaseSingleton
 		return $url;
 	}
 
+	protected $_virtualCommand = null;
+
 	/**
 	 * Enable XMLNuke get parameters like:
 	 *
@@ -1274,11 +1278,16 @@ class Context extends BaseSingleton
 	 */
 	public function getVirtualCommand()
 	{
-		$script = $this->get($this->_PHP_SELF);
-		$name = $this->get("SCRIPT_NAME");
+		if ($this->_virtualCommand == null)
+		{
+			$script = $this->get($this->_PHP_SELF);
+			$name = $this->get("SCRIPT_NAME");
 
-		$command = substr($script, strlen($name) + 1);
-		return $command;
+			$command = substr($script, strlen($name) + 1);
+			$this->_virtualCommand = $command;
+		}
+
+		return $this->_virtualCommand;
 	}
 
 	/**
