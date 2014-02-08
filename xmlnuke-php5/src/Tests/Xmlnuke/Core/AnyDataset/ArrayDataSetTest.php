@@ -272,7 +272,6 @@ class ArrayDataSetTest extends PHPUnit_Framework_TestCase
 		if ($arrayIterator->hasNext())
 		{
 			$sr = $arrayIterator->moveNext();
-			var_dump($sr->getRawFormat());
 			$this->assertField($sr, $count, "__id", 0);
 			$this->assertField($sr, $count, "__key", 0);
 			$this->assertField($sr, $count, "__class", "Tests\Xmlnuke\Sample\ModelGetter");

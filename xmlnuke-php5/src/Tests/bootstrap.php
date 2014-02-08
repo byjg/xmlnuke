@@ -88,6 +88,9 @@ class config
 		$values['xmlnuke.CHECKCONTENTTYPE'] = true;
 		$values['xmlnuke.CACHESTORAGEMETHOD'] = 'PLAIN';
 		$values['xmlnuke.XMLSTORAGEMETHOD'] = 'PLAIN';
+		$values['xmlnuke.RESTRICTACCESS'] = '';
+		$values['xmlnuke.OUTPUT_FORMAT'] = '';
+		$values['xmlnuke.POST_PROCESS_RESULT'] = '\Xmlnuke\Core\Processor\BaseProcessResult';
 		return $values;
 	}
 }
