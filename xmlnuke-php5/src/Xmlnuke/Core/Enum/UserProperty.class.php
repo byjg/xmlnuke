@@ -35,7 +35,6 @@ namespace Xmlnuke\Core\Enum;
  */
 class UserProperty
 {
-	const Site = "editsite";
 	const Role = "roles";
 
 	/**
@@ -50,11 +49,6 @@ class UserProperty
 
 		switch ($userProp)
 		{
-			case UserProperty::Site:
-			{
-				$result = "editsite";
-				break;
-			}
 			case UserProperty::Role:
 			{
 				$result = "roles";

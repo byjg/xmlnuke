@@ -64,7 +64,7 @@ class CustomConfig extends NewBaseAdminModule
 
 	public function getAccessLevel()
 	{
-		return AccessLevel::CurrentSiteAndRole;
+		return AccessLevel::OnlyRole;
 	}
 
 	public function getRole()
@@ -129,7 +129,6 @@ class CustomConfig extends NewBaseAdminModule
 		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.URLMODULE", $this->_context->get("xmlnuke.URLMODULE")));
 		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.URLXMLNUKEADMIN", $this->_context->get("xmlnuke.URLXMLNUKEADMIN")));
 		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.URLXMLNUKEENGINE", $this->_context->get("xmlnuke.URLXMLNUKEENGINE")));
-		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.DEFAULTSITE", $this->_context->get("xmlnuke.DEFAULTSITE")));
 		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.DEFAULTPAGE", $this->_context->get("xmlnuke.DEFAULTPAGE")));
 		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.XSLCACHE", $this->_context->get("xmlnuke.XSLCACHE")));
 		$form->addXmlnukeObject(new XmlInputTextBox("xmlnuke.SMTPSERVER", "smtpserver", $this->_context->get("xmlnuke.SMTPSERVER"), 30));
@@ -146,7 +145,7 @@ class CustomConfig extends NewBaseAdminModule
 		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "usefullparameter", "xmlnuke.USEFULLPARAMETER", $truefalse, $this->getStringBool($this->_context->get("xmlnuke.USEFULLPARAMETER"))));
 		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.CACHESTORAGEMETHOD", $this->_context->get("xmlnuke.CACHESTORAGEMETHOD")));
 		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.XMLSTORAGEMETHOD", $this->_context->get("xmlnuke.XMLSTORAGEMETHOD")));
-		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.EXTERNALSITEDIR", $this->_context->get("xmlnuke.EXTERNALSITEDIR")));
+		$form->addXmlnukeObject(new XmlInputLabelField("xmlnuke.XMLNUKEDATA", $this->_context->get("xmlnuke.XMLNUKEDATA")));
 		$form->addXmlnukeObject(new XmlInputTextBox("xmlnuke.PHPLIBDIR", "phplibdir", $this->_context->get("xmlnuke.PHPLIBDIR"), 30));
 
 		$boxButton = new XmlInputButtons();

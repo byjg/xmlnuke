@@ -77,7 +77,7 @@ class EditLanguage extends NewBaseAdminModule
 
 	public function getAccessLevel()
 	{
-		return AccessLevel::CurrentSiteAndRole;
+		return AccessLevel::OnlyRole;
 	}
 
 	public function getRole()

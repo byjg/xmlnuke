@@ -174,10 +174,6 @@ class ParamProcessor
 		
 		$fullLink = ($this->_context->get("xmlnuke.USEFULLPARAMETER") == "true");
 		
-		if ($fullLink || $this->_context->getSite()!= $this->_context->get("xmlnuke.DEFAULTSITE"))
-		{
-			$xmlnukeParam["site"] = $this->_context->getSite();
-		}
 		if ($fullLink || $this->_context->getXsl()!= $this->_context->get("xmlnuke.DEFAULTPAGE"))
 		{
 			$xmlnukeParam["xsl"] = ($this->_context->getXsl() == "index" ? $this->_context->get("xmlnuke.DEFAULTPAGE") : $this->_context->getXsl());
@@ -199,7 +195,6 @@ class ParamProcessor
 			
 			switch ($arTmp[0])
 			{
-				case "site":
 				case "xml":
 				case "xsl":
 				case "lang":

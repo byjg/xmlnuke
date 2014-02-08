@@ -68,7 +68,7 @@ class XMLFilenameProcessor extends FilenameProcessor
 	 */
 	public function SharedPath()
 	{
-		return $this->PrivatePath();
+		return FileUtil::Slash($this->_context->XmlPath(), $this->getLanguageId());
 	}
 
 	/**
@@ -78,7 +78,7 @@ class XMLFilenameProcessor extends FilenameProcessor
 	 */
 	public function PrivatePath()
 	{
-		return $this->_context->XmlPath() . $this->getLanguageId() . FileUtil::Slash();
+		return FileUtil::Slash($this->_context->XmlPath(false), $this->getLanguageId());
 	}
 
 	/**

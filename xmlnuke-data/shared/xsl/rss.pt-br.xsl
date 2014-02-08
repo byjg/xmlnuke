@@ -6,7 +6,7 @@
 	      <xsl:for-each select="page/group">
             <channel>
                <title>[param:site] - <xsl:value-of select="title" /></title>
-	       <link>http://[param:SERVER_name]/[param:xmlnuke.URLXMLNUKEENGINE]?site=[param:site]</link>
+	       <link>http://[param:SERVER_name]/[param:xmlnuke.URLXMLNUKEENGINE]</link>
                <description>
                   Canal <xsl:value-of select="title" /> do site [param:site]
                </description>
@@ -16,7 +16,7 @@
                      <title>
                         <xsl:value-of select="title" />
                      </title>
-                     <link>http://[param:SERVER_name][param:SCRIPT_name]?site=[param:site]&amp;xml=<xsl:value-of select="id" /></link>
+                     <link>http://[param:SERVER_name][param:SCRIPT_name]?xml=<xsl:value-of select="id" /></link>
                      <description>
                         <xsl:value-of select="summary" />
                      </description>

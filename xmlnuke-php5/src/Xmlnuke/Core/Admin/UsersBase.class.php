@@ -287,21 +287,7 @@ abstract class UsersBase implements IUsersBase
 
 			if ($this->userIsAdmin($userId))
 			{
-				if ($userProp == UserProperty::Site)
-				{
-					//string[]
-					$result = $this->_context->ExistingSites();
-					for($i=0, $resultLength = count($result); $i<$resultLength ;$i++)
-					{
-						$result[FileUtil::ExtractFileName($result[$i])] = FileUtil::ExtractFileName($result[$i]);
-					}
-					return $result;
-				}
-				else
-				{
-					return array("admin" => "admin");
-
-				}
+				return array("admin" => "admin");
 			}
 			else
 			{
@@ -311,23 +297,11 @@ abstract class UsersBase implements IUsersBase
 				}
 				else
 				{
-					if ($userProp == UserProperty::Site)
+					foreach($nodes as $node)
 					{
-						foreach($nodes as $node)
-						{
-							$result[FileUtil::ExtractFileName($node)] = FileUtil::ExtractFileName($node);
-						}
-						return $result;
+						$result[$node] = $node;
 					}
-					else
-					{
-						foreach($nodes as $node)
-						{
-							$result[$node] = $node;
-						}
-						return $result;
-
-					}
+					return $result;
 				}
 			}
 

@@ -105,7 +105,6 @@ class ControlPanel extends NewBaseAdminModule
 		$block->addXmlnukeObject($paragraph);
 		
 		$paragraph->addXmlnukeObject(new XmlnukeText($mywords->Value("INFO_USER", array($this->_context->authenticatedUser(), $this->_context->authenticatedUserId())), false, false, false, true));
-		$paragraph->addXmlnukeObject(new XmlnukeText($mywords->Value("INFO_SITE", $this->_context->getSite(), false, false, false, true)));
 		
 		$this->defaultXmlnukeDocument->addXmlnukeObject($block);
 		

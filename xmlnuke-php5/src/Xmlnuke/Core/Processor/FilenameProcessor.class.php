@@ -140,8 +140,6 @@ abstract class FilenameProcessor
 	 */
 	public function PathSuggested()
 	{
-		$path = $this->PrivatePath();
-
 		switch ($this->_filenameLocation)
 		{
 			case ForceFilenameLocation::PathFromRoot:
@@ -155,23 +153,41 @@ abstract class FilenameProcessor
 					// - If File in PrivatePath exists (this is the first option!!)
 					// - If file in SharedPath exists (this is the second option!!)
 					// - Otherwise references
-					if (FileUtil::Exists($this->PrivatePath() . $this->FullQualifiedName()))
+					$path = null;
+					$pvtPath = $this->PrivatePath();
+					$pathAlt = null;
+					if (!is_array($pvtPath))
+						$pvtPath = array($pvtPath);
+
+					foreach($pvtPath as $pathSuggested)
 					{
-						$path = $this->PrivatePath();
+						if (FileUtil::Exists($pathSuggested . $this->FullQualifiedName()))
+						{
+							return $pathSuggested;
+						}
+						if ($pathAlt == null)
+						{
+							$pathAlt = $pathSuggested;
+						}
 					}
-					else if (FileUtil::Exists($this->SharedPath() . $this->FullQualifiedName()))
+
+					if (empty($path) && FileUtil::Exists($this->SharedPath() . $this->FullQualifiedName()))
 					{
 						$path = $this->SharedPath();
 					}
 					else
 					{
-						$path = $this->PrivatePath();
+						$path = $pathAlt;
 					}
 					break;
 				}
 			case ForceFilenameLocation::PrivatePath:
 				{
-					$path = $this->PrivatePath();
+					$pathTmp = $this->PrivatePath();
+					if (is_array($pathTmp))
+						$path = array_shift($pathTmp);
+					else
+						$path = $pathTmp;
 					break;
 				}
 			case ForceFilenameLocation::SharedPath:

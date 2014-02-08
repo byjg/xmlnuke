@@ -64,14 +64,13 @@ class config
 		$values['xmlnuke.USERSDATABASE'] = '';
 		$values['xmlnuke.USERSCLASS'] = '';
 		$values['xmlnuke.LOGINMODULE'] = 'Xmlnuke.Login';
-		$values['xmlnuke.EXTERNALSITEDIR'] =
+		$values['xmlnuke.XMLNUKEDATA'] =
 				array();
 		$values['xmlnuke.PHPLIBDIR'] =
 				array();
 		$values['xmlnuke.URLXMLNUKEENGINE'] = 'xmlnuke.php';
 		$values['xmlnuke.URLMODULE'] = 'xmlnuke.php';
 		$values['xmlnuke.URLXMLNUKEADMIN'] = 'xmlnukeadmin.php';
-		$values['xmlnuke.DEFAULTSITE'] = 'teste';
 		$values['xmlnuke.DEFAULTPAGE'] = 'page';
 		$values['xmlnuke.URLBASE'] = '';
 		$values['xmlnuke.DETECTMOBILE'] = true;

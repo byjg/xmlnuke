@@ -154,7 +154,6 @@ class Context extends BaseSingleton
 
 		$this->setXsl();
 		$this->setXml();
-		$this->setSite();
 
 		$this->_xmlnukepath = $this->get("xmlnuke.ROOTDIR");
 		$this->_reset = ($this->getParameter("reset") != "");
@@ -168,7 +167,6 @@ class Context extends BaseSingleton
 		$this->addPairToConfig("SELFURLREAL", $_SERVER["SCRIPT_NAME"]."?".$_SERVER["QUERY_STRING"]."&");
 		$this->addPairToConfig("SELFURL", $_SERVER["REQUEST_URI"]);
 		$this->addPairToConfig("ROOTDIR", $this->_xmlnukepath."/".$this-> _site);
-		$this->addPairToConfig("SITE", $this->_site);
 		$this->addPairToConfig("XMLNUKE", $this->_XmlNukeVersion);
 		//$this->addPairToConfig("USERNAME", $this->authenticatedUser());
 		//$this->addPairToConfig("USERID", $this->authenticatedUserId());
@@ -196,12 +194,12 @@ class Context extends BaseSingleton
 		$langAvail = $this->LanguagesAvailable();
 		foreach (array_keys($langAvail) as $key)
 		{
-			$langStr =$langStr."<a href='".$this->bindXmlnukeUrl( $this->getXml(), $this->getXsl(), $this->getSite(), $key )."'>".$langAvail[$key]."</a> | ";
+			$langStr =$langStr."<a href='".$this->bindXmlnukeUrl( $this->getXml(), $this->getXsl(), $key )."'>".$langAvail[$key]."</a> | ";
 		}
 		$this->addPairToConfig("LANGUAGESELECTOR", str_replace("&", "&amp;", substr($langStr,0,strlen($langStr)-2)));
 
 		// Adjusts to Run with XMLNukeDB
-		$this->_appNameInMemory = "db_".$this->getSite()."_".strtolower($this->Language()->getName());
+		$this->_appNameInMemory = "db_".strtolower($this->Language()->getName());
 
 		$this->_xmlnukedb = new XmlnukeDB($this->XmlHashedDir(), $this->XmlPath(), strtolower($this->Language()->getName()));
 		//$this->_xmlnukedb->loadIndex();
@@ -361,36 +359,6 @@ class Context extends BaseSingleton
 		else
 			$this->_xsl = $value;
 	}
-	/**
-	* @access public
-	* @return string Return the current Site page argument
-	*/
-	public function getSite()
-	{
-		return $this->_site;
-	}
-	/**
-	* @access public
-	* @param string $value Value to SITE page argument
-	* @return void
-	*/
-	public function setSite($value = null)
-	{
-		if (is_null($value))
-		{
-			$this->_site = $this->getParameter("site");
-			if ($this->_site == "")
-			{
-				$this->_site = $this->get("xmlnuke.DEFAULTSITE");
-			}
-			else
-			{
-				$this->_site = htmlentities($this->_site);
-			}
-		}
-		else
-			$this->_site = $value;
-	}
 
 	public function getModule()
 	{
@@ -532,36 +500,34 @@ class Context extends BaseSingleton
 	* @access public
 	* @return string Return the root directory where the current site pages are located.
 	*/
-	public function CurrentSitePath()
+	public function CurrentSitePath($default = true)
 	{
-		$externalSiteArray = $this->getExternalSiteDir();
-		$externalSite = isset($externalSiteArray[$this->getSite()]) ? $externalSiteArray[$this->getSite()] : "";
+		$xmlnukeData = array_values($this->getXmlnukeData());
 
-		if ($externalSite != "")
-		{
-			return $externalSite.FileUtil::Slash();
-		}
+		if (!is_array($xmlnukeData))
+			throw new \InvalidArgumentException('You need pass an array to xmlnuke.XMLNUKEDATA parameter');
+
+		if ($default)
+			return array_shift($xmlnukeData) . FileUtil::Slash();
 		else
-		{
-			return $this->SiteRootPath().$this->getSite().FileUtil::Slash();
-		}
+			return FileUtil::Slash($xmlnukeData);
 	}
 
 	/**
 	* @access public
 	* @return string Return the root directory where the current site XML pages are located.
 	*/
-	public function XmlPath()
+	public function XmlPath($default = true)
 	{
-		return $this->CurrentSitePath()."xml".FileUtil::Slash();
+		return FileUtil::Slash($this->CurrentSitePath($default), 'xml');
 	}
 	/**
 	* @access public
 	* @return string Return the root directory where the current site XSL pages are located.
 	*/
-	public function XslPath()
+	public function XslPath($default = true)
 	{
-		return $this->CurrentSitePath()."xsl".FileUtil::Slash();
+		return FileUtil::Slash($this->CurrentSitePath($default), 'xsl');
 	}
 
 	/**
@@ -570,7 +536,6 @@ class Context extends BaseSingleton
 	*/
 	public function CachePath()
 	{
-
 		return $this->CurrentSitePath()."cache".FileUtil::Slash();
 	}
 
@@ -757,49 +722,24 @@ class Context extends BaseSingleton
 		return $this->_XmlNukeVersion;
 	}
 
-	/**
-	* @access public
-	* @return array Return all exists sites and your full paths.
-	*/
-	public function ExistingSites()
-	{
-		$sites = FileUtil::RetrieveSubFolders($this->XmlNukePath()."sites");
-		$ret = array();
-		foreach ($sites as $key=>$value)
-		{
-			$basename = basename($value);
-			if ($basename[0] != "." )
-			{
-				$ret[] = $value;
-			}
-
-		}
-
-		$externalSite = $this->getExternalSiteDir();
-		foreach ($externalSite as $key=>$value)
-		{
-			$ret[] = $key;
-		}
-
-
-		return $ret;
-	}
-
-	protected $_externalSiteArray = null;
+	protected $_xmlnukeData = null;
 
 	/**
 	 * @return array()
 	 */
-	protected function getExternalSiteDir()
+	protected function getXmlnukeData()
 	{
-		if ($this->_externalSiteArray == null)
+		if ($this->_xmlnukeData == null)
 		{
-			if (!is_array($this->get("xmlnuke.EXTERNALSITEDIR")))
-				throw new \InvalidArgumentException('Config "xmlnuke.EXTERNALSITEDIR" requires an associative array');
+			if ($this->get('xmlnuke.EXTERNALSITEDIR') != '')
+				throw new \UnexpectedValueException('The parameter xmlnuke.EXTERNALSITEDIR was deprecated. Use xmlnuke.XMLNUKEDATA instead.');
 
-			$this->_externalSiteArray = $this->get("xmlnuke.EXTERNALSITEDIR");
+			$this->_xmlnukeData = $this->get("xmlnuke.XMLNUKEDATA");
+
+			if (!is_array($this->_xmlnukeData))
+				throw new \InvalidArgumentException('Config "xmlnuke.XMLNUKEDATA" requires an associative array');
 		}
-		return $this->_externalSiteArray;
+		return $this->_xmlnukeData;
 	}
 
 	/**
@@ -1088,7 +1028,7 @@ class Context extends BaseSingleton
 	* @param string $lang
 	* @return string Return the bind Url
 	*/
-	public function bindModuleUrl($modulename, $xsl="", $site="",  $lang="")
+	public function bindModuleUrl($modulename, $xsl="", $lang="")
 	{
 		$queryStart = strpos($modulename, "?");
 		$queryString = "";
@@ -1117,9 +1057,6 @@ class Context extends BaseSingleton
 			}
 		}
 
-		if(empty($site))
-			$site = $this->getSite();
-
 		if(empty($lang))
 			$lang = strtolower($this->Language()->getName());
 
@@ -1127,10 +1064,6 @@ class Context extends BaseSingleton
 		$fullLink = $this->get("xmlnuke.USEFULLPARAMETER");
 		if (!$fullLink)
 		{
-			if ($site == $this->get("xmlnuke.DEFAULTSITE"))
-			{
-				$site = "";
-			}
 			if ($xsl == $this->get("xmlnuke.DEFAULTPAGE"))
 			{
 				$xsl = "";
@@ -1144,10 +1077,6 @@ class Context extends BaseSingleton
 
 		$url = $this->UrlModule()."?module=".$modulename;
 		$url .= $queryString;
-		if ($site != "")
-		{
-			$url .= "&site=".$site;
-		}
 		if ($xsl != "")
 		{
 			$url .= "&xsl=".$xsl;
@@ -1170,18 +1099,15 @@ class Context extends BaseSingleton
 	* @param string $lang
 	* @return string Return the bind Url
 	*/
-	public function bindXmlnukeUrl($xml, $xsl="", $site="",  $lang="")
+	public function bindXmlnukeUrl($xml, $xsl="", $lang="")
 	{
 		if(empty($xsl))
 			$xsl = $this->getXsl();
 
-		if(empty($site))
-			$site = $this->getSite();
-
 		if(empty($lang))
 			$lang = strtolower($this->Language()->getName());
 
-		return $this->UrlXmlnukeEngine()."?site=".$site."&xml=".$xml."&xsl=".$xsl."&lang=".$lang;
+		return $this->UrlXmlnukeEngine()."?xml=".$xml."&xsl=".$xsl."&lang=".$lang;
 	}
 
 	/**

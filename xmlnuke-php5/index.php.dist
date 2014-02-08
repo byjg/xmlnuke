@@ -59,81 +59,17 @@ define("MAX_COLS", 3);
     </td>
 	</tr>
 	<tr>
-<?php
-$arr = $context->ExistingSites();
-$count = 0;
-
-foreach($arr as $key)
-{
-	if (basename($key) != '.svn')
-	{
-		$site = FileUtil::ExtractFileName($key);
-		escreveColuna($site);
-		$count = $count + 1;
-		if ($count%MAX_COLS == 0)
-		{
-			echo "</tr><tr>";
-		}
-	}
-}
-for($i=($count%MAX_COLS);$i<MAX_COLS;$i++)
-{
-		echo "<td style='color:Black;background-color:#DEDFDE;'>&nbsp;</td>";
-}
-?>
-	</tr>
-	<tr>
-		<td colspan="<?php echo MAX_COLS?>" align="Right" style="color:Black;background-color:#C6C3C6;font-size:X-Small;font-weight:bold;">
-			<?php echo getVersion()?>
-			<br />
-			Platform: <?php echo PHP_OS ?>
-		</td>
-	</tr>
-	</table>
-</body>
-</html>
-
-
-<?php
-// ============= FUNCOES ====================
-
-function getUrlImage($site)
-{
-	return "common/icons/$site.png";
-}
-
-function getUrlEnterSite($site)
-{
-	$targetPage = Context::getInstance()->UrlXmlNukeEngine() . "?xml=home";
-	return  $targetPage . "&site=" . $site . "&xsl=page";
-}
-
-function getUrlAdmin($site)
-{
-	$targetAdmin = Context::getInstance()->UrlXmlNukeAdmin();
-
-	return  $targetAdmin . "?site=" . $site;
-}
-
-function getVersion()
-{
-	return Context::getInstance()->XmlNukeVersion();
-}
-
-
-function escreveColuna($site)
-{
-	?>
 	<td align="Center" valign="Middle" style="color:Black;background-color:#DEDFDE;">
-		<a href="<?php echo getUrlEnterSite($site)?>" style="font-size: XX-Small">
-			<img src="<?php echo getUrlImage($site)?>" alt="<?php echo $site?>" onerror="this.onerror=null; this.src='common/icons/.png'"><br>
+		<a href="<?php echo Context::getInstance()->get('xmlnuke.URLXMLNUKEENGINE'); ?>" style="font-size: XX-Small">
+			<img src="common/icons/.png" alt="" onerror="this.onerror=null; this.src='common/icons/.png'"><br>
 			== Access this site ==
 		</a>
 		<br>
-		<a href="<?php echo getUrlAdmin($site)?>" style="font-size: XX-Small">
+		<a href="<?php echo Context::getInstance()->get('xmlnuke.URLXMLNUKEADMIN'); ?>" style="font-size: XX-Small">
 			Admin
 		</a>
 	</td>
-	<?php
-}
-?>
+	</tr>
+  </table>
+</body>
+</html>

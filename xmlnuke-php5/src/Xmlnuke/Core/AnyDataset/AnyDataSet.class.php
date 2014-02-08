@@ -102,13 +102,17 @@ class AnyDataSet
 		$this->_path = null;
 		if ($file != null)
 		{
-			if (! is_string ( $file ))
+			if ($file instanceof \Xmlnuke\Core\Processor\FilenameProcessor)
 			{
 				$this->_path = $file->FullQualifiedNameAndPath ();
 			}
-			else
+			elseif (!is_object ($file))
 			{
 				$this->_path = $file;
+			}
+			else
+			{
+				throw new \InvalidArgumentException('I expected a string or a Instance of FileNameProcessor class');
 			}
 			$this->CreateFrom ( $this->_path );
 		}

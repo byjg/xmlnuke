@@ -53,7 +53,7 @@ class AnydatasetLangFilenameProcessor extends AnydatasetBaseFilenameProcessor
 	 */
 	public function SharedPath()
 	{
-		return $this->_context->SharedRootPath() . "lang" . FileUtil::Slash();
+		return FileUtil::Slash($this->_context->SharedRootPath(), 'lang');
 	}
 
 	/**
@@ -63,7 +63,7 @@ class AnydatasetLangFilenameProcessor extends AnydatasetBaseFilenameProcessor
 	 */
 	public function PrivatePath()
 	{
-		return $this->_context->CurrentSitePath() . "lang" . FileUtil::Slash();
+		return FileUtil::Slash($this->_context->CurrentSitePath(false), "lang");
 	}
 
 	public function Extension()

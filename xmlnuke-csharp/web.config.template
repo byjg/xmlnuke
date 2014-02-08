@@ -7,7 +7,6 @@
 		<add key="xmlnuke.URLMODULE" value="[xmlnuke.URLMODULE]"/>
 		<add key="xmlnuke.URLXMLNUKEADMIN" value="[xmlnuke.URLXMLNUKEADMIN]"/>
 		<add key="xmlnuke.URLXMLNUKEENGINE" value="[xmlnuke.URLXMLNUKEENGINE]"/>
-		<add key="xmlnuke.DEFAULTSITE" value="[xmlnuke.DEFAULTSITE]"/>
 		<add key="xmlnuke.DEFAULTPAGE" value="[xmlnuke.DEFAULTPAGE]"/>
 		<add key="xmlnuke.ALWAYSUSECACHE" value="[xmlnuke.ALWAYSUSECACHE]"/>
 		<add key="xmlnuke.SHOWCOMPLETEERRORMESSAGES" value="[xmlnuke.SHOWCOMPLETEERRORMESSAGES]"/>
@@ -23,7 +22,7 @@
 		<add key="xmlnuke.CHECKCONTENTTYPE" value="[xmlnuke.CHECKCONTENTTYPE]"/>
 		<add key="xmlnuke.CACHESTORAGEMETHOD" value="[xmlnuke.CACHESTORAGEMETHOD]"/>
 		<add key="xmlnuke.XMLSTORAGEMETHOD" value="[xmlnuke.XMLSTORAGEMETHOD]"/>
-		<add key="xmlnuke.EXTERNALSITEDIR" value="[xmlnuke.EXTERNALSITEDIR]"/>
+		<add key="xmlnuke.XMLNUKEDATA" value="[xmlnuke.XMLNUKEDATA]"/>
 		<!-- END: XMLNUKE SETUP -->
 	</appSettings>
 	<location path="[ROOTDIR_APPWEB]">

@@ -97,7 +97,7 @@ class XMLCacheFilenameProcessor extends FilenameProcessor
 	 */
 	public function FullName($xml, $xsl, $languageId)
 	{
-		return str_replace(FileUtil::Slash(), "#", $this->_context->getSite() . "." . $xsl . "." . $languageId . "." . $xml);
+		return str_replace(FileUtil::Slash(), "#", $xsl . "." . $languageId . "." . $xml);
 	}
 }
 

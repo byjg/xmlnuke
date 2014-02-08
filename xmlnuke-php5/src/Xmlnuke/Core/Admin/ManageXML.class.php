@@ -45,7 +45,7 @@ class ManageXML extends BaseAdminModule
 	
 	public function getAccessLevel() 
 	{
-		return AccessLevel::CurrentSiteAndRole;
+		return AccessLevel::OnlyRole;
 	}
 
 	public function getRole()
@@ -239,7 +239,7 @@ class ManageXML extends BaseAdminModule
 		}
 		else
 		{
-			$this->addMenuOption($myWords->Value("PREVIEWMENU"), "engine:xmlnuke?site=[param:site]&xml=" . $id . "&xsl=[param:xsl]&lang=[param:lang]", "preview");
+			$this->addMenuOption($myWords->Value("PREVIEWMENU"), "engine:xmlnuke?xml=" . $id . "&xsl=[param:xsl]&lang=[param:lang]", "preview");
 			$this->addMenuOption($myWords->Value("NEWXMLMENU"), "module:Xmlnuke.Admin.ManageXML", null);
 			$langAvail = $this->_context->LanguagesAvailable();
 			$processorFile = new XMLFilenameProcessor($id);

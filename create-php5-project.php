@@ -10,16 +10,15 @@ if (PHP_SAPI == 'cli')
 	echo "============================\n";
 	echo "\n";
 
-	if ($argc < 5)
+	if ($argc < 4)
 	{
 		echo "Use this script to create a XMLNuke PHP5 project ready run and edit in Netbeans, PDT Eclipse or another editor. \n";
 		echo "\n";
 		echo "Usage: \n";
-		echo "   create-php5-project.php PATHTOYOURPROJECT sitename project language1 language2... \n";
+		echo "   create-php5-project.php PATHTOYOURPROJECT project language1 language2... \n";
 		echo "\n";
 		echo "Where: \n";
 		echo "   PATHTOYOURPROJECT is the full path for your project  \n";
-		echo "   sitename is your site, for example: mysite  \n";
 		echo "   project is the name of the project, for example: MyProject  \n";
 		echo "   language is the main language for your project. e.g.: pt-br or en-us or de-de  \n";
 		echo "\n";
@@ -53,16 +52,15 @@ class CreatePhp5Project
 	public static function Run($arg = null)
 	{
 
-		if (func_num_args() < 5)
-			throw new Exception('I expected at least 5 parameters: file, homepath, sitename, projectname and language ');
+		if (func_num_args() < 4)
+			throw new Exception('I expected at least 5 parameters: file, homepath, projectname and language ');
 
 		$argc = func_num_args();
 		$argv = func_get_args();
 
 		$HOME = $argv[1];
 		$HTTPDOCS = $argv[1] . "/httpdocs";
-		$SITE = strtolower($argv[2]);
-		$PROJECT = $argv[3];
+		$PROJECT = $argv[2];
 		$PROJECT_FILE = strtolower($PROJECT);
 		$XMLNUKE = dirname(realpath($_SERVER["SCRIPT_FILENAME"]));
 		$TEMPLATE = "$XMLNUKE/templates/php5";
@@ -117,7 +115,7 @@ class CreatePhp5Project
 
 				# Creating International Static Files
 				$langs = array();
-				$i = 4;
+				$i = 3;
 				while ( $i < $argc )
 				{
 					$langs[] = "'" . $argv[$i] . "' => '" . $argv[$i] . "'";
@@ -190,8 +188,8 @@ class CreatePhp5Project
 
 				# Config
 				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/config.php.template", "$HTTPDOCS/config.inc-dist.php",
-					array('/__DATADIR__/', '/__PHPDIR__/', '/__SITE__/', '/__PROJECT_DATA__/', '/__PROJECT_LIB__/', '/__DATE__/', '/__LANGS__/'),
-					array($DATADIR, $PHPDIR, $SITE, "$HOME/data", "$HOME/lib", date('c'), $LANGUAGESAVAILABLE )
+					array('/__DATADIR__/', '/__PHPDIR__/', '/__PROJECT_DATA__/', '/__PROJECT_LIB__/', '/__DATE__/', '/__LANGS__/'),
+					array($DATADIR, $PHPDIR, "$HOME/data", "$HOME/lib", date('c'), $LANGUAGESAVAILABLE )
 				);
 
 
@@ -238,7 +236,6 @@ class CreatePhp5Project
 				return  array(
 					'HOME' => $HOME,
 					'HTTPDOCS' => $HTTPDOCS,
-					'SITE' => $SITE,
 					'PROJECT' => $PROJECT,
 					'PROJECT_FILE' => $PROJECT_FILE,
 					'XMLNUKE' => $XMLNUKE,

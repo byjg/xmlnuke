@@ -266,9 +266,25 @@ class FileUtil
 	* If OperationSystem is WINDOWS the slash will be '\\'
 	* If OperationSystem is UNIX the slash will be '/'
 	*/
-	public static function Slash()
+	public static function Slash($path = null, $append = null)
 	{
-		return self::isWindowsOS() ? "\\" : "/";
+		$slash = self::isWindowsOS() ? "\\" : "/";
+
+		if (empty($path))
+			return $slash;
+		else
+			if (is_array($path))
+			{
+				$path = array_values($path);
+				for($i=0;$i<count($path);$i++)
+					$path[$i] = FileUtil::Slash($path[$i], $append);
+
+				return $path;
+			}
+			else
+			{
+				return $path . ($path[strlen($path)-1] == $slash ? "" : $slash) . (!empty($append) ? $append . $slash : '');
+			}
 	}
 
 	/**

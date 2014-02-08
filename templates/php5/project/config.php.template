@@ -14,9 +14,9 @@ class config
 		$values['xmlnuke.USERSDATABASE'] = '';                    # DBDataset connection ('_db.anydata.xml')
 		$values['xmlnuke.USERSCLASS'] = '';                       # IUsersBase instance
 		$values['xmlnuke.LOGINMODULE'] = 'Xmlnuke.Login';         # IModule instance
-		$values['xmlnuke.EXTERNALSITEDIR'] =
+		$values['xmlnuke.XMLNUKEDATA'] =
 				array(
-					'__SITE__' => '__PROJECT_DATA__'
+					'__PROJECT_DATA__'
 				);
 		$values['xmlnuke.PHPLIBDIR'] =
 				array(
@@ -25,7 +25,6 @@ class config
 		$values['xmlnuke.URLXMLNUKEENGINE'] = 'xmlnuke.php';
 		$values['xmlnuke.URLMODULE'] = 'xmlnuke.php';
 		$values['xmlnuke.URLXMLNUKEADMIN'] = 'xmlnuke.php?/admin';
-		$values['xmlnuke.DEFAULTSITE'] = '__SITE__';
 		$values['xmlnuke.DEFAULTPAGE'] = 'page';
 		$values['xmlnuke.URLBASE'] = '';
 		$values['xmlnuke.DETECTMOBILE'] = true;

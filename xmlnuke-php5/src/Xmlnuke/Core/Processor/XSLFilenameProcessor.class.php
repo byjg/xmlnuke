@@ -64,7 +64,7 @@ class XSLFilenameProcessor extends FilenameProcessor
 	 */
 	public function SharedPath()
 	{
-		return $this->_context->SharedRootPath() . "xsl" . FileUtil::Slash();
+		return FileUtil::Slash($this->_context->SharedRootPath(), "xsl");
 	}
 
 	/**
@@ -74,7 +74,7 @@ class XSLFilenameProcessor extends FilenameProcessor
 	 */
 	public function PrivatePath()
 	{
-		return $this->_context->XslPath();
+		return $this->_context->XslPath(false);
 	}
 
 	/**

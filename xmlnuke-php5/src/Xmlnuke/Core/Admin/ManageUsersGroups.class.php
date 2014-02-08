@@ -63,7 +63,7 @@ class ManageUsersGroups extends NewBaseAdminModule
 	}
 	public function  getAccessLevel() 
     { 
-		return AccessLevel::CurrentSiteAndRole; 
+		return AccessLevel::OnlyRole; 
     } 
 
     public function getRole() 
@@ -124,7 +124,6 @@ class ManageUsersGroups extends NewBaseAdminModule
 		$form = new XmlFormCollection($this->_context, $this->url->getUrl(), "");
 		$textbox = new XmlInputTextBox($this->myWords->Value("FORM_NAME"), "textbox_role", "");
 		$sitesArray["_all"] = $this->myWords->Value("FORM_ALLSITES");
-		$sitesArray[$this->_context->getSite()] = ucfirst($this->_context->getSite());
 		$select = new XmlEasyList(EasyListType::SELECTLIST , "select_sites", $this->myWords->Value("FORM_SELECTSITE"), $sitesArray, "_all");
 		$button = new XmlInputButtons();
 		$button->addSubmit("OK", "");
@@ -226,9 +225,8 @@ class ManageUsersGroups extends NewBaseAdminModule
 		$para = new XmlParagraphCollection();
 		$this->_mainBlock->addXmlnukeObject($para);
 		
-		$this->AddEditListToSite($this->_mainBlock, $this->_context->getSite(), $this->getRolesFromSite($this->_context->getSite()));
+		$this->AddEditListToSite($this->_mainBlock, '_all', $this->getRolesFromSite('_all'));
 		$this->url->addParam("action", ModuleAction::Create);
-		$this->url->addParam("site", $this->_context->getSite());
 		
 		$this->defaultXmlnukeDocument->addXmlnukeObject($this->_mainBlock);
 	}
@@ -287,7 +285,6 @@ class ManageUsersGroups extends NewBaseAdminModule
 		$para = new XmlParagraphCollection();
 		$this->_mainBlock->addXmlnukeObject($para);
 		$this->url->addParam("editsite", $site);
-		$this->url->addParam("site", $this->_context->getSite());
 		
 		$editList = new XmlEditList($this->_context, $this->myWords->Value("EDITLIST_TITLE", $site), $this->url->getUrl(), true, false, true, true);
 		$editList->setDataSource($dataset->getIterator());

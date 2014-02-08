@@ -26,10 +26,6 @@
 			<icon>common/imgs/admin_icon/icon_users.gif</icon>
 			<url>module:Xmlnuke.Admin.ManageUsers</url>
 		</module>
-		<module name="managesites">
-			<icon>common/imgs/admin_icon/icon_sites.gif</icon>
-			<url>module:Xmlnuke.Admin.ManageSites</url>
-		</module>
 		<module name="xmlindex">
 			<icon>common/imgs/admin_icon/icon_xmlnukedb.gif</icon>
 			<url>module:Xmlnuke.Admin.ManageXMLDBIndex</url>

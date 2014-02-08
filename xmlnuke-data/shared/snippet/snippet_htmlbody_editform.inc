@@ -342,7 +342,7 @@
 	</dt>
 	<dd>
 		<xsl:variable name="ampchar"><xsl:if test="$engine='PHP'">&amp;amp;</xsl:if><xsl:if test="not($engine='PHP')">&amp;</xsl:if></xsl:variable>
-		<xsl:variable name="imgsrc"><xsl:value-of select="$urlbase" />imagevalidate.[param:ENGINEEXTENSION]?c=<xsl:value-of select="@chars" /><xsl:value-of select="$ampchar" />cq=<xsl:value-of select="@challengequestion" /><xsl:value-of select="$ampchar" />site=<xsl:value-of select="$site" /><xsl:value-of select="$ampchar" />lang=<xsl:value-of select="$lang" /><xsl:value-of select="$ampchar" /></xsl:variable>
+		<xsl:variable name="imgsrc"><xsl:value-of select="$urlbase" />imagevalidate.[param:ENGINEEXTENSION]?c=<xsl:value-of select="@chars" /><xsl:value-of select="$ampchar" />cq=<xsl:value-of select="@challengequestion" /><xsl:value-of select="$ampchar" /><xsl:value-of select="$ampchar" />lang=<xsl:value-of select="$lang" /><xsl:value-of select="$ampchar" /></xsl:variable>
 		<img border="0" align="top" src="{$imgsrc}" onclick="this.src = '{$imgsrc}' + (new Date().getTime());" />
 		<br/>
 		<input type="text" name="imagevalidate" value="" size="8"/>

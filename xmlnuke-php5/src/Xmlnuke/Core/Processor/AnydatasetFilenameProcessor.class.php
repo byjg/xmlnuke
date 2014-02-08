@@ -53,7 +53,7 @@ class AnydatasetFilenameProcessor extends AnydatasetBaseFilenameProcessor
 	 */
 	public function SharedPath()
 	{
-		return $this->_context->SharedRootPath() . "anydataset" . FileUtil::Slash();
+		return FileUtil::Slash($this->_context->SharedRootPath(), 'anydataset');
 	}
 
 	/**
@@ -63,7 +63,7 @@ class AnydatasetFilenameProcessor extends AnydatasetBaseFilenameProcessor
 	 */
 	public function PrivatePath()
 	{
-		return $this->_context->CurrentSitePath() . "anydataset" . FileUtil::Slash();
+		return FileUtil::Slash($this->_context->CurrentSitePath(false), "anydataset");
 	}
 }
 

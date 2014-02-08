@@ -21,7 +21,7 @@
 						</xsl:for-each>
 					</TABLE><p/>
 				</xsl:for-each>
-				<p><A HREF="admin:engine?site=[param:site]"><b>Administrar Conteúdo</b></A></p>
+				<p><A HREF="admin:engine"><b>Administrar Conteúdo</b></A></p>
 				<p><b>[param:languageselector]</b></p>
 			</BODY>
 		</HTML>

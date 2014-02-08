@@ -76,7 +76,7 @@ class ManageUsers extends NewBaseAdminModule
 	}
 	public function  getAccessLevel()
     {
-          return AccessLevel::CurrentSiteAndRole;
+          return AccessLevel::OnlyRole;
     }
 
     public function getRole()
@@ -166,24 +166,6 @@ class ManageUsers extends NewBaseAdminModule
 				{
 					$message->addXmlnukeObject(new XmlnukeText($this->myWords->Value("ERRO"), true ));
 				}
-				$exec = true;
-			}
-
-			if ( $action == "addsite" )
-			{
-
-				$users->addPropertyValueToUser( $uid, $this->_context->get("sites"), UserProperty::Site );
-				$users->Save();
-				$message->addXmlnukeObject(new XmlnukeText($this->myWords->Value("SITEADDED"), true ));
-				$exec = true;
-			}
-
-			if ( $action == "removesite" )
-			{
-				//echo "SITE: ".$this->_context->get("sites");
-				$users->removePropertyValueFromUser( $uid, $this->_context->get("sites"), UserProperty::Site );
-				$users->Save();
-				$message->addXmlnukeObject(new XmlnukeText($this->myWords->Value("SITEREMOVED"), true ));
 				$exec = true;
 			}
 
@@ -426,52 +408,6 @@ class ManageUsers extends NewBaseAdminModule
 		$tabview->addTabItem($this->myWords->Value("TABREMOVEUSER"), $form);
 
 		// -------------------------------------------------------------------
-		// REMOVER SITE DO USUARIO
-		$para = new XmlParagraphCollection();
-		$form =  new XmlFormCollection($this->_context, $this->url, $this->myWords->Value("FORMEDITSITES"));
-		$form->setJSValidate(true);
-		$form->addXmlnukeObject(new XmlInputHidden("action", "removesite"));
-		$form->addXmlnukeObject(new XmlInputHidden("curpage", $this->_context->get("curpage")));
-		$form->addXmlnukeObject(new XmlInputHidden("valueid", $uid));
-		$usersites = $users->returnUserProperty($uid, UserProperty::Site);
-		$usersites = is_null($usersites)?array():$usersites;
-		$sites = array();
-		foreach ($usersites as $i)
-		{
-			$sites[$i] = $i;
-		}
-		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "sites", $this->myWords->Value("FORMUSERSITES"), $sites));
-		$boxButton = new XmlInputButtons();
-		$boxButton->addSubmit($this->myWords->Value("TXT_REMOVE"), "");
-		$form->addXmlnukeObject($boxButton);
-		$para->addXmlnukeObject($form);
-
-		// -------------------------------------------------------------------
-		// ADICIONAR SITE AO USUARIO
-		$form =  new XmlFormCollection($this->_context, $this->url, "");
-		$form->setJSValidate(true);
-		$form->addXmlnukeObject(new XmlInputHidden("action", "addsite"));
-		$form->addXmlnukeObject(new XmlInputHidden("curpage", $this->_context->get("curpage")));
-		$form->addXmlnukeObject(new XmlInputHidden("valueid", $uid));
-		$existingSites = $this->_context->ExistingSites();
-		//for(int i=0;i<existingSites.Length;i++)
-		$index = 0;
-		$sites = array();
-		foreach ($existingSites as $i)
-		{
-			$site = FileUtil::ExtractFileName($i);
-			$sites[$site] = $site;
-		}
-		$form->addXmlnukeObject(new XmlEasyList(EasyListType::SELECTLIST, "sites", $this->myWords->Value("FORMSITES"), $sites));
-		$boxButton = new XmlInputButtons();
-		$boxButton->addSubmit($this->myWords->Value("TXT_ADD"), "");
-		$form->addXmlnukeObject($boxButton);
-		$para->addXmlnukeObject($form);
-		$tabview->addTabItem($this->myWords->Value("TABMANSITE"), $para, (($this->_action == "addsite")||($this->_action == "removesite")));
-
-
-
-		// -------------------------------------------------------------------
 		// REMOVER PAPEL DO USUARIO
 		$para = new XmlParagraphCollection();
 		$form =  new XmlFormCollection($this->_context, $this->url, $this->myWords->Value("FORMEDITROLES"));
@@ -622,7 +558,7 @@ class ManageUsers extends NewBaseAdminModule
 	protected function getAllRoles($users)
 	{
 		$dataArray = array();
-		$it = $users->getRolesIterator($this->_context->getSite());
+		$it = $users->getRolesIterator('_all');
 		while ($it->hasNext()) {
 			$sr = $it->moveNext();
 //			$site = $sr->getField($users->getRolesTable()->Site);

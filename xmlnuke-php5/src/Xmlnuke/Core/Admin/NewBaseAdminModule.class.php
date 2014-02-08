@@ -93,7 +93,7 @@ abstract class NewBaseAdminModule extends BaseModule
 		$this->_help = $this->_px->addParagraph($this->_mainBlock);
 		$this->_menu =$this->_px->addParagraph($this->_mainBlock);
 		
-		$this->_px->addHref($this->_menu, "module:Xmlnuke.Admin.ControlPanel?site=".$this->_context->getSite() . "&lang=" . $this->_context->Language()->getName(), "Menu", null);
+		$this->_px->addHref($this->_menu, "module:Xmlnuke.Admin.ControlPanel?lang=" . $this->_context->Language()->getName(), "Menu", null);
 
 		return $this->_px;     
 	}
@@ -105,15 +105,8 @@ abstract class NewBaseAdminModule extends BaseModule
 	{
 		$this->_mainBlock = new XmlBlockCollection('Menu', BlockPosition::Center );
 		$this->_help = new XmlParagraphCollection();
-		//$this->_menu = new XmlParagraphCollection();
 		$this->_mainBlock->addXmlnukeObject($this->_help);
-		//$this->_mainBlock->addXmlnukeObject($this->_menu);
 		$this->defaultXmlnukeDocument->addXmlnukeObject($this->_mainBlock);
-		//$url = new XmlnukeManageUrl(URLTYPE::ADMIN, '');
-		//$url->addParam('site', $this->_context->getSite());
-		//$link = new XmlAnchorCollection($url->getUrl(), '');
-		//$link->addXmlnukeObject(new XmlnukeText('Menu'));
-		//$this->_menu->addXmlnukeObject($link);
 		$lang = $this->CreateMenuAdmin();
 
 		$this->defaultXmlnukeDocument->setPageTitle("XMLNuke");

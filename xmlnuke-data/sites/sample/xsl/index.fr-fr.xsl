@@ -39,7 +39,7 @@
                <p />
             </xsl:for-each>
             <p>
-               <a href="module:Xmlnuke.Admin.ControlPanel?site=[param:site]">
+               <a href="module:Xmlnuke.Admin.ControlPanel">
                   <b>Index de l'administration</b>
                </a>
             </p>

@@ -14,7 +14,7 @@
          </HEAD>
          <BODY>
             <div Align="right">
-               <a href="engine:xmlnuke?site=[param:site]&amp;xml=index&amp;xsl=index">Mapa do Site</a> | <a href="#" onclick="javascript:window.open('[param:script_name]?xml=[param:xml]&amp;xsl=preview&amp;site=[param:site]&amp;lang=[param:lang]&amp;module=[param:module]','','toolbar=yes,location=no,status=no,menubar=yes,scrollbars=yes,resizable=no,width=660,height=440')">Preparar para Impressao</a> | [param:languageselector]
+               <a href="engine:xmlnuke?xml=index&amp;xsl=index">Mapa do Site</a> | <a href="#" onclick="javascript:window.open('[param:script_name]?xml=[param:xml]&amp;xsl=preview&amp;lang=[param:lang]&amp;module=[param:module]','','toolbar=yes,location=no,status=no,menubar=yes,scrollbars=yes,resizable=no,width=660,height=440')">Preparar para Impressao</a> | [param:languageselector]
 				</div>
             <TABLE WIDTH="100%" BORDER="0" class="MAINTITLEBACKGROUND">
                <TR>

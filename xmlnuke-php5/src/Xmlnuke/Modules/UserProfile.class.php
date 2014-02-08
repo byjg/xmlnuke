@@ -287,14 +287,8 @@ class UserProfile extends BaseModule
 		$form = new XmlFormCollection($this->_context, $this->_url, $this->_myWords->Value("OTHERTITLE"));
 		$this->_paragraph->addXmlnukeObject($form);
 
-		$easyList = new XmlEasyList(EasyListType::SELECTLIST , "", $this->_myWords->Value("OTHERSITE"), $this->_users->returnUserProperty($this->_context->authenticatedUserId(), UserProperty::Site));
-		$form->addXmlnukeObject($easyList);
-		
 		$easyList = new XmlEasyList(EasyListType::SELECTLIST , "", $this->_myWords->Value("OTHERROLE"), $this->_users->returnUserProperty($this->_context->authenticatedUserId(), UserProperty::Role));
-		$form->addXmlnukeObject($easyList);
-		
-//		$px->addSelect4($form, $this->_myWords->Value("OTHERSITE"), "", $this->_users->returnUserProperty($this->_context->authenticatedUserId(), UserProperty::Site));
-//		$this->_px->addSelect4($form, , "", $this->_users->returnUserProperty($this->_context->authenticatedUserId(), UserProperty::Role));
+		$form->addXmlnukeObject($easyList);		
 	}
 }
 ?>

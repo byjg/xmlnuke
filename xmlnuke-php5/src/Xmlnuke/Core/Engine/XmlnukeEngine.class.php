@@ -385,7 +385,6 @@ class XmlnukeEngine
 				$retDocument = XmlUtil::CreateXmlDocumentFromStr("<".$this->_extractNodesRoot."/>", false);
 				$nodeRoot = $retDocument->documentElement;
 				XmlUtil::AddAttribute($nodeRoot, "xpath", $this->_extractNodes);
-				XmlUtil::AddAttribute($nodeRoot, "site", $this->_context->getSite());
 				foreach ($nodes as $node) 
 				{
 					$nodeToAdd = XmlUtil::CreateChild($nodeRoot, $node->nodeName, "");
@@ -441,7 +440,7 @@ class XmlnukeEngine
 		// Create Argument List
 		$xslTran->setParameter("", "xml", $this->_context->getXml());
 		$xslTran->setParameter("", "xsl", $this->_context->getXsl());
-		$xslTran->setParameter("", "site", $this->_context->getSite());
+		$xslTran->setParameter("", "site", '_all');
 		$xslTran->setParameter("", "lang", $this->_context->Language()->getName());
 		$xslTran->setParameter("", "module", $this->_context->getModule());
 		$xslTran->setParameter("", "transformdate", date("Y-m-d H:i:s") );

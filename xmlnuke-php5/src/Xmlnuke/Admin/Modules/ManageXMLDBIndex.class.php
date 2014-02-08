@@ -47,7 +47,7 @@ class ManageXMLDBIndex extends BaseAdminModule
 	}
 	public function  getAccessLevel() 
         { 
-              return AccessLevel::CurrentSiteAndRole;
+              return AccessLevel::OnlyRole;
         } 
 
         public function getRole() 

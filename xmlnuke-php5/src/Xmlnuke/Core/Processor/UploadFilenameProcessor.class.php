@@ -64,7 +64,7 @@ class UploadFilenameProcessor extends FilenameProcessor
 	 */
 	public function PrivatePath()
 	{
-		return $this->_context->CurrentSitePath() . FileUtil::Slash() . "upload" . FileUtil::Slash();
+		return FileUtil::Slash($this->_context->CurrentSitePath(), "upload");
 	}
 	/**
 	 *@return string

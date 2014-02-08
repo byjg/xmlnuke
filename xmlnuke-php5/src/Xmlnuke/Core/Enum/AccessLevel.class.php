@@ -35,8 +35,6 @@ namespace Xmlnuke\Core\Enum;
 class AccessLevel
 {
 	const OnlyAdmin = 0;
-	const OnlyCurrentSite = 1;
 	const OnlyRole = 2;
 	const OnlyAuthenticated= 3;
-	const CurrentSiteAndRole = 4;
 }

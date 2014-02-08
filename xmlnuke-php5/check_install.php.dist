@@ -228,7 +228,6 @@ function EditConfig()
 		$configValues["xmlnuke.URLMODULE"]="xmlnuke.php";
 		$configValues["xmlnuke.URLXMLNUKEADMIN"]="xmlnukeadmin.php";
 		$configValues["xmlnuke.URLXMLNUKEENGINE"]="xmlnuke.php";
-		$configValues["xmlnuke.DEFAULTSITE"]="sample";
 		$configValues["xmlnuke.DEFAULTPAGE"]="page";
 		$configValues["xmlnuke.LOGINMODULE"]="login";
 		$configValues["xmlnuke.URLBASE"]="";
@@ -247,7 +246,7 @@ function EditConfig()
 		$configValues["xmlnuke.CHECKCONTENTTYPE"] = true;
 		$configValues["xmlnuke.CACHESTORAGEMETHOD"] = "PLAIN";
 		$configValues["xmlnuke.XMLSTORAGEMETHOD"] = "PLAIN";
-		$configValues["xmlnuke.EXTERNALSITEDIR"] = "";
+		$configValues["xmlnuke.XMLNUKEDATA"] = "";
 		$configValues["xmlnuke.PHPLIBDIR"] = "";
 		$configValues["xmlnuke.PHPXMLNUKEDIR"] = "";
 
@@ -326,9 +325,6 @@ function EditConfig()
 	writeInputData($configValues, "xmlnuke.URLXMLNUKEADMIN",
 		"The script name of XMLNukeAdmin front controller", 1);
 
-	writeInputData($configValues, "xmlnuke.DEFAULTSITE",
-		"Default site name", 1);
-
 	writeInputData($configValues, "xmlnuke.DEFAULTPAGE",
 		"Default XSL Style", 1);
 
@@ -399,7 +395,7 @@ function EditConfig()
     	"How XMLNuke will be store XML documents in filesystem", 3,
     	array("PLAIN" => "Plain(Flat) directory", "HASHED" => "Hashed Directory Structure"));
 
-    writeInputData($configValues, "xmlnuke.EXTERNALSITEDIR",
+    writeInputData($configValues, "xmlnuke.XMLNUKEDATA",
     	"Sets the path for sites that are not stored within the structure of xmlnuke.ROOTDIR. " .
     	"You need to configure a pair of values in this option. The first value defines the name of the site,  " .
     	"and the second defines the physical path of the site. You can safely leave this option blank.", 4);

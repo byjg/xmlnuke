@@ -232,8 +232,7 @@ abstract class BaseModule implements IModule
 		if ($this->_cacheId == "")
 		{
 			// Starting NAME
-			$id = strtolower(get_class($this)) . "#" . $this->_context->getSite() . "#" .
-				$this->_context->getXsl() . "#" . $this->_context->Language()->getName();
+			$id = strtolower(get_class($this)) . $this->_context->getXsl() . "#" . $this->_context->Language()->getName();
 
 			// Exclude common and random parameteres from request
 			$exclude = array("phpsessid" => 1, "reset" => 1, "debug" => 1, "nocache" => 1, "x" => 1, "y" => 1, "site" => 1, "xml" => 1, "xsl" => 1, "module" => 1, "__clickevent" => 1, "__postback" => 1) + $_COOKIE;
@@ -316,11 +315,7 @@ abstract class BaseModule implements IModule
 					return true;
 				}
 
-				if (($this->getAccessLevel() == AccessLevel::OnlyCurrentSite) || ($this->getAccessLevel() == AccessLevel::CurrentSiteAndRole))
-				{
-					$grantToSite = $users->checkUserProperty($this->_context->authenticatedUserId(), $this->_context->getSite(), UserProperty::Site);
-				}
-				if (($this->getAccessLevel() == AccessLevel::OnlyRole) || ($this->getAccessLevel() == AccessLevel::CurrentSiteAndRole))
+				if ($this->getAccessLevel() == AccessLevel::OnlyRole)
 				{
 					$roles = $this->getRole();
 					if (!is_null($roles) && ($roles != ""))
@@ -343,14 +338,7 @@ abstract class BaseModule implements IModule
 					}
 				}
 
-				if ($this->getAccessLevel() == AccessLevel::CurrentSiteAndRole)
-				{
-					return ($grantToSite && $grantToRole);
-				}
-				else
-				{
-					return ($grantToSite || $grantToRole);
-				}
+				return $grantToRole;
 			}
 			else
 			{

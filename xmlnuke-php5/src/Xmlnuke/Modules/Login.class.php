@@ -392,7 +392,7 @@ class Login extends BaseModule
 		$path = $this->_context->get("SCRIPT_NAME");
 		$path = substr($path,0,strrpos($path,"/")+1);
 		$url = "http://" . $this->_context->get("SERVER_NAME").$path;
-		$body = $myWords->ValueArgs("WELCOMEMESSAGE", array($name, $this->_context->get("SERVER_NAME"), $user, $password, $url.$this->_context->bindModuleUrl("UserProfile")));
+		$body = $myWords->ValueArgs("WELCOMEMESSAGE", array($name, $this->_context->get("SERVER_NAME"), $user, $password, $url.$this->_context->bindModuleUrl("Xmlnuke.UserProfile")));
 
 		$envelope = new MailEnvelope(
 			MailUtil::getFullEmailName($name, $email),

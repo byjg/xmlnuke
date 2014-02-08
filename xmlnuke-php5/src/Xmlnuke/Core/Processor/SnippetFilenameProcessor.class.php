@@ -63,7 +63,7 @@ class SnippetFilenameProcessor extends FilenameProcessor
 	 */
 	public function SharedPath()
 	{
-		return $this->_context->SharedRootPath() . "snippet" . FileUtil::Slash();
+		return FileUtil::Slash($this->_context->SharedRootPath(), 'snippet');
 	}
 
 	/**
@@ -73,7 +73,7 @@ class SnippetFilenameProcessor extends FilenameProcessor
 	 */
 	public function PrivatePath()
 	{
-		return $this->_context->CurrentSitePath() . "snippet" . FileUtil::Slash();
+		return FileUtil::Slash($this->_context->CurrentSitePath(false), "snippet");
 	}
 
 	/**
