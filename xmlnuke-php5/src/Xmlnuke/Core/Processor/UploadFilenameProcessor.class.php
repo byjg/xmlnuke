@@ -42,10 +42,19 @@ class UploadFilenameProcessor extends FilenameProcessor
 	 * @param string $singlename
 	 * @return void
 	 */
-	public function __construct($singlename)
+	public function __construct($singlename = "")
 	{
-		parent::__construct($singlename);
-		$this->_filenameLocation = ForceFilenameLocation::PrivatePath;
+		if ($singlename == "")
+		{
+			$singlename = basename(tempnam('/tmp/', 'upload_'));
+			parent::__construct($singlename);
+			$this->setFilenameLocation(ForceFilenameLocation::DefinePath, "/tmp");
+		}
+		else
+		{
+			parent::__construct($singlename);
+			$this->_filenameLocation = ForceFilenameLocation::PrivatePath;
+		}
 	}
 
 	/**
