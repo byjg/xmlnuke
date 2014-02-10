@@ -37,7 +37,7 @@ namespace Xmlnuke\Core\Processor;
 use Exception;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Exception\EngineException;
-use Xmlnuke\Core\Exception\NotFoundException;
+use Xmlnuke\Core\Exception\SnippetNotFoundException;
 use Xmlnuke\Util\FileUtil;
 
 class SnippetProcessor
@@ -103,7 +103,7 @@ class SnippetProcessor
 						$snippetFile = substr($line, $iStart + 9, $iEnd - $iStart - 10);
 						$snippet = new SnippetFilenameProcessor(trim($snippetFile));
 						if (!FileUtil::Exists($snippet))
-							throw new NotFoundException("Snippet " . $snippet->FullQualifiedNameAndPath () . " not found" );
+							throw new SnippetNotFoundException("Snippet " . $snippet->FullQualifiedNameAndPath () . " not found" );
 						$fStreamSnippet = FileUtil::OpenFile ($snippet->FullQualifiedNameAndPath(), "r");
 						$sReadSnippet = FileUtil::ReadFile($fStreamSnippet, filesize($snippet->FullQualifiedNameAndPath()));
 						FileUtil::CloseFile($fStreamSnippet);

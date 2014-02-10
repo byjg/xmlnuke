@@ -39,7 +39,7 @@ use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Engine\ModuleFactory;
 use Xmlnuke\Core\Engine\XmlnukeEngine;
 use Xmlnuke\Core\Exception\NotAuthenticatedException;
-use Xmlnuke\Core\Exception\NotFoundException;
+use Xmlnuke\Core\Exception\ModuleNotFoundException;
 use Xmlnuke\Core\Processor\BaseProcessResult;
 
 class HtmlWrapper extends BaseSingleton implements IOutputWrapper
@@ -97,7 +97,7 @@ class HtmlWrapper extends BaseSingleton implements IOutputWrapper
 			$engine = $this->createXmlnukeEngine();
 			$writeResult->SearchAndReplace($engine->TransformDocumentFromModule($module));
 		}
-		catch (NotFoundException $ex)
+		catch (ModuleNotFoundException $ex)
 		{
 			$module = ModuleFactory::GetModule('Xmlnuke.HandleException',
 				array(

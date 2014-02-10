@@ -33,7 +33,7 @@ use InvalidArgumentException;
 use Xmlnuke\Core\Enum\AuthMode;
 use Xmlnuke\Core\Enum\SSLAccess;
 use Xmlnuke\Core\Exception\NotAuthenticatedException;
-use Xmlnuke\Core\Exception\NotFoundException;
+use Xmlnuke\Core\Exception\ModuleNotFoundException;
 use Xmlnuke\Core\Module\IModule;
 use Xmlnuke\Core\Processor\XMLFilenameProcessor;
 
@@ -81,7 +81,7 @@ class ModuleFactory
 		if (class_exists($className, true))
 			$result = new $className;
 		else
-			throw new NotFoundException("Module \"$modulename\" not found");
+			throw new ModuleNotFoundException("Module \"$modulename\" not found");
 
 		if (!($result instanceof IModule))
 			throw new InvalidArgumentException('Class "' . $className . '" is not a IModule object');
