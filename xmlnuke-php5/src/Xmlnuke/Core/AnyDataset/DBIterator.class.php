@@ -108,7 +108,7 @@ class DBIterator extends GenericIterator
       			}
       			else
 				{
-					$row[$key] = FileUtil::fixUTF8($value);
+					$row[$key] = \ForceUTF8\Encoding::toUTF8($value);
 				}
 			}
 			$sr = new SingleRow($row);
