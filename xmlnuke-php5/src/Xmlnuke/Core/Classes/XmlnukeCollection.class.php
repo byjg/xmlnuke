@@ -197,7 +197,7 @@ class XmlnukeCollection
 
 		#------------
 		# Create Class Node
-		if ($_dontCreateClassNode)
+		if ($_dontCreateClassNode || $model instanceof \stdClass)
 			$node = $current;
 		else
 		{
