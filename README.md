@@ -3,7 +3,7 @@ XMLNuke
 
 [![Build Status](https://travis-ci.org/byjg/xmlnuke.png?branch=php53)](https://travis-ci.org/byjg/xmlnuke)
 
-*The master branch requires PHP53 or higher and is full PSR-0 compliant by using namespaces. The branch 'php50' is the legacy XMLNuke version and is now deprecated.*
+**[ *The master branch requires PHP53 or higher and is full PSR-0 compliant by using namespaces. The branch 'php50' is the legacy XMLNuke version and is now deprecated.* ]**
 
 
 XMLNuke is a Web Development Framework focused on the Data. Programming in XMLNuke you'll never more worry about open and close PHP tags and manage *spaghetti code*. All of your code is fully based in objects and all code produces only data in XML or JSON, you choose. 
