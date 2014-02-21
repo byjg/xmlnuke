@@ -197,14 +197,15 @@ class SingleRow
 		}
 		else
 		{
-			for($i=sizeof($result)-1;$i>=0;$i--)
+			for($i=0;$i<count($result);$i++)
 			{
 				if ($result[$i] == $value)
 				{
-					unset($this->_row[$name][$i]);
+					unset($result[$i]);
 					$this->informChanges();
 				}
 			}
+			$this->_row[$name] = array_values($result);
 		}
 	}
 
