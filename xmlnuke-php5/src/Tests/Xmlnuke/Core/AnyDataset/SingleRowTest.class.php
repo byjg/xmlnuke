@@ -221,18 +221,6 @@ class SingleRowTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @covers Xmlnuke\Core\AnyDataset\SingleRow::getRawFormat
-	 * @todo   Implement testGetRawFormat().
-	 */
-	public function testGetRawFormat()
-	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'Tested in method testAddField() '
-		);
-	}
-
-	/**
 	 * @covers Xmlnuke\Core\AnyDataset\SingleRow::getOriginalRawFormat
 	 * @todo   Implement testGetOriginalRawFormat().
 	 */
