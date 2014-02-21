@@ -40,7 +40,17 @@ class AnyDataSetTest extends \PHPUnit_Framework_TestCase
 		$this->object->appendRow();
 		$this->object->addField('field', 'value');
 
-		$this->assertEquals(str_replace("\n", "", trim($this->object->XML())), '<?xml version="1.0" encoding="utf-8"?><anydataset><row><field name="field">value</field></row></anydataset>');
+		$xmlDom = \Xmlnuke\Util\XmlUtil::CreateXmlDocumentFromStr(
+			'<?xml version="1.0" encoding="utf-8"?>'
+				. '<anydataset>'
+				. '<row>'
+				. '<field name="field">value</field>'
+				. '</row>'
+			. '</anydataset>'
+		);
+		$xmlDomValidate = \Xmlnuke\Util\XmlUtil::CreateXmlDocumentFromStr($this->object->XML());
+
+		$this->assertEquals($xmlDom, $xmlDomValidate);
 	}
 
 	/**
@@ -61,10 +71,16 @@ class AnyDataSetTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testAppendRow()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
+		$qtd = $this->object->getIterator()->Count();
+		$this->assertEquals(0, $qtd);
+
+		$this->object->appendRow();
+		$qtd = $this->object->getIterator()->Count();
+		$this->assertEquals(1, $qtd);
+
+		$this->object->appendRow();
+		$qtd = $this->object->getIterator()->Count();
+		$this->assertEquals(2, $qtd);
 	}
 
 	/**
