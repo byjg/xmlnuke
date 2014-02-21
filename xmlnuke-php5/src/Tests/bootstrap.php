@@ -55,8 +55,8 @@ class config
 	public static function getValuesConfig()
 	{
 		$values = array();
-		$values['xmlnuke.ROOTDIR'] = realpath(__DIR__ . '/../../..');
-		$values['xmlnuke.PHPXMLNUKEDIR'] = realpath(__DIR__ . '/../..');
+		$values['xmlnuke.ROOTDIR'] = realpath(__DIR__ . '/../../../xmlnuke-data');
+		$values['xmlnuke.PHPXMLNUKEDIR'] = PHPXMLNUKEDIR;
 		$values['xmlnuke.USEABSOLUTEPATHSROOTDIR'] = true;
 		$values['xmlnuke.XSLCACHE'] = '\Xmlnuke\Core\Cache\NoCacheEngine';
 		$values['xmlnuke.SMTPSERVER'] = '';
@@ -94,8 +94,3 @@ class config
 	}
 }
 ## END-OF-FILE
-
-?>
-
-
-?>
