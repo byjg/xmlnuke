@@ -99,6 +99,26 @@ class DateUtil
 		$timestamp = DateUtil::TimeStampFromStr($source, $sourceFormat, $hour);
 		return DateUtil::FormatDate($timestamp, $targetFormat, $separator, $hour);
 	}
+
+	/**
+	 * Check if a date is Valid
+	 *
+	 * @param type $date
+	 * @param type $format
+	 * @param type $separator
+	 * @param type $hour
+	 * @return type
+	 */
+	public static function Validate($date, $format = DATEFORMAT::YMD, $separator = "/")
+	{
+		$timestamp = DateUtil::TimeStampFromStr($date, $format);
+		$dateCheck = DateUtil::FormatDate($timestamp, $format, $separator, true);
+
+		$date = $date . substr('--/--/---- 00:00:00', strlen($date));
+
+		$timestamp2 = DateUtil::TimeStampFromStr($dateCheck, $format);
+		return ($timestamp == $timestamp2) && ($date == $dateCheck);
+	}
 	
 	/**
 	*@desc Add days in a specfied date
@@ -132,7 +152,7 @@ class DateUtil
 	*@param DATEFORMAT $dateFormat
 	*@return string 
 	*/
-	public static function TimeStampFromStr($date, $dateFormat = DATEFORMAT::YMD, $hour = false)
+	public static function TimeStampFromStr($date, $dateFormat = DATEFORMAT::YMD)
 	{
 		if ($date == "")
 		{
@@ -141,15 +161,9 @@ class DateUtil
 		else 
 		{
 			$reg = preg_split("/[^0-9]/", $date);
-			while (sizeof($reg) < 6)
+			while (count($reg) < 6)
 			{
-				$reg[sizeof($reg)] = 0;
-			}
-			if (!$hour)
-			{
-				$reg[3] = 0;
-				$reg[4] = 0;
-				$reg[5] = 0;
+				$reg[count($reg)] = 0;
 			}
 		}
 		
@@ -187,31 +201,42 @@ class DateUtil
 	
 	public static function GetDateParts($date, $dateFormat = DATEFORMAT::YMD, $separator="/")
 	{
-		$reg = preg_split("/[^0-9]/", $date);
-		while (sizeof($reg) < 6)
+		if (!DateUtil::Validate($date, $dateFormat, $separator, true))
 		{
-			$reg[sizeof($reg)] = 0;
+			if (($dateFormat == DATEFORMAT::DMY) || ($dateFormat == DATEFORMAT::MDY))
+				$reg = array("00", "00", "0000", "00", "00", "00");
+			else
+				$reg = array("0000", "00", "00", "00", "00", "00");
+		}
+		else
+		{
+			$reg = preg_split("/[^0-9]/", $date);
+			while (sizeof($reg) < 6)
+			{
+				$reg[sizeof($reg)] = '00';
+			}
 		}
 		
-		$datePart = array();
-		
+		$datePart = array();		
+		if (($dateFormat == DATEFORMAT::DMY) || ($dateFormat == DATEFORMAT::MDY))
+			$datePart[DateParts::DATE] = sprintf("%02d$separator%02d$separator%04d", $reg[0], $reg[1], $reg[2]);
+		else
+			$datePart[DateParts::DATE] = sprintf("%04d$separator%02d$separator%02d", $reg[0], $reg[1], $reg[2]);
+
 		switch ($dateFormat) {
 			case DATEFORMAT::DMY:
-				$datePart[DateParts::DATE] = sprintf("%02d$separator%02d$separator%02d", $reg[0], $reg[1], $reg[2]);
 				$datePart[DateParts::DAY] = $reg[0];
 				$datePart[DateParts::MONTH] = $reg[1];
 				$datePart[DateParts::YEAR] = $reg[2];
 				break;
 		
 			case DATEFORMAT::MDY:
-				$datePart[DateParts::DATE] = sprintf("%02d$separator%02d$separator%02d", $reg[1], $reg[0], $reg[2]);
 				$datePart[DateParts::DAY] = $reg[1];
 				$datePart[DateParts::MONTH] = $reg[0];
 				$datePart[DateParts::YEAR] = $reg[2];
 				break;
 		
 			default:
-				$datePart[DateParts::DATE] = sprintf("%02d$separator%02d$separator%02d", $reg[2], $reg[1], $reg[0]);
 				$datePart[DateParts::DAY] = $reg[2];
 				$datePart[DateParts::MONTH] = $reg[1];
 				$datePart[DateParts::YEAR] = $reg[0];
