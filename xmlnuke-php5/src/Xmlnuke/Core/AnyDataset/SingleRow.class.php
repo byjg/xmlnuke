@@ -106,7 +106,7 @@ class SingleRow
 		$result = $this->_row[$name];
 		if (is_array($result))
 		{
-			return $result[0];
+			return array_shift($result);
 		}
 		else
 		{
