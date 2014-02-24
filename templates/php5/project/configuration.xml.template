@@ -15,8 +15,8 @@ and open the template in the editor.
 	stopOnFailure="false">
 
 	<testsuites>
-		<testsuite name="__PROJECT__ Test Suite">
-		  <directory>__PROJECT__</directory>
+		<testsuite name="__PROJECT__">
+		  <directory suffix='Test.php'>__PROJECT__</directory>
 		</testsuite>
 	</testsuites>
 

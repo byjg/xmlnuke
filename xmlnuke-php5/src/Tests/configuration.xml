@@ -16,7 +16,7 @@ and open the template in the editor.
 
 	<testsuites>
 		<testsuite name="Xmlnuke">
-		  <directory>Xmlnuke</directory>
+		  <directory suffix='Test.php'>Xmlnuke</directory>
 		</testsuite>
 	</testsuites>
 

@@ -155,7 +155,7 @@ class CreatePhp5Project
 				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/bootstrap.php.template", "$HOME/lib/Tests/bootstrap.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
 				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/configuration.xml.template", "$HOME/lib/Tests/configuration.xml", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
 				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/sample.php.template", "$HOME/lib/$PROJECT/Classes/Sample.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
-				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/sampletest.php.template", "$HOME/lib/Tests/$PROJECT/Classes/SampleTest.class.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
+				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/sampletest.php.template", "$HOME/lib/Tests/$PROJECT/Classes/SampleTest.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
 
 				# Netbeans project specific
 				@mkdir( "$HOME/nbproject" );
