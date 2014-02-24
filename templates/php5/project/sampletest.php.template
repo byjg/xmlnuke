@@ -32,7 +32,7 @@ class SampleTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @covers BlaBleBli\Classes\Sample::add
+	 * @covers __PROJECT__\Classes\Sample::add
 	 * @todo   Implement testAdd().
 	 */
 	public function testAdd()
@@ -44,7 +44,7 @@ class SampleTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @covers BlaBleBli\Classes\Sample::getTotal
+	 * @covers __PROJECT__\Classes\Sample::getTotal
 	 * @todo   Implement testGetTotal().
 	 */
 	public function testGetTotal()
