@@ -305,19 +305,19 @@ class  XmlDualList extends XmlnukeDocumentObject
 		
 		$nodeWorking = XmlUtil::CreateChild($current, "duallist", "");
 		
-		if (is_a($this->_buttonAllRight, "DualListButton") && $this->_buttonAllRight->type != DualListButtonType::None ) 
+		if ($this->_buttonAllRight instanceof DualListButton && $this->_buttonAllRight->type != DualListButtonType::None )
 		{
 			$this->makeButton($this->_buttonAllRight, "allright", $nodeWorking, $this->_listLeftName, $this->_listRightName, "true");
 		}
-		if (is_a($this->_buttonOneRight, "DualListButton") && $this->_buttonOneRight->type != DualListButtonType::None ) 
+		if ($this->_buttonOneRight instanceof DualListButton && $this->_buttonOneRight->type != DualListButtonType::None )
 		{
 			$this->makeButton($this->_buttonOneRight, "oneright", $nodeWorking, $this->_listLeftName, $this->_listRightName, "false");
 		}
-		if (is_a($this->_buttonOneLeft, "DualListButton") && $this->_buttonOneLeft->type != DualListButtonType::None ) 
+		if ($this->_buttonOneLeft instanceof DualListButton && $this->_buttonOneLeft->type != DualListButtonType::None )
 		{
 			$this->makeButton($this->_buttonOneLeft, "oneleft", $nodeWorking, $this->_listRightName, $this->_listLeftName, "false");
 		}		
-		if (is_a($this->_buttonAllLeft, "DualListButton") && $this->_buttonAllLeft->type != DualListButtonType::None ) 
+		if ($this->_buttonAllLeft instanceof DualListButton && $this->_buttonAllLeft->type != DualListButtonType::None )
 		{
 			$this->makeButton($this->_buttonAllLeft, "allleft", $nodeWorking, $this->_listRightName, $this->_listLeftName, "true");
 		}
@@ -331,27 +331,53 @@ class  XmlDualList extends XmlnukeDocumentObject
 		XmlUtil::AddAttribute($rightList, "name", $this->_listRightName);
 		XmlUtil::AddAttribute($rightList, "caption", $this->_listRightCaption);
 		XmlUtil::AddAttribute($rightList, "size", $this->_listRightSize);
-		
-		$arrRight = array();
-		if (!is_null($this->_listRightDataSource)) 
-		{
-			while ($this->_listRightDataSource->hasNext())
-			{
-				$row = $this->_listRightDataSource->moveNext();
-				$arrRight[$row->getField($this->_dataTableFieldId)] = $row->getField($this->_dataTableFieldText);
-			}
-		}	
 
-		$arrLeft = array();
-		while ($this->_listLeftDataSource->hasNext())
+		// Fill Right Side
+		if (!is_array($this->_listRightDataSource))
 		{
-			$row = $this->_listLeftDataSource->moveNext();
-			if (!array_key_exists($row->getField($this->_dataTableFieldId), $arrRight))
+			$arrRight = array();
+			if (!is_null($this->_listRightDataSource))
 			{
-				$arrLeft[$row->getField($this->_dataTableFieldId)] = $row->getField($this->_dataTableFieldText);
+				while ($this->_listRightDataSource->hasNext())
+				{
+					$row = $this->_listRightDataSource->moveNext();
+					$arrRight[$row->getField($this->_dataTableFieldId)] = $row->getField($this->_dataTableFieldText);
+				}
 			}
 		}
+		else
+		{
+			$arrRight = $this->_listRightDataSource;
+		}
+
+		// Fill Left Side
+		if (!is_array($this->_listLeftDataSource))
+		{
+			$arrLeft = array();
+			while ($this->_listLeftDataSource->hasNext())
+			{
+				$row = $this->_listLeftDataSource->moveNext();
+				if (!array_key_exists($row->getField($this->_dataTableFieldId), $arrRight))
+				{
+					$arrLeft[$row->getField($this->_dataTableFieldId)] = $row->getField($this->_dataTableFieldText);
+				}
+			}
+		}
+		else
+		{
+			$arrLeft = $this->_listLeftDataSource;
+		}
 		
+		// Fix Data Source
+		foreach($arrRight as $key=>$value)
+		{
+			if (isset($arrLeft[$key]))
+			{
+				$arrRight[$key] = $arrLeft[$key];
+				unset($arrLeft[$key]);
+			}
+		}
+
 		$this->buildListItens($leftList, $arrLeft);
 		$this->buildListItens($rightList, $arrRight);
 		
