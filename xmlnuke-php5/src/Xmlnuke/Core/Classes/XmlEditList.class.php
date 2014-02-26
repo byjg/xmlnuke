@@ -312,7 +312,7 @@ class  XmlEditList extends XmlnukeDocumentObject
 				}
 				else 
 				{
-					$value = $field->arrayLookup[$value];
+					$value = isset($field->arrayLookup[$value]) ? $field->arrayLookup[$value] : "[$value ?]";
 				}
 				XmlUtil::AddTextNode($column, $value);
 				break;
