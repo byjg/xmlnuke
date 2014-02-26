@@ -142,7 +142,7 @@ class DateUtil
 	*/
 	public static function DateDiff($newestDate, $oldiestDate, $dateFormat = DATEFORMAT::YMD)
 	{
-		$diff =  floor((DateUtil::TimeStampFromStr($newestDate, $dateFormat) - DateUtil::TimeStampFromStr($oldiestDate, $dateFormat)) / 86400);
+		$diff =  round((DateUtil::TimeStampFromStr($newestDate, $dateFormat) - DateUtil::TimeStampFromStr($oldiestDate, $dateFormat)) / 86400);
 		return $diff;
 	}
 	

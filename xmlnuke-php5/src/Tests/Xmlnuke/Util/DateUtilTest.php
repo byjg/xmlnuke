@@ -152,9 +152,8 @@ class DateUtilTest extends \PHPUnit_Framework_TestCase
 		$days = DateUtil::DateDiff($date2, $date1);  // From do new date to old date
 		$this->assertEquals(29, $days);
 
-		$date2 = '2000-02-02';
 		$days = DateUtil::DateDiff($date1, $date2);  // Negative number
-		$this->assertEquals(-1, $days);
+		$this->assertEquals(-29, $days);
 	}
 
 	/**
