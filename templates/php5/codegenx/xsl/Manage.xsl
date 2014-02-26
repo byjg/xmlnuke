@@ -30,6 +30,7 @@ namespace <xsl:value-of select="$project" />\<xsl:value-of select="$xsl" />\Modu
 
 use <xsl:value-of select="$project" />\Classes\UIEdit\<xsl:value-of select="$ClassName" /> as <xsl:value-of select="$ClassName" />UIEdit;
 use <xsl:value-of select="$project" />\Classes\Dal\<xsl:value-of select="$ClassName" /> as <xsl:value-of select="$ClassName" />Dal;
+use <xsl:value-of select="$project" />\Classes\DatabaseModel\<xsl:value-of select="$ClassName" /> as <xsl:value-of select="$ClassName" />Model;
 use Xmlnuke\Core\Classes\CrudFieldCollection;
 use Xmlnuke\Core\Classes\XmlBlockCollection;
 use Xmlnuke\Core\Classes\XmlnukeCrudDB;
@@ -59,7 +60,7 @@ class <xsl:value-of select="$ClassName" /> extends <xsl:value-of select="$extend
 	public function CreatePage()
 	{
 		$this->WordCollection();
-		$this->CreateDocument("TITLE");
+		$this->CreateDocument($this->_words->Value("TITLE"));
 
 		$op = $this->_context->get("op");
 		if ($op == "1")
@@ -115,7 +116,7 @@ class <xsl:value-of select="$ClassName" /> extends <xsl:value-of select="$extend
 			$this->_words->Value("PROCESSPAGE_TITLE"), 
 			"module:" . $this->_moduleName, 
 			null, 
-			'<xsl:value-of select="@name" />', 
+			<xsl:value-of select="$ClassName" />Model::__TABLENAME__,
 			<xsl:value-of select="$ClassName" />Dal::DataBaseName()
 		);
 		$crud->setPermissions(true, false, true, true);
