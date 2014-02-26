@@ -34,11 +34,13 @@ use <xsl:value-of select="$project" />\Base\BaseUIEdit as <xsl:value-of select="
 use <xsl:value-of select="$project" />\Classes\DatabaseModel\<xsl:value-of select="$ClassName" /> as <xsl:value-of select="$ClassName" />Model;
 use Xmlnuke\Core\Classes\CrudField;
 use Xmlnuke\Core\Classes\EditListField;
+use Xmlnuke\Core\Classes\XmlInputMemo;
 use Xmlnuke\Core\Classes\XmlInputTextBox;
 use Xmlnuke\Core\Database\BaseDBAccess;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\DATEFORMAT;
 use Xmlnuke\Core\Enum\INPUTTYPE;
+use Xmlnuke\Core\Enum\XmlInputObjectType;
 use Xmlnuke\Core\Enum\LanguageFileTypes;
 use Xmlnuke\Core\Locale\LanguageCollection;
 use Xmlnuke\Core\Locale\LanguageFactory;
@@ -237,6 +239,9 @@ class <xsl:value-of select="$ClassName" /> extends <xsl:value-of select="$projec
 			<xsl:when test="contains(@type, 'date') or contains(@type, 'DATE')">$field->dataType = INPUTTYPE::DATE;</xsl:when>
 			<xsl:otherwise>$field->dataType = INPUTTYPE::TEXT;</xsl:otherwise>
 		</xsl:choose>
+		<xsl:if test="@type='text'">
+		$field->fieldXmlInput = XmlInputObjectType::MEMO; // XmlInputObjectType::HTMLTEXT
+		</xsl:if>
 		return $field;
 	}
 
