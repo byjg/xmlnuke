@@ -134,6 +134,7 @@ class Context extends BaseSingleton
 
 	protected $_PHP_SELF = "PHP_SELF";
 
+
 	/**
 	* Context construtor. Read data from HttpContext class and assign default values to main arguments (XML, XSL, SITE and LANG) if doesn't exists.
 	* Process Config.php and put into NameValueCollection the make easy access it.
@@ -142,14 +143,63 @@ class Context extends BaseSingleton
 	*/
 	protected function __construct()
 	{
+		// Empty to avoid recursion
+	}
+
+
+	/**
+	 * Semaphore status
+	 * @var int
+	 */
+	private $_status = 0;
+
+	/**
+	 *
+	 * @return Context
+	 */
+	public static function getInstance()
+	{
+		$context = parent::getInstance();
+
+		//while ($context->_status == 1)   # Semaphore --> 1 Setup not finished yet. Wait for it.
+		//	sleep(1);
+
+		if ($context->_status == 0)      # Not setup yet. Enter and 'lock' to avoid recursive loop
+		{
+			$context->_status = 1;       # Lock semaphore / Running
+
+			$context->setupVariables();
+			ModuleFactory::registerUserLibDir($context);
+
+			$context->setLocale();
+
+			// Adjusts to Run with XMLNukeDB
+			$context->_appNameInMemory = "db_".strtolower($context->Language()->getName());
+
+			$context->_xmlnukedb = new XmlnukeDB($context->XmlHashedDir(), $context->XmlPath(), strtolower($context->Language()->getName()));
+			//$this->_xmlnukedb->loadIndex();
+
+			if ($context->get("logout") != "")
+			{
+				   $context->MakeLogout();
+			}
+
+			$context->_status = 2;       # Release Semaphore / All done.
+		}
+
+		return $context;
+	}
+
+	private function setupVariables()
+	{
 		$valuesConfig = \config::getValuesConfig();
 
 		if (strpos($_SERVER["SERVER_SOFTWARE"], 'nginx') !== false)
 			$this->_PHP_SELF = 'DOCUMENT_URI';
-		
+
 		if (!is_array($valuesConfig))
 			throw new InvalidArgumentException ("getValuesConfig() method expects an array. ");
-		
+
 		$this->AddCollectionToConfig($valuesConfig);
 
 		$this->setXsl();
@@ -185,30 +235,9 @@ class Context extends BaseSingleton
 			$this->_module = htmlentities($this->_module);
 			$this->set("module", $this->_module);
 		}
-
-		ModuleFactory::registerUserLibDir($this);
-
-		$this->setLocale();
-
-		$langStr = "";
-		$langAvail = $this->LanguagesAvailable();
-		foreach (array_keys($langAvail) as $key)
-		{
-			$langStr =$langStr."<a href='".$this->bindXmlnukeUrl( $this->getXml(), $this->getXsl(), $key )."'>".$langAvail[$key]."</a> | ";
-		}
-		$this->addPairToConfig("LANGUAGESELECTOR", str_replace("&", "&amp;", substr($langStr,0,strlen($langStr)-2)));
-
-		// Adjusts to Run with XMLNukeDB
-		$this->_appNameInMemory = "db_".strtolower($this->Language()->getName());
-
-		$this->_xmlnukedb = new XmlnukeDB($this->XmlHashedDir(), $this->XmlPath(), strtolower($this->Language()->getName()));
-		//$this->_xmlnukedb->loadIndex();
-
-		if ($this->get("logout") != "")
-		{
-		       $this->MakeLogout();
-		}
 	}
+
+
 
 	protected $_xslCacheEngine = null;
 	
@@ -419,8 +448,7 @@ class Context extends BaseSingleton
 		if (is_null($curLang))
 			$curLang = $defaultLang;
 
-		$this->_lang = LocaleFactory::GetLocale($curLang, $this);
-		$this->_lang->setLanguage($langAvail[$this->_lang->getName()]);
+		$this->_lang = LocaleFactory::GetLocale($curLang);
 		$this->addPairToConfig("LANGUAGE", $this->_lang->getName());
 		$this->addPairToConfig("LANGUAGENAME", $this->_lang->getLanguage());
 	}

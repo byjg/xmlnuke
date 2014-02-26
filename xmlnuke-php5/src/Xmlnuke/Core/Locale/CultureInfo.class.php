@@ -74,38 +74,9 @@ class CultureInfo
 	*/
 	public function getLanguage()
 	{
-		return $this->_Language;
+		$row = LocaleFactory::getInfoLocaleDB('shortname', $this->getName());
+		return $row->getField('name');
 	}
-	/**
-	*@param string $lang
-	*@return void
-	*@desc
-	*/
-	public function setLanguage($lang)
-	{
-		$this->_Language = $lang;
-	}
-
-
-	/**
-	*@param
-	*@return string
-	*@desc
-	*/
-	public function getCharSet()
-	{
-		return $this->_CharSet;
-	}
-	/**
-	*@param string $CharSet
-	*@return void
-	*@desc
-	*/
-	public function setCharSet($CharSet)
-	{
-		$this->_CharSet = $CharSet;
-	}
-
 
 	public function __construct($language, $langstr = null)
 	{
@@ -118,11 +89,17 @@ class CultureInfo
 		$this->_cultureActive = setlocale(LC_ALL, $systemLocale . ".UTF8", $language . ".UTF-8", $systemLocale, $language, $this->_name);
 
 		// Try to load in Windows if failed before
-		$iLang = 0;
-		while (!$this->_cultureActive && ($iLang < count($langstr)))
+		if (!$this->_cultureActive)
 		{
-			$this->_cultureActive = setlocale(LC_ALL, $langstr[$iLang]);
-			$iLang++;
+			$row = $this->getInfoLocaleDB('shortname', $this->getName());
+			$langstr = $sr->getFieldArray("langstr");
+
+			$iLang = 0;
+			while (!$this->_cultureActive && ($iLang < count($langstr)))
+			{
+				$this->_cultureActive = setlocale(LC_ALL, $langstr[$iLang]);
+				$iLang++;
+			}
 		}
 
 		if (!$this->_cultureActive)
@@ -195,32 +172,17 @@ class CultureInfo
 
 	public function formatMoney($number, $intlSymbol = false, $truncate = false)
 	{
-		if (!is_numeric($number)) 
-			$number = doubleval (str_replace($this->_localeConv["decimal_point"], ".", $number));
-
 		if ($truncate)
-		{
-			$factor = pow(10, intval($this->_localeConv["frac_digits"] == "" || $this->_localeConv["frac_digits"] > 5 ? 2 : $this->_localeConv["frac_digits"]));
-			$number = intval($number * $factor) / $factor;
-		}
-		if (!$intlSymbol)
-		{
-			$format = "%01." . $this->_localeConv["frac_digits"] . "f";
-			$retorno = sprintf($format, $number);
-
-			$moneySymbol = $this->getCurrencySymbol();
-			if ($this->_localeConv["p_sep_by_space"]) $space = ' '; else $space = '';
-			$retorno = ($this->_localeConv["p_cs_precedes"] ? "$moneySymbol$space$retorno" : "$retorno$space$moneySymbol");
-		}
+			$mask = '12.0';
 		else
-		{
-			$format = "%01." . $this->_localeConv["frac_digits"] . "F";
-			$retorno = sprintf($format, $number);
+			$mask = 0;
 
-			$retorno = $retorno . " " . $this->getIntlCurrencySymbol();
-		}
+		if ($intlSymbol)
+			$formatted = trim(money_format("%{$mask}i", $number));
+		else
+			$formatted = trim(money_format("%{$mask}n", $number));
 
-		return $retorno;
+		return $formatted;
 	}
 
 	/**

@@ -56,49 +56,57 @@ class LocaleFactory
 
 	protected static $_locales = array();
 
+	private static $_localeData = null;
+
+	private static $_localeDbCache = array();
+
+
+	/**
+	 *
+	 * @param type $field
+	 * @param type $value
+	 * @return \Xmlnuke\Core\AnyDataset\SingleRow
+	 */
+	public static function getInfoLocaleDB($field, $value)
+	{
+		if (self::$_localeData == null)
+		{
+			$file = new \Xmlnuke\Core\Processor\AnydatasetSetupFilenameProcessor('locale');
+			self::$_localeData = new \Xmlnuke\Core\AnyDataset\AnyDataSet($file);
+		}
+
+		if (!isset(self::$_localeDbCache[$field]))
+		{
+			$filter = new \Xmlnuke\Core\AnyDataset\IteratorFilter();
+			$filter->addRelation($field, \Xmlnuke\Core\Enum\Relation::Contains, $value);
+			$it = self::$_localeData->getIterator($filter);
+			if ($it->hasNext())
+				self::$_localeDbCache[$field] = $it->moveNext();
+			else
+			{
+				$sr = new \Xmlnuke\Core\AnyDataset\SingleRow();
+				\Xmlnuke\Core\Engine\Context::getInstance()->WriteWarningMessage("$lang was not found in locale.anydata.xml file");
+				$sr->AddField('name', $value . ' ???');
+				$sr->AddField('shortname', $value);
+				self::$_localeDbCache[$field] = $sr;
+			}
+		}
+		
+		return self::$_localeDbCache[$field];
+	}
+
 	/**
 	 * Get a CulturuInfo class from the Language Name in the 5 letters format. Example: pt-br, en-us
 	 * @param string $lang
 	 * @param Context $context
 	 * @return \CultureInfo
 	 */
-	public static function GetLocale($lang, $context = null)
+	public static function GetLocale($lang)
 	{
 		if (array_key_exists($lang, LocaleFactory::$_locales))
 			return LocaleFactory::$_locales[$lang];
 		
-		// Note the Reference for the $context could not be removed only in this section.
-		if (is_null($context))
-			$context = Context::getInstance ();
-		
-		// ***************************
-		// * ATENTION - Dont do it again!!!!!!!
-		// *
-		$path = $context->SharedRootPath(); 
-		// *
-		// * The line above is necessary, because, FilenameProcessor need Language,
-		// * but Language isnt created yet. Dont do it again!!!!!!!
-		// ******************************************************************
-		$localeFile = new AnyDataSet($path. FileUtil::Slash() . "setup" . FileUtil::Slash() . "locale.anydata.xml");
-		$itf = new IteratorFilter();
-		$itf->addRelation("shortname", Relation::Contains, $lang);
-		
-		$it = $localeFile->getIterator($itf);
-		if ($it->hasNext())
-		{
-			$sr = $it->moveNext();
-			
-			$locale = new CultureInfo($sr->getField("shortname"), $sr->getFieldArray("langstr"));
-			$locale->setLanguage($sr->getField("locale"));
-			$locale->setCharSet("utf-8");
-		}
-		else
-		{
-			$context->WriteWarningMessage("$lang was not found in locale.anydata.xml file");
-			$locale = new CultureInfo($lang);
-			$locale->setLanguage("?");//?????????
-			$locale->setCharSet("utf-8");
-		}
+		$locale = new CultureInfo($lang);
 
 		LocaleFactory::$_locales[$lang] = $locale;
 
