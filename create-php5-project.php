@@ -208,7 +208,7 @@ class CreatePhp5Project
 				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/imagevalidate.php",  "$HTTPDOCS/") );
 				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/xmlnuke.inc.php", "$HTTPDOCS/") );
 				//$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/check_install.php.dist", "$HTTPDOCS/check_install.php") );
-				CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/index.php.dist", "$HTTPDOCS/index.php") );
+				copy( "$PHPDIR/index.php.dist", "$HTTPDOCS/index.php" );
 				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/xmlnuke.php", "$HTTPDOCS/") );
 
 				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/webservice.php", "$HTTPDOCS/") );
