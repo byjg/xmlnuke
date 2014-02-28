@@ -77,7 +77,13 @@ abstract class FilenameProcessor
 		{
 			$this->_singlename = $singlename;
 			$this->_context = Context::getInstance();
-			$this->_languageid = strtolower($this->_context->Language()->getName());
+			$lang = $this->_context->Language();
+
+			if ($lang != null)
+				$this->_languageid = strtolower($lang->getName());
+			else
+				$this->_languageid = 'en-us';
+
 			$this->_filenameLocation = ForceFilenameLocation::UseWhereExists;
 		}
 		else

@@ -402,7 +402,6 @@ class Context extends BaseSingleton
 	public function Language()
 	{
 		return $this->_lang;
-
 	}
 
 	public function setLocale($str = "")
