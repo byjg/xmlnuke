@@ -174,6 +174,7 @@ class CreatePhp5Project
 				$aux .= "	</row>\n" ;
 				$aux .= "</anydataset>\n" ;
 				CreatePhp5Project::writeTemplate( $aux, "$HOME/data/anydataset/_db.anydata.xml", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
+				copy( "$HOME/data/anydataset/_db.anydata.xml", "$HOME/data/anydataset/_db.anydata-dist.xml" );
 
 				$aux = "";
 				$aux .= "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" ;
@@ -187,10 +188,11 @@ class CreatePhp5Project
 				CreatePhp5Project::writeTemplate( $aux, "$HOME/data/anydataset/_configemail.anydata.xml", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
 
 				# Config
-				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/config.php.template", "$HTTPDOCS/config.inc-dist.php",
+				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/config.php.template", "$HTTPDOCS/config.inc.php",
 					array('/__DATADIR__/', '/__PHPDIR__/', '/__PROJECT_DATA__/', '/__PROJECT_LIB__/', '/__DATE__/', '/__LANGS__/'),
 					array($DATADIR, $PHPDIR, "$HOME/data", "$HOME/lib", date('c'), $LANGUAGESAVAILABLE )
 				);
+				copy( "$HTTPDOCS/config.inc.php", "$HTTPDOCS/config.inc-dist.php" );
 
 
 				# CodeGenX Generators
@@ -214,12 +216,18 @@ class CreatePhp5Project
 				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/webservice.php", "$HTTPDOCS/") );
 				$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/chart.php", "$HTTPDOCS/") );
 
-				$gitIgnore[] = "config.inc.php";
-				$gitIgnore[] = "# ----------";
+
+				$gitIgnore[] = "";
+				$gitIgnore[] = "# Machine specific XMLNuke files";
 				$gitIgnore[] = "common";
 				$gitIgnore[] = "data/cache/*.cache.*";
-				$gitIgnore[] = "data/anydataset/_db.anydata.xml   # Create a _db.anydata-dist.xml instead to commit this file";
 				$gitIgnore[] = "";
+
+				$gitIgnore[] = "# User specific files. Copy from *-dist.* files instead commit them.";
+				$gitIgnore[] = "httpdocs/config.inc.php";
+				$gitIgnore[] = "data/anydataset/_db.anydata.xml";
+				$gitIgnore[] = "";
+
 				$gitIgnore[] = "# Netbeans Project";
 				$gitIgnore[] = "nbproject/private";
 				$gitIgnore[] = "";

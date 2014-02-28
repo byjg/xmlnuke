@@ -6,9 +6,9 @@ class config
 	{
 		$values = array();
 		$values['xmlnuke.ROOTDIR'] = '__DATADIR__';
-		$values['xmlnuke.PHPXMLNUKEDIR'] = '__PHPDIR__';
+		$values['xmlnuke.PHPXMLNUKEDIR'] = rtrim(PHPXMLNUKEDIR, DIRECTORY_SEPARATOR);
 		$values['xmlnuke.USEABSOLUTEPATHSROOTDIR'] = true;
-		$values['xmlnuke.XSLCACHE'] = '\Xmlnuke\Core\Cache\NoCacheEngine';  #ICacheEngine instance
+		$values['xmlnuke.XSLCACHE'] = '\Xmlnuke\Core\Cache\NoCacheEngine';  # ICacheEngine instance
 		$values['xmlnuke.SMTPSERVER'] = '';                       # [smtp|ssl]://user:pass@server:port
 		$values['xmlnuke.USEFULLPARAMETER'] = true;
 		$values['xmlnuke.USERSDATABASE'] = '';                    # DBDataset connection ('_db.anydata.xml')
@@ -47,5 +47,5 @@ class config
 		return $values;
 	}
 }
-define('PHPXMLNUKEDIR', '__PHPDIR__/');
+define('PHPXMLNUKEDIR', '__PHPDIR__' . DIRECTORY_SEPARATOR);
 ## END-OF-FILE
