@@ -86,13 +86,29 @@ class CultureInfo
 		}
 		$this->_name = $language;
 		$systemLocale = $this->getIsoName();
-		$this->_cultureActive = setlocale(LC_ALL, $systemLocale . ".UTF8", $language . ".UTF-8", $systemLocale, $language, $this->_name);
+
+		$options = array(
+			$systemLocale . ".UTF8", 
+			$systemLocale . ".UTF-8", 
+			$systemLocale . ".utf8", 
+			$systemLocale . ".utf-8", 
+			$systemLocale, 
+			$language, 
+			$this->_name
+		);
+
+		// Try to load default set of language
+		$this->_cultureActive = null;
+		while(count($options)>0 && !$this->_cultureActive)
+		{
+			$this->_cultureActive = setlocale(LC_ALL, array_shift($options));
+		}
 
 		// Try to load in Windows if failed before
 		if (!$this->_cultureActive)
 		{
 			$row = LocaleFactory::getInfoLocaleDB('shortname', $this->getName());
-			$langstr = $sr->getFieldArray("langstr");
+			$langstr = $row->getFieldArray("langstr");
 
 			$iLang = 0;
 			while (!$this->_cultureActive && ($iLang < count($langstr)))
