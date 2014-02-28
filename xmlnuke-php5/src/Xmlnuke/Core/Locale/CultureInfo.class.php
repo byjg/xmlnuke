@@ -91,7 +91,7 @@ class CultureInfo
 		// Try to load in Windows if failed before
 		if (!$this->_cultureActive)
 		{
-			$row = $this->getInfoLocaleDB('shortname', $this->getName());
+			$row = LocaleFactory::getInfoLocaleDB('shortname', $this->getName());
 			$langstr = $sr->getFieldArray("langstr");
 
 			$iLang = 0;
