@@ -105,7 +105,7 @@ class <xsl:value-of select="$ClassName" /> extends <xsl:value-of select="$extend
 			<xsl:variable name="fieldname">
 				<xsl:value-of select="@name" />
 			</xsl:variable>
-		$field = $uiedit->crudField<xsl:if test="../foreign-key/reference[@local=$fieldname]">List</xsl:if><xsl:value-of select="$FieldName" />();
+		$field = $uiedit->crudField<xsl:if test="../foreign-key/reference[@local=$fieldname] or @type='enum'">List</xsl:if><xsl:value-of select="$FieldName" />();
 		$fields->addCrudField($field);
 		</xsl:for-each>
 		

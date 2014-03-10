@@ -245,6 +245,27 @@ class <xsl:value-of select="$ClassName" /> extends <xsl:value-of select="$projec
 		return $field;
 	}
 
+	<xsl:if test="@type='enum'">
+	/**
+	 * Obter um CrudField List de <xsl:value-of select="$FieldName" />
+	 * @param bool $visible
+	 * @param bool $required
+	 * @param integer $viewSize
+	 * @return CrudField
+	 */
+	public function crudFieldList<xsl:value-of select="$FieldName" />($visible = true, $required = <xsl:if test="@required='true'">true</xsl:if>
+	<xsl:if test="not(@required='true')">false</xsl:if>, $viewSize = <xsl:value-of select="$ViewSize" />)
+	{
+		$field = $this->crudField<xsl:value-of select="$FieldName" />($visible, $required, $viewSize);
+
+		$arrayKeys = array(<xsl:value-of select="@size" />) ;
+		$arrayVals = array(<xsl:value-of select="@size" />) ;
+
+		$field->arraySelectList = array_combine($arrayKeys, $arrayVals);
+		$field->fieldXmlInput = \Xmlnuke\Core\Enum\XmlInputObjectType::SELECTLIST;
+		return $field;
+	}
+	</xsl:if>
 	<xsl:if test="../foreign-key/reference[@local=$fieldname]">
 	<xsl:variable name="ForeignClass">
 		<xsl:call-template name="upperCase">
@@ -392,5 +413,5 @@ class <xsl:value-of select="$ClassName" /> extends <xsl:value-of select="$projec
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
-	
+
 </xsl:stylesheet>
