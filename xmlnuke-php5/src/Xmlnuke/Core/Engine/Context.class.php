@@ -1542,4 +1542,28 @@ class Context extends BaseSingleton
 
 		return $ipaddress;
 	}
+
+	/**
+	 * Use this method to get the SERVER NAME.
+	 * @return string
+	 */
+	public function getServerName($port = false, $protocol = false)
+	{
+		$servername = '';
+		if (isset($_SERVER['SERVER_NAME']) && !empty($_SERVER['SERVER_NAME']))
+			$servername = $_SERVER['SERVER_NAME'];
+		else if(isset($_SERVER['HTTP_HOST']) && !empty($_SERVER['HTTP_HOST']))
+			$servername = $_SERVER['HTTP_HOST'];
+		else
+			$servername = $_SERVER['SERVER_ADDR'];
+
+		if ($port && isset($_SERVER['SERVER_PORT']))
+			$servername .= ':' . $_SERVER['SERVER_PORT'];
+
+		if ($protocol)
+			$servername = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://") . $servername;
+
+		return $servername;
+	}
+
 }
