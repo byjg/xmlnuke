@@ -130,10 +130,10 @@ abstract class BaseService extends BaseModule implements IService
 	 *
 	 * @return type
 	 */
-	public function getAuthMode()
-	{
-		return AuthMode::HttpDigest;
-	}
+	//public function getAuthMode()
+	//{
+	//	return AuthMode::HttpBasic;
+	//}
 }
 
 ?>
