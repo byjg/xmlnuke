@@ -696,6 +696,11 @@ class Context extends BaseSingleton
 		$this->addPairToConfig($key, $value);
 	}
 
+	public function rmset($key)
+	{
+		unset($this->_config[strtoupper($key)]);
+	}
+
 	protected $_langAvail = null;
 	/**
 	* @access public
@@ -1016,7 +1021,7 @@ class Context extends BaseSingleton
 	public function setSession($name, $value)
 	{
 		$_SESSION[strtoupper($name)] = $value;
-		$this->addPairToConfig("session." . $name, $value);
+		$this->addPairToConfig("session." . strtoupper($name), $value);
 	}
 
 	/**
@@ -1027,11 +1032,8 @@ class Context extends BaseSingleton
 	*/
 	public function removeSession($name)
 	{
-		if (array_key_exists(strtoupper($name), $_SESSION))
-			unset($_SESSION[strtoupper($name)]);
-
-		if (array_key_exists("session." . strtoupper($name), $_SESSION))
-			unset($this->_config["session." . strtoupper($name)]);
+		unset($_SESSION[strtoupper($name)]);
+		unset($this->_config["session." . strtoupper($name)]);
 	}
 
 	/**
