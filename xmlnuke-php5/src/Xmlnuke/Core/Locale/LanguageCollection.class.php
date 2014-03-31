@@ -140,16 +140,11 @@ class LanguageCollection
 	*/
 	private function replaceValues($str, $array)
 	{
-		$strLen = strlen ( $str );
-		$pos = strpos($str,"{");
-		while($pos !== false)
+		foreach($array as $i=>$value)
 		{
-			$key = $str{$pos + 1};
-			$value = $array[$key];
-			$str = str_replace("{".$key."}",$value,$str);
-			$pos = strpos($str,"{",$pos);
+			$str = str_replace("{" . $i . "}", $value, $str);
 		}
-		//echo("$str<br>");
+		//$str = preg_replace('/\{.*\}/', '', $str);
 		return $str;
 	}
 	
