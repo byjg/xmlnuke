@@ -660,10 +660,16 @@ class Context extends BaseSingleton
 	* @access public
 	* @return string
 	*/
-	public function get($key)
+	public function get($key, $persistent = false)
 	{
+		if ($persistent) {
+			$origKey = $key;
+			$key = "PVALUE.$key";
+		}
+		
 		$key = strtoupper($key);
-		if (array_key_exists($key, $this->_config))
+
+		if (isset($this->_config[$key]))
 		{
 			$value = $this->_config[$key];
 			if ($value instanceof IProcessParameter)
@@ -674,6 +680,20 @@ class Context extends BaseSingleton
 			{
 				return $value;
 			}
+		}
+		elseif ($persistent)
+		{
+			if ($this->get($origKey) != "")
+				$value = $this->get($origKey);
+			else if ($this->getSession($key))
+				$value = $this->getSession($key);
+			else
+				$value = "";
+
+			$this->setSession($key, $value);
+			$this->set($key, $value);
+
+			return $value;
 		}
 		else
 		{
