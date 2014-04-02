@@ -31,11 +31,11 @@
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Classes;
+namespace Xmlnuke\Core\Formatter;
 
 use Xmlnuke\Core\AnyDataset\DBDataSet;
 
-class  XmlnukeCrudDBFormatterDate implements IEditListFormatter
+class CrudDateFormatter implements IEditListFormatter
 {
 	/**
 	 * @var DBDataSet

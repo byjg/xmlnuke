@@ -28,36 +28,22 @@
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+namespace Xmlnuke\Core\Formatter;
+
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Classes;
-
-class  XmlnukeCrudBaseFormatterDualList implements IEditListFormatter
+class CrudPKFormatter implements IEditListFormatter
 {
-	protected $_arraySource = array();
-
-	public function __construct($arraySource)
-	{
-		$this->_arraySource = $arraySource;
-	}
-
 	public function Format($row, $fieldname, $value)
 	{
-		if ($value != "")
+		$fieldnameKey = explode("|", $fieldname);
+		$value = "";
+		foreach ($fieldnameKey as $fieldnameValue)
 		{
-			$ardt = explode(",", $value);
-			$arResult = array();
-			foreach ($ardt as $key=>$value)
-			{
-				$arResult[] = $this->_arraySource[$value];
-			}
-			return implode(", ", $arResult);
+			$value .= (($value!="")?"|":"") . $row->getField($fieldnameValue);
 		}
-		else
-		{
-			return "-";
-		}
+		return $value;
 	}
 }
 

@@ -31,7 +31,7 @@
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Classes;
+namespace Xmlnuke\Core\Formatter;
 
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Processor\ForceFilenameLocation;
@@ -39,7 +39,7 @@ use Xmlnuke\Core\Processor\UploadFilenameProcessor;
 use Xmlnuke\Util\FileUtil;
 use Xmlnuke\Util\ImageUtil;
 
-class  XmlnukeCrudBaseSaveFormatterFileUpload implements IEditListFormatter
+class CrudFileUploadFormatter implements IEditListFormatter
 {
 	/**
 	 * @var Context

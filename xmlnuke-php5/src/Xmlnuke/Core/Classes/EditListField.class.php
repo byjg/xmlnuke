@@ -35,6 +35,7 @@ namespace Xmlnuke\Core\Classes;
 
 use Xmlnuke\Core\Enum\EditListFieldSummary;
 use Xmlnuke\Core\Enum\EditListFieldType;
+use Xmlnuke\Core\Formatter\IEditListFormatter;
 
 class  EditListField
 {

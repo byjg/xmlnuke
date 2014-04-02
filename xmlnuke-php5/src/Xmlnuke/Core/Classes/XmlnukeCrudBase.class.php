@@ -41,12 +41,13 @@ use Xmlnuke\Core\Enum\EasyListType;
 use Xmlnuke\Core\Enum\EditListFieldType;
 use Xmlnuke\Core\Enum\InputTextBoxType;
 use Xmlnuke\Core\Enum\INPUTTYPE;
-use Xmlnuke\Core\Enum\LanguageFileTypes;
 use Xmlnuke\Core\Enum\MultipleSelectType;
 use Xmlnuke\Core\Enum\UIAlert;
 use Xmlnuke\Core\Enum\URLTYPE;
 use Xmlnuke\Core\Enum\XmlInputObjectType;
 use Xmlnuke\Core\Exception\XMLNukeException;
+use Xmlnuke\Core\Formatter\CrudDualListFormatter;
+use Xmlnuke\Core\Formatter\CrudPKFormatter;
 use Xmlnuke\Core\Locale\LanguageCollection;
 use Xmlnuke\Core\Locale\LanguageFactory;
 use Xmlnuke\Util\DateUtil;
@@ -484,7 +485,7 @@ abstract class XmlnukeCrudBase extends XmlnukeDocumentObject implements IXmlnuke
 		$field = new EditListField();
 		$field->fieldData = $fldKey;
 		$field->editlistName = "#";
-		$field->formatter = new XmlnukeCrudBaseFormatterKey();
+		$field->formatter = new CrudPKFormatter();
 		$field->fieldType = EditListFieldType::FORMATTER;
 		$editList->addEditListField($field);
 
@@ -503,16 +504,16 @@ abstract class XmlnukeCrudBase extends XmlnukeDocumentObject implements IXmlnuke
 				elseif ($this->_fields[$i]->fieldXmlInput == XmlInputObjectType::DUALLIST)
 				{
 					$field->fieldType = EditListFieldType::FORMATTER;
-					$field->formatter = new XmlnukeCrudBaseFormatterDualList($this->_fields[$i]->arraySelectList);
+					$field->formatter = new CrudDualListFormatter($this->_fields[$i]->arraySelectList);
 				}
 				else
 				{
 					$field->fieldType = EditListFieldType::TEXT;
 				}
 				$field->newColumn = $this->_fields[$i]->newColumn;
-				if (!is_null($this->_fields[$i]->editListFormatter))
+				if (!is_null($this->_fields[$i]->viewFormatter))
 				{
-					$field->formatter = $this->_fields[$i]->editListFormatter;
+					$field->formatter = $this->_fields[$i]->viewFormatter;
 					$field->fieldType = EditListFieldType::FORMATTER;
 				}
 
@@ -647,9 +648,9 @@ abstract class XmlnukeCrudBase extends XmlnukeDocumentObject implements IXmlnuke
 					$curValue = str_replace(".", $this->_decimalSeparator, $curValue);
 				}
 
-				if ($this->_fields[$i]->editFormatter != null)
+				if ($this->_fields[$i]->beforeUpdateFormatter != null)
 				{
-					$curValue = $this->_fields[$i]->editFormatter->Format($sr, $this->_fields[$i]->fieldName, $curValue);
+					$curValue = $this->_fields[$i]->beforeUpdateFormatter->Format($sr, $this->_fields[$i]->fieldName, $curValue);
 				}
 			}
 			else

@@ -27,7 +27,7 @@
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
-namespace Xmlnuke\Core\Classes;
+namespace Xmlnuke\Core\Formatter;
 
 use Xmlnuke\Core\AnyDataset\SingleRow;
 

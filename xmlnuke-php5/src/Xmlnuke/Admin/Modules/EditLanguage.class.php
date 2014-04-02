@@ -161,7 +161,7 @@ class EditLanguage extends NewBaseAdminModule
 				$process->key = ($i == 0);
 				if ($value == "LANGUAGE")
 				{
-					$process->saveDatabaseFormatter = $this;
+					$process->beforeInsertFormatter = $this;
 				}
 				$CrudFieldCollection->addCrudField($process);
 				$i++;

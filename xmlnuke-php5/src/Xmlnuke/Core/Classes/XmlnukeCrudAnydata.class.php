@@ -212,9 +212,9 @@ class  XmlnukeCrudAnydata extends XmlnukeCrudBase
 			for($i=0, $fieldLength = sizeof($this->_fields); $i<$fieldLength; $i++)
 			{
 				$value = $this->_context->get($this->_fields[$i]->fieldName);
-				if ($this->_fields[$i]->saveDatabaseFormatter != null)
+				if ($this->_fields[$i]->beforeInsertFormatter != null)
 				{
-					$value = $this->_fields[$i]->saveDatabaseFormatter->Format($srCurInfo, $this->_fields[$i]->fieldName, $value);
+					$value = $this->_fields[$i]->beforeInsertFormatter->Format($srCurInfo, $this->_fields[$i]->fieldName, $value);
 				}
 				$data->addField($this->_fields[$i]->fieldName, $value);
 			}
@@ -241,9 +241,9 @@ class  XmlnukeCrudAnydata extends XmlnukeCrudBase
 								continue; // Do nothing if none files are uploaded.
 						}
 
-						if ($this->_fields[$i]->saveDatabaseFormatter != null)
+						if ($this->_fields[$i]->beforeInsertFormatter != null)
 						{
-							$value = $this->_fields[$i]->saveDatabaseFormatter->Format($srCurInfo, $this->_fields[$i]->fieldName, $value);
+							$value = $this->_fields[$i]->beforeInsertFormatter->Format($srCurInfo, $this->_fields[$i]->fieldName, $value);
 						}
 						$sr->setField($this->_fields[$i]->fieldName, $value);
 					}

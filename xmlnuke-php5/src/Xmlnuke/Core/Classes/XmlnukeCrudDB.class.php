@@ -41,6 +41,7 @@ use Xmlnuke\Core\Enum\INPUTTYPE;
 use Xmlnuke\Core\Enum\SQLFieldType;
 use Xmlnuke\Core\Enum\SQLType;
 use Xmlnuke\Core\Enum\XmlInputObjectType;
+use Xmlnuke\Core\Formatter\CrudDateFormatter;
 use Xmlnuke\Util\Debug;
 
 /**
@@ -102,7 +103,7 @@ use Xmlnuke\Util\Debug;
  * 
  * @package xmlnuke
  */
-class  XmlnukeCrudDB extends XmlnukeCrudBase
+class XmlnukeCrudDB extends XmlnukeCrudBase
 {
 	/**
 	*@var string
@@ -300,9 +301,9 @@ class  XmlnukeCrudDB extends XmlnukeCrudBase
 							continue; // Do nothing if none files are uploaded.
 					}
 
-					if ($field->saveDatabaseFormatter != null)
+					if ($field->beforeInsertFormatter != null)
 					{
-						$value = $field->saveDatabaseFormatter->Format($srCurInfo, $field->fieldName, $value);
+						$value = $field->beforeInsertFormatter->Format($srCurInfo, $field->fieldName, $value);
 					}
 
 					$fieldList[$field->fieldName] = array(SQLFieldType::Text, $value);
@@ -413,10 +414,10 @@ class  XmlnukeCrudDB extends XmlnukeCrudBase
 	 */
 	protected function editListFieldCustomize($editListField, $field)
 	{
-		if ( ((($field->dataType == INPUTTYPE::DATE) || ($field->dataType == INPUTTYPE::DATETIME))) && ($field->editListFormatter == null))
+		if ( ((($field->dataType == INPUTTYPE::DATE) || ($field->dataType == INPUTTYPE::DATETIME))) && ($field->viewFormatter == null))
 		{
 			$editListField->fieldType = EditListFieldType::FORMATTER;
-			$editListField->formatter = new XmlnukeCrudDBFormatterDate($this->_dbData, $this->_dateFormat, ($field->dataType == INPUTTYPE::DATETIME));
+			$editListField->formatter = new CrudDateFormatter($this->_dbData, $this->_dateFormat, ($field->dataType == INPUTTYPE::DATETIME));
 		}
 		return $editListField;
 	}

@@ -37,7 +37,7 @@ use ArrayObject;
 use InvalidArgumentException;
 use Xmlnuke\Core\Enum\XmlInputObjectType;
 
-class  CrudFieldCollection
+class CrudFieldCollection
 {
 	/**
 	*@var Array
@@ -56,9 +56,9 @@ class  CrudFieldCollection
 	 */
 	public function addCrudField($p)
 	{
-		if ( ($p->fieldXmlInput == XmlInputObjectType::FILEUPLOAD) && ($p->saveDatabaseFormatter == null) )
+		if ( ($p->fieldXmlInput == XmlInputObjectType::FILEUPLOAD) && ($p->beforeInsertFormatter == null) )
 		{
-			throw new InvalidArgumentException("CrudField of type FileUpload need to define a saveDatabaseFormatter. Did you try to use 'XmlnukeCrudBaseSaveFormatterFileUpload' class?");
+			throw new InvalidArgumentException("CrudField of type FileUpload need to define a beforeInsertFormatter or afterSaveFormatter. Did you try to use 'CrudFileUploadFormatter' class?");
 		}
 		$this->fields[] = $p;
 	}

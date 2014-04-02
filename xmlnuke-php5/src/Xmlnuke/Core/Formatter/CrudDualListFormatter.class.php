@@ -1,7 +1,5 @@
 <?php
 
-use Xmlnuke\Core\Classes\IEditListFormatter;
-
 /*
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  *  Copyright:
@@ -30,22 +28,36 @@ use Xmlnuke\Core\Classes\IEditListFormatter;
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
-namespace Xmlnuke\Core\Classes;
-
 /**
  * @package xmlnuke
  */
-class  XmlnukeCrudBaseFormatterKey implements IEditListFormatter
+namespace Xmlnuke\Core\Formatter;
+
+class CrudDualListFormatter implements IEditListFormatter
 {
+	protected $_arraySource = array();
+
+	public function __construct($arraySource)
+	{
+		$this->_arraySource = $arraySource;
+	}
+
 	public function Format($row, $fieldname, $value)
 	{
-		$fieldnameKey = explode("|", $fieldname);
-		$value = "";
-		foreach ($fieldnameKey as $fieldnameValue)
+		if ($value != "")
 		{
-			$value .= (($value!="")?"|":"") . $row->getField($fieldnameValue);
+			$ardt = explode(",", $value);
+			$arResult = array();
+			foreach ($ardt as $key=>$value)
+			{
+				$arResult[] = $this->_arraySource[$value];
+			}
+			return implode(", ", $arResult);
 		}
-		return $value;
+		else
+		{
+			return "-";
+		}
 	}
 }
 

@@ -34,6 +34,7 @@ namespace Xmlnuke\Core\Classes;
 
 use Xmlnuke\Core\Enum\INPUTTYPE;
 use Xmlnuke\Core\Enum\XmlInputObjectType;
+use Xmlnuke\Core\Formatter\IEditListFormatter;
 
 class  CrudField
 {
@@ -100,15 +101,15 @@ class  CrudField
 	/**
 	* @var IEditListFormatter
 	*/
-	public $editListFormatter;
+	public $viewFormatter;
 	/**
 	 * @var IEditListFormatter
 	 */
-	public $editFormatter;
+	public $beforeUpdateFormatter;
 	/**
 	 * @var IEditListFormatter
 	 */
-	public $saveDatabaseFormatter;
+	public $beforeInsertFormatter;
 
 	public function __construct($newcolumn = true)
 	{

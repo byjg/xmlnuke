@@ -43,6 +43,7 @@ use Xmlnuke\Core\Enum\CustomButtons;
 use Xmlnuke\Core\Enum\EditListFieldSummary;
 use Xmlnuke\Core\Enum\EditListFieldType;
 use Xmlnuke\Core\Enum\SelectType;
+use Xmlnuke\Core\Formatter\IEditListFormatter;
 use Xmlnuke\Core\Processor\ParamProcessor;
 use Xmlnuke\Util\XmlUtil;
 
@@ -299,7 +300,7 @@ class  XmlEditList extends XmlnukeDocumentObject
 			case EditListFieldType::IMAGE:
 			{ 
 //				XmlnukeImage $xmi
-				$xmi = new XmlnukeImage( $row->getField($field->fieldData)); 
+				$xmi = new XmlnukeImage( $row->getField($field->fieldData));
 				$xmi->generateObject($column); 
 				break; 
 			}
