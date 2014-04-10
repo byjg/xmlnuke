@@ -137,7 +137,7 @@ class DBPDODriver implements IDBDriver
 	{
 		if ($array)
 		{
-			$sql = XmlnukeProviderFactory::ParseSQL ( $this->_connectionManagement, $sql, $array );
+			list($sql, $array) = XmlnukeProviderFactory::ParseSQL ( $this->_connectionManagement, $sql, $array );
 			$stmt = $this->_db->prepare ( $sql );
 			foreach ( $array as $key => $value )
 			{

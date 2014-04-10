@@ -82,7 +82,7 @@ class DBSQLRelayDriver implements IDBDriver
 
 		if ($array)
 		{
-			$sql = XmlnukeProviderFactory::ParseSQL ( $this->_connectionManagement, $sql, $array );
+			list($sql, $array) = XmlnukeProviderFactory::ParseSQL ( $this->_connectionManagement, $sql, $array );
 
 			sqlrcur_prepareQuery ( $cur, $sql );
 			$bindCount = 1;

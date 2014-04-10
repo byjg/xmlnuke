@@ -69,7 +69,7 @@ class XmlnukeProviderFactory
 	 * @param ConnectionManagement $connData
 	 * @param string $SQL
 	 * @param array $param
-	 * @return string
+	 * @return array An array with the adjusted SQL and PARAMs
 	 */
 	public static function ParseSQL($connData, $SQL, $params = null)
 	{
@@ -80,12 +80,15 @@ class XmlnukeProviderFactory
 		foreach ( $params as $key => $value )
 		{
 			$arg = str_replace ( "_", XmlnukeProviderFactory::KeyAdj ( $key ), $paramSubstName );
-			$SQL = str_replace ( "[[" . $key . "]]", $arg, $SQL );
+			if (strpos($SQL, "[[" . $key . "]]") !== false)
+				$SQL = str_replace ( "[[" . $key . "]]", $arg, $SQL );
+			else
+				unset($params[$key]);
 		}
 
-		$SQL = preg_replace("/\[\[[\w\d\-\.]+\]\]/", "null", $SQL);
+		$SQL = preg_replace("/\[\[(.*?)\]\]/", "null", $SQL);
 
-		return $SQL;
+		return array($SQL, $params);
 	}
 
 	public static function KeyAdj($key)
