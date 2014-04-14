@@ -34,11 +34,9 @@
 namespace Xmlnuke\Core\AnyDataset;
 
 use DOMNode;
-use ReflectionClass;
-use ReflectionProperty;
 use Xmlnuke\Util\XmlUtil;
 
-class SingleRow
+class SingleRow extends \Xmlnuke\Core\Engine\Object
 {
 	/**
 	 * \DOMNode represents a SingleRow
@@ -66,7 +64,7 @@ class SingleRow
 		else
 		{
 			$this->_row = array();
-			$this->bindFromObject($instance);
+			$this->bind($instance);
 		}
 
 		$this->acceptChanges();
@@ -318,44 +316,6 @@ class SingleRow
 	{
 		$this->_node = null;
 	}
-
-	protected function bindFromObject($instance)
-	{
-		$class = new ReflectionClass(get_class($instance));
-
-		$properties = $class->getProperties( ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PRIVATE | ReflectionProperty::IS_PUBLIC );
-
-		if (!is_null($properties))
-		{
-			foreach ($properties as $prop)
-			{
-				$propName = $prop->getName();
-
-				// Remove Prefix "_" from Property Name to find a value
-				if ($propName[0] == "_")
-				{
-					$propName = substr($propName, 1);
-				}
-
-				if ($propName == "propertyPattern")
-					continue;
-
-				// If exists value, set it;
-				if ($prop->isPublic())
-					$this->AddField($propName, $prop->getValue($instance));
-				else
-				{
-					$metName = "get" . ucfirst($propName);
-
-					if ($class->hasMethod($metName))
-					{
-						$this->AddField($propName, $class->getMethod($metName)->invoke($instance));
-					}
-				}
-			}
-		}
-	}
-
 
 }
 ?>

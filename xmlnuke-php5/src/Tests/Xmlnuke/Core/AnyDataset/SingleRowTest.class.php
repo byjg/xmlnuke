@@ -104,6 +104,12 @@ class SingleRowTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertEquals(array(10, 20, 30), $this->object->getFieldArray('field1'));
 		$this->assertEquals(array(40), $this->object->getFieldArray('field2'));
+
+		$this->object->AddField('field3', '');
+		$this->object->acceptChanges();
+
+		$this->assertEquals(array(), $this->object->getFieldArray('field3'));
+
 	}
 
 	/**
@@ -274,5 +280,63 @@ class SingleRowTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(array('field1'=>array(10,20,30), 'field2'=>40), $this->object->getRawFormat());
 		$this->assertEquals(40, $this->object->getField('field2'));
 	}
+
+	public function testConstructor_ModelPublic()
+	{
+		$model = new \Tests\Xmlnuke\Sample\ModelPublic(10, 'Testing');
+
+		$sr = new SingleRow($model);
+		
+		$this->assertEquals(10, $sr->getField("Id"));
+		$this->assertEquals("Testing", $sr->getField("Name"));
+	}
+
+	public function testConstructor_ModelGetter()
+	{
+		$model = new \Tests\Xmlnuke\Sample\ModelGetter(10, 'Testing');
+
+		$sr = new SingleRow($model);
+
+		$this->assertEquals(10, $sr->getField("Id"));
+		$this->assertEquals("Testing", $sr->getField("Name"));
+	}
+
+	public function testConstructor_stdClass()
+	{
+		$model = new \stdClass();
+		$model->Id = 10;
+		$model->Name = "Testing";
+
+		$sr = new SingleRow($model);
+
+		$this->assertEquals(10, $sr->getField("Id"));
+		$this->assertEquals("Testing", $sr->getField("Name"));
+	}
+
+	public function testConstructor_Array()
+	{
+		$array = array("Id" => 10, "Name" => "Testing");
+
+		$sr = new SingleRow($array);
+
+		$this->assertEquals(10, $sr->getField("Id"));
+		$this->assertEquals("Testing", $sr->getField("Name"));
+	}
+
+	public function testConstructor_PropertyPattern()
+	{
+		$model = new \Tests\Xmlnuke\Sample\ModelPropertyPattern();
+		$model->setIdModel(10);
+		$model->setClientName("Testing");
+
+		$sr = new SingleRow($model);
+
+		// Important to note:
+		// The property is _Id_Model, but is changed to "set/get IdModel" throught PropertyName
+		// Because this, the field is Id_Model instead IdModel
+		$this->assertEquals(10, $sr->getField("Id_Model"));
+		$this->assertEquals("Testing", $sr->getField("Client_Name"));
+	}
+
 
 }

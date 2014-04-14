@@ -33,7 +33,6 @@
  */
 namespace Xmlnuke\Core\AnyDataset;
 
-use ReflectionMethod;
 use UnexpectedValueException;
 use Xmlnuke\Core\AnyDataset\ArrayDataSet;
 use Xmlnuke\Core\AnyDataset\ArrayIIterator;
@@ -80,8 +79,7 @@ class ArrayDataSet
 					{
 						if (strpos($method, "get") === 0)
 						{
-							$met = new ReflectionMethod($value, $method);
-							$result[substr($method,3)] = $met->invoke($value);
+							$result[substr($method,3)] = $value->{$method}();
 						}
 					}
 					$this->_array[$key] = $result;

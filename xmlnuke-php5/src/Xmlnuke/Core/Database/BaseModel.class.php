@@ -30,9 +30,6 @@
 namespace Xmlnuke\Core\Database;
 
 use InvalidArgumentException;
-use ReflectionClass;
-use ReflectionMethod;
-use ReflectionProperty;
 use Xmlnuke\Core\AnyDataset\IIterator;
 use Xmlnuke\Core\AnyDataset\SingleRow;
 use Xmlnuke\Core\Engine\Context;
@@ -40,10 +37,10 @@ use Xmlnuke\Core\Engine\Context;
 /**
  * @package xmlnuke
  */
-abstract class BaseModel
+abstract class BaseModel extends \Xmlnuke\Core\Engine\Object
 {
 
-	protected $_propertyPattern = array('/(\w*)/', '$1');
+	protected $_propertyPattern = array('/([^A-Za-z0-9])/', '');
 
 	/**
 	 * Construct a model and optionally can set (bind) your properties base and the attribute matching from SingleRow, IIterator or the Xmlnuke Context
@@ -52,159 +49,40 @@ abstract class BaseModel
 	 */
 	public function __construct($object=null)
 	{
-		if ($object instanceof SingleRow)
+		if (is_object($object))
 		{
-			$this->bindSingleRow($object);
-		}
-		elseif ($object instanceof IIterator)
-		{
-			$this->bindIterator($object);
-		}
-		elseif ($object instanceof Context)
-		{
-			$this->bindFromContext($object);
-		}
-		else
-		{
-			$this->bindObject($object);
+			$this->bind($object);
 		}
 	}
 
 
 	/**
-	 * This setter enable changes in how XMLNuke will match a property (protected) into your Getter or Setter
+	 * PropertyPattern can change how the protected property will be change to your related getter or setter.
+	 *
+	 * For example:
+	 * protected $some_thing
+	 *
+	 * without propertypattern have to be:
+	 * public function getSome_thing()
+	 *
+	 * but with the default property pattern ([^A-Za-z]) can be (excluing all char are not alpha)
+	 * public function getSomething()
+	 *
 	 * @param $pattern
 	 * @param $replace
 	 * @return void
 	 */
 	public function setPropertyPattern($pattern, $replace)
 	{
-		$this->_propertyPattern = array(($pattern[0]!="/" ? "/" : "") . $pattern . ($pattern[strlen($pattern)-1]!="/" ? "/" : ""), $replace);
+		if ($pattern == null)
+			$this->_propertyPattern = null;
+		else
+			$this->_propertyPattern = array(($pattern[0]!="/" ? "/" : "") . $pattern . ($pattern[strlen($pattern)-1]!="/" ? "/" : ""), $replace);
 	}
 	public function getPropertyPattern()
 	{
 		return $this->_propertyPattern;
 	}
 
-	/**
-	 * Set the public properties based on the matching with the SingleRow->getField()
-	 *
-	 * @param SingleRow $sr
-	 */
-	public function bindSingleRow($sr)
-	{
-		if ($sr == null)
-		{
-			return;
-		}
-		elseif (!($sr instanceof SingleRow))
-		{
-			throw new InvalidArgumentException("I expected a SingleRow object");
-		}
-
-		$this->bindObject($sr);
-	}
-
-	/**
-	 * Set the public properties based on the first iteration matching with IIterater->moveNext()->getField() 
-	 *
-	 * @param IIterator $it
-	 */
-	public function bindIterator($it)
-	{
-		if ($it->hasNext())
-		{
-			$sr = $it->moveNext();
-			$this->bindSingleRow($sr);
-		}
-	}
-
-
-	/**
-	 * Set the public properties based on the Get/Post request defined in the XMLnuke context;
-	 *
-	 * @param Context $context
-	 */
-	public function bindFromContext($context = null)
-	{
-		if ($context == null)
-		{
-			$context = Context::getInstance();
-		}
-
-		if (!($context instanceof Context))
-		{
-			throw new InvalidArgumentException("I expected a Context object");
-		}
-
-		$this->bindObject($context);
-	}
-
-	/**
-	 * Set the public properties based on the public properties existing in the $object variable
-	 *
-	 * @param Object object
-	 */
-	protected function bindObject($object)
-	{
-		$class = new ReflectionClass(get_class($this));
-
-		$properties = $class->getProperties( ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PRIVATE | ReflectionProperty::IS_PUBLIC );
-
-		if (!is_null($properties))
-		{
-			foreach ($properties as $prop)
-			{
-				$propName = $prop->getName();
-				if ($propName == "_propertyPattern")
-					continue;
-
-				// Remove Prefix "_" from Property Name to find a value
-				if ($propName[0] == "_")
-				{
-					$propName = substr($propName, 1);
-				}
-
-				if ($object instanceof SingleRow)
-				{
-					$propValue = $object->getField(strtolower($propName));
-				}
-				elseif ($object instanceof Context)
-				{
-					$propValue = $object->get($propName);
-				}
-				elseif (is_object($object) && method_exists($object, $propName))
-				{
-					$propValue = $object->{$propName}();
-				}
-				elseif (is_object($object) && method_exists($object, "get$propName"))
-				{
-					$getPropName = "get$propName";
-					$propValue = $object->{$getPropName}();
-				}
-				elseif (is_object($object) && $prop->isPublic())
-				{
-					$propValue = $object->{$propName};
-				}
-				else
-				{
-					$propValue = "";
-				}
-
-				// If exists value, set it;
-				if ($propValue != "")
-				{
-					if (property_exists($this, $propName))
-						$this->{$propName} = $propValue;
-					else
-					{
-						$setName = "set" . ucfirst(preg_replace($this->_propertyPattern[0], $this->_propertyPattern[1], $propName));
-						if (method_exists($this, $setName))
-							$this->{$setName}($propValue);
-					}
-				}
-			}
-		}
-	}
 }
 ?>
