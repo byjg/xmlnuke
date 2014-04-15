@@ -19,6 +19,8 @@ class TextFileDataSetTest extends PHPUnit_Framework_TestCase
 	protected static $fileName_MacClassic = "";
 	protected static $fileName_BlankLine = "";
 
+	const RemoteURL = "http://www.xmlnuke.com/site/";
+
 	protected $_context = null;
 
 	public static function setUpBeforeClass()
@@ -186,7 +188,7 @@ class TextFileDataSetTest extends PHPUnit_Framework_TestCase
 
 	function test_navigateTextIterator_Remote_Unix()
 	{
-		$txtFile = new TextFileDataSet(Context::getInstance(), 'http://www.xmlnuke.com/site/' . basename(self::$fileName_Unix), self::$fieldNames, TextFileDataSet::CSVFILE);
+		$txtFile = new TextFileDataSet(Context::getInstance(), self::RemoteURL . basename(self::$fileName_Unix), self::$fieldNames, TextFileDataSet::CSVFILE);
 		$txtIterator = $txtFile->getIterator();
 
 		$count = 0;
@@ -200,7 +202,7 @@ class TextFileDataSetTest extends PHPUnit_Framework_TestCase
 
 	function test_navigateTextIterator_Remote_Windows()
 	{
-		$txtFile = new TextFileDataSet(Context::getInstance(), 'http://www.xmlnuke.com/site/' . basename(self::$fileName_Windows), self::$fieldNames, TextFileDataSet::CSVFILE);
+		$txtFile = new TextFileDataSet(Context::getInstance(), self::RemoteURL . basename(self::$fileName_Windows), self::$fieldNames, TextFileDataSet::CSVFILE);
 		$txtIterator = $txtFile->getIterator();
 
 		$count = 0;
@@ -215,10 +217,9 @@ class TextFileDataSetTest extends PHPUnit_Framework_TestCase
 	/**
 	 * fsockopen and fgets is buggy when read a Mac classic document (\r line ending)
 	 */
-	/*
 	function test_navigateTextIterator_Remote_MacClassic()
 	{
-		$txtFile = new TextFileDataSet(Context::getInstance(), 'http://www.xmlnuke.com/site/' . basename(self::$fileName_MacClassic), self::$fieldNames, TextFileDataSet::CSVFILE);
+		$txtFile = new TextFileDataSet(Context::getInstance(), self::RemoteURL . basename(self::$fileName_MacClassic), self::$fieldNames, TextFileDataSet::CSVFILE);
 		$txtIterator = $txtFile->getIterator();
 
 		$count = 0;
@@ -227,14 +228,12 @@ class TextFileDataSetTest extends PHPUnit_Framework_TestCase
 			$this->assertSingleRow($sr, ++$count);
 		}
 
-		$this->assert($count == 2000, "Count records mismatch. Need to process 2000 records and I count $count.");
+		$this->assertEquals($count, 2000);
 	}
-	 *
-	 */
 
 	function test_navigateTextIterator_Remote_BlankLine()
 	{
-		$txtFile = new TextFileDataSet(Context::getInstance(), 'http://www.xmlnuke.com/site/' . basename(self::$fileName_BlankLine), self::$fieldNames, TextFileDataSet::CSVFILE);
+		$txtFile = new TextFileDataSet(Context::getInstance(), self::RemoteURL . basename(self::$fileName_BlankLine), self::$fieldNames, TextFileDataSet::CSVFILE);
 		$txtIterator = $txtFile->getIterator();
 
 		$count = 0;
@@ -260,7 +259,7 @@ class TextFileDataSetTest extends PHPUnit_Framework_TestCase
 	 */
 	function test_remoteFileNotFound()
 	{
-		$txtFile = new TextFileDataSet(Context::getInstance(), "http://www.xmlnuke.com/site/notfound-test", self::$fieldNames, TextFileDataSet::CSVFILE);
+		$txtFile = new TextFileDataSet(Context::getInstance(), self::RemoteURL . "notfound-test", self::$fieldNames, TextFileDataSet::CSVFILE);
 		$txtIterator = $txtFile->getIterator();
 	}
 

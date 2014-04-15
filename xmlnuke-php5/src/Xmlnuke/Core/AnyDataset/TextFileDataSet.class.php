@@ -76,7 +76,7 @@ class TextFileDataSet
 		{
 			throw new InvalidArgumentException("You must define an array of fields.");
 		}
-		if (strpos($source, "http://")===false)
+		if (!preg_match('~(http|https|ftp)://~', $source))
 		{
 			if ($source instanceof FilenameProcessor)
 			{
@@ -121,77 +121,23 @@ class TextFileDataSet
 	*/
 	public function getIterator()
 	{
-		//'/(http|ftp|https):\\/\\/((\\w|\\.)+)/i'; 		
-
-		$errno = null;
-		$errstr = null;
-		if ($this->_sourceType == "HTTP")
+		$old = ini_set('auto_detect_line_endings', true);
+		$handle = @fopen($this->_source, "r");
+		ini_set('auto_detect_line_endings', $old);
+		if (!$handle)
 		{
-			// Expression Regular:
-			// [1]: http or ftp
-			// [2]: Server name
-			// [3]: Full Path
-			$pat = "/(http|ftp|https):\/\/([\w+|\.]+)/i";
-			$urlParts = preg_split($pat, $this->_source, -1,PREG_SPLIT_DELIM_CAPTURE);	
-				
-			$handle = @fsockopen($urlParts[2], 80, $errno, $errstr, 30);
-			if (!$handle)
-			{
-				throw new DatasetException("TextFileDataSet Socket error: $errstr ($errno)");
-			}
-			else 
-			{
-				$out = "GET " . $urlParts[3] . " HTTP/1.1\r\n";
-				$out .= "Host: " . $urlParts[2] . "\r\n";
-				$out .= "Connection: Close\r\n\r\n";
-				fwrite($handle, $out);
-
-				try 
-				{
-					// Read Http Header
-					$headerLine = fgets($handle, 4096);
-					while ((trim(preg_replace("/(\r?\n?)$/", "", $headerLine)) !="") && ($headerLine !== false))
-					{
-						$status = array();
-						if (preg_match("#HTTP/1\.\d (?P<status>\d{3})\s#", $headerLine, $status))
-							if ($status["status"] != "200")
-								throw new DatasetException("Status expected 200 and I got [" . $status["status"] . "]");
-								
-						$headerLine = fgets($handle, 4096);
-					}
-					if ($headerLine === false)
-						throw new DatasetException("Cant get Header File");
-
-					$it = new TextFileIterator($this->_context, $handle, $this->_fields, $this->_fieldexpression);
-					return $it;
-				}
-				catch (Exception $ex)
-				{
-					fclose($handle);
-					throw ($ex);
-				}
-			}
+			throw new DatasetException("TextFileDataSet failed to open resource");
 		}
-		else 
+		else
 		{
-			$old = ini_set('auto_detect_line_endings', true);
-			$handle = fopen($this->_source, "r");
-			ini_set('auto_detect_line_endings', $old);
-			if (!$handle)
+			try
 			{
-				throw new DatasetException("TextFileDataSet File open error");
+				$it = new TextFileIterator($this->_context, $handle, $this->_fields, $this->_fieldexpression);
+				return $it;
 			}
-			else 
+			catch (Exception $ex)
 			{
-				try 
-				{
-					$it = new TextFileIterator($this->_context, $handle, $this->_fields, $this->_fieldexpression);
-					return $it;
-				}
-				catch (Exception $ex)
-				{
-					fclose($handle);
-				}
+				fclose($handle);
 			}
 		}
 	}
