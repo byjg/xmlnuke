@@ -34,6 +34,7 @@
 namespace Xmlnuke\Core\Engine;
 
 use InvalidArgumentException;
+use UnexpectedValueException;
 use Xmlnuke\Core\Admin\IUsersBase;
 use Xmlnuke\Core\Admin\UsersAnyDataSet;
 use Xmlnuke\Core\Admin\UsersDBDataSet;
@@ -41,6 +42,7 @@ use Xmlnuke\Core\AnyDataset\AnyDataSet;
 use Xmlnuke\Core\AnyDataset\IteratorFilter;
 use Xmlnuke\Core\Cache\NoCacheEngine;
 use Xmlnuke\Core\Classes\BaseSingleton;
+use Xmlnuke\Core\Enum\OutputData;
 use Xmlnuke\Core\Enum\Relation;
 use Xmlnuke\Core\Exception\NotImplementedException;
 use Xmlnuke\Core\Exception\UploadUtilException;
@@ -784,7 +786,7 @@ class Context extends BaseSingleton
 		if ($this->_xmlnukeData == null)
 		{
 			if ($this->get('xmlnuke.EXTERNALSITEDIR') != '')
-				throw new \UnexpectedValueException('The parameter xmlnuke.EXTERNALSITEDIR was deprecated. Use xmlnuke.XMLNUKEDATA instead.');
+				throw new UnexpectedValueException('The parameter xmlnuke.EXTERNALSITEDIR was deprecated. Use xmlnuke.XMLNUKEDATA instead.');
 
 			$this->_xmlnukeData = $this->get("xmlnuke.XMLNUKEDATA");
 
@@ -1505,37 +1507,45 @@ class Context extends BaseSingleton
 		return $this->__userdb;
     }
 
+	/**
+	 *
+	 * @return OutputData
+	 */
 	public function getOutputFormat()
 	{
 		if ($this->get("xmlnuke.OUTPUT_FORMAT") == "")
 		{
 			if ($this->get("raw")=="xml")
 			{
-				$output = XmlnukeEngine::OUTPUT_XML;
+				$output = OutputData::Xml;
 			}
 			elseif (($this->get("raw")=="json") || ($this->get("CONTENT_TYPE") == "application/json"))
 			{
-				$output = XmlnukeEngine::OUTPUT_JSON;
+				$output = OutputData::Json;
 			}
 			else
 			{
-				$output = XmlnukeEngine::OUTPUT_TRANSFORMED_DOC;
+				$output = OutputData::Xslt;
 			}
 
-			$this->set("xmlnuke.OUTPUT_FORMAT", $output);
+			$this->setOutputFormat($output);
 		}
 
 		return $this->get("xmlnuke.OUTPUT_FORMAT");
 	}
 
+	/**
+	 * Warning! Try to not use this method. Instead set it on your method module getOutputFormat()
+	 * @param OutputData $value
+	 */
 	public function setOutputFormat($value)
 	{
-		throw new NotImplementedException("setOutput is not implemented");
+		$this->set("xmlnuke.OUTPUT_FORMAT", $value);
 	}
 
 	public function WriteWarningMessage($message)
 	{
-		if ($this->getOutputFormat() == XmlnukeEngine::OUTPUT_TRANSFORMED_DOC)
+		if ($this->getOutputFormat() == OutputData::Xslt)
 			echo "<br/>\n<b>Warning: </b>" . $message . "\n<br/>";
 	}
 

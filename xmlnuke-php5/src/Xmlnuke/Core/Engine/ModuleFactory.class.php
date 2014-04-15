@@ -106,6 +106,12 @@ class ModuleFactory
 			$urlSSL = "https://" . $context->get("HTTP_HOST") . $context->get("REQUEST_URI");
 		}
 
+		$output = $result->getOutputFormat();
+		if ($output != null)
+		{
+			$context->setOutputFormat($output);
+		}
+
 		if (strlen($urlSSL) > 0)
 		{
 			if ($context->get("REQUEST_METHOD") == "GET")

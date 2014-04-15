@@ -34,11 +34,11 @@ namespace Xmlnuke\Core\Engine;
 
 use Whoops\Handler\Handler;
 use Whoops\Handler\JsonResponseHandler;
-use Whoops\Handler\MinimalHandler;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Handler\XmlResponseHandler;
 use Whoops\Run;
 use Xmlnuke\Core\Classes\BaseSingleton;
+use Xmlnuke\Core\Enum\OutputData;
 
 class ErrorHandler extends BaseSingleton
 {
@@ -61,11 +61,11 @@ class ErrorHandler extends BaseSingleton
 
 		$output = Context::getInstance()->getOutputFormat();
 
-		if ($output == XmlnukeEngine::OUTPUT_JSON)
+		if ($output == OutputData::Json)
 		{
 			$this->_handler = new JsonResponseHandler();
 		}
-		else if ($output == XmlnukeEngine::OUTPUT_XML)
+		else if ($output == OutputData::Xml)
 		{
 			$this->_handler = new XmlResponseHandler();
 		}

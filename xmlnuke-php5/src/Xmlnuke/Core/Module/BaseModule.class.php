@@ -549,6 +549,15 @@ abstract class BaseModule implements IModule
 		return $xslFile;
 	}
 
+	/**
+	 * Force a specific output if the return is not null and ignores the parameter "raw"
+	 * @return \Xmlnuke\Core\Enum\OutputData
+	 */
+	public function getOutputFormat()
+	{
+		return null;
+	}
+
 }
 
 ?>

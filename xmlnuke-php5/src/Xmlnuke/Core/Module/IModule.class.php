@@ -152,5 +152,12 @@ interface IModule
 	 * @return \Xmlnuke\Core\Processor\XSLFilenameProcessor File name processor
 	 */
 	function getXsl();
+
+	/**
+	 * Force a specific output if the return is not null and ignores the parameter "raw"
+	 * @return \Xmlnuke\Core\Enum\OutputData
+	 */
+	function getOutputFormat();
+
 }
 ?>

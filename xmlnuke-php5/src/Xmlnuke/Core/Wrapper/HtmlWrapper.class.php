@@ -38,8 +38,9 @@ use Xmlnuke\Core\Classes\XmlnukeManageUrl;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Engine\ModuleFactory;
 use Xmlnuke\Core\Engine\XmlnukeEngine;
-use Xmlnuke\Core\Exception\NotAuthenticatedException;
+use Xmlnuke\Core\Enum\OutputData;
 use Xmlnuke\Core\Exception\ModuleNotFoundException;
+use Xmlnuke\Core\Exception\NotAuthenticatedException;
 use Xmlnuke\Core\Processor\BaseProcessResult;
 
 class HtmlWrapper extends BaseSingleton implements IOutputWrapper
@@ -132,12 +133,12 @@ class HtmlWrapper extends BaseSingleton implements IOutputWrapper
 		$extraParam = array();
 		$output = $context->getOutputFormat();
 
-		if ($output == XmlnukeEngine::OUTPUT_XML)
+		if ($output == OutputData::Xml)
 		{
 			header("Content-Type: text/xml; charset=utf-8");
 			header("Content-Disposition: inline; filename=\"{$alternateFilename}.xml\";");
 		}
-		elseif ($output == XmlnukeEngine::OUTPUT_JSON)
+		elseif ($output == OutputData::Json)
 		{
 			$extraParam["json_function"] = $context->get("jsonfn");
 			header("Content-Type: application/json; charset=utf-8");

@@ -41,6 +41,7 @@ use Xmlnuke\Core\Classes\ICheckAccess;
 use Xmlnuke\Core\Classes\IXmlnukeDocument;
 use Xmlnuke\Core\Classes\IXmlnukeDocumentObject;
 use Xmlnuke\Core\Classes\PageXml;
+use Xmlnuke\Core\Enum\OutputData;
 use Xmlnuke\Core\Exception\AccessDeniedByRuleException;
 use Xmlnuke\Core\Exception\EngineException;
 use Xmlnuke\Core\Exception\XMLNukeException;
@@ -95,7 +96,7 @@ class XmlnukeEngine
 	 */
 	public function __construct(
 			$context, 
-			$outputResult = XmlnukeEngine::OUTPUT_TRANSFORMED_DOC,
+			$outputResult = OutputData::Xslt,
 			$extractNodes = "", 
 			$extraParams = array()
 	)
@@ -103,7 +104,7 @@ class XmlnukeEngine
 		$this->_context = $context;
 		if (is_bool($outputResult))
 		{
-			$outputResult = ($outputResult ? XmlnukeEngine::OUTPUT_TRANSFORMED_DOC : XmlnukeEngine::OUTPUT_XML);
+			$outputResult = ($outputResult ? OutputData::Xslt : OutputData::Xml);
 		}
 		$this->_outputResult = $outputResult;
 		$this->_extractNodes = $extractNodes;
@@ -143,7 +144,7 @@ class XmlnukeEngine
 
 		// Check if file cache already exists
 		// If exists read it from there;
-		if (($this->_outputResult == XmlnukeEngine::OUTPUT_TRANSFORMED_DOC) && ($result !== false))
+		if (($this->_outputResult == OutputData::Xslt) && ($result !== false))
 		{
 			return $result;
 		}
@@ -156,7 +157,7 @@ class XmlnukeEngine
 			$result = $this->TransformDocumentFromDOM($this->getXmlDocument($xmlFile));
 
 			// Save cache file - NOCACHE: Doesn't Save; Otherwise: Allways save
-			if (!$this->_context->getNoCache() && ($this->_outputResult == XmlnukeEngine::OUTPUT_TRANSFORMED_DOC))
+			if (!$this->_context->getNoCache() && ($this->_outputResult == OutputData::Xslt))
 			{
 				$this->_context->getXSLCacheEngine()->set($cacheName, $result);
 			}
@@ -181,11 +182,11 @@ class XmlnukeEngine
 		$result = $cacheEngine->get($cacheName, $ttl);
 
 		$getFromCache = ($ttl !== false)
-				&& ($this->_outputResult == XmlnukeEngine::OUTPUT_TRANSFORMED_DOC)
+				&& ($this->_outputResult == OutputData::Xslt)
 				&& ($result !== false);
 			;
 
-		$saveToCache = (($ttl !== false) && ($this->_outputResult == XmlnukeEngine::OUTPUT_TRANSFORMED_DOC));
+		$saveToCache = (($ttl !== false) && ($this->_outputResult == OutputData::Xslt));
 
 		if (!$getFromCache)
 		{
@@ -373,7 +374,7 @@ class XmlnukeEngine
 		}
 		
 		// Check if there is no XSL template
-		if ($this->_outputResult != XmlnukeEngine::OUTPUT_TRANSFORMED_DOC)
+		if ($this->_outputResult != OutputData::Xslt)
 		{
 			if ($this->_extractNodes == "")
 			{
@@ -398,7 +399,7 @@ class XmlnukeEngine
 				$outDocument = $retDocument;
 			}
 
-			if ($this->_outputResult == XmlnukeEngine::OUTPUT_JSON)
+			if ($this->_outputResult == OutputData::Json)
 			{
 				return XmlUtil::xml2json($outDocument, $this->_extraParams["json_function"]);
 			}
