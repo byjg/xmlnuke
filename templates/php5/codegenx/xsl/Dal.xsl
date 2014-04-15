@@ -70,7 +70,7 @@ class <xsl:value-of select="$ClassName" /> extends <xsl:value-of select="$projec
 		$param['<xsl:value-of select="@name"/>'] = $<xsl:value-of select="@name"/>;</xsl:for-each>
 
 		$it = $this->getIterator($sql, $param);		
-		$model->bindIterator($it);
+		$model->bind($it);
 		
 		return $model;
 	}
@@ -174,7 +174,7 @@ class <xsl:value-of select="$ClassName" /> extends <xsl:value-of select="$projec
 		</xsl:for-each>
 		$it = $this->getIterator($sql, $param);	
 		$model = new <xsl:value-of select="$ClassName" />Model();
-		$model->bindIterator($it);
+		$model->bind($it);
 		
 		return $model;
 	}
