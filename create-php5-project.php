@@ -33,7 +33,7 @@ if (PHP_SAPI == 'cli')
 			echo "\n";
 			echo "You must do some configurations manualy:\n";
 			echo "  - Create an alias \"/common\" pointing to \"{$result['XMLNUKE']}/xmlnuke-common\" \n";
-			echo "  - Point the document root on your Web Server to \"{$result['HOME']}\" \n";
+			echo "  - Point the document root on your Web Server to \"{$result['HOME']}/httpdocs\" \n";
 			echo "\n";
 			echo "After this you can play with these URLs:\n";
 			echo "http://localhost/xmlnuke.php?xml=home\n";
@@ -61,6 +61,8 @@ class CreatePhp5Project
 		$HOME = $argv[1];
 		$HTTPDOCS = $argv[1] . "/httpdocs";
 		$PROJECT = $argv[2];
+		if (!preg_match('~^[A-Za-z]([A-Za-z0-9])*$~', $PROJECT))
+			throw new Exception('Project musct contain only letters and numbers and start with a letter');
 		$PROJECT_FILE = strtolower($PROJECT);
 		$XMLNUKE = dirname(realpath($_SERVER["SCRIPT_FILENAME"]));
 		$TEMPLATE = "$XMLNUKE/templates/php5";
