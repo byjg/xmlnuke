@@ -49,7 +49,7 @@ abstract class BaseModel extends \Xmlnuke\Core\Engine\Object
 	 */
 	public function __construct($object=null)
 	{
-		if (is_object($object))
+		if (is_object($object) || is_array($object))
 		{
 			$this->bind($object);
 		}

@@ -61,7 +61,7 @@ class BaseModelTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @covers Xmlnuke\Core\Database\BaseModel::bindSingleRow
+	 * @covers Xmlnuke\Core\Database\BaseModel::bindArray
 	 */
 	public function testBindSingleRow()
 	{
@@ -76,7 +76,7 @@ class BaseModelTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @covers Xmlnuke\Core\Database\BaseModel::bindSingleRow
+	 * @covers Xmlnuke\Core\Database\BaseModel::bindArray
 	 */
 	public function testBindIterator()
 	{
@@ -134,6 +134,22 @@ class BaseModelTest extends \PHPUnit_Framework_TestCase
 		$model->Name = "Testing";
 
 		$object = new \Tests\Xmlnuke\Sample\BaseModel($model);
+
+		$this->assertEquals(10, $object->Id);
+		$this->assertEquals("Testing", $object->getName());
+	}
+
+	/**
+	 * @covers Xmlnuke\Core\Database\BaseModel::bindArray
+	 */
+	public function testBindFromArray()
+	{
+		$array = array(
+			"Id" => 10,
+			"Name" => "Testing"
+		);
+
+		$object = new \Tests\Xmlnuke\Sample\BaseModel($array);
 
 		$this->assertEquals(10, $object->Id);
 		$this->assertEquals("Testing", $object->getName());

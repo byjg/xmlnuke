@@ -64,15 +64,19 @@ class Object
 		{
 			$this->bindStdClass($source, $target);
 		}
+		else if (is_array($source))
+		{
+			$this->bindArray($source, $target);
+		}
 		else if ($source instanceof \Xmlnuke\Core\AnyDataset\SingleRow)
 		{
-			$this->bindSingleRow($source, $target);
+			$this->bindArray($source->getRawFormat(), $target);
 		}
 		else if ($source instanceof \Xmlnuke\Core\AnyDataset\IIterator)
 		{
 			if ($source->hasNext())
 			{
-				$this->bindSingleRow($source->moveNext(), $target);
+				$this->bindArray($source->moveNext()->getRawFormat(), $target);
 			}		
 		}
 		else if ($source instanceof Context)
@@ -144,13 +148,11 @@ class Object
 	 * @param \Xmlnuke\Core\AnyDataset\SingleRow $source
 	 * @param mixed $target
 	 */
-	protected function bindSingleRow($source, $target)
+	protected function bindArray($source, $target)
 	{
-		$properties = $source->getFieldNames();
-
-		foreach ($properties as $propName)
+		foreach ($source as $propName=>$value)
 		{
-			$this->setPropValue($target, $propName, $source->getField($propName));
+			$this->setPropValue($target, $propName, $value);
 		}
 	}
 
