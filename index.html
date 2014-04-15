@@ -1,0 +1,274 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>XMLNuke by byjg</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">XMLNuke</h1>
+        <p class="header">A PHP Framework focused on your content</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/byjg/xmlnuke/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/byjg/xmlnuke/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/byjg/xmlnuke">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/byjg">byjg</a></p>
+
+
+      </header>
+      <section>
+        <h1>
+<a name="xmlnuke" class="anchor" href="#xmlnuke"><span class="octicon octicon-link"></span></a>XMLNuke</h1>
+
+<p><a href="https://travis-ci.org/byjg/xmlnuke"><img src="https://travis-ci.org/byjg/xmlnuke.png?branch=master" alt="Build Status"></a></p>
+
+<p><strong>[ <em>The master branch requires PHP53 or higher and is full PSR-0 compliant by using namespaces. The branch 'php50' is the legacy XMLNuke version and is now deprecated.</em> ]</strong></p>
+
+<p>XMLNuke is a Web Development Framework focused on the Data. Programming in XMLNuke you'll never more worry about open and close PHP tags and manage <em>spaghetti code</em>. All of your code is fully based in objects and all code produces only data in XML or JSON, you choose. </p>
+
+<p>This is a page in XMLNuke:</p>
+
+<div class="highlight highlight-php"><pre><span class="k">namespace</span> <span class="nx">MyProject\Modules</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Xmlnuke\Core\Classes\XmlnukeDocument</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Xmlnuke\Core\Module\BaseModule</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Home</span> <span class="k">extends</span> <span class="nx">BaseModule</span> 
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">()</span>
+    <span class="p">{}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">CreatePage</span><span class="p">()</span> 
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">defaultXmlnukeDocument</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XmlnukeDocument</span><span class="p">(</span><span class="s2">"Title"</span><span class="p">,</span> <span class="s2">"Abstract"</span><span class="p">);</span>
+        <span class="o">...</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">defaultXmlnukeDocument</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>You can easily add some requirements to your page without have to care about how handle this. For example, you can define that your page requires authentication, will be cached or requires to be executed in a SSL context. See the example below:</p>
+
+<div class="highlight highlight-php"><pre><span class="k">namespace</span> <span class="nx">MyProject\Modules</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Xmlnuke\Core\Module\BaseModule</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Home</span> <span class="k">extends</span> <span class="nx">BaseModule</span> 
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * requiresAutentication(), getAccessLevel() and getRole() handle the page security and access level</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="nx">functon</span> <span class="nx">requiresAutentication</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getAccessLevel</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">\Xmlnuke\Core\Enum\AccessLevel</span><span class="o">::</span><span class="na">OnlyRole</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getRole</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="k">array</span><span class="p">(</span><span class="s2">"DIRECTOR"</span><span class="p">,</span> <span class="s2">"MANAGER"</span><span class="p">);</span>
+    <span class="p">}</span>
+
+
+    <span class="sd">/**</span>
+<span class="sd">     * useCache determines if the XMLNuke will store your page in a cache or not.</span>
+<span class="sd">     * By default XMLNuke can store in the:</span>
+<span class="sd">     *   - \Xmlnuke\Core\Cache\ArrayCacheEngine (Static Array), </span>
+<span class="sd">     *   - \Xmlnuke\Core\Cache\FileSystemCacheEngine (File System), </span>
+<span class="sd">     *   - \Xmlnuke\Core\Cache\MemcachedEngine (MemCached),</span>
+<span class="sd">     *   - \Xmlnuke\Core\Cache\NoCacheEngine (Ignore Cache)</span>
+<span class="sd">     * </span>
+<span class="sd">     * You can configure your own cache strategy by implementing the interface </span>
+<span class="sd">     * \Xmlnuke\Core\Cache\ICacheEngine.</span>
+<span class="sd">     */</span> 
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">useCache</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">_action</span> <span class="o">!=</span> <span class="s2">""</span><span class="p">)</span>
+        <span class="p">{</span>
+              <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span>
+        <span class="p">{</span>
+              <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="sd">/** </span>
+<span class="sd">     * Determines if your page requires SSL or Not</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">requiresSSL</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">\Xmlnuke\Core\Enum\SSLAccess</span><span class="o">::</span><span class="na">ForceSSL</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>If you work with models using the classic getter and setter or property you can add it to your page and the XMLNuke will output. For example:</p>
+
+<div class="highlight highlight-php"><pre><span class="k">namespace</span> <span class="nx">MyProject\Classes</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MyClass</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$_name</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getName</span><span class="p">()</span> <span class="o">...</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">setName</span><span class="p">(</span><span class="nv">$value</span><span class="p">)</span> <span class="o">...</span><span class="p">;</span>
+
+    <span class="k">protected</span> <span class="nv">$_age</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getAge</span><span class="p">()</span> <span class="o">...</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">setAge</span><span class="p">(</span><span class="nv">$value</span><span class="p">)</span> <span class="o">...</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<div class="highlight highlight-php"><pre><span class="k">namespace</span> <span class="nx">MyProject\Modules</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">MyProject\Classes</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Xmlnuke\Core\Classes\XmlnukeDocument</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Xmlnuke\Core\Module\BaseModule</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Home</span> <span class="k">extends</span> <span class="nx">BaseModule</span> 
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">CreatePage</span><span class="p">()</span> 
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">defaultXmlnukeDocument</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XmlnukeDocument</span><span class="p">(</span><span class="s2">"Title"</span><span class="p">,</span> <span class="s2">"Abstract"</span><span class="p">);</span>
+        <span class="o">...</span>
+
+        <span class="nv">$myClass</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyClass</span><span class="p">();</span>
+        <span class="nv">$myClass</span><span class="o">-&gt;</span><span class="na">setName</span><span class="p">(</span><span class="s1">'Joao'</span><span class="p">);</span>
+        <span class="nv">$myClass</span><span class="o">-&gt;</span><span class="na">setAge</span><span class="p">(</span><span class="mi">39</span><span class="p">);</span>
+        <span class="o">...</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">defaultXmlnukeDocument</span><span class="o">-&gt;</span><span class="na">addXmlnukeObject</span><span class="p">(</span><span class="nv">$myClass</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">defaultXmlnukeDocument</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>After that you can associate a Snippet XSL to handle this data and produces HTML or whatever you want to produce by the XSL transformation. You can optionally get the raw data in XML or JSON by calling through your web browser:</p>
+
+<pre lang="url"><code>http://youserver/xmlnuke.php?module=byjg.home&amp;raw=xml&amp;spath=//MyProject_Classes_MyClass
+</code></pre>
+
+<div class="highlight highlight-xml"><pre><span class="nt">&lt;xmlnuke</span> <span class="na">xpath=</span><span class="s">"//MyProject_Classes_MyClass"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;MyProject_Classes_MyClass&gt;</span>
+        <span class="nt">&lt;name&gt;</span>Joao<span class="nt">&lt;/name&gt;</span>
+        <span class="nt">&lt;age&gt;</span>39<span class="nt">&lt;/age&gt;</span>
+    <span class="nt">&lt;/MyProject_Classes_MyClass&gt;</span>
+<span class="nt">&lt;/xmlnuke&gt;</span>
+</pre></div>
+
+<p>or</p>
+
+<pre lang="url"><code>http://yourserver/xmlnuke.php?module=byjg.home&amp;raw=json&amp;xpath=//MyProject_Classes_MyClass;
+</code></pre>
+
+<div class="highlight highlight-json"><pre><span class="p">{</span>
+    <span class="nt">"MyProject_Classes_MyClass"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">"name"</span><span class="p">:</span> <span class="s2">"Joao"</span><span class="p">,</span>
+        <span class="nt">"age"</span><span class="p">:</span> <span class="s2">"39"</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>See the <a href="https://github.com/byjg/xmlnuke/wiki">Wiki</a> for more examples;</p>
+
+<h2>
+<a name="installing" class="anchor" href="#installing"><span class="octicon octicon-link"></span></a>Installing</h2>
+
+<p>The master branch requires PHP 5.3 to run. Prior PHP versions can use the legacy 'php50' branch. </p>
+
+<h3>
+<a name="web-install" class="anchor" href="#web-install"><span class="octicon octicon-link"></span></a>Web Install</h3>
+
+<p>You can install the XMLNuke by using the XMLNuke PHP5 Installer. It is a interactive interface and will guide you during all install process. This tool check if your system meets the XMLNuke requirements, download the XMLNuke and creates a project for you. <em>It is in beta stage</em></p>
+
+<p>See more at:<br><a href="https://github.com/byjg/xmlnuke-php5-installer">https://github.com/byjg/xmlnuke-php5-installer</a></p>
+
+<h3>
+<a name="command-line-debianubuntu" class="anchor" href="#command-line-debianubuntu"><span class="octicon octicon-link"></span></a>Command Line (Debian/Ubuntu)</h3>
+
+<p>You have to install your web server (Apache2, Lighttd, nginx, ...). XMLNuke requires for PHP:</p>
+
+<pre><code>apt-get install php5-xsl php5-json
+</code></pre>
+
+<p>Download the XMLNuke package. You can download from:</p>
+
+<ul>
+<li>the Zip package (<a href="https://github.com/byjg/xmlnuke/archive/master.zip">https://github.com/byjg/xmlnuke/archive/master.zip</a>) or </li>
+<li>from repository by using the Git or SVN. </li>
+</ul><p>Extract the package in any folder, e.g. /opt/xmlnuke.<br><strong>Remember</strong>: The XMLNuke folder cannot to be accessible from you Web Browser. </p>
+
+<p>Run at your terminal:</p>
+
+<pre><code>cd /opt/xmlnuke
+./copy-dist-files.sh link yes
+</code></pre>
+
+<p>Choose and create a folder for your project. This folder must be accessible through your web broswer. </p>
+
+<pre><code>mkdir /var/www/my-project
+php /opt/xmlnuke/create-php5-project.php /var/www/my-project myproject en-us pt-br
+ln -s /opt/xmlnuke/xmlnuke-common /var/www/my-project/common
+</code></pre>
+
+<p>Now, just test it:</p>
+
+<pre><code>http://yourserver/my-project
+</code></pre>
+
+<h3>
+<a name="windows" class="anchor" href="#windows"><span class="octicon octicon-link"></span></a>Windows</h3>
+
+<p>You have to install your web server (Xampp, Apache2, IIS, ...) and configure it to run PHP5 scripts. Make sure that the XSL extension is installed. </p>
+
+<p>Download the XMLNuke package. You can download from:</p>
+
+<ul>
+<li>the Zip package (<a href="https://github.com/byjg/xmlnuke/archive/master.zip">https://github.com/byjg/xmlnuke/archive/master.zip</a>) or </li>
+<li>from repository by using the Git or SVN. </li>
+</ul><p>Extract the package in any folder, e.g. D:\data\xmlnuke.<br><strong>Remember</strong>: The XMLNuke folder cannot to be accessible from you Web Browser. </p>
+
+<p>Using the Windows Explorer find your XMLNuke folder and double click in the file "copy-dist-files.vbs". Follow the instructions. </p>
+
+<p>Choose and create a folder for your project (e.g. c:\InetPub\wwwroot\my-project). This folder must be accessible through your web broswer. Using the Windows Explorer find your XMLNuke Folder and double click in the file "create-php5-project.vbs" and follow the instructions. </p>
+
+<p>Now, just test it:</p>
+
+<pre><code>http://yourserver/my-project
+</code></pre>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		          <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-874486-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
