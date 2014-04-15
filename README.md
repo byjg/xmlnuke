@@ -1,7 +1,7 @@
 XMLNuke
 =======
 
-[![Build Status](https://travis-ci.org/byjg/xmlnuke.png?branch=php53)](https://travis-ci.org/byjg/xmlnuke)
+[![Build Status](https://travis-ci.org/byjg/xmlnuke.png?branch=master)](https://travis-ci.org/byjg/xmlnuke)
 
 **[ *The master branch requires PHP53 or higher and is full PSR-0 compliant by using namespaces. The branch 'php50' is the legacy XMLNuke version and is now deprecated.* ]**
 
