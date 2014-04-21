@@ -96,8 +96,8 @@ class chart{
 		$this->m_thousandsSeparator = $thousandsSeparator;
 		$this->m_decimalSeparator = $decimalSeparator;
 	}
-	
-	function setLegend($position, $borderStyle, $borderColor, $fillColor, $font){
+
+	function setLegend($style, $strokeColor, $fillColor, $font){
 		//$this->m_legendPosition
 		$this->m_legendStyle = $style;
 
