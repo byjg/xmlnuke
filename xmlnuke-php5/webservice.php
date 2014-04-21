@@ -13,5 +13,3 @@ require_once("xmlnuke.inc.php");
 #############################################
 
 SOAPWrapper::getInstance()->Process();
-
-?>
