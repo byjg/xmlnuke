@@ -229,7 +229,7 @@ abstract class Services_Webservice
             $this->intoStruct();
             if (isset($_SERVER['HTTP_SOAPACTION'])) {
                 $this->createServer();
-            } elseif ($_REQUEST['httpmethod']) {
+            } elseif (isset($_REQUEST['svc'])) {
                	$this->handleHTTP(); // by JG
             } else {
                 $this->handleINFO();
@@ -249,7 +249,7 @@ abstract class Services_Webservice
     private function createServer()
     {
         $server = new SoapServer(null, $this->soapServerOptions);
-        $server->SetClass($this->classname);
+        $server->SetClass($this->wsdlclassname);
         $server->handle();
     }
 
@@ -264,22 +264,22 @@ abstract class Services_Webservice
     {
     	try
     	{
-			$method = new ReflectionMethod($this->classname, $_REQUEST["httpmethod"]);
+			$method = new ReflectionMethod($this->classname, $_REQUEST["svc"]);
     	}
     	catch (Exception $ex)
     	{
-    		echo $this->_httpFailure . "Method does not exists";
+    		echo '{ error: "Method does not exists" }';
     		exit;
     	}
 		if (!$method->isPublic())
 		{
-			echo $this->_httpFailure . "Method does not exists";
+    		echo '{ error: "Method is not public" }';
 			exit;
 		}
 
 		$params = $method->getParameters();
 		$paramValues = array();
-		$missingParams = "";
+		$missingParams = array();
 		foreach ($params as $param)
 		{
 			$paramName = $param->getName();
@@ -290,16 +290,16 @@ abstract class Services_Webservice
 			}
 			if (is_null($paramValue))
 			{
-				$missingParams .= ( ($missingParams == "") ? "" : ", " ) . $paramName;
+				$missingParams[] = $paramName;
 			}
 			else
 			{
 				$paramValues[$paramName] = $paramValue;
 			}
 		}
-		if ($missingParams != "")
+		if (count($missingParams) > 0)
 		{
-			echo $this->_httpFailure . "Missing params $missingParams";
+			echo '{ error: "Missing params", parameters: [ "' . implode('","', $missingParams) . '"] }';
 		}
 		else
 		{
@@ -308,31 +308,23 @@ abstract class Services_Webservice
 				$result = $method->invokeArgs($this, $paramValues);
 				if (is_array($result))
 				{
-					$str = sizeof($result);
-					foreach ($result as $line)
-					{
-						$str .= "|$line";
-					}
-					echo $this->_httpSuccess . "$str";
+					echo json_encode($result);
 				}
 				elseif (is_object($result))
 				{
-					echo $this->_httpFailure . "Return type is not supported";
+					echo '{ error: "Return type is not supported" } ';
 				}
 				else
 				{
-					echo $this->_httpSuccess . $result;
+					echo $result;
 				}
 			}
 			catch (Exception $ex)
 			{
-				echo $this->_httpFailure . $ex->getMessage();
+				echo '{ error: "' . $ex->getMessage() . '" }';
 			}
 		}
     }
-    protected $_httpSuccess = "OK|";
-    protected $_httpFailure = "ERR|";
-
     // }}}
     // {{{ handleWSDL()
     /**
@@ -380,7 +372,7 @@ abstract class Services_Webservice
         $disco_soap = $this->disco->createElement('soap');
         $disco_soap->setAttribute('address', $urlBase);
         $disco_soap->setAttribute('xmlns:q1', $this->namespace);
-        $disco_soap->setAttribute('binding', 'q1:' . $this->classname);
+        $disco_soap->setAttribute('binding', 'q1:' . $this->wsdlclassname);
         $disco_soap->setAttribute('xmlns', self::SCHEMA_DISCO_SCL);
         $disco_contractref->appendChild($disco_soap);
         $disco_discovery->appendChild($disco_contractref);
@@ -446,19 +438,19 @@ a:hover {
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
-<title>' . $this->classname . ' WebService</title>
+<title>' . $this->wsdlclassname . ' WebService</title>
 <meta name="generator" content="PEAR::Services_Webservice" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <style type="text/css">
 ' . $css . '</style> </head> <body> <div id="header">'.
-        '<h1>' . $this->classname . '</h1> <p>' .
+        '<h1>' . $this->wsdlclassname . '</h1> <p>' .
         htmlspecialchars($this->description)
         . '</p></div><p>The following operations are supported. ' .
         'For a formal definition, please review the <a href="' .
         htmlentities($this->getSelfUrl()) . '?WSDL">Service Description</a>.</p>
 <ul>';
 
-        foreach ($this->wsdlStruct[$this->classname]['method'] as $methodName => $method) {
+        foreach ($this->wsdlStruct[$this->wsdlclassname]['method'] as $methodName => $method) {
             $paramValue = array();
             foreach ($method['var'] as $methodVars) {
                 if (isset($methodVars['param'])) {
@@ -537,6 +529,7 @@ For more details on URIs, see <a href="http://www.ietf.org/rfc/rfc2396.txt"><acr
     {
         $class = new ReflectionObject($this);
         $this->classname = $class->getName();
+        $this->wsdlclassname = str_replace('\\', '.', $class->getName());
         $this->classMethodsIntoStruct();
         $this->classStructDispatch();
     }
@@ -551,7 +544,7 @@ For more details on URIs, see <a href="http://www.ietf.org/rfc/rfc2396.txt"><acr
      */
     protected function classStructDispatch()
     {
-        foreach ($this->wsdlStruct[$this->classname]['method'] as $method) {
+        foreach ($this->wsdlStruct[$this->wsdlclassname]['method'] as $method) {
             foreach ($method['var'] as $var) {
                 if (($var['class'] == 1 && $var['length'] == 0)
                     || ($var['class'] == 1 && $var['length'] > 0)
@@ -669,7 +662,7 @@ For more details on URIs, see <a href="http://www.ietf.org/rfc/rfc2396.txt"><acr
                         strpos($_docComments_Description, '*', 1) - 1
                     )
                 );
-                $this->wsdlStruct[$this->classname]['method'][$method->getName()]['description'] = $docComments_Description;
+                $this->wsdlStruct[$this->wsdlclassname]['method'][$method->getName()]['description'] = $docComments_Description;
                 preg_match_all('~@param\s(\S+)~', $docComments, $param);
                 preg_match_all(
                     '~@return\s(\S+)~',
@@ -684,19 +677,19 @@ For more details on URIs, see <a href="http://www.ietf.org/rfc/rfc2396.txt"><acr
                     $_cleanType = str_replace('[]', '', $_type, $_length);
                     $_typens    = str_repeat('ArrayOf', $_length);
 
-                    $this->wsdlStruct[$this->classname]['method'][$method->getName()]['var'][$i]['name']
+                    $this->wsdlStruct[$this->wsdlclassname]['method'][$method->getName()]['var'][$i]['name']
                         = $params[$i]->getName();
-                    $this->wsdlStruct[$this->classname]['method'][$method->getName()]['var'][$i]['wsdltype']
+                    $this->wsdlStruct[$this->wsdlclassname]['method'][$method->getName()]['var'][$i]['wsdltype']
                         = $_typens . $_cleanType;
-                    $this->wsdlStruct[$this->classname]['method'][$method->getName()]['var'][$i]['type']
+                    $this->wsdlStruct[$this->wsdlclassname]['method'][$method->getName()]['var'][$i]['type']
                         = $_cleanType;
-                    $this->wsdlStruct[$this->classname]['method'][$method->getName()]['var'][$i]['length']
+                    $this->wsdlStruct[$this->wsdlclassname]['method'][$method->getName()]['var'][$i]['length']
                         = $_length;
-                    $this->wsdlStruct[$this->classname]['method'][$method->getName()]['var'][$i]['array']
+                    $this->wsdlStruct[$this->wsdlclassname]['method'][$method->getName()]['var'][$i]['array']
                         = ($_length > 0 && in_array($_cleanType, $this->simpleTypes)) ? true : false;
-                    $this->wsdlStruct[$this->classname]['method'][$method->getName()]['var'][$i]['class']
+                    $this->wsdlStruct[$this->wsdlclassname]['method'][$method->getName()]['var'][$i]['class']
                         = (!in_array($_cleanType, $this->simpleTypes) && new ReflectionClass($_cleanType)) ? true : false;
-                    $this->wsdlStruct[$this->classname]['method'][$method->getName()]['var'][$i]['param']
+                    $this->wsdlStruct[$this->wsdlclassname]['method'][$method->getName()]['var'][$i]['param']
                         = true;
                 }
                 // return
@@ -708,17 +701,17 @@ For more details on URIs, see <a href="http://www.ietf.org/rfc/rfc2396.txt"><acr
                 }
                 $_typens = str_repeat('ArrayOf', $_length);
 
-                $this->wsdlStruct[$this->classname]['method'][$method->getName()]['var'][$i]['wsdltype']
+                $this->wsdlStruct[$this->wsdlclassname]['method'][$method->getName()]['var'][$i]['wsdltype']
                     = $_typens.$_cleanType;
-                $this->wsdlStruct[$this->classname]['method'][$method->getName()]['var'][$i]['type']
+                $this->wsdlStruct[$this->wsdlclassname]['method'][$method->getName()]['var'][$i]['type']
                     = $_cleanType;
-                $this->wsdlStruct[$this->classname]['method'][$method->getName()]['var'][$i]['length']
+                $this->wsdlStruct[$this->wsdlclassname]['method'][$method->getName()]['var'][$i]['length']
                     = $_length;
-                $this->wsdlStruct[$this->classname]['method'][$method->getName()]['var'][$i]['array']
+                $this->wsdlStruct[$this->wsdlclassname]['method'][$method->getName()]['var'][$i]['array']
                     = ($_length > 0 && $_cleanType != 'void' && in_array($_cleanType, $this->simpleTypes)) ? true : false;
-                $this->wsdlStruct[$this->classname]['method'][$method->getName()]['var'][$i]['class']
+                $this->wsdlStruct[$this->wsdlclassname]['method'][$method->getName()]['var'][$i]['class']
                     = ($_cleanType != 'void' && !in_array($_cleanType, $this->simpleTypes) && new ReflectionClass($_cleanType)) ? true : false;
-                $this->wsdlStruct[$this->classname]['method'][$method->getName()]['var'][$i]['return']
+                $this->wsdlStruct[$this->wsdlclassname]['method'][$method->getName()]['var'][$i]['return']
                     = true;
             }
         }
@@ -745,14 +738,14 @@ For more details on URIs, see <a href="http://www.ietf.org/rfc/rfc2396.txt"><acr
         */
 
         $this->wsdl_definitions = $this->wsdl->createElement('definitions');
-        $this->wsdl_definitions->setAttribute('name', $this->classname);
+        $this->wsdl_definitions->setAttribute('name', $this->wsdlclassname);
         $this->wsdl_definitions->setAttribute(
             'targetNamespace',
-            'urn:' . $this->classname
+            'urn:' . $this->wsdlclassname
         );
         $this->wsdl_definitions->setAttribute(
             'xmlns:typens',
-            'urn:' . $this->classname
+            'urn:' . $this->wsdlclassname
         );
         $this->wsdl_definitions->setAttribute(
             'xmlns:xsd',
@@ -795,7 +788,7 @@ For more details on URIs, see <a href="http://www.ietf.org/rfc/rfc2396.txt"><acr
         $types  = $this->wsdl->createElement('types');
         $schema = $this->wsdl->createElement('xsd:schema');
         $schema->setAttribute('xmlns', self::SOAP_XML_SCHEMA_VERSION);
-        $schema->setAttribute('targetNamespace', 'urn:'.$this->classname);
+        $schema->setAttribute('targetNamespace', 'urn:'.$this->wsdlclassname);
         $types->appendChild($schema);
 
         // array
@@ -907,7 +900,7 @@ For more details on URIs, see <a href="http://www.ietf.org/rfc/rfc2396.txt"><acr
             <part name="helloResponse" type="xsd:string"/>
         </message>
         */
-        foreach ($this->wsdlStruct[$this->classname]['method'] as $name => $method) {
+        foreach ($this->wsdlStruct[$this->wsdlclassname]['method'] as $name => $method) {
             $messageInput = $this->wsdl->createElement('message');
             $messageInput->setAttribute('name', $name);
             $messageOutput = $this->wsdl->createElement('message');
@@ -964,20 +957,20 @@ For more details on URIs, see <a href="http://www.ietf.org/rfc/rfc2396.txt"><acr
         </binding>
         */
         $binding = $this->wsdl->createElement('binding');
-        $binding->setAttribute('name', $this->classname . 'Binding');
-        $binding->setAttribute('type', 'typens:' . $this->classname . 'Port');
+        $binding->setAttribute('name', $this->wsdlclassname . 'Binding');
+        $binding->setAttribute('type', 'typens:' . $this->wsdlclassname . 'Port');
         $soap_binding = $this->wsdl->createElement('soap:binding');
         $soap_binding->setAttribute('style', 'rpc');
         $soap_binding->setAttribute('transport', self::SCHEMA_SOAP_HTTP);
         $binding->appendChild($soap_binding);
-        foreach ($this->wsdlStruct[$this->classname]['method'] as $name => $vars) {
+        foreach ($this->wsdlStruct[$this->wsdlclassname]['method'] as $name => $vars) {
             $operation = $this->wsdl->createElement('operation');
             $operation->setAttribute('name', $name);
             $binding->appendChild($operation);
             $soap_operation = $this->wsdl->createElement('soap:operation');
             $soap_operation->setAttribute(
                 'soapAction',
-                'urn:'.$this->classname.'Action'
+                'urn:'.$this->wsdlclassname.'Action'
             );
             $operation->appendChild($soap_operation);
             $input  = $this->wsdl->createElement('input');
@@ -1016,8 +1009,8 @@ For more details on URIs, see <a href="http://www.ietf.org/rfc/rfc2396.txt"><acr
         </portType>
         */
         $portType = $this->wsdl->createElement('portType');
-        $portType->setAttribute('name', $this->classname.'Port');
-        foreach ($this->wsdlStruct[$this->classname]['method'] as $methodName => $methodVars) {
+        $portType->setAttribute('name', $this->wsdlclassname.'Port');
+        foreach ($this->wsdlStruct[$this->wsdlclassname]['method'] as $methodName => $methodVars) {
             $operation = $this->wsdl->createElement('operation');
             $operation->setAttribute('name', $methodName);
             $portType->appendChild($operation);
@@ -1055,10 +1048,10 @@ For more details on URIs, see <a href="http://www.ietf.org/rfc/rfc2396.txt"><acr
         </service>
         */
         $service = $this->wsdl->createElement('service');
-        $service->setAttribute('name', $this->classname);
+        $service->setAttribute('name', $this->wsdlclassname);
         $port = $this->wsdl->createElement('port');
-        $port->setAttribute('name', $this->classname . 'Port');
-        $port->setAttribute('binding', 'typens:' . $this->classname . 'Binding');
+        $port->setAttribute('name', $this->wsdlclassname . 'Port');
+        $port->setAttribute('binding', 'typens:' . $this->wsdlclassname . 'Binding');
         $adress = $this->wsdl->createElement('soap:address');
         $adress->setAttribute(
             'location',
