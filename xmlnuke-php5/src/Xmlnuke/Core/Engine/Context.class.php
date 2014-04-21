@@ -196,7 +196,7 @@ class Context extends BaseSingleton
 	{
 		$valuesConfig = \config::getValuesConfig();
 
-		if (strpos($_SERVER["SERVER_SOFTWARE"], 'nginx') !== false)
+		if (isset($_SERVER["SERVER_SOFTWARE"]) && strpos($_SERVER["SERVER_SOFTWARE"], 'nginx') !== false)
 			$this->_PHP_SELF = 'DOCUMENT_URI';
 
 		if (!is_array($valuesConfig))

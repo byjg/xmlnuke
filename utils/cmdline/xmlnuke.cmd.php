@@ -9,6 +9,8 @@ foreach ($argv as $pair)
                 $_GET[$arPair[0]] = $arPair[1];
         }
 }
+$_SERVER['QUERY_STRING'] = implode('&', $argv);
+$_SERVER['REQUEST_URI'] = 'xmlnuke.cmd.php';
 
 #$_SERVER["PHP_SELF"] .= $_REQUEST["ws"];
 

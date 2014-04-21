@@ -16,20 +16,13 @@ then
 	cd $2;
 fi
 
-if [ ! -f config.inc.php ]
-then
-	echo "runxmlnuke.sh: You need run this script inside the your path directory";
-	echo;
-	exit 1;
-fi
-
-if [ "$#" == "0" ]
+if [ "$#" == "0" -o ! -f config.inc.php ]
 then
 	echo
-	echo "runscript.sh by JG (2012)"
+	echo "runscript.sh by JG (2014)"
 	echo
 	echo "This script enables you run XMLNuke pages or modules directly from the command line"
-	echo "The default result is XML (rawxml=true) but you can get JSON (rawjson=true)"
+	echo "The default result is XML (raw=xml) but you can get JSON (raw=json)"
 	echo
 	echo "USAGE:"
 	echo "You have to pass key-value pair for each parameter you want to use. "
@@ -44,10 +37,18 @@ then
 	done
 	echo
 	echo "EXAMPLE:"
+	echo "   runxmlnuke.sh xmlnuke /Projects/Sample/httpdocs site=sample xml=home lang=en-us"
 	echo
-	echo runxmlnuke.sh xmlnuke site=sample xml=home lang=en-us
+
+	if [ ! -f config.inc.php ]
+	then
+		echo "**You need run this script inside the your path directory**";
+	else
+		echo "No arguments provided"
+	fi
+
 	echo
-	echo "No arguments provided"
+
 	exit 1
 fi
 
