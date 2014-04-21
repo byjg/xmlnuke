@@ -32,7 +32,6 @@
 namespace Xmlnuke\Core\Classes;
 
 use InvalidArgumentException;
-use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Util\XmlUtil;
 
 /**
@@ -40,10 +39,6 @@ use Xmlnuke\Util\XmlUtil;
  */
 class  XmlnukeMediaGallery extends XmlnukeCollection implements IXmlnukeDocumentObject
 {
-	/**
-	 * @var Context
-	 */
-	protected $_context;
 
 	protected $_name = "";
 	protected $_api = false;
@@ -52,12 +47,10 @@ class  XmlnukeMediaGallery extends XmlnukeCollection implements IXmlnukeDocument
 
 	/**
 	 *
-	 * @param Context $context
 	 * @param string $name 
 	 */
-	public function __construct($context, $name = "")
+	public function __construct($name = "")
 	{
-		$this->_context = $context;
 		$this->_name = $name;
 		if ($this->_name == "")
 		{
