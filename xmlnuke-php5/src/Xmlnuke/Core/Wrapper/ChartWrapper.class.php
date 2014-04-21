@@ -25,29 +25,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
- * -------------------------------------------------------------------------------------------------
- *
- *   PanaChart - PHP Chart Generator -  October 2003
- *
- *   Copyright (C) 2003 Eugen Fernea - eugenf@panacode.com
- *   Panacode Software - info@panacode.com
- *   http://www.panacode.com/
- *
- *   Modified by Joao Gilberto Magalhaes to adapt into XMLNuke Project
- *
- *   This program is free software; you can redistribute it and/or
- *   modify it under the terms of the GNU General Public License
- *   as published by the Free Software Foundation;
- *
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details.
- *
- *   You should have received a copy of the GNU General Public License
- *   along with this program; if not, write to the Free Software
- *   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- *
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
@@ -61,24 +38,16 @@ use Xmlnuke\Core\Classes\BaseSingleton;
 use Xmlnuke\Core\Engine\ChartFactory;
 use Xmlnuke\Core\Engine\Context;
 
+/**
+ * TODO: This class does not working properly. REDO!
+ * TODO: Get an alternative for Image Chart from Google because it is deprecated.
+ */
 class ChartWrapper extends BaseSingleton implements IOutputWrapper
 {
 	public function Process()
 	{
 
-		if (isset($_REQUEST["args"]))
-		{
-			$cnAux = split(";", $_REQUEST["args"]);
-			foreach ($cnAux as $key=>$value)
-			{
-				$pair = split(":", $value);
-				$_REQUEST[$pair[0]] = $pair[1];
-			}
-		}
-
 		$context = Context::getInstance();
-
-		require_once(PHPXMLNUKEDIR . "src/Xmlnuke/Library/panachart/panachart.php");
 
 		/*
 		   You must have pass a parameter called CN.
@@ -94,38 +63,103 @@ class ChartWrapper extends BaseSingleton implements IOutputWrapper
 			{
 				$cn = '\\' . str_replace('.', '\\', $context->get("cn"));
 				$chartObj = new $cn();
-				$ochart = $chartObj->getChartObject();
-				$ochart->plot("");
+				$chart = $chartObj->getChartObject();
+				//$chart = new \Xmlnuke\Core\Classes\ChartObject();
+
+				$params = array();
+
+				if ($chart->getChartType() == \Xmlnuke\Core\Enum\ChartType::Area)
+					$params['cht'] = '1c';
+				else if ($chart->getChartType() == \Xmlnuke\Core\Enum\ChartType::Line)
+					$params['cht'] = '1c';
+				else if ($chart->getChartType() == \Xmlnuke\Core\Enum\ChartType::Pie && !$chart->getIs3d())
+					$params['cht'] = 'p';
+				else if ($chart->getChartType() == \Xmlnuke\Core\Enum\ChartType::Pie && $chart->getIs3d())
+					$params['cht'] = 'p3';
+				else if ($chart->getChartType() == \Xmlnuke\Core\Enum\ChartType::Donut)
+					$params['cht'] = 'p';
+				else if ($chart->getChartType() == \Xmlnuke\Core\Enum\ChartType::Bar)
+					$params['cht'] = 'bhg';
+				else if ($chart->getChartType() == \Xmlnuke\Core\Enum\ChartType::Column)
+					$params['cht'] = 'bvg';
+				else
+					$params['cht'] = 'bvg';
+
+				/*
+				   The formula below is necessary because Google have a maximum limit of 480.000.
+				   This is basic rule of three
+
+				   R = W/H --> W = R*H
+
+				   Wo*Ho => (Wo*Ho)/10000
+				   R*H² => 30
+				    .
+				   . .
+				   H² = (30*Wo*Ho) / (R*((Wo*Ho)/10000))
+				 */
+				$size = ($chart->getWidth() * $chart->getHeight()) / 10000;
+				if ($size > 30)
+				{
+					$ratio = $chart->getWidth() / $chart->getHeight();
+					$chart->setHeight( intval(sqrt( (30 * $chart->getWidth() * $chart->getHeight()) / ($ratio * $size) )) );
+					$chart->setWidth( intval($ratio * $chart->getHeight()) );
+				}
+
+				$params['chs'] = $chart->getWidth() . 'x' . $chart->getHeight();
+
+				$iter = $chart->getSerie();
+
+				$params['chd'] = 't:';
+				$data = array();
+				foreach ($iter as $serie)
+				{
+					if (!isset($params['chdl']))
+					{
+						$serieData = $serie->getRawFormat();
+						unset($serieData['data_0']);
+						$params['chdl'] = implode('|', $serieData);
+					}
+					else
+					{
+						$serieData = $serie->getRawFormat();
+						for($i=1;$i<count($serieData);$i++)
+						{
+							if (!isset($data[$i]))
+								$data[$i] = array();
+
+							$data[$i][] = $serieData["data_$i"];
+						}
+					}
+				}
+				foreach ($data as $itemData)
+				{
+					$params['chd'] .= implode(',', $itemData) . "|";
+				}
+				$params['chd'] = substr($params['chd'], 0, strlen($params['chd'])-1);
+
+				$colors = array('#FFF8A3', '#A9CC8F', '#B2C8D9', '#BEA37A', '#F3AA79', '#B5B5A9', '#E6A5A4',
+								'#F8D753', '#5C9746', '#3E75A7', '#7A653E', '#E1662A', '#74796F', '#C4384F',
+								'#F0B400', '#1E6C0B', '#00488C', '#332600', '#D84000', '#434C43', '#B30023',
+								'#FAE16B', '#82B16A', '#779DBF', '#907A52', '#EB8953', '#8A8D82', '#D6707B',
+								'#F3C01C', '#3D8128', '#205F9A', '#63522B', '#DC5313', '#5D645A', '#BC1C39');
+				$params['chco'] = str_replace('#', '', implode('|', $colors));
+
+				$strParams = "";
+				foreach($params as $key=>$value)
+				{
+					$strParams .= $key . "=" . str_replace("'", "", $value) . "&";
+				}
+				$strParams .= 'chds=a';
+
+				print_r($strParams);
+				die();
+
+
+				Header("Content-Type: image/png");
+				$imageData = file_get_contents('http://chart.apis.google.com/chart?cht=p3&chd=t:39,47,8,4,2&chs=380x180&chl=IE|Firefox|Chrome|Safari|Opera');
+				echo $imageData;
 			}
-			else
-			{
-				// You need create a Class it have the method getChartObjet().
-				// This method *must* return a PanaChart object.
-				// The code like this:
 
-				// Series
-				$vSerie1 = array(10, 15, 20);
-				$vSerie2 = array(8, 12, 8);
-				$vLabels = array("A", "B", "C");
-
-				// AREA
-				$ochart = new chart(500,300,7, '#eeeeee');
-				$ochart->setTitle("You need pass: chart.php?cn=CHARTNAME","#000000",2);
-				$ochart->setPlotArea(SOLID,"#000000", '#ddddee');
-				$ochart->setLegend(SOLID, "#444444", "#ffffff", 1, '');
-				$ochart->addSeries($vSerie1,'bar','Serie 1', SOLID,'#000000', '#88ff88');
-				$ochart->addSeries($vSerie2,'line','Serie 2', LARGE_SOLID,'#ff8888', '#ff8888');
-				$ochart->setXAxis('#000000', SOLID, 1, "", '%s');
-				$ochart->setYAxis('#000000', SOLID, 1, "", '%d');
-				$ochart->setLabels($vLabels, '#000000', 1, VERTICAL);
-				$ochart->setGrid("#bbbbbb", DOTTED, "#bbbbbb", DOTTED);
-				$ochart->plot("");
-
-				// Chart Types
-				// area, line, bar, impuls, spline, step, dot
-			}
-
-			Header("Content-Type: image/png");
 		}
 		catch (Exception $ex)
 		{

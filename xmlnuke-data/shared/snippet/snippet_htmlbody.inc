@@ -13,6 +13,7 @@
 <xmlnuke-htmlbody_uialert />
 <xmlnuke-htmlbody_mediagallery />
 <xmlnuke-htmlbody_progressbar />
+<xmlnuke-htmlbody_chart />
 
 <xsl:template name="i18n.jquery">
 	<xsl:choose>
