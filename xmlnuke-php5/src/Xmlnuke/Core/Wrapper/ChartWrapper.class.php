@@ -89,9 +89,10 @@ class ChartWrapper extends BaseSingleton implements IOutputWrapper
 		*/
 		try
 		{
-			$cn = '\\' . str_replace('.', '\\', $context->get("cn"));
+			$cn = $context->get("cn");
 			if ($cn!="")
 			{
+				$cn = '\\' . str_replace('.', '\\', $context->get("cn"));
 				$chartObj = new $cn();
 				$ochart = $chartObj->getChartObject();
 				$ochart->plot("");
