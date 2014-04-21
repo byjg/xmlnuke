@@ -807,6 +807,11 @@ abstract class XmlnukeCrudBase extends XmlnukeDocumentObject implements IXmlnuke
 		else if (($field->fieldXmlInput == XmlInputObjectType::DATE) || ($field->fieldXmlInput == XmlInputObjectType::DATETIME))
 		{
 			$cur = explode(" ", $curValue);
+			if (count($cur) == 0)
+				$cur = array('', '');
+			else if (count($cur) == 1)
+				$cur[] = '';
+			
 			$idt = new XmlInputDateTime($field->fieldCaption, $field->fieldName, $this->_dateFormat, ($field->fieldXmlInput == XmlInputObjectType::DATETIME), $cur[0], $cur[1]);
 			return $idt;
 		}
