@@ -236,12 +236,15 @@ class ChartObject
 		{
 			$column = array();
 			$sum = array( );
-			for($i=1;$i<count($info);$i++)
+			for($i=0;$i<count($info);$i++)
 			{
-				$column[] = $info[$i]['name'];
-				$sum[] = array_sum($data[$info[$i]['column']]);
+				if ($info[$i]['type'] == \Xmlnuke\Core\Enum\ChartColumnType::Number)
+				{
+					$column[] = $info[$i]['name'];
+					$sum[] = array_sum($data[$info[$i]['column']]);
+				}
 			}
-			$this->addSerie($info[0]['name'], \Xmlnuke\Core\Enum\ChartColumnType::String, $column);
+			$this->addSerie('Labels', \Xmlnuke\Core\Enum\ChartColumnType::String, $column);
 			$this->addSerie('Sum', \Xmlnuke\Core\Enum\ChartColumnType::Number, $sum);
 			$this->setChartType(\Xmlnuke\Core\Enum\ChartType::Pie);
 		}
