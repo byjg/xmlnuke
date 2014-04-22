@@ -225,28 +225,31 @@ class ChartObject
 		}
 
 		// Add Series with the extract data
-		if (!$totalPieChart)
+		if (count($data) > 0)
 		{
-			foreach ($info as $infoCol)
+			if (!$totalPieChart)
 			{
-				$this->addSerie($infoCol['name'], $infoCol['type'], $data[$infoCol['column']]);
-			}
-		}
-		else
-		{
-			$column = array();
-			$sum = array( );
-			for($i=0;$i<count($info);$i++)
-			{
-				if ($info[$i]['type'] == \Xmlnuke\Core\Enum\ChartColumnType::Number)
+				foreach ($info as $infoCol)
 				{
-					$column[] = $info[$i]['name'];
-					$sum[] = array_sum($data[$info[$i]['column']]);
+					$this->addSerie($infoCol['name'], $infoCol['type'], $data[$infoCol['column']]);
 				}
 			}
-			$this->addSerie('Labels', \Xmlnuke\Core\Enum\ChartColumnType::String, $column);
-			$this->addSerie('Sum', \Xmlnuke\Core\Enum\ChartColumnType::Number, $sum);
-			$this->setChartType(\Xmlnuke\Core\Enum\ChartType::Pie);
+			else
+			{
+				$column = array();
+				$sum = array( );
+				for($i=0;$i<count($info);$i++)
+				{
+					if ($info[$i]['type'] == \Xmlnuke\Core\Enum\ChartColumnType::Number)
+					{
+						$column[] = $info[$i]['name'];
+						$sum[] = array_sum($data[$info[$i]['column']]);
+					}
+				}
+				$this->addSerie('Labels', \Xmlnuke\Core\Enum\ChartColumnType::String, $column);
+				$this->addSerie('Sum', \Xmlnuke\Core\Enum\ChartColumnType::Number, $sum);
+				$this->setChartType(\Xmlnuke\Core\Enum\ChartType::Pie);
+			}
 		}
 	}
 
