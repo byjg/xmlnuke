@@ -53,9 +53,13 @@ class ChartObject
 
 	protected $_Is3d;
 
-	protected $_MinValue;
+	protected $_MinValueX;
 
-	protected $_MaxValue;
+	protected $_MaxValueX;
+
+	protected $_MinValueY;
+
+	protected $_MaxValueY;
 
 	protected $_ChartType;
 
@@ -155,26 +159,45 @@ class ChartObject
 		$this->_Is3d = $Is3d;
 	}
 
-	public function getMinValue()
+	public function getMinValueX()
 	{
-		return $this->_MinValue;
+		return $this->_MinValueX;
 	}
 
-	public function setMinValue($MinValue)
+	public function setMinValueX($MinValueX)
 	{
-		$this->_MinValue = $MinValue;
+		$this->_MinValueX = $MinValueX;
 	}
 
-	public function getMaxValue()
+	public function getMaxValueX()
 	{
-		return $this->_MaxValue;
+		return $this->_MaxValueX;
 	}
 
-	public function setMaxValue($MaxValue)
+	public function setMaxValueX($MaxValueX)
 	{
-		$this->_MaxValue = $MaxValue;
+		$this->_MaxValueX = $MaxValueX;
 	}
 
+	public function getMinValueY()
+	{
+		return $this->_MinValueY;
+	}
+
+	public function setMinValueY($MinValueY)
+	{
+		$this->_MinValueY = $MinValueY;
+	}
+
+	public function getMaxValueY()
+	{
+		return $this->_MaxValueY;
+	}
+
+	public function setMaxValueY($MaxValueY)
+	{
+		$this->_MaxValueY = $MaxValueY;
+	}
 
 	public function addSerie($name, $type, $data)
 	{

@@ -444,10 +444,15 @@
 			<xsl:otherwise>ColumnChart</xsl:otherwise>
 		</xsl:choose></xsl:variable>
 
+		var minValueX = <xsl:if test="MinValueX"><xsl:value-of select="MinValueX" /></xsl:if><xsl:if test="not(MinValueX)">undefined</xsl:if>;
+		var minValueY = <xsl:if test="MinValueY"><xsl:value-of select="MinValueY" /></xsl:if><xsl:if test="not(MinValueY)">undefined</xsl:if>;
+		var maxValueX = <xsl:if test="MaxValueX"><xsl:value-of select="MaxValueX" /></xsl:if><xsl:if test="not(MaxValueX)">undefined</xsl:if>;
+		var maxValueY = <xsl:if test="MaxValueY"><xsl:value-of select="MaxValueY" /></xsl:if><xsl:if test="not(MaxValueY)">undefined</xsl:if>;
+
         var options = {
           title: '<xsl:value-of select="Title"/>',
-          vAxis: {title: '<xsl:value-of select="TitleVertical"/>',  titleTextStyle: {color: 'black'}},
-          hAxis: {title: '<xsl:value-of select="TitleHorizontal"/>',  titleTextStyle: {color: 'black'}},
+          vAxis: {title: '<xsl:value-of select="TitleVertical"/>',  titleTextStyle: {color: 'black'}, minValue: minValueY, maxValue: maxValueY},
+          hAxis: {title: '<xsl:value-of select="TitleHorizontal"/>',  titleTextStyle: {color: 'black'}, minValue: minValueX, maxValue: maxValueX},
 		  <xsl:if test="ChartType='donut'">pieHole: 0.4,</xsl:if>
 		  is3D: <xsl:if test="Is3d=1">true</xsl:if><xsl:if test="not(Is3d=1)">false</xsl:if>,
         };
