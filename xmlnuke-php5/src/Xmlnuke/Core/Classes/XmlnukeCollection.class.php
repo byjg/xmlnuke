@@ -298,7 +298,12 @@ class XmlnukeCollection
 						}
 					}
 				}
-				else if (($propValue != "") || ($_writeEmpty))
+				else if (!empty($propValue)				// Some values are empty for PHP but need to be considered
+							|| ($propValue === 0)
+							|| ($propValue === false)
+							|| ($propValue === '0')
+							|| ($_writeEmpty)
+				)
 				{
 					if ($_isClassAttr)
 						XmlUtil::AddAttribute ($node, $_propName, $propValue);
