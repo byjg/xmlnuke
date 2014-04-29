@@ -49,8 +49,7 @@ abstract class BaseService extends BaseModule implements IService
 	{
 		parent::Setup($xmlModuleName, $customArgs);
 
-		//if ($this->_context->get("CONTENT_TYPE") == "application/json")
-		//	$this->
+		$this->defaultXmlnukeDocument = new ServiceDocument();
 	}
 
 	/**
@@ -63,8 +62,6 @@ abstract class BaseService extends BaseModule implements IService
 		$method = strtoupper($this->_context->get("REQUEST_METHOD"));
 
 		$customAction = strtolower($method) . ucfirst($this->_action);
-
-		$this->defaultXmlnukeDocument = new ServiceDocument();
 
 		if (method_exists($this, $customAction))
 			$this->$customAction($this->getRawRequest(), $this->_context->get("id"));
