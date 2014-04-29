@@ -58,7 +58,7 @@ class ServiceDocument extends XmlnukeCollection implements IXmlnukeDocument
 	 * @package xmlnuke
 	 * @return IXmlnukeDocument
 	 */
-	public function generatePage()
+	public function generatePage($obj = null)
 	{
 		return $this;
 	}
