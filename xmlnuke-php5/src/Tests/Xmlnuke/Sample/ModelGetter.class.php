@@ -2,6 +2,9 @@
 
 namespace Tests\Xmlnuke\Sample;
 
+/**
+ * @Xmlnuke:NodeName ModelGetter
+ */
 class ModelGetter extends \Xmlnuke\Core\Database\BaseModel
 {
 	protected $_Id = "";

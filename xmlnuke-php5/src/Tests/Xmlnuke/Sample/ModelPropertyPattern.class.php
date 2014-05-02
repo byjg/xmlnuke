@@ -2,6 +2,9 @@
 
 namespace Tests\Xmlnuke\Sample;
 
+/**
+ * @Xmlnuke:NodeName ModelPropertyPattern
+ */
 class ModelPropertyPattern extends \Xmlnuke\Core\Database\BaseModel
 {
 	protected $_Id_Model = "";
