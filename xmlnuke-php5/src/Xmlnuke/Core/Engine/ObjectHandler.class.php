@@ -91,6 +91,19 @@ class ObjectHandler
 		else
 			throw new \InvalidArgumentException('The model is not an object or an array');
 
+		// Fix First Level non-associative arrays
+		if (is_array($model) && count(get_object_vars($this->_model)) == 0)
+		{
+			foreach ($model as $value)
+			{
+				if (!is_object($value) && !is_array($value))
+					$this->_model->scalar[] = $value;
+				else
+					$this->_model->__object[] = $value; // __object is a special name and it is not rendered
+			}
+		}
+
+
 		$this->_current = $current;
 		$this->_config = $config;
 		$this->_forcePropName = $forcePropName;
@@ -225,13 +238,22 @@ class ObjectHandler
 
 		$propMeta[ObjectHandler::PropIgnore] = array_key_exists("$this->_config:ignore", $propAttributes);
 		$propMeta[ObjectHandler::PropName] = isset($propAttributes["$this->_config:nodename"]) ? $propAttributes["$this->_config:nodename"] : $propName;
-		if (strpos($propMeta[ObjectHandler::PropName], ":") === false) $propMeta[ObjectHandler::PropName] = $classMeta[ObjectHandler::ClassDefaultPrefix] . $propMeta[ObjectHandler::PropName];
+		$propMeta[ObjectHandler::PropDontCreateNode] = array_key_exists("$this->_config:dontcreatenode", $propAttributes);
+		$propMeta[ObjectHandler::PropForceName] = isset($propAttributes["$this->_config:dontcreatenode"]) ? $propAttributes["$this->_config:dontcreatenode"] : "";
+		if (strpos($propMeta[ObjectHandler::PropName], ":") === false) 
+		{
+			$propMeta[ObjectHandler::PropName] = $classMeta[ObjectHandler::ClassDefaultPrefix] . $propMeta[ObjectHandler::PropName];
+		} 
+		if ($propMeta[ObjectHandler::PropName] == '__object')
+		{
+			$propMeta[ObjectHandler::PropDontCreateNode] = true;
+		}
 		$propMeta[ObjectHandler::PropAttributeOf] = $classMeta[ObjectHandler::ClassIsRDF] ? "" : (isset($propAttributes["$this->_config:isattributeof"]) ? $propAttributes["$this->_config:isattributeof"] : "");
 		$propMeta[ObjectHandler::PropIsBlankNode] = $classMeta[ObjectHandler::ClassIsRDF] ? (isset($propAttributes["$this->_config:isblanknode"]) ? $propAttributes["$this->_config:isblanknode"] : "") : "";
 		$propMeta[ObjectHandler::PropIsResourceUri] = $classMeta[ObjectHandler::ClassIsRDF] && array_key_exists("$this->_config:isresourceuri", $propAttributes); // Valid Only Inside BlankNode
 		$propMeta[ObjectHandler::PropIsClassAttr] = $classMeta[ObjectHandler::ClassIsRDF] ? false : array_key_exists("$this->_config:isclassattribute", $propAttributes);
-		$propMeta[ObjectHandler::PropDontCreateNode] = array_key_exists("$this->_config:dontcreatenode", $propAttributes);
-		$propMeta[ObjectHandler::PropForceName] = isset($propAttributes["$this->_config:dontcreatenode"]) ? $propAttributes["$this->_config:dontcreatenode"] : "";
+
+
 
 		return $propMeta;
 	}

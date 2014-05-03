@@ -59,35 +59,35 @@ class ObjectHandlerTest extends \PHPUnit_Framework_TestCase
 		);
 	}
 
-//	/**
-//	 * @covers Xmlnuke\Core\Engine\ObjectHandler::CreateObjectFromModel
-//	 * @todo   Implement testCreateObjectFromModel().
-//	 */
-//	public function testCreateObjectFromModel_ObjectGetter_2elem()
-//	{
-//		$model = array(
-//			new \Tests\Xmlnuke\Sample\ModelGetter(10, 'Joao'),
-//			new \Tests\Xmlnuke\Sample\ModelGetter(20, 'JG')
-//		);
-//
-//		$this->object = new ObjectHandler($this->root, $model, 'xmlnuke');
-//		$result = $this->object->CreateObjectFromModel();
-//
-//		$this->assertEquals(
-//			\Xmlnuke\Util\XmlUtil::CreateXmlDocumentFromStr(
-//				'<root>'
-//					. '<ModelGetter>'
-//					.	'<Id>10</Id>'
-//					.	'<Name>Joao</Name>'
-//					. '</ModelGetter>'
-//					. '<ModelGetter>'
-//					.	'<Id>20</Id>'
-//					.	'<Name>JG</Name>'
-//					. '</ModelGetter>'
-//					. '</root>'),
-//			$this->document
-//		);
-//	}
+	/**
+	 * @covers Xmlnuke\Core\Engine\ObjectHandler::CreateObjectFromModel
+	 * @todo   Implement testCreateObjectFromModel().
+	 */
+	public function testCreateObjectFromModel_ObjectGetter_2elem()
+	{
+		$model = array(
+			new \Tests\Xmlnuke\Sample\ModelGetter(10, 'Joao'),
+			new \Tests\Xmlnuke\Sample\ModelGetter(20, 'JG')
+		);
+
+		$this->object = new ObjectHandler($this->root, $model, 'xmlnuke');
+		$result = $this->object->CreateObjectFromModel();
+
+		$this->assertEquals(
+			\Xmlnuke\Util\XmlUtil::CreateXmlDocumentFromStr(
+				'<root>'
+					. '<ModelGetter>'
+					.	'<Id>10</Id>'
+					.	'<Name>Joao</Name>'
+					. '</ModelGetter>'
+					. '<ModelGetter>'
+					.	'<Id>20</Id>'
+					.	'<Name>JG</Name>'
+					. '</ModelGetter>'
+					. '</root>'),
+			$this->document
+		);
+	}
 
 	/**
 	 * @covers Xmlnuke\Core\Engine\ObjectHandler::CreateObjectFromModel
@@ -112,35 +112,35 @@ class ObjectHandlerTest extends \PHPUnit_Framework_TestCase
 		);
 	}
 
-//	/**
-//	 * @covers Xmlnuke\Core\Engine\ObjectHandler::CreateObjectFromModel
-//	 * @todo   Implement testCreateObjectFromModel().
-//	 */
-//	public function testCreateObjectFromModel_ObjectPublic_2elem()
-//	{
-//		$model = array(
-//			new \Tests\Xmlnuke\Sample\ModelPublic(10, 'Joao'),
-//			new \Tests\Xmlnuke\Sample\ModelPublic(20, 'JG')
-//		);
-//
-//		$this->object = new ObjectHandler($this->root, $model, 'xmlnuke');
-//		$result = $this->object->CreateObjectFromModel();
-//
-//		$this->assertEquals(
-//			\Xmlnuke\Util\XmlUtil::CreateXmlDocumentFromStr(
-//				'<root>'
-//					. '<Tests_Xmlnuke_Sample_ModelPublic>'
-//					.	'<Id>10</Id>'
-//					.	'<Name>Joao</Name>'
-//					. '</Tests_Xmlnuke_Sample_ModelPublic>'
-//					. '<Tests_Xmlnuke_Sample_ModelPublic>'
-//					.	'<Id>20</Id>'
-//					.	'<Name>JG</Name>'
-//					. '</Tests_Xmlnuke_Sample_ModelPublic>'
-//					. '</root>'),
-//			$this->document
-//		);
-//	}
+	/**
+	 * @covers Xmlnuke\Core\Engine\ObjectHandler::CreateObjectFromModel
+	 * @todo   Implement testCreateObjectFromModel().
+	 */
+	public function testCreateObjectFromModel_ObjectPublic_2elem()
+	{
+		$model = array(
+			new \Tests\Xmlnuke\Sample\ModelPublic(10, 'Joao'),
+			new \Tests\Xmlnuke\Sample\ModelPublic(20, 'JG')
+		);
+
+		$this->object = new ObjectHandler($this->root, $model, 'xmlnuke');
+		$result = $this->object->CreateObjectFromModel();
+
+		$this->assertEquals(
+			\Xmlnuke\Util\XmlUtil::CreateXmlDocumentFromStr(
+				'<root>'
+					. '<Tests_Xmlnuke_Sample_ModelPublic>'
+					.	'<Id>10</Id>'
+					.	'<Name>Joao</Name>'
+					. '</Tests_Xmlnuke_Sample_ModelPublic>'
+					. '<Tests_Xmlnuke_Sample_ModelPublic>'
+					.	'<Id>20</Id>'
+					.	'<Name>JG</Name>'
+					. '</Tests_Xmlnuke_Sample_ModelPublic>'
+					. '</root>'),
+			$this->document
+		);
+	}
 
 	/**
 	 * @covers Xmlnuke\Core\Engine\ObjectHandler::CreateObjectFromModel
@@ -390,7 +390,7 @@ class ObjectHandlerTest extends \PHPUnit_Framework_TestCase
 	 * @covers Xmlnuke\Core\Engine\ObjectHandler::CreateObjectFromModel
 	 * @todo   Implement testCreateObjectFromModel().
 	 */
-	public function testCreateObjectFromModel_Collection_RenameNode()
+	public function testCreateObjectFromModel_Collection_SkipParentAndRenameChild()
 	{
 		$modellist = new \Tests\Xmlnuke\Sample\ModelList3();
 		$modellist->addItem(new \Tests\Xmlnuke\Sample\ModelGetter(10, 'Joao'));
@@ -406,6 +406,27 @@ class ObjectHandlerTest extends \PHPUnit_Framework_TestCase
 					.	'<List><Id>10</Id><Name>Joao</Name></List>'
 					.	'<List><Id>20</Id><Name>JG</Name></List>'
 					. '</ModelList>'
+					. '</root>'),
+			$this->document
+		);
+	}
+
+	/**
+	 * @covers Xmlnuke\Core\Engine\ObjectHandler::CreateObjectFromModel
+	 * @todo   Implement testCreateObjectFromModel().
+	 */
+	public function testCreateObjectFromModel_OnlyScalarAtFirstLevel()
+	{
+		$model = array(10, 'Joao');
+
+		$this->object = new ObjectHandler($this->root, $model, 'xmlnuke');
+		$result = $this->object->CreateObjectFromModel();
+
+		$this->assertEquals(
+			\Xmlnuke\Util\XmlUtil::CreateXmlDocumentFromStr(
+				'<root>'
+					. '<scalar>10</scalar>'
+					. '<scalar>Joao</scalar>'
 					. '</root>'),
 			$this->document
 		);
