@@ -201,6 +201,8 @@ class Object
 		return null;
 	}
 
+	private $_allPropInsentive = null;
+
 	/**
 	 *
 	 * @param mixed $obj
@@ -231,6 +233,24 @@ class Object
 		else if (property_exists($obj, $propName))
 		{
 			$obj->{$propName} = $value;
+		}
+		else
+		{
+			if ($this->_allPropInsentive == null)
+			{
+				$this->_allPropInsentive = array();
+
+				$classVars = get_class_vars(get_class($obj));
+				foreach ($classVars as $varKey=>$varValue)
+				{
+					$this->_allPropInsentive[strtolower($varKey)] = $varKey;
+				}
+			}
+
+			if (isset($this->_allPropInsentive[strtolower($propName)]))
+			{
+				$obj->{$this->_allPropInsentive[strtolower($propName)]} = $value;
+			}
 		}
 	}
 

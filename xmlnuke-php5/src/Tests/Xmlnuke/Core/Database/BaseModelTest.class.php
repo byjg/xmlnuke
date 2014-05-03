@@ -66,8 +66,8 @@ class BaseModelTest extends \PHPUnit_Framework_TestCase
 	public function testBindSingleRow()
 	{
 		$sr = new \Xmlnuke\Core\AnyDataset\SingleRow();
-		$sr->AddField("Id", 10);
-		$sr->AddField("Name", "Testing");
+		$sr->AddField("id", 10);
+		$sr->AddField("name", "Testing");
 
 		$object = new \Tests\Xmlnuke\Sample\BaseModel($sr);
 
@@ -83,8 +83,8 @@ class BaseModelTest extends \PHPUnit_Framework_TestCase
 		$anydata = new \Xmlnuke\Core\AnyDataset\AnyDataSet();
 
 		$sr = new \Xmlnuke\Core\AnyDataset\SingleRow();
-		$sr->AddField("Id", 10);
-		$sr->AddField("Name", "Testing");
+		$sr->AddField("id", 10);
+		$sr->AddField("name", "Testing");
 		$anydata->appendRow($sr);
 
 		$object = new \Tests\Xmlnuke\Sample\BaseModel($anydata->getIterator());
@@ -98,11 +98,11 @@ class BaseModelTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testBindFromContext()
 	{
-		$_REQUEST["Id"] = 10;
-		$_REQUEST["Name"] = "Testing";
+		$_REQUEST["id"] = 10;
+		$_REQUEST["name"] = "Testing";
 		$context = \Xmlnuke\Core\Engine\Context::getInstance();
-		$context->set("Id", 10);
-		$context->set("Name", "Testing");
+		$context->set("id", 10);
+		$context->set("name", "Testing");
 
 		$object = new \Tests\Xmlnuke\Sample\BaseModel($context);
 
@@ -129,6 +129,7 @@ class BaseModelTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testBindFromStdClass()
 	{
+		// Matching exact property names
 		$model = new \stdClass();
 		$model->Id = 10;
 		$model->Name = "Testing";
@@ -137,6 +138,17 @@ class BaseModelTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertEquals(10, $object->Id);
 		$this->assertEquals("Testing", $object->getName());
+
+		// Matching with different case letters
+		$model2 = new \stdClass();
+		$model2->id = 10;
+		$model2->name = "Testing";
+
+		$object = new \Tests\Xmlnuke\Sample\BaseModel($model2);
+
+		$this->assertEquals(10, $object->Id);
+		$this->assertEquals("Testing", $object->getName());
+
 	}
 
 	/**
