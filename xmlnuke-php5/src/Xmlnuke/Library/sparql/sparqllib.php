@@ -132,6 +132,8 @@ class sparql_connection
 		curl_setopt($ch, CURLOPT_HTTPHEADER,array (
 			"Accept: application/sparql-results+xml"
 		));
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 
 		$output = curl_exec($ch);
 		$info = curl_getinfo($ch);
