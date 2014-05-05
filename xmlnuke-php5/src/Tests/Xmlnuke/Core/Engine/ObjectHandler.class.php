@@ -338,6 +338,30 @@ class ObjectHandlerTest extends \PHPUnit_Framework_TestCase
 	 * @covers Xmlnuke\Core\Engine\ObjectHandler::CreateObjectFromModel
 	 * @todo   Implement testCreateObjectFromModel().
 	 */
+	public function testCreateObjectFromModel_Array_Array_2 ()
+	{
+		$model = new \stdClass();
+		$model->Obj = array( array( 10, 'Joao') );
+
+		$this->object = new ObjectHandler($this->root, $model, 'xmlnuke');
+		$result = $this->object->CreateObjectFromModel();
+
+		$this->assertEquals(
+			\Xmlnuke\Util\XmlUtil::CreateXmlDocumentFromStr(
+				'<root>'
+					. '<Obj>'
+					. '<scalar>10</scalar>'
+					. '<scalar>Joao</scalar>'
+					. '</Obj>'
+					. '</root>'),
+			$this->document
+		);
+	}
+
+	/**
+	 * @covers Xmlnuke\Core\Engine\ObjectHandler::CreateObjectFromModel
+	 * @todo   Implement testCreateObjectFromModel().
+	 */
 	public function testCreateObjectFromModel_Collection_DontCreateNode()
 	{
 		$modellist = new \Tests\Xmlnuke\Sample\ModelList();
