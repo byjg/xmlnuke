@@ -74,9 +74,7 @@ class ErrorHandler extends BaseSingleton
 			$this->_handler = new PrettyPageHandler();
 			if (!Context::getInstance()->getDevelopmentStatus())
 			{
-				$this->_handler->setPageTemplate('minimal-template');
-				$this->_handler->setPageCss('minimal-page');
-				$this->_handler->setShowDataTable(false);
+				$this->_handler->addResourcePath(\WhoopsResources\Resource::getPath());
 			}
 		}
 
@@ -101,7 +99,8 @@ class ErrorHandler extends BaseSingleton
 
 	public function addExtraInfo($name, $value)
 	{
-		$this->_handler->addDataTable('Xmlnuke Debug', array($name => $value));
+		if (method_exists($this->_handler, 'addDataTable'))
+			$this->_handler->addDataTable('Xmlnuke Debug', array($name => $value));
 	}
 
 }
