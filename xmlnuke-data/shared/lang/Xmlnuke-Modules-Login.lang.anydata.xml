@@ -6,7 +6,7 @@
     <field name="CREATEUSERFAIL">Username or email already in database. Can't add.</field>
     <field name="CREATEUSEROK">User created. Your password was sent to your email address.</field>
     <field name="FORGOTUSERFAIL">Email not found.</field>
-    <field name="FORGOTUSEROK">Email found. Your new password has been mailed.</field>
+    <field name="FORGOTUSEROK">Email found. The instructions to reset your password has been mailed.</field>
     <field name="LOGINTITLE">Type in your credentials</field>
     <field name="LOGINFORGOTMESSAGE">I Forgot my password</field>
     <field name="LOGINCREATEUSERMESSAGE">Create user</field>
@@ -23,11 +23,21 @@
     <field name="FORGOTPASSBUTTON">Send my password to my email address.</field>
     <field name="SUBJECTMESSAGE">{0}: Sign in confirmation</field>
     <field name="WELCOMEMESSAGE">{0},\n\nYou requested to Sign Up at site {1}\n\nYour Login: {2}\nYour Password: {3} (Warning: this password is case-sensitive)\n\nGo to the URL address {4} to sign in and/or change your profile.</field>
+    <field name="RESETSUBJECTMESSAGE">{0}: Reset Password</field>
+    <field name="RESETPASSWORDMESSAGE">{0},\n\nYou requested to change your password at site {1}\n\nYour Login: {2}\n\nTo reset your password click in the URL address {3}.</field>
     <field name="CAPTCHALABEL">Captcha:</field>
     <field name="CAPTCHAPLACEHOLDER">Enter the characters from image</field>
     <field name="OBJECTIMAGEINVALID">The numbers you types didn't match. You need to type the text correctly.</field>
 	<field name="INCOMPLETEDATA">You must provide a valid email, username and your name.</field>
     <field name="LOGINPROBLEMSMESSAGE">Problems?</field>
+	<field name="RESETPASSTITLE">Confirm the password reset</field>
+	<field name="LABELRETYPEPASSWORD">Retype</field>
+	<field name="RESETPASSBUTTON">Reset Password</field>
+	<field name="PLACEHOLDERRETYPEPASSWORD">Retype the password</field>
+	<field name="PASSWORDISREQUIRED">The password is required</field>
+	<field name="PASSWORDNOTMATCH">The password does not match.</field>
+	<field name="RESETINVALIDTOKEN">Reset Token is invalid.</field>
+	<field name="RESETPASSWORDOK">The password was successful changed.</field>
   </row>
   <row>
     <field name="LANGUAGE">pt-br</field>
@@ -36,7 +46,7 @@
     <field name="CREATEUSERFAIL">Nome de usuário ou email existem. Não é possível incluir.</field>
     <field name="CREATEUSEROK">Usuário criado. Sua senha será enviada para o seu email.</field>
     <field name="FORGOTUSERFAIL">Email não encontrado.</field>
-    <field name="FORGOTUSEROK">Email encontrado. A nova senha foi enviada por email.</field>
+    <field name="FORGOTUSEROK">Email encontrado. As instruções para resetar a sua senha foram enviadas por email.</field>
     <field name="LOGINTITLE">Digite suas credenciais</field>
     <field name="LOGINFORGOTMESSAGE">Esqueci a minha senha</field>
 	<field name="LABELUSERNAME">Usuário</field>
@@ -54,11 +64,21 @@
     <field name="FORGOTPASSBUTTON">Enviar senha para esse email</field>
     <field name="SUBJECTMESSAGE">{0}: Confirmação de Cadastro</field>
     <field name="WELCOMEMESSAGE">{0},\n\nVocê solicitou o seu cadastramento no site {1}\n\nSeu Login: {2}\nSua Senha: {3} (atenção: a senha é sensível a maiúscula e minúscula)\n\nAcesse o endereço {4} para efetuar o logon e/ou alterar seus dados</field>
+    <field name="RESETSUBJECTMESSAGE">{0}: Resetar Senha</field>
+    <field name="RESETPASSWORDMESSAGE">{0},\n\nVocê solicitou resetar a sua senha no site {1}\n\nSeu Login: {2}\n\nPara resetar a sua senha clique no link {3}.</field>
     <field name="CAPTCHALABEL">Captcha:</field>
     <field name="CAPTCHAPLACEHOLDER">Digite os caracteres da imagem</field>
     <field name="OBJECTIMAGEINVALID">O texto que você digitou não confere. Você precisa digitar o texto corretamente para prosseguir. </field>
 	<field name="INCOMPLETEDATA">Você precisa digitar um email válido, um usuário e o seu nome.</field>
     <field name="LOGINPROBLEMSMESSAGE">Problemas?</field>
+	<field name="RESETPASSTITLE">Confirme a reinicilização da senha</field>
+	<field name="LABELRETYPEPASSWORD">Redigite</field>
+	<field name="RESETPASSBUTTON">Reiniciar Senha</field>
+	<field name="PLACEHOLDERRETYPEPASSWORD">Redigite a senha</field>
+	<field name="PASSWORDISREQUIRED">É o obrigatório o preenchimento das senhas</field>
+	<field name="PASSWORDNOTMATCH">As senhas digitadas não conferem.</field>
+	<field name="RESETINVALIDTOKEN">Token de reset de senha inválido.</field>
+	<field name="RESETPASSWORDOK">A senha foi alterada com sucesso.</field>
   </row>
   <row>
     <field name="LANGUAGE">de-de</field>
@@ -67,7 +87,7 @@
     <field name="CREATEUSERFAIL">Benutzername oder E-Mail-Adresse ist bereits vorhanden und konnte nicht hinzugefügt werden.</field>
     <field name="CREATEUSEROK">Benutzer angelegt. Ihr Passwort wurde an Ihre E-Mail-Adresse gesendet.</field>
     <field name="FORGOTUSERFAIL">E-Mail-Adresse nicht gefunden.</field>
-    <field name="FORGOTUSEROK">E-Mail-Adresse gefunden. Ihr neues Passwort wurde Ihnen zugeschickt.</field>
+    <field name="FORGOTUSEROK">E-Mail gefunden. Die Anweisungen zum Zurücksetzen des Passworts wurde verschickt.</field>
     <field name="LOGINTITLE">Geben Sie Ihre Anmeldedaten ein</field>
     <field name="LOGINFORGOTMESSAGE">Ich habe mein Passwort vergessen</field>
     <field name="LOGINCREATEUSERMESSAGE">Ich möchte mich registrieren</field>
@@ -84,11 +104,21 @@
     <field name="FORGOTPASSBUTTON">Passwort zusenden</field>
     <field name="SUBJECTMESSAGE">{0}: Registrierungsbestätigung</field>
     <field name="WELCOMEMESSAGE">{0},\n\nSie haben sich bei {1} registriert.\n\nBenutzername: {2}\nPasswort: {3} (Groß-/Kleinschreibung beachten)\n\nGehen Sie zur URL {4} um sich anzumelden und/oder Ihr Profil zu ändern.</field>
+    <field name="RESETSUBJECTMESSAGE">{0}: Passwort zurücksetzen</field>
+    <field name="RESETPASSWORDMESSAGE">{0},\n\nSie gebeten, Ihr Passwort zu ändern Website {1}\n\nIhre Anmeldung: {2}\n\nUm Ihr Passwort klicken Sie in der URL-Adresse zurückgesetzt {3}.</field>
     <field name="CAPTCHALABEL">Captcha:</field>
     <field name="CAPTCHAPLACEHOLDER">Geben Sie die Zeichen aus dem Bild</field>
     <field name="OBJECTIMAGEINVALID">Sie haben die Sicherheitsabfrage nicht oder falsch beantwortet. Bitte überprüfen Sie die Eingabe.</field>
 	<field name="INCOMPLETEDATA">Sie müssen eine gültige E-Mail, Benutzername und Ihren Namen.</field>
     <field name="LOGINPROBLEMSMESSAGE">Sonstiges:</field>
+	<field name="RESETPASSTITLE">Bestätigen Sie das Passwort-Reset</field>
+	<field name="LABELRETYPEPASSWORD">Retype</field>
+	<field name="RESETPASSBUTTON">Passwort zurücksetzen</field>
+	<field name="PLACEHOLDERRETYPEPASSWORD">Geben Sie das Passwort</field>
+	<field name="PASSWORDISREQUIRED">Das Passwort ist erforderlich</field>
+	<field name="PASSWORDNOTMATCH">Das Passwort stimmt nicht überein.</field>
+	<field name="RESETINVALIDTOKEN">Zurücksetzen Token ist ungültig.</field>
+	<field name="RESETPASSWORDOK">Das Passwort wurde erfolgreich geändert.</field>
   </row>
   <row>
     <field name="LANGUAGE">fr-fr</field>
@@ -97,7 +127,7 @@
     <field name="CREATEUSERFAIL">Nom d'utilisateur ou e-mail déjà en base de données. Impossible d'ajouter.</field>
     <field name="CREATEUSEROK">	Créés par l'utilisateur. Votre mot de passe a été envoyé à votre adresse e-mail.</field>
     <field name="FORGOTUSERFAIL">Courrier électronique introuvable.</field>
-    <field name="FORGOTUSEROK">Email trouvé. Votre nouveau mot de passe a été envoyé par la poste.</field>
+    <field name="FORGOTUSEROK">Email trouvés. Les instructions pour réinitialiser votre mot de passe a été envoyé par la poste.</field>
     <field name="LOGINTITLE">Tapez vos informations d'identification</field>
     <field name="LOGINFORGOTMESSAGE">J'ai oublié mon mot de passe</field>
     <field name="LOGINCREATEUSERMESSAGE">Créer un utilisateur</field>
@@ -114,11 +144,21 @@
     <field name="FORGOTPASSBUTTON">Envoyez mon mot de passe à mon adresse e-mail.</field>
     <field name="SUBJECTMESSAGE">{0}: S'inscrire dans la confirmation</field>
     <field name="WELCOMEMESSAGE">{0}, \n\nVous priées de s'inscrire sur le site de {1} \n\nVotre Login: {2} \n Password Votre: {3} (Attention: ce mot de passe est sensible à la casse) \n\nONG à l'URL address {4} pour vous connecter et / ou modifier votre profil.</field>
+    <field name="RESETSUBJECTMESSAGE">{0}: Réinitialiser le mot de</field>
+    <field name="RESETPASSWORDMESSAGE">{0},\n\nVous avez demandé à changer votre mot de passe sur le site {1}\n\nVotre login: {2}\n\nPour réinitialiser votre mot de passe cliquez dans l'adresse URL {3}.</field>
     <field name="CAPTCHALABEL">Captcha:</field>
     <field name="CAPTCHAPLACEHOLDER">Entrez les caracteres de l'image</field>
     <field name="OBJECTIMAGEINVALID">Les chiffres que vous types ne correspondent pas. Vous devez saisir le texte correctement.</field>
 	<field name="INCOMPLETEDATA">Vous devez fournir une adresse email valide, le nom d'utilisateur et votre nom.</field>
     <field name="LOGINPROBLEMSMESSAGE">Problèmes?</field>
+	<field name="RESETPASSTITLE">Confirmez la réinitialisation du mot de passe</field>
+	<field name="LABELRETYPEPASSWORD">Retaper</field>
+	<field name="RESETPASSBUTTON">Réinitialiser le mot de</field>
+	<field name="PLACEHOLDERRETYPEPASSWORD">Retaper le mot de passe</field>
+	<field name="PASSWORDISREQUIRED">Le mot de passe est nécessaire</field>
+	<field name="PASSWORDNOTMATCH">Le mot de passe ne correspond pas.</field>
+	<field name="RESETINVALIDTOKEN">Jeton de réinitialisation n'est pas valide.</field>
+	<field name="RESETPASSWORDOK">Le mot de passe a réussi changé.</field>
   </row>
   <row>
     <field name="LANGUAGE">sv-se</field>
@@ -127,7 +167,7 @@
     <field name="CREATEUSERFAIL">Användarnamn eller e-post redan i databasen. Kan inte lägga till.</field>
     <field name="CREATEUSEROK">Användare skapas. Ditt lösenord har skickats till din e-postadress.</field>
     <field name="FORGOTUSERFAIL">Email hittades inte.</field>
-    <field name="FORGOTUSEROK">Email hittades. Ditt nya lösenord har skickat.</field>
+    <field name="FORGOTUSEROK">Email hittade. Instruktionerna för att återställa ditt lösenord har skickats.</field>
     <field name="LOGINTITLE">Skriv in din inloggningsinformation</field>
     <field name="LOGINFORGOTMESSAGE">Jag har glömt mitt lösenord</field>
     <field name="LOGINCREATEUSERMESSAGE">Skapa användare</field>
@@ -144,10 +184,20 @@
     <field name="FORGOTPASSBUTTON">Skicka mitt lösenord till min e-postadress.</field>
     <field name="SUBJECTMESSAGE">{0}: Logga in bekräftelse</field>
     <field name="WELCOMEMESSAGE">{0} \n\nDu uppmanas att registrera sig på plats {1} \n nDin Login: {2} \nDin Lösenord: {3} (Varning: Detta lösenord är skiftlägeskänsligt) \n\nGå till URL adress {4} för att logga in och / eller ändra din profil.</field>
+    <field name="RESETSUBJECTMESSAGE">{0}: Återställ lösenord</field>
+    <field name="RESETPASSWORDMESSAGE">{0},\n\nDu uppmanas att byta lösenord på webbplatsen {1}\n\nDin Login: {2}\n\nFör att återställa ditt lösenord, klicka på URL-adressen {3}.</field>
     <field name="CAPTCHALABEL">Captcha:</field>
     <field name="CAPTCHAPLACEHOLDER">Skriv in uppgifterna från bilden</field>
     <field name="OBJECTIMAGEINVALID">Siffrorna du typer matchade inte. Du måste skriva texten på rätt sätt.</field>
 	<field name="INCOMPLETEDATA">Du måste ange en giltig e-postadress, användarnamn och ditt namn.</field>
     <field name="LOGINPROBLEMSMESSAGE">Problem?</field>
-  </row>
+  	<field name="RESETPASSTITLE">Bekräfta återställningslösenord</field>
+	<field name="LABELRETYPEPASSWORD">Upprepa</field>
+	<field name="RESETPASSBUTTON">Återställ lösenord</field>
+	<field name="PLACEHOLDERRETYPEPASSWORD">Upprepa lösenordet</field>
+	<field name="PASSWORDISREQUIRED">Lösenordet krävs</field>
+	<field name="PASSWORDNOTMATCH">Lösenordet stämmer inte.</field>
+	<field name="RESETINVALIDTOKEN">Återställ Token är ogiltig.</field>
+	<field name="RESETPASSWORDOK">Lösenordet lyckades förändrats.</field>
+</row>
 </anydataset>

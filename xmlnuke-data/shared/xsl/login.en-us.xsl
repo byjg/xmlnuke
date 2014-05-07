@@ -185,8 +185,8 @@
 				<xmlnuke-blockcentercss2 />
 			</form>
 
-			<xsl:if test="//Login/CanRetrievePassword">
-			<a href="module:Xmlnuke.Login?action=action.FORGOTPASSWORD" id="forgotpass"><xsl:value-of select="//l10n/LOGINFORGOTMESSAGE" /></a>
+			<xsl:if test="//Login/CanRetrievePassword='true'">
+			<a href="module:Xmlnuke.Login?action=action.FORGOTPASSWORD&amp;ReturnUrl={//Login/ReturnUrl}" id="forgotpass"><xsl:value-of select="//l10n/LOGINFORGOTMESSAGE" /></a>
 			</xsl:if>
 		</div>
 	</body>
@@ -210,7 +210,7 @@
 
 		<div>
 			<input type="submit" id="signIn" name="signIn" value="{//l10n/TXT_LOGIN}" class="btn left" />
-			<xsl:if test="CanRegister">
+			<xsl:if test="CanRegister='true'">
 			<input type="button" id="signUp" name="signUp" value="{//l10n/CREATEUSERBUTTON}" class="btn right"
 				onclick="$('#Action').val('action.NEWUSER'); $('.boxCont').submit();" />
 			</xsl:if>
@@ -260,6 +260,34 @@
 
 		<div>
 			<input type="submit" id="create" name="create" value="{//l10n/CREATEUSERBUTTON}" class="btn left" />
+		</div>
+	</xsl:template>
+
+	<!-- -->
+
+	<xsl:template match="Login[Action='action.RESETPASSWORD']">
+		<input type="hidden" name="Action" value="{NextAction}" />
+		<input type="hidden" name="ResetToken" value="{ResetToken}" />
+		<input type="hidden" name="Username" value="{Username}" />
+		<input type="hidden" name="ReturnUrl" value="{ReturnUrl}" />
+
+		<div>
+			<label for="password"><xsl:value-of select="//l10n/LABELUSERNAME" /></label>
+			<span class="input"><xsl:value-of select="Username" /></span>
+		</div>
+
+		<div>
+			<label for="password"><xsl:value-of select="//l10n/LABELPASSWORD" /></label>
+			<input id="password" type="password" name="password" placeholder="{//l10n/PLACEHOLDERPASSWORD}" />
+		</div>
+
+		<div>
+			<label for="password"><xsl:value-of select="//l10n/LABELRETYPEPASSWORD" /></label>
+			<input id="password2" type="password" name="password2" placeholder="{//l10n/PLACEHOLDERRETYPEPASSWORD}" />
+		</div>
+
+		<div>
+			<input type="submit" id="create" name="create" value="{//l10n/RESETPASSBUTTON}" class="btn left" />
 		</div>
 	</xsl:template>
 

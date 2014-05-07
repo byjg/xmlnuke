@@ -46,6 +46,8 @@ class Login extends \Xmlnuke\Core\Database\BaseModel
 	protected $_Action;
 	protected $_NextAction;
 
+	protected $_ResetToken;
+
 	protected $_ReturnUrl;
 
 	public function getUsername()
@@ -136,6 +138,16 @@ class Login extends \Xmlnuke\Core\Database\BaseModel
 	public function setReturnUrl($ReturnUrl)
 	{
 		$this->_ReturnUrl = $ReturnUrl;
+	}
+
+	public function getResetToken()
+	{
+		return $this->_ResetToken;
+	}
+
+	public function setResetToken($Token)
+	{
+		$this->_ResetToken = $Token;
 	}
 
 

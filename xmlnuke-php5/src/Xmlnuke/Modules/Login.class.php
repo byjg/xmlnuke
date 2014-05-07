@@ -39,6 +39,8 @@ class ModuleActionLogin extends \Xmlnuke\Core\Enum\ModuleAction
 	const NEWUSERCONFIRM = 'action.NEWUSERCONFIRM';
 	const FORGOTPASSWORD = 'action.FORGOTPASSWORD';
 	const FORGOTPASSWORDCONFIRM = 'action.FORGOTPASSWORDCONFIRM';
+	const RESETPASSWORD = 'action.RESETPASSWORD';
+	const RESETPASSWORDCONFIRM = 'action.RESETPASSWORDCONFIRM';
 }
 
 /**
@@ -146,6 +148,12 @@ class Login extends BaseModule
 			case ModuleActionLogin::NEWUSERCONFIRM :
 				$this->CreateNewUserConfirm();
 				break;
+			case ModuleActionLogin::RESETPASSWORD :
+				$this->ResetPassword();
+				break;
+			case ModuleActionLogin::RESETPASSWORDCONFIRM :
+				$this->ResetPasswordConfirm();
+				break;
 			default:
 				$this->FormLogin();
 				break;
@@ -242,11 +250,111 @@ class Login extends BaseModule
 		}
 		else
 		{
-			$newpassword = $this->getRandomPassword();
-			$user->setField($this->_users->getUserTable()->Password, $this->_users->getSHAPassword($newpassword));
-			$this->sendWelcomeMessage($myWords, $user->getField($this->_users->getUserTable()->Name), $user->getField($this->_users->getUserTable()->Username), $user->getField($this->_users->getUserTable()->Email), $newpassword );
+			$newpassword = sha1($this->getRandomPassword());
+			$user->setField('TOKEN_PWD_RESET', $newpassword);
 			$this->_users->Save();
+			$this->sendResetPasswordMessage($myWords, $user->getField($this->_users->getUserTable()->Name), $user->getField($this->_users->getUserTable()->Username), $user->getField($this->_users->getUserTable()->Email), $newpassword );
 			$container->addXmlnukeObject(new XmlnukeText($myWords->Value("FORGOTUSEROK"), true));
+			$this->FormLogin();
+		}
+	}
+
+	/**
+	 * Forgot Password
+	 *
+	 */
+	protected function ResetPassword()
+	{
+		if (!$this->_login->getCanRetrievePassword())
+		{
+			$this->FormLogin();
+			return;
+		}
+
+		$user = $this->_users->getUserName( $this->_login->getUsername() );
+		$myWords = $this->WordCollection();
+
+		if (is_null($user) || ($user->getField("TOKEN_PWD_RESET") != $this->_login->getResetToken()))
+		{
+			$container = new XmlnukeUIAlert($this->_context, UIAlert::BoxAlert);
+			$container->setAutoHide(5000);
+			$container->addXmlnukeObject(new XmlnukeText($myWords->Value("RESETINVALIDTOKEN"), true));
+			$this->_blockCenter->addXmlnukeObject($container);
+
+			$this->FormLogin();
+			return;
+		}
+
+		$this->defaultXmlnukeDocument->setPageTitle($myWords->Value("RESETPASSTITLE"));
+
+		$this->_login->setAction(ModuleActionLogin::RESETPASSWORD);
+		$this->_login->setNextAction(ModuleActionLogin::RESETPASSWORDCONFIRM);
+		$this->_login->setCanRegister(false); // Hide buttons
+		$this->_login->setCanRetrievePassword(false); // Hide buttons
+
+		return;
+	}
+
+	/**
+	 * Forgot Password Confirm
+	 *
+	 */
+	protected function ResetPasswordConfirm()
+	{
+		$myWords = $this->WordCollection();
+
+		if (!$this->_login->getCanRetrievePassword())
+		{
+			$this->FormLogin();
+			return;
+		}
+		elseif ($this->_login->getPassword() == "" || $this->_context->get('password2') == "")
+		{
+			$container = new XmlnukeUIAlert($this->_context, UIAlert::BoxAlert);
+			$container->setAutoHide(5000);
+			$container->addXmlnukeObject(new XmlnukeText($myWords->Value("PASSWORDISREQUIRED"), true));
+			$this->_blockCenter->addXmlnukeObject($container);
+
+			$this->ResetPassword();
+			return;
+		}
+		elseif ($this->_login->getPassword() != $this->_context->get('password2'))
+		{
+			$container = new XmlnukeUIAlert($this->_context, UIAlert::BoxAlert);
+			$container->setAutoHide(5000);
+			$container->addXmlnukeObject(new XmlnukeText($myWords->Value("PASSWORDNOTMATCH"), true));
+			$this->_blockCenter->addXmlnukeObject($container);
+
+			$this->ResetPassword();
+			return;
+		}
+
+		$user = $this->_users->getUserName( $this->_login->getUsername() );
+
+		if (is_null($user))
+		{
+			$this->FormLogin();
+		}
+		elseif ($user->getField("TOKEN_PWD_RESET") != $this->_login->getResetToken())
+		{
+			$container = new XmlnukeUIAlert($this->_context, UIAlert::BoxAlert);
+			$container->setAutoHide(5000);
+			$container->addXmlnukeObject(new XmlnukeText($myWords->Value("RESETINVALIDTOKEN"), true));
+			$this->_blockCenter->addXmlnukeObject($container);
+
+			$this->FormLogin();
+			return;
+		}
+		else
+		{
+			$newpassword = $this->_users->getSHAPassword($this->_login->getPassword());
+			$user->removeFieldName('TOKEN_PWD_RESET');
+			$user->setField($this->_users->getUserTable()->Password, $newpassword);
+			$this->_users->Save();
+			$container = new XmlnukeUIAlert($this->_context, UIAlert::ModalDialog, "");
+			$container->addRedirectButton($myWords->Value("TXT_BACK"), $this->_login->getReturnUrl());
+			$container->addXmlnukeObject(new XmlnukeText($myWords->Value("RESETPASSWORDOK"), true));
+			$this->_blockCenter->addXmlnukeObject($container);
 			$this->FormLogin();
 		}
 	}
@@ -391,12 +499,36 @@ class Login extends BaseModule
 	{
 		$path = $this->_context->get("SCRIPT_NAME");
 		$path = substr($path,0,strrpos($path,"/")+1);
-		$url = "http://" . $this->_context->get("SERVER_NAME").$path;
+		$url = "http://" . $this->_context->getServerName() . $path;
 		$body = $myWords->ValueArgs("WELCOMEMESSAGE", array($name, $this->_context->get("SERVER_NAME"), $user, $password, $url.$this->_context->bindModuleUrl("Xmlnuke.UserProfile")));
 
 		$envelope = new MailEnvelope(
 			MailUtil::getFullEmailName($name, $email),
 			$myWords->Value("SUBJECTMESSAGE", "[" . $this->_context->get("SERVER_NAME") . "]"),
+			$body
+		);
+		$envelope->Send();
+	}
+
+	/**
+	 * Send a email with user data profile
+	 *
+	 * @param LanguageCollection $myWords
+	 * @param String $name
+	 * @param String $user
+	 * @param String $email
+	 * @param String $password
+	 */
+	protected function sendResetPasswordMessage($myWords, $name, $user, $email, $token)
+	{
+		$path = $this->_context->get("SCRIPT_NAME");
+		$path = substr($path,0,strrpos($path,"/")+1);
+		$url = "http://" . $this->_context->getServerName() . $path;
+		$body = $myWords->ValueArgs("RESETPASSWORDMESSAGE", array($name, $this->_context->get("SERVER_NAME"), $user, $url.$this->_context->bindModuleUrl(str_replace('\\', '.', get_class()) . '?action=' . ModuleActionLogin::RESETPASSWORD . '&username=' . $user . '&resettoken=' . $token . '&returnurl=' . $this->_login->getReturnUrl())));
+
+		$envelope = new MailEnvelope(
+			MailUtil::getFullEmailName($name, $email),
+			$myWords->Value("RESETSUBJECTMESSAGE", "[" . $this->_context->getServerName() . "]"),
 			$body
 		);
 		$envelope->Send();
