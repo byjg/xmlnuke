@@ -456,4 +456,82 @@ class ObjectHandlerTest extends \PHPUnit_Framework_TestCase
 		);
 	}
 
+	public function testEmptyValues()
+	{
+		$model = new \stdClass();
+		$model->varFalse = false;
+		$model->varTrue = true;
+		$model->varZero = 0;
+		$model->varZeroStr = '0';      
+		$model->varNull = null;        // Sould not created
+		$model->varEmptyString = '';   // Sould not created
+
+		$this->object = new ObjectHandler($this->root, $model, 'xmlnuke');
+		$result = $this->object->CreateObjectFromModel();
+
+		$this->assertEquals(
+			\Xmlnuke\Util\XmlUtil::CreateXmlDocumentFromStr(
+				'<root>'
+					. '<varFalse>false</varFalse>'
+					. '<varTrue>true</varTrue>'
+					. '<varZero>0</varZero>'
+					. '<varZeroStr>0</varZeroStr>'
+					. '</root>'),
+			$this->document
+		);
+	}
+
+	public function testIterator()
+	{
+		$model = new \Xmlnuke\Core\AnyDataset\AnyDataSet();
+		$model->AddField("id", 10);
+		$model->AddField("name", 'Testing');
+
+		$model->appendRow();
+		$model->AddField("id", 20);
+		$model->AddField("name", 'Other');
+
+		$iterator = $model->getIterator();
+
+		$this->object = new ObjectHandler($this->root, $iterator, 'xmlnuke');
+		$result = $this->object->CreateObjectFromModel();
+
+		$this->assertEquals(
+			\Xmlnuke\Util\XmlUtil::CreateXmlDocumentFromStr(
+				'<root>'
+					. '<row>'
+					. '<field name="id">10</field>'
+					. '<field name="name">Testing</field>'
+					. '</row>'
+					. '<row>'
+					. '<field name="id">20</field>'
+					. '<field name="name">Other</field>'
+					. '</row>'
+					. '</root>'),
+			$this->document
+		);
+
+	}
+
+	public function testLanguageCollection()
+	{
+		$model = new \Xmlnuke\Core\Locale\LanguageCollection();
+		$model->addText(Context::getInstance()->Language()->getName(), 'TEXT_WARNING', 'Aviso');
+		$model->addText(Context::getInstance()->Language()->getName(), 'TEXT_NEW', 'Novo');
+
+		$this->object = new ObjectHandler($this->root, $model, 'xmlnuke');
+		$result = $this->object->CreateObjectFromModel();
+
+		$this->assertEquals(
+			\Xmlnuke\Util\XmlUtil::CreateXmlDocumentFromStr(
+				'<root>'
+					. '<l10n>'
+					. '<TEXT_WARNING>Aviso</TEXT_WARNING>'
+					. '<TEXT_NEW>Novo</TEXT_NEW>'
+					. '</l10n>'
+					. '</root>'),
+			$this->document
+		);
+
+	}
 }

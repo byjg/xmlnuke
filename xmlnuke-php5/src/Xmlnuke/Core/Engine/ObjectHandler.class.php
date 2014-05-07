@@ -120,6 +120,17 @@ class ObjectHandler
 			}
 			return $this->_current;
 		}
+		elseif ($this->_model instanceof \Xmlnuke\Core\Locale\LanguageCollection)
+		{
+			$keys = $this->_model->getCollection();
+			$l10n = XmlUtil::CreateChild($this->_current, "l10n");
+			foreach ($keys as $key=>$value)
+			{
+				XmlUtil::CreateChild($l10n, $key, $value);
+			}
+			return $this->_current;
+		}
+
 
 		$classMeta = $this->getClassInfo();
 
@@ -400,6 +411,10 @@ class ObjectHandler
 					{
 						$used = XmlUtil::CreateChild($node, $propMeta[ObjectHandler::PropName]);
 						XmlUtil::AddAttribute($used, "rdf:resource", $propMeta[ObjectHandler::PropValue]);
+					}
+					elseif (is_bool($propMeta[ObjectHandler::PropValue]))
+					{
+						$used = XmlUtil::CreateChild($node, $propMeta[ObjectHandler::PropName], $propMeta[ObjectHandler::PropValue] ? 'true' : 'false');
 					}
 					else
 					{
