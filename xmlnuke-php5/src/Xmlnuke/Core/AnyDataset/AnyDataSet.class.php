@@ -139,7 +139,11 @@ class AnyDataSet
 				$fields =  $row->getElementsByTagName("field");
 				foreach ($fields as $field)
 				{
-					$sr->addField($field->attributes->getNamedItem("name")->nodeValue, $field->nodeValue);
+					$attr = $field->attributes->getNamedItem("name");
+					if ($attr != null)
+						$sr->addField($attr->nodeValue, $field->nodeValue);
+					else
+						throw new \InvalidArgumentException('Malformed anydataset file ' . basename($filepath));
 				}
 				$sr->acceptChanges();
 				$this->_collection[] = $sr;
