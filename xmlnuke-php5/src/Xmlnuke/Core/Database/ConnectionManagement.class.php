@@ -223,6 +223,10 @@ class ConnectionManagement
 			// Set the Driver
 			$this->setDriver ( $parts ['driver'] );
 
+			if (!isset($parts['path']) && !isset($parts['host']))
+                                throw new InvalidArgumentException("Connection string " . $this->_dbconnectionstring . " is invalid! Please fix it.");
+
+
 			// If a path pattern was found set it; otherwise define the database properties
 			if (array_key_exists('path', $parts) && (!empty($parts['path'])))
 				$this->setFilePath ($parts['path']);
