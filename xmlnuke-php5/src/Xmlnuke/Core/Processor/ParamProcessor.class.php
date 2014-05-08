@@ -151,7 +151,14 @@ class ParamProcessor
 				break;
 			
 			case "module":
-				$result = $this->_context->UrlModule() . $arResult["port"][0] . "?module=" . $arResult["host"][0];
+				if ($arResult['host'][0] == '__self__')
+				{
+					$result = $this->_context->UrlModule() . $arResult["port"][0] . "?module=" . $this->_context->getModule();
+				}
+				else
+				{
+					$result = $this->_context->UrlModule() . $arResult["port"][0] . "?module=" . $arResult["host"][0];
+				}
 				$sep = "&";
 				break;
 				
