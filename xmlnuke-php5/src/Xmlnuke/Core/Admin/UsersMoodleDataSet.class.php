@@ -145,6 +145,7 @@ class UsersMoodleDataSet extends UsersDBDataSet
 
 		if ($user != null)
 		{
+			// Get the user's roles from moodle
 			$sqlRoles = 'SELECT shortname
 						 FROM
 							mdl_role AS r
@@ -157,14 +158,21 @@ class UsersMoodleDataSet extends UsersDBDataSet
 						group by shortname';
 			$param = array("id" => $user->getField($this->getUserTable()->Id));
 			$it = $this->_DB->getIterator($sqlRoles, $param);
-
-			$user->setField($this->getUserTable()->Admin, 'no');
 			foreach ($it as $sr)
 			{
-				if ($sr->getField('shortname') == 'admin')
-					$user->setField($this->getUserTable()->Admin, 'yes');
-
 				$user->AddField("roles", $sr->getField('shortname'));
+			}
+
+			// Find the moodle site admin (super user)
+			$user->setField($this->getUserTable()->Admin, 'no');
+			$sqlAdmin = "select value from mdl_config where name = 'siteadmins'";
+			$it = $this->_DB->getIterator($sqlAdmin);
+			if ($it->hasNext())
+			{
+				$sr = $it->moveNext();
+				$siteAdmin = ',' . $sr->getField('value') . ',';
+				$isAdmin = (strpos($siteAdmin, ",{$user->getField($this->getUserTable()->Id)},") !== false);
+				$user->setField($this->getUserTable()->Admin, $isAdmin ? 'yes' : 'no');
 			}
 		}
 
