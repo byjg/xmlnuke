@@ -39,6 +39,7 @@ use Xmlnuke\Core\Processor\AnydatasetBaseFilenameProcessor;
 use Xmlnuke\Core\Processor\AnydatasetLangFilenameProcessor;
 use Xmlnuke\Core\Processor\ForceFilenameLocation;
 use Xmlnuke\Util\Debug;
+use Xmlnuke\Util\FileUtil;
 
 /**
  * LanguageCollection class create a NameValueCollection but only add elements from the current language context
@@ -163,40 +164,31 @@ class LanguageCollection
 		}
 
 		$this->_loadedFromFile = false;
-		
-		$i = 0;
-		
-		while ($i++ < 2)
-		{
-			if ( ($langFile->getFilenameLocation() == ForceFilenameLocation::UseWhereExists) || ($langFile->getFilenameLocation() == ForceFilenameLocation::SharedPath) || ($langFile->getFilenameLocation() == ForceFilenameLocation::PrivatePath) )
-			{
-				if ($i == 1)
-				{
-					$langFile->setFilenameLocation(ForceFilenameLocation::SharedPath);
-				}
-				else
-				{
-					$langFile->setFilenameLocation(ForceFilenameLocation::PrivatePath);
-				}
-			}
-			else
-			{
-				$i = 2; // Force exit from loop at the end. 
-			}
 
-			$this->_debugInfo .= $langFile->ToString() . " in " . $langFile->getFilenameLocation() . "(\"" . $langFile->FullQualifiedNameAndPath() . "\") ";
-			if (!$langFile->Exists())
+		$paths = array();
+		if ($langFile->getFilenameLocation() == ForceFilenameLocation::UseWhereExists || ($langFile->getFilenameLocation() == ForceFilenameLocation::SharedPath))
+			$paths[] = $langFile->SharedPath();
+		if ($langFile->getFilenameLocation() == ForceFilenameLocation::UseWhereExists || ($langFile->getFilenameLocation() == ForceFilenameLocation::PrivatePath))
+			$paths = array_merge($paths, $langFile->PrivatePath());
+
+		foreach ($paths as $path)
+		{
+
+			$filename = $path . $langFile->FullQualifiedName();
+			
+			$this->_debugInfo .= $langFile->ToString() . " in " . $filename . ' ';
+			if (!FileUtil::Exists($filename))
 			{
-				$this->_debugInfo .= "Does not exists; \n";
+				$this->_debugInfo .= "[Does not exists]; \n";
 				continue;
 			}
 			
-			$this->_debugInfo .= "Exists; \n";
+			$this->_debugInfo .= "[Exists]; \n";
 			
 			$curLang = strtolower($this->_context->Language()->getName());
 			try 
 			{
-				$lang = new AnyDataSet( $langFile );
+				$lang = new AnyDataSet( $filename );
 			}
 			catch (Exception $e)
 			{
