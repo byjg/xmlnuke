@@ -51,7 +51,7 @@ class ModuleActionLogin extends \Xmlnuke\Core\Enum\ModuleAction
  */
 namespace Xmlnuke\Modules;
 
-use Xmlnuke\Core\Admin\UsersAnyDataSet;
+use Xmlnuke\Core\Admin\IUsersBase;
 use Xmlnuke\Core\Classes\MailEnvelope;
 use Xmlnuke\Core\Classes\PageXml;
 use Xmlnuke\Core\Classes\XmlBlockCollection;
@@ -60,11 +60,13 @@ use Xmlnuke\Core\Classes\XmlnukeManageUrl;
 use Xmlnuke\Core\Classes\XmlnukeText;
 use Xmlnuke\Core\Classes\XmlnukeUIAlert;
 use Xmlnuke\Core\Enum\BlockPosition;
+use Xmlnuke\Core\Enum\DATEFORMAT;
 use Xmlnuke\Core\Enum\UIAlert;
 use Xmlnuke\Core\Locale\LanguageCollection;
 use Xmlnuke\Core\Module\BaseModule;
 use Xmlnuke\Core\Processor\XSLFilenameProcessor;
 use Xmlnuke\Model\Login as LoginModel;
+use Xmlnuke\Util\DateUtil;
 use Xmlnuke\Util\MailUtil;
 
 class Login extends BaseModule
@@ -72,7 +74,7 @@ class Login extends BaseModule
 	/**
 	 * Users
 	 *
-	 * @var UsersAnyDataSet
+	 * @var IUsersBase
 	 */
 	protected $_users;
 		
@@ -252,6 +254,7 @@ class Login extends BaseModule
 		{
 			$newpassword = sha1($this->getRandomPassword());
 			$user->setField('TOKEN_PWD_RESET', $newpassword);
+			$user->setField('TOKEN_PWD_RESET_VALID', DateUtil::DateAdd(DateUtil::Today(DATEFORMAT::YMD), 2, DATEFORMAT::YMD));
 			$this->_users->Save();
 			$this->sendResetPasswordMessage($myWords, $user->getField($this->_users->getUserTable()->Name), $user->getField($this->_users->getUserTable()->Username), $user->getField($this->_users->getUserTable()->Email), $newpassword );
 			$container->addXmlnukeObject(new XmlnukeText($myWords->Value("FORGOTUSEROK"), true));
@@ -271,10 +274,13 @@ class Login extends BaseModule
 			return;
 		}
 
-		$user = $this->_users->getUserName( $this->_login->getUsername() );
 		$myWords = $this->WordCollection();
 
-		if (is_null($user) || ($user->getField("TOKEN_PWD_RESET") != $this->_login->getResetToken()))
+		$user = $this->_users->getUserName( $this->_login->getUsername() );
+		$tokenValid = $user->getField("TOKEN_PWD_RESET") == $this->_login->getResetToken()
+				&& $user->getField("TOKEN_PWD_RESET_VALID") >= \Xmlnuke\Util\DateUtil::Today(\Xmlnuke\Core\Enum\DATEFORMAT::YMD);
+
+		if (is_null($user) || !$tokenValid)
 		{
 			$container = new XmlnukeUIAlert($this->_context, UIAlert::BoxAlert);
 			$container->setAutoHide(5000);
@@ -331,7 +337,10 @@ class Login extends BaseModule
 
 		$user = $this->_users->getUserName( $this->_login->getUsername() );
 
-		if (is_null($user))
+		$tokenValid = $user->getField("TOKEN_PWD_RESET") == $this->_login->getResetToken()
+				&& $user->getField("TOKEN_PWD_RESET_VALID") >= \Xmlnuke\Util\DateUtil::Today(\Xmlnuke\Core\Enum\DATEFORMAT::YMD);
+
+		if (is_null($user) || !$tokenValid)
 		{
 			$this->FormLogin();
 		}
@@ -348,7 +357,8 @@ class Login extends BaseModule
 		else
 		{
 			$newpassword = $this->_users->getSHAPassword($this->_login->getPassword());
-			$user->removeFieldName('TOKEN_PWD_RESET');
+			$user->setField('TOKEN_PWD_RESET', '');
+			$user->setField('TOKEN_PWD_RESET_VALID', '');
 			$user->setField($this->_users->getUserTable()->Password, $newpassword);
 			$this->_users->Save();
 			$container = new XmlnukeUIAlert($this->_context, UIAlert::ModalDialog, "");
