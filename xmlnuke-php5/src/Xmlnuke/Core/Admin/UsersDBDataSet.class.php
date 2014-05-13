@@ -73,17 +73,61 @@ class UsersDBDataSet extends UsersBase
             $srOri = $this->_cacheUserOriginal[$key];
             $srMod = $this->_cacheUserWork[$key];
 
-            $changed = false;
-            foreach ($srOri->getFieldNames() as $keyfld=>$fieldname)
+			// Look for changes
+            $changeUser = false;
+            foreach ($srMod->getFieldNames() as $keyfld=>$fieldname)
             {
+				$userField = ($fieldname == $this->getUserTable()->Name
+					|| $fieldname == $this->getUserTable()->Email
+					|| $fieldname == $this->getUserTable()->Username
+					|| $fieldname == $this->getUserTable()->Password
+					|| $fieldname == $this->getUserTable()->Created
+					|| $fieldname == $this->getUserTable()->Admin
+					|| $fieldname == $this->getUserTable()->Id
+				);
                 if ($srOri->getField($fieldname) != $srMod->getField($fieldname))
                 {
-                    $changed = true;
-                    break;
+					// This change is in the Users table or is a Custom property?
+					if ($userField)
+					{
+						$changeUser = true;
+					}
+					else
+					{
+						// Erase Old Custom Properties
+						$sql = "DELETE FROM ". $this->getCustomTable()->Table
+								. " WHERE " . $this->getUserTable()->Id . " = [[id]] "
+								. "   AND " . $this->getCustomTable()->Name . " = [[name]] "
+								. "   AND " . $this->getCustomTable()->Value . " = [[value]] ";
+
+						$param = array(
+							'id' => $srMod->getField($this->getUserTable()->Id),
+							'name' => $fieldname,
+							'value' => $srOri->getField($fieldname)
+						);
+						$this->_DB->execSQL($sql, $param);
+
+						// If new Value is_empty does not add
+						if ($srMod->getField($fieldname) == "")
+							continue;
+
+						// Insert new Value
+						$sql = " INSERT INTO ".$this->getCustomTable()->Table
+								. "( ".$this->getUserTable()->Id  .", ".$this->getCustomTable()->Name.", ".$this->getCustomTable()->Value.") "
+								. " VALUES ( [[id]], [[name]], [[value]] ) ";
+
+						$param = array();
+						$param["id"] = $srMod->getField($this->getUserTable()->Id);
+						$param["name"] = $fieldname;
+						$param["value"] = $srMod->getField($fieldname);
+
+						$this->_DB->execSQL($sql, $param);
+
+					}
                 }
             }
 
-            if($changed)
+            if($changeUser)
 			{
 				$sql = "UPDATE ".$this->getUserTable()->Table;
 				$sql .= " SET ".$this->getUserTable()->Name." = [[".$this->getUserTable()->Name."]] ";
