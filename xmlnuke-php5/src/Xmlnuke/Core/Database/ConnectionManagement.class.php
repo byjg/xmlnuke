@@ -36,6 +36,7 @@ use Xmlnuke\Core\AnyDataset\IteratorFilter;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\Relation;
 use Xmlnuke\Core\Exception\DataBaseException;
+use Xmlnuke\Core\Exception\NotFoundException;
 use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
 
 /**
@@ -169,17 +170,31 @@ class ConnectionManagement
 	{
 		$this->_context = Context::getInstance();
 
-		$configFile = new AnydatasetFilenameProcessor ( "_db");
-		$config = new AnyDataSet ( $configFile );
-		$filter = new IteratorFilter ( );
-		$filter->addRelation ( "dbname", Relation::Equal, $dbname );
-		$it = $config->getIterator ( $filter );
-		if (! $it->hasNext ())
+		if (!preg_match('~^(\w+)://~', $dbname))
 		{
-			throw new DataBaseException ( "Connection string " . $dbname . " not found in _db.anydata.xml config!", 1001 );
-		}
+			$configFile = new AnydatasetFilenameProcessor ( "_db");
+			if (!$configFile->Exists())
+			{
+				throw new NotFoundException ( "Database file config '_db.anydata.xml' not found!");
+			}
 
-		$data = $it->moveNext ();
+			$config = new AnyDataSet ( $configFile );
+			$filter = new IteratorFilter ( );
+			$filter->addRelation ( "dbname", Relation::Equal, $dbname );
+			$it = $config->getIterator ( $filter );
+			if (! $it->hasNext ())
+			{
+				throw new DataBaseException ( "Connection string " . $dbname . " not found in _db.anydata.xml config!", 1001 );
+			}
+
+			$data = $it->moveNext ();
+		}
+		else
+		{
+			$data = new \Xmlnuke\Core\AnyDataset\SingleRow();
+			$data->AddField('dbtype', 'dsn');
+			$data->AddField('dbconnectionstring', $dbname);
+		}
 
 		$this->setDbType ( $data->getField ( "dbtype" ) );
 		$this->setDbConnectionString ( $data->getField ( "dbconnectionstring" ) );
