@@ -45,17 +45,6 @@ class  ArrayCacheEngine extends BaseSingleton implements ICacheEngine
 
 	protected $_L1Cache = array();
 
-	/**
-	 * This method is necessary only because PHP 5.2.x or lower does not support the method "get_called_class"
-	 * @deprecated since version 3.5
-	 * @return type
-	 */
-	public static function getInstance()
-	{
-		return self::manageInstances("ArrayCacheEngine");
-	}
-
-
 	protected function __construct()
 	{
 		$this->_context = Context::getInstance();
