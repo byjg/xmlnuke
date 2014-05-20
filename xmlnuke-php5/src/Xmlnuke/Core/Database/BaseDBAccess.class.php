@@ -31,6 +31,7 @@
 namespace Xmlnuke\Core\Database;
 
 use InvalidArgumentException;
+use Xmlnuke\Core\AnyDataset\CachedDBDataset;
 use Xmlnuke\Core\AnyDataset\DBDataSet;
 use Xmlnuke\Core\AnyDataset\IIterator;
 use Xmlnuke\Core\Cache\ICacheEngine;
@@ -114,7 +115,7 @@ abstract class BaseDBAccess
 		{
 			if (is_null($this->_cachedDb))
 			{
-				$this->_cachedDb = new CachedDBDataSet($this->getDataBaseName(), $this->getCacheEngine());
+				$this->_cachedDb = new CachedDBDataset($this->getDataBaseName(), $this->getCacheEngine());
 			}
 
 			return $this->_cachedDb;
