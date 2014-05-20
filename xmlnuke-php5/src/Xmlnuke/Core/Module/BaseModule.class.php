@@ -39,8 +39,10 @@ use Xmlnuke\Core\Classes\PageXml;
 use Xmlnuke\Core\Classes\XmlnukeDocument;
 use Xmlnuke\Core\Classes\XmlnukeManageUrl;
 use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Engine\Object;
 use Xmlnuke\Core\Enum\AccessLevel;
 use Xmlnuke\Core\Enum\AuthMode;
+use Xmlnuke\Core\Enum\OutputData;
 use Xmlnuke\Core\Enum\SSLAccess;
 use Xmlnuke\Core\Enum\URLTYPE;
 use Xmlnuke\Core\Enum\UserProperty;
@@ -49,7 +51,7 @@ use Xmlnuke\Core\Exception\InsufficientPrivilegeException;
 use Xmlnuke\Core\Exception\NotImplementedException;
 use Xmlnuke\Core\Locale\LanguageCollection;
 use Xmlnuke\Core\Locale\LanguageFactory;
-use Xmlnuke\Core\Processor\XMLCacheFilenameProcessor;
+use Xmlnuke\Core\Processor\CacheFilenameProcessor;
 use Xmlnuke\Core\Processor\XMLFilenameProcessor;
 use Xmlnuke\Core\Processor\XSLFilenameProcessor;
 use Xmlnuke\Util\Debug;
@@ -77,7 +79,7 @@ abstract class BaseModule implements IModule
 
 	/**
 	 * Cache file module
-	 * @var XMLCacheFilenameProcessor
+	 * @var CacheFilenameProcessor
 	 */
 	protected $_cacheFile;
 
@@ -168,7 +170,7 @@ abstract class BaseModule implements IModule
 		$this->_start = microtime(true);
 		$this->_xmlModuleName = $xmlModuleName;
 		$this->_context = Context::getInstance();
-		$this->_cacheFile = new XMLCacheFilenameProcessor($this->_xmlModuleName->ToString());
+		$this->_cacheFile = new CacheFilenameProcessor($this->_xmlModuleName->ToString());
 		$this->_action = $this->_context->get("action");
 		if ($this->_action == "")
 		{
@@ -551,7 +553,7 @@ abstract class BaseModule implements IModule
 
 	/**
 	 * Force a specific output if the return is not null and ignores the parameter "raw"
-	 * @return \Xmlnuke\Core\Enum\OutputData
+	 * @return OutputData
 	 */
 	public function getOutputFormat()
 	{

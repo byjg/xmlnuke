@@ -35,6 +35,9 @@ namespace Xmlnuke\Core\Processor;
 
 use Xmlnuke\Util\FileUtil;
 
+/**
+ * @deprecated since version 4.00.1
+ */
 class XMLCacheFilenameProcessor extends FilenameProcessor
 {
 	/**

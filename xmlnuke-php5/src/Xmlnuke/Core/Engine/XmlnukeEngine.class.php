@@ -49,7 +49,6 @@ use Xmlnuke\Core\Module\IModule;
 use Xmlnuke\Core\Processor\ForceFilenameLocation;
 use Xmlnuke\Core\Processor\ParamProcessor;
 use Xmlnuke\Core\Processor\SnippetProcessor;
-use Xmlnuke\Core\Processor\XMLCacheFilenameProcessor;
 use Xmlnuke\Core\Processor\XMLFilenameProcessor;
 use Xmlnuke\Core\Processor\XSLFilenameProcessor;
 use Xmlnuke\Util\FileUtil;
@@ -137,8 +136,7 @@ class XmlnukeEngine
 	public function TransformDocumentNoArgs()
 	{
 		// Creating FileNames will be used in this functions.
-		$xmlCacheFile = new XMLCacheFilenameProcessor($this->_context->getXml());
-		$cacheName = $xmlCacheFile->FullQualifiedNameAndPath();
+		$cacheName = $this->_context->getXml() . ".html";
 
 		$result = $this->_context->getXSLCacheEngine()->get($cacheName, 7200);
 
@@ -175,8 +173,7 @@ class XmlnukeEngine
 	{
 		$ttl = $module->useCache();
 
-		$cacheProc = new XMLCacheFilenameProcessor($module->getCacheId());
-		$cacheName = $cacheProc->FullQualifiedNameAndPath();
+		$cacheName = $module->getCacheId() . '.module';
 
 		$cacheEngine = $module->getCacheEngine();
 		$result = $cacheEngine->get($cacheName, $ttl);
@@ -233,11 +230,8 @@ class XmlnukeEngine
 	
 	public function TransformDocumentRemote($url)
 	{
-		$cachename = str_replace(".", "_", "REMOTE-" . UsersBase::getSHAPassword($url));
-		$cacheFile = new XMLCacheFilenameProcessor($cachename);
-
 		$cacheEngine = $this->_context->getXSLCacheEngine();
-		$file = $cacheFile->FullQualifiedNameAndPath();
+		$file = str_replace(".", "_", "remote-" . UsersBase::getSHAPassword($url));
 
 		$result = $cacheEngine->get($file, 60);
 		if ($result !== false)

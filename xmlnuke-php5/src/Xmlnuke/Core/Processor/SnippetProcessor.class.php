@@ -75,9 +75,7 @@ class SnippetProcessor
 	*/
 	public function IncludeSnippet($xslPath)
 	{
-		$xslCache = new XSLCacheFilenameProcessor($this->_file->ToString());
-		$xslName = $xslCache->FullQualifiedNameAndPath();
-
+		$xslName = $this->_file->ToString() . '.' . strtolower($this->_context->Language()->getName()) . '.xsl';
 
 		$cacheEngine = $this->_context->getXSLCacheEngine();
 		$result = $cacheEngine->get($xslName, 7200);
