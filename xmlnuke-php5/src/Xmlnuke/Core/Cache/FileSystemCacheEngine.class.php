@@ -33,6 +33,7 @@ namespace Xmlnuke\Core\Cache;
 use Exception;
 use Xmlnuke\Core\Classes\BaseSingleton;
 use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Processor\CacheFilenameProcessor;
 use Xmlnuke\Util\FileUtil;
 use Xmlnuke\Util\LogWrapper;
 
@@ -42,18 +43,7 @@ class  FileSystemCacheEngine extends BaseSingleton implements ICacheEngine
 	 *
 	 * @var Context
 	 */
-	protected $_context = null;
-
-	/**
-	 * This method is necessary only because PHP 5.2.x or lower does not support the method "get_called_class"
-	 * @deprecated since version 3.5
-	 * @return FileSystemCacheEngine
-	 */
-	public static function getInstance()
-	{
-		return self::manageInstances("FileSystemCacheEngine");
-	}
-
+	protected $_context = null;	
 
 	protected function __construct()
 	{ 
@@ -87,7 +77,8 @@ class  FileSystemCacheEngine extends BaseSingleton implements ICacheEngine
 		}
 
 		// Check if file is Locked
-		$lockFile = $key . ".lock";
+		$fileKey = $this->fixKey($key);
+		$lockFile = $fileKey . ".lock";
 		if (file_exists($lockFile))
 		{
 			$log->trace("[Cache] Locked! $key. Waiting...");
@@ -111,9 +102,9 @@ class  FileSystemCacheEngine extends BaseSingleton implements ICacheEngine
 		}
 
 		// Check if file exists
-		if (file_exists($key))
+		if (file_exists($fileKey))
 		{
-			$fileAge = filemtime($key);
+			$fileAge = filemtime($fileKey);
 
 			if (($ttl > 0) && (intval(time() - $fileAge) > $ttl))
 			{
@@ -123,7 +114,7 @@ class  FileSystemCacheEngine extends BaseSingleton implements ICacheEngine
 			else
 			{
 				$log->trace("[Cache] Get '$key'");
-				return FileUtil::QuickFileRead($key);
+				return unserialize(FileUtil::QuickFileRead($fileKey));
 			}
 		}
 		else
@@ -144,19 +135,21 @@ class  FileSystemCacheEngine extends BaseSingleton implements ICacheEngine
 	{
 		$log = LogWrapper::getLogger("cache.filesystemcacheengine");
 
+		$fileKey = $this->fixKey($key);
+
 		if (!$this->_context->getNoCache())
 		{
 			$log->trace("[Cache] Set '$key' in FileSystem");
 
 			try
 			{
-				if (FileUtil::Exists($key))
-					FileUtil::DeleteFileString ($key);
+				if (FileUtil::Exists($fileKey))
+					FileUtil::DeleteFileString ($fileKey);
 
 				if (is_string($object) && (strlen($object) == 0))
-					touch($key);
+					touch($fileKey);
 				else
-					FileUtil::QuickFileWrite($key, $object);
+					FileUtil::QuickFileWrite($fileKey, serialize($object));
 			}
 			catch (Exception $ex)
 			{
@@ -179,13 +172,15 @@ class  FileSystemCacheEngine extends BaseSingleton implements ICacheEngine
 	{
 		$log = LogWrapper::getLogger("cache.filesystemcacheengine");
 
+		$fileKey = $this->fixKey($key);
+
 		if (!$this->_context->getNoCache())
 		{
 			$log->trace("[Cache] Append '$key' in FileSystem");
 
 			try
 			{
-				FileUtil::QuickFileWrite($key, $content, true);
+				FileUtil::QuickFileWrite($fileKey, serialize($content), true);
 			}
 			catch (Exception $ex)
 			{
@@ -207,7 +202,7 @@ class  FileSystemCacheEngine extends BaseSingleton implements ICacheEngine
 		$log = LogWrapper::getLogger("cache.filesystemcacheengine");
 		$log->trace("[Cache] Lock '$key'");
 
-		$lockFile = $key . ".lock";
+		$lockFile = $this->fixKey($key) . ".lock";
 
 		try
 		{
@@ -228,11 +223,18 @@ class  FileSystemCacheEngine extends BaseSingleton implements ICacheEngine
 		$log = LogWrapper::getLogger("cache.filesystemcacheengine");
 		$log->trace("[Cache] Unlock '$key'");
 
-		$lockFile = $key . ".lock";
+		$lockFile = $this->fixKey($key) . ".lock";
 		
 		if (file_exists($lockFile))
 			FileUtil::DeleteFileString($lockFile);
 	}
 
+	protected function fixKey($key)
+	{
+		$cache = new CacheFilenameProcessor($key);
+		$cachePathName = $cache->FullQualifiedNameAndPath();
+
+		return $cachePathName;
+	}
 }
 ?>
