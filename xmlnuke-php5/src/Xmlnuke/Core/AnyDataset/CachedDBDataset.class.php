@@ -65,13 +65,23 @@ class CachedDBDataset extends DBDataSet
 	{
 		$key1 = md5($sql);
 
-		if (is_array($array))
-			$key2 = ":" . md5(json_encode ($array));
+		// Check which parameter exists in the SQL
+		$arKey2 = array();
+		foreach($array as $key=>$value)
+		{
+			if (preg_match("/\[\[$key\]\]/", $sql))
+				$arKey2[$key] = $value;
+		}
+
+		// Define the query key
+		if (is_array($arKey2) && count($arKey2) > 0)
+			$key2 = ":" . md5(json_encode ($arKey2));
 		else
 			$key2 = "";
-
 		$key = "qry:" . $key1 . $key2;
-		$cache = $this->_cacheEngine->get($key);
+
+		// Get the CACHE
+		$cache = $this->_cacheEngine->get($key, $ttl);
 		if ($cache === false)
 		{
 			$cache = array();
