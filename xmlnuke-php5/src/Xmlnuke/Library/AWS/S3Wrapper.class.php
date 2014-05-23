@@ -27,6 +27,10 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
+namespace AWS;
+
+use Exception;
+
 class S3Wrapper
 {
 
@@ -50,7 +54,7 @@ class S3Wrapper
 
 	/**
 	 *
-	 * @return \S3
+	 * @return S3
 	 * @throws Exception
 	 */
 	protected function getInstance()

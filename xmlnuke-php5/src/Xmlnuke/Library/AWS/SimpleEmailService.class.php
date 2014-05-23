@@ -37,6 +37,8 @@
 *
 */
 
+namespace AWS;
+
 /**
 * Amazon SimpleEmailService PHP class
 *

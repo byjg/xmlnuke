@@ -1,5 +1,7 @@
 <?php
 
+namespace AWS;
+
     // This is a fresh rewrite of the previous S3 class using PHP 5.
     // All transfers are done using PHP's native curl extension rather
     // than piping everything to the command line as before. (That was

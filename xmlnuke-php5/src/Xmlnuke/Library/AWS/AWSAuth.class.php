@@ -27,6 +27,13 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
+namespace AWS;
+
+use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use Xmlnuke\Core\Enum\Relation;
+use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
+
 class AWSAuth
 {
 	protected $_accessKey = "";
