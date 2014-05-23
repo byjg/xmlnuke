@@ -233,7 +233,7 @@ class HtmlWrapper extends BaseSingleton implements IOutputWrapper
 		$context = Context::getInstance();
 
 		$className = $context->get('xmlnuke.POST_PROCESS_RESULT');
-		if (empty($class))
+		if (empty($className))
 			$className = "\Xmlnuke\Core\Processor\BaseProcessResult";
 
 		$class = new $className();
