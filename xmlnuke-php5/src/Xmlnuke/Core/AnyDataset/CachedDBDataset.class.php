@@ -67,10 +67,15 @@ class CachedDBDataset extends DBDataSet
 
 		// Check which parameter exists in the SQL
 		$arKey2 = array();
-		foreach($array as $key=>$value)
+		if (is_array($array))
 		{
-			if (preg_match("/\[\[$key\]\]/", $sql))
-				$arKey2[$key] = $value;
+			foreach($array as $key=>$value)
+			{
+				if (preg_match("/\[\[$key\]\]/", $sql))
+				{
+					$arKey2[$key] = $value;
+				}
+			}
 		}
 
 		// Define the query key
