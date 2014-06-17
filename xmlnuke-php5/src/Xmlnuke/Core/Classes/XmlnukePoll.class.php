@@ -37,6 +37,7 @@ use Xmlnuke\Core\Enum\LanguageFileTypes;
 use Xmlnuke\Core\Enum\Relation;
 use Xmlnuke\Core\Locale\LanguageCollection;
 use Xmlnuke\Core\Locale\LanguageFactory;
+use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
 use Xmlnuke\Util\XmlUtil;
 
 /**
@@ -113,7 +114,7 @@ class  XmlnukePoll extends XmlnukeDocumentObject
 		}
 		$this->_processed = false;
 		$this->getPollConfig();
-		$this->_myWords = LanguageFactory::GetLanguageCollection(LanguageFileTypes::OBJECT, "com.xmlnuke.classes.xmlnukepoll");
+		$this->_myWords = LanguageFactory::GetLanguageCollection(get_class());
 	}
 
 	/**
