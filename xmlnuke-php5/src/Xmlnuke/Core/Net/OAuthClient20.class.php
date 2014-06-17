@@ -5,6 +5,17 @@
  */
 namespace Xmlnuke\Core\Net;
 
+use baseOAuth20;
+use InvalidArgumentException;
+use ReflectionClass;
+use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Enum\Relation;
+use Xmlnuke\Core\Exception\NotAuthenticatedException;
+use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
+use Xmlnuke\Util\WebRequest;
+
 class OAuthClient20
 {
 	/* The OAuth Client ID Parameter */
