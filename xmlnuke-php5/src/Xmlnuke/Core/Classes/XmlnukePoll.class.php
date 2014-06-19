@@ -33,7 +33,6 @@ use Xmlnuke\Core\AnyDataset\AnyDataSet;
 use Xmlnuke\Core\AnyDataset\DBDataSet;
 use Xmlnuke\Core\AnyDataset\IteratorFilter;
 use Xmlnuke\Core\Engine\Context;
-use Xmlnuke\Core\Enum\LanguageFileTypes;
 use Xmlnuke\Core\Enum\Relation;
 use Xmlnuke\Core\Locale\LanguageCollection;
 use Xmlnuke\Core\Locale\LanguageFactory;
@@ -343,29 +342,21 @@ class  XmlnukePoll extends XmlnukeDocumentObject
 									'#FAE16B', '#82B16A', '#779DBF', '#907A52', '#EB8953', '#8A8D82', '#D6707B',
 									'#F3C01C', '#3D8128', '#205F9A', '#63522B', '#DC5313', '#5D645A', '#BC1C39');
 
-					$fldGrp = array();
-					$anyGraph = new AnyDataSet();
-					$anyGraph->appendRow();
-					$anyGraph->addField("data", $title);
-					while ($itAnswer->hasNext())
-					{
-						$sr = $itAnswer->moveNext();
-						$anyGraph->addField("qty_" . $sr->getField("code"), $sr->getField("votes"));
-						$fldGrp["qty_" . $sr->getField("code")] = $sr->getField("short");
-					}
-					$itGraphInv = $anyGraph->getIterator();
+					//\Xmlnuke\Util\Debug::PrintValue($itAnswer);
 
-					$chart = new XmlChart($this->_context, "Title", $itGraphInv, ChartOutput::Flash, ChartSeriesFormat::Column);
-					$chart->setFrame($this->_width, $this->_height);
-					$chart->setLegend("data", "#444444", "#FFFFFF");
-					$chart->setAreaColor("#000000", "#ddddee");
-					$iColor = 0;
-					foreach ($fldGrp as $key=>$value)
-					{
-						$chart->addSeries($key, $value, '#000000', $colors[$iColor++]);
-					}
+					$info = array();
+					$info[] = array("column" => "answer", "type" => \Xmlnuke\Core\Enum\ChartColumnType::String, "name" => "Legend");
+					$info[] = array("column" => "votes", "type" => \Xmlnuke\Core\Enum\ChartColumnType::Number, "name" => "Value");
 
-					$chart->generateObject($current);
+					$chart = new ChartObject("");
+					$chart->setChartType(\Xmlnuke\Core\Enum\ChartType::Pie);
+					$chart->setIs3d(true);
+					$chart->setWidth($this->_width);
+					$chart->setHeight($this->_height);
+					$chart->addSeriesIterator($itAnswer, $info);
+
+					$object = new \Xmlnuke\Core\Engine\ObjectHandler($current, $chart, "xmlnuke");
+					$object->CreateObjectFromModel();
 				}
 				else
 				{
