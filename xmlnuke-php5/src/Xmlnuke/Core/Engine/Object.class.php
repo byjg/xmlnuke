@@ -193,7 +193,7 @@ class Object
 		{
 			return $obj->{$propName};
 		}
-		else
+		else if ($prop->isPublic())
 		{
 			return $prop->getValue($obj);
 		}
@@ -201,7 +201,7 @@ class Object
 		return null;
 	}
 
-	private $_allPropInsentive = null;
+	private $_propNameLower = null;
 
 	/**
 	 *
@@ -236,20 +236,20 @@ class Object
 		}
 		else
 		{
-			if ($this->_allPropInsentive == null)
+			if ($this->_propNameLower == null)
 			{
-				$this->_allPropInsentive = array();
+				$this->_propNameLower = array();
 
 				$classVars = get_class_vars(get_class($obj));
 				foreach ($classVars as $varKey=>$varValue)
 				{
-					$this->_allPropInsentive[strtolower($varKey)] = $varKey;
+					$this->_propNameLower[strtolower($varKey)] = $varKey;
 				}
 			}
 
-			if (isset($this->_allPropInsentive[strtolower($propName)]))
+			if (isset($this->_propNameLower[strtolower($propName)]))
 			{
-				$obj->{$this->_allPropInsentive[strtolower($propName)]} = $value;
+				$obj->{$this->_propNameLower[strtolower($propName)]} = $value;
 			}
 		}
 	}
