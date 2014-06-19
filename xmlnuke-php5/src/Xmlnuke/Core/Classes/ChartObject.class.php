@@ -216,7 +216,7 @@ class ChartObject
 			{
 				if ($type == \Xmlnuke\Core\Enum\ChartColumnType::String)
 				{
-					$item = "'$item'";
+					$item = "'" . \Xmlnuke\Util\ConvertFromUTF8::RemoveAccent($item) . "'";
 				}
 				else if ($type == \Xmlnuke\Core\Enum\ChartColumnType::Number)
 				{
