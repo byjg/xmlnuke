@@ -199,6 +199,12 @@ class ChartObject
 		$this->_MaxValueY = $MaxValueY;
 	}
 
+	/**
+	 *
+	 * @param string $name
+	 * @param \Xmlnuke\Core\Enum\ChartColumnType $type
+	 * @param string $data
+	 */
 	public function addSerie($name, $type, $data)
 	{
 		$iter = $this->_Serie->getIterator();
@@ -208,8 +214,21 @@ class ChartObject
 
 			foreach ($data as $item)
 			{
+				if ($type == \Xmlnuke\Core\Enum\ChartColumnType::String)
+				{
+					$item = "'$item'";
+				}
+				else if ($type == \Xmlnuke\Core\Enum\ChartColumnType::Number)
+				{
+					$item = intval($item);
+				}
+				else
+				{
+					throw new \UnexpectedValueException('Unexpected Chat Column Type - ' . $type);
+				}
+
 				$this->_Serie->appendRow();
-				$this->_Serie->addField('data_0', ($type == \Xmlnuke\Core\Enum\ChartColumnType::String ? "'" : "") . $item . ($type == \Xmlnuke\Core\Enum\ChartColumnType::String ? "'" : ""));
+				$this->_Serie->addField('data_0', $item);
 			}
 		}
 		else
@@ -224,7 +243,20 @@ class ChartObject
 				}
 				else if (count($data) > 0)
 				{
-					$row->addField("data_$serieCount", ($type == \Xmlnuke\Core\Enum\ChartColumnType::String ? "'" : "") . array_shift($data) . ($type == \Xmlnuke\Core\Enum\ChartColumnType::String ? "'" : ""));
+					if ($type == \Xmlnuke\Core\Enum\ChartColumnType::String)
+					{
+						$item = "'" . array_shift($data) . "'";
+					}
+					else if ($type == \Xmlnuke\Core\Enum\ChartColumnType::Number)
+					{
+						$item = intval(array_shift($data));
+					}
+					else
+					{
+						throw new \UnexpectedValueException('Unexpected Chat Column Type - ' . $type);
+					}
+
+					$row->addField("data_$serieCount", $item);
 				}
 			}
 		}
@@ -233,7 +265,7 @@ class ChartObject
 	/**
 	 *
 	 * @param type $iter
-	 * @param type $info { column: "", type: "", name: "" }
+	 * @param array $info { column: "", type: "ChartColumnType", name: "" }
 	 */
 	public function addSeriesIterator($iter, $info, $totalPieChart = false)
 	{
