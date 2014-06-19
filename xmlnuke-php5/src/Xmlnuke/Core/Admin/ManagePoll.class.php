@@ -33,6 +33,35 @@
  */
 namespace Xmlnuke\Core\Admin;
 
+use Exception;
+use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use Xmlnuke\Core\AnyDataset\DBDataSet;
+use Xmlnuke\Core\Classes\CrudField;
+use Xmlnuke\Core\Classes\CrudFieldCollection;
+use Xmlnuke\Core\Classes\XmlBlockCollection;
+use Xmlnuke\Core\Classes\XmlEasyList;
+use Xmlnuke\Core\Classes\XmlFormCollection;
+use Xmlnuke\Core\Classes\XmlInputButtons;
+use Xmlnuke\Core\Classes\XmlInputGroup;
+use Xmlnuke\Core\Classes\XmlInputHidden;
+use Xmlnuke\Core\Classes\XmlInputTextBox;
+use Xmlnuke\Core\Classes\XmlnukeBreakLine;
+use Xmlnuke\Core\Classes\XmlnukeCrudAnydata;
+use Xmlnuke\Core\Classes\XmlnukeCrudBase;
+use Xmlnuke\Core\Classes\XmlnukeCrudDB;
+use Xmlnuke\Core\Classes\XmlnukeText;
+use Xmlnuke\Core\Classes\XmlParagraphCollection;
+use Xmlnuke\Core\Enum\AccessLevel;
+use Xmlnuke\Core\Enum\BlockPosition;
+use Xmlnuke\Core\Enum\CustomButtons;
+use Xmlnuke\Core\Enum\EasyListType;
+use Xmlnuke\Core\Enum\INPUTTYPE;
+use Xmlnuke\Core\Enum\ModuleAction;
+use Xmlnuke\Core\Enum\MultipleSelectType;
+use Xmlnuke\Core\Enum\XmlInputObjectType;
+use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
+use Xmlnuke\Util\FileUtil;
+
 class ManagePoll extends NewBaseAdminModule
 {	
 	protected $_tblpoll = "";
@@ -41,7 +70,7 @@ class ManagePoll extends NewBaseAdminModule
 	protected $_isdb = false;
 	protected $_connection = "";
 
-	protected $_moduleUrl = "module:Xmlnuke.Admin.managepoll";
+	protected $_moduleUrl = "module:Xmlnuke.Admin.ManagePoll";
 	
 	public function ManagePoll()
 	{
@@ -74,7 +103,7 @@ class ManagePoll extends NewBaseAdminModule
 		$block = new XmlBlockCollection($this->myWords->Value("TITLE"), BlockPosition::Center);
 		
 		$this->addMenuItem($this->_moduleUrl, $this->myWords->Value("MENULISTPOLLS"), "");
-		$this->addMenuItem("module:Xmlnuke.Admin.managedbconn", $this->myWords->Value("MENUMANAGEDBCONN"), "");
+		$this->addMenuItem("module:Xmlnuke.Admin.ManageDBConn", $this->myWords->Value("MENUMANAGEDBCONN"), "");
 			
 		// Create a NEW config file and SETUP Database
 		$configfile = new AnydatasetFilenameProcessor("_poll");
@@ -397,7 +426,7 @@ class ManagePoll extends NewBaseAdminModule
 					$processfields, 
 					$this->myWords->Value("AVAILABLEANSWER", $pollname), 
 					$this->_moduleUrl, 
-					array($buttons), 
+					null,
 					$this->_tblanswer, 
 					$this->_connection
 				);
@@ -412,7 +441,7 @@ class ManagePoll extends NewBaseAdminModule
 					$processfields, 
 					$this->myWords->Value("AVAILABLEANSWER", $pollname), 
 					$this->_moduleUrl, 
-					array($buttons), 
+					null,
 					$anydatafile
 				);
 		}
