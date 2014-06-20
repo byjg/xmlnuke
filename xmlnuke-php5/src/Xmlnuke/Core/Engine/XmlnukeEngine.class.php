@@ -119,7 +119,12 @@ class XmlnukeEngine
 		// Check if the access is granted
 		if ($this->_context->get("xmlnuke.RESTRICTACCESS") != "")
 		{
-			$checkClass = PluginFactory::LoadPlugin($this->_context->get("xmlnuke.RESTRICTACCESS"));
+			$checkClassName = $this->_context->get("xmlnuke.RESTRICTACCESS");
+
+			if (!class_exists($checkClassName))
+				throw new InvalidArgumentException($this->_context->get("xmlnuke.RESTRICTACCESS") . ' does not exists.');
+
+			$checkClass = new $checkClassName();
 
 			if (!($checkClass instanceof ICheckAccess))
 				throw new InvalidArgumentException($this->_context->get("xmlnuke.RESTRICTACCESS") . ' need to implement ICheckAccess');
