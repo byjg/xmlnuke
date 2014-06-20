@@ -16,7 +16,7 @@
 				}
 			}
 			<xsl:for-each select="tabitem">
-				<xsl:if test="@default='true'">, selected: <xsl:value-of select="position()" />-1</xsl:if>
+				<xsl:if test="@default='true'">, active: <xsl:value-of select="position()" />-1</xsl:if>
 			</xsl:for-each>
 		}).find(".ui-tabs-nav").sortable({axis:'x'});
 	});
