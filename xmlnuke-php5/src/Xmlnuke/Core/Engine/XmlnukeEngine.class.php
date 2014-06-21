@@ -446,6 +446,7 @@ class XmlnukeEngine
 		$xslTran->setParameter("", "transformdate", date("Y-m-d H:i:s") );
 		$xslTran->setParameter("", "urlbase", $this->_context->get("xmlnuke.URLBASE"));
 		$xslTran->setParameter("", "engine", "PHP");
+		$xslTran->setParameter("", "url", $this->_context->getServerName(false, true) . $this->_context->get('REQUEST_URI'));
 		
 		//Transform and output		
 		$xtw = $xslTran->transformToXML($xml);	
