@@ -101,6 +101,9 @@
 
 					for (var key in resultData)
 					{
+						if (resultData[key]==undefined)
+							continue;
+						
 						processedData = processedData.concat(
 							[{
 								"id": resultData[key]["<xsl:value-of select="@autosuggest_objid" />"],
