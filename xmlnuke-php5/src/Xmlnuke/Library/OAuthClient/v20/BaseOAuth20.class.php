@@ -19,6 +19,8 @@
 
 namespace OAuthClient\v20;
 
+use Xmlnuke\Util\WebRequest;
+
 /**
  * Base OAuth class
  */
