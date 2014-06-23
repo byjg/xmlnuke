@@ -162,7 +162,7 @@ class HtmlWrapper extends BaseSingleton implements IOutputWrapper
 				$contentType = $context->getSuggestedContentType();
 			}
 			header("Content-Type: {$contentType["content-type"]}; charset=utf-8");
-			if ($contentType["content-disposition"] != "")
+			if (isset($contentType["content-disposition"]))
 			{
 				header("Content-Disposition: {$contentType["content-disposition"]}; filename=\"{$alternateFilename}.{$contentType["extension"]}\";");
 			}
