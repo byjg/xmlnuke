@@ -62,8 +62,6 @@ class AutoLoad extends \Xmlnuke\Core\Classes\BaseSingleton
 				(
 					"src/",
 					"src/Xmlnuke/Library/",
-					"src/modules/oauthclient/20/",
-					"src/modules/oauthclient/10/",
 					"src/modules/aws/"
 				),
 			AutoLoad::USER_PROJECTS => array()

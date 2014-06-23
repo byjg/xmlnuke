@@ -1,16 +1,21 @@
 <?php
 
+namespace OAuthClient\v20;
+
+use Exception;
+
 /**
- * FourSquareOAuth20 is an OAuth 2.0 client implementation
- * More information can be found at https://developer.foursquare.com/overview/auth
+ * WindowsLiveOAuth20 is an OAuth 2.0 client implementation
+ * More information can be found at http://msdn.microsoft.com/en-us/library/live/hh243647.aspx
  *
  * @author jg
  */
-class FourSquareOAuth20 
-{
-	public function authorizationURL() { return "https://foursquare.com/oauth2/authenticate"; }
 
-	public function accessTokenURL() { return "https://foursquare.com/oauth2/access_token"; }
+class WindowsLiveOAuth20 extends BaseOAuth20
+{
+	public function authorizationURL() { return "https://login.live.com/oauth20_authorize.srf"; }
+
+	public function accessTokenURL() { return "https://login.live.com/oauth20_token.srf"; }
 	
 	public function validateRequest($result) {
 		$statusCode = trim(parent::validateRequest($result));

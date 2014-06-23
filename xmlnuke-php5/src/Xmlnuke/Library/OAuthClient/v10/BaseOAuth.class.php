@@ -17,11 +17,12 @@
  * João Gilberto Magalhães
  */
 
+namespace OAuthClient\v10;
 
 /**
  * Base OAuth class
  */
-abstract class baseOAuth {/*{{{*/
+abstract class BaseOAuth {/*{{{*/
   /* Contains the last HTTP status code returned */
   private $http_status;
 
@@ -70,7 +71,7 @@ abstract class baseOAuth {/*{{{*/
   function lastAPICall() { return $this->last_api_call; }
 
   /**
-   * construct baseOAuth object
+   * construct BaseOAuth object
    */
   function __construct($consumer_key, $consumer_secret, $oauth_token = NULL, $oauth_token_secret = NULL) {/*{{{*/
     $this->sha1_method = new OAuthSignatureMethod_HMAC_SHA1();

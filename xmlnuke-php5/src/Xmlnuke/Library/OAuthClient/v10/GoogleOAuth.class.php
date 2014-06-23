@@ -1,9 +1,11 @@
 <?php
 
+namespace OAuthClient\v10;
+
 /**
  * Twitter OAuth class
  */
-class GoogleOAuth extends baseOAuth {/*{{{*/
+class GoogleOAuth extends BaseOAuth {/*{{{*/
   /* Set up the API root URL */
   public static $TO_API_ROOT = "https://www.google.com";
 

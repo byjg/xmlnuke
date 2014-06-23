@@ -1,12 +1,17 @@
 <?php
 
+namespace OAuthClient\v20;
+
+use Exception;
+
+
 /**
  * GoogleOAuth20 is an OAuth 2.0 client implementation
  * More information can be found at https://developers.google.com/accounts/docs/OAuth2
  *
  * @author jg
  */
-class GoogleOAuth20 extends baseOAuth20
+class GoogleOAuth20 extends BaseOAuth20
 {
 	
 	public function authorizationURL() { return "https://accounts.google.com/o/oauth2/auth"; }

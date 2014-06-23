@@ -5,9 +5,8 @@
  */
 namespace Xmlnuke\Core\Net;
 
-use baseOAuth20;
 use InvalidArgumentException;
-use ReflectionClass;
+use OAuthClient\v20\BaseOAuth20;
 use Xmlnuke\Core\AnyDataset\AnyDataSet;
 use Xmlnuke\Core\AnyDataset\IteratorFilter;
 use Xmlnuke\Core\Engine\Context;
@@ -176,7 +175,7 @@ class OAuthClient20
 
 	/**
 	 * Handle OAuth 2.0 Flow
-	 * @return baseOAuth20
+	 * @return BaseOAuth20
 	 */
 	public function handle()
 	{
@@ -186,8 +185,7 @@ class OAuthClient20
 		$state = $this->getVar("state");
 		
 		// Initiate OAuth Client with Specific server configuration
-		$class = new ReflectionClass($this->_className);
-		$to = $class->newInstance();
+		$to = new $this->_className();
 
 		// Try to Handle the Authentication Process
 		if ($accessToken == "")

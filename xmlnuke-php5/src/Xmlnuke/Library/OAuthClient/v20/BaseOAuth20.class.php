@@ -17,11 +17,12 @@
  * João Gilberto Magalhães
  */
 
+namespace OAuthClient\v20;
 
 /**
  * Base OAuth class
  */
-abstract class baseOAuth20 {/*{{{*/
+abstract class BaseOAuth20 {/*{{{*/
 
 	protected $_lastStatusCode = "";
 	protected $_accessToken = "";

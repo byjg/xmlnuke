@@ -12,10 +12,14 @@
 
 /* Load OAuth lib. You can find it at http://oauth.net */
 
+namespace OAuthClient\v10;
+
+use Exception;
+
 /**
  * Twitter OAuth class
  */
-class TwitterOAuth extends baseOAuth {/*{{{*/
+class TwitterOAuth extends BaseOAuth {/*{{{*/
 	
 	/* Set up the API root URL */
 	public static $TO_API_ROOT = "https://twitter.com";

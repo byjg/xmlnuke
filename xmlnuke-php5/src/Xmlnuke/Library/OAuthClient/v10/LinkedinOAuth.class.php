@@ -1,5 +1,10 @@
 <?php
 
+namespace OAuthClient\v10;
+
+use Exception;
+
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -10,7 +15,7 @@
  *
  * @author jg
  */
-class LinkedinOAuth extends baseOAuth
+class LinkedinOAuth extends BaseOAuth
 {
 	/* Set up the API root URL */
 	public static $TO_API_ROOT = "https://api.linkedin.com";
