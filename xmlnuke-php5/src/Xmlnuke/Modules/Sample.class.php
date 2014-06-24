@@ -1283,7 +1283,7 @@ class Sample extends BaseModule
 		$para = new XmlParagraphCollection();
 		$para->addXmlnukeObject(new XmlnukeText("Galeria de Imagens (album de Fotos)"));
 
-		$gallery = new XmlnukeMediaGallery($this->_context, "Galeria1");
+		$gallery = new XmlnukeMediaGallery("Galeria1");
 		$gallery->addImage("common/imgs/albumsample/1.jpg", "common/imgs/albumsample/t_1.jpg", "Titulo Imagem 1", "Você pode colocar um caption aqui", 60, 60);
 		$gallery->addImage("common/imgs/albumsample/2.jpg", "common/imgs/albumsample/t_2.jpg", "Titulo Imagem 2", "Você pode colocar um caption aqui", 60, 60);
 		$gallery->addImage("common/imgs/albumsample/3.jpg", "common/imgs/albumsample/t_3.jpg", "Titulo Imagem 3", "Você pode colocar um caption aqui", 60, 60);
@@ -1293,7 +1293,7 @@ class Sample extends BaseModule
 		$para = new XmlParagraphCollection();
 		$para->addXmlnukeObject(new XmlnukeText("Flash, Youtube e Quicktime"));
 
-		$gallery = new XmlnukeMediaGallery($this->_context);
+		$gallery = new XmlnukeMediaGallery();
 		$gallery->addEmbed("http://www.adobe.com/products/flashplayer/include/marquee/design.swf", 792, 294, "http://images.apple.com/trailers/wb/images/terminatorsalvation_200903131052.jpg", "Titulo Flash", "Aqui vc está vendo um Flash");
 		$gallery->addEmbed("http://movies.apple.com/movies/wb/terminatorsalvation/terminatorsalvation-tlr3_h.480.mov", 480, 204, "http://images.apple.com/trailers/wb/images/terminatorsalvation_200903131052.jpg", "Titulo Quicktime", "Aqui vc está vendo um Quicktime Movie");
 		$gallery->addEmbed("http://www.youtube.com/watch?v=4m48GqaOz90", "", "", "http://i1.ytimg.com/vi/4m48GqaOz90/default.jpg", "Titulo Youtube", "Aqui vc está vendo um Vídeo do Youtube");
@@ -1303,12 +1303,12 @@ class Sample extends BaseModule
 		$para = new XmlParagraphCollection();
 		$para->addXmlnukeObject(new XmlnukeText("IFrame"));
 
-		$gallery = new XmlnukeMediaGallery($this->_context);
+		$gallery = new XmlnukeMediaGallery();
 		$gallery->addIFrame($this->_url, 480, 204, "", "IFrame");
 		$para->addXmlnukeObject($gallery);
 		$block->addXmlnukeObject($para);
 
-		$gallery = new XmlnukeMediaGallery($this->_context, "Galeria2");
+		$gallery = new XmlnukeMediaGallery("Galeria2");
 		$gallery->setApi(true);
 		$gallery->setVisible(false);
 		$gallery->addImage("common/imgs/albumsample/4.jpg", "", "Titulo Imagem 1", "Você pode colocar um caption aqui");
