@@ -1,36 +1,13 @@
 <?php
+namespace Xmlnuke\Util;
+
 define ( "IMAGE_FLIP_HORIZONTAL", 1 );
 define ( "IMAGE_FLIP_VERTICAL", 2 );
 define ( "IMAGE_FLIP_BOTH", 3 );
 
-namespace Xmlnuke\Util;
-
-class StampPosition
-{
-	const TopRight = 1;
-	const TopLeft = 2;
-	const BottomRight = 3;
-	const BottomLeft = 4;
-	const Center = 5;
-	const Top = 6;
-	const Bottom = 7;
-	const Left = 8;
-	const Right = 9;
-	const Random = 999;
-}
-
-namespace Xmlnuke\Util;
-
-class TextAligment
-{
-	const Left = 1;
-	const Right = 2;
-	const Center = 3;
-}
-
-namespace Xmlnuke\Util;
-
 use Exception;
+use Xmlnuke\Core\Enum\StampPosition;
+use Xmlnuke\Core\Enum\TextAlignment;
 use Xmlnuke\Core\Exception\ImageUtilException;
 use Xmlnuke\Core\Exception\NotFoundException;
 use Xmlnuke\Core\Exception\PHPException;
@@ -432,11 +409,11 @@ class ImageUtil
 			//Debug::PrintValue($bbox);
 			switch ($textAlignment)
 			{
-				case TextAligment::Right:
+				case TextAlignment::Right:
 					$x = $point[0] - abs($bbox[2] - $bbox[0]);
 					break;
 				
-				case TextAligment::Center:
+				case TextAlignment::Center:
 					$x = $point[0] - (abs($bbox[2] - $bbox[0]) / 2);
 					break;
 				
