@@ -149,8 +149,8 @@ class Captcha {
 
 	public static function TextIsValid($text)
 	{
-		$captchaimg = $_SESSION['captchaimg'];
-		$_SESSION['captchaimg'] = null;
+		$captchaimg = isset($_SESSION['captchaimg']) ? $_SESSION['captchaimg'] : null;
+		unset($_SESSION['captchaimg']);
 		return (strtolower($text) == $captchaimg);
 	}
 }
