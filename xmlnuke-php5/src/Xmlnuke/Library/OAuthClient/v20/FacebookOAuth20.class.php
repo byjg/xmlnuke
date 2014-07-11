@@ -17,11 +17,11 @@ use Exception;
  */
 class FacebookOAuth20 extends BaseOAuth20
 {
-	protected $GRAPH_API = "https://graph.facebook.com";
+	protected $GRAPH_API = "https://graph.facebook.com/v2.0";
 	
-	public function authorizationURL() { return "http://www.facebook.com/dialog/oauth"; }
+	public function authorizationURL() { return "http://www.facebook.com/v2.0/dialog/oauth"; }
 
-	public function accessTokenURL() { return "https://graph.facebook.com/oauth/access_token"; }
+	public function accessTokenURL() { return "https://graph.facebook.com/v2.0/oauth/access_token"; }
 	
 	public function validateRequest($result) {
 		$statusCode = trim(parent::validateRequest($result));
