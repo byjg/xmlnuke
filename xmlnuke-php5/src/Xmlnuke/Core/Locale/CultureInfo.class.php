@@ -97,12 +97,7 @@ class CultureInfo
 			$this->_name
 		);
 
-		// Try to load default set of language
-		$this->_cultureActive = null;
-		while(count($options)>0 && !$this->_cultureActive)
-		{
-			$this->_cultureActive = setlocale(LC_ALL, array_shift($options));
-		}
+		$this->_cultureActive = setlocale(LC_ALL, $options);
 
 		// Try to load in Windows if failed before
 		if (!$this->_cultureActive)
