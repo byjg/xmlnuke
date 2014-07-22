@@ -46,7 +46,9 @@ class WebRequest
 	protected $_username;
 	protected $_password;
 	protected $_referer;
-	protected $_header = false;
+	protected $_requestHeader = array();
+	protected $_responseHeader = null;
+	protected $_cookies = array();
 	protected $_followLocation = true;
 	protected $_lastStatus = "";
 
@@ -95,18 +97,56 @@ class WebRequest
 		return $this->_lastStatus;
 	}
 
-	public function getOutputHeader()
+	public function getResponseHeader()
 	{
-		return $this->_header;
+		return $this->_responseHeader;
 	}
+
 	/**
 	 *
-	 * @param bool $value
-	 * @return unknown_type
+	 * @param mixed $key Key may be a string or an associative array. In this case value have to be null;
+	 * @param string $value
 	 */
-	public function setOutputHeader($value)
+	public function addRequestHeader($key, $value = null)
 	{
-		$this->_header = $value;
+		if (is_array($key))
+		{
+			foreach ($key as $newKey=>$newValue)
+				$this->addRequestHeader($newKey, $newValue);
+		}
+		else
+		{
+			$key = preg_replace_callback('/([\s\-_]|^)([a-z0-9-_])/',
+				function($match) {
+					return strtoupper($match[0]);
+				},
+				$key
+			);
+			$this->_requestHeader[] = "$key: $value";
+		}
+	}
+
+	/**
+	 *
+	 * @param mixed $key Key may be a string or an associative array. In this case value have to be null;
+	 * @param string $value If value is null so, try to parse
+	 */
+	public function addCookie($key, $value = null)
+	{
+		if (is_array($key))
+		{
+			foreach ($key as $newKey=>$newValue)
+				$this->addCookie($newKey, $newValue);
+		}
+		else
+		{
+			$value = preg_replace('/(;\s*path=.+)/', '', $value);
+
+			if (is_numeric($key))
+				$this->_cookies[] = $value;
+			else
+				$this->_cookies[] = "$key=$value";
+		}
 	}
 
 	public function getFollowLocation()
@@ -202,7 +242,9 @@ class WebRequest
 		curl_setopt($curl, CURLOPT_URL, $this->_url);
 		curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 30);
 		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-		curl_setopt($curl, CURLOPT_HEADER, $this->_header);
+		//curl_setopt($hCurl, CURLOPT_STDERR, fopen('php://output', 'w+'));
+		//curl_setopt($hCurl, CURLOPT_VERBOSE, 1);
+		curl_setopt($curl, CURLOPT_HEADER, true);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)");
 		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, $this->_followLocation);
@@ -219,6 +261,12 @@ class WebRequest
 		{
 			curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
 			curl_setopt($curl, CURLOPT_USERPWD, $this->_username . ":" . $this->_password);
+		}
+		
+		// Add the content-type
+		if ($content_type != null)
+		{
+			$this->addRequestHeader("Content-Type", $content_type);
 		}
 
 		// Adjust parameters
@@ -239,10 +287,23 @@ class WebRequest
 			}
 		}
 		// Check if pass file
-		elseif ($content_type != null)
+		elseif ($data != null)
 		{
-			curl_setopt($curl, CURLOPT_HTTPHEADER, Array("Content-Type: $content_type"));
-			$fields_string = $data;
+			$fields_string = $data;			
+		}
+
+		// Check if have header
+		if (count($this->_requestHeader) > 0)
+		{
+			curl_setopt($curl, CURLOPT_HTTPHEADER, $this->_requestHeader);
+			$this->_requestHeader = array(); // Reset request Header
+		}
+
+		// Add Cookies
+		if (count($this->_cookies) > 0)
+		{
+			curl_setopt($curl, CURLOPT_COOKIE, implode(";", $this->_cookies));
+			$this->_cookies = array(); // Reset request Header
 		}
 
 		// Set the proper method
@@ -275,6 +336,8 @@ class WebRequest
 		}
 
 		$result = curl_exec($curl);
+
+		$header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
 		$this->_header = curl_getinfo($curl);
 		$this->_lastStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 		curl_close($curl);
@@ -285,8 +348,48 @@ class WebRequest
 		}
 		else
 		{
-			return $result;
+			$this->_responseHeader = $this->parseHeader(substr($result, 0, $header_size));
+			return substr($result, $header_size);
 		}
+	}
+
+	protected function parseHeader($raw_headers)
+	{
+        $headers = array();
+        $key = ''; // [+]
+
+        foreach(explode("\n", $raw_headers) as $i => $h)
+        {
+            $h = explode(':', $h, 2);
+
+            if (isset($h[1]))
+            {
+                if (!isset($headers[$h[0]]))
+                    $headers[$h[0]] = trim($h[1]);
+                elseif (is_array($headers[$h[0]]))
+                {
+                    // $tmp = array_merge($headers[$h[0]], array(trim($h[1]))); // [-]
+                    // $headers[$h[0]] = $tmp; // [-]
+                    $headers[$h[0]] = array_merge($headers[$h[0]], array(trim($h[1]))); // [+]
+                }
+                else
+                {
+                    // $tmp = array_merge(array($headers[$h[0]]), array(trim($h[1]))); // [-]
+                    // $headers[$h[0]] = $tmp; // [-]
+                    $headers[$h[0]] = array_merge(array($headers[$h[0]]), array(trim($h[1]))); // [+]
+                }
+
+                $key = $h[0]; // [+]
+            }
+            else // [+]
+            { // [+]
+                if (substr($h[0], 0, 1) == "\t") // [+]
+                    $headers[$key] .= "\r\n\t".trim($h[0]); // [+]
+                elseif (!$key) // [+]
+                    $headers[0] = trim($h[0]);trim($h[0]); // [+]
+            } // [+]
+        }
+		return $headers;
 	}
 
 
