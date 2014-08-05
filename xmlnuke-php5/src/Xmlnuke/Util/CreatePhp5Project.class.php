@@ -252,7 +252,7 @@ class CreatePhp5Project
 			unlink ("$HTTPDOCS/xmlnuke.inc.php");
 		$gitIgnore[] = CreatePhp5Project::executeShell( "ln -sf", array("$PHPDIR/xmlnuke.inc.php", "$HTTPDOCS/") );
 
-		if (!file_exists('$HTTPDOCS/index.php'))
+		if (!file_exists("$HTTPDOCS/index.php"))
 			copy( "$PHPDIR/index.php.dist", "$HTTPDOCS/index.php" );
 
 		if (file_exists("$HTTPDOCS/xmlnuke.php"))
