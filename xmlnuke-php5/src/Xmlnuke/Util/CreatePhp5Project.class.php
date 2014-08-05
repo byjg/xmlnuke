@@ -240,8 +240,8 @@ class CreatePhp5Project
 
 		$xmlnukePathConfig = $config['xmlnuke.PHPXMLNUKEDIR'];
 
-		//if ($PHPDIR != $xmlnukePathConfig)
-		//	throw new Exception("Config points to '$xmlnukePathConfig' and the script is running on '$PHPDIR';");
+		if ($PHPDIR != $xmlnukePathConfig)
+			throw new Exception("Config points to '$xmlnukePathConfig' and the script is running on '$PHPDIR';");
 
 
 		if (file_exists("$HTTPDOCS/imagevalidate.php"))

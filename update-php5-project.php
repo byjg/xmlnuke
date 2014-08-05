@@ -30,7 +30,7 @@ if (PHP_SAPI == 'cli')
 	{
 		try
 		{
-			$result = CreatePhp5Project::Update(dirname($argv[0]), $argv[1]);
+			$result = CreatePhp5Project::Update(__DIR__, $argv[1]);
 
 			echo "Done.\n";
 			echo "\n";
