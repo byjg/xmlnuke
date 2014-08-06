@@ -71,8 +71,11 @@ class  XmlnukeManageUrl
 			$params = explode("&", $arr[1]);
 			foreach ($params as $value)
 			{
+				if ($value == '')
+					continue;
+
 				$paramPart = explode("=", $value);
-				$this->addParam($paramPart[0], $paramPart[1]);
+				$this->addParam($paramPart[0], isset($paramPart[1]) ? $paramPart[1] : '');
 			}
 		}
 	}
