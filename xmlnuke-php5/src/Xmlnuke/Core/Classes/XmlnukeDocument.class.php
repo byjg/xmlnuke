@@ -126,6 +126,10 @@ class XmlnukeDocument extends XmlnukeCollection implements IXmlnukeDocument
 		$m->title = $title; 
 		$m->summary = $summary; 
 		$m->icon = $icon;
+
+		if (!isset($this->_menuGroup[$group]))
+			$this->addMenuGroup('Menu', $group);
+		
 		$this->_menuGroup[$group]->menus[] = $m;
 	} 
 	
@@ -135,8 +139,11 @@ class XmlnukeDocument extends XmlnukeCollection implements IXmlnukeDocument
 	*@return void
 	*/
 	public function setMenuTitle($title, $group = "__DEFAULT__") 
-	{ 
-		$this->_menuGroup[$group]->menuTitle = $title; 
+	{
+		if (!isset($this->_menuGroup[$group]))
+			$this->addMenuGroup ($title, $group);
+		else
+			$this->_menuGroup[$group]->menuTitle = $title;
 	} 
 	
 	public function addMenuGroup($title, $group)
