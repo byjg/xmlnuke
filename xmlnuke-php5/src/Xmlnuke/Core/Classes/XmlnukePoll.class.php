@@ -33,6 +33,9 @@ use Xmlnuke\Core\AnyDataset\AnyDataSet;
 use Xmlnuke\Core\AnyDataset\DBDataSet;
 use Xmlnuke\Core\AnyDataset\IteratorFilter;
 use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Engine\ObjectHandler;
+use Xmlnuke\Core\Enum\ChartColumnType;
+use Xmlnuke\Core\Enum\ChartType;
 use Xmlnuke\Core\Enum\Relation;
 use Xmlnuke\Core\Locale\LanguageCollection;
 use Xmlnuke\Core\Locale\LanguageFactory;
@@ -170,50 +173,36 @@ class  XmlnukePoll extends XmlnukeDocumentObject
 				$this->_poll = $this->_context->get("xmlnuke_poll");
 				$this->_lang = $this->_context->get("xmlnuke_polllang");
 
-				/*
-				// Try to get the Last IP who vote here.
-				$ok = false;
-				$filelastip = new AnydatasetFilenameProcessor("poll_lastip_" . $this->_poll);
-				$filelastip->setFilenameLocation(ForceFilenameLocation::DefinePath, FileUtil::GetTempDir() . FileUtil::Slash());
-				$anylastip = new AnyDataSet($filelastip);
-				$itlastip = $anylastip->getIterator();
-				if ($itlastip->hasNext())
+				$ok = true;
+				// Check if IP already voted -> Freeze IP for 5 days.
+				if ($this->_isdb)
 				{
-					$sr = $itlastip->moveNext();
-					$arr = $sr->getFieldArray("ip");
+					// Remove Old Entries
+					$dbdata = new DBDataSet($this->_connection);
+					$sql = "delete from " . $this->_tbllastip . " where register < now() - interval 5 day ";
+					$dbdata->execSQL($sql);
 
-					// Is This a New IP?
-					if (array_search($this->_context->getClientIp(), $arr) === false)
+					// Check if exists
+					$sql = "select count(1) from " . $this->_tbllastip . " where ip = [[ip]] and name = [[name]] ";
+					$param = array(
+						"ip" => $this->_context->getClientIp(),
+						"name" => $this->_poll
+					);
+					$count = $dbdata->getScalar($sql, $param);
+
+					$ok = false;
+					if ($count == 0)
 					{
 						$ok = true;
 
-						// Is The maximum amount of unique IP reached?
-						// If true, I need to remove the excess.
-						if (sizeof($arr) > 20)
-						{
-							array_shift($arr);
-							$arr[] = $this->_context->getClientIp();
-
-							$anylastip->removeRow(0);
-							$anylastip->appendRow();
-							foreach ($arr as $value)
-							{
-								$anylastip->addField("ip", $value);
-							}
-							$anylastip->Save();
-						}
+						$sql = "insert into " . $this->_tbllastip . " (ip, name, register) values ([[ip]], [[name]], now()) ";
+						$param = array(
+							"ip" => $this->_context->getClientIp(),
+							"name" => $this->_poll
+						);
+						$dbdata->execSQL($sql, $param);
 					}
 				}
-				// OK. First time here. I need to add the IP.
-				else
-				{
-					$ok = true;
-					$anylastip->appendRow();
-					$anylastip->addField("ip", $this->_context->get("REMOTE_ADDR"));
-					$anylastip->Save();
-				}
-				 */
-				$ok = true;
 
 				// Is My IP Unique? If true I can process the vote.
 				// Note if the poll name, lang and code are wrong the system does not do anything.
@@ -345,17 +334,17 @@ class  XmlnukePoll extends XmlnukeDocumentObject
 					//\Xmlnuke\Util\Debug::PrintValue($itAnswer);
 
 					$info = array();
-					$info[] = array("column" => "answer", "type" => \Xmlnuke\Core\Enum\ChartColumnType::String, "name" => "Legend");
-					$info[] = array("column" => "votes", "type" => \Xmlnuke\Core\Enum\ChartColumnType::Number, "name" => "Value");
+					$info[] = array("column" => "answer", "type" => ChartColumnType::String, "name" => "Legend");
+					$info[] = array("column" => "votes", "type" => ChartColumnType::Number, "name" => "Value");
 
 					$chart = new ChartObject("");
-					$chart->setChartType(\Xmlnuke\Core\Enum\ChartType::Pie);
+					$chart->setChartType(ChartType::Pie);
 					$chart->setIs3d(true);
 					$chart->setWidth($this->_width);
 					$chart->setHeight($this->_height);
 					$chart->addSeriesIterator($itAnswer, $info);
 
-					$object = new \Xmlnuke\Core\Engine\ObjectHandler($current, $chart, "xmlnuke");
+					$object = new ObjectHandler($current, $chart, "xmlnuke");
 					$object->CreateObjectFromModel();
 				}
 				else
