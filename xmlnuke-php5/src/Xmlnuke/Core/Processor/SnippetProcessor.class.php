@@ -87,28 +87,24 @@ class SnippetProcessor
 		{
 			$content = "";
 
-			$lines = file($xslPath);
+			$content = file_get_contents($xslPath);
 			try
 			{
 				$cacheEngine->lock($xslName);
 
-				foreach($lines as $line)
+				$iStart = strpos($content,"<xmlnuke-");
+				while ($iStart!==false)
 				{
-					$iStart = strpos($line,"<xmlnuke-");
-					while ($iStart!==false)
-					{
-						$iEnd = strpos($line,">",$iStart + 1);
-						$snippetFile = substr($line, $iStart + 9, $iEnd - $iStart - 10);
-						$snippet = new SnippetFilenameProcessor(trim($snippetFile));
-						if (!FileUtil::Exists($snippet))
-							throw new SnippetNotFoundException("Snippet " . $snippet->FullQualifiedNameAndPath () . " not found" );
-						$fStreamSnippet = FileUtil::OpenFile ($snippet->FullQualifiedNameAndPath(), "r");
-						$sReadSnippet = FileUtil::ReadFile($fStreamSnippet, filesize($snippet->FullQualifiedNameAndPath()));
-						FileUtil::CloseFile($fStreamSnippet);
-						$line = substr($line,0,$iStart). self::LF . $sReadSnippet . substr($line,$iEnd+ 1);
-						$iStart = strpos($line,"<xmlnuke-");
-					}
-					$content .= $line;
+					$iEnd = strpos($content,">",$iStart + 1);
+					$snippetFile = substr($content, $iStart + 9, $iEnd - $iStart - 10);
+					$snippet = new SnippetFilenameProcessor(trim($snippetFile));
+					if (!FileUtil::Exists($snippet))
+						throw new SnippetNotFoundException("Snippet " . $snippet->FullQualifiedNameAndPath () . " not found" );
+
+					$sReadSnippet = file_get_contents($snippet->FullQualifiedNameAndPath());
+					
+					$content = substr($content,0,$iStart). self::LF . $sReadSnippet . substr($content,$iEnd+ 1);
+					$iStart = strpos($content,"<xmlnuke-");
 				}
 
 				$cacheEngine->unlock($xslName);
