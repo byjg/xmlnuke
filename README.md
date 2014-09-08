@@ -228,3 +228,17 @@ Now, just test it:
 
     http://yourserver/my-project
     
+
+## Development
+
+The `master` branch is the stable release. All development will be done in the `develop` branch.
+Merge Requests will be accepted in the `develop` branch.
+
+### Pre-Commit Hook.
+
+You can install a pre-commit hook to execute all unit tests before each commit. Install this hook by using the command:
+
+```
+cd <xmlnukedir>
+ln -s <xmlnukedir>/utils/git/hooks/pre-commit .git/hooks
+```
