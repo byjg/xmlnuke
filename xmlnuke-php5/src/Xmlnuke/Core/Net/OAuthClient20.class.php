@@ -87,7 +87,17 @@ class OAuthClient20
 			$this->_app_uri = $sr->getField("app_uri");
 			
 			$this->_className = $sr->getField("appclass");
-			$this->_extraArgs = $sr->getFieldArray("extra_arg");
+			$this->_extraArgs = array();
+
+			$tmpExtraArgs = $sr->getFieldArray("extra_arg");
+			if (count($tmpExtraArgs) > 0)
+			{
+				foreach ($tmpExtraArgs as $value)
+				{
+					$params = explode("=", $value);
+					$this->_extraArgs[$params[0]] = (count($params) > 1 ? $params[1] : "");
+				}
+			}
 		}
 		else
 		{
@@ -204,6 +214,11 @@ class OAuthClient20
 					"state" => $state,
 					"scope" => $this->_scope
 				);
+
+				if (count($this->_extraArgs) > 0)
+				{
+					$params = array_merge($params, $this->_extraArgs);
+				}
 				
 				$req = new WebRequest($to->authorizationURL());
 				$req->Redirect($params, $this->_window_top);
