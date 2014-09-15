@@ -9,7 +9,7 @@ use Whoops\Exception\ErrorException;
 /**
  * NOTE: The class name must end with "Test" suffix.
  */
-class XMLDatasetTest extends PHPUnit_Framework_TestCase
+class XmlDataSetTest extends PHPUnit_Framework_TestCase
 {
 	const XML_OK = '<?xml version="1.0" encoding="UTF-8"?>
 		<bookstore>
@@ -118,6 +118,32 @@ class XMLDatasetTest extends PHPUnit_Framework_TestCase
 		$xmlIterator = $xmlDataset->getIterator();
 
 		$this->assertEquals($xmlIterator->Count(), 3); 
+	}
+
+	function test_repeatedNodes()
+	{
+		$xml = '<?xml version="1.0" encoding="UTF-8"?>
+		<bookstore>
+		<book category="COOKING">
+		  <title lang="en">Everyday Italian</title>
+		  <author>Giada De Laurentiis</author>
+		  <author>Another Author</author>
+		  <year>2005</year>
+		  <price>30.00</price>
+		</book></bookstore>';
+
+		$xmlDataset = new XmlDataSet(Context::getInstance(), $xml, $this->rootNode, array("author"=>"author"));
+		$xmlIterator = $xmlDataset->getIterator();
+
+		$this->assertEquals(1, $xmlIterator->Count());
+
+		$sr = $xmlIterator->moveNext();
+		$authors = $sr->getFieldArray('author');
+
+		$this->assertEquals(2, count($authors));
+		$this->assertEquals('Giada De Laurentiis', $authors[0]);
+		$this->assertEquals('Another Author', $authors[1]);
+		
 	}
 
 	/**

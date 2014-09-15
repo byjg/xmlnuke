@@ -131,15 +131,17 @@ class XmlIterator extends GenericIterator
 
 		foreach ($this->_colNodes as $key=>$colxpath)
 		{
-			$nodecol = XmlUtil::selectSingleNode($node, $colxpath);
+			$nodecol = XmlUtil::selectNodes($node, $colxpath);
 			if (is_null($nodecol))
 			{
 				$sr->AddField(strtolower($key), "");
 			}
 			else
 			{
-				//Debug::PrintValue($nodecol);
-				$sr->AddField(strtolower($key), $nodecol->nodeValue);
+				foreach ($nodecol as $col)
+				{
+					$sr->AddField(strtolower($key), $col->nodeValue);
+				}
 			}
 		}
 
