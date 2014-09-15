@@ -75,7 +75,9 @@ class XmlIterator extends GenericIterator
 	 */
 	private $_current = 0;
 
-	public function __construct($context, $nodeList, $colNodes)
+	protected $_registerNS;
+
+	public function __construct($context, $nodeList, $colNodes, $registerNS)
 	{
 		if (!($nodeList instanceof DOMNodeList))
 		{
@@ -86,6 +88,8 @@ class XmlIterator extends GenericIterator
 			throw new InvalidArgumentException("XmlIterator: Wrong column node type");
 		}
 
+
+		$this->_registerNS = $registerNS;
 		$this->_context = $context;
 		$this->_nodeList = $nodeList;
 		$this->_colNodes = $colNodes;
@@ -131,7 +135,7 @@ class XmlIterator extends GenericIterator
 
 		foreach ($this->_colNodes as $key=>$colxpath)
 		{
-			$nodecol = XmlUtil::selectNodes($node, $colxpath);
+			$nodecol = XmlUtil::selectNodes($node, $colxpath, $this->_registerNS);
 			if (is_null($nodecol))
 			{
 				$sr->AddField(strtolower($key), "");
