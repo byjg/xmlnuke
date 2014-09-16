@@ -231,16 +231,14 @@ class OAuthClient20
 					"client_id" => $this->_client_id,
 					"redirect_uri" => $this->_redirect_uri,
 					"client_secret" => $this->_client_secret,
-					"code" => $code
+					"code" => $code,
+					"grant_type" => "authorization_code"
 				);
 				
 				$req = new WebRequest($to->accessTokenURL());
-				$response = $req->Get($params);
+				$result = $req->Post($params);
 
-				$paramsResp = null;
-				parse_str($response, $paramsResp);
-				
-				$accessToken = $paramsResp['access_token'];
+				$accessToken = $to->decodeAccessToken($result);
 				
 				$this->setVar("access_token", $accessToken);
 				$to->setAccessToken($accessToken);

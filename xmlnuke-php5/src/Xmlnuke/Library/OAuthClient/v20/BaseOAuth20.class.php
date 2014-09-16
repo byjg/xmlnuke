@@ -82,6 +82,13 @@ abstract class BaseOAuth20 {/*{{{*/
 		
 		return $url;
 	}
+
+	public function decodeAccessToken($result)
+	{
+		$response =  json_decode($result);
+		$accessToken = $response->access_token;
+		return $accessToken;
+	}
 	
 	public function get($url, $params = null)
 	{

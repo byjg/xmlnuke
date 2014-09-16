@@ -38,6 +38,14 @@ class FacebookOAuth20 extends BaseOAuth20
 			throw new Exception($statusCode . "\n\n" . $result);
 		}
 	}
+
+	public function decodeAccessToken($result)
+	{
+		$paramsResp = null;
+		parse_str($result, $paramsResp);
+		$accessToken = $paramsResp['access_token'];
+		return $accessToken;
+	}
 	
 	protected function preparedUrl($url) {
 		return parent::preparedUrl($this->GRAPH_API . $url);
