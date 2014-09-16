@@ -131,7 +131,21 @@ class Debug
 						}
 
 						$raw = $sr->getRawFormat();
-						$result .= '<tr><td class="devdebug">' . implode('</b></td><td class="devdebug">', $raw) . '</td></tr>';
+						$result .= '<tr>';
+						foreach($raw as $item)
+						{
+							$result .= '<td class="devdebug">';
+							if (is_array($raw))
+							{
+								$result .= implode(',', $raw);
+							}
+							else
+							{
+								$result .= $raw;
+							}
+							$result .= '</td>';
+						}
+						$result .= '</tr>';
 					}
 					$result .= "</table>";
 					self::writeLog('IIterator', $result, false);
