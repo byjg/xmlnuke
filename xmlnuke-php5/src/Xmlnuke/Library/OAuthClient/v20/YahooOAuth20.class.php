@@ -11,11 +11,11 @@ use Exception;
  * @author jg
  */
 
-class WindowsLiveOAuth20 extends BaseOAuth20
+class YahooOAuth20 extends BaseOAuth20
 {
-	public function authorizationURL() { return "https://login.live.com/oauth20_authorize.srf"; }
+	public function authorizationURL() { return "https://api.login.yahoo.com/oauth2/request_auth"; }
 
-	public function accessTokenURL() { return "https://login.live.com/oauth20_token.srf"; }
+	public function accessTokenURL() { return "https://api.login.yahoo.com/oauth2/get_token"; }
 	
 	public function validateRequest($result) {
 		$statusCode = trim(parent::validateRequest($result));
@@ -33,6 +33,22 @@ class WindowsLiveOAuth20 extends BaseOAuth20
 		}
 	}
 	
+	public function decodeAccessToken($result)
+	{
+		$response =  json_decode($result);
+		$accessToken = $response->access_token;
+		$this->_yahooGuid = $response->xoauth_yahoo_guid;
+		//$response->refresh_token
+		return $accessToken;
+	}
+
+	protected $_yahooGuid = null;
+
+	public function getYahooGuid()
+	{
+		return $this->_yahooGuid;
+	}
+
 	public function getData($objectId = "me", $params = null)
 	{
 		return json_decode($this->get(($objectId[0] != "/" ? "/" : "") . $objectId, $params));

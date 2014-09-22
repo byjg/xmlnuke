@@ -18,7 +18,7 @@ $_SERVER['SCRIPT_NAME'] = '';
 $_SERVER['QUERY_STRING'] = '';
 $_SERVER['REQUEST_URI'] = '/';
 
-define('PHPUNIT_BASE_ROOT', '../../httpdocs');
+define('PHPUNIT_BASE_ROOT', dirname(__FILE__) . '/../../httpdocs');
 
 set_include_path(get_include_path() . PATH_SEPARATOR . PHPUNIT_BASE_ROOT);
 

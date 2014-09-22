@@ -34,10 +34,6 @@ class GoogleOAuth20 extends BaseOAuth20
 		}
 	}
 	
-	protected function preparedUrl($url) {
-		return parent::preparedUrl($this->GRAPH_API . $url);
-	}
-	
 	public function getData($objectId = "me", $params = null)
 	{
 		return json_decode($this->get(($objectId[0] != "/" ? "/" : "") . $objectId, $params));

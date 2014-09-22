@@ -66,6 +66,12 @@ class XmlDataSet
 	private $_context;
 
 	/**
+	 *
+	 * @var type
+	 */
+	protected $_registerNS;
+
+	/**
 	 * Enter description here...
 	 *
 	 * @param Context $context
@@ -74,7 +80,7 @@ class XmlDataSet
 	 * @param string[] $colNode
 	 * @return XmlDataSet
 	 */
-	public function __construct($context, $xml, $rowNode, $colNode)
+	public function __construct($context, $xml, $rowNode, $colNode, $registerNS = null)
 	{
 		if (!is_array($colNode))
 		{
@@ -90,6 +96,17 @@ class XmlDataSet
 			$this->_domDocument = XmlUtil::CreateXmlDocumentFromStr($xml);
 		}
 
+		if (is_null($registerNS))
+		{
+			$registerNS = array();
+		}
+
+		if (!is_array($registerNS))
+		{
+			throw new \InvalidArgumentException('The parameter $registerNS must be an associative array');
+		}
+
+		$this->_registerNS = $registerNS;
 		$this->_rowNode = $rowNode;
 		$this->_colNodes = $colNode;
 		$this->_context = $context;
@@ -103,7 +120,7 @@ class XmlDataSet
 	*/
 	public function getIterator()
 	{
-		$it = new XmlIterator($this->_context, XmlUtil::selectNodes($this->_domDocument->documentElement, $this->_rowNode), $this->_colNodes);
+		$it = new XmlIterator($this->_context, XmlUtil::selectNodes($this->_domDocument->documentElement, $this->_rowNode, $this->_registerNS), $this->_colNodes, $this->_registerNS);
 		return $it;
 	}
 	

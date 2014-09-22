@@ -216,8 +216,9 @@ class Context extends BaseSingleton
 		$this->AddSessionToConfig($_SESSION);
 		$this->AddCookieToConfig($_COOKIE);
 
-		$this->addPairToConfig("SELFURLREAL", $_SERVER["SCRIPT_NAME"]."?".$_SERVER["QUERY_STRING"]."&");
-		$this->addPairToConfig("SELFURL", $_SERVER["REQUEST_URI"]);
+		$queryString = (isset($_SERVER["QUERY_STRING"]) && !empty($_SERVER["QUERY_STRING"])) ? $_SERVER["QUERY_STRING"] . '&' : '';
+		$this->addPairToConfig("SELFURLREAL", $_SERVER["SCRIPT_NAME"] . "?" . $queryString);
+		$this->addPairToConfig("SELFURL", isset($_SERVER["REQUEST_URI"]) ? $_SERVER["REQUEST_URI"] : '/');
 		$this->addPairToConfig("ROOTDIR", $this->_xmlnukepath."/".$this-> _site);
 		$this->addPairToConfig("XMLNUKE", $this->_XmlNukeVersion);
 		//$this->addPairToConfig("USERNAME", $this->authenticatedUser());
