@@ -1,0 +1,38 @@
+{
+	"name": "byjg/xmlnuke",
+	"description": "PHP Framework based on XML/JSON",
+	"type": "project",
+	"version": "4.01-dev",
+	"keywords": ["api", "framework", "xml", "json", "xsl"],
+	"homepage": "http://xmlnuke.com",
+	"license": "GPL",
+	"authors": [
+		{
+			"name": "João Gilberto Magalhães",
+			"email": "joao@xmlnuke.com"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/byjg/xmlnuke/issues",
+		"source": "https://github.com/byjg/xmlnuke"
+	},
+	"require": {
+		"php": ">=5.3.1",
+		"ext-json": "*",
+		"ext-dom": "*",
+		"ext-xml": "*",
+		"ext-xsl": "*",
+		"ext-session": "*"
+	},
+	"suggest": {
+		"ext-curl": "*",
+		"ext-PDO": "*",
+		"ext-pdo_mysql": "*",
+		"ext-gd": "*"
+	},
+	"autoload": {
+		"psr-0": {
+			"Xmlnuke\\": "xmlnuke-php5/src/"
+		}
+	}
+}
