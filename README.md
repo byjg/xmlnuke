@@ -181,7 +181,7 @@ To do this you have to create a empty folder and put the following `composer.jso
 {
     "require": {
         "byjg/xmlnuke": "dev-master"
-    }
+    },
     "scripts": {
         "post-install-cmd": [
              "Xmlnuke\\Util\\Composer::postInstallCmd"

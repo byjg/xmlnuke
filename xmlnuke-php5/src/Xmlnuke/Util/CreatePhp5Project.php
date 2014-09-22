@@ -194,7 +194,7 @@ class CreatePhp5Project
 
 				$gitIgnore[] = "# Netbeans Project";
 				$gitIgnore[] = "nbproject/private";
-				$gitIgnore[] = ""
+				$gitIgnore[] = "";
 				$gitIgnore[] = "# Composer Vendor";
 				$gitIgnore[] = "vendor";
 				$gitIgnore[] = "";
