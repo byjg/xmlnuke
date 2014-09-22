@@ -171,13 +171,35 @@ See the [Wiki](https://github.com/byjg/xmlnuke/wiki) for more examples;
 
 The master branch requires PHP 5.3 to run. Prior PHP versions can use the legacy 'php50' branch. 
 
-### Web Install
+### Composer
 
-You can install the XMLNuke by using the XMLNuke PHP5 Installer. It is a interactive interface and will guide you during all install process. This tool check if your system meets the XMLNuke requirements, download the XMLNuke and creates a project for you. *It is in beta stage*
+Composer can download XMLNuke and create a empty XMLNuke project at the same time. 
 
-See more at:   
-https://github.com/byjg/xmlnuke-php5-installer
+To do this you have to create a empty folder and put the following `composer.json` file:
 
+```json
+{
+    "require": {
+        "byjg/xmlnuke": "dev-master"
+    },
+    "scripts": {
+        "post-install-cmd": [
+             "Xmlnuke\\Util\\Composer::postInstallCmd"
+        ],
+	"post-update-cmd" : [
+             "Xmlnuke\\Util\\Composer::postInstallCmd"
+        ]
+    }
+}
+```
+
+and execute the command:
+
+```bash
+composer install
+```
+
+This procedure is valid for existing XMLNuke projects also. 
 
 
 ### Command Line (Debian/Ubuntu)
@@ -190,7 +212,7 @@ Download the XMLNuke package. You can download from:
 - the Zip package (https://github.com/byjg/xmlnuke/archive/master.zip) or 
 - from repository by using the Git or SVN. 
 
-Extract the package in any folder, e.g. /opt/xmlnuke.   
+Extract the package in any folder, e.g. /opt/xmlnuke.
 **Remember**: The XMLNuke folder cannot to be accessible from you Web Browser. 
 
 Run at your terminal:

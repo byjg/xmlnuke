@@ -10,7 +10,7 @@ class CreatePhp5Project
 	{
 
 		if (func_num_args() < 4)
-			throw new Exception('I expected at least 5 parameters: file, homepath, projectname and language ');
+			throw new Exception('I expected at least 4 parameters: file, homepath, projectname and language ');
 
 		$argc = func_num_args();
 		$argv = func_get_args();
@@ -21,7 +21,7 @@ class CreatePhp5Project
 		if (!preg_match('~^[A-Za-z]([A-Za-z0-9])*$~', $PROJECT))
 			throw new Exception('Project musct contain only letters and numbers and start with a letter');
 		$PROJECT_FILE = strtolower($PROJECT);
-		$XMLNUKE = dirname(realpath($_SERVER["SCRIPT_FILENAME"]));
+		$XMLNUKE = dirname($argv[0]);
 		$TEMPLATE = "$XMLNUKE/templates/php5";
 
 		$PHPDIR = "$XMLNUKE" . DIRECTORY_SEPARATOR . "xmlnuke-php5";
@@ -34,7 +34,7 @@ class CreatePhp5Project
 				$DATADIR = "$PHPDIR" . DIRECTORY_SEPARATOR . "data";
 				if ( ! file_exists( $DATADIR ) )
 				{
-					throw new Exception("XMLNuke release not found!!! Cannot continue.");
+					throw new Exception("XMLNuke data dir '$DATADIR' not found!!! Cannot continue.");
 				}
 			}
 
@@ -151,7 +151,12 @@ class CreatePhp5Project
 					array('/__DATADIR__/', '/__PHPDIR__/', '/__PROJECT_DATA__/', '/__PROJECT_LIB__/', '/__DATE__/', '/__LANGS__/'),
 					array($DATADIR, $PHPDIR, "$HOME/data", "$HOME/lib", date('c'), $LANGUAGESAVAILABLE )
 				);
-				copy( "$HTTPDOCS/config.inc.php", "$HTTPDOCS/config.inc-dist.php" );
+				$configInc = file_get_contents("$HTTPDOCS/config.inc.php");
+				$configInc = str_replace($XMLNUKE, '#XMLNUKE#',
+							str_replace($HOME, '#PROJECT#',
+								$configInc
+							));
+				file_put_contents("$HTTPDOCS/config.inc-dist.php", $configInc);
 
 
 				# CodeGenX Generators
@@ -190,6 +195,9 @@ class CreatePhp5Project
 				$gitIgnore[] = "# Netbeans Project";
 				$gitIgnore[] = "nbproject/private";
 				$gitIgnore[] = "";
+				$gitIgnore[] = "# Composer Vendor";
+				$gitIgnore[] = "vendor";
+				$gitIgnore[] = "";
 				$gitIgnore[] = "# User Defined";
 				$gitIgnore[] = "";
 
@@ -217,7 +225,7 @@ class CreatePhp5Project
 		}
 		else
 		{
-			throw new Exception("XMLNuke release not found!!! Cannot continue.");
+			throw new Exception("XMLNuke PHP DIR '$PHPDIR' not found!!! Cannot continue.");
 		}
 	}
 
