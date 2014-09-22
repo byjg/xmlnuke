@@ -34,5 +34,10 @@
 		"psr-0": {
 			"Xmlnuke\\": "xmlnuke-php5/src/"
 		}
+	},
+	"scripts": {
+		"post-install-cmd": [
+			"Xmlnuke\\Util\\Composer::postInstallCmd"
+		]
 	}
 }

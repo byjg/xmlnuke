@@ -151,7 +151,12 @@ class CreatePhp5Project
 					array('/__DATADIR__/', '/__PHPDIR__/', '/__PROJECT_DATA__/', '/__PROJECT_LIB__/', '/__DATE__/', '/__LANGS__/'),
 					array($DATADIR, $PHPDIR, "$HOME/data", "$HOME/lib", date('c'), $LANGUAGESAVAILABLE )
 				);
-				copy( "$HTTPDOCS/config.inc.php", "$HTTPDOCS/config.inc-dist.php" );
+				$configInc = file_get_contents("$HTTPDOCS/config.inc.php");
+				$configInc = str_replace($XMLNUKE, '#XMLNUKE#',
+							str_replace($HOME, '#PROJECT#',
+								$configInc
+							));
+				file_put_contents("$HTTPDOCS/config.inc-dist.php", $configInc);
 
 
 				# CodeGenX Generators
