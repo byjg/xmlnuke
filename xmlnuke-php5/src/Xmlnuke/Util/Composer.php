@@ -25,6 +25,7 @@ class Composer
 		{
 			$output->write("Creating Project...", true);
 			$result = call_user_func_array( array( '\Xmlnuke\Util\CreatePhp5Project', 'Run' ), array(
+					$baseXmlnuke . '/Composer.php',
 					$baseProject,
 					basename($baseProject),
 					"en-us"
