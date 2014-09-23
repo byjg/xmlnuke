@@ -23,7 +23,6 @@
           <li class="download"><a class="buttons" href="https://github.com/byjg/xmlnuke/zipball/master">Download ZIP</a></li>
           <li class="download"><a class="buttons" href="https://github.com/byjg/xmlnuke/tarball/master">Download TAR</a></li>
           <li><a class="buttons github" href="https://github.com/byjg/xmlnuke">View On GitHub</a></li>
-          <li><a class="buttons wiki" href="https://github.com/byjg/xmlnuke/wiki">Wiki Pages</a></li>
         </ul>
 
         <p class="header">This project is maintained by <a class="header name" href="https://github.com/byjg">byjg</a></p>
@@ -195,11 +194,33 @@
 <p>The master branch requires PHP 5.3 to run. Prior PHP versions can use the legacy 'php50' branch. </p>
 
 <h3>
-<a name="web-install" class="anchor" href="#web-install"><span class="octicon octicon-link"></span></a>Web Install</h3>
+<a name="composer" class="anchor" href="#composer"><span class="octicon octicon-link"></span></a>Composer</h3>
 
-<p>You can install the XMLNuke by using the XMLNuke PHP5 Installer. It is a interactive interface and will guide you during all install process. This tool check if your system meets the XMLNuke requirements, download the XMLNuke and creates a project for you. <em>It is in beta stage</em></p>
+<p>Composer can download XMLNuke and create a empty XMLNuke project at the same time. </p>
 
-<p>See more at:<br><a href="https://github.com/byjg/xmlnuke-php5-installer">https://github.com/byjg/xmlnuke-php5-installer</a></p>
+<p>To do this you have to create a empty folder and put the following <code>composer.json</code> file:</p>
+
+<div class="highlight highlight-json"><pre><span class="p">{</span>
+    <span class="nt">"require"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">"byjg/xmlnuke"</span><span class="p">:</span> <span class="s2">"dev-master"</span>
+    <span class="p">},</span>
+    <span class="nt">"scripts"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">"post-install-cmd"</span><span class="p">:</span> <span class="p">[</span>
+             <span class="s2">"Xmlnuke\\Util\\Composer::postInstallCmd"</span>
+        <span class="p">],</span>
+    <span class="nt">"post-update-cmd"</span> <span class="p">:</span> <span class="p">[</span>
+             <span class="s2">"Xmlnuke\\Util\\Composer::postInstallCmd"</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>and execute the command:</p>
+
+<div class="highlight highlight-bash"><pre>composer install
+</pre></div>
+
+<p>This procedure is valid for existing XMLNuke projects also. </p>
 
 <h3>
 <a name="command-line-debianubuntu" class="anchor" href="#command-line-debianubuntu"><span class="octicon octicon-link"></span></a>Command Line (Debian/Ubuntu)</h3>
@@ -214,7 +235,8 @@
 <ul>
 <li>the Zip package (<a href="https://github.com/byjg/xmlnuke/archive/master.zip">https://github.com/byjg/xmlnuke/archive/master.zip</a>) or </li>
 <li>from repository by using the Git or SVN. </li>
-</ul><p>Extract the package in any folder, e.g. /opt/xmlnuke.<br><strong>Remember</strong>: The XMLNuke folder cannot to be accessible from you Web Browser. </p>
+</ul><p>Extract the package in any folder, e.g. /opt/xmlnuke.
+<strong>Remember</strong>: The XMLNuke folder cannot to be accessible from you Web Browser. </p>
 
 <p>Run at your terminal:</p>
 
@@ -253,6 +275,21 @@ ln -s /opt/xmlnuke/xmlnuke-common /var/www/my-project/common
 <p>Now, just test it:</p>
 
 <pre><code>http://yourserver/my-project
+</code></pre>
+
+<h2>
+<a name="development" class="anchor" href="#development"><span class="octicon octicon-link"></span></a>Development</h2>
+
+<p>The <code>master</code> branch is the stable release. All development will be done in the <code>develop</code> branch.
+Merge Requests will be accepted in the <code>develop</code> branch.</p>
+
+<h3>
+<a name="pre-commit-hook" class="anchor" href="#pre-commit-hook"><span class="octicon octicon-link"></span></a>Pre-Commit Hook.</h3>
+
+<p>You can install a pre-commit hook to execute all unit tests before each commit. Install this hook by using the command:</p>
+
+<pre><code>cd &lt;xmlnukedir&gt;
+ln -s &lt;xmlnukedir&gt;/utils/git/hooks/pre-commit .git/hooks
 </code></pre>
       </section>
       <footer>
