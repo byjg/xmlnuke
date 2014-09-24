@@ -180,18 +180,62 @@ class MongoDBDriver implements INoSQLDriver
 
 	/**
 	 * Update a document based on your criteria
+	 *
+	 * Options for MongoDB is an array of:
+	 *
+	 * sort array	Determines which document the operation will modify if the
+	 *              query selects multiple documents. findAndModify will modify
+	 *              the first document in the sort order specified by this argument.
+	 * remove boolean	Optional if update field exists. When TRUE, removes the
+	 *              selected document. The default is FALSE.
+	 * update array	Optional if remove field exists. Performs an update of the
+	 *              selected document.
+	 * new boolean	Optional. When TRUE, returns the modified document rather than the original.
+	 *              The findAndModify method ignores the new option for remove operations.
+	 *              The default is FALSE.
+	 * upsert boolean	Optional. Used in conjunction with the update field. When TRUE,
+	 *              the findAndModify command creates a new document if the query
+	 *              returns no documents. The default is false. In MongoDB 2.2, the findAndModify
+	 *              command returns NULL when upsert is TRUE.
+	 *
 	 * @param mixed $document
-	 * @param type $filter
+	 * @param array $filter
+	 * @param array $options See:
 	 * @return bool
 	 */
-	public function update($document, $filter = null)
+	public function update($document, $filter = null, $options = null)
 	{
-		//TODO: Get the document and update
 		if (is_null($filter))
 		{
-			$filter = array();
+			throw new \InvalidArgumentException('You need to set the filter for update, or pass an empty array for all fields');
 		}
-		return $this->_collection->update($filter, $document);
+
+		$update = array();
+		if (is_array($document))
+		{
+			$document['updated_at'] = new MongoDate();
+		}
+		if ($document instanceof stdClass)
+		{
+			$document->updated_at = new MongoDate();
+		}
+		foreach ($document as $key => $value)
+		{
+			if ($key[0] == '$')
+			{
+				$update[$key] = $value;
+			}
+			else
+			{
+				$update['$set'][$key] = $value;
+			}
+		}
+		
+		if (is_null($options))
+		{
+			$options = array('new' => true);
+		}
+		return $this->_collection->findAndModify($filter, $update, array(), $options);
 	}
 
 

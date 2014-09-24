@@ -134,9 +134,9 @@ class NoSQLDataSet implements INoSQLDriver
 	 * @param mixed $filter
 	 * @return bool
 	 */
-	public function update($document, $filter = null)
+	public function update($document, $filter = null, $options = null)
 	{
-		return $this->_dbDriver->update($document, $filter);
+		return $this->_dbDriver->update($document, $filter, $options);
 	}
 
 

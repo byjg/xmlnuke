@@ -39,7 +39,7 @@ interface INoSQLDriver
 	function getCollection();
 	function setCollection($collection);
 	function insert($document);
-	function update($document, $filter = null);
+	function update($document, $filter = null, $options = null);
 
 	function getDbConnection();
 
