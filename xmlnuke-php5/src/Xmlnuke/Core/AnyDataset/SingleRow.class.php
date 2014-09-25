@@ -278,6 +278,21 @@ class SingleRow extends \Xmlnuke\Core\Engine\Object
 	}
 
 	/**
+	 *
+	 * @return array
+	 */
+	public function getAsJSON()
+	{
+		if (is_array($this->_row))
+		{
+			return json_decode(json_encode($this->_row));
+		}
+		else
+		{
+			throw new \UnexpectedValueException('I expected that getRawFormat is array() but ' . gettype($this->_row) . ' was given');
+		}
+	}
+	/**
 	 * @return array
 	 */
 	public function getOriginalRawFormat()
