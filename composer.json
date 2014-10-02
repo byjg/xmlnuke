@@ -12,6 +12,11 @@
 			"email": "joao@xmlnuke.com"
 		}
 	],
+	"bin": [
+		"copy-dist-files.sh",
+		"create-php5-project.php",
+		"update-php5-project.php"
+	],
 	"support": {
 		"issues": "https://github.com/byjg/xmlnuke/issues",
 		"source": "https://github.com/byjg/xmlnuke"
