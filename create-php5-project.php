@@ -1,4 +1,4 @@
-#!/usr/bin/php
+#!/usr/bin/env php
 <?php
 
 require_once __DIR__ . '/xmlnuke-php5/src/Xmlnuke/Util/CreatePhp5Project.php';
