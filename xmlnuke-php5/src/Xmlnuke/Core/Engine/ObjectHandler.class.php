@@ -81,8 +81,15 @@ class ObjectHandler
 
 	protected $_node = null;
 
-
-	public function __construct($current, $model, $config, $forcePropName = "")
+	/**
+	 *
+	 * @param \DOMNode $current Current Dom Node
+	 * @param mixed $model Array or instance of object model
+	 * @param string $config The name of comment inspector
+	 * @param string $forcePropName force a name
+	 * @throws \InvalidArgumentException
+	 */
+	public function __construct($current, $model, $config = "xmlnuke", $forcePropName = "")
 	{
 		if (is_array($model))
 			$this->_model = (object) $model;
@@ -110,6 +117,10 @@ class ObjectHandler
 	}
 
 
+	/**
+	 * Create a object model inside the "current node"
+	 * @return \DOMNode
+	 */
 	public function CreateObjectFromModel()
 	{
 		if ($this->_model instanceof IIterator)
@@ -155,11 +166,8 @@ class ObjectHandler
 	}
 
 	/**
-	 *
-	 * @param stdClass $this->_model
-	 * @param type $this->_config
-	 * @param type $this->_forcePropName
-	 * @return type
+	 * Get the info of comment instance
+	 * @return array
 	 */
 	protected function getClassInfo()
 	{
