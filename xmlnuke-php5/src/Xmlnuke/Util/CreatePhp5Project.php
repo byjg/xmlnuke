@@ -21,7 +21,7 @@ class CreatePhp5Project
 		if (!preg_match('~^[A-Za-z]([A-Za-z0-9])*$~', $PROJECT))
 			throw new Exception('Project musct contain only letters and numbers and start with a letter');
 		$PROJECT_FILE = strtolower($PROJECT);
-		$XMLNUKE = dirname($argv[0]);
+		$XMLNUKE = dirname(dirname(dirname(dirname(__DIR__))));
 		$TEMPLATE = "$XMLNUKE/templates/php5";
 
 		$PHPDIR = "$XMLNUKE" . DIRECTORY_SEPARATOR . "xmlnuke-php5";
