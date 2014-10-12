@@ -30,8 +30,6 @@
 
 namespace Xmlnuke\Util;
 
-require_once(PHPXMLNUKEDIR . 'src/Xmlnuke/Library/log4php/Logger.php');
-
 use Xmlnuke\Core\Exception\NotFoundException;
 use Xmlnuke\Core\Processor\LogConfigFilenameProcessor;
 

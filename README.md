@@ -201,7 +201,7 @@ composer install
 
 This procedure is valid for existing XMLNuke projects also. 
 
-### Composer: Global installation
+### Composer: Global installation using global
 
 You can install XMLNuke globally using composer. To do this execute the command:
 
@@ -218,6 +218,12 @@ It is interesting that the folder `~/.composer/vendor/bin` it is the PATH of ser
 
 ```bash
 export PATH=~/.composer/vendor/bin:$PATH
+```
+
+### Composer: Global installation using create-project
+
+```bash
+sudo composer create-project byjg/xmlnuke /opt/xmlnuke dev-master
 ```
 
 ### Command Line (Debian/Ubuntu)

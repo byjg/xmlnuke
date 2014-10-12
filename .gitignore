@@ -36,6 +36,10 @@ bin/*
 *.pidb
 *.csi
 
+# Composer files
+vendor
+composer.lock
+
 # Other files
 .project
 .buildpath

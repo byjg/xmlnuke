@@ -46,6 +46,8 @@ if (!is_readable(PHPXMLNUKEDIR . "src/Xmlnuke/Core/Engine/Autoload.class.php"))
 require_once PHPXMLNUKEDIR . "src/Xmlnuke/Core/Engine/Autoload.class.php";
 $autoload = AutoLoad::getInstance();
 
+require(PHPXMLNUKEDIR . 'src/vendor/autoload.php');
+
 // Error Handler
 ErrorHandler::getInstance()->register();
 

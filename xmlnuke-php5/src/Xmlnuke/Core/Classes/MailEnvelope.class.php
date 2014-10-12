@@ -33,8 +33,6 @@ namespace Xmlnuke\Core\Classes;
  * @package xmlnuke
  */
 
-require_once(PHPXMLNUKEDIR . "src/Xmlnuke/Library/phpmailer/class.phpmailer.php");
-
 use Exception;
 use InvalidArgumentException;
 use PHPMailer;
