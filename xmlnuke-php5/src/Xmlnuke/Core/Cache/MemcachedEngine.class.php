@@ -155,6 +155,16 @@ class  MemcachedEngine extends BaseSingleton implements ICacheEngine
 	}
 
 	/**
+	 * Unlock resource
+	 * @param string $key
+	 */
+	public function release($key)
+	{
+		unset($this->_L1Cache[$key]);
+		$this->_memCached->delete($key);
+	}
+
+	/**
 	 *
 	 * @param string $key
 	 * @param string $str

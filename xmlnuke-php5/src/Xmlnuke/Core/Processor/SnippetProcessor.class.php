@@ -116,10 +116,7 @@ class SnippetProcessor
 			catch (Exception $ex)
 			{
 				$cacheEngine->unlock($xslName);
-				if (FileUtil::Exists($xslCache->FullQualifiedNameAndPath()))
-				{
-					FileUtil::DeleteFile($xslCache);
-				}
+				$cacheEngine->release($xslName);
 				throw $ex;
 			}
 		}

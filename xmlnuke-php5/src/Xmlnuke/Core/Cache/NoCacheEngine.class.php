@@ -62,6 +62,16 @@ class  NoCacheEngine extends BaseSingleton implements ICacheEngine
 		return true;
 	}
 
+	
+	/**
+	 * Unlock resource
+	 * @param string $key
+	 */
+	public function release($key)
+	{
+		return;
+	}
+
 	/**
 	 *
 	 * @param string $key

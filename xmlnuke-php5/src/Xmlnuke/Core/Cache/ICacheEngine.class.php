@@ -64,10 +64,16 @@ interface ICacheEngine
 	function lock($key);
 
 	/**
-	 * UnLock resource after set it
+	 * Unlock resource
 	 * @param string $key
 	 */
 	function unlock($key);
+
+	/**
+	 * Release the object
+	 * @param string $key
+	 */
+	function release($key);
 }
 
 ?>
