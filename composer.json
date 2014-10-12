@@ -31,9 +31,9 @@
 		"ext-xml": "*",
 		"ext-xsl": "*",
 		"ext-session": "*",
-		"apache/log4php": "2.*",
-		"phpmailer/phpmailer": "5.*",
-		"filp/whoops": "1.1.*"
+		"apache/log4php": "2.3.0",
+		"phpmailer/phpmailer": "5.2.9",
+		"filp/whoops": "1.1.2"
 	},
 	"suggest": {
 		"ext-curl": "*",
