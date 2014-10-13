@@ -46,7 +46,14 @@ if (!is_readable(PHPXMLNUKEDIR . "src/Xmlnuke/Core/Engine/Autoload.class.php"))
 require_once PHPXMLNUKEDIR . "src/Xmlnuke/Core/Engine/Autoload.class.php";
 $autoload = AutoLoad::getInstance();
 
-require(PHPXMLNUKEDIR . 'src/vendor/autoload.php');
+if (file_exists(PHPXMLNUKEDIR . 'src/vendor/autoload.php'))
+{
+	require(PHPXMLNUKEDIR . 'src/vendor/autoload.php');
+}
+if (file_exists(PHPXMLNUKEDIR . '../../../autoload.php'))
+{
+	require(PHPXMLNUKEDIR . '../../../autoload.php');
+}
 
 // Error Handler
 ErrorHandler::getInstance()->register();
