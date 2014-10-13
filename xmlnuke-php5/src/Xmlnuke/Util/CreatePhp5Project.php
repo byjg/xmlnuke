@@ -197,9 +197,10 @@ class CreatePhp5Project
 				$gitIgnore[] = "";
 				$gitIgnore[] = "# Composer Vendor";
 				$gitIgnore[] = "vendor";
+				$gitIgnore[] = "composer.lock";
 				$gitIgnore[] = "";
 				$gitIgnore[] = "# User Defined";
-				$gitIgnore[] = "";
+				$gitIgnore[] = "*~";
 
 				CreatePhp5Project::writeToFile("$HOME/.gitignore", $gitIgnore);
 				//touch("$HOME/config.inc.php");
