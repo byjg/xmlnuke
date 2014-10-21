@@ -1,0 +1,15 @@
+{
+	"name": "user/project-name",
+	"description": "Put your description here",
+    "require": {
+        "byjg/xmlnuke": "dev-master"
+    },
+    "scripts": {
+        "post-install-cmd": [
+             "Xmlnuke\\Util\\Composer::postInstallCmd"
+        ],
+    "post-update-cmd" : [
+             "Xmlnuke\\Util\\Composer::postInstallCmd"
+        ]
+    }
+}

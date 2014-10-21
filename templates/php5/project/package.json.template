@@ -1,0 +1,6 @@
+{
+  "jam": {
+    "packageDir": "httpdocs/static/jam",
+    "baseUrl": "httpdocs"
+  }
+}
