@@ -35,6 +35,7 @@ obj/*
 bin/*
 *.pidb
 *.csi
+.zedstate
 
 # Composer files
 vendor
