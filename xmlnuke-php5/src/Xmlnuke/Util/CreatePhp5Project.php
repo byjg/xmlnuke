@@ -21,7 +21,7 @@ class CreatePhp5Project
 		if (!preg_match('~^[A-Za-z]([A-Za-z0-9])*$~', $PROJECT))
 			throw new Exception('Project musct contain only letters and numbers and start with a letter');
 		$PROJECT_FILE = strtolower($PROJECT);
-		$XMLNUKE = dirname($argv[0]);
+		$XMLNUKE = dirname(dirname(dirname(dirname(__DIR__))));
 		$TEMPLATE = "$XMLNUKE/templates/php5";
 
 		$PHPDIR = "$XMLNUKE" . DIRECTORY_SEPARATOR . "xmlnuke-php5";
@@ -62,6 +62,12 @@ class CreatePhp5Project
 				CreatePhp5Project::writeToFile( "$HTTPDOCS/static/js/_empty", "-- EMPTY --") ;
 				CreatePhp5Project::writeToFile( "$HTTPDOCS/static/css/_empty", "-- EMPTY --") ;
 				CreatePhp5Project::writeToFile( "$HTTPDOCS/static/img/_empty", "-- EMPTY --") ;
+				copy( "$TEMPLATE/project/bowerrc.template", "$HOME/.bowerrc" );
+				copy( "$TEMPLATE/project/package.json.template", "$HOME/package.json" );
+				if (!file_exists("$HOME/composer.json"))
+				{
+					copy( "$TEMPLATE/project/composer.json.template", "$HOME/composer.json" );
+				}
 
 				# Creating Empty files for Data
 				CreatePhp5Project::writeToFile( "$HOME/data/anydataset/.do_not_remove", "-- DO NOT REMOVE THIS DIRECTORY --") ;
@@ -197,9 +203,10 @@ class CreatePhp5Project
 				$gitIgnore[] = "";
 				$gitIgnore[] = "# Composer Vendor";
 				$gitIgnore[] = "vendor";
+				$gitIgnore[] = "composer.lock";
 				$gitIgnore[] = "";
 				$gitIgnore[] = "# User Defined";
-				$gitIgnore[] = "";
+				$gitIgnore[] = "*~";
 
 				CreatePhp5Project::writeToFile("$HOME/.gitignore", $gitIgnore);
 				//touch("$HOME/config.inc.php");
@@ -249,7 +256,13 @@ class CreatePhp5Project
 		$xmlnukePathConfig = $config['xmlnuke.PHPXMLNUKEDIR'];
 
 		if ($PHPDIR != $xmlnukePathConfig)
-			throw new Exception("Config points to '$xmlnukePathConfig' and the script is running on '$PHPDIR';");
+		{
+			$contents = file_get_contents($CONFIG);
+			$contents = str_replace($xmlnukePathConfig, $PHPDIR, $contents);
+			file_put_contents($CONFIG, $contents);
+
+			throw new Exception("Config points to '$xmlnukePathConfig' and the script is running on '$PHPDIR'\n\nYour config is now updated. Please run it again;");
+		}
 
 
 		if (file_exists("$HTTPDOCS/imagevalidate.php"))

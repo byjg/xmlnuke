@@ -81,7 +81,7 @@ class  ArrayCacheEngine extends BaseSingleton implements ICacheEngine
 	{
 		$log = LogWrapper::getLogger("cache.arraycacheengine");
 		$log->trace("[Cache] Set '$key' in L1 Cache");
-		
+
 		$this->_L1Cache[$key] = $object;
 
 		return true;
@@ -101,6 +101,15 @@ class  ArrayCacheEngine extends BaseSingleton implements ICacheEngine
 		$this->_L1Cache[$key] = $this->_L1Cache[$key] . $str;
 
 		return true;
+	}
+
+	/**
+	 * Unlock resource
+	 * @param string $key
+	 */
+	public function release($key)
+	{
+		unset($this->_L1Cache[$key]);
 	}
 
 	/**

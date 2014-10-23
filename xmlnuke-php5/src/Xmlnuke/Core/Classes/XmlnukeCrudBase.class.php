@@ -613,6 +613,10 @@ abstract class XmlnukeCrudBase extends XmlnukeDocumentObject implements IXmlnuke
 		{
 			$title = $this->_lang->Value("TITLE_VIEW", $this->_header);
 		}
+		else
+		{
+			$title = "";
+		}
 
 //		XmlFormCollection $form
 		$form = new XmlFormCollection($this->_context, $this->_module, $title);

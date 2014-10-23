@@ -331,8 +331,8 @@ class XmlnukeEngine
 	{
 		// Add a custom XML based on attribute xmlobjet inside root
 		// Example:
-		// <page xmlobject="plugin.name[param1, param2]">
-		$pattern = "/(?P<plugin>((\w+)\.)+\w+)\[(?P<param>([#']?[\w]+[#']?\s*,?\s*)+)\]/";
+		// <page xmlobject="plugin.name(param1, param2)">
+		$pattern = "/(?P<plugin>.*?)\s*\((?P<param>([#']?.*?[#']?\s*,?\s*)+)?\)/";
 		$xmlRoot = $xml->documentElement;
 		$xmlRootAttributes = $xmlRoot->attributes;
 		if ($xmlRootAttributes != null)
@@ -360,14 +360,26 @@ class XmlnukeEngine
 								$param[$i] = trim($param[$i]);
 							}
 						}
-						$className = $matches["plugin"][$iCount];
-						$plugin = new $className($param[0], $param[1], $param[2], $param[3], $param[4]);
-						if (!($plugin instanceof IXmlnukeDocumentObject))
+						$className = str_replace('.', '\\', $matches["plugin"][$iCount]);
+						if ($className[0] != '\\')
 						{
-							throw new InvalidArgumentException("The attribute in XMLNuke need to implement IXmlnukeDocumentObject interface");
+							$className = "\\$className";
 						}
-						$plugin->generateObject($xmlRoot);
+						$plugin = new $className($param[0], $param[1], $param[2], $param[3], $param[4]);
+						if ($plugin instanceof IXmlnukeDocumentObject)
+						{
+							$plugin->generateObject($xmlRoot);
+						}
+						else
+						{
+							$handler = new ObjectHandler($xmlRoot, $plugin);
+							$handler->CreateObjectFromModel();
+						}
 					}
+				}
+				else if ($attr->nodeName == 'xsl')
+				{
+					$xslFile = new XSLFilenameProcessor($attr->value);
 				}
 			}
 		}

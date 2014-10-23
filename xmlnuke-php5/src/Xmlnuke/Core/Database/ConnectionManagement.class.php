@@ -224,7 +224,7 @@ class ConnectionManagement
 
 			$patDriver = "(?P<driver>[\w\.]+)\:\/\/";
 			$patCredentials = "(?P<username>[\w\.$!%&\-_]+)(?::(?P<password>[\w\.$!%&#\*\+=\[\]\(\)\-_]+))?@";
-			$patHost = "(?P<host>[\w\-\.]+)(?::(?P<port>\d+))?";
+			$patHost = "(?P<host>[\w\-\.,_]+)(?::(?P<port>\d+))?";
 			$patDatabase = "\/(?P<database>[\w\-\.]+)";
 			$patExtra = "(?:\?(?P<extraparam>(?:[\w\-\.]+=[\w\-%\.\/]+&?)*))?";
 			$patFile = "(?P<path>(?:\w\:)?\/(?:[\w\-\.]+\/?)+)?";

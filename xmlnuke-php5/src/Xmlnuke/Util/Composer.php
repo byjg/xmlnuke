@@ -27,7 +27,7 @@ class Composer
 			$result = call_user_func_array( array( '\Xmlnuke\Util\CreatePhp5Project', 'Run' ), array(
 					$baseXmlnuke . '/Composer.php',
 					$baseProject,
-					basename($baseProject),
+					preg_replace('/[^A-Za-z0-0]/', '', basename($baseProject)),
 					"en-us"
 				)
 			);

@@ -29,8 +29,6 @@
 */
 namespace Xmlnuke\Util;
 
-require_once(PHPXMLNUKEDIR . "src/Xmlnuke/Library/phpmailer/class.phpmailer.php");
-
 use PHPMailer;
 use Xmlnuke\Core\AnyDataset\AnyDataSet;
 use Xmlnuke\Core\AnyDataset\IteratorFilter;

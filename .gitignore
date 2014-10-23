@@ -35,6 +35,11 @@ obj/*
 bin/*
 *.pidb
 *.csi
+.zedstate
+
+# Composer files
+vendor
+composer.lock
 
 # Other files
 .project

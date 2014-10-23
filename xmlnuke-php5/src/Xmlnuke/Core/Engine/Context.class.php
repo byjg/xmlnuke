@@ -243,7 +243,11 @@ class Context extends BaseSingleton
 
 
 	protected $_xslCacheEngine = null;
-	
+
+	/**
+	 *
+	 * @return \Xmlnuke\Core\Cache\ICacheEngine
+	 */
 	public function getXSLCacheEngine()
 	{
 		if ($this->_xslCacheEngine == null)

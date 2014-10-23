@@ -1,7 +1,13 @@
 language: php
 php:
+  - "5.6"
   - "5.5"
   - "5.4"
   - "5.3"
 
-script: phpunit --configuration xmlnuke-php5/src/Tests/configuration.xml
+install:
+  - composer install
+
+script: 
+  - phpunit --configuration xmlnuke-php5/src/Tests/configuration.xml
+

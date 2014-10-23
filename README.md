@@ -171,7 +171,7 @@ See the [Wiki](https://github.com/byjg/xmlnuke/wiki) for more examples;
 
 The master branch requires PHP 5.3 to run. Prior PHP versions can use the legacy 'php50' branch. 
 
-### Composer
+### Composer: Project level installation
 
 Composer can download XMLNuke and create a empty XMLNuke project at the same time. 
 
@@ -201,6 +201,30 @@ composer install
 
 This procedure is valid for existing XMLNuke projects also. 
 
+### Composer: Global installation using global
+
+You can install XMLNuke globally using composer. To do this execute the command:
+
+```bash
+# use dev-master for stable version
+# use dev-develop for unstable/develop versions
+# use the version number for specific version
+composer global require "byjg/xmlnuke=dev-master"
+```
+
+Make sure that the folder `~/.composer` can be accessible by your web server.
+
+It is interesting that the folder `~/.composer/vendor/bin` it is the PATH of server:
+
+```bash
+export PATH=~/.composer/vendor/bin:$PATH
+```
+
+### Composer: Global installation using create-project
+
+```bash
+sudo composer create-project byjg/xmlnuke /opt/xmlnuke dev-master
+```
 
 ### Command Line (Debian/Ubuntu)
 

@@ -146,6 +146,9 @@ class  FileSystemCacheEngine extends BaseSingleton implements ICacheEngine
 				if (FileUtil::Exists($fileKey))
 					FileUtil::DeleteFileString ($fileKey);
 
+				if (is_null($object))
+					return;
+
 				if (is_string($object) && (strlen($object) == 0))
 					touch($fileKey);
 				else
@@ -160,6 +163,15 @@ class  FileSystemCacheEngine extends BaseSingleton implements ICacheEngine
 		{
 			$log->trace("[Cache] Not Set '$key' because NOCACHE=true");
 		}
+	}
+
+	/**
+	 * Unlock resource
+	 * @param string $key
+	 */
+	public function release($key)
+	{
+		$this->set($key, null);
 	}
 
 	/**

@@ -34,18 +34,28 @@ namespace Xmlnuke\Core\Engine;
 
 // It is necessary this include, because autoload was not initiated :(
 require_once(PHPXMLNUKEDIR . 'src/Xmlnuke/Core/Classes/BaseSingleton.class.php');
+require_once(PHPXMLNUKEDIR . 'src/Xmlnuke/Util/FileUtil.class.php');
 
 class AutoLoad extends \Xmlnuke\Core\Classes\BaseSingleton
 {
 	const FRAMEWORK_XMLNUKE = 'FRAMEWORK_XMLNUKE';
 	const USER_PROJECTS = 'USER_PROJECTS';
 	
+	protected static $_folders = array();
+
 	protected function __construct()
 	{
 		spl_autoload_register(array($this, "autoLoad_XmlnukeFramework"));
 		spl_autoload_register(array($this, "autoLoad_UserProjects"));
-		
-		$this->registrUserProject(PHPXMLNUKEDIR . 'src'); // For Xmlnuke.Modules.
+
+		self::$_folders[AutoLoad::FRAMEWORK_XMLNUKE] =
+				array
+				(
+					"src/",
+					"src/Xmlnuke/Library/"
+				);
+
+		self::$_folders[AutoLoad::USER_PROJECTS] = array();
 	}
 
 	public function registrUserProject($path)
@@ -53,20 +63,15 @@ class AutoLoad extends \Xmlnuke\Core\Classes\BaseSingleton
 		$path = str_replace('\\', '/', $path);
 		AutoLoad::$_folders[AutoLoad::USER_PROJECTS][] = 
 			(substr($path, -strlen('/')) === '/' ? substr($path, 0, strlen($path)-1) : $path);
+
+		// For projects that use composer also
+		$vendorDirs = glob(dirname($path) . '/vendor/*');
+		foreach ($vendorDirs as $vendor)
+		{
+			AutoLoad::$_folders[AutoLoad::USER_PROJECTS][] = $vendor;
+		}
 	}
 	
-	protected static $_folders =
-		array(
-			AutoLoad::FRAMEWORK_XMLNUKE =>
-				array
-				(
-					"src/",
-					"src/Xmlnuke/Library/",
-					"src/modules/aws/"
-				),
-			AutoLoad::USER_PROJECTS => array()
-		);
-
 	// Auto Load method for Core Xmlnuke and 3rd Party
 	protected function autoLoad_XmlnukeFramework($className)
 	{
@@ -75,23 +80,20 @@ class AutoLoad extends \Xmlnuke\Core\Classes\BaseSingleton
 			// PSR-0 Classes
 			// convert namespace to full file path
 			$class = PHPXMLNUKEDIR . $prefix . str_replace('\\', '/', $className);
-			if (is_readable($class . '.class.php'))
-			{
-				require_once($class . '.class.php');
-				break;
-			}
-			else if (is_readable($class . '.php'))
-			{
-				require_once($class . '.php');
-				break;
-			}
+			$class = (
+				file_exists("$class.class.php")
+					? "$class.class.php"
+				    : (
+						file_exists("$class.php")
+							? "$class.php"
+							: null
+						)
+					);
 			
-			// Non PSR-0 and No Namespace classes
-			$filename = PHPXMLNUKEDIR . $prefix . strtolower($className) . ".class.php";
-			if (is_readable($filename))
+			if (!empty($class) && \Xmlnuke\Util\FileUtil::isReadable($class))
 			{
-				require_once $filename;
-				return;
+				require_once($class);
+				break;
 			}
 		}
     }
@@ -105,16 +107,19 @@ class AutoLoad extends \Xmlnuke\Core\Classes\BaseSingleton
 		foreach (AutoLoad::$_folders[AutoLoad::USER_PROJECTS] as $libName => $libDir)
 		{
 			$file = $libDir . '/' . $class;
-			if (is_readable($file . '.class.php'))
-			{
-				if (\Xmlnuke\Util\FileUtil::isWindowsOS() && (count(glob($file . '.*')) == 0))
-					throw new \Xmlnuke\Core\Exception\EngineException(
-						'The module file name "' . $className . '" does not match uppercase and lowercase. ' .
-						'Your operating system supports this behavior, ' .
-						'but Xmlnuke does not accept to ensure your code will run on any platform.'
+			$file = (
+						file_exists("$file.class.php")
+							? "$file.class.php"
+							: (
+								file_exists("$file.php")
+									? "$file.php"
+									: null
+								)
 					);
 
-				require_once $file . '.class.php';
+			if (!empty($file) && \Xmlnuke\Util\FileUtil::isReadable($file))
+			{
+				require_once $file;
 				return;
 			}
 		}

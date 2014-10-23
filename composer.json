@@ -3,7 +3,7 @@
 	"description": "PHP Framework based on XML/JSON",
 	"type": "project",
 	"version": "4.01-dev",
-	"keywords": ["api", "framework", "xml", "json", "xsl"],
+	"keywords": ["api", "framework", "xml", "json", "xsl", "xmlnuke"],
 	"homepage": "http://xmlnuke.com",
 	"license": "GPL",
 	"authors": [
@@ -11,6 +11,14 @@
 			"name": "João Gilberto Magalhães",
 			"email": "joao@xmlnuke.com"
 		}
+	],
+	"config": {
+		"vendor-dir": "xmlnuke-php5/src/vendor"
+	},
+	"bin": [
+		"copy-dist-files.sh",
+		"create-php5-project.php",
+		"update-php5-project.php"
 	],
 	"support": {
 		"issues": "https://github.com/byjg/xmlnuke/issues",
@@ -22,11 +30,20 @@
 		"ext-dom": "*",
 		"ext-xml": "*",
 		"ext-xsl": "*",
-		"ext-session": "*"
+		"ext-session": "*",
+		"apache/log4php": "2.3.0",
+		"phpmailer/phpmailer": "5.2.9",
+		"filp/whoops": "1.1.2",
+		"neitanod/forceutf8": "dev-master"
 	},
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/byjg/forceutf8"
+		}
+	],
 	"suggest": {
 		"ext-curl": "*",
-		"ext-PDO": "*",
 		"ext-pdo_mysql": "*",
 		"ext-gd": "*"
 	},

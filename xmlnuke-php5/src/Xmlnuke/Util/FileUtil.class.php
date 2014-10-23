@@ -333,7 +333,7 @@ class FileUtil
 		return $result;
 
 	}
-	//OK!
+
 	/**
 	 * OS is Microsoft Windows?
 	 *
@@ -347,6 +347,41 @@ class FileUtil
 		else {
 			return false;
 		}
+	}
+
+	/**
+	 * OS is MacOS or Darwin?
+	 *
+	 * @return bool
+	 */
+	public static function isMacOS()
+	{
+		if (strpos(strtolower(PHP_OS), 'darwin') !== false) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Check if the file is readable across all platforms
+	 * @param string $filename
+	 * @return bool The filename matches with your spelling name.
+	 */
+	public static function isReadable($filename)
+	{
+		if (!is_readable($filename))
+			return false;
+
+		if ((self::isWindowsOS() || self::isMacOS()) && (count(glob($filename . '*')) == 0))
+			throw new \Xmlnuke\Core\Exception\CaseMismatchException(
+				'Your operating system is not case sensitive and it can find the file "' . $filename . '" ' .
+				'with different uppercase and lowercase combination in your name. ' .
+				'However Xmlnuke will not accept it for ensure your code will run on any platform.'
+			);
+		else
+			return true;
 	}
 
 	/**
