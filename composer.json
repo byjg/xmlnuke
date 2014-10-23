@@ -34,7 +34,8 @@
 		"apache/log4php": "2.3.0",
 		"phpmailer/phpmailer": "5.2.9",
 		"filp/whoops": "1.1.2",
-		"neitanod/forceutf8": "dev-master"
+		"neitanod/forceutf8": "dev-master",
+		"mobiledetect/mobiledetectlib": "2.8.5"
 	},
 	"repositories": [
 		{
