@@ -31,4 +31,12 @@
     <field name="content-disposition">attachment</field>
     <field name="extension">doc</field>
   </row>
+  <row>
+    <field name="xsl">mobile</field>
+    <field name="content-type">application/vnd.wap.xhtml+xml</field>
+    <field name="content-type">application/xhtml+xml</field>
+    <field name="content-type">text/html</field>
+    <field name="content-disposition"></field>
+    <field name="extension"></field>
+  </row>
 </anydataset>

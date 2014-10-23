@@ -411,50 +411,58 @@ class Context extends BaseSingleton
 		return $this->_lang;
 	}
 
+	/**
+	 *
+	 * @param type $str
+	 */
 	public function setLocale($str = "")
 	{
 		$lang = strtolower($str == "" ? $this->getParameter("lang") : $str);
 
-		$langAvail = $this->LanguagesAvailable();
+		$langAccepted = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+		$langAvail = array_keys($this->LanguagesAvailable());
 
-		// Check if it uses the Language set by the user OR from HTTP_ACCEPT_LANGUAGE
-		if (($str == "") && ($lang == ""))
-			$matches = array( array('xx-xx') );
-		elseif ($lang != "")
-			$matches = array(
-				array($lang, substr($lang, 0, 2))
-			);
+		// Get the languages to check
+		if (!empty($str))
+		{
+			$checkLang = array($str);
+		}
+		else if (!empty($lang))
+		{
+			$checkLang = array($lang);
+		}
 		else
 		{
-			$matches = array();
-			preg_match_all('/(\w{2}\-\w{2}|\w{2})/', $_SERVER['HTTP_ACCEPT_LANGUAGE'], $matches);
+			$checkLang = $langAvail;
 		}
 
-		// Get the proper language
-		$defaultLang = null;
-		$curLang = null;
-		foreach ($matches[0] as $acceptLang)
+		// Language Negotiator
+		$langNeg = new \Negotiation\LanguageNegotiator();
+		$langAccepted = $langNeg->getBest($_SERVER['HTTP_ACCEPT_LANGUAGE'], $checkLang);
+		if (is_null($langAccepted))
 		{
-			foreach($langAvail as $configLang => $dummy)
-			{
-				if (is_null($defaultLang))
-					$defaultLang = strtolower($configLang);
-
-				if (strpos(strtolower($configLang), strtolower($acceptLang)) !== false)
-				{
-					$curLang = strtolower($configLang);
-					break;
-				}
-			}
-
-			if (!is_null($curLang))
-				break;
+			$currentLanguage = !empty($str) ? $str : (!empty($lang) ? $lang : $langAvail[0]);
+		}
+		else
+		{
+			$currentLanguage = strtolower($langAccepted->getValue());
 		}
 
-		if (is_null($curLang))
-			$curLang = $defaultLang;
+		// Get the correct language
+		$selected = array_merge( 
+			preg_grep("/^" . $currentLanguage . "*/", $langAvail),
+			preg_grep("/^" . substr($currentLanguage, 0, 2) . "*/", $langAvail)
+		);
+		if (count($selected) == 0)
+		{
+			$currentLanguage = $langAvail[0];
+		}
+		else
+		{
+			$currentLanguage = array_shift($selected);
+		}
 
-		$this->_lang = LocaleFactory::GetLocale($curLang);
+		$this->_lang = LocaleFactory::GetLocale($currentLanguage);
 		$this->addPairToConfig("LANGUAGE", $this->_lang->getName());
 		$this->addPairToConfig("LANGUAGENAME", $this->_lang->getLanguage());
 	}
@@ -752,28 +760,6 @@ class Context extends BaseSingleton
 
 	/**
 	* @access public
-	* @return array Return the languages available from xmlnuke.LANGUAGESAVAILABLE from Config.php file.
-	*/
-	public function LanguagesAvailableMajor()
-	{
-		$pairs = $this->LanguagesAvailable();
-
-		$result = array();
-
-		foreach ($pairs as $pair)
-		{
-			$values = explode('=',$pair);
-			$langSplit = explode('-', strtolower($values[0]));
-
-			if (!array_key_exists($langSplit[0], $result))
-				$result[$langSplit[0]] = strtolower ($values[0]);
-		}
-		return $result;
-	}
-
-
-	/**
-	* @access public
 	* @return string Return XmlNuke version.
 	*/
 	public function XmlNukeVersion()
@@ -784,7 +770,7 @@ class Context extends BaseSingleton
 	protected $_xmlnukeData = null;
 
 	/**
-	 * @return array()
+	 * @return array
 	 */
 	protected function getXmlnukeData()
 	{
@@ -847,7 +833,7 @@ class Context extends BaseSingleton
 	/**
 	* Make login in XMLNuke Engine
 	* @access public
-	* @param strgin $user
+	* @param string $user
 	* @return void
 	*/
 	public function MakeLogin($user, $id)
@@ -927,7 +913,7 @@ class Context extends BaseSingleton
 	}
 	/**
 	* @access public
-	* @return XMLNukeDB
+	* @return XmlnukeDB
 	*/
 	public function getXMLDataBase()
 	{
@@ -1030,7 +1016,7 @@ class Context extends BaseSingleton
 	/**
 	* @access public
 	* @param string $name
-	* @return String
+	* @return string
 	* @desc Return the value of a cookie
 	*/
 	public function getCookie($name)
@@ -1042,7 +1028,7 @@ class Context extends BaseSingleton
 	* @access public
 	* @param string $name
 	* @param string $value
-	* @return String
+	* @return string
 	* @desc Add a value in session
 	*/
 	public function setSession($name, $value)
@@ -1066,7 +1052,7 @@ class Context extends BaseSingleton
 	/**
 	* @access public
 	* @param string $name
-	* @return String
+	* @return string
 	* @desc Return the a value in this session
 	*/
 	public function getSession($name)
@@ -1202,31 +1188,24 @@ class Context extends BaseSingleton
 	*/
 	private function readCustomConfig()
 	{
-		//  |
-		//  |  Attention: FilenameProcessor not used because readCustomConfig is fired before
-		//  |  setting current language...
-		//  v
-		//processor.AnydatasetFilenameProcessor configFile = new processor.AnydatasetFilenameProcessor("customconfig", this);
+		$configFile = new AnydatasetFilenameProcessor("customconfig", $this);
 
-		$phyFile = $this->CurrentSitePath()."customconfig.anydata.xml"; // <--- argh!!
-		if (FileUtil::Exists($phyFile))
+		$config = new AnyDataSet($configFile);
+		$it = $config->getIterator(null);
+		if ($it->hasNext())
 		{
-			$config = new AnyDataSet($phyFile);
-			$it = $config->getIterator(null);
-			if ($it->hasNext())
+			//SingleRow
+			$sr = $it->moveNext();
+			$fieldNames = $sr->getFieldNames();
+			foreach( $fieldNames as $field )
 			{
-				//SingleRow
-				$sr = $it->moveNext();
-				$fieldNames = $sr->getFieldNames();
-				foreach( $fieldNames as $field )
+				if ($sr->getField($field) != "")
 				{
-					if ($sr->getField($field) != "")
-					{
-						$this->addPairToConfig($field, $sr->getField($field));
-					}
+					$this->addPairToConfig($field, $sr->getField($field));
 				}
 			}
 		}
+		
 	}
 
 	/**
@@ -1300,7 +1279,7 @@ class Context extends BaseSingleton
 	 *
 	 * @param UploadFilenameProcessor $filenameProcessor
 	 * @param bool $useProcessorForName
-	 * @param string/array $field Contain the filename properties (if Array, or $filename if string)
+	 * @param string|array $field Contain the filename properties (if Array, or $filename if string)
 	 * @param array Valid Extensions
 	 * @return Array Filename saved.
 	 */
@@ -1375,6 +1354,20 @@ class Context extends BaseSingleton
 		}
     }
 
+	/**
+	 * Gets and array with the best content-type for the page.
+	 * It checks the file "contenttype.anydata.xsl" if the property "xmlnuke.CHECKCONTENTTYPE" is true
+	 *
+	 * The returned array is:
+	 * array(
+	 *   "xsl" => "",
+	 *   "content-type" => "",
+	 *   "content-disposition" => "",
+	 *   "extension" => ""
+	 * )
+	 *
+	 * @return array
+	 */
 	public function getSuggestedContentType()
 	{
 		if (count($this->_contentType) == 0)
@@ -1412,51 +1405,6 @@ class Context extends BaseSingleton
 		}
 		return ($this->_contentType);
 	}
-
-	/**
-	 * Original code from: Maciej Łebkowski
-	 * @param array $mimeTypes
-	 * @return <type>
-	 */
-	function getBestSupportedMimeType($mimeTypes = null)
-	{
-		// Values will be stored in this array
-		$AcceptTypes = Array ();
-
-		// Accept header is case insensitive, and whitespace isn’t important
-		$accept = strtolower(str_replace(' ', '', $_SERVER['HTTP_ACCEPT']));
-		// divide it into parts in the place of a ","
-		$accept = explode(',', $accept);
-		foreach ($accept as $a)
-		{
-			// the default quality is 1.
-			$q = 1;
-			// check if there is a different quality
-			if (strpos($a, ';q='))
-			{
-				// divide "mime/type;q=X" into two parts: "mime/type" i "X"
-				list($a, $q) = explode(';q=', $a);
-			}
-			// mime-type $a is accepted with the quality $q
-			// WARNING: $q == 0 means, that mime-type isn’t supported!
-			$AcceptTypes[$a] = $q;
-		}
-		arsort($AcceptTypes);
-
-		// if no parameter was passed, just return parsed data
-		if (!$mimeTypes) return $AcceptTypes;
-
-		$mimeTypes = array_map('strtolower', (array)$mimeTypes);
-
-		// let’s check our supported types:
-		foreach ($AcceptTypes as $mime => $q)
-		{
-		   if ($q && in_array($mime, $mimeTypes)) return $mime;
-		}
-		// no mime-type found
-		return null;
-	}
-
 
 	public function Debug()
 	{

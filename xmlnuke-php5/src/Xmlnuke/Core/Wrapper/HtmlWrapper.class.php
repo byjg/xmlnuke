@@ -148,21 +148,27 @@ class HtmlWrapper extends BaseSingleton implements IOutputWrapper
 		else
 		{
 			$contentType = array("xsl"=>"", "content-type"=>"", "content-disposition"=>"", "extension"=>"");
+			
+			// Check if is Mobile
 			if ($this->detectMobile())
 			{
-				// WML
-				//$contentType = "text/vnd.wap.wml";
-				//$context->setXsl("wml");
-
-				// XHTML + MP
-				$contentType["content-type"] = $context->getBestSupportedMimeType(array("application/vnd.wap.xhtml+xml", "application/xhtml+xml", "text/html"));
 				$context->setXsl("mobile");
+			}
+			$contentType = $context->getSuggestedContentType();
+
+			// Get the best content-type for it
+			if (!is_array($contentType["content-type"]))
+			{
+				$bestContentType = $contentType["content-type"];
 			}
 			else
 			{
-				$contentType = $context->getSuggestedContentType();
+				$negContentType = new \Negotiation\FormatNegotiator();
+				$bestContentType = $negContentType->getBestFormat($_SERVER['HTTP_ACCEPT'], $contentType["content-type"]);
 			}
-			header("Content-Type: {$contentType["content-type"]}; charset=utf-8");
+
+			// Write Headers
+			header("Content-Type: {$bestContentType}; charset=utf-8");
 			if (isset($contentType["content-disposition"]))
 			{
 				header("Content-Disposition: {$contentType["content-disposition"]}; filename=\"{$alternateFilename}.{$contentType["extension"]}\";");
@@ -188,8 +194,17 @@ class HtmlWrapper extends BaseSingleton implements IOutputWrapper
 			return false;
 		}
 
-		$detect = new MobileDetect();
+		if ($context->get('xmlmobile') != '')
+		{
+			$context->setSession('xmlnuke.USEMOBILE', $context->get('xmlmobile') == "true");
+		}
 
+		if ($context->getSession('xmlnuke.USEMOBILE') != '')
+		{
+			return $context->getSession('xmlnuke.USEMOBILE');
+		}
+
+		$detect = new MobileDetect();
 		// Any mobile device (phones or tablets).
 		return $detect->isMobile();
 	}
