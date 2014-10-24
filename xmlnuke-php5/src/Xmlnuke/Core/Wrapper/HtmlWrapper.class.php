@@ -164,7 +164,15 @@ class HtmlWrapper extends BaseSingleton implements IOutputWrapper
 			else
 			{
 				$negContentType = new \Negotiation\FormatNegotiator();
-				$bestContentType = $negContentType->getBestFormat($_SERVER['HTTP_ACCEPT'], $contentType["content-type"]);
+				$bestContent = $negContentType->getBest($_SERVER['HTTP_ACCEPT'], $contentType["content-type"]);
+				if (!is_null($bestContent))
+				{
+					$bestContentType = $bestContent->getValue();
+				}
+				else
+				{
+					$bestContentType = "text/html";
+				}
 			}
 
 			// Write Headers

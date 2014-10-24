@@ -419,7 +419,6 @@ class Context extends BaseSingleton
 	{
 		$lang = strtolower($str == "" ? $this->getParameter("lang") : $str);
 
-		$langAccepted = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
 		$langAvail = array_keys($this->LanguagesAvailable());
 
 		// Get the languages to check
@@ -438,7 +437,7 @@ class Context extends BaseSingleton
 
 		// Language Negotiator
 		$langNeg = new \Negotiation\LanguageNegotiator();
-		$langAccepted = $langNeg->getBest($_SERVER['HTTP_ACCEPT_LANGUAGE'], $checkLang);
+		$langAccepted = $langNeg->getBest(isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : "en-us", $checkLang);
 		if (is_null($langAccepted))
 		{
 			$currentLanguage = !empty($str) ? $str : (!empty($lang) ? $lang : $langAvail[0]);
