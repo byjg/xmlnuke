@@ -207,7 +207,7 @@ class HtmlWrapper extends BaseSingleton implements IOutputWrapper
 			$context->setSession('xmlnuke.USEMOBILE', $context->get('xmlmobile') == "true");
 		}
 
-		if ($context->getSession('xmlnuke.USEMOBILE') != '')
+		if ($context->getSession('xmlnuke.USEMOBILE') === false  || $context->getSession('xmlnuke.USEMOBILE') === true)
 		{
 			return $context->getSession('xmlnuke.USEMOBILE');
 		}
