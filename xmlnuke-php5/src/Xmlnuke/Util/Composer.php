@@ -15,6 +15,16 @@ class Composer
 	{
 		$baseXmlnuke = realpath(dirname(__FILE__). "/../../../.." );
 		$baseProject = realpath(dirname($baseXmlnuke) . "/../..");
+		
+		$extra = $event->getComposer()->getPackage()->getExtra();
+		if (isset($extra) && isset($extra['project-name']))
+		{
+			$projectName = $extra['project-name'];
+		}
+		else
+		{
+			$projectName = basename($baseProject);
+		}
 
 		$output = $event->getIO();
 		$output->write('=== XMLNUKE ===', true);
@@ -27,7 +37,7 @@ class Composer
 			$result = call_user_func_array( array( '\Xmlnuke\Util\CreatePhp5Project', 'Run' ), array(
 					$baseXmlnuke . '/Composer.php',
 					$baseProject,
-					preg_replace('/[^A-Za-z0-0]/', '', basename($baseProject)),
+					preg_replace('/[^A-Za-z0-0]/', '', $projectName),
 					"en-us"
 				)
 			);
