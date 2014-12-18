@@ -27,14 +27,14 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+namespace Xmlnuke\Core\Classes;
+
 require_once('Archive/Tar.php');
 
 /**
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\Classes;
-
-class  Tar extends Archive_Tar
+class Tar extends Archive_Tar
 {
 	
 	public $warning;

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <page>
 	<meta>
 		<title>XMLNuke Treeview</title>
@@ -32,20 +32,20 @@
 				<treeview title="Windows XP Explorer Treeview">
 					<folder title="Eigene Dateien" img="mydocuments.gif" action="document.getElementById('here').style.display='none';">
 						<folder title="Haus" img="folder.gif">
-							<leaf title="Was ist los?" code="1" img="ie_link.gif" action="loadUrl('here', '?module=sample&op=1&xsl=blank');"/>
-							<leaf title="Na, wie geht's?" code="1" img="question.gif"  action="loadUrl('here', '?module=sample&op=2&xsl=blank');"/>
-							<leaf title="Warum Sie mich engagieren sollten?" code="1" img="question.gif" action="loadUrl('here', '?module=sample&op=3&xsl=blank');"/>
+							<leaf title="Was ist los?" code="1" img="ie_link.gif" action="loadUrl('here', '?module=sample&amp;op=1&amp;xsl=blank');"/>
+							<leaf title="Na, wie geht's?" code="1" img="question.gif"  action="loadUrl('here', '?module=sample&amp;op=2&amp;xsl=blank');"/>
+							<leaf title="Warum Sie mich engagieren sollten?" code="1" img="question.gif" action="loadUrl('here', '?module=sample&amp;op=3&amp;xsl=blank');"/>
 						</folder>
 						<folder title="Meine Bilder" img="myimages.gif">
-							<leaf title="lustig" code="1" img="red_ball.gif"  action="loadUrl('here', '?module=sample&op=4&xsl=blank');"/>
-							<leaf title="ounga ounga" code="1" img="red_ball.gif"  action="loadUrl('here', '?module=sample&op=5&xsl=blank');"/>
+							<leaf title="lustig" code="1" img="red_ball.gif"  action="loadUrl('here', '?module=sample&amp;op=4&amp;xsl=blank');"/>
+							<leaf title="ounga ounga" code="1" img="red_ball.gif"  action="loadUrl('here', '?module=sample&amp;op=5&amp;xsl=blank');"/>
 						</folder>
 					</folder>
 					<folder title="Arbeitsplatz" img="computer.gif" action="document.getElementById('here').style.display='none';">
 						<folder title="3½-Diskette (A:)" code="1" img="floppy.gif"/>
 						<folder title="Festplatte (C:)" code="1" img="harddrive.gif">
 							<leaf title="Linux" code="1" img="folder.gif"/>
-							<leaf title="Open source" code="1" img="folder.gif" action="loadUrl('here', '?xml=treeview&xsl=blank&rawxml=true&xpath=//blockcenter');"/>
+							<leaf title="Open source" code="1" img="folder.gif" action="loadUrl('here', '?xml=treeview&amp;xsl=blank&amp;rawxml=true&amp;xpath=//blockcenter');"/>
 							<leaf title="Freedom" code="1" img="folder.gif"/>
 						</folder>
 						<leaf title="Systemsteuerung" code="1" img="config.gif"/>
@@ -54,7 +54,8 @@
 					<folder title="Netzwerkumgebung" img="network.gif" action="alert('Empty!');"/>
 					<folder title="Papierkorb" img="trash.gif" action="alert('Empty!');"/>
 				</treeview>
-				<container style="display: none; width: 100%; height: 400px" id="here"/>			</p>
+				<container style="display: none; width: 100%; height: 400px" id="here"/>
+			</p>
 		</body>
 	</blockcenter>
 </page>

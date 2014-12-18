@@ -32,6 +32,7 @@
 			</mediagallery>
 			</p>
 
+			<p>Flash
 			<mediagallery name="flash">
 				<mediaitem src="http://www.adobe.com/products/flashplayer/include/marquee/design.swf" thumb="http://images.apple.com/trailers/wb/images/terminatorsalvation_200903131052.jpg" caption="This is a Flash Source" title="Flash Source"/>
 			</mediagallery>
@@ -53,8 +54,10 @@
 			<mediagallery name="iframe">
 				<mediaitem src="engine:xmlnuke?xml=home&amp;xsl=preview" caption="This is a IFrame" title="View IFRAME"/>
 			</mediagallery>
+			</p>
 			<p>
-			Only one object: <mediaitem src="common/imgs/albumsample/6.jpg" caption="You can add a caption to this photo" title="Clique aqui" width="60" height="60" /></p>
+			Only one object: <mediaitem src="common/imgs/albumsample/6.jpg" caption="You can add a caption to this photo" title="Clique aqui" width="60" height="60" />
+			</p>
 		</body>
 	</blockcenter>
-	</page>
+</page>
