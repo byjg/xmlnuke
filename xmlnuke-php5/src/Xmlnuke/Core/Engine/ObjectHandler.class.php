@@ -191,7 +191,7 @@ class ObjectHandler
 		# Define Class Attributes
 		$classMeta[ObjectHandler::ClassName] = ($this->_forcePropName != "" ? $this->_forcePropName : (isset($classAttributes["$this->_config:nodename"]) ? $classAttributes["$this->_config:nodename"] : get_class($this->_model)));
 		$classMeta[ObjectHandler::ClassGetter] = isset($classAttributes["$this->_config:getter"]) ? $classAttributes["$this->_config:getter"] : "get";
-		$classMeta[ObjectHandler::ClassPropertyPattern] = isset($classAttributes["$this->_config:propertypattern"]) ? eval($classAttributes["$this->_config:propertypattern"]) : array('/([^a-zA-Z0-9])/', '');
+		$classMeta[ObjectHandler::ClassPropertyPattern] = isset($classAttributes["$this->_config:propertypattern"]) ? explode(',', $classAttributes["$this->_config:propertypattern"]) : array('/([^a-zA-Z0-9])/', '');
 		$classMeta[ObjectHandler::ClassWriteEmpty] = (isset($classAttributes["$this->_config:writeempty"]) ? $classAttributes["$this->_config:writeempty"] : "false") == "true";
 		$classMeta[ObjectHandler::ClassDocType] = isset($classAttributes["$this->_config:doctype"]) ? strtolower($classAttributes["$this->_config:doctype"]) : "xml";
 		$classMeta[ObjectHandler::ClassRdfType] = $this->replaceVars($classMeta[ObjectHandler::ClassName], isset($classAttributes["$this->_config:rdftype"]) ? $classAttributes["$this->_config:rdftype"] : "{HOST}/rdf/class/{CLASS}");

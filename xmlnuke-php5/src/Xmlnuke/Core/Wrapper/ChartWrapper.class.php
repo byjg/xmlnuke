@@ -151,10 +151,6 @@ class ChartWrapper extends BaseSingleton implements IOutputWrapper
 				}
 				$strParams .= 'chds=a';
 
-				print_r($strParams);
-				die();
-
-
 				Header("Content-Type: image/png");
 				$imageData = file_get_contents('http://chart.apis.google.com/chart?cht=p3&chd=t:39,47,8,4,2&chs=380x180&chl=IE|Firefox|Chrome|Safari|Opera');
 				echo $imageData;
