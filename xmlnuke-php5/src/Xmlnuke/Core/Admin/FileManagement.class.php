@@ -32,6 +32,16 @@
  */
 namespace Xmlnuke\Core\Admin;
 
+use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use Xmlnuke\Core\Classes\FileBrownserUserType;
+use Xmlnuke\Core\Classes\PageXml;
+use Xmlnuke\Core\Classes\XmlBlockCollection;
+use Xmlnuke\Core\Classes\XmlFileBrowser;
+use Xmlnuke\Core\Enum\AccessLevel;
+use Xmlnuke\Core\Enum\BlockPosition;
+use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
+use Xmlnuke\Core\Processor\ForceFilenameLocation;
+
 class FileManagement extends NewBaseAdminModule
 {
 	public function FileManagement()
@@ -44,7 +54,7 @@ class FileManagement extends NewBaseAdminModule
 	}
 	public function  getAccessLevel() 
     { 
-          return AccessLevel::OnlyRole; 
+          return AccessLevel::OnlyRole;
     } 
 
     public function getRole() 

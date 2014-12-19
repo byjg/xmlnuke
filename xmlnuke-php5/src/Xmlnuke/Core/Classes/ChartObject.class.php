@@ -33,6 +33,12 @@
 
 namespace Xmlnuke\Core\Classes;
 
+use UnexpectedValueException;
+use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use Xmlnuke\Core\Enum\ChartColumnType;
+use Xmlnuke\Core\Enum\ChartType;
+use Xmlnuke\Util\ConvertFromUTF8;
+
 /**
  * @Xmlnuke:NodeName ChartObject
  */
@@ -65,7 +71,7 @@ class ChartObject
 
 	/**
 	 *
-	 * @var \Xmlnuke\Core\AnyDataset\AnyDataSet
+	 * @var AnyDataSet
 	 */
 	protected $_Serie;
 
@@ -75,8 +81,8 @@ class ChartObject
 		$this->_Width = 800;
 		$this->_Height = 600;
 		$this->_Title = $title;
-		$this->_ChartType = \Xmlnuke\Core\Enum\ChartType::Column;
-		$this->_Serie = new \Xmlnuke\Core\AnyDataset\AnyDataSet();
+		$this->_ChartType = ChartType::Column;
+		$this->_Serie = new AnyDataSet();
 	}
 
 	public function getId()
@@ -202,7 +208,7 @@ class ChartObject
 	/**
 	 *
 	 * @param string $name
-	 * @param \Xmlnuke\Core\Enum\ChartColumnType $type
+	 * @param ChartColumnType $type
 	 * @param string $data
 	 */
 	public function addSerie($name, $type, $data)
@@ -214,17 +220,17 @@ class ChartObject
 
 			foreach ($data as $item)
 			{
-				if ($type == \Xmlnuke\Core\Enum\ChartColumnType::String)
+				if ($type == ChartColumnType::String)
 				{
-					$item = "'" . \Xmlnuke\Util\ConvertFromUTF8::RemoveAccent($item) . "'";
+					$item = "'" . ConvertFromUTF8::RemoveAccent($item) . "'";
 				}
-				else if ($type == \Xmlnuke\Core\Enum\ChartColumnType::Number)
+				else if ($type == ChartColumnType::Number)
 				{
 					$item = intval($item);
 				}
 				else
 				{
-					throw new \UnexpectedValueException('Unexpected Chat Column Type - ' . $type);
+					throw new UnexpectedValueException('Unexpected Chat Column Type - ' . $type);
 				}
 
 				$this->_Serie->appendRow();
@@ -243,17 +249,17 @@ class ChartObject
 				}
 				else if (count($data) > 0)
 				{
-					if ($type == \Xmlnuke\Core\Enum\ChartColumnType::String)
+					if ($type == ChartColumnType::String)
 					{
 						$item = "'" . array_shift($data) . "'";
 					}
-					else if ($type == \Xmlnuke\Core\Enum\ChartColumnType::Number)
+					else if ($type == ChartColumnType::Number)
 					{
 						$item = intval(array_shift($data));
 					}
 					else
 					{
-						throw new \UnexpectedValueException('Unexpected Chat Column Type - ' . $type);
+						throw new UnexpectedValueException('Unexpected Chat Column Type - ' . $type);
 					}
 
 					$row->addField("data_$serieCount", $item);
@@ -295,15 +301,15 @@ class ChartObject
 				$sum = array( );
 				for($i=0;$i<count($info);$i++)
 				{
-					if ($info[$i]['type'] == \Xmlnuke\Core\Enum\ChartColumnType::Number)
+					if ($info[$i]['type'] == ChartColumnType::Number)
 					{
 						$column[] = $info[$i]['name'];
 						$sum[] = array_sum($data[$info[$i]['column']]);
 					}
 				}
-				$this->addSerie('Labels', \Xmlnuke\Core\Enum\ChartColumnType::String, $column);
-				$this->addSerie('Sum', \Xmlnuke\Core\Enum\ChartColumnType::Number, $sum);
-				$this->setChartType(\Xmlnuke\Core\Enum\ChartType::Pie);
+				$this->addSerie('Labels', ChartColumnType::String, $column);
+				$this->addSerie('Sum', ChartColumnType::Number, $sum);
+				$this->setChartType(ChartType::Pie);
 			}
 		}
 	}

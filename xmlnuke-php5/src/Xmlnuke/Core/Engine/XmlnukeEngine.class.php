@@ -53,6 +53,7 @@ use Xmlnuke\Core\Processor\XMLFilenameProcessor;
 use Xmlnuke\Core\Processor\XSLFilenameProcessor;
 use Xmlnuke\Util\FileUtil;
 use Xmlnuke\Util\XmlUtil;
+use Exception;
 use XSLTProcessor;
 
 class XmlnukeEngine

@@ -58,7 +58,7 @@ class ImageUtil
 			fclose($handle);
 		}
 		
-		if (! file_exists ( $image_file ) or ! is_readable ( $image_file ))
+		if (!file_exists ( $image_file ) || !is_readable ( $image_file ))
 			throw new NotFoundException("File is not found or not is readable. Cannot continue.");
 
 		$this->file_name = $image_file;

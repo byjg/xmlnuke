@@ -32,6 +32,17 @@
  */
 namespace Xmlnuke\Core\Admin;
 
+use Xmlnuke\Core\Classes\CrudField;
+use Xmlnuke\Core\Classes\CrudFieldCollection;
+use Xmlnuke\Core\Classes\XmlBlockCollection;
+use Xmlnuke\Core\Classes\XmlnukeCrudAnydata;
+use Xmlnuke\Core\Classes\XmlnukeText;
+use Xmlnuke\Core\Classes\XmlParagraphCollection;
+use Xmlnuke\Core\Enum\AccessLevel;
+use Xmlnuke\Core\Enum\BlockPosition;
+use Xmlnuke\Core\Enum\INPUTTYPE;
+use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
+
 class ConfigSearch extends NewBaseAdminModule
 {
 	public function ConfigSearch()

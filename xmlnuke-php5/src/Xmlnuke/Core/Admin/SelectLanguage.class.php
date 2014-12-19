@@ -32,6 +32,8 @@
  */
 namespace Xmlnuke\Core\Admin;
 
+use Xmlnuke\Core\Enum\AccessLevel;
+
 class SelectLanguage extends BaseAdminModule
 {
 	public function SelectLanguage()
@@ -45,7 +47,7 @@ class SelectLanguage extends BaseAdminModule
 
 	public function  getAccessLevel() 
         { 
-              return AccessLevel::OnlyRole; 
+              return AccessLevel::OnlyRole;
         } 
 
        public function getRole() 
