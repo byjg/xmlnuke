@@ -168,7 +168,7 @@ class DBOci8Driver implements IDBDriver
 	
 	public function getAllFields($tablename) 
 	{
-		$cur = $this->getOci8Cursor("select * from " . $tablename);
+		$cur = $this->getOci8Cursor(SQLHelper::createSafeSQL("select * from :table", array(':table' => $tablename)));
 		
 		$ncols = oci_num_fields($cur);
 

@@ -195,7 +195,7 @@ class DBPGSqlFunctions extends DBBaseFunctions
 	function executeAndGetInsertedId($dbdataset, $sql, $param, $sequence = null)
 	{
 		$id = parent::executeAndGetInsertedId($dbdataset, $sql, $param);
-		$it = $dbdataset->getIterator("select currval('" . $sequence . "') id");
+		$it = $dbdataset->getIterator(SQLHelper::createSafeSQL("select currval(':sequence') id", array(':sequence' => $sequence)));
 		if ($it->hasNext())
 		{
 			$sr = $it->moveNext();

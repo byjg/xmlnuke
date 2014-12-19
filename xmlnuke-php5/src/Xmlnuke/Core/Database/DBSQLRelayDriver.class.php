@@ -128,7 +128,7 @@ class DBSQLRelayDriver implements IDBDriver
 	{
 		$cur=sqlrcur_alloc($this->_conn);
 
-		$success = sqlrcur_sendQuery($cur,"select * from " . $tablename);
+		$success = sqlrcur_sendQuery($cur, SQLHelper::createSafeSQL("select * from :table", array(":table"=>$tablename)));
 		sqlrcon_endSession($con);
 		
 		if (!$success)

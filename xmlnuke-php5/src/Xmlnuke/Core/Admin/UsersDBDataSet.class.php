@@ -34,11 +34,14 @@
  */
 namespace Xmlnuke\Core\Admin;
 
+use InvalidArgumentException;
 use Xmlnuke\Core\AnyDataset\AnyDataSet;
 use Xmlnuke\Core\AnyDataset\DBDataSet;
 use Xmlnuke\Core\AnyDataset\IIterator;
 use Xmlnuke\Core\AnyDataset\IteratorFilter;
 use Xmlnuke\Core\AnyDataset\SingleRow;
+use Xmlnuke\Core\Database\SQLHelper;
+use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\UserProperty;
 use Xmlnuke\Core\Exception\DatasetException;
 
@@ -49,6 +52,8 @@ class UsersDBDataSet extends UsersBase
 	*/
 	protected $_DB;
 
+	protected $_SQLHelper;
+
 	protected $_cacheUserWork = array();
     protected $_cacheUserOriginal = array();
 
@@ -56,10 +61,11 @@ class UsersDBDataSet extends UsersBase
 	/**
 	  * DBDataSet constructor
 	  */
-	public function __construct($context, $dataBase)
+	public function __construct(Context $context, $dataBase)
 	{
 		$this->_context = $context;
 		$this->_DB = new DBDataSet($dataBase, $context);
+		$this->_SQLHelper = new SQLHelper($this->_DB);
 	}
 
 	/**
@@ -95,7 +101,7 @@ class UsersDBDataSet extends UsersBase
 					else
 					{
 						// Erase Old Custom Properties
-						$sql = $this->createSafeSQL("DELETE FROM :Table "
+						$sql = $this->_SQLHelper->createSafeSQL("DELETE FROM :Table "
 								. " WHERE :Id = [[id]] "
 								. "   AND :Name = [[name]] "
 								. "   AND :Value = [[value]] ",
@@ -119,7 +125,7 @@ class UsersDBDataSet extends UsersBase
 							continue;
 
 						// Insert new Value
-						$sql = $this->createSafeSQL("INSERT INTO :Table "
+						$sql = $this->_SQLHelper->createSafeSQL("INSERT INTO :Table "
 								. "( :Id, :Name, :Value ) "
 								. " VALUES ( [[id]], [[name]], [[value]] ) ",
 								array(
@@ -152,7 +158,7 @@ class UsersDBDataSet extends UsersBase
 				$sql .= ", :Admin = [[admin]] ";
 				$sql .= " WHERE :Id = [[id]]";
 
-				$sql = $this->createSafeSQL($sql, array(
+				$sql = $this->_SQLHelper->createSafeSQL($sql, array(
 						':Table' => $this->getUserTable()->Table,
 						':Name' => $this->getUserTable()->Name,
 						':Email' => $this->getUserTable()->Email,
@@ -202,7 +208,7 @@ class UsersDBDataSet extends UsersBase
 		$sql = " INSERT INTO :Table (:Name, :Email, :Username, :Password, :Created ) ";
 		$sql .=" VALUES ([[name]], [[email]], [[username]], [[password]], [[created]] ) ";
 
-		$sql = $this->createSafeSQL($sql, array(
+		$sql = $this->_SQLHelper->createSafeSQL($sql, array(
 				':Table' => $this->getUserTable()->Table,
 				':Name' => $this->getUserTable()->Name,
 				':Email' => $this->getUserTable()->Email,
@@ -241,7 +247,7 @@ class UsersDBDataSet extends UsersBase
 		}
 		else
 		{
-			throw new \InvalidArgumentException('Invalid getIterator mode');
+			throw new InvalidArgumentException('Invalid getIterator mode');
 		}
 		return $this->_DB->getIterator($sql, $param);
 	}
@@ -295,13 +301,13 @@ class UsersDBDataSet extends UsersBase
 		$param = array( "login" => $login );
 		if ($this->getCustomTable()->Table != "")
 		{
-			$sql = $this->createSafeSQL($baseSql, array(
+			$sql = $this->_SQLHelper->createSafeSQL($baseSql, array(
 				':Table' => $this->getCustomTable()->Table,
 				':Username' => $this->getUserTable()->Username
 			));
 			$this->_DB->execSQL($sql, $param);
 		}
-		$sql = $this->createSafeSQL($baseSql, array(
+		$sql = $this->_SQLHelper->createSafeSQL($baseSql, array(
 			':Table' => $this->getUserTable()->Table,
 			':Username' => $this->getUserTable()->Username
 		));
@@ -321,13 +327,13 @@ class UsersDBDataSet extends UsersBase
 		$param = array("id"=>$userId);
 		if ($this->getCustomTable()->Table != "")
 		{
-			$sql = $this->createSafeSQL($baseSql, array(
+			$sql = $this->_SQLHelper->createSafeSQL($baseSql, array(
 				':Table' => $this->getCustomTable()->Table,
 				':Id' => $this->getUserTable()->Id
 			));
 			$this->_DB->execSQL($sql, $param);
 		}
-		$sql = $this->createSafeSQL($baseSql, array(
+		$sql = $this->_SQLHelper->createSafeSQL($baseSql, array(
 			':Table' => $this->getUserTable()->Table,
 			':Id' => $this->getUserTable()->Id
 		));
@@ -355,7 +361,7 @@ class UsersDBDataSet extends UsersBase
 				$sql = " INSERT INTO :Table ( :Id, :Name, :Value ) ";
 				$sql .=" VALUES ( [[id]], [[name]], [[value]] ) ";
 
-				$sql = $this->createSafeSQL($sql, array(
+				$sql = $this->_SQLHelper->createSafeSQL($sql, array(
 					":Table" => $this->getCustomTable()->Table,
 					":Id" => $this->getUserTable()->Id, 
 					":Name" => $this->getCustomTable()->Name,
@@ -402,7 +408,7 @@ class UsersDBDataSet extends UsersBase
 				$sql .= " AND :Value = [[value]] ";
 				$param["value"] = $propValue;
 			}
-			$sql = $this->createSafeSQL($sql, array(
+			$sql = $this->_SQLHelper->createSafeSQL($sql, array(
 					':Table' => $this->getCustomTable()->Table,
 					':Name' => $this->getCustomTable()->Name,
 					':Id' => $this->getUserTable()->Id,
@@ -435,7 +441,7 @@ class UsersDBDataSet extends UsersBase
 
 		$sql = "DELETE FROM :Table WHERE :Name = [[name]] AND :Value = [[value]] ";
 
-		$sql = $this->createSafeSQL($sql, array(
+		$sql = $this->_SQLHelper->createSafeSQL($sql, array(
 			":Table" => $this->getCustomTable()->Table,
 			":Name" => $this->getCustomTable()->Name,
 			":Value" => $this->getCustomTable()->Value
@@ -461,7 +467,7 @@ class UsersDBDataSet extends UsersBase
 		$userId = $userRow->getField($this->getUserTable()->Id);
 		$sql = "select * from :Table where :Id = [[id]]";
 
-		$sql = $this->createSafeSQL($sql, array(
+		$sql = $this->_SQLHelper->createSafeSQL($sql, array(
 			":Table" => $this->getCustomTable()->Table,
 			":Id" => $this->getUserTable()->Id
 		));
@@ -496,7 +502,7 @@ class UsersDBDataSet extends UsersBase
 			$param["role"] = $role;
 		}
 
-		$sql = $this->createSafeSQL($sql, array(
+		$sql = $this->_SQLHelper->createSafeSQL($sql, array(
 			":Table" => $this->getRolesTable()->Table,
 			":Site" => $this->getRolesTable()->Site,
 			":Role" => $this->getRolesTable()->Role
@@ -522,7 +528,7 @@ class UsersDBDataSet extends UsersBase
 
 		$sql = "insert into :Table ( :Site, :Role ) values ( [[site]], [[role]] )";
 
-		$sql = $this->createSafeSQL($sql, array(
+		$sql = $this->_SQLHelper->createSafeSQL($sql, array(
 			":Table" => $this->getRolesTable()->Table,
 			":Site" => $this->getRolesTable()->Site 
 		));
@@ -550,7 +556,7 @@ class UsersDBDataSet extends UsersBase
 			" WHERE :Site = [[site]] " .
 			" AND :Role = [[role]] ";
 
-		$sql = $this->createSafeSQL($sql, array(
+		$sql = $this->_SQLHelper->createSafeSQL($sql, array(
 			":Table" => $this->getRolesTable()->Table, 
 			":Site" => $this->getRolesTable()->Site,
 			":Role" => $this->getRolesTable()->Role
@@ -591,14 +597,5 @@ class UsersDBDataSet extends UsersBase
 		return $this->_RolesTable;
 	}
 
-	public function createSafeSQL($sql, $list)
-	{
-		foreach($list as $key=>$value)
-		{
-			$value = str_replace(["'", ';'], ["", ''], $value);
-			$sql = str_replace($key, $value, $sql);
-		}
-		return $sql;
-	}
 }
 ?>
