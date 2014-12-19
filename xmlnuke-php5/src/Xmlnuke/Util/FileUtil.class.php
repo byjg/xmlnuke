@@ -100,7 +100,7 @@ class FileUtil
 				{
 					if(!is_null($pattern) && $pattern!="")
 					{
-						if (@eregi("$pattern", $file))
+						if (preg_match("/$pattern/", $file))
 						{
 							$array[]=$folder.self::Slash().$file;
 						}

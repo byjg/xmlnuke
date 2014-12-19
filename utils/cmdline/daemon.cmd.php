@@ -5,7 +5,7 @@ if (!defined('SLEEP_SERVICE'))
 // Read parameters and convert to XMLNuke context
 foreach ($argv as $pair)
 {
-	$arPair = split("=", $pair);
+	$arPair = explode("=", $pair);
 	if (sizeof($arPair) > 1)
 	{
 		$_REQUEST[$arPair[0]] = $arPair[1];
