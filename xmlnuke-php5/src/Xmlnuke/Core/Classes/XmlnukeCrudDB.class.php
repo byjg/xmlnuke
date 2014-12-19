@@ -357,14 +357,15 @@ class XmlnukeCrudDB extends XmlnukeCrudBase
 		}
 		if (($this->_sort != "") && ($getAll))
 		{
-			$sql .= " order by " . $this->getSort();
+			$sql .= " order by :order ";
 		}
 
 		$sqlHelper = new SQLHelper($this->_dbData);
 		$sql = $sqlHelper->createSafeSQL($sql, array(
 			':fields' => $fields,
 			':table' => $this->_table,
-			':where' => $this->getWhereClause($param)
+			':where' => $this->getWhereClause($param),
+			":order" => $this->getSort()
 		));
 
 		$this->DebugInfo($sql, $param);
