@@ -180,7 +180,8 @@ To do this you have to create a empty folder and put the following `composer.jso
 ```json
 {
     "require": {
-        "byjg/xmlnuke": "dev-master"
+        "byjg/xmlnuke": "dev-master",
+	    "minimum-stability": "dev"
     },
     "scripts": {
         "post-install-cmd": [
