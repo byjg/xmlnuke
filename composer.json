@@ -2,7 +2,7 @@
 	"name": "byjg/xmlnuke",
 	"description": "PHP Framework based on XML/JSON",
 	"type": "project",
-	"version": "4.01-dev",
+	"version": "4.4-dev",
 	"keywords": ["api", "framework", "xml", "json", "xsl", "xmlnuke"],
 	"homepage": "http://xmlnuke.com",
 	"license": "GPL",
