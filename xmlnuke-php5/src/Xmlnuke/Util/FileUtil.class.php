@@ -100,7 +100,7 @@ class FileUtil
 				{
 					if(!is_null($pattern) && $pattern!="")
 					{
-						if (@eregi("$pattern", $file))
+						if (preg_match("/$pattern/", $file))
 						{
 							$array[]=$folder.self::Slash().$file;
 						}
@@ -391,7 +391,7 @@ class FileUtil
 	*/
 	public static function fixUTF8($document)
 	{
-		return Encoding::fixUTF8(Encoding::removeBOM($document));
+		return Encoding::fixUTF8(Encoding::removeBOM($document), Encoding::ICONV_TRANSLIT);
 	}
 
 	/**

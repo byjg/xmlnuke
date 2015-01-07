@@ -114,7 +114,7 @@ O XMLNuke interpreta esses objetos de uma forma bastante abrangente, mas é impo
 			<li>@XMLNuke:Getter get<br/>Define o prefixo do método getter. Por padrão procurará sempre 'get' e o nome da propriedade</li>
 			<li>@XMLNuke:NodeName node<br/>Define o nome do nó XML que será gerado. Se omitido, utiliza o nome da classe</li>
 			<li>@XMLNuke:WriteEmpty false<br/>Se o conteúdo da propriedade é vazio, ele será omitido. Mas é possível fazer com seja sempre escrito alterando esse parâmetro para true.</li>
-			<li>@XMLNuke:PropertyPattern array('/(\w*)/', '$1')<br/>O nome da propriedade pode ter um formato ligeiramente diferente do método get. Por exemplo, uma propriedade pode ser definida como: nome_da_propriedade, e o seu método get por ser definido como getNomeDaPropriedade(). Isso é possível graças a esse atributo. Não utilize-o caso não seja necessário.</li>
+			<li>@XMLNuke:PropertyPattern /(\w*)/,$1<br/>O nome da propriedade pode ter um formato ligeiramente diferente do método get. Por exemplo, uma propriedade pode ser definida como: nome_da_propriedade, e o seu método get por ser definido como getNomeDaPropriedade(). Isso é possível graças a esse atributo. Não utilize-o caso não seja necessário.</li>
 			</ul>
 			</p>
 

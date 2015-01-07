@@ -12,7 +12,7 @@
 		<title>Kalender-Beispiel</title>
 		<body>
 			<p>
-				<calendar name="cal1" month="1" year="2009" title="Januar / 2009>
+				<calendar name="cal1" month="1" year="2009" title="Januar / 2009">
 					<event day="24">Test-Ereignis #1</event>
 					<event day="25" type="5">Test-Ereignis #2</event>
 					<event day="26" type="11">Test-Ereignis #3</event>

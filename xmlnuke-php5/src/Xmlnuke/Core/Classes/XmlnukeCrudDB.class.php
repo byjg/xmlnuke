@@ -344,14 +344,12 @@ class XmlnukeCrudDB extends XmlnukeCrudBase
 			}
 		}
 
-		$sql =
-			"select " . $fields . " " .
-			"from " . $this->_table . " ";
+		$sql = "select :fields from :table ";
 
 		$param = array();
 		if (!$getAll)
 		{
-			$sql .= "where " . $this->getWhereClause($param);
+			$sql .= "where :where ";
 		}
 		if ($this->_filter != "")
 		{
@@ -359,8 +357,16 @@ class XmlnukeCrudDB extends XmlnukeCrudBase
 		}
 		if (($this->_sort != "") && ($getAll))
 		{
-			$sql .= " order by " . $this->getSort();
+			$sql .= " order by :order ";
 		}
+
+		$sqlHelper = new SQLHelper($this->_dbData);
+		$sql = $sqlHelper->createSafeSQL($sql, array(
+			':fields' => $fields,
+			':table' => $this->_table,
+			':where' => $this->getWhereClause($param),
+			":order" => $this->getSort()
+		));
 
 		$this->DebugInfo($sql, $param);
 		return $this->_dbData->getIterator($sql, $param);

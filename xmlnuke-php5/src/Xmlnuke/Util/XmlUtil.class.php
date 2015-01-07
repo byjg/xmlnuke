@@ -288,7 +288,7 @@ class XmlUtil
 				$rootNode->appendChild($newNode);
 			}
 		}
-		catch (Exception $ex)
+		catch (\Exception $ex)
 		{
 			throw $ex;
 		}
@@ -831,7 +831,7 @@ class XmlUtil
 	 *
 	 * @param type $node
 	 * @param type $name
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	protected static function checkIfPrefixWasDefined( $node, $name )
 	{

@@ -3,6 +3,7 @@
 
 namespace OAuthClient\v10;
 
+use Exception;
 
 /* Generic exception class
  */

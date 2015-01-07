@@ -37,6 +37,8 @@ use Xmlnuke\Core\Enum\Relation;
 
 class IteratorFilter
 {
+	const XPATH = 1;
+	const SQL = 2;
 
 	/**
 	 * @var array
@@ -58,7 +60,7 @@ class IteratorFilter
 	*/
 	public function getXPath()
 	{
-		$xpathFilter = $this->generator(1, $param);
+		$xpathFilter = $this->getFilter(IteratorFilter::XPATH, $param);
 		//Debug::PrintValue($xpathFilter);
 
 		if ($xpathFilter == "")
@@ -84,13 +86,18 @@ class IteratorFilter
 	{
 		$params = array();
 
-		$sql = "select $returnFields from " . $tableName;
-		$sqlFilter = $this->generator(2, $params);
+		$sql = "select :returnFields from :tableName ";
+		$sqlFilter = $this->getFilter(IteratorFilter::SQL, $params);
 		if ($sqlFilter != "")
 		{
-			$sql .= " where " . $sqlFilter . " ";
+			$sql .= " where :sqlFilter ";
 		}
-		//Debug::PrintValue($sql, $params);
+
+		$sql = \Xmlnuke\Core\Database\SQLHelper::createSafeSQL($sql, array(
+			":returnFields" => $returnFields,
+			":tableName" => $tableName,
+			":sqlFilter" => $sqlFilter
+		));
 
 		return $sql;
 	}
@@ -116,12 +123,13 @@ class IteratorFilter
 	}
 
 	/**
+	 * Return a filter in SQL or XPATH
 	 *
-	 * @param $type
+	 * @param $type use XPATH or SQL
 	 * @param $param
 	 * @return unknown_type
 	 */
-	private function generator($type, &$param)
+	public function getFilter($type, &$param)
 	{
 		$filter = "";
 		$param = array();
@@ -146,7 +154,7 @@ class IteratorFilter
 			}
 			else
 			{
-				if ( ($previousValue != null) and ($previousValue[0] != "(") )
+				if ( ($previousValue != null) && ($previousValue[0] != "(") )
 				{
 					$filter .= $value[0];
 				}

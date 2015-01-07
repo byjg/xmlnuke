@@ -32,7 +32,30 @@
  */
 namespace Xmlnuke\Core\Admin;
 
-class ManageUsersGroups extends NewBaseAdminModule 
+use Whoops\Example\Exception;
+use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use Xmlnuke\Core\Classes\EditListField;
+use Xmlnuke\Core\Classes\PageXml;
+use Xmlnuke\Core\Classes\XmlAnchorCollection;
+use Xmlnuke\Core\Classes\XmlBlockCollection;
+use Xmlnuke\Core\Classes\XmlEasyList;
+use Xmlnuke\Core\Classes\XmlEditList;
+use Xmlnuke\Core\Classes\XmlFormCollection;
+use Xmlnuke\Core\Classes\XmlInputButtons;
+use Xmlnuke\Core\Classes\XmlInputHidden;
+use Xmlnuke\Core\Classes\XmlInputLabelField;
+use Xmlnuke\Core\Classes\XmlInputTextBox;
+use Xmlnuke\Core\Classes\XmlnukeManageUrl;
+use Xmlnuke\Core\Classes\XmlnukeText;
+use Xmlnuke\Core\Classes\XmlParagraphCollection;
+use Xmlnuke\Core\Enum\AccessLevel;
+use Xmlnuke\Core\Enum\BlockPosition;
+use Xmlnuke\Core\Enum\EasyListType;
+use Xmlnuke\Core\Enum\ModuleAction;
+use Xmlnuke\Core\Enum\URLTYPE;
+use Xmlnuke\Core\Locale\LanguageCollection;
+
+class ManageUsersGroups extends NewBaseAdminModule
 {
 	/**
 	 * Url to this module
@@ -63,7 +86,7 @@ class ManageUsersGroups extends NewBaseAdminModule
 	}
 	public function  getAccessLevel() 
     { 
-		return AccessLevel::OnlyRole; 
+		return AccessLevel::OnlyRole;
     } 
 
     public function getRole() 
@@ -171,7 +194,7 @@ class ManageUsersGroups extends NewBaseAdminModule
 		try
 		{
 			$this->user->editRolePublic($selectedSite, $selectedRole, $newRole);
-			$para->addXmlnukeObject(new XmlnukeText($this->myWords->Value("MSG_EDITED"), true));		
+			$para->addXmlnukeObject(new XmlnukeText($this->myWords->Value("MSG_EDITED"), true));
 		}
 		catch (Exception $ex)
 		{

@@ -32,6 +32,21 @@
  */
 namespace Xmlnuke\Core\Admin;
 
+use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use Xmlnuke\Core\Classes\CrudField;
+use Xmlnuke\Core\Classes\CrudFieldCollection;
+use Xmlnuke\Core\Classes\XmlAnchorCollection;
+use Xmlnuke\Core\Classes\XmlBlockCollection;
+use Xmlnuke\Core\Classes\XmlnukeCrudAnydata;
+use Xmlnuke\Core\Classes\XmlnukeCrudBase;
+use Xmlnuke\Core\Classes\XmlnukeText;
+use Xmlnuke\Core\Classes\XmlParagraphCollection;
+use Xmlnuke\Core\Enum\AccessLevel;
+use Xmlnuke\Core\Enum\BlockPosition;
+use Xmlnuke\Core\Enum\INPUTTYPE;
+use Xmlnuke\Core\Enum\Relation;
+use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
+
 class Download extends NewBaseAdminModule
 {
 	function Download()

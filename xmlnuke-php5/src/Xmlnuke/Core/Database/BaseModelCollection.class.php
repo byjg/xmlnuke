@@ -30,9 +30,12 @@
 
 namespace Xmlnuke\Core\Database;
 
-use Xmlnuke\Core\AnyDataset\IIterator;
-use Xmlnuke\Core\Database\BaseModel;
+use \InvalidArgumentException;
 use Xmlnuke\Core\AnyDataset\GenericIterator;
+use Xmlnuke\Core\AnyDataset\IIterator;
+use Xmlnuke\Core\AnyDataset\SingleRow;
+use Xmlnuke\Core\Database\BaseModel;
+use Xmlnuke\Core\Exception\IteratorException;
 
 /**
  * @package xmlnuke

@@ -33,10 +33,10 @@
  */
 namespace Xmlnuke\Core\Wrapper;
 
-use chart;
+use Exception;
 use Xmlnuke\Core\Classes\BaseSingleton;
-use Xmlnuke\Core\Engine\ChartFactory;
 use Xmlnuke\Core\Engine\Context;
+use Xmlnuke\Core\Enum\ChartType;
 
 /**
  * TODO: This class does not working properly. REDO!
@@ -68,19 +68,19 @@ class ChartWrapper extends BaseSingleton implements IOutputWrapper
 
 				$params = array();
 
-				if ($chart->getChartType() == \Xmlnuke\Core\Enum\ChartType::Area)
+				if ($chart->getChartType() == ChartType::Area)
 					$params['cht'] = '1c';
-				else if ($chart->getChartType() == \Xmlnuke\Core\Enum\ChartType::Line)
+				else if ($chart->getChartType() == ChartType::Line)
 					$params['cht'] = '1c';
-				else if ($chart->getChartType() == \Xmlnuke\Core\Enum\ChartType::Pie && !$chart->getIs3d())
+				else if ($chart->getChartType() == ChartType::Pie && !$chart->getIs3d())
 					$params['cht'] = 'p';
-				else if ($chart->getChartType() == \Xmlnuke\Core\Enum\ChartType::Pie && $chart->getIs3d())
+				else if ($chart->getChartType() == ChartType::Pie && $chart->getIs3d())
 					$params['cht'] = 'p3';
-				else if ($chart->getChartType() == \Xmlnuke\Core\Enum\ChartType::Donut)
+				else if ($chart->getChartType() == ChartType::Donut)
 					$params['cht'] = 'p';
-				else if ($chart->getChartType() == \Xmlnuke\Core\Enum\ChartType::Bar)
+				else if ($chart->getChartType() == ChartType::Bar)
 					$params['cht'] = 'bhg';
-				else if ($chart->getChartType() == \Xmlnuke\Core\Enum\ChartType::Column)
+				else if ($chart->getChartType() == ChartType::Column)
 					$params['cht'] = 'bvg';
 				else
 					$params['cht'] = 'bvg';
@@ -151,11 +151,7 @@ class ChartWrapper extends BaseSingleton implements IOutputWrapper
 				}
 				$strParams .= 'chds=a';
 
-				print_r($strParams);
-				die();
-
-
-				Header("Content-Type: image/png");
+				header("Content-Type: image/png");
 				$imageData = file_get_contents('http://chart.apis.google.com/chart?cht=p3&chd=t:39,47,8,4,2&chs=380x180&chl=IE|Firefox|Chrome|Safari|Opera');
 				echo $imageData;
 			}

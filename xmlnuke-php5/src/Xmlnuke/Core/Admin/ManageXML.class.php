@@ -32,6 +32,15 @@
  */
 namespace Xmlnuke\Core\Admin;
 
+use Whoops\Example\Exception;
+use Xmlnuke\Core\Enum\AccessLevel;
+use Xmlnuke\Core\Enum\INPUTTYPE;
+use Xmlnuke\Core\Processor\XMLFilenameProcessor;
+use Xmlnuke\Core\Processor\XSLCacheFilenameProcessor;
+use Xmlnuke\Util\FileUtil;
+use Xmlnuke\Util\XmlUtil;
+use Xmlnuke\XmlFS\XmlnukeDB;
+
 class ManageXML extends BaseAdminModule
 {
 	public function ManageXML()
@@ -163,7 +172,7 @@ class ManageXML extends BaseAdminModule
 					{
 						
 						//$editNode = XmlUtil::SelectSingleNode($index->documentElement,"/xmlindex/group[id='" . $group . "']");		
-						$editNode = XmlUtil::SelectSingleNode($index->documentElement,"group[id='" . $group . "']");									
+						$editNode = XmlUtil::SelectSingleNode($index->documentElement,"group[id='" . $group . "']");
 						$newNode = XmlUtil::CreateChild($editNode, "page", "");
 						XmlUtil::CreateChild($newNode, "id", $id);
 						XmlUtil::CreateChild($newNode, "title", $title);

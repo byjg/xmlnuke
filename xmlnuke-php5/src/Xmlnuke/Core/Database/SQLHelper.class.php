@@ -58,12 +58,8 @@ class SQLHelper
 	 *
 	 * @param DBDataSet $db
 	 */
-	public function __construct($db)
+	public function __construct(DBDataSet $db)
 	{
-		if (!($db instanceof DBDataSet) )
-		{
-			throw new InvalidArgumentException("Constructor must be an DBDataSet object");
-		}
 		$this->_db = $db;
 	}
 
@@ -216,6 +212,16 @@ class SQLHelper
 	{
 		$this->_fieldDeliLeft = $left;
 		$this->_fieldDeliRight = $right;
+	}
+
+	public static function createSafeSQL($sql, $list)
+	{
+		foreach($list as $key=>$value)
+		{
+			$value = str_replace(["'", ';'], ["", ''], $value);
+			$sql = str_replace($key, $value, $sql);
+		}
+		return $sql;
 	}
 }
 ?>

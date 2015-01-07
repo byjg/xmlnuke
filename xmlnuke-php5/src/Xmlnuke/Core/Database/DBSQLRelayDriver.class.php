@@ -34,7 +34,9 @@
 namespace Xmlnuke\Core\Database;
 
 use Xmlnuke\Core\AnyDataset\SQLRelayIterator;
+use Xmlnuke\Core\Exception\DataBaseException;
 use Xmlnuke\Core\Exception\DatasetException;
+use Xmlnuke\Core\Exception\NotImplementedException;
 
 class DBSQLRelayDriver implements IDBDriver
 {
@@ -128,7 +130,7 @@ class DBSQLRelayDriver implements IDBDriver
 	{
 		$cur=sqlrcur_alloc($this->_conn);
 
-		$success = sqlrcur_sendQuery($cur,"select * from " . $tablename);
+		$success = sqlrcur_sendQuery($cur, SQLHelper::createSafeSQL("select * from :table", array(":table"=>$tablename)));
 		sqlrcon_endSession($con);
 		
 		if (!$success)
@@ -159,9 +161,9 @@ class DBSQLRelayDriver implements IDBDriver
 
 			$ret = sqlrcon_commit($this->_conn);
 			if ($ret === 0)
-				throw new DatabaseException ('Commit failed');
+				throw new DataBaseException ('Commit failed');
 			else if ($ret === -1)
-				throw new DatabaseException ('An error occurred. Commit failed');
+				throw new DataBaseException ('An error occurred. Commit failed');
 			
 			sqlrcon_autoCommitOn($this->_conn);
 		}
@@ -201,12 +203,12 @@ class DBSQLRelayDriver implements IDBDriver
 
 	public function getAttribute($name)
 	{
-		throw new \Xmlnuke\Core\Exception\NotImplementedException('Method not implemented for SQL Relay Driver');
+		throw new NotImplementedException('Method not implemented for SQL Relay Driver');
 	}
 
 	public function setAttribute($name, $value)
 	{
-		throw new \Xmlnuke\Core\Exception\NotImplementedException('Method not implemented for SQL Relay Driver');
+		throw new NotImplementedException('Method not implemented for SQL Relay Driver');
 	}
 
 }

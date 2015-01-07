@@ -1,7 +1,4 @@
 <?php
-
-use Xmlnuke\Core\AnyDataset\GenericIterator;
-use Xmlnuke\Core\AnyDataset\SingleRow;
 /*
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 *  Copyright:
@@ -30,12 +27,15 @@ use Xmlnuke\Core\AnyDataset\SingleRow;
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
+namespace Xmlnuke\Core\AnyDataset;
+
+use Xmlnuke\Core\AnyDataset\GenericIterator;
+use Xmlnuke\Core\AnyDataset\SingleRow;
+
 /**
  * Iterator class is a structure used to navigate forward in a AnyDataSet structure.
  * @package xmlnuke
  */
-namespace Xmlnuke\Core\AnyDataset;
-
 class AnyIterator extends GenericIterator
 {
 

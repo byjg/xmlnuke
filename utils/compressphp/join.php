@@ -38,7 +38,7 @@ else
 
 function find_required_php($filename, &$filelist, $pathlist)
 {
-	$pathar = split(":", $pathlist);
+	$pathar = explode(":", $pathlist);
 	$found = false;
 	foreach ($pathar as $path)
 	{

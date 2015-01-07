@@ -173,7 +173,7 @@ class DBPDODriver implements IDBDriver
 	public function getAllFields($tablename) 
 	{
 		$fields = array ();
-		$rs = $this->_db->query ( "select * from " . $tablename . " where 0=1" );
+		$rs = $this->_db->query ( SQLHelper::createSafeSQL("select * from :table where 0=1", array(":table" => $tablename)) );
 		$fieldLength = $rs->columnCount ();
 		for($i = 0; $i < $fieldLength; $i++) 
 		{

@@ -110,6 +110,7 @@ class ModuleFactory
 		if ($output != null)
 		{
 			$context->setOutputFormat($output);
+			ErrorHandler::getInstance()->setHandler($output);
 		}
 
 		if (strlen($urlSSL) > 0)

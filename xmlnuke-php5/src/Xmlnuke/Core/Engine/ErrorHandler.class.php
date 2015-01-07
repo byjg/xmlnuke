@@ -61,6 +61,18 @@ class ErrorHandler extends BaseSingleton
 
 		$output = Context::getInstance()->getOutputFormat();
 
+		$this->setHandler($output);
+	}
+
+	/**
+	 * Set the proper Error Handler based on the Output of the page
+	 *
+	 * @param OutputData $output
+	 */
+	public function setHandler($output)
+	{
+		$this->_whoops->popHandler();
+
 		if ($output == OutputData::Json)
 		{
 			$this->_handler = new JsonResponseHandler();
@@ -97,6 +109,12 @@ class ErrorHandler extends BaseSingleton
 		$this->_whoops->unregister();
 	}
 
+	/**
+	 * Added extra information for debug purposes on the error handler screen
+	 * 
+	 * @param string $name
+	 * @param value $value
+	 */
 	public function addExtraInfo($name, $value)
 	{
 		if (method_exists($this->_handler, 'addDataTable'))

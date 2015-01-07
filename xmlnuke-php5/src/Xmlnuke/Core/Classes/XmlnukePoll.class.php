@@ -179,11 +179,13 @@ class  XmlnukePoll extends XmlnukeDocumentObject
 				{
 					// Remove Old Entries
 					$dbdata = new DBDataSet($this->_connection);
-					$sql = "delete from " . $this->_tbllastip . " where register < now() - interval 5 day ";
+					$sql = "delete from :table where register < now() - interval 5 day ";
+					$sql = \Xmlnuke\Core\Database\SQLHelper::createSafeSQL($sql, array(':table' => $this->_tbllastip));
 					$dbdata->execSQL($sql);
 
 					// Check if exists
-					$sql = "select count(1) from " . $this->_tbllastip . " where ip = [[ip]] and name = [[name]] ";
+					$sql = "select count(1) from :table where ip = [[ip]] and name = [[name]] ";
+					$sql = \Xmlnuke\Core\Database\SQLHelper::createSafeSQL($sql, array(':table' => $this->_tbllastip));
 					$param = array(
 						"ip" => $this->_context->getClientIp(),
 						"name" => $this->_poll
@@ -195,7 +197,8 @@ class  XmlnukePoll extends XmlnukeDocumentObject
 					{
 						$ok = true;
 
-						$sql = "insert into " . $this->_tbllastip . " (ip, name, register) values ([[ip]], [[name]], now()) ";
+						$sql = "insert into :table (ip, name, register) values ([[ip]], [[name]], now()) ";
+						$sql = \Xmlnuke\Core\Database\SQLHelper::createSafeSQL($sql, array(':table' => $this->_tbllastip));
 						$param = array(
 							"ip" => $this->_context->getClientIp(),
 							"name" => $this->_poll
@@ -217,11 +220,12 @@ class  XmlnukePoll extends XmlnukeDocumentObject
 					{
 						$dbdata = new DBDataSet($this->_connection, $this->_context);
 						$param = array();
-						$sql = $itf->getSql($this->_tblanswer, $param); // Use only to get Where clause
-						$i = strpos($sql, $this->_tblanswer);
-						$sql = "update " . $this->_tblanswer . " set " .
-							" votes = IFNULL(votes,0) + 1 " .
-							substr($sql, $i + strlen($this->_tblanswer) + 1);
+						$sql = "update :table set votes = IFNULL(votes,0) + 1 where :filter ";
+
+						$sql = \Xmlnuke\Core\Database\SQLHelper::createSafeSQL($sql, array(
+							':table' => $this->_tblanswer,
+							':filter' => $itf->getFilter(IteratorFilter::SQL, $param)
+						));
 						$dbdata->execSQL($sql, $param);
 					}
 					else

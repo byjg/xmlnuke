@@ -29,6 +29,7 @@
 
 namespace Xmlnuke\Modules;
 
+use DOMNode;
 use Xmlnuke\Core\Classes\MailEnvelope;
 use Xmlnuke\Core\Classes\PageXml;
 use Xmlnuke\Core\Classes\XmlAnchorCollection;
@@ -40,12 +41,11 @@ use Xmlnuke\Core\Classes\XmlInputHidden;
 use Xmlnuke\Core\Classes\XmlInputImageValidate;
 use Xmlnuke\Core\Classes\XmlnukeBreakLine;
 use Xmlnuke\Core\Classes\XmlnukeDocument;
-use Xmlnuke\Core\Classes\XmlnukeStringXML;
 use Xmlnuke\Core\Classes\XmlnukeText;
 use Xmlnuke\Core\Classes\XmlParagraphCollection;
-use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\BlockPosition;
 use Xmlnuke\Core\Locale\LanguageCollection;
+use Xmlnuke\Core\Module\BaseModule;
 use Xmlnuke\Core\Processor\XMLFilenameProcessor;
 use Xmlnuke\Util\MailUtil;
 /**
@@ -64,35 +64,35 @@ class SendEmail extends BaseModule
 	/**
 	 * To Name Id
 	 *
-	 * @var String
+	 * @var string
 	 */
 	private $_toName_ID = "";
 	
 	/**
 	 * From Name
 	 *
-	 * @var String
+	 * @var string
 	 */
 	private $_fromName = "";
 	
 	/**
 	 * From Email
 	 *
-	 * @var String
+	 * @var string
 	 */
 	private $_fromEmail = "";
 	
 	/**
 	 * Subject
 	 *
-	 * @var String
+	 * @var string
 	 */
 	private $_subject = "";
 	
 	/**
 	 * Message
 	 *
-	 * @var String
+	 * @var string
 	 */
 	private $_message = "";
 
@@ -100,14 +100,14 @@ class SendEmail extends BaseModule
 	 * Extra Field Message (extra_fields)
 	 * field1=Caption1;field2=Caption2;...
 	 *
-	 * @var String
+	 * @var string
 	 */
 	private $_extraMessage = "";
 	
 	/**
 	 * Redirect
 	 *
-	 * @var String
+	 * @var string
 	 */
 	private $_redirect = "";
 
@@ -133,8 +133,7 @@ class SendEmail extends BaseModule
 	 * Setup the module receiving external parameters and assing it to private variables.
 	 *
 	 * @param XMLFilenameProcessor $xmlModuleName
-	 * @param Context $context
-	 * @param Object $customArgs
+	 * @param mixed $customArgs
 	 */
 	public function Setup($xmlModuleName, $customArgs)
 	{
@@ -183,7 +182,7 @@ class SendEmail extends BaseModule
 	/**
 	 * CreatePage is called from module processor and decide the proper output XML.
 	 *
-	 * @return XML object
+	 * @return DOMNode object
 	 */
 	public function CreatePage()
 	{
@@ -275,8 +274,8 @@ class SendEmail extends BaseModule
 	/**
 	 * Create the PageXml object from CreatePage() parameters
 	 *
-	 * @param String $title
-	 * @param Array $ht
+	 * @param string $title
+	 * @param array $ht
 	 * @return PageXml
 	 */
 	private function CreatePageArgs($title, $ht)

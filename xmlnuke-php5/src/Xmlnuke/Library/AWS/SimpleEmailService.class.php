@@ -386,7 +386,7 @@ final class SimpleEmailServiceRequest
 	function __construct($ses, $verb) {
 		$this->ses = $ses;
 		$this->verb = $verb;
-		$this->response = new STDClass;
+		$this->response = new \stdClass;
 		$this->response->error = false;
 	}
 
