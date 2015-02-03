@@ -135,13 +135,13 @@ class Debug
 						foreach($raw as $item)
 						{
 							$result .= '<td class="devdebug">';
-							if (is_array($raw))
+							if (is_array($item))
 							{
-								$result .= implode(',', $raw);
+								$result .= implode(',', $item);
 							}
 							else
 							{
-								$result .= $raw;
+								$result .= $item;
 							}
 							$result .= '</td>';
 						}

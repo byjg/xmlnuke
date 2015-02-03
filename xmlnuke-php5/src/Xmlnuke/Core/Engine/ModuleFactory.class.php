@@ -261,7 +261,13 @@ class ModuleFactory
 
 			$autoLoad = AutoLoad::getInstance();
 			foreach(ModuleFactory::$_phpLibDir as $lib => $path)
+			{
+				if (!file_exists($path))
+				{
+					throw new \Exception("Path $path in xmlnuke.PHPLIBDIR was not found");
+				}
 				$autoLoad->registrUserProject($path);
+			}
 		}
 		return ModuleFactory::$_phpLibDir;
 	}

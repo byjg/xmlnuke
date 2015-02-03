@@ -85,7 +85,7 @@ class LocaleFactory
 			else
 			{
 				$sr = new \Xmlnuke\Core\AnyDataset\SingleRow();
-				\Xmlnuke\Core\Engine\Context::getInstance()->WriteWarningMessage("$lang was not found in locale.anydata.xml file");
+				\Xmlnuke\Core\Engine\Context::getInstance()->WriteWarningMessage("The language $value was not found in locale.anydata.xml file");
 				$sr->AddField('name', $value . ' ???');
 				$sr->AddField('shortname', $value);
 				self::$_localeDbCache[$field] = $sr;
