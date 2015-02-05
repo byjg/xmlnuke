@@ -109,10 +109,16 @@ class  XmlInputValidate extends XmlnukeDocumentObject
 	}
 
 	/**
-	*@desc set input custom JavaScript
-	*@param string $customjs
-	*@return void
-	*/
+	 * Defines a customjs function name for validate the code
+	 * Ex.
+	 *
+	 * <code>
+	 * $text->setCustomJS("functionName");
+	 * </code>
+	 *
+	 * @param string $customjs
+	 * @return void
+	 */
 	public function setCustomJS($customjs)
 	{
 		$this->_customjs = $customjs;
