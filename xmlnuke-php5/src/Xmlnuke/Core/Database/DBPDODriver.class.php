@@ -33,6 +33,7 @@
  */
 namespace Xmlnuke\Core\Database;
 
+use Exception;
 use PDO;
 use PDOStatement;
 use Xmlnuke\Core\AnyDataset\DBIterator;
@@ -51,23 +52,11 @@ class DBPDODriver implements IDBDriver
 	 */
 	protected $_connectionManagement;
 
-	public function __construct($connMngt)
+	public function __construct(ConnectionManagement $connMngt, $strcnn, $preOptions, $postOptions)
 	{	
 		$this->_connectionManagement = $connMngt;
-		
-		if ($this->_connectionManagement->getDriver () == "literal")
-		{
-			$strcnn = $this->_connectionManagement->getDbConnectionString();
-		}
-		else if ($this->_connectionManagement->getDriver () == "odbc")
-		{
-			$strcnn = $this->_connectionManagement->getDriver () . ":" . $this->_connectionManagement->getServer ();
-		}
-		else if ($this->_connectionManagement->getDriver () == "oci")
-		{
-			$strcnn = $this->_connectionManagement->getDriver () . ":dbname=" . DBOci8Driver::getTnsString($this->_connectionManagement);
-		}
-		else 
+
+		if ($strcnn == null)
 		{
 			if ($this->_connectionManagement->getFilePath() != "")
 				$strcnn = $this->_connectionManagement->getDriver () . ":" . $this->_connectionManagement->getFilePath ();
@@ -86,39 +75,29 @@ class DBPDODriver implements IDBDriver
 		}
 
 		// Create Connection
-		$this->_db = new PDO ( $strcnn, $this->_connectionManagement->getUsername (), $this->_connectionManagement->getPassword () );
+		$this->_db = new PDO ( $strcnn, $this->_connectionManagement->getUsername (), $this->_connectionManagement->getPassword (), (array)$preOptions );
 		$this->_connectionManagement->setDriver($this->_db->getAttribute(PDO::ATTR_DRIVER_NAME));
 
 		// Set Specific Attributes
 		$this->_db->setAttribute ( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 		$this->_db->setAttribute ( PDO::ATTR_CASE, PDO::CASE_LOWER );
-		if ($this->_connectionManagement->getDriver() == "mysql")
+
+		foreach ((array)$postOptions as $key=>$value)
 		{
-			$this->_db->setAttribute ( PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true );
-			if ((PHP_VERSION_ID < 50300) || (PHP_VERSION_ID > 50301))
-			{
-				$this->_db->setAttribute ( PDO::MYSQL_ATTR_INIT_COMMAND, "SET NAMES utf8" );
-			}
+			$this->_db->setAttribute ( $key, $value );
 		}
-		if (($this->_connectionManagement->getDriver() != "dblib") && ($this->_connectionManagement->getDriver() != "odbc"))
+	}
+
+	public static function factory(ConnectionManagement $connMngt)
+	{
+		$class = '\Xmlnuke\Core\Database\Pdo' . ucfirst($connMngt->getDriver());
+		try
 		{
-			if ( defined( 'PDO::ATTR_EMULATE_PREPARES' ) ) {
-				$this->_db->setAttribute ( PDO::ATTR_EMULATE_PREPARES, true );
-			}
-		}
-		// Solve the error:
-		// SQLSTATE[HY000]: General error: 1934 General SQL Server error: Check messages from the SQL Server [1934] (severity 16) [(null)]
-		// http://gullele.wordpress.com/2010/12/15/accessing-xml-column-of-sql-server-from-php-pdo/
-		// http://stackoverflow.com/questions/5499128/error-when-using-xml-in-stored-procedure-pdo-ms-sql-2008
-		if ($this->_connectionManagement->getDriver() == "dblib")
-		{
-			$this->_db->exec('SET QUOTED_IDENTIFIER ON');
-			$this->_db->exec('SET ANSI_WARNINGS ON');
-			$this->_db->exec('SET ANSI_PADDING ON');
-			$this->_db->exec('SET ANSI_NULLS ON');
-			$this->_db->exec('SET CONCAT_NULL_YIELDS_NULL ON');
-			//$this->execSql('SET NUMERIC_ROUNDABORT OFF');
-			//$this->execSql('set dateformat ymd');
+			return new $class($connMngt);
+
+		} catch (Exception $ex) {
+
+			return new DBPDODriver($connMngt);
 		}
 	}
 	
