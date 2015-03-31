@@ -36,7 +36,21 @@ use Xmlnuke\Core\Classes\BaseSingleton;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Util\LogWrapper;
 
-
+/**
+ * Caching based on Unix Share Memory
+ *
+ * # ipcs -m
+ * List all segments used
+ *
+ * # ipcs -lm
+ * ------ Shared Memory Limits --------
+ * max number of segments = 4096       <--- this is SHMMNI
+ * max seg size (kbytes) = 67108864    <--- this is SHMMAX
+ * max total shared memory (kbytes) = 17179869184<- this is SHMALL
+ * min seg size (bytes) = 1
+ *
+ *
+ */
 class ShmopCacheEngine extends BaseSingleton implements ICacheEngine
 {
 	const DEFAULT_PERMISSION = "0700";
