@@ -91,13 +91,14 @@ class DBPDODriver implements IDBDriver
 	public static function factory(ConnectionManagement $connMngt)
 	{
 		$class = '\Xmlnuke\Core\Database\Pdo' . ucfirst($connMngt->getDriver());
-		try
+
+		if (!class_exists($class, true))
+		{
+			return new DBPDODriver($connMngt, null, null, null);
+		}
+		else
 		{
 			return new $class($connMngt);
-
-		} catch (Exception $ex) {
-
-			return new DBPDODriver($connMngt);
 		}
 	}
 	
