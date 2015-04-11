@@ -183,7 +183,10 @@ class sparql_connection
 	var $caps_anysubject;
 	function capabilityCache( $filename, $dba_type='db4' )
 	{
-		$this->caps_cache = dba_open($filename, "c", $dba_type );
+		if (function_exists('dba_open'))
+		{
+			$this->caps_cache = dba_open($filename, "c", $dba_type );
+		}
 	}
 	function capabilityCodes()
 	{
