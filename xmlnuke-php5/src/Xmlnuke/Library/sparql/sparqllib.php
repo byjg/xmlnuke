@@ -185,7 +185,11 @@ class sparql_connection
 	{
 		if (function_exists('dba_open'))
 		{
-			$this->caps_cache = dba_open($filename, "c", $dba_type );
+			$handlers = dba_handlers(true);
+			if (array_key_exists($dba_type, $handlers)) // it is possible to save cache?
+			{
+				$this->caps_cache = dba_open($filename, "c", $dba_type );
+			}
 		}
 	}
 	function capabilityCodes()

@@ -76,7 +76,7 @@ class SparQLDataSet
 		}
 
 		if (function_exists('dba_open')) {
-			$cache = \Xmlnuke\Util\FileUtil::GetTempDir() . "/caps." . sha1($url) . ".db";
+			$cache = \Xmlnuke\Util\FileUtil::GetTempDir() . "/caps.db";
 			$this->_db->capabilityCache( $cache );
 		}
 	}
