@@ -38,10 +38,6 @@ use Xmlnuke\Core\Classes\BaseSingleton;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\ChartType;
 
-/**
- * TODO: This class does not working properly. REDO!
- * TODO: Get an alternative for Image Chart from Google because it is deprecated.
- */
 class ChartWrapper extends BaseSingleton implements IOutputWrapper
 {
 	public function Process()

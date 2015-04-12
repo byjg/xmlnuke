@@ -440,7 +440,6 @@ class ObjectHandler
 
 	}
 
-	// TODO: Adcionar o objecto Reflection
 	protected function replaceVars($name, $text)
 	{
 		$context = Context::getInstance();

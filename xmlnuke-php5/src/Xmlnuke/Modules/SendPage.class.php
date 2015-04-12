@@ -45,13 +45,14 @@ use Xmlnuke\Core\Classes\XmlParagraphCollection;
 use Xmlnuke\Core\Enum\BlockPosition;
 use Xmlnuke\Core\Enum\INPUTTYPE;
 use Xmlnuke\Core\Locale\LanguageCollection;
+use Xmlnuke\Core\Module\BaseModule;
 use Xmlnuke\Core\Processor\XMLFilenameProcessor;
 use Xmlnuke\Util\MailUtil;
 
 /**
  * @package xmlnuke
  */
-class SendPage extends BaseModule 
+class SendPage extends BaseModule
 {
 	/**
 	 * To Name
