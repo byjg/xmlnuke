@@ -34,7 +34,6 @@
 namespace Xmlnuke\Core\AnyDataset;
 
 use InvalidArgumentException;
-use sparql_result;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Exception\IteratorException;
 
@@ -48,7 +47,7 @@ class SparQLIterator extends GenericIterator
 	private $_context = null;
 
 	/**
-	 * @var sparql_result
+	 * @var \SparQL\Result
 	 */
 	private $_sparqlQuery;
 	
@@ -59,13 +58,8 @@ class SparQLIterator extends GenericIterator
 	 */
 	private $_current = 0;
 
-	public function __construct($sparqlQuery)
+	public function __construct(\SparQL\Result $sparqlQuery)
 	{
-		if (!($sparqlQuery instanceof sparql_result))
-		{
-			throw new InvalidArgumentException("Invalid SparQL object");
-		}
-		
 		$this->_sparqlQuery = $sparqlQuery;
 
 		$this->_current = 0;
@@ -73,7 +67,7 @@ class SparQLIterator extends GenericIterator
 
 	public function Count()
 	{
-		return (sparql_num_rows( $this->_sparqlQuery ));
+		return ($this->_sparqlQuery->numRows());
 	}
 
 	/**
@@ -103,7 +97,7 @@ class SparQLIterator extends GenericIterator
 			throw new IteratorException("No more records. Did you used hasNext() before moveNext()?");
 		}
 		
-		if ($row = sparql_fetch_array( $this->_sparqlQuery ))
+		if ($row = $this->_sparqlQuery->fetchArray())
 		{
 			$sr = new SingleRow($row);
 			$this->_current++;
