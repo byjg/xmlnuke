@@ -208,6 +208,9 @@ class Context extends BaseSingleton
 		$this->setXml();
 
 		$this->_xmlnukepath = $this->get("xmlnuke.ROOTDIR");
+		if (!file_exists($this->_xmlnukepath))
+			throw new \Exception('the config xmlnuke.ROOTDIR not found');
+
 		$this->_reset = ($this->getParameter("reset") != "");
 		$this->_nocache = ($this->getParameter("nocache"));
 
@@ -781,7 +784,15 @@ class Context extends BaseSingleton
 			$this->_xmlnukeData = $this->get("xmlnuke.XMLNUKEDATA");
 
 			if (!is_array($this->_xmlnukeData))
-				throw new \InvalidArgumentException('Config "xmlnuke.XMLNUKEDATA" requires an associative array');
+				throw new \InvalidArgumentException('Config "xmlnuke.XMLNUKEDATA" requires an array');
+
+			foreach($this->_xmlnukeData as $data)
+			{
+				if (!file_exists($data))
+				{
+					throw new \Exception("Path '$data' in xmlnuke.XMLNUKEDATA was not found");
+				}
+			}
 		}
 		return $this->_xmlnukeData;
 	}

@@ -78,7 +78,7 @@ class DBDataSet
 		elseif ($this->_connectionManagement->getDriver () == "oci8") 
 			$this->_dbDriver = new DBOci8Driver ($this->_connectionManagement);
 		else
-			$this->_dbDriver = new DBPDODriver($this->_connectionManagement);
+			$this->_dbDriver = DBPDODriver::factory($this->_connectionManagement);
 	}
 	
 	public function getDbType() 

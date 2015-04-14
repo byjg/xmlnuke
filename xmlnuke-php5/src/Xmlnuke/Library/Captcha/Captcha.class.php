@@ -10,7 +10,6 @@
 namespace Captcha;
 
 use Xmlnuke\Core\Engine\Context;
-use Xmlnuke\Core\Enum\LanguageFileTypes;
 use Xmlnuke\Core\Locale\LanguageFactory;
 
 class Captcha {

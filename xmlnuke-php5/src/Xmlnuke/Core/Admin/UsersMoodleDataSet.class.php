@@ -39,30 +39,28 @@ namespace Xmlnuke\Core\Admin;
  */
 define('AUTH_PASSWORD_NOT_CACHED', 'not cached'); // String used in password field when password is not stored.
 
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
-use Xmlnuke\Core\AnyDataset\DBDataSet;
-use Xmlnuke\Core\AnyDataset\IIterator;
-use Xmlnuke\Core\AnyDataset\IteratorFilter;
-use Xmlnuke\Core\AnyDataset\SingleRow;
+
+use ErrorException;
+use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\UserProperty;
-use Xmlnuke\Core\Exception\DatasetException;
+use Xmlnuke\Core\Exception\NotImplementedException;
 
 class UsersMoodleDataSet extends UsersDBDataSet
 {
 
 	/**
-	 * TODO: Create a way to populate the siteSalt
-	 * 
-	 * @var type 
+	 * @var string
 	 */
 	protected $_siteSalt = "";
 
 	/**
 	  * DBDataSet constructor
 	  */
-	public function __construct($context, $dataBase)
+	public function __construct(Context $context, $dataBase)
 	{
 		parent::__construct($context, $dataBase);
+
+		$this->_siteSalt = $context->get('moodle.sitesalt');
 	}
 
 	/**
@@ -71,7 +69,7 @@ class UsersMoodleDataSet extends UsersDBDataSet
 	 */
 	public function Save()
 	{
-		throw new \Xmlnuke\Core\Exception\NotImplementedException('Save user is not implemented');
+		throw new NotImplementedException('Save user is not implemented');
 	}
 
 	/**
@@ -85,7 +83,7 @@ class UsersMoodleDataSet extends UsersDBDataSet
 	 */
 	public function addUser( $name, $userName, $email, $password )
 	{
-		throw new \Xmlnuke\Core\Exception\NotImplementedException('Add new user is not implemented');
+		throw new NotImplementedException('Add new user is not implemented');
 	}
 
 	protected function password_is_legacy_hash($password)
@@ -118,7 +116,7 @@ class UsersMoodleDataSet extends UsersDBDataSet
 		{
 			if (!function_exists('crypt'))
 			{
-				throw new \ErrorException("Crypt must be loaded for password_verify to function");
+				throw new ErrorException("Crypt must be loaded for password_verify to function");
 			}
 
 			$ret = crypt($password, $savedPassword);
@@ -188,7 +186,7 @@ class UsersMoodleDataSet extends UsersDBDataSet
 	* */
 	public function removeUserName( $login )
 	{
-		throw new \Xmlnuke\Core\Exception\NotImplementedException('Remove user is not implemented');
+		throw new NotImplementedException('Remove user is not implemented');
 	}
 
 	/**
@@ -199,7 +197,7 @@ class UsersMoodleDataSet extends UsersDBDataSet
 	* */
 	public function removeUserById( $userId )
 	{
-		throw new \Xmlnuke\Core\Exception\NotImplementedException('Remove user by Id is not implemented');
+		throw new NotImplementedException('Remove user by Id is not implemented');
 	}
 
 	/**
@@ -212,7 +210,7 @@ class UsersMoodleDataSet extends UsersDBDataSet
 	* */
 	public function removePropertyValueFromAllUsers($propValue, $userProp)
 	{
-		throw new \Xmlnuke\Core\Exception\NotImplementedException('Remove property value from all users is not implemented');
+		throw new NotImplementedException('Remove property value from all users is not implemented');
 	}
 
 
@@ -224,7 +222,7 @@ class UsersMoodleDataSet extends UsersDBDataSet
 	 */
 	public function addRolePublic($site, $role)
 	{
-		throw new \Xmlnuke\Core\Exception\NotImplementedException('Add role public is not implemented');
+		throw new NotImplementedException('Add role public is not implemented');
 	}
 
 	/**
@@ -236,7 +234,7 @@ class UsersMoodleDataSet extends UsersDBDataSet
 	 */
 	public function editRolePublic($site, $role, $newValue = null)
 	{
-		throw new \Xmlnuke\Core\Exception\NotImplementedException('Edit role public is not implemented');
+		throw new NotImplementedException('Edit role public is not implemented');
 	}
 
 	public function getUserTable()
@@ -281,4 +279,3 @@ class UsersMoodleDataSet extends UsersDBDataSet
 		return $this->_RolesTable;
 	}
 }
-?>

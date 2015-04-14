@@ -30,8 +30,6 @@
 
 namespace Xmlnuke\Core\AnyDataset;
 
-require_once(PHPXMLNUKEDIR . "src/Xmlnuke/Library/sparql/sparqllib.php"); // Non-PSR-0 Compliant
-
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Exception\DatasetException;
 
@@ -60,7 +58,7 @@ class SparQLDataSet
 	{
 		$this->_context = Context::getInstance();
 
-		$this->_db = sparql_connect( $url );
+		$this->_db = new \SparQL\Connection( $url );
 		
 		if( !$this->_db ) 
 		{ 
@@ -76,7 +74,7 @@ class SparQLDataSet
 		}
 
 		if (function_exists('dba_open')) {
-			$cache = \Xmlnuke\Util\FileUtil::GetTempDir() . "/caps." . sha1($url) . ".db";
+			$cache = \Xmlnuke\Util\FileUtil::GetTempDir() . "/caps.db";
 			$this->_db->capabilityCache( $cache );
 		}
 	}

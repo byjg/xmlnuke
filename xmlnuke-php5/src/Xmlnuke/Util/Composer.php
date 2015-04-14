@@ -54,6 +54,13 @@ class Composer
 			file_put_contents($baseProject . "/httpdocs/config.inc.php", $configInc);
 		}
 
+		if (!file_exists($baseProject . '/data/anydataset/_db.anydata.xml'))
+		{
+			$output->write("Setting the _db.anydata ...", true);
+			$dbInc = file_get_contents($baseProject . "/data/anydataset/_db.anydata-dist.xml");
+			file_put_contents($baseProject . "/data/anydataset/_db.anydata.xml", $dbInc);
+		}
+
 		$output->write("Updating Project References...", true);
 		CreatePhp5Project::Update($baseXmlnuke, $baseProject);
 	}

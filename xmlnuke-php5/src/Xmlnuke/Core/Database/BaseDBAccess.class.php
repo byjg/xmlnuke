@@ -375,17 +375,31 @@ abstract class BaseDBAccess
 
 	public function beginTransaction()
 	{
-		$this->_db->beginTransaction();
+		$this->getDBDataSet()->beginTransaction();
 	}
 
 	public function commitTransaction()
 	{
-		$this->_db->commitTransaction();
+		$this->getDBDataSet()->commitTransaction();
 	}
 
 	public function rollbackTransaction()
 	{
-		$this->_db->rollbackTransaction();
+		$this->getDBDataSet()->rollbackTransaction();
+	}
+
+	public function getObjectDbDataSet()
+	{
+		return $this->_db;
+	}
+
+	public function joinTransactionContext(BaseDBAccess $dal)
+	{
+		if (is_null($dal->getObjectDbDataSet()))
+		{
+			throw new \Exception('Transaction not initialized');
+		}
+		$this->_db = $dal->getObjectDbDataSet();
 	}
 
 }
