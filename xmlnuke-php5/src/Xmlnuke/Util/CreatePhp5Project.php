@@ -294,6 +294,21 @@ class CreatePhp5Project
 				unlink ("$HTTPDOCS/common");
 			CreatePhp5Project::executeShell( "ln -sf", array("$XMLNUKE/xmlnuke-common", "$HTTPDOCS/common") );
 		}
+
+		// Rename Dist Files
+		$directory = new \RecursiveDirectoryIterator($xmlnuke);
+		$iterator = new \RecursiveIteratorIterator($directory);
+		$regex = new \RegexIterator($iterator, '/\.dist$/i', \RecursiveRegexIterator::GET_MATCH);
+
+		foreach ($regex as $filename=>$pattern)
+		{
+			$newFile = str_replace($pattern[0], '', $filename);
+			if (!file_exists($newFile))
+			{
+				copy($filename, $newFile);
+			}
+		}
+
 		return true;
 	}
 
