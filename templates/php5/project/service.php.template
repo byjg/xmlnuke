@@ -9,8 +9,8 @@ class ServiceSample extends __PROJECT__BaseService
 	public function Get()
 	{
 		return [
-			"id": "99",
-			"name": "Testing"
+			"id" => "99",
+			"name" => "Testing"
 		];
 	}
 
