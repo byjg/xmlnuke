@@ -111,6 +111,7 @@ class CreatePhp5Project
 				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/basedbaccess.php.template", "$HOME/lib/$PROJECT/Base/BaseDBAccess.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
 				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/basemodel.php.template", "$HOME/lib/$PROJECT/Base/BaseModel.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
 				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/basemodule.php.template", "$HOME/lib/$PROJECT/Base/BaseModule.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
+				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/baseservice.php.template", "$HOME/lib/$PROJECT/Base/BaseService.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
 				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/baseuiedit.php.template", "$HOME/lib/$PROJECT/Base/BaseUIEdit.php", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
 
 				# Create Project PHPUnit Related Files
