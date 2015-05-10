@@ -1,0 +1,17 @@
+<?php
+
+namespace __PROJECT__\Modules;
+
+use __PROJECT__\Base\BaseService as __PROJECT__BaseService;
+
+class ServiceSample extends __PROJECT__BaseService
+{
+	public function Get()
+	{
+		return [
+			"id": "99",
+			"name": "Testing"
+		];
+	}
+
+}
