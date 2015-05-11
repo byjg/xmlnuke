@@ -4,14 +4,44 @@ namespace __PROJECT__\Modules;
 
 use __PROJECT__\Base\BaseService as __PROJECT__BaseService;
 
+/**
+ * For create RESTFull services you only need to implement methods with the
+ * same name of the HTTP Method you can handle. 
+ * 
+ * For example, to handle a HTTP POST method you only need implement the method
+ * 
+ * <code>
+ * public function Post($postData, $id = null)
+ * {
+ *		return $this->defaultXmlnukeDocument;
+ * }
+ * </code>
+ * 
+ * This method receive two parameters:
+ * $postData -> The JSON payload
+ * $id -> The request ID
+ */
 class ServiceSample extends __PROJECT__BaseService
 {
-	public function Get()
+	public function Get($postData, $id = null)
 	{
-		return [
-			"id" => "99",
-			"name" => "Testing"
-		];
+		if ($id == 1)
+		{
+			// You can create a stdClass and send as response
+			$stdClass = new \stdClass;
+			$stdClass->id = 99;
+			$stdClass->name = "Testing";
+		}
+		else
+		{
+			// You can send an array as answer
+			$object = [ "id"=>"1234", "name" => "Another Testing"];
+		}
+
+		// Add the object to the output.
+		$this->defaultXmlnukeDocument->addXmlnukeObject($object);
+
+		return $this->defaultXmlnukeDocument;
 	}
 
 }
