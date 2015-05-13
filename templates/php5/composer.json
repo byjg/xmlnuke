@@ -1,0 +1,14 @@
+{
+    "require": {
+        "byjg/xmlnuke": "dev-master"
+    },
+    "minimum-stability": "dev",
+    "scripts": {
+        "post-install-cmd": [
+             "Xmlnuke\\Util\\Composer::postInstallCmd"
+        ],
+    "post-update-cmd" : [
+             "Xmlnuke\\Util\\Composer::postInstallCmd"
+        ]
+    }
+}
