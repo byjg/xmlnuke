@@ -33,8 +33,10 @@
  */
 namespace Xmlnuke\Core\Wrapper;
 
-use Detection\MobileDetect;
-
+use Exception;
+use FastRoute\Dispatcher;
+use FastRoute\RouteCollector;
+use InvalidArgumentException;
 use Xmlnuke\Core\Classes\BaseSingleton;
 
 class RouteWrapper extends BaseSingleton implements IOutputWrapper
@@ -73,14 +75,14 @@ class RouteWrapper extends BaseSingleton implements IOutputWrapper
 	{
 		if (!is_array($methods))
 		{
-			throw new \InvalidArgumentException('You need pass an array');
+			throw new InvalidArgumentException('You need pass an array');
 		}
 
 		foreach ($methods as $key=>$value)
 		{
 			if (!isset($value['method']) || !isset($value['pattern']))
 			{
-				throw new \InvalidArgumentException('Array has not the valid format');
+				throw new InvalidArgumentException('Array has not the valid format');
 			}
 		}
 	}
@@ -112,7 +114,7 @@ class RouteWrapper extends BaseSingleton implements IOutputWrapper
 		$uri = $_SERVER['REQUEST_URI'];
 
 		// Generic Dispatcher for XMLNuke
-		$dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
+		$dispatcher = \FastRoute\simpleDispatcher(function(RouteCollector $r) {
 
 			foreach ($this->getDefaultMethods() as $route)
 			{
@@ -128,17 +130,17 @@ class RouteWrapper extends BaseSingleton implements IOutputWrapper
 
 		switch ($routeInfo[0])
 		{
-			case FastRoute\Dispatcher::NOT_FOUND:
+			case Dispatcher::NOT_FOUND:
 
 				// ... 404 Not Found
 				return self::NOT_FOUND;
 
-			case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
+			case Dispatcher::METHOD_NOT_ALLOWED:
 
 				// ... 405 Method Not Allowed
 				return self::METHOD_NOT_ALLOWED;
 
-			case FastRoute\Dispatcher::FOUND:
+			case Dispatcher::FOUND:
 
 				// ... 200 Process:
 				$handler = $routeInfo[1];
