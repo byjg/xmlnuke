@@ -155,6 +155,7 @@ class CreatePhp5Project
 				CreatePhp5Project::writeTemplate( $aux, "$HOME/data/anydataset/_configemail.anydata.xml", array('/__PROJECT__/', '/__PROJECT_FILE__/'), array($PROJECT, $PROJECT_FILE ) );
 
 				# Config
+				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/route.php.template", "$HTTPDOCS/route.php", array(), array());
 				CreatePhp5Project::writeTemplate( "$TEMPLATE/project/config.php.template", "$HTTPDOCS/config.inc.php",
 					array('/__DATADIR__/', '/__PHPDIR__/', '/__PROJECT_DATA__/', '/__PROJECT_LIB__/', '/__DATE__/', '/__LANGS__/'),
 					array($DATADIR, $PHPDIR, "$HOME/data", "$HOME/lib", date('c'), $LANGUAGESAVAILABLE )
