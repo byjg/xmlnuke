@@ -41,10 +41,10 @@ define("SESSION_XMLNUKE_AUTHUSERID", "SESSION_XMLNUKE_AUTHUSERID");
 define("SESSION_XMLNUKE_USERCONTEXT", "SESSION_XMLNUKE_USERCONTEXT");
 
 // Activate AutoLoad
-if (!is_readable(PHPXMLNUKEDIR . "src/Xmlnuke/Core/Engine/Autoload"))
+if (!is_readable(PHPXMLNUKEDIR . "src/Xmlnuke/Core/Engine/Autoload.php"))
 	die("<b>Fatal error:</b> Bad Xmlnuke configuration. Check your constant 'PHPXMLNUKEDIR'");
 
-require_once PHPXMLNUKEDIR . "src/Xmlnuke/Core/Engine/Autoload";
+require_once PHPXMLNUKEDIR . "src/Xmlnuke/Core/Engine/Autoload.php";
 $autoload = AutoLoad::getInstance();
 
 if (file_exists(PHPXMLNUKEDIR . 'src/vendor/autoload.php'))

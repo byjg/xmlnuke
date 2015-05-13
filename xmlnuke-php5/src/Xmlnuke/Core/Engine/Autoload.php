@@ -33,8 +33,8 @@
 namespace Xmlnuke\Core\Engine;
 
 // It is necessary this include, because autoload was not initiated :(
-require_once(PHPXMLNUKEDIR . 'src/Xmlnuke/Core/Classes/BaseSingleton');
-require_once(PHPXMLNUKEDIR . 'src/Xmlnuke/Util/FileUtil');
+require_once(PHPXMLNUKEDIR . 'src/Xmlnuke/Core/Classes/BaseSingleton.php');
+require_once(PHPXMLNUKEDIR . 'src/Xmlnuke/Util/FileUtil.php');
 
 class AutoLoad extends \Xmlnuke\Core\Classes\BaseSingleton
 {
