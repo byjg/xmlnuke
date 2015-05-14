@@ -147,6 +147,7 @@ class RouteWrapper extends BaseSingleton implements IOutputWrapper
 				$vars = $routeInfo[2];
 
 				// Check Alias
+				$moduleAlias = $this->getModuleAlias();
 				if (isset($moduleAlias[$vars['module']]))
 				{
 					$vars['module'] = $moduleAlias[$vars['module']];
