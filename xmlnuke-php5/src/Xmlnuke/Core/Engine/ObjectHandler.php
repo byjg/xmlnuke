@@ -97,8 +97,15 @@ class ObjectHandler
 	 */
 	public function __construct($current, $model, $config = "xmlnuke", $forcePropName = "", $parentArray = false)
 	{
+		// Setup
+		$this->_current = $current;
+		$this->_config = $config;
+		$this->_forcePropName = $forcePropName;
+
+		// Define the parentArray
 		$this->_parentArray = $parentArray;
 
+		// Check the proper treatment
 		if (is_array($model))
 		{
 			$this->_model = (object) $model;
@@ -128,10 +135,6 @@ class ObjectHandler
 		{
 			throw new InvalidArgumentException('The model is not an object or an array');
 		}
-
-		$this->_current = $current;
-		$this->_config = $config;
-		$this->_forcePropName = $forcePropName;
 	}
 
 
@@ -395,9 +398,15 @@ class ObjectHandler
 						return !(is_object($val) || is_array($val));
 					}));
 
+					$lazyCreate = false;
+
 					if ($propMeta[ObjectHandler::PropDontCreateNode] || (!$isAssoc && $hasScalar))
 					{
 						$nodeUsed = $node;
+					}
+					else if ((!$isAssoc && !$hasScalar))
+					{
+						$lazyCreate = true;    // Have to create the node every iteration
 					}
 					else
 					{
@@ -417,6 +426,15 @@ class ObjectHandler
 							$obj = new \stdClass;
 							$obj->{(is_string($keyAr) ? $keyAr : $propMeta[ObjectHandler::PropName])} = $valAr;
 							$this->_currentArray = false;
+						}
+						else if ($lazyCreate)
+						{
+							if ($used == null && is_object($valAr)) // If the child is an object there is no need to create every time the node.
+							{
+								$lazyCreate = false;
+							}
+							$nodeUsed = $used = XmlUtil::CreateChild($node, $propMeta[ObjectHandler::PropName]);
+							$obj = $valAr;
 						}
 						else
 						{
