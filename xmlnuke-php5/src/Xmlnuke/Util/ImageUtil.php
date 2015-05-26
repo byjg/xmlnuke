@@ -27,8 +27,8 @@ class ImageUtil
 	private $org_image;
 
 	/**
-	 *
-	 * @param string $image_file
+	 * Construct an Image Handler based on an image resource or file name
+	 * @param string|resource $image_file The path or URL to image or the image resource.
 	 * @return ImageUtil
 	 */
 	function __construct($image_file)
@@ -37,50 +37,67 @@ class ImageUtil
 		
 		if (! function_exists ( 'imagecreatefrompng' ))
 			throw new PHPException("GD module is not installed");
-		
-		if (strpos($image_file, "http://") !== false)
+
+		if (!is_string($image_file))
 		{
-			$extern = true;
-			$url = $image_file;
-			$image_file = basename($url);
-			$info = pathinfo($image_file);
-			$image_file = tempnam(sys_get_temp_dir(), "img_") . "." . $info['extension'];
-			
-			$handle = fopen($image_file, "w");
-			try
+			if (get_resource_type($image_file) == 'gd')
 			{
-				$x = file_get_contents($url);
-				fwrite($handle, $x);
+				$image = $image_file;
+				$this->file_name = null;
+				$img = array( 'mime' => 'image/png' );
 			}
-			catch (Exception $ex)
+			else
 			{
+				$image = null;
 			}
-			fclose($handle);
 		}
-		
-		if (!file_exists ( $image_file ) || !is_readable ( $image_file ))
-			throw new NotFoundException("File is not found or not is readable. Cannot continue.");
-
-		$this->file_name = $image_file;
-		$img = getimagesize ( $image_file );
-		$image = null;
-
-		//Create the image depending on what kind of file it is.
-		switch ($img ['mime'])
+		else
 		{
-			case 'image/png' :
-				$image = imagecreatefrompng ( $image_file );
-				break;
-			case 'image/jpeg' :
-				$image = imagecreatefromjpeg ( $image_file );
-				break;
-			case 'image/gif' :
-				$old_id = imagecreatefromgif ( $image_file );
-				$image = imagecreatetruecolor ( $img [0], $img [1] );
-				imagecopy ( $image, $old_id, 0, 0, 0, 0, $img [0], $img [1] );
-				break;
-			default :
-				break;
+
+			if (strpos($image_file, "http://") !== false)
+			{
+				$extern = true;
+				$url = $image_file;
+				$image_file = basename($url);
+				$info = pathinfo($image_file);
+				$image_file = tempnam(sys_get_temp_dir(), "img_") . "." . $info['extension'];
+
+				$handle = fopen($image_file, "w");
+				try
+				{
+					$x = file_get_contents($url);
+					fwrite($handle, $x);
+				}
+				catch (Exception $ex)
+				{
+				}
+				fclose($handle);
+			}
+
+			if (!file_exists ( $image_file ) || !is_readable ( $image_file ))
+				throw new NotFoundException("File is not found or not is readable. Cannot continue.");
+
+			$this->file_name = $image_file;
+			$img = getimagesize ( $image_file );
+			$image = null;
+
+			//Create the image depending on what kind of file it is.
+			switch ($img ['mime'])
+			{
+				case 'image/png' :
+					$image = imagecreatefrompng ( $image_file );
+					break;
+				case 'image/jpeg' :
+					$image = imagecreatefromjpeg ( $image_file );
+					break;
+				case 'image/gif' :
+					$old_id = imagecreatefromgif ( $image_file );
+					$image = imagecreatetruecolor ( $img [0], $img [1] );
+					imagecopy ( $image, $old_id, 0, 0, 0, 0, $img [0], $img [1] );
+					break;
+				default :
+					break;
+			}
 		}
 
 		if ($image == null)
@@ -89,7 +106,10 @@ class ImageUtil
 		$this->info = $img;
 		$this->width = imagesx ( $image );
 		$this->height = imagesy ( $image );
-		$this->image = $this->org_image = $image;
+		$this->image = $image;
+
+		$this->org_image = imagecreatetruecolor($this->width, $this->height);
+	    imagecopy($this->org_image, $this->image, 0, 0, 0, 0, $this->width, $this->height);
 		
 		if ($extern)
 			unlink($image_file);
@@ -297,11 +317,19 @@ class ImageUtil
 	 * @param string $src_image
 	 * @param StampPosition $position
 	 */
-	function stampImage($src_image, $position = 3, $padding = 5)
+	function stampImage($src_image, $position = StampPosition::BottomRight, $padding = 5, $oppacity = 100)
 	{
 		$dst_image = $this->image;
 
-		$imageUtil = new ImageUtil ( $src_image );
+		if ($src_image instanceof ImageUtil)
+		{
+			$imageUtil = $src_image;
+		}
+		else
+		{
+			$imageUtil = new ImageUtil ( $src_image );
+		}
+		
 		$watermark = $imageUtil->getImage ();
 
 		imagealphablending ( $dst_image, true );
@@ -329,31 +357,31 @@ class ImageUtil
 		switch ($position)
 		{
 			case StampPosition::TopRight :
-				imagecopy( $dst_image, $watermark, ($dst_w - $src_w) - $padx, $pady, 0, 0, $src_w, $src_h );
+				imagecopymerge( $dst_image, $watermark, ($dst_w - $src_w) - $padx, $pady, 0, 0, $src_w, $src_h, $oppacity );
 				break;
 			case StampPosition::TopLeft :
-				imagecopy ( $dst_image, $watermark, $padx, $pady, 0, 0, $src_w, $src_h );
+				imagecopymerge ( $dst_image, $watermark, $padx, $pady, 0, 0, $src_w, $src_h, $oppacity );
 				break;
 			case StampPosition::BottomRight :
-				imagecopy ( $dst_image, $watermark, ($dst_w - $src_w) - $padx, ($dst_h - $src_h) - $pady, 0, 0, $src_w, $src_h );
+				imagecopymerge ( $dst_image, $watermark, ($dst_w - $src_w) - $padx, ($dst_h - $src_h) - $pady, 0, 0, $src_w, $src_h, $oppacity );
 				break;
 			case StampPosition::BottomLeft :
-				imagecopy ( $dst_image, $watermark, $padx, ($dst_h - $src_h) - $pady, 0, 0, $src_w, $src_h );
+				imagecopymerge ( $dst_image, $watermark, $padx, ($dst_h - $src_h) - $pady, 0, 0, $src_w, $src_h, $oppacity );
 				break;
 			case StampPosition::Center :
-				imagecopy ( $dst_image, $watermark, (($dst_w / 2) - ($src_w / 2)), (($dst_h / 2) - ($src_h / 2)), 0, 0, $src_w, $src_h );
+				imagecopymerge ( $dst_image, $watermark, (($dst_w / 2) - ($src_w / 2)), (($dst_h / 2) - ($src_h / 2)), 0, 0, $src_w, $src_h, $oppacity );
 				break;
 			case StampPosition::Top :
-				imagecopy ( $dst_image, $watermark, (($dst_w / 2) - ($src_w / 2)), $pady, 0, 0, $src_w, $src_h );
+				imagecopymerge ( $dst_image, $watermark, (($dst_w / 2) - ($src_w / 2)), $pady, 0, 0, $src_w, $src_h, $oppacity );
 				break;
 			case StampPosition::Bottom :
-				imagecopy ( $dst_image, $watermark, (($dst_w / 2) - ($src_w / 2)), ($dst_h - $src_h) - $pady, 0, 0, $src_w, $src_h );
+				imagecopymerge ( $dst_image, $watermark, (($dst_w / 2) - ($src_w / 2)), ($dst_h - $src_h) - $pady, 0, 0, $src_w, $src_h, $oppacity );
 				break;
 			case StampPosition::Left :
-				imagecopy ( $dst_image, $watermark, $padx, (($dst_h / 2) - ($src_h / 2)), 0, 0, $src_w, $src_h );
+				imagecopymerge ( $dst_image, $watermark, $padx, (($dst_h / 2) - ($src_h / 2)), 0, 0, $src_w, $src_h, $oppacity );
 				break;
 			case StampPosition::Right :
-				imagecopy ( $dst_image, $watermark, ($dst_w - $src_w) - $padx, (($dst_h / 2) - ($src_h / 2)), 0, 0, $src_w, $src_h );
+				imagecopymerge ( $dst_image, $watermark, ($dst_w - $src_w) - $padx, (($dst_h / 2) - ($src_h / 2)), 0, 0, $src_w, $src_h, $oppacity );
 				break;
 		}
 
@@ -365,7 +393,7 @@ class ImageUtil
 	function writeText($text, $point, $size, $angle, $font, $maxwidth = 0, $rgbAr = null, $textAlignment = 1)
 	{
 		if(!is_readable($font)) 
-		    throw new ImageUtilException('Error: The server is missing the specified font.') ;
+		    throw new ImageUtilException('Error: The specified font not found') ;
 
 		if (!is_array($rgbAr))
 			$rgbAr = array(0, 0, 0);
@@ -483,6 +511,7 @@ class ImageUtil
 		}
 		if ($destroy)
 			$this->destroy ();
+
 		return false;
 	}
 
@@ -490,7 +519,7 @@ class ImageUtil
 	 * Display the image and then destroy it.
 	 * Example: $img->show();
 	 */
-	function show($destroy = true)
+	function show($destroy = true, $die = true)
 	{
 		if (! $this->image)
 			return false;
@@ -514,6 +543,9 @@ class ImageUtil
 		if ($destroy)
 			$this->destroy ();
 
+		if ($die)
+			exit;
+
 		return $this;
 	}
 
@@ -522,7 +554,9 @@ class ImageUtil
 	 */
 	function restore()
 	{
-		$this->image = $this->org_image;
+		$this->image = imagecreatetruecolor(imagesx($this->org_image), imagesy($this->org_image));
+	    imagecopy($this->image, $this->org_image, 0, 0, 0, 0, imagesx($this->org_image), imagesy($this->org_image));
+		
 		return $this;
 	}
 
