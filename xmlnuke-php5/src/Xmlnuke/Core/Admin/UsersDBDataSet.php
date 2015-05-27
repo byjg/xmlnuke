@@ -237,18 +237,15 @@ class UsersDBDataSet extends UsersBase
 	 * @param array $param
 	 * @return IIterator
 	 */
-	public function getIterator($filter = null, $param = array())
+	public function getIterator(IteratorFilter $filter = null, $param = array())
 	{
 		$sql = "";
 		$param = array();
-		if ($filter instanceof IteratorFilter)
+		if (is_null($filter))
 		{
-			$sql = $filter->getSql($this->getUserTable()->Table, $param);
+			$filter = new IteratorFilter();
 		}
-		else
-		{
-			throw new InvalidArgumentException('Invalid getIterator mode');
-		}
+		$sql = $filter->getSql($this->getUserTable()->Table, $param);
 		return $this->_DB->getIterator($sql, $param);
 	}
 

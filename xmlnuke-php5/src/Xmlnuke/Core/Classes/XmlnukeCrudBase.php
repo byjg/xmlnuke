@@ -180,9 +180,9 @@ abstract class XmlnukeCrudBase extends XmlnukeDocumentObject implements IXmlnuke
 
 		$this->_currentAction = $this->_context->get("acao");
 
-		for($i=0, $fieldsLength = sizeof($this->_fields); $i<$fieldsLength; $i++)
+		foreach ($this->_fields as $i=>$field)
 		{
-			if ($this->_fields[$i]->key)
+			if ($field->key)
 			{
 				$this->_keyIndex[] = $i;
 			}
