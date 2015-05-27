@@ -33,11 +33,11 @@
  */
 namespace Xmlnuke\Core\Formatter;
 
+use ByJG\ImageUtil\ImageUtil;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Processor\ForceFilenameLocation;
 use Xmlnuke\Core\Processor\UploadFilenameProcessor;
 use Xmlnuke\Util\FileUtil;
-use Xmlnuke\Util\ImageUtil;
 
 class CrudFileUploadFormatter implements IEditListFormatter
 {
