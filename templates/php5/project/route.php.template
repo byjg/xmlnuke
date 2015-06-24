@@ -56,7 +56,7 @@ $routeWraper = RouteWrapper::getInstance();
  *
  * You can create your own route pattern by define the methods here
  */
-//$routeWraper->setDefaultMethods(
+//$routeWraper->setDefaultMethods([
 //	[ "method" => ['GET', 'POST'], "pattern" => '/module/{module}/{id:[0-9]+}/{xsl}', "handler" => 'module' ],
 //	[ "method" => ['GET', 'POST'], "pattern" => '/module/{module}/{id:[0-9]+}', "handler" => 'module' ],
 //	[ "method" => ['GET', 'POST'], "pattern" => '/module/{module}/{xsl}', "handler" => 'module' ],
@@ -71,7 +71,7 @@ $routeWraper = RouteWrapper::getInstance();
 //	[ "method" => ['GET', 'POST', 'PUT', 'DELETE'], "pattern" => '/{version}/{module}/{id:[0-9]+}.{output}', "handler" => 'service' ],
 //	[ "method" => ['GET', 'POST', 'PUT', 'DELETE'], "pattern" => '/{version}/{module}/{action}.{output}', "handler" => 'service' ],
 //	[ "method" => ['GET', 'POST', 'PUT', 'DELETE'], "pattern" => '/{version}/{module}.{output}', "handler" => 'service' ]
-//);
+//]);
 
 // --------------------------------------------------------------------------
 // You do not need change from this point

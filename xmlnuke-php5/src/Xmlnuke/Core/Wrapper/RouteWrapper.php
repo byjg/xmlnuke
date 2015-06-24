@@ -44,7 +44,7 @@ class RouteWrapper extends BaseSingleton implements IOutputWrapper
 	const OK = "OK";
 	const METHOD_NOT_ALLOWED = "NOT_ALLOWED";
 	const NOT_FOUND = "NOT FOUND";
-	
+
 	protected $_defaultMethods = [
 			[ "method" => ['GET', 'POST'], "pattern" => '/module/{module}/{id:[0-9]+}/{xsl}', "handler" => 'module' ],
 			[ "method" => ['GET', 'POST'], "pattern" => '/module/{module}/{id:[0-9]+}', "handler" => 'module' ],
@@ -111,7 +111,8 @@ class RouteWrapper extends BaseSingleton implements IOutputWrapper
 	{
 		// Get the URL parameters
 		$httpMethod = $_SERVER['REQUEST_METHOD'];
-		$uri = $_SERVER['REQUEST_URI'];
+		$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+		parse_str(parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY), $queryStr);
 
 		// Generic Dispatcher for XMLNuke
 		$dispatcher = \FastRoute\simpleDispatcher(function(RouteCollector $r) {
@@ -144,7 +145,7 @@ class RouteWrapper extends BaseSingleton implements IOutputWrapper
 
 				// ... 200 Process:
 				$handler = $routeInfo[1];
-				$vars = $routeInfo[2];
+				$vars = array_merge($routeInfo[2], $queryStr);
 
 				// Check Alias
 				$moduleAlias = $this->getModuleAlias();
