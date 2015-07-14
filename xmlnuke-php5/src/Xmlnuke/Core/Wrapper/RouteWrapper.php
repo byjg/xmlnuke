@@ -39,8 +39,10 @@ use FastRoute\RouteCollector;
 use InvalidArgumentException;
 use Xmlnuke\Core\Classes\BaseSingleton;
 
-class RouteWrapper extends BaseSingleton implements IOutputWrapper
+class RouteWrapper implements IOutputWrapper
 {
+	use \ByJG\DesignPattern\Singleton;
+
 	const OK = "OK";
 	const METHOD_NOT_ALLOWED = "NOT_ALLOWED";
 	const NOT_FOUND = "NOT FOUND";

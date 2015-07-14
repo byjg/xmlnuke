@@ -40,9 +40,10 @@ use Whoops\Run;
 use Xmlnuke\Core\Classes\BaseSingleton;
 use Xmlnuke\Core\Enum\OutputData;
 
-class ErrorHandler extends BaseSingleton
+class ErrorHandler 
 {
-
+	use \ByJG\DesignPattern\Singleton;
+	
 	/**
 	 *
 	 * @var Run

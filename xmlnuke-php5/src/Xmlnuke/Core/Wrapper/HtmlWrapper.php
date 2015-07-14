@@ -34,7 +34,7 @@
 namespace Xmlnuke\Core\Wrapper;
 
 use Detection\MobileDetect;
-use Xmlnuke\Core\Classes\BaseSingleton;
+use Negotiation\FormatNegotiator;
 use Xmlnuke\Core\Classes\XmlnukeManageUrl;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Engine\ModuleFactory;
@@ -44,8 +44,10 @@ use Xmlnuke\Core\Exception\ModuleNotFoundException;
 use Xmlnuke\Core\Exception\NotAuthenticatedException;
 use Xmlnuke\Core\Processor\BaseProcessResult;
 
-class HtmlWrapper extends BaseSingleton implements IOutputWrapper
+class HtmlWrapper implements IOutputWrapper
 {
+	use \ByJG\DesignPattern\Singleton;
+
 	public function Process()
 	{
 
@@ -163,7 +165,7 @@ class HtmlWrapper extends BaseSingleton implements IOutputWrapper
 			}
 			else
 			{
-				$negContentType = new \Negotiation\FormatNegotiator();
+				$negContentType = new FormatNegotiator();
 				$bestContent = $negContentType->getBest($_SERVER['HTTP_ACCEPT'], $contentType["content-type"]);
 				if (!is_null($bestContent))
 				{

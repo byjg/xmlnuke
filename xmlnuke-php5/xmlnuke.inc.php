@@ -57,13 +57,7 @@ if (!class_exists('config') && !file_exists("config.inc.php"))
 require_once("config.inc.php");
 if (!class_exists('config')) { header("Location: check_install.php"); exit(); }
 
-// Activate AutoLoad
-if (!is_readable(PHPXMLNUKEDIR . "src/Xmlnuke/Core/Engine/Autoload.php"))
-	die("<b>Fatal error:</b> Bad Xmlnuke configuration. Check your constant 'PHPXMLNUKEDIR'");
-
-require_once PHPXMLNUKEDIR . "src/Xmlnuke/Core/Engine/Autoload.php";
-$autoload = AutoLoad::getInstance();
-
+// Composer Autoload
 if (file_exists(PHPXMLNUKEDIR . 'src/vendor/autoload.php'))
 {
 	require(PHPXMLNUKEDIR . 'src/vendor/autoload.php');
@@ -72,6 +66,13 @@ if (file_exists(PHPXMLNUKEDIR . '../../../autoload.php'))
 {
 	require(PHPXMLNUKEDIR . '../../../autoload.php');
 }
+
+// XMLNuke autoload
+if (!is_readable(PHPXMLNUKEDIR . "src/Xmlnuke/Core/Engine/AutoLoad.php"))
+	die("<b>Fatal error:</b> Bad Xmlnuke configuration. Check your constant 'PHPXMLNUKEDIR'");
+
+$autoload = AutoLoad::getInstance();
+
 
 // Error Handler
 ErrorHandler::getInstance()->register();

@@ -32,12 +32,10 @@
  */
 namespace Xmlnuke\Core\Engine;
 
-// It is necessary this include, because autoload was not initiated :(
-require_once(PHPXMLNUKEDIR . 'src/Xmlnuke/Core/Classes/BaseSingleton.php');
-require_once(PHPXMLNUKEDIR . 'src/Xmlnuke/Util/FileUtil.php');
-
-class AutoLoad extends \Xmlnuke\Core\Classes\BaseSingleton
+class AutoLoad 
 {
+	use \ByJG\DesignPattern\Singleton;
+
 	const FRAMEWORK_XMLNUKE = 'FRAMEWORK_XMLNUKE';
 	const USER_PROJECTS = 'USER_PROJECTS';
 	

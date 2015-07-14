@@ -31,8 +31,6 @@
 namespace Xmlnuke\Core\Cache;
 
 use InvalidArgumentException;
-use Whoops\Example\Exception;
-use Xmlnuke\Core\Classes\BaseSingleton;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Util\LogWrapper;
 
@@ -51,8 +49,10 @@ use Xmlnuke\Util\LogWrapper;
  *
  *
  */
-class ShmopCacheEngine extends BaseSingleton implements ICacheEngine
+class ShmopCacheEngine implements ICacheEngine
 {
+	use \ByJG\DesignPattern\Singleton;
+
 	const DEFAULT_PERMISSION = "0700";
 	const MAX_SIZE = 524288;
 
