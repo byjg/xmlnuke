@@ -17,8 +17,26 @@ use Xmlnuke\Core\Engine\AutoLoad;
 use Xmlnuke\Core\Engine\ErrorHandler;
 
 ob_start();
+
+// Start Session Safely
+$sn = session_name();
+if (isset($_COOKIE[$sn]))
+{
+	$sessid = $_COOKIE[$sn];
+}
+else if (isset($_GET[$sn]))
+{
+	$sessid = $_GET[$sn];
+}
+if (isset($sessid) && !preg_match('/^[a-zA-Z0-9,\-]{22,40}$/', $sessid))
+{
+	header("HTTP/1.0 403 Session Forbidden");
+	http_response_code(403);
+	die('<h1>Session Forbidden</h1>');
+}
 session_start();
 
+// Set header
 set_include_path(get_include_path() . PATH_SEPARATOR . '.');
 // Solve problem Page Expired when Back button was selected
 header("Expires: Sat, 01 Jan 2000 00:00:00 GMT");
@@ -39,13 +57,7 @@ if (!class_exists('config') && !file_exists("config.inc.php"))
 require_once("config.inc.php");
 if (!class_exists('config')) { header("Location: check_install.php"); exit(); }
 
-// Activate AutoLoad
-if (!is_readable(PHPXMLNUKEDIR . "src/Xmlnuke/Core/Engine/Autoload.class.php"))
-	die("<b>Fatal error:</b> Bad Xmlnuke configuration. Check your constant 'PHPXMLNUKEDIR'");
-
-require_once PHPXMLNUKEDIR . "src/Xmlnuke/Core/Engine/Autoload.class.php";
-$autoload = AutoLoad::getInstance();
-
+// Composer Autoload
 if (file_exists(PHPXMLNUKEDIR . 'src/vendor/autoload.php'))
 {
 	require(PHPXMLNUKEDIR . 'src/vendor/autoload.php');
@@ -54,6 +66,13 @@ if (file_exists(PHPXMLNUKEDIR . '../../../autoload.php'))
 {
 	require(PHPXMLNUKEDIR . '../../../autoload.php');
 }
+
+// XMLNuke autoload
+if (!is_readable(PHPXMLNUKEDIR . "src/Xmlnuke/Core/Engine/AutoLoad.php"))
+	die("<b>Fatal error:</b> Bad Xmlnuke configuration. Check your constant 'PHPXMLNUKEDIR'");
+
+$autoload = AutoLoad::getInstance();
+
 
 // Error Handler
 ErrorHandler::getInstance()->register();

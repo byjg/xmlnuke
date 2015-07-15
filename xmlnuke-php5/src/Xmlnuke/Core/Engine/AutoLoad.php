@@ -32,12 +32,10 @@
  */
 namespace Xmlnuke\Core\Engine;
 
-// It is necessary this include, because autoload was not initiated :(
-require_once(PHPXMLNUKEDIR . 'src/Xmlnuke/Core/Classes/BaseSingleton.class.php');
-require_once(PHPXMLNUKEDIR . 'src/Xmlnuke/Util/FileUtil.class.php');
-
-class AutoLoad extends \Xmlnuke\Core\Classes\BaseSingleton
+class AutoLoad 
 {
+	use \ByJG\DesignPattern\Singleton;
+
 	const FRAMEWORK_XMLNUKE = 'FRAMEWORK_XMLNUKE';
 	const USER_PROJECTS = 'USER_PROJECTS';
 	
@@ -81,11 +79,11 @@ class AutoLoad extends \Xmlnuke\Core\Classes\BaseSingleton
 			// convert namespace to full file path
 			$class = PHPXMLNUKEDIR . $prefix . str_replace('\\', '/', $className);
 			$class = (
-				file_exists("$class.class.php")
-					? "$class.class.php"
+				file_exists("$class.php")
+					? "$class.php"
 				    : (
-						file_exists("$class.php")
-							? "$class.php"
+						file_exists("$class.class.php")
+							? "$class.class.php"
 							: null
 						)
 					);
@@ -108,11 +106,11 @@ class AutoLoad extends \Xmlnuke\Core\Classes\BaseSingleton
 		{
 			$file = $libDir . '/' . $class;
 			$file = (
-						file_exists("$file.class.php")
-							? "$file.class.php"
+						file_exists("$file.php")
+							? "$file.php"
 							: (
-								file_exists("$file.php")
-									? "$file.php"
+								file_exists("$file.class.php")
+									? "$file.class.php"
 									: null
 								)
 					);

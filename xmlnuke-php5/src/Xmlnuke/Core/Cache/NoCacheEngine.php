@@ -27,18 +27,15 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
-
 namespace Xmlnuke\Core\Cache;
 
-use Xmlnuke\Core\Classes\BaseSingleton;
-use Xmlnuke\Core\Engine\Context;
-
-
-class  NoCacheEngine extends BaseSingleton implements ICacheEngine
+class  NoCacheEngine implements ICacheEngine
 {
+	use \ByJG\DesignPattern\Singleton;
+	
 	protected function __construct()
 	{
-		$this->_context = Context::getInstance();
+
 	}
 
 	/**

@@ -34,15 +34,16 @@ use InvalidArgumentException;
 use Memcached;
 use Xmlnuke\Core\AnyDataset\AnyDataSet;
 use Xmlnuke\Core\AnyDataset\IteratorFilter;
-use Xmlnuke\Core\Classes\BaseSingleton;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\Relation;
 use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
 use Xmlnuke\Util\LogWrapper;
 
 
-class  MemcachedEngine extends BaseSingleton implements ICacheEngine
+class  MemcachedEngine implements ICacheEngine
 {
+	use \ByJG\DesignPattern\Singleton;
+	
 	/**
 	 *
 	 * @var Context

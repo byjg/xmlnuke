@@ -34,12 +34,13 @@
 namespace Xmlnuke\Core\Wrapper;
 
 use InvalidArgumentException;
-use Services_Webservice;
-use Xmlnuke\Core\Classes\BaseSingleton;
+use ReflectionClass;
 use Xmlnuke\Core\Engine\Context;
 
-class SOAPWrapper extends BaseSingleton implements IOutputWrapper
+class SOAPWrapper implements IOutputWrapper
 {
+	use \ByJG\DesignPattern\Singleton;
+
 	public function Process()
 	{
 
@@ -62,7 +63,7 @@ class SOAPWrapper extends BaseSingleton implements IOutputWrapper
 
 		$className = '\\' . str_replace('.', '\\', $name);
 
-		$rClass = new \ReflectionClass($className);
+		$rClass = new ReflectionClass($className);
 		$class = $rClass->newInstance();
 
 		if ($class instanceof \Services_Webservice)

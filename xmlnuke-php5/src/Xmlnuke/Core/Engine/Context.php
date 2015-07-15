@@ -34,17 +34,17 @@
 namespace Xmlnuke\Core\Engine;
 
 use InvalidArgumentException;
+use Negotiation\LanguageNegotiator;
 use UnexpectedValueException;
 use Xmlnuke\Core\Admin\IUsersBase;
 use Xmlnuke\Core\Admin\UsersAnyDataSet;
 use Xmlnuke\Core\Admin\UsersDBDataSet;
 use Xmlnuke\Core\AnyDataset\AnyDataSet;
 use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use Xmlnuke\Core\Cache\ICacheEngine;
 use Xmlnuke\Core\Cache\NoCacheEngine;
-use Xmlnuke\Core\Classes\BaseSingleton;
 use Xmlnuke\Core\Enum\OutputData;
 use Xmlnuke\Core\Enum\Relation;
-use Xmlnuke\Core\Exception\NotImplementedException;
 use Xmlnuke\Core\Exception\UploadUtilException;
 use Xmlnuke\Core\Locale\CultureInfo;
 use Xmlnuke\Core\Locale\LocaleFactory;
@@ -57,8 +57,12 @@ use Xmlnuke\Util\Debug;
 use Xmlnuke\Util\FileUtil;
 use Xmlnuke\XmlFS\XmlnukeDB;
 
-class Context extends BaseSingleton
+class Context 
 {
+	use \ByJG\DesignPattern\Singleton {
+		getInstance as traitGetInstance;
+	}
+
 	/**
 	* @access private
 	* @var string
@@ -161,7 +165,7 @@ class Context extends BaseSingleton
 	 */
 	public static function getInstance()
 	{
-		$context = parent::getInstance();
+		$context = self::traitGetInstance();
 
 		//while ($context->_status == 1)   # Semaphore --> 1 Setup not finished yet. Wait for it.
 		//	sleep(1);
@@ -249,7 +253,7 @@ class Context extends BaseSingleton
 
 	/**
 	 *
-	 * @return \Xmlnuke\Core\Cache\ICacheEngine
+	 * @return ICacheEngine
 	 */
 	public function getXSLCacheEngine()
 	{
@@ -439,7 +443,7 @@ class Context extends BaseSingleton
 		}
 
 		// Language Negotiator
-		$langNeg = new \Negotiation\LanguageNegotiator();
+		$langNeg = new LanguageNegotiator();
 		$langAccepted = $langNeg->getBest(isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : "en-us", $checkLang);
 		if (is_null($langAccepted))
 		{

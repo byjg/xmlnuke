@@ -768,7 +768,17 @@ class XmlUtil
 
 		array_walk($array, "Xmlnuke\Util\XmlUtil::mapArray");
 
-		return $jsonFunction . $pre . json_encode($array) . $pos;
+		// Check an special case from Xml
+		if (isset($array[\Xmlnuke\Core\Engine\ObjectHandler::ObjectArray]))
+		{
+			$json = json_encode($array[\Xmlnuke\Core\Engine\ObjectHandler::ObjectArray]);
+		}
+		else
+		{
+			$json = json_encode($array);
+		}
+
+		return $jsonFunction . $pre . $json . $pos;
 	}
 
 	/**

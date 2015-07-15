@@ -32,14 +32,13 @@
  */
 namespace Xmlnuke\Core\Engine;
 
-use DOMNode;
 use Exception;
+use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionProperty;
 use stdClass;
 use Xmlnuke\Core\AnyDataset\IIterator;
-use Xmlnuke\Core\Classes\BaseSingleton;
-use Xmlnuke\Core\Classes\XmlnukeCollection;
+use Xmlnuke\Core\Locale\LanguageCollection;
 use Xmlnuke\Util\XmlUtil;
 
 
@@ -71,6 +70,9 @@ class ObjectHandler
 	const PropForceName = "PropForceName";
 	const PropValue = 'PropValue';
 
+	const ObjectArray_IgnoreNode = '__object__ignore';
+	const ObjectArray = '__object';
+
 	protected $_model = null;
 
 	protected $_config = "xmlnuke";
@@ -81,39 +83,58 @@ class ObjectHandler
 
 	protected $_node = null;
 
+	protected $_parentArray = false;
+
+	protected $_currentArray = false;
+
 	/**
 	 *
 	 * @param \DOMNode $current Current Dom Node
 	 * @param mixed $model Array or instance of object model
 	 * @param string $config The name of comment inspector
 	 * @param string $forcePropName force a name
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
-	public function __construct($current, $model, $config = "xmlnuke", $forcePropName = "")
+	public function __construct($current, $model, $config = "xmlnuke", $forcePropName = "", $parentArray = false)
 	{
-		if (is_array($model))
-			$this->_model = (object) $model;
-		else if (is_object($model))
-			$this->_model = $model;
-		else
-			throw new \InvalidArgumentException('The model is not an object or an array');
-
-		// Fix First Level non-associative arrays
-		if (is_array($model) && count(get_object_vars($this->_model)) == 0)
-		{
-			foreach ($model as $value)
-			{
-				if (!is_object($value) && !is_array($value))
-					$this->_model->scalar[] = $value;
-				else
-					$this->_model->__object[] = $value; // __object is a special name and it is not rendered
-			}
-		}
-
-
+		// Setup
 		$this->_current = $current;
 		$this->_config = $config;
 		$this->_forcePropName = $forcePropName;
+
+		// Define the parentArray
+		$this->_parentArray = $parentArray;
+
+		// Check the proper treatment
+		if (is_array($model))
+		{
+			$this->_model = (object) $model;
+			$this->_currentArray = true;
+
+			// Fix First Level non-associative arrays
+			if (count(get_object_vars($this->_model)) == 0)
+			{
+				foreach ($model as $value)
+				{
+					if (!is_object($value) && !is_array($value))
+					{
+						$this->_model->scalar[] = $value;
+					}
+					else
+					{
+						$this->_model->{ObjectHandler::ObjectArray_IgnoreNode}[] = $value; // __object__ignore is a special name and it is not rendered
+					}
+				}
+			}
+		}
+		else if (is_object($model))
+		{
+			$this->_model = $model;
+		}
+		else
+		{
+			throw new InvalidArgumentException('The model is not an object or an array');
+		}
 	}
 
 
@@ -131,7 +152,7 @@ class ObjectHandler
 			}
 			return $this->_current;
 		}
-		elseif ($this->_model instanceof \Xmlnuke\Core\Locale\LanguageCollection)
+		elseif ($this->_model instanceof LanguageCollection)
 		{
 			$keys = $this->_model->getCollection();
 			$l10n = XmlUtil::CreateChild($this->_current, "l10n");
@@ -146,7 +167,9 @@ class ObjectHandler
 		$classMeta = $this->getClassInfo();
 
 		if ($classMeta[ObjectHandler::ClassIgnoreAllClass])
+		{
 			return $this->_current;
+		}
 
 
 		# Get the node names of this Class
@@ -156,9 +179,13 @@ class ObjectHandler
 		#------------
 		# Get all properties
 		if ($this->_model instanceof stdClass)
+		{
 			$properties = get_object_vars ($this->_model);
+		}
 		else
+		{
 			$properties = $classMeta[ObjectHandler::ClassRefl]->getProperties( ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PRIVATE | ReflectionProperty::IS_PUBLIC );
+		}
 
 		$this->createPropertyNodes($node, $properties, $classMeta);
 
@@ -227,7 +254,9 @@ class ObjectHandler
 
 		# Does nothing here
 		if ($propName == "_propertyPattern")
+		{
 			return null;
+		}
 
 		# Determine where it located the Property Value --> Getter or inside the property
 		if (!($prop instanceof ReflectionProperty) || $prop->isPublic())
@@ -240,7 +269,9 @@ class ObjectHandler
 		{
 			// Remove Prefix "_" from Property Name to find a value
 			if ($propName[0] == "_")
+			{
 				$propName = substr($propName, 1);
+			}
 
 			$methodName = $classMeta[ObjectHandler::ClassGetter] . ucfirst(preg_replace($classMeta[ObjectHandler::ClassPropertyPattern][0], $classMeta[ObjectHandler::ClassPropertyPattern][1], $propName));
 			if ($classMeta[ObjectHandler::ClassRefl]->hasMethod($methodName))
@@ -251,7 +282,9 @@ class ObjectHandler
 				$propMeta[ObjectHandler::PropValue] = $method->invoke($this->_model, "");
 			}
 			else
+			{
 				return null;
+			}
 		}
 
 
@@ -259,11 +292,11 @@ class ObjectHandler
 		$propMeta[ObjectHandler::PropName] = isset($propAttributes["$this->_config:nodename"]) ? $propAttributes["$this->_config:nodename"] : $propName;
 		$propMeta[ObjectHandler::PropDontCreateNode] = array_key_exists("$this->_config:dontcreatenode", $propAttributes);
 		$propMeta[ObjectHandler::PropForceName] = isset($propAttributes["$this->_config:dontcreatenode"]) ? $propAttributes["$this->_config:dontcreatenode"] : "";
-		if (strpos($propMeta[ObjectHandler::PropName], ":") === false) 
+		if (strpos($propMeta[ObjectHandler::PropName], ":") === false)
 		{
 			$propMeta[ObjectHandler::PropName] = $classMeta[ObjectHandler::ClassDefaultPrefix] . $propMeta[ObjectHandler::PropName];
 		} 
-		if ($propMeta[ObjectHandler::PropName] == '__object')
+		if ($propMeta[ObjectHandler::PropName] == ObjectHandler::ObjectArray_IgnoreNode)
 		{
 			$propMeta[ObjectHandler::PropDontCreateNode] = true;
 		}
@@ -294,12 +327,20 @@ class ObjectHandler
 
 		#------------
 		# Create Class Node
-		if ($classMeta[ObjectHandler::ClassDontCreateClassNode] || $this->_model instanceof stdClass)
+		if ($this->_model instanceof stdClass && $this->_parentArray)
+		{
+			$node = XmlUtil::CreateChild($this->_current, ObjectHandler::ObjectArray);
+		}
+		else if ($classMeta[ObjectHandler::ClassDontCreateClassNode] || $this->_model instanceof stdClass)
+		{
 			$node = $this->_current;
+		}
 		else
 		{
 			if (!$classMeta[ObjectHandler::ClassIsRDF])
+			{
 				$node = XmlUtil::CreateChild($this->_current, $classMeta[ObjectHandler::ClassName]);
+			}
 			else
 			{
 				XmlUtil::AddNamespaceToDocument($this->_current, "rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
@@ -322,7 +363,10 @@ class ObjectHandler
 				# Define Properties
 				$propMeta = $this->getPropInfo($classMeta, $prop, $keyProp);
 
-				if ($propMeta[ObjectHandler::PropIgnore]) continue;
+				if ($propMeta[ObjectHandler::PropIgnore])
+				{
+					continue;
+				}
 
 				# Process the Property Value
 				$used = null;
@@ -332,9 +376,13 @@ class ObjectHandler
 				if (is_object($propMeta[ObjectHandler::PropValue]))
 				{
 					if ($propMeta[ObjectHandler::PropDontCreateNode])
+					{
 						$nodeUsed = $node;
+					}
 					else
+					{
 						$nodeUsed = XmlUtil::CreateChild($node, $propMeta[ObjectHandler::PropName]);
+					}
 
 					$objHandler = new ObjectHandler($nodeUsed, $propMeta[ObjectHandler::PropValue], $this->_config, $propMeta[ObjectHandler::PropForceName]);
 					$used = $objHandler->CreateObjectFromModel();
@@ -350,8 +398,16 @@ class ObjectHandler
 						return !(is_object($val) || is_array($val));
 					}));
 
+					$lazyCreate = false;
+
 					if ($propMeta[ObjectHandler::PropDontCreateNode] || (!$isAssoc && $hasScalar))
+					{
 						$nodeUsed = $node;
+					}
+					else if ((!$isAssoc && !$hasScalar))
+					{
+						$lazyCreate = true;    // Have to create the node every iteration
+					}
 					else
 					{
 						$nodeUsed = $used = XmlUtil::CreateChild($node, $propMeta[ObjectHandler::PropName]);
@@ -369,13 +425,23 @@ class ObjectHandler
 						{
 							$obj = new \stdClass;
 							$obj->{(is_string($keyAr) ? $keyAr : $propMeta[ObjectHandler::PropName])} = $valAr;
+							$this->_currentArray = false;
+						}
+						else if ($lazyCreate)
+						{
+							if ($used == null && is_object($valAr)) // If the child is an object there is no need to create every time the node.
+							{
+								$lazyCreate = false;
+							}
+							$nodeUsed = $used = XmlUtil::CreateChild($node, $propMeta[ObjectHandler::PropName]);
+							$obj = $valAr;
 						}
 						else
 						{
 							$obj = $valAr;
 						}
 
-						$objHandler = new ObjectHandler($nodeUsed, $obj, $this->_config,  $propMeta[ObjectHandler::PropForceName] );
+						$objHandler = new ObjectHandler($nodeUsed, $obj, $this->_config,  $propMeta[ObjectHandler::PropForceName], $this->_currentArray );
 						$objHandler->CreateObjectFromModel();
 					}
 				}
@@ -484,11 +550,17 @@ class ObjectHandler
 			$value = $arr["value"][$i];
 
 			if (!array_key_exists($key, $result))
+			{
 				$result[$key] = $value;
+			}
 			elseif (is_array($result[$key]))
+			{
 				$result[$key][] = $value;
+			}
 			else
+			{
 				$result[$key] = array($result[$key], $value);
+			}
 		}
 
 		return $result;

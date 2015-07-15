@@ -30,24 +30,16 @@
 
 namespace Xmlnuke\Core\Cache;
 
-use Xmlnuke\Core\Classes\BaseSingleton;
-use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Util\LogWrapper;
 
-
-class  ArrayCacheEngine extends BaseSingleton implements ICacheEngine
+class  ArrayCacheEngine implements ICacheEngine
 {
-	/**
-	 *
-	 * @var Context
-	 */
-	protected $_context = null;
+	use \ByJG\DesignPattern\Singleton;
 
 	protected $_L1Cache = array();
 
 	protected function __construct()
 	{
-		$this->_context = Context::getInstance();
 	}
 
 	/**

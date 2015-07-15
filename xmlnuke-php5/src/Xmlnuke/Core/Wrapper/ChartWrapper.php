@@ -34,12 +34,13 @@
 namespace Xmlnuke\Core\Wrapper;
 
 use Exception;
-use Xmlnuke\Core\Classes\BaseSingleton;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\ChartType;
 
-class ChartWrapper extends BaseSingleton implements IOutputWrapper
+class ChartWrapper implements IOutputWrapper
 {
+	use \ByJG\DesignPattern\Singleton;
+	
 	public function Process()
 	{
 
