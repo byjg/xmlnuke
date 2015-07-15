@@ -40,7 +40,8 @@
 		"byjg/sparqllib": "dev-master",
 		"nikic/fast-route": "dev-master",
 		"byjg/imageutil": "~1.0",
-		"byjg/singleton-pattern": "~1.0"
+		"byjg/singleton-pattern": "~1.0",
+		"byjg/webrequest": "~1.0"
 	},
 	"repositories": [
 		{

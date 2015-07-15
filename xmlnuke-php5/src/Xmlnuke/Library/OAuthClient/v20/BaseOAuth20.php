@@ -19,7 +19,7 @@
 
 namespace OAuthClient\v20;
 
-use Xmlnuke\Util\WebRequest;
+use ByJG\Util\WebRequest;
 
 /**
  * Base OAuth class
@@ -93,7 +93,7 @@ abstract class BaseOAuth20 {/*{{{*/
 	public function get($url, $params = null)
 	{
 		$req = new WebRequest($this->preparedUrl($url));
-		$result = $req->Get($params);
+		$result = $req->get($params);
 		$this->_lastStatusCode = $req->getLastStatus();
 		return $this->validateRequest($result);
 	}
@@ -101,7 +101,7 @@ abstract class BaseOAuth20 {/*{{{*/
 	public function post($url, $params = null)
 	{
 		$req = new WebRequest($this->preparedUrl($url));
-		$result = $req->Post($params);
+		$result = $req->post($params);
 		$this->_lastStatusCode = $req->getLastStatus();
 		return $this->validateRequest($result);
 	}
@@ -109,7 +109,7 @@ abstract class BaseOAuth20 {/*{{{*/
 	public function delete($url, $params = null)
 	{
 		$req = new WebRequest($this->preparedUrl($url));
-		$result = $req->Delete($params);
+		$result = $req->delete($params);
 		$this->_lastStatusCode = $req->getLastStatus();
 		return $this->validateRequest($result);
 	}

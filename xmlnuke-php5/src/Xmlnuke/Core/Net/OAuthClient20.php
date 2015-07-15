@@ -5,6 +5,7 @@
  */
 namespace Xmlnuke\Core\Net;
 
+use ByJG\Util\WebRequest;
 use InvalidArgumentException;
 use OAuthClient\v20\BaseOAuth20;
 use Xmlnuke\Core\AnyDataset\AnyDataSet;
@@ -13,7 +14,6 @@ use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\Relation;
 use Xmlnuke\Core\Exception\NotAuthenticatedException;
 use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
-use Xmlnuke\Util\WebRequest;
 
 class OAuthClient20
 {
@@ -221,7 +221,7 @@ class OAuthClient20
 				}
 				
 				$req = new WebRequest($to->authorizationURL());
-				$req->Redirect($params, $this->_window_top);
+				$req->redirect($params, $this->_window_top);
 			}
 			
 			// Request the Access Token
@@ -236,7 +236,7 @@ class OAuthClient20
 				);
 				
 				$req = new WebRequest($to->accessTokenURL());
-				$result = $req->Post($params);
+				$result = $req->post($params);
 
 				$accessToken = $to->decodeAccessToken($result);
 				
@@ -248,7 +248,7 @@ class OAuthClient20
 				if ($this->_app_uri != "")
 				{
 					$req = new WebRequest($this->_app_uri);
-					$response = $req->Redirect();
+					$response = $req->redirect();
 				}
 			}
 		}
