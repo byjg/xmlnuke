@@ -36,8 +36,8 @@
  */
 namespace Xmlnuke\Core\Locale;
 
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
-use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use ByJG\AnyDataset\Repository\AnyDataset;
+use ByJG\AnyDataset\Repository\IteratorFilter;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\Relation;
 use Xmlnuke\Util\FileUtil;
@@ -65,26 +65,26 @@ class LocaleFactory
 	 *
 	 * @param type $field
 	 * @param type $value
-	 * @return \Xmlnuke\Core\AnyDataset\SingleRow
+	 * @return \ByJG\AnyDataset\Repository\SingleRow
 	 */
 	public static function getInfoLocaleDB($field, $value)
 	{
 		if (self::$_localeData == null)
 		{
 			$file = new \Xmlnuke\Core\Processor\AnydatasetSetupFilenameProcessor('locale');
-			self::$_localeData = new \Xmlnuke\Core\AnyDataset\AnyDataSet($file);
+			self::$_localeData = new \ByJG\AnyDataset\Repository\AnyDataset($file);
 		}
 
 		if (!isset(self::$_localeDbCache[$field]))
 		{
-			$filter = new \Xmlnuke\Core\AnyDataset\IteratorFilter();
+			$filter = new \ByJG\AnyDataset\Repository\IteratorFilter();
 			$filter->addRelation($field, \Xmlnuke\Core\Enum\Relation::Contains, $value);
 			$it = self::$_localeData->getIterator($filter);
 			if ($it->hasNext())
 				self::$_localeDbCache[$field] = $it->moveNext();
 			else
 			{
-				$sr = new \Xmlnuke\Core\AnyDataset\SingleRow();
+				$sr = new \ByJG\AnyDataset\Repository\SingleRow();
 				\Xmlnuke\Core\Engine\Context::getInstance()->WriteWarningMessage("The language $value was not found in locale.anydata.xml file");
 				$sr->AddField('name', $value . ' ???');
 				$sr->AddField('shortname', $value);

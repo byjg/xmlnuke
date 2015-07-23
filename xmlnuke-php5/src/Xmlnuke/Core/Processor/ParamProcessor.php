@@ -34,7 +34,7 @@ use DOMNode;
 use DOMXPath;
 use Exception;
 use Xmlnuke\Core\Engine\Context;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 /**
 *ParamProcessor can process the XSL transform result (or xhtml cache) and replace the [PARAM:...] 

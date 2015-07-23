@@ -29,7 +29,7 @@
 
 namespace Xmlnuke\Core\Formatter;
 
-use Xmlnuke\Core\AnyDataset\SingleRow;
+use ByJG\AnyDataset\Repository\SingleRow;
 
 /**
  * @package xmlnuke

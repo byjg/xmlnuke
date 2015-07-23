@@ -34,7 +34,7 @@
 namespace Xmlnuke\Core\Classes;
 
 use UnexpectedValueException;
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use ByJG\AnyDataset\Repository\AnyDataset;
 use Xmlnuke\Core\Enum\ChartColumnType;
 use Xmlnuke\Core\Enum\ChartType;
 use Xmlnuke\Util\ConvertFromUTF8;
@@ -71,7 +71,7 @@ class ChartObject
 
 	/**
 	 *
-	 * @var AnyDataSet
+	 * @var AnyDataset
 	 */
 	protected $_Serie;
 
@@ -82,7 +82,7 @@ class ChartObject
 		$this->_Height = 600;
 		$this->_Title = $title;
 		$this->_ChartType = ChartType::Column;
-		$this->_Serie = new AnyDataSet();
+		$this->_Serie = new AnyDataset();
 	}
 
 	public function getId()
@@ -244,7 +244,7 @@ class ChartObject
 			{
 				if ($serieCount == null)
 				{
-					$serieCount = count($row->getRawFormat());
+					$serieCount = count($row->toArray());
 					$row->addField("data_$serieCount", "'$name'");
 				}
 				else if (count($data) > 0)

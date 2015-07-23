@@ -36,7 +36,7 @@ use DOMNode;
 use InvalidArgumentException;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\DATEFORMAT;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class  XmlFormCollection extends XmlnukeCollection implements IXmlnukeDocumentObject
 {

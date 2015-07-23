@@ -37,12 +37,12 @@ use InvalidArgumentException;
 use Negotiation\LanguageNegotiator;
 use UnexpectedValueException;
 use Xmlnuke\Core\Admin\IUsersBase;
-use Xmlnuke\Core\Admin\UsersAnyDataSet;
+use Xmlnuke\Core\Admin\UsersAnyDataset;
 use Xmlnuke\Core\Admin\UsersDBDataSet;
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
-use Xmlnuke\Core\AnyDataset\IteratorFilter;
-use Xmlnuke\Core\Cache\ICacheEngine;
-use Xmlnuke\Core\Cache\NoCacheEngine;
+use ByJG\AnyDataset\Repository\AnyDataset;
+use ByJG\AnyDataset\Repository\IteratorFilter;
+use ByJG\Cache\ICacheEngine;
+use ByJG\Cache\NoCacheEngine;
 use Xmlnuke\Core\Enum\OutputData;
 use Xmlnuke\Core\Enum\Relation;
 use Xmlnuke\Core\Exception\UploadUtilException;
@@ -1176,8 +1176,8 @@ class Context
 		//processor.AnydatasetFilenameProcessor
 		$configFile = new AnydatasetFilenameProcessor("customconfig");
 		$phyFile = $this->CurrentSitePath().$configFile->FullQualifiedName();
-		//anydataset.AnyDataSet
-		$config = new AnyDataSet($phyFile);
+		//anydataset.AnyDataset
+		$config = new AnyDataset($phyFile);
 		//anydataset.AnyIterator
 		$it = $config->getIterator();
 		if ($it->hasNext())
@@ -1204,7 +1204,7 @@ class Context
 	{
 		$configFile = new AnydatasetFilenameProcessor("customconfig", $this);
 
-		$config = new AnyDataSet($configFile);
+		$config = new AnyDataset($configFile);
 		$it = $config->getIterator(null);
 		if ($it->hasNext())
 		{
@@ -1393,7 +1393,7 @@ class Context
 			if ($this->get("xmlnuke.CHECKCONTENTTYPE"))
 			{
 				$filename = new AnydatasetFilenameProcessor("contenttype");
-				$anydataset = new AnyDataSet($filename);
+				$anydataset = new AnyDataset($filename);
 				$itf = new IteratorFilter();
 				$itf->addRelation("xsl", Relation::Equal, $this->getXsl());
 				$it = $anydataset->getIterator($itf);
@@ -1405,7 +1405,7 @@ class Context
 				else
 				{
 					$filename = new AnydatasetSetupFilenameProcessor("contenttype");
-					$anydataset = new AnyDataSet($filename);
+					$anydataset = new AnyDataset($filename);
 					$itf = new IteratorFilter();
 					$itf->addRelation("xsl", Relation::Equal, $this->getXsl());
 					$it = $anydataset->getIterator($itf);
@@ -1463,7 +1463,7 @@ class Context
 			}
 			elseif ($conn == "")
 			{
-				$this->__userdb = new UsersAnyDataSet($this);
+				$this->__userdb = new UsersAnyDataset($this);
 			}
 			else
 			{

@@ -31,7 +31,7 @@
 namespace Xmlnuke\Core\Classes;
 
 use DOMNode;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 /**
  * @package xmlnuke

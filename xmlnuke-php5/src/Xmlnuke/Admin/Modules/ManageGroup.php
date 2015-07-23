@@ -37,7 +37,7 @@ use Xmlnuke\Core\Enum\AccessLevel;
 use Xmlnuke\Core\Enum\INPUTTYPE;
 use Xmlnuke\Core\Processor\XMLFilenameProcessor;
 use Xmlnuke\Util\FileUtil;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class ManageGroup extends BaseAdminModule
 {

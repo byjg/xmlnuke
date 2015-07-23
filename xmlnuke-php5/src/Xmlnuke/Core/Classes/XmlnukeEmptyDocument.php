@@ -31,7 +31,7 @@ namespace Xmlnuke\Core\Classes;
 
 use DOMDocument;
 use InvalidArgumentException;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 /**
  * Implements a XMLNuke Document. 

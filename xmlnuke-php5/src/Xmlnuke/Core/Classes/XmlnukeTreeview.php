@@ -50,7 +50,7 @@ namespace Xmlnuke\Core\Classes;
 use DOMNode;
 use InvalidArgumentException;
 use Xmlnuke\Core\Engine\Context;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class  XmlnukeTreeview extends XmlnukeDocumentObject 
 {
@@ -114,7 +114,7 @@ namespace Xmlnuke\Core\Classes;
 use DOMNode;
 use InvalidArgumentException;
 use Xmlnuke\Core\Engine\Context;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 use Xmlnuke\Core\Processor\ParamProcessor;
 
 class  XmlnukeTreeViewLeaf extends XmlnukeDocumentObject
@@ -254,7 +254,7 @@ namespace Xmlnuke\Core\Classes;
 use DOMNode;
 use InvalidArgumentException;
 use Xmlnuke\Core\Engine\Context;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class  XmlnukeTreeViewFolder extends XmlnukeTreeViewLeaf
 {

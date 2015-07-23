@@ -34,7 +34,7 @@
 namespace Xmlnuke\Admin\Modules;
 
 use Xmlnuke\Core\Admin\NewBaseAdminModule;
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use ByJG\AnyDataset\Repository\AnyDataset;
 use Xmlnuke\Core\Classes\XmlBlockCollection;
 use Xmlnuke\Core\Classes\XmlEasyList;
 use Xmlnuke\Core\Classes\XmlFormCollection;
@@ -240,7 +240,7 @@ class CustomConfig extends NewBaseAdminModule
 	{
 		$processor = new AnydatasetFilenameProcessor("_db");
 		$processor->UseFileFromAnyLanguage();
-		$anydata = new AnyDataSet($processor);
+		$anydata = new AnyDataset($processor);
 		$it = $anydata->getIterator();
 		$ret = array();
 		$ret[''] = '-- Default UsersAnydataSet --';

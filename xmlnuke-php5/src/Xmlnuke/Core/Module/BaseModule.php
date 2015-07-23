@@ -34,7 +34,7 @@ use ReflectionClass;
 use ReflectionMethod;
 use ReflectionProperty;
 use Xmlnuke\Core\Admin\IUsersBase;
-use Xmlnuke\Core\Cache\ICacheEngine;
+use ByJG\Cache\ICacheEngine;
 use Xmlnuke\Core\Classes\PageXml;
 use Xmlnuke\Core\Classes\XmlnukeDocument;
 use Xmlnuke\Core\Classes\XmlnukeManageUrl;

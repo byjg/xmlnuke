@@ -30,8 +30,8 @@
 namespace Xmlnuke\Core\Locale;
 
 use Exception;
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
-use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use ByJG\AnyDataset\Repository\AnyDataset;
+use ByJG\AnyDataset\Repository\IteratorFilter;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\Relation;
 use Xmlnuke\Core\Exception\EngineException;
@@ -188,7 +188,7 @@ class LanguageCollection
 			$curLang = strtolower($this->_context->Language()->getName());
 			try 
 			{
-				$lang = new AnyDataSet( $filename );
+				$lang = new AnyDataset( $filename );
 			}
 			catch (Exception $e)
 			{

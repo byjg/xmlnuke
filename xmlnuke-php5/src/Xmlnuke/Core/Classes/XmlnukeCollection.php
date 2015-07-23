@@ -42,7 +42,7 @@ use ReflectionClass;
 use ReflectionProperty;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\XMLTransform;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class XmlnukeCollection
 {

@@ -35,7 +35,7 @@ namespace Xmlnuke\Admin\Modules;
 
 use Exception;
 use Xmlnuke\Core\Admin\NewBaseAdminModule;
-use Xmlnuke\Core\AnyDataset\DBDataSet;
+use ByJG\AnyDataset\Repository\DBDataSet;
 use Xmlnuke\Core\Classes\CrudField;
 use Xmlnuke\Core\Classes\CrudFieldCollection;
 use Xmlnuke\Core\Classes\XmlAnchorCollection;

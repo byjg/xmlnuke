@@ -34,8 +34,8 @@
 namespace Xmlnuke\Core\Admin;
 
 use Exception;
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
-use Xmlnuke\Core\AnyDataset\DBDataSet;
+use ByJG\AnyDataset\Repository\AnyDataset;
+use ByJG\AnyDataset\Repository\DBDataSet;
 use Xmlnuke\Core\Classes\CrudField;
 use Xmlnuke\Core\Classes\CrudFieldCollection;
 use Xmlnuke\Core\Classes\XmlBlockCollection;
@@ -113,7 +113,7 @@ class ManagePoll extends NewBaseAdminModule
 		}
 		else 
 		{
-			$anyconfig = new AnyDataSet($configfile);
+			$anyconfig = new AnyDataset($configfile);
 			$it = $anyconfig->getIterator();
 			if ($it->hasNext())
 			{
@@ -186,7 +186,7 @@ class ManagePoll extends NewBaseAdminModule
 					
 					$block->addXmlnukeObject(new XmlEasyList(EasyListType::UNORDEREDLIST, "", $this->myWords->Value("RESULTSQL"), $results));
 					
-					$anypoll = new AnyDataSet(new AnydatasetFilenameProcessor("_poll"));
+					$anypoll = new AnyDataset(new AnydatasetFilenameProcessor("_poll"));
 					$anypoll->appendRow();
 					$anypoll->addField("dbname", $this->_context->get("type"));
 					$anypoll->addField("tbl_poll", $tblpoll);
@@ -201,7 +201,7 @@ class ManagePoll extends NewBaseAdminModule
 			}
 			else 
 			{
-				$anypoll = new AnyDataSet(new AnydatasetFilenameProcessor("_poll"));
+				$anypoll = new AnyDataset(new AnydatasetFilenameProcessor("_poll"));
 				$anypoll->appendRow();
 				$anypoll->addField("dbname", "-anydata-");
 				$anypoll->Save();
@@ -220,7 +220,7 @@ class ManagePoll extends NewBaseAdminModule
 			$form->addXmlnukeObject(new XmlInputHidden("action", ModuleAction::CreateConfirm));
 			$db = array("-anydata-"=>$this->myWords->Value("NOTUSEDB"));
 			$anydatafile = new AnydatasetFilenameProcessor("_db");
-			$anydata = new AnyDataSet($anydatafile);
+			$anydata = new AnyDataset($anydatafile);
 			$it = $anydata->getIterator();
 			while ($it->hasNext())
 			{

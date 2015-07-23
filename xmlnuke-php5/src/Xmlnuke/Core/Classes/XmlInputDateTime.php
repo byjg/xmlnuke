@@ -38,7 +38,7 @@ use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\DATEFORMAT;
 use Xmlnuke\Core\Enum\INPUTTYPE;
 use Xmlnuke\Util\DateUtil;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class  XmlInputDateTime extends XmlnukeDocumentObject
 {

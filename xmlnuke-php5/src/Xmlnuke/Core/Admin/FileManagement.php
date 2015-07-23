@@ -32,7 +32,7 @@
  */
 namespace Xmlnuke\Core\Admin;
 
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use ByJG\AnyDataset\Repository\AnyDataset;
 use Xmlnuke\Core\Classes\FileBrownserUserType;
 use Xmlnuke\Core\Classes\PageXml;
 use Xmlnuke\Core\Classes\XmlBlockCollection;
@@ -98,7 +98,7 @@ class FileManagement extends NewBaseAdminModule
 		//SET FILEBROWSER ACESS LEVEL
 		$processor = new AnydatasetFilenameProcessor("filemanagement");
 		$processor->setFilenameLocation(ForceFilenameLocation::UseWhereExists );
-		$anyDataSet = new AnyDataSet($processor);
+		$anyDataSet = new AnyDataset($processor);
 
 		$ignoreAdmin = false;
 

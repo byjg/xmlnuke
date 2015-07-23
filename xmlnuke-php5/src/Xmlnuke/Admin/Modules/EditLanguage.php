@@ -34,9 +34,9 @@
 namespace Xmlnuke\Admin\Modules;
 
 use Xmlnuke\Core\Admin\NewBaseAdminModule;
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
-use Xmlnuke\Core\AnyDataset\ArrayDataSet;
-use Xmlnuke\Core\AnyDataset\IIterator;
+use ByJG\AnyDataset\Repository\AnyDataset;
+use ByJG\AnyDataset\Repository\ArrayDataSet;
+use ByJG\AnyDataset\Repository\IIterator;
 use Xmlnuke\Core\Classes\CrudField;
 use Xmlnuke\Core\Classes\CrudFieldCollection;
 use Xmlnuke\Core\Classes\EditListField;
@@ -146,7 +146,7 @@ class EditLanguage extends NewBaseAdminModule
 
 			$langDir = new AnydatasetLangFilenameProcessor($file);
 			$langDir->setFilenameLocation(($op == "" ? ForceFilenameLocation::PrivatePath : ForceFilenameLocation::SharedPath));
-			$anydata = new AnyDataSet($langDir);
+			$anydata = new AnyDataset($langDir);
 
 			$it = $anydata->getIterator();
 			$sr = $it->moveNext();
@@ -198,7 +198,7 @@ class EditLanguage extends NewBaseAdminModule
 			$file = $this->_context->get("newfile");
 			$langDir = new AnydatasetLangFilenameProcessor($file);
 			$langDir->setFilenameLocation(($op == "" ? ForceFilenameLocation::PrivatePath : ForceFilenameLocation::SharedPath));
-			$anydata = new AnyDataSet($langDir);
+			$anydata = new AnyDataset($langDir);
 
 			$fields = explode("\r\n", $this->_context->get("fields"));
 

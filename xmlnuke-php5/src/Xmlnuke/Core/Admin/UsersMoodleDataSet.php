@@ -29,7 +29,7 @@
 
 /**
  * Stores and retrieves user information from a database.
- * @see UsersAnyDataSet
+ * @see UsersAnyDataset
  * @package xmlnuke
  */
 namespace Xmlnuke\Core\Admin;
@@ -65,7 +65,7 @@ class UsersMoodleDataSet extends UsersDBDataSet
 
 	/**
 	 *
-	 * Save the current UsersAnyDataSet
+	 * Save the current UsersAnyDataset
 	 */
 	public function Save()
 	{

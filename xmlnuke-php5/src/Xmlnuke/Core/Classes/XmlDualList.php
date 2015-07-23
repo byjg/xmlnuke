@@ -87,9 +87,9 @@ namespace Xmlnuke\Core\Classes;
 
 use DOMNode;
 use InvalidArgumentException;
-use Xmlnuke\Core\AnyDataset\IIterator;
+use ByJG\AnyDataset\Repository\IIterator;
 use Xmlnuke\Core\Engine\Context;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class  XmlDualList extends XmlnukeDocumentObject
 {

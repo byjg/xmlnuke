@@ -32,7 +32,7 @@
  */
 namespace Xmlnuke\Core\Admin;
 
-use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use ByJG\AnyDataset\Repository\IteratorFilter;
 use Xmlnuke\Core\Classes\CrudField;
 use Xmlnuke\Core\Classes\CrudFieldCollection;
 use Xmlnuke\Core\Classes\XmlAnchorCollection;

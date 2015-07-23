@@ -8,8 +8,8 @@ namespace Xmlnuke\Core\Net;
 use ByJG\Util\WebRequest;
 use InvalidArgumentException;
 use OAuthClient\v20\BaseOAuth20;
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
-use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use ByJG\AnyDataset\Repository\AnyDataset;
+use ByJG\AnyDataset\Repository\IteratorFilter;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\Relation;
 use Xmlnuke\Core\Exception\NotAuthenticatedException;
@@ -68,7 +68,7 @@ class OAuthClient20
 		}
 
 		$oauthFile = new AnydatasetFilenameProcessor("_oauthclient20");
-		$oauthAny = new AnyDataSet($oauthFile);
+		$oauthAny = new AnyDataset($oauthFile);
 
 		$itf = new IteratorFilter();
 		$itf->addRelation("appname", Relation::Equal, $appName);
@@ -109,7 +109,7 @@ class OAuthClient20
 	public static function existsApp($appName)
 	{
 		$oauthFile = new AnydatasetFilenameProcessor("_oauthclient20");
-		$oauthAny = new AnyDataSet($oauthFile);
+		$oauthAny = new AnyDataset($oauthFile);
 
 		$itf = new IteratorFilter();
 		$itf->addRelation("appname", Relation::Equal, $appName);

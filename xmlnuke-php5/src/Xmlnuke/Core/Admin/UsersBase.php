@@ -29,9 +29,9 @@
 
 namespace Xmlnuke\Core\Admin;
 
-use Xmlnuke\Core\AnyDataset\IIterator;
-use Xmlnuke\Core\AnyDataset\IteratorFilter;
-use Xmlnuke\Core\AnyDataset\SingleRow;
+use ByJG\AnyDataset\Repository\IIterator;
+use ByJG\AnyDataset\Repository\IteratorFilter;
+use ByJG\AnyDataset\Repository\SingleRow;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\CustomTable;
 use Xmlnuke\Core\Enum\Relation;
@@ -127,7 +127,7 @@ abstract class UsersBase implements IUsersBase
 	}
 
 	/**
-	* Save the current UsersAnyDataSet
+	* Save the current UsersAnyDataset
 	* */
 	public function Save()
 	{

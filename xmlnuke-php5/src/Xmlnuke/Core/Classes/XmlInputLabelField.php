@@ -33,7 +33,7 @@
 namespace Xmlnuke\Core\Classes;
 
 use DOMNode;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class  XmlInputLabelField extends XmlnukeDocumentObject
 {

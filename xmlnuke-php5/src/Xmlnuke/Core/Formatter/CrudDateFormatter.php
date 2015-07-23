@@ -33,7 +33,7 @@
  */
 namespace Xmlnuke\Core\Formatter;
 
-use Xmlnuke\Core\AnyDataset\DBDataSet;
+use ByJG\AnyDataset\Repository\DBDataSet;
 
 class CrudDateFormatter implements IEditListFormatter
 {

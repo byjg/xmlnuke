@@ -29,9 +29,9 @@
 
 namespace Xmlnuke\Core\Admin;
 
-use Xmlnuke\Core\AnyDataset\ArrayDataSet;
-use Xmlnuke\Core\AnyDataset\IIterator;
-use Xmlnuke\Core\AnyDataset\XmlDataSet;
+use ByJG\AnyDataset\Repository\ArrayDataSet;
+use ByJG\AnyDataset\Repository\IIterator;
+use ByJG\AnyDataset\Repository\XmlDataSet;
 use Xmlnuke\Core\Classes\PageXml;
 use Xmlnuke\Core\Classes\XmlBlockCollection;
 use Xmlnuke\Core\Classes\XmlnukeDocument;

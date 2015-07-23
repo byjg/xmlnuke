@@ -32,12 +32,12 @@
  */
 namespace Xmlnuke\Modules;
 
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
-use Xmlnuke\Core\AnyDataset\ArrayDataSet;
-use Xmlnuke\Core\AnyDataset\DBDataSet;
-use Xmlnuke\Core\AnyDataset\IteratorFilter;
-use Xmlnuke\Core\AnyDataset\TextFileDataSet;
-use Xmlnuke\Core\AnyDataset\XmlDataSet;
+use ByJG\AnyDataset\Repository\AnyDataset;
+use ByJG\AnyDataset\Repository\ArrayDataSet;
+use ByJG\AnyDataset\Repository\DBDataSet;
+use ByJG\AnyDataset\Repository\IteratorFilter;
+use ByJG\AnyDataset\Repository\TextFileDataSet;
+use ByJG\AnyDataset\Repository\XmlDataSet;
 use Xmlnuke\Core\Classes\ChartOutput;
 use Xmlnuke\Core\Classes\ChartSeriesFormat;
 use Xmlnuke\Core\Classes\CrudField;
@@ -445,7 +445,7 @@ class Sample extends BaseModule
 		$firstParagraph->addXmlnukeObject($breakLine);
 
 		$guestbookFile = new AnydatasetFilenameProcessor("guestbook");
-		$guestbook = new AnyDataSet($guestbookFile);
+		$guestbook = new AnyDataset($guestbookFile);
 		$iterator = $guestbook->getIterator();
 
 		$thirdParagraph = new XmlParagraphCollection();
@@ -645,7 +645,7 @@ class Sample extends BaseModule
 			case "setupconf":
 				{
 					$filename = new AnydatasetFilenameProcessor("_db");
-					$anydata = new AnyDataSet($filename);
+					$anydata = new AnyDataset($filename);
 					$itf = new IteratorFilter();
 					$itf->addRelation("dbname", Relation::Equal, "sampledb");
 					$it = $anydata->getIterator($itf);

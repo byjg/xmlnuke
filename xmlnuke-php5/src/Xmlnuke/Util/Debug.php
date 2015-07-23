@@ -40,11 +40,11 @@ use Exception;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionProperty;
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
-use Xmlnuke\Core\AnyDataset\AnyIterator;
-use Xmlnuke\Core\AnyDataset\IIterator;
-use Xmlnuke\Core\AnyDataset\IteratorFilter;
-use Xmlnuke\Core\AnyDataset\SingleRow;
+use ByJG\AnyDataset\Repository\AnyDataset;
+use ByJG\AnyDataset\Repository\AnyIterator;
+use ByJG\AnyDataset\Repository\IIterator;
+use ByJG\AnyDataset\Repository\IteratorFilter;
+use ByJG\AnyDataset\Repository\SingleRow;
 use Xmlnuke\Core\Engine\ErrorHandler;
 use Xmlnuke\Core\Locale\LanguageCollection;
 use Xmlnuke\Core\Processor\FilenameProcessor;
@@ -99,9 +99,9 @@ class Debug
 			}
 			elseif ($var instanceof SingleRow)
 			{
-				self::writeLog('SingleRow', print_r($var->getRawFormat(), true), true);
+				self::writeLog('SingleRow', print_r($var->toArray(), true), true);
 			}
-			elseif ($var instanceof AnyDataSet)
+			elseif ($var instanceof AnyDataset)
 			{
 				Debug::PrintValue($var->getIterator());
 			}
@@ -130,7 +130,7 @@ class Debug
 							$result .= '<tr><th class="devdebug">' . implode('</b></th><th class="devdebug">', $arr) . '</th></tr>';
 						}
 
-						$raw = $sr->getRawFormat();
+						$raw = $sr->toArray();
 						$result .= '<tr>';
 						foreach($raw as $item)
 						{
