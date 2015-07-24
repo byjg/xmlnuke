@@ -33,7 +33,7 @@ namespace Xmlnuke\Model;
 /**
  * @Xmlnuke:NodeName Login
  */
-class Login extends \Xmlnuke\Core\Database\BaseModel
+class Login extends \ByJG\AnyDataset\Database\BaseModel
 {
 	protected $_Username;
 	protected $_Password;

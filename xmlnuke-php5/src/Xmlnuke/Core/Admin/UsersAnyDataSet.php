@@ -28,7 +28,7 @@
 */
 
 /**
- * Stores and retrieve user information based on AnyDataSet file. 
+ * Stores and retrieve user information based on AnyDataset file. 
  * 
  * This is the default method in XMLNuke. 
  * The file where the users, passwords and properties are stored is located on xmlnuke-data/shared/setup/users.anydata.xml
@@ -38,20 +38,20 @@
  */
 namespace Xmlnuke\Core\Admin;
 
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
-use Xmlnuke\Core\AnyDataset\IIterator;
-use Xmlnuke\Core\AnyDataset\IteratorFilter;
-use Xmlnuke\Core\AnyDataset\SingleRow;
+use ByJG\AnyDataset\Repository\AnyDataset;
+use ByJG\AnyDataset\Repository\IIterator;
+use ByJG\AnyDataset\Repository\IteratorFilter;
+use ByJG\AnyDataset\Repository\SingleRow;
 use Xmlnuke\Core\Enum\Relation;
 use Xmlnuke\Core\Enum\UserProperty;
 use Xmlnuke\Core\Exception\DatasetException;
 use Xmlnuke\Core\Processor\AnydatasetSetupFilenameProcessor;
 
-class UsersAnyDataSet extends UsersBase
+class UsersAnyDataset extends UsersBase
 {
 	/**
-	 * Internal AnyDataSet structure to store the Users
-	 * @var AnyDataSet
+	 * Internal AnyDataset structure to store the Users
+	 * @var AnyDataset
 	 */
 	protected $_anyDataSet;
 
@@ -64,17 +64,17 @@ class UsersAnyDataSet extends UsersBase
 	protected $_usersFile;
 
 	/**
-	 * AnyDataSet constructor
+	 * AnyDataset constructor
 	*/
 	public function __construct($context)
 	{
 		$this->_context = $context;
 		$this->_usersFile = new AnydatasetSetupFilenameProcessor("users");
-		$this->_anyDataSet = new AnyDataSet($this->_usersFile);
+		$this->_anyDataSet = new AnyDataset($this->_usersFile);
 	}
 
 	/**
-	 * Save the current UsersAnyDataSet
+	 * Save the current UsersAnyDataset
 	*/
 	public function Save()
 	{
@@ -237,12 +237,12 @@ class UsersAnyDataSet extends UsersBase
 	/**
 	 * Enter description here...
 	 *
-	 * @return AnyDataSet
+	 * @return AnyDataset
 	 */
 	protected function getRoleAnydataSet()
 	{
 		$fileRole = new AnydatasetSetupFilenameProcessor($this->getRolesTable()->Table);
-		$roleDataSet = new AnyDataSet($fileRole);
+		$roleDataSet = new AnyDataset($fileRole);
 		return $roleDataSet;
 	}
 

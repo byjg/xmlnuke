@@ -30,8 +30,8 @@
 namespace Xmlnuke\Util;
 
 use PHPMailer;
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
-use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use ByJG\AnyDataset\Repository\AnyDataset;
+use ByJG\AnyDataset\Repository\IteratorFilter;
 use Xmlnuke\Core\Classes\MailEnvelope;
 use Xmlnuke\Core\Enum\Relation;
 use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
@@ -78,7 +78,7 @@ class MailUtil
 	public static function getEmailFromID($IDEmail = "DEFAULT", $name = "")
 	{
 		$configFile = new AnydatasetFilenameProcessor("_configemail");
-		$config = new AnyDataSet($configFile);
+		$config = new AnyDataset($configFile);
 		$filter = new IteratorFilter();
 		$filter->addRelation("destination_id", Relation::Equal, $IDEmail);
 		$it = $config->getIterator($filter);

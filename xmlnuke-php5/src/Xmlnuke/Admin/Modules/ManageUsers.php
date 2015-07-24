@@ -34,7 +34,7 @@ namespace Xmlnuke\Admin\Modules;
 
 use Xmlnuke\Core\Admin\NewBaseAdminModule;
 use Xmlnuke\Core\Admin\UsersBase;
-use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use ByJG\AnyDataset\Repository\IteratorFilter;
 use Xmlnuke\Core\Classes\EditListField;
 use Xmlnuke\Core\Classes\XmlAnchorCollection;
 use Xmlnuke\Core\Classes\XmlBlockCollection;

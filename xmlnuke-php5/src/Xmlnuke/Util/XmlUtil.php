@@ -737,7 +737,7 @@ class XmlUtil
 
 			// If still an array, walk. 
 			if (is_array($value))
-				array_walk($value, "Xmlnuke\Util\XmlUtil::mapArray");
+				array_walk($value, "ByJG\Util\XmlUtil::mapArray");
 		}
 	}
 
@@ -766,7 +766,7 @@ class XmlUtil
 		else
 			$array = (array)$xml;
 
-		array_walk($array, "Xmlnuke\Util\XmlUtil::mapArray");
+		array_walk($array, "ByJG\Util\XmlUtil::mapArray");
 
 		// Check an special case from Xml
 		if (isset($array[\Xmlnuke\Core\Engine\ObjectHandler::ObjectArray]))

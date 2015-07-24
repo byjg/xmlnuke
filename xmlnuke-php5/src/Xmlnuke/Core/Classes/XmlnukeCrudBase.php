@@ -31,9 +31,9 @@ namespace Xmlnuke\Core\Classes;
 
 use DOMNode;
 use Exception;
-use Xmlnuke\Core\AnyDataset\ArrayDataSet;
-use Xmlnuke\Core\AnyDataset\IIterator;
-use Xmlnuke\Core\AnyDataset\SingleRow;
+use ByJG\AnyDataset\Repository\ArrayDataSet;
+use ByJG\AnyDataset\Repository\IIterator;
+use ByJG\AnyDataset\Repository\SingleRow;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\CustomButtons;
 use Xmlnuke\Core\Enum\DATEFORMAT;

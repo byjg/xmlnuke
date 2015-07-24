@@ -39,10 +39,10 @@ namespace Xmlnuke\Core\Classes;
 
 use DOMNode;
 use InvalidArgumentException;
-use Xmlnuke\Core\AnyDataset\IIterator;
-use Xmlnuke\Core\Database\BaseDBAccess;
+use ByJG\AnyDataset\Repository\IIterator;
+use ByJG\AnyDataset\Database\BaseDBAccess;
 use Xmlnuke\Core\Enum\EasyListType;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class  XmlEasyList extends XmlnukeDocumentObject
 {

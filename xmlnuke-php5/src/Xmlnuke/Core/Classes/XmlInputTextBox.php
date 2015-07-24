@@ -38,7 +38,7 @@ use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\InputTextBoxType;
 use Xmlnuke\Core\Enum\INPUTTYPE;
 use Xmlnuke\Core\Enum\URLTYPE;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class  XmlInputTextBox extends XmlInputValidate 
 {

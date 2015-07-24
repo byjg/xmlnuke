@@ -33,7 +33,7 @@ use DOMNode;
 use Xmlnuke\Core\Classes\PageXml;
 use Xmlnuke\Core\Module\BaseModule;
 use Xmlnuke\Core\Processor\XSLFilenameProcessor;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 /**
  * Base Admin Modules

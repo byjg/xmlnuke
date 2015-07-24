@@ -34,10 +34,10 @@ namespace Xmlnuke\Core\Classes;
 
 use DOMNode;
 use InvalidArgumentException;
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
-use Xmlnuke\Core\AnyDataset\ArrayDataSet;
-use Xmlnuke\Core\AnyDataset\IIterator;
-use Xmlnuke\Core\AnyDataset\SingleRow;
+use ByJG\AnyDataset\Repository\AnyDataset;
+use ByJG\AnyDataset\Repository\ArrayDataSet;
+use ByJG\AnyDataset\Repository\IIterator;
+use ByJG\AnyDataset\Repository\SingleRow;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\CustomButtons;
 use Xmlnuke\Core\Enum\EditListFieldSummary;
@@ -45,7 +45,7 @@ use Xmlnuke\Core\Enum\EditListFieldType;
 use Xmlnuke\Core\Enum\SelectType;
 use Xmlnuke\Core\Formatter\IEditListFormatter;
 use Xmlnuke\Core\Processor\ParamProcessor;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class  XmlEditList extends XmlnukeDocumentObject
 {
@@ -488,7 +488,7 @@ class  XmlEditList extends XmlnukeDocumentObject
 		// Generate SUMMARY Information
 		if (sizeof($summaryFields) > 0)
 		{
-			$anydata = new AnyDataSet();
+			$anydata = new AnyDataset();
 			$anydata->appendRow();
 			foreach($this->_fields as $chave=>$field)
 			{

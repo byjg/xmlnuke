@@ -32,7 +32,7 @@ namespace Xmlnuke\Core\Classes;
 
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\UIAlert;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 /**
  * @package xmlnuke

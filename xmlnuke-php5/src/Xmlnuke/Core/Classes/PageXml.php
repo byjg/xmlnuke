@@ -40,7 +40,7 @@ use DOMNode;
 use DOMXPath;
 use Xmlnuke\Core\Processor\XMLFilenameProcessor;
 use Xmlnuke\Util\FileUtil;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class  PageXml implements IXmlnukeDocument 
 {

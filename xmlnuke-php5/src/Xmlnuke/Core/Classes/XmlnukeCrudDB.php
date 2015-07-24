@@ -30,11 +30,11 @@
 namespace Xmlnuke\Core\Classes;
 
 use Exception;
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
-use Xmlnuke\Core\AnyDataset\DBDataSet;
-use Xmlnuke\Core\AnyDataset\IIterator;
-use Xmlnuke\Core\AnyDataset\SingleRow;
-use Xmlnuke\Core\Database\SQLHelper;
+use ByJG\AnyDataset\Repository\AnyDataset;
+use ByJG\AnyDataset\Repository\DBDataSet;
+use ByJG\AnyDataset\Repository\IIterator;
+use ByJG\AnyDataset\Repository\SingleRow;
+use ByJG\AnyDataset\Database\SQLHelper;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\EditListFieldType;
 use Xmlnuke\Core\Enum\INPUTTYPE;
@@ -279,7 +279,7 @@ class XmlnukeCrudDB extends XmlnukeCrudBase
 		if ($sqlType != SQLType::SQL_DELETE)
 		{
 			// Get a SingleRow with all field values
-			$anyCurInfo = new AnyDataSet();
+			$anyCurInfo = new AnyDataset();
 			$anyCurInfo->appendRow();
 			foreach ($this->_fields as $field)
 			{

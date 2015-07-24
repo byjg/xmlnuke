@@ -33,7 +33,7 @@
 namespace Xmlnuke\Core\Admin;
 
 use Whoops\Example\Exception;
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use ByJG\AnyDataset\Repository\AnyDataset;
 use Xmlnuke\Core\Classes\EditListField;
 use Xmlnuke\Core\Classes\PageXml;
 use Xmlnuke\Core\Classes\XmlAnchorCollection;
@@ -259,11 +259,11 @@ class ManageUsersGroups extends NewBaseAdminModule
 	 * Get all rules from a site
 	 *
 	 * @param string $site
-	 * @return AnyDataSet
+	 * @return AnyDataset
 	 */
 	protected function getRolesFromSite($site)
 	{
-		$newDataSet = new AnyDataSet();
+		$newDataSet = new AnyDataset();
 		$it = $this->user->getRolesIterator($site);
 		while ($it->hasNext()) {
 			$sr = $it->moveNext();
@@ -301,7 +301,7 @@ class ManageUsersGroups extends NewBaseAdminModule
 	 *
 	 * @param XmlBlockCollection $this->_mainBlock
 	 * @param string $site
-	 * @param AnyDataSet $dataset
+	 * @param AnyDataset $dataset
 	 */
 	protected function AddEditListToSite($block, $site, $dataset)
 	{

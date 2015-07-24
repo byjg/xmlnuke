@@ -29,18 +29,18 @@
 
 /**
  * Stores and retrieves user information from a database. 
- * @see UsersAnyDataSet
+ * @see UsersAnyDataset
  * @package xmlnuke
  */
 namespace Xmlnuke\Core\Admin;
 
 use InvalidArgumentException;
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
-use Xmlnuke\Core\AnyDataset\DBDataSet;
-use Xmlnuke\Core\AnyDataset\IIterator;
-use Xmlnuke\Core\AnyDataset\IteratorFilter;
-use Xmlnuke\Core\AnyDataset\SingleRow;
-use Xmlnuke\Core\Database\SQLHelper;
+use ByJG\AnyDataset\Repository\AnyDataset;
+use ByJG\AnyDataset\Repository\DBDataSet;
+use ByJG\AnyDataset\Repository\IIterator;
+use ByJG\AnyDataset\Repository\IteratorFilter;
+use ByJG\AnyDataset\Repository\SingleRow;
+use ByJG\AnyDataset\Database\SQLHelper;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\UserProperty;
 use Xmlnuke\Core\Exception\DatasetException;
@@ -70,7 +70,7 @@ class UsersDBDataSet extends UsersBase
 
 	/**
 	 *
-	 * Save the current UsersAnyDataSet
+	 * Save the current UsersAnyDataset
 	 */
 	public function Save()
 	{
@@ -266,7 +266,7 @@ class UsersDBDataSet extends UsersBase
 			$this->getCustomFields($sr);
 
                 // Clone the User Properties
-                $anyOri = new AnyDataSet();
+                $anyOri = new AnyDataset();
                 $anyOri->appendRow();
                 foreach ($sr->getFieldNames() as $key=>$fieldName)
                 {

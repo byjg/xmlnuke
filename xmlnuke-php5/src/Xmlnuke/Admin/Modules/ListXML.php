@@ -45,7 +45,7 @@ use Xmlnuke\Core\Classes\XmlTableRowCollection;
 use Xmlnuke\Core\Enum\AccessLevel;
 use Xmlnuke\Core\Enum\BlockPosition;
 use Xmlnuke\Core\Processor\XMLFilenameProcessor;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class ListXML extends NewBaseAdminModule
 {

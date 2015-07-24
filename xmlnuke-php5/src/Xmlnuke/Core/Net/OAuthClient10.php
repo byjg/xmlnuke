@@ -7,8 +7,8 @@ namespace Xmlnuke\Core\Net;
 
 use InvalidArgumentException;
 use ReflectionClass;
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
-use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use ByJG\AnyDataset\Repository\AnyDataset;
+use ByJG\AnyDataset\Repository\IteratorFilter;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\Relation;
 use Xmlnuke\Core\Exception\NotAuthenticatedException;
@@ -61,7 +61,7 @@ class OAuthClient10
 		}
 
 		$oauthFile = new AnydatasetFilenameProcessor("_oauthclient10");
-		$oauthAny = new AnyDataSet($oauthFile);
+		$oauthAny = new AnyDataset($oauthFile);
 
 		$itf = new IteratorFilter();
 		$itf->addRelation("appname", Relation::Equal, $appName);
