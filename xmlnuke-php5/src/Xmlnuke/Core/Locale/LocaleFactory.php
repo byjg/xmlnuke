@@ -39,7 +39,7 @@ namespace Xmlnuke\Core\Locale;
 use ByJG\AnyDataset\Repository\AnyDataset;
 use ByJG\AnyDataset\Repository\IteratorFilter;
 use Xmlnuke\Core\Engine\Context;
-use Xmlnuke\Core\Enum\Relation;
+use ByJG\AnyDataset\Enum\Relation;
 use Xmlnuke\Util\FileUtil;
 
 class LocaleFactory
@@ -72,13 +72,13 @@ class LocaleFactory
 		if (self::$_localeData == null)
 		{
 			$file = new \Xmlnuke\Core\Processor\AnydatasetSetupFilenameProcessor('locale');
-			self::$_localeData = new \ByJG\AnyDataset\Repository\AnyDataset($file);
+			self::$_localeData = new \ByJG\AnyDataset\Repository\AnyDataset($file->FullQualifiedNameAndPath());
 		}
 
 		if (!isset(self::$_localeDbCache[$field]))
 		{
 			$filter = new \ByJG\AnyDataset\Repository\IteratorFilter();
-			$filter->addRelation($field, \Xmlnuke\Core\Enum\Relation::Contains, $value);
+			$filter->addRelation($field, \ByJG\AnyDataset\Enum\ Relation::CONTAINS, $value);
 			$it = self::$_localeData->getIterator($filter);
 			if ($it->hasNext())
 				self::$_localeDbCache[$field] = $it->moveNext();

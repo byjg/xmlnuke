@@ -10,7 +10,7 @@ use ReflectionClass;
 use ByJG\AnyDataset\Repository\AnyDataset;
 use ByJG\AnyDataset\Repository\IteratorFilter;
 use Xmlnuke\Core\Engine\Context;
-use Xmlnuke\Core\Enum\Relation;
+use ByJG\AnyDataset\Enum\Relation;
 use Xmlnuke\Core\Exception\NotAuthenticatedException;
 use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
 
@@ -61,10 +61,10 @@ class OAuthClient10
 		}
 
 		$oauthFile = new AnydatasetFilenameProcessor("_oauthclient10");
-		$oauthAny = new AnyDataset($oauthFile);
+		$oauthAny = new AnyDataset($oauthFile->FullQualifiedNameAndPath());
 
 		$itf = new IteratorFilter();
-		$itf->addRelation("appname", Relation::Equal, $appName);
+		$itf->addRelation("appname",  Relation::EQUAL, $appName);
 		$it = $oauthAny->getIterator($itf);
 
 		if ($it->hasNext())

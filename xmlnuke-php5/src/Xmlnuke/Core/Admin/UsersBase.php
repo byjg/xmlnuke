@@ -34,7 +34,7 @@ use ByJG\AnyDataset\Repository\IteratorFilter;
 use ByJG\AnyDataset\Repository\SingleRow;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\CustomTable;
-use Xmlnuke\Core\Enum\Relation;
+use ByJG\AnyDataset\Enum\Relation;
 use Xmlnuke\Core\Enum\RolesTable;
 use Xmlnuke\Core\Enum\UserProperty;
 use Xmlnuke\Core\Enum\UserTable;
@@ -167,7 +167,7 @@ abstract class UsersBase implements IUsersBase
 	public function getUserEMail( $email )
 	{
 		$filter = new IteratorFilter();
-		$filter->addRelation($this->getUserTable()->Email, Relation::Equal , strtolower($email));
+		$filter->addRelation($this->getUserTable()->Email,  Relation::EQUAL , strtolower($email));
 		return $this->getUser($filter);
 	}
 
@@ -181,7 +181,7 @@ abstract class UsersBase implements IUsersBase
 	public function getUserName( $username )
 	{
 		$filter = new IteratorFilter();
-		$filter->addRelation($this->getUserTable()->Username, Relation::Equal , strtolower($username) );
+		$filter->addRelation($this->getUserTable()->Username,  Relation::EQUAL , strtolower($username) );
 		return $this->getUser($filter);
 	}
 
@@ -195,7 +195,7 @@ abstract class UsersBase implements IUsersBase
 	public function getUserId( $id )
 	{
 		$filter = new IteratorFilter();
-		$filter->addRelation($this->getUserTable()->Id, Relation::Equal , $id );
+		$filter->addRelation($this->getUserTable()->Id,  Relation::EQUAL , $id );
 		return $this->getUser($filter);
 	}
 
@@ -231,8 +231,8 @@ abstract class UsersBase implements IUsersBase
 	public function validateUserName( $userName, $password )
 	{
 		$filter = new IteratorFilter();
-		$filter->addRelation($this->getUserTable()->Username, Relation::Equal , strtolower($userName));
-		$filter->addRelation($this->getUserTable()->Password, Relation::Equal , $this->getSHAPassword($password));
+		$filter->addRelation($this->getUserTable()->Username,  Relation::EQUAL , strtolower($userName));
+		$filter->addRelation($this->getUserTable()->Password,  Relation::EQUAL , $this->getSHAPassword($password));
 		return $this->getUser($filter);
 	}
 

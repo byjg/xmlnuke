@@ -11,7 +11,7 @@ use OAuthClient\v20\BaseOAuth20;
 use ByJG\AnyDataset\Repository\AnyDataset;
 use ByJG\AnyDataset\Repository\IteratorFilter;
 use Xmlnuke\Core\Engine\Context;
-use Xmlnuke\Core\Enum\Relation;
+use ByJG\AnyDataset\Enum\Relation;
 use Xmlnuke\Core\Exception\NotAuthenticatedException;
 use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
 
@@ -68,10 +68,10 @@ class OAuthClient20
 		}
 
 		$oauthFile = new AnydatasetFilenameProcessor("_oauthclient20");
-		$oauthAny = new AnyDataset($oauthFile);
+		$oauthAny = new AnyDataset($oauthFile->FullQualifiedNameAndPath());
 
 		$itf = new IteratorFilter();
-		$itf->addRelation("appname", Relation::Equal, $appName);
+		$itf->addRelation("appname",  Relation::EQUAL, $appName);
 		$it = $oauthAny->getIterator($itf);
 
 		if ($it->hasNext())
@@ -109,10 +109,10 @@ class OAuthClient20
 	public static function existsApp($appName)
 	{
 		$oauthFile = new AnydatasetFilenameProcessor("_oauthclient20");
-		$oauthAny = new AnyDataset($oauthFile);
+		$oauthAny = new AnyDataset($oauthFile->FullQualifiedNameAndPath());
 
 		$itf = new IteratorFilter();
-		$itf->addRelation("appname", Relation::Equal, $appName);
+		$itf->addRelation("appname",  Relation::EQUAL, $appName);
 		$it = $oauthAny->getIterator($itf);
 
 		return ($it->hasNext());

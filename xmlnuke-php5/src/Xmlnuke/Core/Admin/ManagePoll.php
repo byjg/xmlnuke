@@ -113,7 +113,7 @@ class ManagePoll extends NewBaseAdminModule
 		}
 		else 
 		{
-			$anyconfig = new AnyDataset($configfile);
+			$anyconfig = new AnyDataset($configfile->FullQualifiedNameAndPath());
 			$it = $anyconfig->getIterator();
 			if ($it->hasNext())
 			{
@@ -185,8 +185,9 @@ class ManagePoll extends NewBaseAdminModule
 					//$results[] = $this->CreateTable($dbdata, "add foreign key lastip", "alter table $tbllastip add constraint pk_lastip_poll foreign key (name) references $tblpoll(name)");
 					
 					$block->addXmlnukeObject(new XmlEasyList(EasyListType::UNORDEREDLIST, "", $this->myWords->Value("RESULTSQL"), $results));
-					
-					$anypoll = new AnyDataset(new AnydatasetFilenameProcessor("_poll"));
+
+					$poll = new AnydatasetFilenameProcessor("_poll");
+					$anypoll = new AnyDataset($poll);
 					$anypoll->appendRow();
 					$anypoll->addField("dbname", $this->_context->get("type"));
 					$anypoll->addField("tbl_poll", $tblpoll);
@@ -201,7 +202,8 @@ class ManagePoll extends NewBaseAdminModule
 			}
 			else 
 			{
-				$anypoll = new AnyDataset(new AnydatasetFilenameProcessor("_poll"));
+				$poll = new AnydatasetFilenameProcessor("_poll");
+				$anypoll = new AnyDataset($poll);
 				$anypoll->appendRow();
 				$anypoll->addField("dbname", "-anydata-");
 				$anypoll->Save();
@@ -220,7 +222,7 @@ class ManagePoll extends NewBaseAdminModule
 			$form->addXmlnukeObject(new XmlInputHidden("action", ModuleAction::CreateConfirm));
 			$db = array("-anydata-"=>$this->myWords->Value("NOTUSEDB"));
 			$anydatafile = new AnydatasetFilenameProcessor("_db");
-			$anydata = new AnyDataset($anydatafile);
+			$anydata = new AnyDataset($anydatafile->FullQualifiedNameAndPath());
 			$it = $anydata->getIterator();
 			while ($it->hasNext())
 			{

@@ -243,7 +243,7 @@ class Search extends BaseModule
 			$nodeAbstractList = array("/meta/abstract");
 
 			$configSearchFile = new AnydatasetFilenameProcessor("_configsearch");
-			$configSearch = new AnyDataset( $configSearchFile );
+			$configSearch = new AnyDataset( $configSearchFile ->FullQualifiedNameAndPath());
 			
 			$iterator = $configSearch->getIterator();
 			while ($iterator->hasNext())

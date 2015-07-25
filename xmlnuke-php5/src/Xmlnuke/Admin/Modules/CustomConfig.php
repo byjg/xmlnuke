@@ -240,7 +240,7 @@ class CustomConfig extends NewBaseAdminModule
 	{
 		$processor = new AnydatasetFilenameProcessor("_db");
 		$processor->UseFileFromAnyLanguage();
-		$anydata = new AnyDataset($processor);
+		$anydata = new AnyDataset($processor->FullQualifiedNameAndPath());
 		$it = $anydata->getIterator();
 		$ret = array();
 		$ret[''] = '-- Default UsersAnydataSet --';

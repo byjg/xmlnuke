@@ -31,7 +31,7 @@ namespace AWS;
 
 use ByJG\AnyDataset\Repository\AnyDataset;
 use ByJG\AnyDataset\Repository\IteratorFilter;
-use Xmlnuke\Core\Enum\Relation;
+use ByJG\AnyDataset\Enum\Relation;
 use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
 
 class AWSAuth
@@ -48,9 +48,9 @@ class AWSAuth
 	public function __construct($configName)
 	{
 		$file = new AnydatasetFilenameProcessor("_aws");
-		$anydata = new AnyDataset($file);
+		$anydata = new AnyDataset($file->FullQualifiedNameAndPath());
 		$itf = new IteratorFilter();
-		$itf->addRelation("config", Relation::Equal, $configName);
+		$itf->addRelation("config",  Relation::EQUAL, $configName);
 
 		$it = $anydata->getIterator($itf);
 

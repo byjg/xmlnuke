@@ -90,7 +90,7 @@ use Xmlnuke\Core\Enum\CustomButtons;
 use Xmlnuke\Core\Enum\DATEFORMAT;
 use Xmlnuke\Core\Enum\EasyListType;
 use Xmlnuke\Core\Enum\INPUTTYPE;
-use Xmlnuke\Core\Enum\Relation;
+use ByJG\AnyDataset\Enum\Relation;
 use Xmlnuke\Core\Enum\SortableListItemState;
 use Xmlnuke\Core\Enum\UIAlert;
 use Xmlnuke\Core\Enum\UIAlertOpenAction;
@@ -445,7 +445,7 @@ class Sample extends BaseModule
 		$firstParagraph->addXmlnukeObject($breakLine);
 
 		$guestbookFile = new AnydatasetFilenameProcessor("guestbook");
-		$guestbook = new AnyDataset($guestbookFile);
+		$guestbook = new AnyDataset($guestbookFile->FullQualifiedNameAndPath());
 		$iterator = $guestbook->getIterator();
 
 		$thirdParagraph = new XmlParagraphCollection();
@@ -645,9 +645,9 @@ class Sample extends BaseModule
 			case "setupconf":
 				{
 					$filename = new AnydatasetFilenameProcessor("_db");
-					$anydata = new AnyDataset($filename);
+					$anydata = new AnyDataset($filename->FullQualifiedNameAndPath());
 					$itf = new IteratorFilter();
-					$itf->addRelation("dbname", Relation::Equal, "sampledb");
+					$itf->addRelation("dbname",  Relation::EQUAL, "sampledb");
 					$it = $anydata->getIterator($itf);
 					if ($it->hasNext())
 					{

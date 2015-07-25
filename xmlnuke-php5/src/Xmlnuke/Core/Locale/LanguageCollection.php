@@ -33,7 +33,7 @@ use Exception;
 use ByJG\AnyDataset\Repository\AnyDataset;
 use ByJG\AnyDataset\Repository\IteratorFilter;
 use Xmlnuke\Core\Engine\Context;
-use Xmlnuke\Core\Enum\Relation;
+use ByJG\AnyDataset\Enum\Relation;
 use Xmlnuke\Core\Exception\EngineException;
 use Xmlnuke\Core\Processor\AnydatasetBaseFilenameProcessor;
 use Xmlnuke\Core\Processor\AnydatasetLangFilenameProcessor;
@@ -196,7 +196,7 @@ class LanguageCollection
 			}
 			
 			$itf = new IteratorFilter();
-			$itf->addRelation("LANGUAGE", Relation::Equal, $curLang );
+			$itf->addRelation("LANGUAGE",  Relation::EQUAL, $curLang );
 	
 			//AnyIterator
 			$it = $lang->getIterator($itf);

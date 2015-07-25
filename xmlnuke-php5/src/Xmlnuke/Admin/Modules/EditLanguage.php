@@ -146,7 +146,7 @@ class EditLanguage extends NewBaseAdminModule
 
 			$langDir = new AnydatasetLangFilenameProcessor($file);
 			$langDir->setFilenameLocation(($op == "" ? ForceFilenameLocation::PrivatePath : ForceFilenameLocation::SharedPath));
-			$anydata = new AnyDataset($langDir);
+			$anydata = new AnyDataset($langDir->FullQualifiedNameAndPath());
 
 			$it = $anydata->getIterator();
 			$sr = $it->moveNext();
@@ -198,7 +198,7 @@ class EditLanguage extends NewBaseAdminModule
 			$file = $this->_context->get("newfile");
 			$langDir = new AnydatasetLangFilenameProcessor($file);
 			$langDir->setFilenameLocation(($op == "" ? ForceFilenameLocation::PrivatePath : ForceFilenameLocation::SharedPath));
-			$anydata = new AnyDataset($langDir);
+			$anydata = new AnyDataset($langDir->FullQualifiedNameAndPath());
 
 			$fields = explode("\r\n", $this->_context->get("fields"));
 

@@ -44,7 +44,7 @@ use Xmlnuke\Core\Classes\XmlParagraphCollection;
 use Xmlnuke\Core\Enum\AccessLevel;
 use Xmlnuke\Core\Enum\BlockPosition;
 use Xmlnuke\Core\Enum\INPUTTYPE;
-use Xmlnuke\Core\Enum\Relation;
+use ByJG\AnyDataset\Enum\Relation;
 use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
 
 class Download extends NewBaseAdminModule
@@ -180,10 +180,10 @@ class Download extends NewBaseAdminModule
 		
 		// Show Process Page State
 		$itf = new IteratorFilter();
-		$itf->addRelation("TYPE", Relation::Equal, $type);
+		$itf->addRelation("TYPE",  Relation::EQUAL, $type);
 		if ($type == "FILE")
 		{
-			$itf->addRelation("cat_id", Relation::Equal, $catId);
+			$itf->addRelation("cat_id",  Relation::EQUAL, $catId);
 		}
 		
 		$processor = new XmlnukeCrudAnydata($this->_context, $fields, $myWords->Value("TITLE_" . $type, $catId), "module:Xmlnuke.Admin.download", null, $downloadFile, $itf);

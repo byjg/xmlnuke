@@ -44,7 +44,7 @@ use ByJG\AnyDataset\Repository\IteratorFilter;
 use ByJG\Cache\ICacheEngine;
 use ByJG\Cache\NoCacheEngine;
 use Xmlnuke\Core\Enum\OutputData;
-use Xmlnuke\Core\Enum\Relation;
+use ByJG\AnyDataset\Enum\Relation;
 use Xmlnuke\Core\Exception\UploadUtilException;
 use Xmlnuke\Core\Locale\CultureInfo;
 use Xmlnuke\Core\Locale\LocaleFactory;
@@ -1177,7 +1177,7 @@ class Context
 		$configFile = new AnydatasetFilenameProcessor("customconfig");
 		$phyFile = $this->CurrentSitePath().$configFile->FullQualifiedName();
 		//anydataset.AnyDataset
-		$config = new AnyDataset($phyFile);
+		$config = new AnyDataset($phyFile->FullQualifiedNameAndPath());
 		//anydataset.AnyIterator
 		$it = $config->getIterator();
 		if ($it->hasNext())
@@ -1204,7 +1204,7 @@ class Context
 	{
 		$configFile = new AnydatasetFilenameProcessor("customconfig", $this);
 
-		$config = new AnyDataset($configFile);
+		$config = new AnyDataset($configFile->FullQualifiedNameAndPath());
 		$it = $config->getIterator(null);
 		if ($it->hasNext())
 		{
@@ -1393,9 +1393,9 @@ class Context
 			if ($this->get("xmlnuke.CHECKCONTENTTYPE"))
 			{
 				$filename = new AnydatasetFilenameProcessor("contenttype");
-				$anydataset = new AnyDataset($filename);
+				$anydataset = new AnyDataset($filename->FullQualifiedNameAndPath());
 				$itf = new IteratorFilter();
-				$itf->addRelation("xsl", Relation::Equal, $this->getXsl());
+				$itf->addRelation("xsl",  Relation::EQUAL, $this->getXsl());
 				$it = $anydataset->getIterator($itf);
 				if ($it->hasNext())
 				{
@@ -1405,9 +1405,9 @@ class Context
 				else
 				{
 					$filename = new AnydatasetSetupFilenameProcessor("contenttype");
-					$anydataset = new AnyDataset($filename);
+					$anydataset = new AnyDataset($filename->FullQualifiedNameAndPath());
 					$itf = new IteratorFilter();
-					$itf->addRelation("xsl", Relation::Equal, $this->getXsl());
+					$itf->addRelation("xsl",  Relation::EQUAL, $this->getXsl());
 					$it = $anydataset->getIterator($itf);
 					if ($it->hasNext())
 					{

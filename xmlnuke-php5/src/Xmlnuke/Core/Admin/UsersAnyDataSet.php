@@ -42,7 +42,7 @@ use ByJG\AnyDataset\Repository\AnyDataset;
 use ByJG\AnyDataset\Repository\IIterator;
 use ByJG\AnyDataset\Repository\IteratorFilter;
 use ByJG\AnyDataset\Repository\SingleRow;
-use Xmlnuke\Core\Enum\Relation;
+use ByJG\AnyDataset\Enum\Relation;
 use Xmlnuke\Core\Enum\UserProperty;
 use Xmlnuke\Core\Exception\DatasetException;
 use Xmlnuke\Core\Processor\AnydatasetSetupFilenameProcessor;
@@ -70,7 +70,7 @@ class UsersAnyDataset extends UsersBase
 	{
 		$this->_context = $context;
 		$this->_usersFile = new AnydatasetSetupFilenameProcessor("users");
-		$this->_anyDataSet = new AnyDataset($this->_usersFile);
+		$this->_anyDataSet = new AnyDataset($this->_usersFile->FullQualifiedNameAndPath());
 	}
 
 	/**
@@ -242,7 +242,7 @@ class UsersAnyDataset extends UsersBase
 	protected function getRoleAnydataSet()
 	{
 		$fileRole = new AnydatasetSetupFilenameProcessor($this->getRolesTable()->Table);
-		$roleDataSet = new AnyDataset($fileRole);
+		$roleDataSet = new AnyDataset($fileRole->FullQualifiedNameAndPath());
 		return $roleDataSet;
 	}
 
@@ -258,11 +258,11 @@ class UsersAnyDataset extends UsersBase
 		$itf = new IteratorFilter();
 		if ($role != "")
 		{
-			$itf->addRelation($this->getRolesTable()->Role, Relation::Equal, $role);
+			$itf->addRelation($this->getRolesTable()->Role,  Relation::EQUAL, $role);
 		}
 		$itf->startGroup();
-		$itf->addRelation($this->getRolesTable()->Site, Relation::Equal, $site);
-		$itf->addRelationOr($this->getRolesTable()->Site, Relation::Equal, "_all");
+		$itf->addRelation($this->getRolesTable()->Site,  Relation::EQUAL, $site);
+		$itf->addRelationOr($this->getRolesTable()->Site,  Relation::EQUAL, "_all");
 		$itf->endGroup();
 
 		$roleDataSet = $this->getRoleAnydataSet();
@@ -279,7 +279,7 @@ class UsersAnyDataset extends UsersBase
 	{
 		$dataset = $this->getRoleAnydataSet();
 		$dataFilter = new IteratorFilter();
-		$dataFilter->addRelation($this->getRolesTable()->Site, Relation::Equal, $site);
+		$dataFilter->addRelation($this->getRolesTable()->Site,  Relation::EQUAL, $site);
 		$iterator = $dataset->getIterator($dataFilter);
 		if(!$iterator->hasNext())
 		{
@@ -289,7 +289,7 @@ class UsersAnyDataset extends UsersBase
 		}
 		else
 		{
-			$dataFilter->addRelation($this->getRolesTable()->Role, Relation::Equal, $role);
+			$dataFilter->addRelation($this->getRolesTable()->Role,  Relation::EQUAL, $role);
 			$iteratorCheckDupRole = $dataset->getIterator($dataFilter);
 			if (!$iteratorCheckDupRole->hasNext())
 			{
@@ -320,8 +320,8 @@ class UsersAnyDataset extends UsersBase
 
 		$roleDataSet = $this->getRoleAnydataSet();
 		$dataFilter = new IteratorFilter();
-		$dataFilter->addRelation($this->getRolesTable()->Site, Relation::Equal, $site);
-		$dataFilter->addRelation($this->getRolesTable()->Role, Relation::Equal, $role);
+		$dataFilter->addRelation($this->getRolesTable()->Site,  Relation::EQUAL, $site);
+		$dataFilter->addRelation($this->getRolesTable()->Role,  Relation::EQUAL, $role);
 		$it = $roleDataSet->getIterator($dataFilter);
 		if ($it->hasNext()) {
 			$sr = $it->moveNext();

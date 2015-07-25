@@ -34,7 +34,7 @@ use ByJG\AnyDataset\Repository\IIterator;
 use ByJG\AnyDataset\Repository\IteratorFilter;
 use ByJG\AnyDataset\Repository\SingleRow;
 use Xmlnuke\Core\Engine\Context;
-use Xmlnuke\Core\Enum\Relation;
+use ByJG\AnyDataset\Enum\Relation;
 use Xmlnuke\Core\Enum\XmlInputObjectType;
 use Xmlnuke\Core\Processor\AnydatasetBaseFilenameProcessor;
 use Xmlnuke\Core\Classes\XmlnukeCrudBase;
@@ -137,7 +137,7 @@ class  XmlnukeCrudAnydata extends XmlnukeCrudBase
 	public function getAllRecords()
 	{
 //		AnyDataset $data
-		$data = new AnyDataset($this->_anydata);
+		$data = new AnyDataset($this->_anydata->FullQualifiedNameAndPath());
 		return $data->getIterator($this->_itf);
 	}
 
@@ -161,7 +161,7 @@ class  XmlnukeCrudAnydata extends XmlnukeCrudBase
 		$i = 0;
 		foreach ($this->_keyIndex as $keyIndex)
 		{
-			$itf->addRelation($this->_fields[$keyIndex]->fieldName, Relation::Equal, $arValueId[$i++]);
+			$itf->addRelation($this->_fields[$keyIndex]->fieldName,  Relation::EQUAL, $arValueId[$i++]);
 		}
 		return $itf;
 	}
@@ -179,7 +179,7 @@ class  XmlnukeCrudAnydata extends XmlnukeCrudBase
 			$itf = $this->getIteratorFilterKey();
 
 			// AnyDataset $data
-			$data = new AnyDataset($this->_anydata);
+			$data = new AnyDataset($this->_anydata->FullQualifiedNameAndPath());
 			$it = $data->getIterator($itf);
 
 			if ($it->hasNext())
@@ -205,7 +205,7 @@ class  XmlnukeCrudAnydata extends XmlnukeCrudBase
 			return $mdo;
 		}
 
-		$data = new AnyDataset($this->_anydata);
+		$data = new AnyDataset($this->_anydata->FullQualifiedNameAndPath());
 		if ($this->_currentAction == self::ACTION_NEW_CONFIRM)
 		{
 			$data->appendRow();

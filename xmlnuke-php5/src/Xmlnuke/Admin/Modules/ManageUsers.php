@@ -58,7 +58,7 @@ use Xmlnuke\Core\Enum\BlockPosition;
 use Xmlnuke\Core\Enum\EasyListType;
 use Xmlnuke\Core\Enum\InputTextBoxType;
 use Xmlnuke\Core\Enum\INPUTTYPE;
-use Xmlnuke\Core\Enum\Relation;
+use ByJG\AnyDataset\Enum\Relation;
 use Xmlnuke\Core\Enum\UserProperty;
 use Xmlnuke\Util\FileUtil;
 
@@ -216,14 +216,14 @@ class ManageUsers extends NewBaseAdminModule
 		$itf = new IteratorFilter();
 		if (!$this->isUserAdmin())
 		{
-			$itf->addRelation("admin", Relation::NotEqual, "yes");
+			$itf->addRelation("admin",  Relation::NOT_EQUAL, "yes");
 		}
 		if ($this->_context->get("pesquser") != "")
 		{
 			$itf->startGroup();
-			$itf->addRelationOr($users->getUserTable()->Username, Relation::Contains, $this->_context->get("pesquser"));
-                        $itf->addRelationOr($users->getUserTable()->Name, Relation::Contains, $this->_context->get("pesquser"));
-                        $itf->addRelationOr($users->getUserTable()->Email, Relation::Contains, $this->_context->get("pesquser"));
+			$itf->addRelationOr($users->getUserTable()->Username,  Relation::CONTAINS, $this->_context->get("pesquser"));
+                        $itf->addRelationOr($users->getUserTable()->Name,  Relation::CONTAINS, $this->_context->get("pesquser"));
+                        $itf->addRelationOr($users->getUserTable()->Email,  Relation::CONTAINS, $this->_context->get("pesquser"));
 			$itf->endGroup();
 		}
 		$it = $users->getIterator($itf);

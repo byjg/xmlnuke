@@ -98,7 +98,7 @@ class FileManagement extends NewBaseAdminModule
 		//SET FILEBROWSER ACESS LEVEL
 		$processor = new AnydatasetFilenameProcessor("filemanagement");
 		$processor->setFilenameLocation(ForceFilenameLocation::UseWhereExists );
-		$anyDataSet = new AnyDataset($processor);
+		$anyDataSet = new AnyDataset($processor->FullQualifiedNameAndPath());
 
 		$ignoreAdmin = false;
 

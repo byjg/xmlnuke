@@ -36,7 +36,7 @@ use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Engine\ObjectHandler;
 use Xmlnuke\Core\Enum\ChartColumnType;
 use Xmlnuke\Core\Enum\ChartType;
-use Xmlnuke\Core\Enum\Relation;
+use ByJG\AnyDataset\Enum\Relation;
 use Xmlnuke\Core\Locale\LanguageCollection;
 use Xmlnuke\Core\Locale\LanguageFactory;
 use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
@@ -126,7 +126,7 @@ class  XmlnukePoll extends XmlnukeDocumentObject
 	protected function getPollConfig()
 	{
 		$pollfile = new AnydatasetFilenameProcessor("_poll");
-		$anyconfig = new AnyDataset($pollfile);
+		$anyconfig = new AnyDataset($pollfile->FullQualifiedNameAndPath());
 
 		$it = $anyconfig->getIterator();
 		if ($it->hasNext())
@@ -151,9 +151,9 @@ class  XmlnukePoll extends XmlnukeDocumentObject
 	protected function getAnyData()
 	{
 		$filepoll = new AnydatasetFilenameProcessor("poll_list");
-		$this->_anyPoll = new AnyDataset($filepoll);
+		$this->_anyPoll = new AnyDataset($filepoll->FullQualifiedNameAndPath());
 		$fileanswer = new AnydatasetFilenameProcessor("poll_" . $this->_poll . "_" . $this->_lang);
-		$this->_anyAnswer = new AnyDataset($fileanswer);
+		$this->_anyAnswer = new AnyDataset($fileanswer->FullQualifiedNameAndPath());
 	}
 
 	/**
@@ -213,9 +213,9 @@ class  XmlnukePoll extends XmlnukeDocumentObject
 				{
 					// Get Data
 					$itf = new IteratorFilter();
-					$itf->addRelation("name", Relation::Equal, $this->_poll);
-					$itf->addRelation("lang", Relation::Equal, $this->_lang);
-					$itf->addRelation("code", Relation::Equal, $this->_context->get("xmlnuke_pollanswer"));
+					$itf->addRelation("name",  Relation::EQUAL, $this->_poll);
+					$itf->addRelation("lang",  Relation::EQUAL, $this->_lang);
+					$itf->addRelation("code",  Relation::EQUAL, $this->_context->get("xmlnuke_pollanswer"));
 					if ($this->_isdb)
 					{
 						$dbdata = new DBDataSet($this->_connection, $this->_context);
@@ -264,8 +264,8 @@ class  XmlnukePoll extends XmlnukeDocumentObject
 		{
 			// Get Data to SHOW the answers OR chart.
 			$itf = new IteratorFilter();
-			$itf->addRelation("name", Relation::Equal, $this->_poll);
-			$itf->addRelation("lang", Relation::Equal, $this->_lang);
+			$itf->addRelation("name",  Relation::EQUAL, $this->_poll);
+			$itf->addRelation("lang",  Relation::EQUAL, $this->_lang);
 			if ($this->_isdb)
 			{
 				$dbdata = new DBDataSet($this->_connection, $this->_context);
