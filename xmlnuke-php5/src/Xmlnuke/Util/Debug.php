@@ -42,7 +42,7 @@ use ReflectionMethod;
 use ReflectionProperty;
 use ByJG\AnyDataset\Repository\AnyDataset;
 use ByJG\AnyDataset\Repository\AnyIterator;
-use ByJG\AnyDataset\Repository\IIterator;
+use ByJG\AnyDataset\Repository\IteratorInterface;
 use ByJG\AnyDataset\Repository\IteratorFilter;
 use ByJG\AnyDataset\Repository\SingleRow;
 use Xmlnuke\Core\Engine\ErrorHandler;
@@ -72,7 +72,7 @@ class Debug
 
 	/**
 	 * Assist your to debug vars. Accept n vars parameters
-	 * Included Debug on ARRAY an IIterator Object
+	 * Included Debug on ARRAY an IteratorInterface Object
 	 *
 	 * @param mixed $arg1
 	 * @param mixed $arg2
@@ -105,12 +105,12 @@ class Debug
 			{
 				Debug::PrintValue($var->getIterator());
 			}
-			elseif ( ($var instanceof IIterator) || ($var instanceof AnyIterator) )
+			elseif ( ($var instanceof IteratorInterface) || ($var instanceof AnyIterator) )
 			{
 				$it = $var;
 				if (!$it->hasNext())
 				{
-					self::writeLog('IIterator', "Não trouxe registros.", false);
+					self::writeLog('IteratorInterface', "Não trouxe registros.", false);
 				}
 				else
 				{
@@ -148,7 +148,7 @@ class Debug
 						$result .= '</tr>';
 					}
 					$result .= "</table>";
-					self::writeLog('IIterator', $result, false);
+					self::writeLog('IteratorInterface', $result, false);
 				}
 			}
 			elseif ($var instanceof IteratorFilter)

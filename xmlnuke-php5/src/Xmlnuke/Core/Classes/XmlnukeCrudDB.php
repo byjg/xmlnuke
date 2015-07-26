@@ -31,8 +31,8 @@ namespace Xmlnuke\Core\Classes;
 
 use Exception;
 use ByJG\AnyDataset\Repository\AnyDataset;
-use ByJG\AnyDataset\Repository\DBDataSet;
-use ByJG\AnyDataset\Repository\IIterator;
+use ByJG\AnyDataset\Repository\DBDataset;
+use ByJG\AnyDataset\Repository\IteratorInterface;
 use ByJG\AnyDataset\Repository\SingleRow;
 use ByJG\AnyDataset\Database\SQLHelper;
 use Xmlnuke\Core\Engine\Context;
@@ -45,7 +45,7 @@ use Xmlnuke\Core\Formatter\CrudDateFormatter;
 use Xmlnuke\Util\Debug;
 
 /**
- * Basic CRUD based on XmlEditList, XmlFormCollection and DBDataSet classes
+ * Basic CRUD based on XmlEditList, XmlFormCollection and DBDataset classes
  * 
  * XmlnukeCrudDB is class to make easy View, Edit, Delete and Update single tables from relational databases like MySQL, PostGres, Oracle, SQLServer and others->
  * To use $this class is necessary define the $fields are used->
@@ -122,7 +122,7 @@ class XmlnukeCrudDB extends XmlnukeCrudBase
 	*/
 	protected $_fieldDeliRight = "";
 	/**
-	 * @var DBDataSet
+	 * @var DBDataset
 	 */
 	protected $_dbData = null;
 
@@ -141,13 +141,13 @@ class XmlnukeCrudDB extends XmlnukeCrudBase
 		parent::__construct($context, $fields, $header, $module, $buttons);
 		$this->_conn = $connection;
 		$this->_table = $table;
-		$this->_dbData = new DBDataSet($this->_conn, $this->_context);
+		$this->_dbData = new DBDataset($this->_conn, $this->_context);
 	}
 
 	/**
-	*@desc Returns an IIterator with all records in table
+	*@desc Returns an IteratorInterface with all records in table
 	*@param
-	*@return IIterator
+	*@return IteratorInterface
 	*/
 	public function getAllRecords()
 	{
@@ -330,7 +330,7 @@ class XmlnukeCrudDB extends XmlnukeCrudBase
 
 	/**
 	 * @param bool $getAll
-	 * @return IIterator
+	 * @return IteratorInterface
 	 */
 	protected function GetIterator($getAll)
 	{

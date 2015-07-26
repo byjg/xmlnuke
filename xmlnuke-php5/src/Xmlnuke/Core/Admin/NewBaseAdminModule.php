@@ -29,9 +29,9 @@
 
 namespace Xmlnuke\Core\Admin;
 
-use ByJG\AnyDataset\Repository\ArrayDataSet;
-use ByJG\AnyDataset\Repository\IIterator;
-use ByJG\AnyDataset\Repository\XmlDataSet;
+use ByJG\AnyDataset\Repository\ArrayDataset;
+use ByJG\AnyDataset\Repository\IteratorInterface;
+use ByJG\AnyDataset\Repository\XmlDataset;
 use Xmlnuke\Core\Classes\PageXml;
 use Xmlnuke\Core\Classes\XmlBlockCollection;
 use Xmlnuke\Core\Classes\XmlnukeDocument;
@@ -183,7 +183,7 @@ abstract class NewBaseAdminModule extends BaseModule
 	 * Enter description here...
 	 *
 	 * @param string $group
-	 * @return IIterator
+	 * @return IteratorInterface
 	 */
 	protected function GetAdminGroups($group = "")
 	{
@@ -200,7 +200,7 @@ abstract class NewBaseAdminModule extends BaseModule
 			}
 		}
 		
-		$arr = new ArrayDataSet($keys, "name");
+		$arr = new ArrayDataset($keys, "name");
 		return $arr->getIterator();
 	}
 	
@@ -251,7 +251,7 @@ abstract class NewBaseAdminModule extends BaseModule
 				if (FileUtil::Exists($configFile))
 				{
 					$config = FileUtil::QuickFileRead($configFile);
-					$dataset = new XmlDataSet($this->_context, $config, $rowNode, $colNode);
+					$dataset = new XmlDataset($this->_context, $config, $rowNode, $colNode);
 					foreach ($dataset->getIterator() as $sr)
 					{
 						if (array_key_exists($sr->getField("group"), $this->_adminModulesList) || ($i==0))

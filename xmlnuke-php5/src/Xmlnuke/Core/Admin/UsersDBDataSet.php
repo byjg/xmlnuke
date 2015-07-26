@@ -36,8 +36,8 @@ namespace Xmlnuke\Core\Admin;
 
 use InvalidArgumentException;
 use ByJG\AnyDataset\Repository\AnyDataset;
-use ByJG\AnyDataset\Repository\DBDataSet;
-use ByJG\AnyDataset\Repository\IIterator;
+use ByJG\AnyDataset\Repository\DBDataset;
+use ByJG\AnyDataset\Repository\IteratorInterface;
 use ByJG\AnyDataset\Repository\IteratorFilter;
 use ByJG\AnyDataset\Repository\SingleRow;
 use ByJG\AnyDataset\Database\SQLHelper;
@@ -45,7 +45,7 @@ use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\UserProperty;
 use Xmlnuke\Core\Exception\DatasetException;
 
-class UsersDBDataSet extends UsersBase
+class UsersDBDataset extends UsersBase
 {
 	/**
 	* @var DBDataset
@@ -59,12 +59,12 @@ class UsersDBDataSet extends UsersBase
 
 
 	/**
-	  * DBDataSet constructor
+	  * DBDataset constructor
 	  */
 	public function __construct(Context $context, $dataBase)
 	{
 		$this->_context = $context;
-		$this->_DB = new DBDataSet($dataBase, $context);
+		$this->_DB = new DBDataset($dataBase, $context);
 		$this->_SQLHelper = new SQLHelper($this->_DB);
 	}
 
@@ -235,7 +235,7 @@ class UsersDBDataSet extends UsersBase
 	 *
 	 * @param IteratorFilter $filter Filter to find user
 	 * @param array $param
-	 * @return IIterator
+	 * @return IteratorInterface
 	 */
 	public function getIterator(IteratorFilter $filter = null, $param = array())
 	{
@@ -483,7 +483,7 @@ class UsersDBDataSet extends UsersBase
 	 *
 	 * @param string $site
 	 * @param string $role
-	 * @return IIterator
+	 * @return IteratorInterface
 	 */
 	public function getRolesIterator($site = "_all", $role = "")
 	{

@@ -33,11 +33,11 @@
 namespace Xmlnuke\Modules;
 
 use ByJG\AnyDataset\Repository\AnyDataset;
-use ByJG\AnyDataset\Repository\ArrayDataSet;
-use ByJG\AnyDataset\Repository\DBDataSet;
+use ByJG\AnyDataset\Repository\ArrayDataset;
+use ByJG\AnyDataset\Repository\DBDataset;
 use ByJG\AnyDataset\Repository\IteratorFilter;
-use ByJG\AnyDataset\Repository\TextFileDataSet;
-use ByJG\AnyDataset\Repository\XmlDataSet;
+use ByJG\AnyDataset\Repository\TextFileDataset;
+use ByJG\AnyDataset\Repository\XmlDataset;
 use Xmlnuke\Core\Classes\ChartOutput;
 use Xmlnuke\Core\Classes\ChartSeriesFormat;
 use Xmlnuke\Core\Classes\CrudField;
@@ -668,14 +668,14 @@ class Sample extends BaseModule
 				}
 			case "test":
 				{
-					$db = new DBDataSet("sampledb", $this->_context);
+					$db = new DBDataset("sampledb", $this->_context);
 					$db->TestConnection();
 					$paragraph->addXmlnukeObject(new XmlnukeText("I suppose it is fine the connection string!", true));
 					break;
 				}
 			case "create":
 				{
-					$db = new DBDataSet("sampledb", $this->_context);
+					$db = new DBDataset("sampledb", $this->_context);
 					$sql = "create table sample (fieldkey integer, fieldname varchar(20))";
 					$db->execSQL($sql);
 					$db->TestConnection();
@@ -773,7 +773,7 @@ class Sample extends BaseModule
 
 	protected function Opcao7()
 	{
-		$block = new XmlBlockCollection("Exemplo 7: XmlDataSet", BlockPosition::Center);
+		$block = new XmlBlockCollection("Exemplo 7: XmlDataset", BlockPosition::Center);
 
 		//XmlnukeBreakLine br = new XmlnukeBreakLine();
 
@@ -791,7 +791,7 @@ class Sample extends BaseModule
 				$colNode[$tmp[0]] = str_replace("\r", "", $tmp[1]);
 			}
 
-			$dataset = new XmlDataSet($this->_context, $xmlstr, $rowNode, $colNode);
+			$dataset = new XmlDataset($this->_context, $xmlstr, $rowNode, $colNode);
 			//$para1->addXmlnukeObject(new XmlnukeText(""));
 			$editlist = new XmlEditList($this->_context, "XML Flat", $this->_url . "?op=7");
 			$editlist->setReadOnly(true);
@@ -839,7 +839,7 @@ class Sample extends BaseModule
 
 	protected function Opcao8()
 	{
-		$block = new XmlBlockCollection("Exemplo 8: TextFileDataSet", BlockPosition::Center);
+		$block = new XmlBlockCollection("Exemplo 8: TextFileDataset", BlockPosition::Center);
 
 		//XmlnukeBreakLine br = new XmlnukeBreakLine();
 
@@ -853,7 +853,7 @@ class Sample extends BaseModule
 		{
 			$processor = new AnydatasetFilenameProcessor("sample");
 			FileUtil::QuickFileWrite($processor->PathSuggested() . "sample.csv", $txtstr);
-			$dataset = new TextFileDataSet($this->_context, $processor->PathSuggested() . "sample.csv", $colNodeStr, $regexp);
+			$dataset = new TextFileDataset($this->_context, $processor->PathSuggested() . "sample.csv", $colNodeStr, $regexp);
 			//$para1->addXmlnukeObject(new XmlnukeText(""));
 			$editlist = new XmlEditList($this->_context, "Text Flat", $this->_url . "?op=8");
 			$editlist->setReadOnly(true);
@@ -864,7 +864,7 @@ class Sample extends BaseModule
 		{
 			$processor = new AnydatasetFilenameProcessor("sample");
 			$txtstr = FileUtil::QuickFileRead($processor->PathSuggested() . "sample.csv");
-			$regexp = TextFileDataSet::CSVFILE;
+			$regexp = TextFileDataset::CSVFILE;
 			$colNodeStr = array();
 			$colNodeStr[] = "category";
 			$colNodeStr[] = "title";
@@ -919,7 +919,7 @@ class Sample extends BaseModule
 		$colNodeStr[] = "author";
 
 		$processor = new AnydatasetFilenameProcessor("sample");
-		$dataset = new TextFileDataSet($this->_context, $processor->PathSuggested() . "sample.csv", $colNodeStr);
+		$dataset = new TextFileDataset($this->_context, $processor->PathSuggested() . "sample.csv", $colNodeStr);
 
 		//$para1->addXmlnukeObject(new XmlnukeText(""));
 		$editlist = new XmlEditList($this->_context, "Text Flat", $this->_url . "?op=9");
@@ -937,7 +937,7 @@ class Sample extends BaseModule
 		$code->AddTextLine("\$chart = new XmlChart(");
 		$code->AddTextLine("		\$this->_context,             // Xmlnuke Context");
 		$code->AddTextLine("		\"Book Store\",            // Graph Title");
-		$code->AddTextLine("		\$dataset->getIterator(),     // IIterator Object");
+		$code->AddTextLine("		\$dataset->getIterator(),     // IteratorInterface Object");
 		$code->AddTextLine("		ChartOutput::Flash,         // Graph output format ");
 		$code->AddTextLine("		ChartSeriesFormat::Column   // Default column type");
 		$code->AddTextLine(");");
@@ -999,9 +999,9 @@ class Sample extends BaseModule
 		// Define DataSet Source
 		$arrayLeft = array("A" => "Letra A", "B" => "Letra B", "C" => "Letra C", "D" => "Letra D", "E" => "Letra E", "F" => "Letra F");
 		$arrayRight = array("B" => "Letra B", "D" => "Letra D");
-		$arrayDBLeft = new ArrayDataSet($arrayLeft);
+		$arrayDBLeft = new ArrayDataset($arrayLeft);
 		$itLeft = $arrayDBLeft->getIterator();
-		$arrayDBRight = new ArrayDataSet($arrayRight);
+		$arrayDBRight = new ArrayDataset($arrayRight);
 		$itRight = $arrayDBRight->getIterator();
 		$duallist->setDataSourceFieldName("key", "value");
 		$duallist->setDataSource($itLeft, $itRight);

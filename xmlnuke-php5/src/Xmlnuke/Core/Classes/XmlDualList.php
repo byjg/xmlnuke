@@ -87,7 +87,7 @@ namespace Xmlnuke\Core\Classes;
 
 use DOMNode;
 use InvalidArgumentException;
-use ByJG\AnyDataset\Repository\IIterator;
+use ByJG\AnyDataset\Repository\IteratorInterface;
 use Xmlnuke\Core\Engine\Context;
 use ByJG\Util\XmlUtil;
 
@@ -122,11 +122,11 @@ class  XmlDualList extends XmlnukeDocumentObject
 	*/
 	protected $_listRightName;
 	/**
-	*@var IIterator
+	*@var IteratorInterface
 	*/
 	protected $_listLeftDataSource;
 	/**
-	*@var IIterator
+	*@var IteratorInterface
 	*/
 	protected $_listRightDataSource;
 	/**
@@ -175,8 +175,8 @@ class  XmlDualList extends XmlnukeDocumentObject
 	/**
 	 * Config DataSource to Dual List
 	 *
-	 * @param IIterator $listLeft
-	 * @param IIterator $listRight
+	 * @param IteratorInterface $listLeft
+	 * @param IteratorInterface $listRight
 	 */
 	public function setDataSource($listLeft, $listRight = null)
 	{

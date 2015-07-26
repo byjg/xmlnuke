@@ -45,7 +45,7 @@ use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\UserProperty;
 use Xmlnuke\Core\Exception\NotImplementedException;
 
-class UsersMoodleDataSet extends UsersDBDataSet
+class UsersMoodleDataSet extends UsersDBDataset
 {
 
 	/**
@@ -54,7 +54,7 @@ class UsersMoodleDataSet extends UsersDBDataSet
 	protected $_siteSalt = "";
 
 	/**
-	  * DBDataSet constructor
+	  * DBDataset constructor
 	  */
 	public function __construct(Context $context, $dataBase)
 	{

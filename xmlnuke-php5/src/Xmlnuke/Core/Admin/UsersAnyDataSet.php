@@ -33,13 +33,13 @@
  * This is the default method in XMLNuke. 
  * The file where the users, passwords and properties are stored is located on xmlnuke-data/shared/setup/users.anydata.xml
  * 
- * @see UsersDBDataSet
+ * @see UsersDBDataset
  * @package xmlnuke
  */
 namespace Xmlnuke\Core\Admin;
 
 use ByJG\AnyDataset\Repository\AnyDataset;
-use ByJG\AnyDataset\Repository\IIterator;
+use ByJG\AnyDataset\Repository\IteratorInterface;
 use ByJG\AnyDataset\Repository\IteratorFilter;
 use ByJG\AnyDataset\Repository\SingleRow;
 use ByJG\AnyDataset\Enum\Relation;
@@ -157,7 +157,7 @@ class UsersAnyDataset extends UsersBase
 	 * Get an Iterator based on a filter
 	 *
 	 * @param IteratorFilter $filter
-	 * @return IIterator
+	 * @return IteratorInterface
 	 */
 	public function getIterator($filter = null)
 	{
@@ -251,7 +251,7 @@ class UsersAnyDataset extends UsersBase
 	 *
 	 * @param string $site
 	 * @param string $role
-	 * @return IIterator
+	 * @return IteratorInterface
 	 */
 	public function getRolesIterator($site, $role = "")
 	{

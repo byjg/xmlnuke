@@ -30,7 +30,7 @@
 namespace Xmlnuke\Core\Classes;
 
 use ByJG\AnyDataset\Repository\AnyDataset;
-use ByJG\AnyDataset\Repository\IIterator;
+use ByJG\AnyDataset\Repository\IteratorInterface;
 use ByJG\AnyDataset\Repository\IteratorFilter;
 use ByJG\AnyDataset\Repository\SingleRow;
 use Xmlnuke\Core\Engine\Context;
@@ -131,8 +131,8 @@ class  XmlnukeCrudAnydata extends XmlnukeCrudBase
 	}
 
 	/**
-	*@desc Returns an IIterator with all records in table
-	*@return IIterator
+	*@desc Returns an IteratorInterface with all records in table
+	*@return IteratorInterface
 	*/
 	public function getAllRecords()
 	{

@@ -30,7 +30,7 @@
 namespace Xmlnuke\Core\Admin;
 
 /**
- * IUsersBase is a Interface to Store and Retrive USERS from an AnyDataset or a DBDataSet structure.
+ * IUsersBase is a Interface to Store and Retrive USERS from an AnyDataset or a DBDataset structure.
  * @package xmlnuke
  */
 interface IUsersBase
@@ -150,7 +150,7 @@ interface IUsersBase
 	 *
 	 * @param string $site
 	 * @param string $role
-	 * @return IIterator
+	 * @return IteratorInterface
 	 */
 	public function getRolesIterator($site, $role = "");
 

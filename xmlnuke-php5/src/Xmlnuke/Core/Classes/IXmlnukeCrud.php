@@ -29,7 +29,7 @@
 
 namespace Xmlnuke\Core\Classes;
 
-use ByJG\AnyDataset\Repository\IIterator;
+use ByJG\AnyDataset\Repository\IteratorInterface;
 use ByJG\AnyDataset\Repository\SingleRow;
 
 /**
@@ -38,7 +38,7 @@ use ByJG\AnyDataset\Repository\SingleRow;
 interface IXmlnukeCrud
 {
 	/**
-	*@return IIterator
+	*@return IteratorInterface
 	*/
 	function getAllRecords();
 	

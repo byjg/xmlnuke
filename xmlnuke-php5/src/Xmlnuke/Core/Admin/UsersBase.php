@@ -29,7 +29,7 @@
 
 namespace Xmlnuke\Core\Admin;
 
-use ByJG\AnyDataset\Repository\IIterator;
+use ByJG\AnyDataset\Repository\IteratorInterface;
 use ByJG\AnyDataset\Repository\IteratorFilter;
 use ByJG\AnyDataset\Repository\SingleRow;
 use Xmlnuke\Core\Engine\Context;
@@ -355,7 +355,7 @@ abstract class UsersBase implements IUsersBase
 	 *
 	 * @param string $site
 	 * @param string $role
-	 * @return IIterator
+	 * @return IteratorInterface
 	 */
 	public function getRolesIterator($site, $role = "")
 	{

@@ -38,7 +38,7 @@ use Negotiation\LanguageNegotiator;
 use UnexpectedValueException;
 use Xmlnuke\Core\Admin\IUsersBase;
 use Xmlnuke\Core\Admin\UsersAnyDataset;
-use Xmlnuke\Core\Admin\UsersDBDataSet;
+use Xmlnuke\Core\Admin\UsersDBDataset;
 use ByJG\AnyDataset\Repository\AnyDataset;
 use ByJG\AnyDataset\Repository\IteratorFilter;
 use ByJG\Cache\ICacheEngine;
@@ -1467,7 +1467,7 @@ class Context
 			}
 			else
 			{
-				$this->__userdb = new UsersDBDataSet($this, $conn);
+				$this->__userdb = new UsersDBDataset($this, $conn);
 			}
 		}
 

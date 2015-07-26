@@ -31,8 +31,8 @@ namespace Xmlnuke\Core\Classes;
 
 use DOMNode;
 use Exception;
-use ByJG\AnyDataset\Repository\ArrayDataSet;
-use ByJG\AnyDataset\Repository\IIterator;
+use ByJG\AnyDataset\Repository\ArrayDataset;
+use ByJG\AnyDataset\Repository\IteratorInterface;
 use ByJG\AnyDataset\Repository\SingleRow;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\CustomButtons;
@@ -234,7 +234,7 @@ abstract class XmlnukeCrudBase extends XmlnukeDocumentObject implements IXmlnuke
 	/**
 	*@desc
 	*@param
-	*@return IIterator
+	*@return IteratorInterface
 	*/
 	public function getAllRecords(){}
 
@@ -781,7 +781,7 @@ abstract class XmlnukeCrudBase extends XmlnukeDocumentObject implements IXmlnuke
 		}
 		else if ($field->fieldXmlInput == XmlInputObjectType::DUALLIST)
 		{
-			$ards = new ArrayDataSet($field->arraySelectList, "value");
+			$ards = new ArrayDataset($field->arraySelectList, "value");
 			$duallist = new XmlDualList($this->_context, $field->fieldName, $this->_lang->Value("TXT_AVAILABLE", $field->fieldCaption), $this->_lang->Value("TXT_USED", $field->fieldCaption));
 			$duallist->createDefaultButtons();
 			$duallist->setDataSourceFieldName("key", "value");
@@ -799,7 +799,7 @@ abstract class XmlnukeCrudBase extends XmlnukeDocumentObject implements IXmlnuke
 			{
 				$ardt = array();
 			}
-			$ards2 = new ArrayDataSet($ardt, "value");
+			$ards2 = new ArrayDataset($ardt, "value");
 
 			$duallist->setDataSource($ards->getIterator(), $ards2->getIterator());
 

@@ -30,7 +30,7 @@
 namespace Xmlnuke\Core\Classes;
 
 use ByJG\AnyDataset\Repository\AnyDataset;
-use ByJG\AnyDataset\Repository\DBDataSet;
+use ByJG\AnyDataset\Repository\DBDataset;
 use ByJG\AnyDataset\Repository\IteratorFilter;
 use Xmlnuke\Core\Engine\Context;
 use ByJG\AnyDataset\Model\ObjectHandler;
@@ -178,7 +178,7 @@ class  XmlnukePoll extends XmlnukeDocumentObject
 				if ($this->_isdb)
 				{
 					// Remove Old Entries
-					$dbdata = new DBDataSet($this->_connection);
+					$dbdata = new DBDataset($this->_connection);
 					$sql = "delete from :table where register < now() - interval 5 day ";
 					$sql = \ByJG\AnyDataset\Database\SQLHelper::createSafeSQL($sql, array(':table' => $this->_tbllastip));
 					$dbdata->execSQL($sql);
@@ -218,7 +218,7 @@ class  XmlnukePoll extends XmlnukeDocumentObject
 					$itf->addRelation("code",  Relation::EQUAL, $this->_context->get("xmlnuke_pollanswer"));
 					if ($this->_isdb)
 					{
-						$dbdata = new DBDataSet($this->_connection, $this->_context);
+						$dbdata = new DBDataset($this->_connection, $this->_context);
 						$param = array();
 						$sql = "update :table set votes = IFNULL(votes,0) + 1 where :filter ";
 
@@ -268,7 +268,7 @@ class  XmlnukePoll extends XmlnukeDocumentObject
 			$itf->addRelation("lang",  Relation::EQUAL, $this->_lang);
 			if ($this->_isdb)
 			{
-				$dbdata = new DBDataSet($this->_connection, $this->_context);
+				$dbdata = new DBDataset($this->_connection, $this->_context);
 				$param = array();
 				$sql = $itf->getSql($this->_tblpoll, $param);
 				$itPoll = $dbdata->getIterator($sql, $param);

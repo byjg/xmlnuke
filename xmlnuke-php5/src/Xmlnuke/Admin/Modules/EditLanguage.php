@@ -35,8 +35,8 @@ namespace Xmlnuke\Admin\Modules;
 
 use Xmlnuke\Core\Admin\NewBaseAdminModule;
 use ByJG\AnyDataset\Repository\AnyDataset;
-use ByJG\AnyDataset\Repository\ArrayDataSet;
-use ByJG\AnyDataset\Repository\IIterator;
+use ByJG\AnyDataset\Repository\ArrayDataset;
+use ByJG\AnyDataset\Repository\IteratorInterface;
 use Xmlnuke\Core\Classes\CrudField;
 use Xmlnuke\Core\Classes\CrudFieldCollection;
 use Xmlnuke\Core\Classes\EditListField;
@@ -228,7 +228,7 @@ class EditLanguage extends NewBaseAdminModule
 	 *
 	 * @param array $filelist
 	 * @param FilenameProcessor $proc
-	 * @return IIterator
+	 * @return IteratorInterface
 	 */
 	private function getIteratorFromList($filelist, $proc)
 	{
@@ -242,7 +242,7 @@ class EditLanguage extends NewBaseAdminModule
 			$arResult[$name] = $name;
 		}
 
-		$ds = new ArrayDataSet($arResult, "singlename");
+		$ds = new ArrayDataset($arResult, "singlename");
 		return $ds->getIterator();
 
 	}

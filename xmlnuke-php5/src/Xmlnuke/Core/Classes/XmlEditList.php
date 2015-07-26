@@ -35,8 +35,8 @@ namespace Xmlnuke\Core\Classes;
 use DOMNode;
 use InvalidArgumentException;
 use ByJG\AnyDataset\Repository\AnyDataset;
-use ByJG\AnyDataset\Repository\ArrayDataSet;
-use ByJG\AnyDataset\Repository\IIterator;
+use ByJG\AnyDataset\Repository\ArrayDataset;
+use ByJG\AnyDataset\Repository\IteratorInterface;
 use ByJG\AnyDataset\Repository\SingleRow;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\CustomButtons;
@@ -82,7 +82,7 @@ class  XmlEditList extends XmlnukeDocumentObject
 	*/
 	protected $_selecttype;
 	/**
-	*@var IIterator
+	*@var IteratorInterface
 	*/
 	protected $_it;
 	/**
@@ -229,14 +229,14 @@ class  XmlEditList extends XmlnukeDocumentObject
 	
 	/**
 	*@desc set Data Source
-	*@param IIterator $it
+	*@param IteratorInterface $it
 	*@return void
 	*/
 	public function setDataSource($it)
 	{
 		if (is_array($it))
 		{
-			$arrayDS = new ArrayDataSet($it);
+			$arrayDS = new ArrayDataset($it);
 			$it = $arrayDS->getIterator();
 		}
 		$this->_it = $it;
@@ -408,8 +408,8 @@ class  XmlEditList extends XmlnukeDocumentObject
 		
 		$summaryFields = array();
 
-		if (!($this->_it instanceof IIterator))
-			throw new InvalidArgumentException('You have to pass an IIterator object to the XmlEditList');
+		if (!($this->_it instanceof IteratorInterface))
+			throw new InvalidArgumentException('You have to pass an IteratorInterface object to the XmlEditList');
 
 		// Generate XML With Data
 		while ($this->_it->hasNext())
