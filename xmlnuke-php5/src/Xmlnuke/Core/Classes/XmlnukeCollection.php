@@ -118,7 +118,7 @@ class XmlnukeCollection
 				}
 				elseif (!($item instanceof IXmlnukeDocumentObject) && ($this->_xmlTransform != XMLTransform::IXMLNukeDocumentObject))
 				{
-					$objHandler = new \Xmlnuke\Core\Engine\ObjectHandler($current, $item, $this->_configTransform);
+					$objHandler = new \ByJG\AnyDataset\Model\ObjectHandler($current, $item, $this->_configTransform);
 					$objHandler->CreateObjectFromModel();
 				}
 			}
