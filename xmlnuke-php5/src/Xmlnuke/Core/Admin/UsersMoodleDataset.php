@@ -45,7 +45,7 @@ use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\UserProperty;
 use Xmlnuke\Core\Exception\NotImplementedException;
 
-class UsersMoodleDataSet extends UsersDBDataset
+class UsersMoodleDataset extends UsersDBDataset
 {
 
 	/**
