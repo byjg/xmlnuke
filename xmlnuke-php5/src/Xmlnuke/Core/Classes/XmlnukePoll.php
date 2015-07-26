@@ -218,7 +218,7 @@ class  XmlnukePoll extends XmlnukeDocumentObject
 					$itf->addRelation("code",  Relation::EQUAL, $this->_context->get("xmlnuke_pollanswer"));
 					if ($this->_isdb)
 					{
-						$dbdata = new DBDataset($this->_connection, $this->_context);
+						$dbdata = new DBDataset($this->_connection);
 						$param = array();
 						$sql = "update :table set votes = IFNULL(votes,0) + 1 where :filter ";
 
@@ -268,7 +268,7 @@ class  XmlnukePoll extends XmlnukeDocumentObject
 			$itf->addRelation("lang",  Relation::EQUAL, $this->_lang);
 			if ($this->_isdb)
 			{
-				$dbdata = new DBDataset($this->_connection, $this->_context);
+				$dbdata = new DBDataset($this->_connection);
 				$param = array();
 				$sql = $itf->getSql($this->_tblpoll, $param);
 				$itPoll = $dbdata->getIterator($sql, $param);

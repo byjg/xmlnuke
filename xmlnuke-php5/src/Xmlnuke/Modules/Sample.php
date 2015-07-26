@@ -668,14 +668,14 @@ class Sample extends BaseModule
 				}
 			case "test":
 				{
-					$db = new DBDataset("sampledb", $this->_context);
+					$db = new DBDataset("sampledb");
 					$db->TestConnection();
 					$paragraph->addXmlnukeObject(new XmlnukeText("I suppose it is fine the connection string!", true));
 					break;
 				}
 			case "create":
 				{
-					$db = new DBDataset("sampledb", $this->_context);
+					$db = new DBDataset("sampledb");
 					$sql = "create table sample (fieldkey integer, fieldname varchar(20))";
 					$db->execSQL($sql);
 					$db->TestConnection();
@@ -791,7 +791,7 @@ class Sample extends BaseModule
 				$colNode[$tmp[0]] = str_replace("\r", "", $tmp[1]);
 			}
 
-			$dataset = new XmlDataset($this->_context, $xmlstr, $rowNode, $colNode);
+			$dataset = new XmlDataset( $xmlstr, $rowNode, $colNode);
 			//$para1->addXmlnukeObject(new XmlnukeText(""));
 			$editlist = new XmlEditList($this->_context, "XML Flat", $this->_url . "?op=7");
 			$editlist->setReadOnly(true);
@@ -853,7 +853,7 @@ class Sample extends BaseModule
 		{
 			$processor = new AnydatasetFilenameProcessor("sample");
 			FileUtil::QuickFileWrite($processor->PathSuggested() . "sample.csv", $txtstr);
-			$dataset = new TextFileDataset($this->_context, $processor->PathSuggested() . "sample.csv", $colNodeStr, $regexp);
+			$dataset = new TextFileDataset( $processor->PathSuggested() . "sample.csv", $colNodeStr, $regexp);
 			//$para1->addXmlnukeObject(new XmlnukeText(""));
 			$editlist = new XmlEditList($this->_context, "Text Flat", $this->_url . "?op=8");
 			$editlist->setReadOnly(true);
@@ -919,7 +919,7 @@ class Sample extends BaseModule
 		$colNodeStr[] = "author";
 
 		$processor = new AnydatasetFilenameProcessor("sample");
-		$dataset = new TextFileDataset($this->_context, $processor->PathSuggested() . "sample.csv", $colNodeStr);
+		$dataset = new TextFileDataset( $processor->PathSuggested() . "sample.csv", $colNodeStr);
 
 		//$para1->addXmlnukeObject(new XmlnukeText(""));
 		$editlist = new XmlEditList($this->_context, "Text Flat", $this->_url . "?op=9");

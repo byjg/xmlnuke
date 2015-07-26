@@ -141,7 +141,7 @@ class XmlnukeCrudDB extends XmlnukeCrudBase
 		parent::__construct($context, $fields, $header, $module, $buttons);
 		$this->_conn = $connection;
 		$this->_table = $table;
-		$this->_dbData = new DBDataset($this->_conn, $this->_context);
+		$this->_dbData = new DBDataset($this->_conn);
 	}
 
 	/**
@@ -306,7 +306,7 @@ class XmlnukeCrudDB extends XmlnukeCrudBase
 						$value = $field->beforeInsertFormatter->Format($srCurInfo, $field->fieldName, $value);
 					}
 
-					$fieldList[$field->fieldName] = array(SQLFieldType::Text, $value);
+					$fieldList[$field->fieldName] = array(SQLFieldType::TEXT, $value);
 				}
 			}
 		}

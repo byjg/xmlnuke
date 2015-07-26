@@ -56,9 +56,9 @@ class UsersMoodleDataset extends UsersDBDataset
 	/**
 	  * DBDataset constructor
 	  */
-	public function __construct(Context $context, $dataBase)
+	public function __construct($dataBase)
 	{
-		parent::__construct($context, $dataBase);
+		parent::__construct($dataBase);
 
 		$this->_siteSalt = $context->get('moodle.sitesalt');
 	}

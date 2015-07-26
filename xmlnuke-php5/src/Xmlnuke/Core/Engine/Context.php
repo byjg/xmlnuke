@@ -33,18 +33,18 @@
  */
 namespace Xmlnuke\Core\Engine;
 
+use ByJG\AnyDataset\Enum\Relation;
+use ByJG\AnyDataset\Repository\AnyDataset;
+use ByJG\AnyDataset\Repository\IteratorFilter;
+use ByJG\Cache\ICacheEngine;
+use ByJG\Cache\NoCacheEngine;
 use InvalidArgumentException;
 use Negotiation\LanguageNegotiator;
 use UnexpectedValueException;
 use Xmlnuke\Core\Admin\IUsersBase;
 use Xmlnuke\Core\Admin\UsersAnyDataset;
 use Xmlnuke\Core\Admin\UsersDBDataset;
-use ByJG\AnyDataset\Repository\AnyDataset;
-use ByJG\AnyDataset\Repository\IteratorFilter;
-use ByJG\Cache\ICacheEngine;
-use ByJG\Cache\NoCacheEngine;
 use Xmlnuke\Core\Enum\OutputData;
-use ByJG\AnyDataset\Enum\Relation;
 use Xmlnuke\Core\Exception\UploadUtilException;
 use Xmlnuke\Core\Locale\CultureInfo;
 use Xmlnuke\Core\Locale\LocaleFactory;
@@ -57,7 +57,7 @@ use Xmlnuke\Util\Debug;
 use Xmlnuke\Util\FileUtil;
 use Xmlnuke\XmlFS\XmlnukeDB;
 
-class Context 
+class Context implements \ByJG\AnyDataset\Model\DumpToArrayInterface
 {
 	use \ByJG\DesignPattern\Singleton {
 		getInstance as traitGetInstance;
@@ -1455,7 +1455,7 @@ class Context
 			$conn = $this->get("xmlnuke.USERSDATABASE");
 			if ($class != "")
 			{
-				$this->__userdb = new $class($this, $conn);
+				$this->__userdb = new $class($conn);
 				if (!($this->__userdb instanceof IUsersBase))
 				{
 					throw new InvalidArgumentException("Authentication class '$class' must implement IUsersBase interface");
@@ -1463,11 +1463,11 @@ class Context
 			}
 			elseif ($conn == "")
 			{
-				$this->__userdb = new UsersAnyDataset($this);
+				$this->__userdb = new UsersAnyDataset();
 			}
 			else
 			{
-				$this->__userdb = new UsersDBDataset($this, $conn);
+				$this->__userdb = new UsersDBDataset($conn);
 			}
 		}
 
@@ -1565,4 +1565,8 @@ class Context
 		return $servername;
 	}
 
+	public function toArray()
+	{
+		return $this->_config;
+	}
 }

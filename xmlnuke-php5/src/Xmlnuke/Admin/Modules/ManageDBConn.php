@@ -181,7 +181,7 @@ class ManageDBConn extends NewBaseAdminModule
 			{
 				try
 				{
-					$dbdataset = new DBDataset($db, $this->_context);
+					$dbdataset = new DBDataset($db);
 					$dbdataset->TestConnection();
 					$p->addXmlnukeObject(new XmlnukeText($this->myWords->Value("SEEMSOK")));
 				}

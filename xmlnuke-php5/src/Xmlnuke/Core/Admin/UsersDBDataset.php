@@ -60,10 +60,9 @@ class UsersDBDataset extends UsersBase
 	/**
 	  * DBDataset constructor
 	  */
-	public function __construct(Context $context, $dataBase)
+	public function __construct($dataBase)
 	{
-		$this->_context = $context;
-		$this->_DB = new DBDataset($dataBase, $context);
+		$this->_DB = new DBDataset($dataBase);
 		$this->_SQLHelper = new SQLHelper($this->_DB);
 	}
 

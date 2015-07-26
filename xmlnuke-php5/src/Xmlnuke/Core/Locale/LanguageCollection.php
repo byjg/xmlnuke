@@ -43,7 +43,7 @@ use Xmlnuke\Util\FileUtil;
 
 /**
  * LanguageCollection class create a NameValueCollection but only add elements from the current language context
- * @package xmlnuke
+ * @xmlnuke:nodename l10n
  */
 class LanguageCollection
 {
@@ -244,6 +244,10 @@ class LanguageCollection
 		Debug::PrintValue($this->_collection);
 	}
 
+	/**
+	 * @xmlnuke:dontcreatenode
+	 * @return array
+	 */
 	public function getCollection()
 	{
 		return $this->_collection;

@@ -251,7 +251,7 @@ abstract class NewBaseAdminModule extends BaseModule
 				if (FileUtil::Exists($configFile))
 				{
 					$config = FileUtil::QuickFileRead($configFile);
-					$dataset = new XmlDataset($this->_context, $config, $rowNode, $colNode);
+					$dataset = new XmlDataset( $config, $rowNode, $colNode);
 					foreach ($dataset->getIterator() as $sr)
 					{
 						if (array_key_exists($sr->getField("group"), $this->_adminModulesList) || ($i==0))

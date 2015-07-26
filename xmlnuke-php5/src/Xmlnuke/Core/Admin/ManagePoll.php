@@ -170,7 +170,7 @@ class ManagePoll extends NewBaseAdminModule
 					$tbllastip = $this->_context->get("tbl_lastip");
 					$suffix = $this->_context->get("tablesuffix");
 					
-					$dbdata = new DBDataset($this->_context->get("type"), $this->_context);
+					$dbdata = new DBDataset($this->_context->get("type"));
 					$results = array();
 					$results[] = $this->CreateTable($dbdata, "create table $tblpoll", "create table $tblpoll (name varchar(15), lang char(5), question varchar(150), multiple char(1), showresults char(1), active char(1)) $suffix");
 					$results[] = $this->CreateTable($dbdata, "create table $tblanswer", "create table $tblanswer (name varchar(15), lang char(5), code int, short varchar(10), answer varchar(50), votes int) $suffix");
