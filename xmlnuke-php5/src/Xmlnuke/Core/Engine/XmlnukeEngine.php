@@ -28,13 +28,16 @@
 */
 
 /**
- * This class call all of other xmlnuke classes and return the XML/XSL processed. 
+ * This class call all of other xmlnuke classes and return the XML/XSL processed.
  * @package xmlnuke
  */
 namespace Xmlnuke\Core\Engine;
 
+use ByJG\AnyDataset\Model\ObjectHandler;
+use ByJG\Util\XmlUtil;
 use DOMDocument;
 use DOMNode;
+use Exception;
 use InvalidArgumentException;
 use UsersBase;
 use Xmlnuke\Core\Classes\ICheckAccess;
@@ -52,8 +55,6 @@ use Xmlnuke\Core\Processor\SnippetProcessor;
 use Xmlnuke\Core\Processor\XMLFilenameProcessor;
 use Xmlnuke\Core\Processor\XSLFilenameProcessor;
 use Xmlnuke\Util\FileUtil;
-use ByJG\Util\XmlUtil;
-use Exception;
 use XSLTProcessor;
 
 class XmlnukeEngine
@@ -61,7 +62,7 @@ class XmlnukeEngine
 	const OUTPUT_TRANSFORMED_DOC = "-";
 	const OUTPUT_XML = "xml";
 	const OUTPUT_JSON = "json";
-	
+
 	/**
 	 * Context
 	 *
@@ -81,23 +82,23 @@ class XmlnukeEngine
 	 * @var string
 	 */
 	protected $_extractNodesRoot = "xmlnuke";
-	
+
 	protected $_extraParams = array();
 
 	/**
 	 * Known $extraParams:
 	 *     root_node = XML Root Node
 	 *     json_funcion = return a JSON function instead a single JSON
-	 * 
+	 *
 	 * @param Context $context
 	 * @param string $outputResult
 	 * @param string $extractNodes
 	 * @param string $extractNodesRoot
 	 */
 	public function __construct(
-			$context, 
+			$context,
 			$outputResult = OutputData::Xslt,
-			$extractNodes = "", 
+			$extractNodes = "",
 			$extraParams = array()
 	)
 	{
@@ -108,12 +109,12 @@ class XmlnukeEngine
 		}
 		$this->_outputResult = $outputResult;
 		$this->_extractNodes = $extractNodes;
-		
+
 		if (!is_array($extraParams))
 			throw new InvalidArgumentException("Engine extra parameters must be an array");
 		else
 			$this->_extraParams = $extraParams;
-		
+
 		if (array_key_exists("root_node", $this->_extraParams) && $this->_extraParams["root_node"] != null)
 			$this->_extractNodesRoot = $this->_extraParams["root_node"];
 
@@ -202,7 +203,7 @@ class XmlnukeEngine
 				$cacheEngine->unlock($cacheName);
 				throw new EngineException("The method CreatePage must return a IXmlnukeDocument", 756);
 			}
-			
+
 			//\DOMNode
 			try
 			{
@@ -221,10 +222,10 @@ class XmlnukeEngine
 			}
 
 			$cacheEngine->unlock($cacheName);
-			
+
 			if ($saveToCache)
 				$cacheEngine->set($cacheName, $result, $ttl);
-			
+
 			return $result;
 		}
 		else
@@ -233,7 +234,7 @@ class XmlnukeEngine
 		}
 	}
 
-	
+
 	public function TransformDocumentRemote($url)
 	{
 		$cacheEngine = $this->_context->getXSLCacheEngine();
@@ -244,29 +245,29 @@ class XmlnukeEngine
 		{
 			return $result;
 		}
-		else 
+		else
 		{
 			$xmlDoc = FileUtil::GetRemoteXMLDocument($url);
-			
+
 			$result = $this->TransformDocumentFromDOM($xmlDoc);
 
 			$search = array ("'&(amp|#38);gt;'i",
 			                 "'&(amp|#38);lt;'i"
 			                 );
-			
+
 			$replace = array (">",
 							  "<"
 							  );
 
 			$result = preg_replace($search, $replace, $result);
-			
+
 			$cacheEngine->set($file, $result);
 
-			return $result;		
+			return $result;
 		}
 	}
-	
-	
+
+
 	/**
 	*@desc Get a xml node element to return ajax component
 	*@param IModule $module User module interface
@@ -280,11 +281,11 @@ class XmlnukeEngine
 		{
 			return "<message>The return value of your CreatePage method is not a PageXml Class.</message>";
 		}
-		if (empty($element)) 
+		if (empty($element))
 		{
 			return XmlUtil::SaveXmlNodeToString($px->getRootNode());
 		}
-		
+
 		//\DOMNode
 		$nodePage = $px->getRootNode();
 		if ($element == "") {
@@ -384,7 +385,7 @@ class XmlnukeEngine
 				}
 			}
 		}
-		
+
 		// Check if there is no XSL template
 		if ($this->_outputResult != OutputData::Xslt)
 		{
@@ -392,17 +393,17 @@ class XmlnukeEngine
 			{
 				$outDocument = $xml;
 			}
-			else 
+			else
 			{
 				$nodes = XmlUtil::selectNodes($xml->documentElement, "/".$this->_extractNodes);
 				$retDocument = XmlUtil::CreateXmlDocumentFromStr("<".$this->_extractNodesRoot."/>", false);
 				$nodeRoot = $retDocument->documentElement;
 				XmlUtil::AddAttribute($nodeRoot, "xpath", $this->_extractNodes);
-				foreach ($nodes as $node) 
+				foreach ($nodes as $node)
 				{
 					$nodeToAdd = XmlUtil::CreateChild($nodeRoot, $node->nodeName, "");
 					$attributes = $node->attributes;
-					foreach ($attributes as $value) 
+					foreach ($attributes as $value)
 					{
 						XmlUtil::AddAttribute($nodeToAdd, $value->nodeName, $value->nodeValue);
 					}
@@ -413,7 +414,7 @@ class XmlnukeEngine
 
 			if ($this->_outputResult == OutputData::Json)
 			{
-				return XmlUtil::xml2json($outDocument, $this->_extraParams["json_function"]);
+				return ObjectHandler::xml2json($outDocument, $this->_extraParams["json_function"]);
 			}
 			else // Default XML.
 			{
@@ -435,9 +436,9 @@ class XmlnukeEngine
 		{
 			throw new EngineException("Cannot load XSL file. The following error occured: ". $ex->getMessage(), 751);
 		}
-		//Process smipets and put teh xsl StyleShet		
-		
-		try 
+		//Process smipets and put teh xsl StyleShet
+
+		try
 		{
 			$xsl = $snippetProcessor->IncludeSnippet($uri);
 		}
@@ -460,10 +461,10 @@ class XmlnukeEngine
 		$xslTran->setParameter("", "urlbase", $this->_context->get("xmlnuke.URLBASE"));
 		$xslTran->setParameter("", "engine", "PHP");
 		$xslTran->setParameter("", "url", $this->_context->getServerName(false, true) . $this->_context->get('REQUEST_URI'));
-		
-		//Transform and output		
-		$xtw = $xslTran->transformToXML($xml);	
-		$xhtml = new DOMDocument();		
+
+		//Transform and output
+		$xtw = $xslTran->transformToXML($xml);
+		$xhtml = new DOMDocument();
 		$xhtml->loadXML($xtw);
 
 		// Reload XHTML result to process PARAM and HREFs
@@ -487,7 +488,7 @@ class XmlnukeEngine
 		{
 			return FileUtil::fixUTF8(strtr($xhtml->saveHTML(), array("></br>"=>"/>")));
 		}
-		else 
+		else
 		{
 			return FileUtil::fixUTF8($xhtml->saveXML());
 		}
@@ -499,7 +500,7 @@ class XmlnukeEngine
 	*@return DOMDocument
 	*/
 	public function getXmlDocument( $xmlFile )
-	{		
+	{
 		$this->_context->setXml($xmlFile->ToString());
 
 		// Load XMLDocument and add ALL and INDEX nodes
