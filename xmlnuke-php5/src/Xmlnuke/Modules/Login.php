@@ -198,7 +198,7 @@ class Login extends BaseModule
 		}
 		else
 		{
-			$this->updateInfo($user->getField($this->_users->getUserTable()->Username), $user->getField($this->_users->getUserTable()->Id));
+			$this->updateInfo($user->getField($this->_users->getUserTable()->username), $user->getField($this->_users->getUserTable()->id));
 		}
 	}
 
@@ -256,7 +256,7 @@ class Login extends BaseModule
 			$user->setField('TOKEN_PWD_RESET', $newpassword);
 			$user->setField('TOKEN_PWD_RESET_VALID', DateUtil::DateAdd(DateUtil::Today(DATEFORMAT::YMD), 2, DATEFORMAT::YMD));
 			$this->_users->Save();
-			$this->sendResetPasswordMessage($myWords, $user->getField($this->_users->getUserTable()->Name), $user->getField($this->_users->getUserTable()->Username), $user->getField($this->_users->getUserTable()->Email), $newpassword );
+			$this->sendResetPasswordMessage($myWords, $user->getField($this->_users->getUserTable()->name), $user->getField($this->_users->getUserTable()->username), $user->getField($this->_users->getUserTable()->email), $newpassword );
 			$container->addXmlnukeObject(new XmlnukeText($myWords->Value("FORGOTUSEROK"), true));
 			$this->FormLogin();
 		}
@@ -359,7 +359,7 @@ class Login extends BaseModule
 			$newpassword = $this->_users->getSHAPassword($this->_login->getPassword());
 			$user->setField('TOKEN_PWD_RESET', '');
 			$user->setField('TOKEN_PWD_RESET_VALID', '');
-			$user->setField($this->_users->getUserTable()->Password, $newpassword);
+			$user->setField($this->_users->getUserTable()->password, $newpassword);
 			$this->_users->Save();
 			$container = new XmlnukeUIAlert($this->_context, UIAlert::ModalDialog, "");
 			$container->addRedirectButton($myWords->Value("TXT_BACK"), $this->_login->getReturnUrl());

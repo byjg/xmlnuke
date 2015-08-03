@@ -123,7 +123,7 @@ class ManageUsers extends NewBaseAdminModule
 					if ($this->isUserAdmin())
 					{
 						$user = $users->getUserName( $this->_context->get("login") );
-						$user->setField( $users->getUserTable()->Admin, $this->_context->get("admin") );
+						$user->setField( $users->getUserTable()->admin, $this->_context->get("admin") );
 						$users->Save();
 					}
 					$message->addXmlnukeObject(new XmlnukeText($this->myWords->Value("CREATED"), true ));
@@ -134,11 +134,11 @@ class ManageUsers extends NewBaseAdminModule
 			if ( $action == "update" )
 			{
 				$user = $users->getUserId( $uid );
-				$user->setField($users->getUserTable()->Name, $this->_context->get("name") );
-				$user->setField($users->getUserTable()->Email, $this->_context->get("email") );
+				$user->setField($users->getUserTable()->name, $this->_context->get("name") );
+				$user->setField($users->getUserTable()->email, $this->_context->get("email") );
 				if ($this->isUserAdmin())
 				{
-					$user->setField($users->getUserTable()->Admin, $this->_context->get("admin") );
+					$user->setField($users->getUserTable()->admin, $this->_context->get("admin") );
 				}
 				$users->Save();
 				$message->addXmlnukeObject(new XmlnukeText($this->myWords->Value("UPDATE"), true ));
@@ -148,7 +148,7 @@ class ManageUsers extends NewBaseAdminModule
 			if ( $action == "changepassword" )
 			{
 				$user = $users->getUserId( $uid );
-				$user->setField($users->getUserTable()->Password, $users->getSHAPassword($this->_context->get("password")) );
+				$user->setField($users->getUserTable()->password, $users->getSHAPassword($this->_context->get("password")) );
 				$users->Save();
 				$message->addXmlnukeObject(new XmlnukeText($this->myWords->Value("CHANGEPASSWORD"), true ));
 				$exec = true;
@@ -221,9 +221,9 @@ class ManageUsers extends NewBaseAdminModule
 		if ($this->_context->get("pesquser") != "")
 		{
 			$itf->startGroup();
-			$itf->addRelationOr($users->getUserTable()->Username,  Relation::CONTAINS, $this->_context->get("pesquser"));
-                        $itf->addRelationOr($users->getUserTable()->Name,  Relation::CONTAINS, $this->_context->get("pesquser"));
-                        $itf->addRelationOr($users->getUserTable()->Email,  Relation::CONTAINS, $this->_context->get("pesquser"));
+			$itf->addRelationOr($users->getUserTable()->username,  Relation::CONTAINS, $this->_context->get("pesquser"));
+                        $itf->addRelationOr($users->getUserTable()->name,  Relation::CONTAINS, $this->_context->get("pesquser"));
+                        $itf->addRelationOr($users->getUserTable()->email,  Relation::CONTAINS, $this->_context->get("pesquser"));
 			$itf->endGroup();
 		}
 		$it = $users->getIterator($itf);
@@ -246,26 +246,26 @@ class ManageUsers extends NewBaseAdminModule
 		$editlist->setEnablePage(true);
 
 		$field = new EditListField();
-		$field->fieldData = $users->getUserTable()->Id;
+		$field->fieldData = $users->getUserTable()->id;
 		$editlist->addEditListField($field);
 
 		$field = new EditListField();
-		$field->fieldData = $users->getUserTable()->Username;
+		$field->fieldData = $users->getUserTable()->username;
 		$field->editlistName = $this->myWords->Value("TXT_LOGIN");
 		$editlist->addEditListField($field);
 
 		$field = new EditListField();
-		$field->fieldData = $users->getUserTable()->Name;
+		$field->fieldData = $users->getUserTable()->name;
 		$field->editlistName = $this->myWords->Value("TXT_NAME");
 		$editlist->addEditListField($field);
 
 		$field = new EditListField();
-		$field->fieldData = $users->getUserTable()->Email;
+		$field->fieldData = $users->getUserTable()->email;
 		$field->editlistName = $this->myWords->Value("TXT_EMAIL");
 		$editlist->addEditListField($field);
 
 		$field = new EditListField();
-		$field->fieldData = $users->getUserTable()->Admin;
+		$field->fieldData = $users->getUserTable()->admin;
 		$field->editlistName = $this->myWords->Value("TITADM");
 		$editlist->addEditListField($field);
 
@@ -333,9 +333,9 @@ class ManageUsers extends NewBaseAdminModule
 	public function EditUser($users, $uid)
 	{
 		$user = $users->getUserId($uid);
-		$block = new XmlBlockCollection($this->myWords->Value("EDITUSER") . $user->getField($users->getUserTable()->Username), BlockPosition::Center );
+		$block = new XmlBlockCollection($this->myWords->Value("EDITUSER") . $user->getField($users->getUserTable()->username), BlockPosition::Center );
 
-		if  (!$this->isUserAdmin() && ($user->getField($users->getUserTable()->Admin)=="yes") )
+		if  (!$this->isUserAdmin() && ($user->getField($users->getUserTable()->admin)=="yes") )
 		{
 			$p = new XmlParagraphCollection();
 			$p->addXmlnukeObject(new XmlnukeText($this->myWords->Value("CANNOTEDITADMIN")));
@@ -354,23 +354,23 @@ class ManageUsers extends NewBaseAdminModule
 		$form->addXmlnukeObject(new XmlInputHidden("action", "update"));
 		$form->addXmlnukeObject(new XmlInputHidden("curpage", $this->_context->get("curpage")));
 		$form->addXmlnukeObject(new XmlInputHidden("valueid", $uid));
-		$textbox = new XmlInputTextBox($this->myWords->Value("LABEL_LOGIN"), "login", $user->getField($users->getUserTable()->Username));
+		$textbox = new XmlInputTextBox($this->myWords->Value("LABEL_LOGIN"), "login", $user->getField($users->getUserTable()->username));
 		$textbox->setDataType(INPUTTYPE::TEXT);
 		$textbox->setRequired(true);
 		$textbox->setReadOnly(true);
 		$form->addXmlnukeObject($textbox);
-		$textbox = new XmlInputTextBox($this->myWords->Value("LABEL_NAME"), "name", $user->getField($users->getUserTable()->Name));
+		$textbox = new XmlInputTextBox($this->myWords->Value("LABEL_NAME"), "name", $user->getField($users->getUserTable()->name));
 		$textbox->setDataType(INPUTTYPE::TEXT);
 		$textbox->setRequired(true);
 		$form->addXmlnukeObject($textbox);
-		$textbox = new XmlInputTextBox($this->myWords->Value("LABEL_EMAIL"), "email", $user->getField($users->getUserTable()->Email));
+		$textbox = new XmlInputTextBox($this->myWords->Value("LABEL_EMAIL"), "email", $user->getField($users->getUserTable()->email));
 		$textbox->setDataType(INPUTTYPE::EMAIL);
 		$textbox->setRequired(true);
 		$form->addXmlnukeObject($textbox);
 		$textbox = new XmlInputLabelField($this->myWords->Value("LABEL_PASSWORD"), $this->myWords->Value("FORMPASSWORDNOTVIEW"));
 		$form->addXmlnukeObject($textbox);
 		$check = new XmlInputCheck($this->myWords->Value("FORMADMINISTRADOR"), "admin", "yes");
-		$check->setChecked($user->getField($users->getUserTable()->Admin));
+		$check->setChecked($user->getField($users->getUserTable()->admin));
 		$check->setReadOnly(!$this->isUserAdmin());
 		$form->addXmlnukeObject($check);
 		$boxButton = new XmlInputButtons();
@@ -487,7 +487,7 @@ class ManageUsers extends NewBaseAdminModule
 				$row = new XmlTableRowCollection();
 
 				$col = new XmlTableColumnCollection();
-				if (($fldName != $users->getUserTable()->Name) && ($fldName != $users->getUserTable()->Username) && ($fldName != $users->getUserTable()->Email) && ($fldName != $users->getUserTable()->Password) && ($fldName != $users->getUserTable()->Created) && ($fldName != $users->getUserTable()->Admin) && ($fldName != $users->getUserTable()->Id))
+				if (($fldName != $users->getUserTable()->name) && ($fldName != $users->getUserTable()->username) && ($fldName != $users->getUserTable()->email) && ($fldName != $users->getUserTable()->password) && ($fldName != $users->getUserTable()->created) && ($fldName != $users->getUserTable()->admin) && ($fldName != $users->getUserTable()->id))
 				{
 					$href = new XmlAnchorCollection("module:Xmlnuke.Admin.ManageUsers?action=removecustomvalue&customfield=" . $fldName . "&valueid=".$uid."&customvalue=" . urlencode($value), "");
 					$href->addXmlnukeObject(new XmlnukeText($this->myWords->Value("TXT_REMOVE")));

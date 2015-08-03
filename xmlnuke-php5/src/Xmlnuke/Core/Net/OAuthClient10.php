@@ -135,10 +135,10 @@ class OAuthClient10
 			foreach ($names as $name)
 			{
 				$field = $this->_appName . '_' . $name;
-				$users->removePropertyValueFromUser($this->_user->getField($users->getUserTable()->Id), null, $field);
+				$users->removePropertyValueFromUser($this->_user->getField($users->getUserTable()->id), null, $field);
 				
 				if (!$forget)
-					$users->addPropertyValueToUser($this->_user->getField($users->getUserTable()->Id), $this->getVar($name), $field);
+					$users->addPropertyValueToUser($this->_user->getField($users->getUserTable()->id), $this->getVar($name), $field);
 				else
 					$this->forgetVar($name);
 			}

@@ -176,7 +176,7 @@ abstract class NewBaseAdminModule extends BaseModule
 	{
 		$user = $this->getUsersDatabase();
 		$sr = $user->getUserId($this->_context->authenticatedUserId());
-		return ($sr->getField($user->getUserTable()->Admin) == "yes");
+		return ($sr->getField($user->getUserTable()->admin) == "yes");
 	}
 	
 	/**
