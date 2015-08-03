@@ -859,7 +859,7 @@ class Context implements DumpToArrayInterface
 	public function MakeLogin($user, $id)
 	{
         $userObj = $this->getUsersDatabase()->getUserId($id);
-        UserContext::getInstance()->registerLogin($userObj->toArray());
+        UserContext::getInstance()->registerLogin($userObj->toArray(), $this->getUsersDatabase());
 	}
 
 	/**
