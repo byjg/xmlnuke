@@ -37,6 +37,7 @@
 		"mobiledetect/mobiledetectlib": "2.8.5",
 		"willdurand/negotiation": "1.3.4",
 		"nikic/fast-route": "dev-master",
+		"byjg/authuser": "dev-master",
 		"byjg/imageutil": "1.0.*",
 		"byjg/singleton-pattern": "1.0.*",
 		"byjg/webrequest": "1.0.*", 
