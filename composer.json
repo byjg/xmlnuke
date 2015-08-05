@@ -43,6 +43,8 @@
 		"byjg/webrequest": "1.0.*", 
         "byjg/anydataset": "1.0.*",
         "byjg/cache-engine": "1.0.*",
+        "byjg/convert": "1.0.*",
+        "byjg/mailwrapper": "1.0.*",
         "byjg/xmlutil": "1.0.*",
         "sheikhheera/iconfig": "dev-master"
 	},
