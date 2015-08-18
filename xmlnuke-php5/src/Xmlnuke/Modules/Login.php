@@ -32,7 +32,7 @@
  */
 namespace Xmlnuke\Modules;
 
-class ModuleActionLogin extends \Xmlnuke\Core\Enum\ModuleAction 
+class ModuleActionLogin extends \Xmlnuke\Core\Enum\ModuleAction
 {
 	const LOGIN = 'action.LOGIN';
 	const NEWUSER = 'action.NEWUSER';
@@ -46,11 +46,12 @@ class ModuleActionLogin extends \Xmlnuke\Core\Enum\ModuleAction
 /**
  * Login is a default module descendant from BaseModule class.
  * This class shows/edit the profile from the current user.
- * 
+ *
  * @package xmlnuke
  */
 namespace Xmlnuke\Modules;
 
+use ByJG\Mail\Util;
 use Xmlnuke\Core\Admin\IUsersBase;
 use Xmlnuke\Core\Classes\MailEnvelope;
 use Xmlnuke\Core\Classes\PageXml;
@@ -67,7 +68,6 @@ use Xmlnuke\Core\Module\BaseModule;
 use Xmlnuke\Core\Processor\XSLFilenameProcessor;
 use Xmlnuke\Model\Login as LoginModel;
 use Xmlnuke\Util\DateUtil;
-use Xmlnuke\Util\MailUtil;
 
 class Login extends BaseModule
 {
@@ -77,7 +77,7 @@ class Login extends BaseModule
 	 * @var IUsersBase
 	 */
 	protected $_users;
-		
+
 	/**
 	 * Module
 	 *
@@ -96,7 +96,7 @@ class Login extends BaseModule
 	 * @var LoginModel
 	 */
 	protected $_login;
-	
+
 	/**
 	 * Default constructor
 	 *
@@ -133,7 +133,7 @@ class Login extends BaseModule
 	 */
 	public function CreatePage()
 	{
-		switch ($this->_action) 
+		switch ($this->_action)
 		{
 			case ModuleActionLogin::LOGIN :
 				$this->MakeLogin();
@@ -162,10 +162,10 @@ class Login extends BaseModule
 		}
 
 		$this->_blockCenter->addXmlnukeObject($this->_login);
-		
+
 		return $this->defaultXmlnukeDocument;
 	}
-	
+
 	/**
 	 * Form Login
 	 *
@@ -225,7 +225,7 @@ class Login extends BaseModule
 
 		return;
 	}
-	
+
 	/**
 	 * Forgot Password Confirm
 	 *
@@ -238,16 +238,16 @@ class Login extends BaseModule
 			return;
 		}
 		$myWords = $this->WordCollection();
-		
+
 		$container = new XmlnukeUIAlert($this->_context, UIAlert::BoxInfo);
 		$container->setAutoHide(5000);
 		$this->_blockCenter->addXmlnukeObject($container);
-		
+
 		$user = $this->_users->getUserEMail( $this->_context->get("email") );
-		
+
 		if (is_null($user))
 		{
-			$container->addXmlnukeObject(new XmlnukeText($myWords->Value("FORGOTUSERFAIL"), true));			
+			$container->addXmlnukeObject(new XmlnukeText($myWords->Value("FORGOTUSERFAIL"), true));
 			$this->ForgotPassword();
 		}
 		else
@@ -278,7 +278,7 @@ class Login extends BaseModule
 
 		$user = $this->_users->getUserName( $this->_login->getUsername() );
 		$tokenValid = $user->getField("TOKEN_PWD_RESET") == $this->_login->getResetToken()
-				&& $user->getField("TOKEN_PWD_RESET_VALID") >= \Xmlnuke\Util\DateUtil::Today(\Xmlnuke\Core\Enum\DATEFORMAT::YMD);
+				&& $user->getField("TOKEN_PWD_RESET_VALID") >= DateUtil::Today(DATEFORMAT::YMD);
 
 		if (is_null($user) || !$tokenValid)
 		{
@@ -338,7 +338,7 @@ class Login extends BaseModule
 		$user = $this->_users->getUserName( $this->_login->getUsername() );
 
 		$tokenValid = $user->getField("TOKEN_PWD_RESET") == $this->_login->getResetToken()
-				&& $user->getField("TOKEN_PWD_RESET_VALID") >= \Xmlnuke\Util\DateUtil::Today(\Xmlnuke\Core\Enum\DATEFORMAT::YMD);
+				&& $user->getField("TOKEN_PWD_RESET_VALID") >= DateUtil::Today(DATEFORMAT::YMD);
 
 		if (is_null($user) || !$tokenValid)
 		{
@@ -409,7 +409,7 @@ class Login extends BaseModule
 		$this->_blockCenter->addXmlnukeObject($container);
 
 		if (($this->_login->getName() == "") || ($this->_login->getEmail() == "") || ($this->_login->getUsername() == "") ||
-			!MailUtil::isValidEmail($this->_login->getEmail()))
+			!Util::isValidEmail($this->_login->getEmail()))
 		{
 			$container->addXmlnukeObject(new XmlnukeText($myWords->Value("INCOMPLETEDATA"), true));
 			$this->CreateNewUser();
@@ -419,7 +419,7 @@ class Login extends BaseModule
 			$container->addXmlnukeObject(new XmlnukeText($myWords->Value("OBJECTIMAGEINVALID"), true));
 			$this->CreateNewUser();
 		}
-		else 
+		else
 		{
 			$newpassword = $this->getRandomPassword();
 			if (!$this->_users->addUser( $this->_login->getName(), $this->_login->getUsername(), $this->_login->getEmail(), $newpassword ) )
@@ -513,7 +513,7 @@ class Login extends BaseModule
 		$body = $myWords->ValueArgs("WELCOMEMESSAGE", array($name, $this->_context->get("SERVER_NAME"), $user, $password, $url.$this->_context->bindModuleUrl("Xmlnuke.UserProfile")));
 
 		$envelope = new MailEnvelope(
-			MailUtil::getFullEmailName($name, $email),
+            Util::getFullEmail($email, $name),
 			$myWords->Value("SUBJECTMESSAGE", "[" . $this->_context->get("SERVER_NAME") . "]"),
 			$body
 		);
@@ -537,7 +537,7 @@ class Login extends BaseModule
 		$body = $myWords->ValueArgs("RESETPASSWORDMESSAGE", array($name, $this->_context->get("SERVER_NAME"), $user, $url.$this->_context->bindModuleUrl(str_replace('\\', '.', get_class()) . '?action=' . ModuleActionLogin::RESETPASSWORD . '&username=' . $user . '&resettoken=' . $token . '&returnurl=' . $this->_login->getReturnUrl())));
 
 		$envelope = new MailEnvelope(
-			MailUtil::getFullEmailName($name, $email),
+			Util::getFullEmail($email, $name),
 			$myWords->Value("RESETSUBJECTMESSAGE", "[" . $this->_context->getServerName() . "]"),
 			$body
 		);
