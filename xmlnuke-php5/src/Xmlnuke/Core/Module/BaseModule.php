@@ -302,7 +302,7 @@ abstract class BaseModule implements IModule
 		{
 			throw new EngineException("Authenticated user id in session does not exists in Users table.", 753);
 		}
-		if ($users->userIsAdmin($this->_context->authenticatedUserId()))
+		if ($users->isAdmin($this->_context->authenticatedUserId()))
 		{
 			return true;
 		}
