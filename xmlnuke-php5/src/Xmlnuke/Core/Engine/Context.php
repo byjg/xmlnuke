@@ -37,10 +37,12 @@ use ByJG\AnyDataset\Enum\Relation;
 use ByJG\AnyDataset\Model\DumpToArrayInterface;
 use ByJG\AnyDataset\Repository\AnyDataset;
 use ByJG\AnyDataset\Repository\IteratorFilter;
+use ByJG\Authenticate\CustomTable;
 use ByJG\Authenticate\UserContext;
 use ByJG\Authenticate\UsersAnyDataset;
 use ByJG\Authenticate\UsersBase;
 use ByJG\Authenticate\UsersDBDataset;
+use ByJG\Authenticate\UserTable;
 use ByJG\Cache\ICacheEngine;
 use ByJG\Cache\NoCacheEngine;
 use InvalidArgumentException;
@@ -1472,7 +1474,7 @@ class Context implements DumpToArrayInterface
 			}
 			else
 			{
-				$this->__userdb = new UsersDBDataset($conn, new \ByJG\Authenticate\UserTable('xmlnuke_users'), new \ByJG\Authenticate\CustomTable('xmlnuke_custom'));
+				$this->__userdb = new UsersDBDataset($conn, new UserTable('xmlnuke_users'), new CustomTable('xmlnuke_custom'));
 			}
 		}
 
