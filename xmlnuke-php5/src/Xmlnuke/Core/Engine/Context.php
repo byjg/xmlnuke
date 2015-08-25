@@ -1472,7 +1472,7 @@ class Context implements DumpToArrayInterface
 			}
 			else
 			{
-				$this->__userdb = new UsersDBDataset($conn);
+				$this->__userdb = new UsersDBDataset($conn, new \ByJG\Authenticate\UserTable('xmlnuke_users'), new \ByJG\Authenticate\CustomTable('xmlnuke_custom'));
 			}
 		}
 
