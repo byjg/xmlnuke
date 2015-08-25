@@ -6,25 +6,25 @@
  *  XMLNuke: A Web Development Framework based on XML.
  *
  *  Main Specification: Joao Gilberto Magalhaes, joao at byjg dot com
- * 
+ *
  *  This file is part of XMLNuke project. Visit http://www.xmlnuke.com
  *  for more information.
- *  
+ *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
  *  as published by the Free Software Foundation; either version 2
  *  of the License, or (at your option) any later version.
- *  
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
- *  
+ *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
- *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
+ *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
 namespace Xmlnuke\Modules;
@@ -55,7 +55,7 @@ use Xmlnuke\Util\MailUtil;
  * Receive external parameters;
  * Output different XML document for each parameter and action;
  * Smtp send mail
- * 
+ *
  * @package xmlnuke
  */
 
@@ -67,28 +67,28 @@ class SendEmail extends BaseModule
 	 * @var string
 	 */
 	private $_toName_ID = "";
-	
+
 	/**
 	 * From Name
 	 *
 	 * @var string
 	 */
 	private $_fromName = "";
-	
+
 	/**
 	 * From Email
 	 *
 	 * @var string
 	 */
 	private $_fromEmail = "";
-	
+
 	/**
 	 * Subject
 	 *
 	 * @var string
 	 */
 	private $_subject = "";
-	
+
 	/**
 	 * Message
 	 *
@@ -103,7 +103,7 @@ class SendEmail extends BaseModule
 	 * @var string
 	 */
 	private $_extraMessage = "";
-	
+
 	/**
 	 * Redirect
 	 *
@@ -161,7 +161,7 @@ class SendEmail extends BaseModule
 	/**
 	 * Return the LanguageCollection used in this module
 	 *
-	 * @return LanguageCollection 
+	 * @return LanguageCollection
 	 */
 	public function WordCollection()
 	{
@@ -200,11 +200,11 @@ class SendEmail extends BaseModule
 		{
 			$ht[$myWords->Value("FLDEMAIL")] = $myWords->Value("ERRORBLANK");
 			$hasError = true;
-		} 
+		}
 		else
 		{
 			if (strrpos( $this->_fromEmail, "@") === false )
-			{       
+			{
 				$ht[$myWords->Value("FLDEMAIL")] = $myWords->Value("FLDEMAIL") . " " . $myWords->Value("ERRORINVALID");
 				$hasError = true;
 			}
@@ -229,7 +229,7 @@ class SendEmail extends BaseModule
 			$document = new XmlnukeDocument($myWords->ValueArgs("TITLE", array( $this->_context->get("SERVER_NAME")) ), $myWords->ValueArgs("ABSTRACT", array( $this->_context->get("SERVER_NAME")) ));
 			$blockcenter = new XmlBlockCollection($myWords->Value("MSGERROR"), BlockPosition::Center );
 			$document->addXmlnukeObject($blockcenter);
-			
+
 			$form = new XmlFormCollection($this->_context, "module:sendemail", $myWords->Value("MSGERROR"));
 			$form->addXmlnukeObject(new XmlInputCaption($myWords->Value("RETRYVALIDATE")));
 			$form->addXmlnukeObject(new XmlInputHidden("toname_id", $this->_context->get("toname_id")));
@@ -243,14 +243,14 @@ class SendEmail extends BaseModule
 			$buttons->addSubmit($myWords->Value("RETRY"), "");
 			$form->addXmlnukeObject($buttons);
 			$blockcenter->addXmlnukeObject($form);
-			
+
 			return $document->generatePage();
 		}
 		else
 		{
 			$envelope = new MailEnvelope(MailUtil::getEmailFromID($this->_toName_ID), $this->_subject, $this->_extraMessage . $this->_message);
 			$envelope->setFrom(MailUtil::getEmailFromID("DEFAULT", $this->_fromName));
-			$envelope->setReplyTo(MailUtil::getFullEmailName($this->_fromName, $this->_fromEmail));
+			$envelope->setReplyTo(\ByJG\Mail\Util::getFullEmail($this->_fromEmail, $this->_fromName));
 			$envelope->setBCC($this->_fromEmail);
 			$envelope->Send();
 
@@ -281,19 +281,19 @@ class SendEmail extends BaseModule
 	private function CreatePageArgs($title, $ht)
 	{
 		$myWords = $this->WordCollection();
-		
+
 		$document = new XmlnukeDocument($myWords->ValueArgs("TITLE", array( $this->_context->get("SERVER_NAME")) ), $myWords->ValueArgs("ABSTRACT", array( $this->_context->get("SERVER_NAME")) ));
-		
+
 		$blockcenter = new XmlBlockCollection($myWords->Value("TITRESP"), BlockPosition::Center );
 		$document->addXmlnukeObject($blockcenter);
-		
+
 		$paragraph = new XmlParagraphCollection();
 		$blockcenter->addXmlnukeObject($paragraph);
 
 		$paragraph->addXmlnukeObject(new XmlnukeText(" "));
 		$paragraph->addXmlnukeObject(new XmlnukeText($title,true));
 		$paragraph->addXmlnukeObject(new XmlnukeBreakLine());
-		
+
 		foreach ( $ht as $key => $value)
 		{
 			$paragraph->addXmlnukeObject(new XmlnukeBreakLine());
