@@ -133,7 +133,7 @@ class ManageUsers extends NewBaseAdminModule
 
 			if ( $action == "update" )
 			{
-				$user = $users->getUserId( $uid );
+				$user = $users->getById( $uid );
 				$user->setField($users->getUserTable()->name, $this->_context->get("name") );
 				$user->setField($users->getUserTable()->email, $this->_context->get("email") );
 				if ($this->isUserAdmin())
@@ -147,7 +147,7 @@ class ManageUsers extends NewBaseAdminModule
 
 			if ( $action == "changepassword" )
 			{
-				$user = $users->getUserId( $uid );
+				$user = $users->getById( $uid );
 				$user->setField($users->getUserTable()->password, $users->getSHAPassword($this->_context->get("password")) );
 				$users->Save();
 				$message->addXmlnukeObject(new XmlnukeText($this->myWords->Value("CHANGEPASSWORD"), true ));
@@ -332,7 +332,7 @@ class ManageUsers extends NewBaseAdminModule
 
 	public function EditUser($users, $uid)
 	{
-		$user = $users->getUserId($uid);
+		$user = $users->getById($uid);
 		$block = new XmlBlockCollection($this->myWords->Value("EDITUSER") . $user->getField($users->getUserTable()->username), BlockPosition::Center );
 
 		if  (!$this->isUserAdmin() && ($user->getField($users->getUserTable()->admin)=="yes") )

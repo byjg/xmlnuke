@@ -297,7 +297,7 @@ abstract class BaseModule implements IModule
 	public function accessGranted()
 	{
 		$users = $this->getUsersDatabase();
-		$currentUser = $users->getUserId($this->_context->authenticatedUserId());
+		$currentUser = $users->getById($this->_context->authenticatedUserId());
 		if (!$currentUser)
 		{
 			throw new EngineException("Authenticated user id in session does not exists in Users table.", 753);
