@@ -187,7 +187,7 @@ class Login extends BaseModule
 	protected function MakeLogin()
 	{
 		$myWords = $this->WordCollection();
-		$user = $this->_users->validateUserName($this->_login->getUsername(), $this->_login->getPassword());
+		$user = $this->_users->isValidUser($this->_login->getUsername(), $this->_login->getPassword());
 		if ($user == null)
 		{
 			$container = new XmlnukeUIAlert($this->_context, UIAlert::BoxAlert);

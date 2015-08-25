@@ -162,7 +162,7 @@ class ModuleFactory
 					$userTable = $usersDb->getUserTable();
 					
 					// Check if Username and plain password is valid. If dont try to check if the SHA1 password is ok
-					if (!$usersDb->validateUserName($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']))
+					if (!$usersDb->isValidUser($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']))
 					{
 						$password = $users->getField($userTable->Password);						
 						if ($password != $_SERVER['PHP_AUTH_PW'])
