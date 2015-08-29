@@ -175,6 +175,9 @@ class XmlnukeCrudDB extends XmlnukeCrudBase
 
 	protected function getWhereClause(&$param)
 	{
+        if (empty($this->_valueId)) {
+            return "";
+        }
 		$arValueId = explode("|", $this->_valueId);
 		$where = "";
 		$i = 0;
