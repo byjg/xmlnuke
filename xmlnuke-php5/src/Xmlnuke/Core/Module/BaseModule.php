@@ -326,7 +326,7 @@ abstract class BaseModule implements IModule
 						{
 							foreach ($roles as $oneRule)
 							{
-								$grantToRole = $users->checkUserProperty($this->_context->authenticatedUserId(), $oneRule, UserProperty::Role);
+								$grantToRole = $users->hasProperty($this->_context->authenticatedUserId(), UserProperty::Role, $oneRule);
 								if ($grantToRole)
 								{
 									break;
@@ -335,7 +335,7 @@ abstract class BaseModule implements IModule
 						}
 						else
 						{
-							$grantToRole = $users->checkUserProperty($this->_context->authenticatedUserId(), $roles, UserProperty::Role);
+							$grantToRole = $users->hasProperty($this->_context->authenticatedUserId(), UserProperty::Role, $roles);
 						}
 					}
 				}
@@ -419,7 +419,7 @@ abstract class BaseModule implements IModule
 			$permArr = explode(",", $checkPerm);
 			foreach ($permArr as $value)
 			{
-				$ok = $ok || $users->checkUserProperty($this->_context->authenticatedUserId(), $value, UserProperty::Role);
+				$ok = $ok || $users->hasProperty($this->_context->authenticatedUserId(), UserProperty::Role, $value);
 			}
 			$this->_checkedPermission[$checkPerm] = $ok;
 		}
