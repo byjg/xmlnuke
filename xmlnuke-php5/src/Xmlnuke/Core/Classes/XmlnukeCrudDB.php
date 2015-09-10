@@ -184,7 +184,8 @@ class XmlnukeCrudDB extends XmlnukeCrudBase
 		foreach ($this->_keyIndex as $keyIndex)
 		{
 			$where .= (($where!="")? " and " : "") . $this->_fields[$keyIndex]->fieldName . " = [[valueid" . $keyIndex. "]] ";
-			$param["valueid" . $keyIndex] = $arValueId[$i++];
+			$param["valueid" . $keyIndex] = isset($arValueId[$i]) ? $arValueId[$i] : null;
+            $i++;
 		}
 		return $where;
 	}
