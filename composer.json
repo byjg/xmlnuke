@@ -52,12 +52,6 @@
         "ext-curl": "*",
         "ext-pdo_mysql": "*"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/neitanod/forceutf8"
-        }
-    ],
     "autoload": {
         "psr-0": {
             "Xmlnuke\\": "xmlnuke-php5/src/"
