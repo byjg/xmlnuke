@@ -218,7 +218,7 @@ abstract class BaseModule implements IModule
 			foreach ($arrRequest as $key => $value)
 			{
 				$key = strtolower($key);
-				$value = strtolower($value);
+				$value = is_array($value) ? sha1(serialize($value)) : strtolower($value);
 				if ((strpos($key, "imagefield_") === false))
 				{
 					$keys[] = $key . "=" . $value;
