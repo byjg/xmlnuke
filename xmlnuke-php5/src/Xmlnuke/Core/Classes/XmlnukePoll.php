@@ -29,18 +29,18 @@
 
 namespace Xmlnuke\Core\Classes;
 
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
-use Xmlnuke\Core\AnyDataset\DBDataSet;
-use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use ByJG\AnyDataset\Repository\AnyDataset;
+use ByJG\AnyDataset\Repository\DBDataset;
+use ByJG\AnyDataset\Repository\IteratorFilter;
 use Xmlnuke\Core\Engine\Context;
-use Xmlnuke\Core\Engine\ObjectHandler;
+use ByJG\AnyDataset\Model\ObjectHandler;
 use Xmlnuke\Core\Enum\ChartColumnType;
 use Xmlnuke\Core\Enum\ChartType;
-use Xmlnuke\Core\Enum\Relation;
+use ByJG\AnyDataset\Enum\Relation;
 use Xmlnuke\Core\Locale\LanguageCollection;
 use Xmlnuke\Core\Locale\LanguageFactory;
 use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 /**
  * @package xmlnuke
@@ -72,11 +72,11 @@ class  XmlnukePoll extends XmlnukeDocumentObject
 	*/
 	private $_myWords;
 	/**
-	 * @var AnyDataSet
+	 * @var AnyDataset
 	 */
 	private $_anyPoll;
 	/**
-	 * @var AnyDataSet
+	 * @var AnyDataset
 	 */
 	private $_anyAnswer;
 
@@ -126,7 +126,7 @@ class  XmlnukePoll extends XmlnukeDocumentObject
 	protected function getPollConfig()
 	{
 		$pollfile = new AnydatasetFilenameProcessor("_poll");
-		$anyconfig = new AnyDataSet($pollfile);
+		$anyconfig = new AnyDataset($pollfile->FullQualifiedNameAndPath());
 
 		$it = $anyconfig->getIterator();
 		if ($it->hasNext())
@@ -151,9 +151,9 @@ class  XmlnukePoll extends XmlnukeDocumentObject
 	protected function getAnyData()
 	{
 		$filepoll = new AnydatasetFilenameProcessor("poll_list");
-		$this->_anyPoll = new AnyDataSet($filepoll);
+		$this->_anyPoll = new AnyDataset($filepoll->FullQualifiedNameAndPath());
 		$fileanswer = new AnydatasetFilenameProcessor("poll_" . $this->_poll . "_" . $this->_lang);
-		$this->_anyAnswer = new AnyDataSet($fileanswer);
+		$this->_anyAnswer = new AnyDataset($fileanswer->FullQualifiedNameAndPath());
 	}
 
 	/**
@@ -178,14 +178,14 @@ class  XmlnukePoll extends XmlnukeDocumentObject
 				if ($this->_isdb)
 				{
 					// Remove Old Entries
-					$dbdata = new DBDataSet($this->_connection);
+					$dbdata = new DBDataset($this->_connection);
 					$sql = "delete from :table where register < now() - interval 5 day ";
-					$sql = \Xmlnuke\Core\Database\SQLHelper::createSafeSQL($sql, array(':table' => $this->_tbllastip));
+					$sql = \ByJG\AnyDataset\Database\SQLHelper::createSafeSQL($sql, array(':table' => $this->_tbllastip));
 					$dbdata->execSQL($sql);
 
 					// Check if exists
 					$sql = "select count(1) from :table where ip = [[ip]] and name = [[name]] ";
-					$sql = \Xmlnuke\Core\Database\SQLHelper::createSafeSQL($sql, array(':table' => $this->_tbllastip));
+					$sql = \ByJG\AnyDataset\Database\SQLHelper::createSafeSQL($sql, array(':table' => $this->_tbllastip));
 					$param = array(
 						"ip" => $this->_context->getClientIp(),
 						"name" => $this->_poll
@@ -198,7 +198,7 @@ class  XmlnukePoll extends XmlnukeDocumentObject
 						$ok = true;
 
 						$sql = "insert into :table (ip, name, register) values ([[ip]], [[name]], now()) ";
-						$sql = \Xmlnuke\Core\Database\SQLHelper::createSafeSQL($sql, array(':table' => $this->_tbllastip));
+						$sql = \ByJG\AnyDataset\Database\SQLHelper::createSafeSQL($sql, array(':table' => $this->_tbllastip));
 						$param = array(
 							"ip" => $this->_context->getClientIp(),
 							"name" => $this->_poll
@@ -213,16 +213,16 @@ class  XmlnukePoll extends XmlnukeDocumentObject
 				{
 					// Get Data
 					$itf = new IteratorFilter();
-					$itf->addRelation("name", Relation::Equal, $this->_poll);
-					$itf->addRelation("lang", Relation::Equal, $this->_lang);
-					$itf->addRelation("code", Relation::Equal, $this->_context->get("xmlnuke_pollanswer"));
+					$itf->addRelation("name",  Relation::EQUAL, $this->_poll);
+					$itf->addRelation("lang",  Relation::EQUAL, $this->_lang);
+					$itf->addRelation("code",  Relation::EQUAL, $this->_context->get("xmlnuke_pollanswer"));
 					if ($this->_isdb)
 					{
-						$dbdata = new DBDataSet($this->_connection, $this->_context);
+						$dbdata = new DBDataset($this->_connection);
 						$param = array();
 						$sql = "update :table set votes = IFNULL(votes,0) + 1 where :filter ";
 
-						$sql = \Xmlnuke\Core\Database\SQLHelper::createSafeSQL($sql, array(
+						$sql = \ByJG\AnyDataset\Database\SQLHelper::createSafeSQL($sql, array(
 							':table' => $this->_tblanswer,
 							':filter' => $itf->getFilter(IteratorFilter::SQL, $param)
 						));
@@ -264,11 +264,11 @@ class  XmlnukePoll extends XmlnukeDocumentObject
 		{
 			// Get Data to SHOW the answers OR chart.
 			$itf = new IteratorFilter();
-			$itf->addRelation("name", Relation::Equal, $this->_poll);
-			$itf->addRelation("lang", Relation::Equal, $this->_lang);
+			$itf->addRelation("name",  Relation::EQUAL, $this->_poll);
+			$itf->addRelation("lang",  Relation::EQUAL, $this->_lang);
 			if ($this->_isdb)
 			{
-				$dbdata = new DBDataSet($this->_connection, $this->_context);
+				$dbdata = new DBDataset($this->_connection);
 				$param = array();
 				$sql = $itf->getSql($this->_tblpoll, $param);
 				$itPoll = $dbdata->getIterator($sql, $param);

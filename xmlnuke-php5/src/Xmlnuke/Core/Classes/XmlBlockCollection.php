@@ -35,7 +35,7 @@ namespace Xmlnuke\Core\Classes;
 use DOMNode;
 use InvalidArgumentException;
 use Xmlnuke\Core\Enum\BlockPosition;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class  XmlBlockCollection extends XmlnukeCollection implements IXmlnukeDocumentObject 
 {

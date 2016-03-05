@@ -35,7 +35,7 @@ namespace Xmlnuke\Admin\Modules;
 
 use Exception;
 use Xmlnuke\Core\Admin\NewBaseAdminModule;
-use Xmlnuke\Core\AnyDataset\DBDataSet;
+use ByJG\AnyDataset\Repository\DBDataset;
 use Xmlnuke\Core\Classes\CrudField;
 use Xmlnuke\Core\Classes\CrudFieldCollection;
 use Xmlnuke\Core\Classes\XmlAnchorCollection;
@@ -181,7 +181,7 @@ class ManageDBConn extends NewBaseAdminModule
 			{
 				try
 				{
-					$dbdataset = new DBDataSet($db, $this->_context);
+					$dbdataset = new DBDataset($db);
 					$dbdataset->TestConnection();
 					$p->addXmlnukeObject(new XmlnukeText($this->myWords->Value("SEEMSOK")));
 				}

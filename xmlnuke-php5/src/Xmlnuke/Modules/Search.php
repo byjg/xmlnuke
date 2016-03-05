@@ -34,7 +34,7 @@ namespace Xmlnuke\Modules;
 
 use DOMDocument;
 use Exception;
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use ByJG\AnyDataset\Repository\AnyDataset;
 use Xmlnuke\Core\Classes\PageXml;
 use Xmlnuke\Core\Classes\XmlAnchorCollection;
 use Xmlnuke\Core\Classes\XmlBlockCollection;
@@ -54,7 +54,7 @@ use Xmlnuke\Core\Module\BaseModule;
 use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
 use Xmlnuke\Core\Processor\FilenameProcessor;
 use Xmlnuke\Core\Processor\XMLFilenameProcessor;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class Search extends BaseModule
 {
@@ -243,7 +243,7 @@ class Search extends BaseModule
 			$nodeAbstractList = array("/meta/abstract");
 
 			$configSearchFile = new AnydatasetFilenameProcessor("_configsearch");
-			$configSearch = new AnyDataSet( $configSearchFile );
+			$configSearch = new AnyDataset( $configSearchFile ->FullQualifiedNameAndPath());
 			
 			$iterator = $configSearch->getIterator();
 			while ($iterator->hasNext())

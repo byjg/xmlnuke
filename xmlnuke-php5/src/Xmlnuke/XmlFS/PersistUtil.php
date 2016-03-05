@@ -32,7 +32,7 @@ namespace Xmlnuke\XmlFS;
 use DOMXPath;
 use Xmlnuke\Core\Exception\NotFoundException;
 use Xmlnuke\Util\FileUtil;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class PersistUtil
 {

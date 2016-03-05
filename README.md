@@ -1,6 +1,27 @@
-XMLNuke
+XMLNuke - The King is dead. Long live the King.
 =======
 
+Since 2002 I started the development of the XMLNuke project. I created a framework because I would like to put the best practice I've learning in PHP and I wanted to be more productive.
+In fact I became more productive developing with XMLNuke than use another framework. Over the years, PHP evolved from your version 3.3 with no code standard to the PSR-*, namespaces,
+object orientation and the powerful composer. XMLNuke survived to all changes and evolved too. The applications I developed using the XMLNuke framework evolved also and the time
+did not kill neither the framework project neither the applications are using it.
+
+But XMLNuke had challenges bigger than the PHP and the time. XMLNuke was formed of a single large block piece of software. If you want to use a small feature you had to install and setup all XMLNuke software.
+
+Now is time to move to next step. I learned with XMLNuke and I produced some useful routines and code. Now, XMLNuke project was splitted in several small and manageable projects.
+This process is going on right now. There are dozen of small projects and this number is continuing to increase. XMLNuke is becoming small and is using these projects.
+
+The most important part of this proccess is the small projects have a better code qualitty (Sensiolab Insigths, Scrutinizer CI and Code Climate) and unit tests (Travis-CI).
+
+The legacy software based on XMLNuke will continue to run, but XMLNuke won't be maintained. You can find the list of the new project in the website
+[OpenSource ByJG](http://opensource.byjg.com/)
+
+**Long live the king. **
+
+
+
+
+## Description
 [![Build Status](https://travis-ci.org/byjg/xmlnuke.png?branch=master)](https://travis-ci.org/byjg/xmlnuke)
 
 **[ *The master branch requires PHP53 or higher and is full PSR-0 compliant by using namespaces. The branch 'php50' is the legacy XMLNuke version and is now deprecated.* ]**

@@ -29,7 +29,7 @@
 
 namespace Xmlnuke\Core\Module;
 
-use Xmlnuke\Core\Cache\ICacheEngine;
+use ByJG\Cache\ICacheEngine;
 use Xmlnuke\Core\Classes\IXmlnukeDocument;
 use Xmlnuke\Core\Enum\AccessLevel;
 use Xmlnuke\Core\Locale\LanguageCollection;

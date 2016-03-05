@@ -42,7 +42,7 @@ use ReflectionClass;
 use ReflectionProperty;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\XMLTransform;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class XmlnukeCollection
 {
@@ -118,7 +118,7 @@ class XmlnukeCollection
 				}
 				elseif (!($item instanceof IXmlnukeDocumentObject) && ($this->_xmlTransform != XMLTransform::IXMLNukeDocumentObject))
 				{
-					$objHandler = new \Xmlnuke\Core\Engine\ObjectHandler($current, $item, $this->_configTransform);
+					$objHandler = new \ByJG\AnyDataset\Model\ObjectHandler($current, $item, $this->_configTransform);
 					$objHandler->CreateObjectFromModel();
 				}
 			}

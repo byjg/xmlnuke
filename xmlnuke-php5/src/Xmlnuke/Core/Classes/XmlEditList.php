@@ -34,10 +34,10 @@ namespace Xmlnuke\Core\Classes;
 
 use DOMNode;
 use InvalidArgumentException;
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
-use Xmlnuke\Core\AnyDataset\ArrayDataSet;
-use Xmlnuke\Core\AnyDataset\IIterator;
-use Xmlnuke\Core\AnyDataset\SingleRow;
+use ByJG\AnyDataset\Repository\AnyDataset;
+use ByJG\AnyDataset\Repository\ArrayDataset;
+use ByJG\AnyDataset\Repository\IteratorInterface;
+use ByJG\AnyDataset\Repository\SingleRow;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\CustomButtons;
 use Xmlnuke\Core\Enum\EditListFieldSummary;
@@ -45,7 +45,7 @@ use Xmlnuke\Core\Enum\EditListFieldType;
 use Xmlnuke\Core\Enum\SelectType;
 use Xmlnuke\Core\Formatter\IEditListFormatter;
 use Xmlnuke\Core\Processor\ParamProcessor;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class  XmlEditList extends XmlnukeDocumentObject
 {
@@ -82,7 +82,7 @@ class  XmlEditList extends XmlnukeDocumentObject
 	*/
 	protected $_selecttype;
 	/**
-	*@var IIterator
+	*@var IteratorInterface
 	*/
 	protected $_it;
 	/**
@@ -229,14 +229,14 @@ class  XmlEditList extends XmlnukeDocumentObject
 	
 	/**
 	*@desc set Data Source
-	*@param IIterator $it
+	*@param IteratorInterface $it
 	*@return void
 	*/
 	public function setDataSource($it)
 	{
 		if (is_array($it))
 		{
-			$arrayDS = new ArrayDataSet($it);
+			$arrayDS = new ArrayDataset($it);
 			$it = $arrayDS->getIterator();
 		}
 		$this->_it = $it;
@@ -408,8 +408,8 @@ class  XmlEditList extends XmlnukeDocumentObject
 		
 		$summaryFields = array();
 
-		if (!($this->_it instanceof IIterator))
-			throw new InvalidArgumentException('You have to pass an IIterator object to the XmlEditList');
+		if (!($this->_it instanceof IteratorInterface))
+			throw new InvalidArgumentException('You have to pass an IteratorInterface object to the XmlEditList');
 
 		// Generate XML With Data
 		while ($this->_it->hasNext())
@@ -488,7 +488,7 @@ class  XmlEditList extends XmlnukeDocumentObject
 		// Generate SUMMARY Information
 		if (sizeof($summaryFields) > 0)
 		{
-			$anydata = new AnyDataSet();
+			$anydata = new AnyDataset();
 			$anydata->appendRow();
 			foreach($this->_fields as $chave=>$field)
 			{

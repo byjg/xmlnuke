@@ -34,9 +34,7 @@ namespace Xmlnuke\Core\Locale;
 
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\LanguageFileTypes;
-use Xmlnuke\Core\Processor\AdminModulesLangFilenameProcessor;
 use Xmlnuke\Core\Processor\AnydatasetLangFilenameProcessor;
-use Xmlnuke\Util\FileUtil;
 
 class LanguageFactory
 {
@@ -51,7 +49,9 @@ class LanguageFactory
 	public static function GetLanguageCollection($className, $deprecated = "")
 	{
 		if ($deprecated != "")
+		{
 			throw new \Xmlnuke\Core\Exception\UnsupportedFeatureException('Please fix call to GetLanguageCollection');
+		}
 
 		$langName = str_replace("\\","-", $className);
 		$langFile = new AnydatasetLangFilenameProcessor($langName);
@@ -61,4 +61,3 @@ class LanguageFactory
 		return $lang;
 	}
 }
-?>

@@ -67,7 +67,7 @@ class config
 		$values['xmlnuke.ROOTDIR'] = realpath(__DIR__ . '/../../../xmlnuke-data');
 		$values['xmlnuke.PHPXMLNUKEDIR'] = PHPXMLNUKEDIR;
 		$values['xmlnuke.USEABSOLUTEPATHSROOTDIR'] = true;
-		$values['xmlnuke.XSLCACHE'] = '\Xmlnuke\Core\Cache\NoCacheEngine';
+		$values['xmlnuke.XSLCACHE'] = '\ByJG\Cache\NoCacheEngine';
 		$values['xmlnuke.SMTPSERVER'] = '';
 		$values['xmlnuke.USEFULLPARAMETER'] = true;
 		$values['xmlnuke.USERSDATABASE'] = '';

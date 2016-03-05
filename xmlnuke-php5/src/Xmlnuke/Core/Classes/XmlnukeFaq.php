@@ -30,7 +30,7 @@
 namespace Xmlnuke\Core\Classes;
 
 use InvalidArgumentException;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 /**
  * @package xmlnuke

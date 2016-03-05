@@ -35,7 +35,7 @@ use InvalidArgumentException;
 use Xmlnuke\Core\Enum\MenuGroup;
 use Xmlnuke\Core\Enum\Menus;
 use Xmlnuke\Core\Enum\Script;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 /**
  * Implements a XMLNuke Document. 

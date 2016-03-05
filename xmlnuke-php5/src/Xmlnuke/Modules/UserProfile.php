@@ -158,7 +158,7 @@ class UserProfile extends BaseModule
 		
 		$this->_user = $this->_users->getUserName( $this->_context->authenticatedUser() );
 		
-		$blockCenterTitle = $this->_myWords->ValueArgs("TITLE", array ($this->_user->getField($this->_users->getUserTable()->Username)));
+		$blockCenterTitle = $this->_myWords->ValueArgs("TITLE", array ($this->_user->getField($this->_users->getUserTable()->username)));
 		$blockcenter = new XmlBlockCollection($blockCenterTitle, BlockPosition::Center );
 		$document->addXmlnukeObject($blockcenter);
 		
@@ -192,8 +192,8 @@ class UserProfile extends BaseModule
 	 */
 	protected function update()
 	{
-		$this->_user->setField($this->_users->getUserTable()->Name, $this->_context->get("name") );
-		$this->_user->setField($this->_users->getUserTable()->Email, $this->_context->get("email") );
+		$this->_user->setField($this->_users->getUserTable()->name, $this->_context->get("name") );
+		$this->_user->setField($this->_users->getUserTable()->email, $this->_context->get("email") );
 		$this->_paragraph->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("UPDATEOK"), true));
 		$this->_users->Save();
 	}
@@ -204,7 +204,7 @@ class UserProfile extends BaseModule
 	 */
 	protected function changePWD()
 	{
-		if ($this->_user->getField($this->_users->getUserTable()->Password) != $this->_users->getSHAPassword($this->_context->get("oldpassword")))
+		if ($this->_user->getField($this->_users->getUserTable()->password) != $this->_users->getSHAPassword($this->_context->get("oldpassword")))
 		{
 			$this->_paragraph->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("CHANGEPASSOLDPASSFAILED") , true));
 		}
@@ -216,7 +216,7 @@ class UserProfile extends BaseModule
 			}
 			else
 			{
-				$this->_user->setField($this->_users->getUserTable()->Password, $this->_users->getSHAPassword($this->_context->get("newpassword")) );
+				$this->_user->setField($this->_users->getUserTable()->password, $this->_users->getSHAPassword($this->_context->get("newpassword")) );
 				$this->_paragraph->addXmlnukeObject(new XmlnukeText($this->_myWords->Value("CHANGEPASSOK"), true));
 				$this->_users->Save();
 			}
@@ -235,13 +235,13 @@ class UserProfile extends BaseModule
 		$hidden = new XmlInputHidden("action", "update");
 		$form->addXmlnukeObject($hidden);
 		
-		$labelField = new XmlInputLabelField($this->_myWords->Value("LABEL_LOGIN"), $this->_user->getField($this->_users->getUserTable()->Username));
+		$labelField = new XmlInputLabelField($this->_myWords->Value("LABEL_LOGIN"), $this->_user->getField($this->_users->getUserTable()->username));
 		$form->addXmlnukeObject($labelField);
 		
-		$textBox = new XmlInputTextBox($this->_myWords->Value("LABEL_NAME"), "name",$this->_user->getField($this->_users->getUserTable()->Name));
+		$textBox = new XmlInputTextBox($this->_myWords->Value("LABEL_NAME"), "name",$this->_user->getField($this->_users->getUserTable()->name));
 		$form->addXmlnukeObject($textBox);
 		
-		$textBox = new XmlInputTextBox($this->_myWords->Value("LABEL_EMAIL"), "email", $this->_user->getField($this->_users->getUserTable()->Email));
+		$textBox = new XmlInputTextBox($this->_myWords->Value("LABEL_EMAIL"), "email", $this->_user->getField($this->_users->getUserTable()->email));
 		$form->addXmlnukeObject($textBox);
 		
 		$button = new XmlInputButtons();

@@ -33,12 +33,12 @@
  */
 namespace Xmlnuke\Core\Formatter;
 
-use Xmlnuke\Core\AnyDataset\DBDataSet;
+use ByJG\AnyDataset\Repository\DBDataset;
 
 class CrudDateFormatter implements IEditListFormatter
 {
 	/**
-	 * @var DBDataSet
+	 * @var DBDataset
 	 */
 	protected $_dbData = null;
 	protected $_hour = null;

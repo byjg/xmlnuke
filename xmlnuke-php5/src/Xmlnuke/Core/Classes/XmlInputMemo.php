@@ -34,7 +34,7 @@ namespace Xmlnuke\Core\Classes;
 
 use DOMNode;
 use InvalidArgumentException;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class  XmlInputMemo extends XmlnukeDocumentObject
 {

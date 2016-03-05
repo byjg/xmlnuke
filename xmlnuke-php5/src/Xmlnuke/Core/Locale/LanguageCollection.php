@@ -30,10 +30,10 @@
 namespace Xmlnuke\Core\Locale;
 
 use Exception;
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
-use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use ByJG\AnyDataset\Repository\AnyDataset;
+use ByJG\AnyDataset\Repository\IteratorFilter;
 use Xmlnuke\Core\Engine\Context;
-use Xmlnuke\Core\Enum\Relation;
+use ByJG\AnyDataset\Enum\Relation;
 use Xmlnuke\Core\Exception\EngineException;
 use Xmlnuke\Core\Processor\AnydatasetBaseFilenameProcessor;
 use Xmlnuke\Core\Processor\AnydatasetLangFilenameProcessor;
@@ -43,7 +43,7 @@ use Xmlnuke\Util\FileUtil;
 
 /**
  * LanguageCollection class create a NameValueCollection but only add elements from the current language context
- * @package xmlnuke
+ * @xmlnuke:nodename l10n
  */
 class LanguageCollection
 {
@@ -188,7 +188,7 @@ class LanguageCollection
 			$curLang = strtolower($this->_context->Language()->getName());
 			try 
 			{
-				$lang = new AnyDataSet( $filename );
+				$lang = new AnyDataset( $filename );
 			}
 			catch (Exception $e)
 			{
@@ -196,7 +196,7 @@ class LanguageCollection
 			}
 			
 			$itf = new IteratorFilter();
-			$itf->addRelation("LANGUAGE", Relation::Equal, $curLang );
+			$itf->addRelation("LANGUAGE",  Relation::EQUAL, $curLang );
 	
 			//AnyIterator
 			$it = $lang->getIterator($itf);
@@ -244,6 +244,10 @@ class LanguageCollection
 		Debug::PrintValue($this->_collection);
 	}
 
+	/**
+	 * @xmlnuke:dontcreatenode
+	 * @return array
+	 */
 	public function getCollection()
 	{
 		return $this->_collection;

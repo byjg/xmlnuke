@@ -40,7 +40,7 @@ use Xmlnuke\Core\Processor\FilenameProcessor;
 use Xmlnuke\Core\Processor\XSLCacheFilenameProcessor;
 use Xmlnuke\Core\Processor\XSLFilenameProcessor;
 use Xmlnuke\Util\FileUtil;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class ManageXSL extends BaseAdminModule
 {

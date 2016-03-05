@@ -112,13 +112,13 @@ class ChartWrapper implements IOutputWrapper
 				{
 					if (!isset($params['chdl']))
 					{
-						$serieData = $serie->getRawFormat();
+						$serieData = $serie->toArray();
 						unset($serieData['data_0']);
 						$params['chdl'] = implode('|', $serieData);
 					}
 					else
 					{
-						$serieData = $serie->getRawFormat();
+						$serieData = $serie->toArray();
 						for($i=1;$i<count($serieData);$i++)
 						{
 							if (!isset($data[$i]))

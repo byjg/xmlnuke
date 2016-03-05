@@ -34,7 +34,7 @@ namespace Xmlnuke\Core\Classes;
 
 use DOMNode;
 use Xmlnuke\Core\Enum\INPUTTYPE;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class  XmlInputValidate extends XmlnukeDocumentObject 
 {

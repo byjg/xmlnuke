@@ -35,7 +35,7 @@ namespace Xmlnuke\Core\Classes;
 use InvalidArgumentException;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\SortableListItemState;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class  XmlInputSortableList extends XmlnukeDocumentObject 
 {

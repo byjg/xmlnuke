@@ -5,7 +5,7 @@ namespace Xmlnuke\Core\Classes;
 use DOMDocument;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\XMLTransform;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 /*
  * To change this template, choose Tools | Templates

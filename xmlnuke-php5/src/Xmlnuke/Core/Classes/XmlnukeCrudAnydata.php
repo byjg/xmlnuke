@@ -29,18 +29,18 @@
 
 namespace Xmlnuke\Core\Classes;
 
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
-use Xmlnuke\Core\AnyDataset\IIterator;
-use Xmlnuke\Core\AnyDataset\IteratorFilter;
-use Xmlnuke\Core\AnyDataset\SingleRow;
+use ByJG\AnyDataset\Repository\AnyDataset;
+use ByJG\AnyDataset\Repository\IteratorInterface;
+use ByJG\AnyDataset\Repository\IteratorFilter;
+use ByJG\AnyDataset\Repository\SingleRow;
 use Xmlnuke\Core\Engine\Context;
-use Xmlnuke\Core\Enum\Relation;
+use ByJG\AnyDataset\Enum\Relation;
 use Xmlnuke\Core\Enum\XmlInputObjectType;
 use Xmlnuke\Core\Processor\AnydatasetBaseFilenameProcessor;
 use Xmlnuke\Core\Classes\XmlnukeCrudBase;
 
 /**
- * Basic CRUD based on XmlEditList, XmlFormCollection and AnyDataSet classes. 
+ * Basic CRUD based on XmlEditList, XmlFormCollection and AnyDataset classes. 
  * 
  * XmlnukeCrudDB is class to make easy View, Edit, Delete and Update single tables from relational databases like MySQL, PostGres, Oracle, SQLServer and others->
  * To use this class is necessary define the fields are used, like a data dictionary. 
@@ -131,13 +131,13 @@ class  XmlnukeCrudAnydata extends XmlnukeCrudBase
 	}
 
 	/**
-	*@desc Returns an IIterator with all records in table
-	*@return IIterator
+	*@desc Returns an IteratorInterface with all records in table
+	*@return IteratorInterface
 	*/
 	public function getAllRecords()
 	{
-//		AnyDataSet $data
-		$data = new AnyDataSet($this->_anydata);
+//		AnyDataset $data
+		$data = new AnyDataset($this->_anydata->FullQualifiedNameAndPath());
 		return $data->getIterator($this->_itf);
 	}
 
@@ -161,7 +161,7 @@ class  XmlnukeCrudAnydata extends XmlnukeCrudBase
 		$i = 0;
 		foreach ($this->_keyIndex as $keyIndex)
 		{
-			$itf->addRelation($this->_fields[$keyIndex]->fieldName, Relation::Equal, $arValueId[$i++]);
+			$itf->addRelation($this->_fields[$keyIndex]->fieldName,  Relation::EQUAL, $arValueId[$i++]);
 		}
 		return $itf;
 	}
@@ -178,8 +178,8 @@ class  XmlnukeCrudAnydata extends XmlnukeCrudBase
 			// IteratorFilter $itf
 			$itf = $this->getIteratorFilterKey();
 
-			// AnyDataSet $data
-			$data = new AnyDataSet($this->_anydata);
+			// AnyDataset $data
+			$data = new AnyDataset($this->_anydata->FullQualifiedNameAndPath());
 			$it = $data->getIterator($itf);
 
 			if ($it->hasNext())
@@ -205,7 +205,7 @@ class  XmlnukeCrudAnydata extends XmlnukeCrudBase
 			return $mdo;
 		}
 
-		$data = new AnyDataSet($this->_anydata);
+		$data = new AnyDataset($this->_anydata->FullQualifiedNameAndPath());
 		if ($this->_currentAction == self::ACTION_NEW_CONFIRM)
 		{
 			$data->appendRow();

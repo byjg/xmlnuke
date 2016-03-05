@@ -33,18 +33,23 @@
  */
 namespace Xmlnuke\Core\Engine;
 
+use ByJG\AnyDataset\Enum\Relation;
+use ByJG\AnyDataset\Model\DumpToArrayInterface;
+use ByJG\AnyDataset\Repository\AnyDataset;
+use ByJG\AnyDataset\Repository\IteratorFilter;
+use ByJG\Authenticate\CustomTable;
+use ByJG\Authenticate\UserContext;
+use ByJG\Authenticate\UsersAnyDataset;
+use ByJG\Authenticate\UsersBase;
+use ByJG\Authenticate\UsersDBDataset;
+use ByJG\Authenticate\UserTable;
+use ByJG\Cache\ICacheEngine;
+use ByJG\Cache\NoCacheEngine;
 use InvalidArgumentException;
 use Negotiation\LanguageNegotiator;
 use UnexpectedValueException;
 use Xmlnuke\Core\Admin\IUsersBase;
-use Xmlnuke\Core\Admin\UsersAnyDataSet;
-use Xmlnuke\Core\Admin\UsersDBDataSet;
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
-use Xmlnuke\Core\AnyDataset\IteratorFilter;
-use Xmlnuke\Core\Cache\ICacheEngine;
-use Xmlnuke\Core\Cache\NoCacheEngine;
 use Xmlnuke\Core\Enum\OutputData;
-use Xmlnuke\Core\Enum\Relation;
 use Xmlnuke\Core\Exception\UploadUtilException;
 use Xmlnuke\Core\Locale\CultureInfo;
 use Xmlnuke\Core\Locale\LocaleFactory;
@@ -57,7 +62,7 @@ use Xmlnuke\Util\Debug;
 use Xmlnuke\Util\FileUtil;
 use Xmlnuke\XmlFS\XmlnukeDB;
 
-class Context 
+class Context implements DumpToArrayInterface
 {
 	use \ByJG\DesignPattern\Singleton {
 		getInstance as traitGetInstance;
@@ -187,7 +192,7 @@ class Context
 
 			if ($context->get("logout") != "")
 			{
-				   $context->MakeLogout();
+				   UserContext::getInstance()->registerLogout();
 			}
 
 			$context->_status = 2;       # Release Semaphore / All done.
@@ -261,11 +266,16 @@ class Context
 		{
 			$cache = $this->get("xmlnuke.XSLCACHE");
 			if ($cache == "")
-				$this->_xslCacheEngine = NoCacheEngine::getInstance();
-			else
-				$this->_xslCacheEngine = $cache::getInstance();
-		}
-		
+            {
+                $this->_xslCacheEngine = new NoCacheEngine();
+            }
+            else
+            {
+                $this->_xslCacheEngine = new $cache();
+            }
+            $this->_xslCacheEngine->configKey = 'xmlnuke';
+        }
+
 		return $this->_xslCacheEngine;
 	}
 
@@ -310,7 +320,7 @@ class Context
 	{
 		return isset($this->_config['XMLNUKE.DEVELOPMENT']) ? $this->_config['XMLNUKE.DEVELOPMENT'] : false;
 	}
-	
+
 	/**
 	* Return a randon number
 	* @access public
@@ -455,7 +465,7 @@ class Context
 		}
 
 		// Get the correct language
-		$selected = array_merge( 
+		$selected = array_merge(
 			preg_grep("/^" . $currentLanguage . "*/", $langAvail),
 			preg_grep("/^" . substr($currentLanguage, 0, 2) . "*/", $langAvail)
 		);
@@ -637,7 +647,7 @@ class Context
 			{
 				$urlBase .= "/";
 			}
-			
+
 			if ($url[0] == "/")
 			{
 				$url = substr($url, 1);
@@ -687,7 +697,7 @@ class Context
 			$origKey = $key;
 			$key = "PVALUE.$key";
 		}
-		
+
 		$key = strtoupper($key);
 
 		if (isset($this->_config[$key]))
@@ -721,7 +731,7 @@ class Context
 			return "";
 		}
 	}
-	
+
 	public function Keys()
 	{
 		return array_keys($this->_config);
@@ -730,7 +740,7 @@ class Context
 	/**
 	 *
 	 * @param type $key
-	 * @param type $value 
+	 * @param type $value
 	 */
 	public function set($key, $value)
 	{
@@ -757,7 +767,7 @@ class Context
 			throw new \InvalidArgumentException('Config "xmlnuke.LANGUAGESAVAILABLE" requires an associative array');
 
 		$this->_langAvail = array();
-		
+
 		foreach ($temp as $key=>$value)
 			$this->_langAvail[strtolower($key)] = $value;
 
@@ -808,11 +818,7 @@ class Context
 	*/
 	public function IsAuthenticated()
 	{
-		return
-		   (
-			($this->getSession(SESSION_XMLNUKE_AUTHUSER) != "") &&
-			($this->getSession(SESSION_XMLNUKE_USERCONTEXT) == $this->get("xmlnuke.USERSDATABASE"))
-		   );
+		return UserContext::getInstance()->isAuthenticated();
 	}
 
 	/**
@@ -824,7 +830,8 @@ class Context
 	{
 		if ($this->IsAuthenticated())
 		{
-			return $this->getSession(SESSION_XMLNUKE_AUTHUSER);
+			$user = UserContext::getInstance()->userInfo();
+            return $user[$this->getUsersDatabase()->getUserTable()->username];
 		}
 		else
 		{
@@ -836,7 +843,8 @@ class Context
 	{
 		if ($this->IsAuthenticated())
 		{
-			return $this->getSession(SESSION_XMLNUKE_AUTHUSERID);
+			$user = UserContext::getInstance()->userInfo();
+            return $user[$this->getUsersDatabase()->getUserTable()->id];
 		}
 		else
 		{
@@ -852,9 +860,8 @@ class Context
 	*/
 	public function MakeLogin($user, $id)
 	{
-		$this->setSession(SESSION_XMLNUKE_AUTHUSER, $user);
-		$this->setSession(SESSION_XMLNUKE_AUTHUSERID, $id);
-		$this->setSession(SESSION_XMLNUKE_USERCONTEXT, $this->get("xmlnuke.USERSDATABASE"));
+        $userObj = $this->getUsersDatabase()->getById($id);
+        UserContext::getInstance()->registerLogin($userObj->toArray());
 	}
 
 	/**
@@ -1088,7 +1095,7 @@ class Context
 	{
 		$queryStart = strpos($modulename, "?");
 		$queryString = "";
-		
+
 		if ($queryStart!==false)
 		{
 			$queryString = "&" . substr($modulename, $queryStart+1);
@@ -1176,8 +1183,8 @@ class Context
 		//processor.AnydatasetFilenameProcessor
 		$configFile = new AnydatasetFilenameProcessor("customconfig");
 		$phyFile = $this->CurrentSitePath().$configFile->FullQualifiedName();
-		//anydataset.AnyDataSet
-		$config = new AnyDataSet($phyFile);
+		//anydataset.AnyDataset
+		$config = new AnyDataset($phyFile->FullQualifiedNameAndPath());
 		//anydataset.AnyIterator
 		$it = $config->getIterator();
 		if ($it->hasNext())
@@ -1204,7 +1211,7 @@ class Context
 	{
 		$configFile = new AnydatasetFilenameProcessor("customconfig", $this);
 
-		$config = new AnyDataSet($configFile);
+		$config = new AnyDataset($configFile->FullQualifiedNameAndPath());
 		$it = $config->getIterator(null);
 		if ($it->hasNext())
 		{
@@ -1219,7 +1226,7 @@ class Context
 				}
 			}
 		}
-		
+
 	}
 
 	/**
@@ -1393,9 +1400,9 @@ class Context
 			if ($this->get("xmlnuke.CHECKCONTENTTYPE"))
 			{
 				$filename = new AnydatasetFilenameProcessor("contenttype");
-				$anydataset = new AnyDataSet($filename);
+				$anydataset = new AnyDataset($filename->FullQualifiedNameAndPath());
 				$itf = new IteratorFilter();
-				$itf->addRelation("xsl", Relation::Equal, $this->getXsl());
+				$itf->addRelation("xsl",  Relation::EQUAL, $this->getXsl());
 				$it = $anydataset->getIterator($itf);
 				if ($it->hasNext())
 				{
@@ -1405,9 +1412,9 @@ class Context
 				else
 				{
 					$filename = new AnydatasetSetupFilenameProcessor("contenttype");
-					$anydataset = new AnyDataSet($filename);
+					$anydataset = new AnyDataset($filename->FullQualifiedNameAndPath());
 					$itf = new IteratorFilter();
-					$itf->addRelation("xsl", Relation::Equal, $this->getXsl());
+					$itf->addRelation("xsl",  Relation::EQUAL, $this->getXsl());
 					$it = $anydataset->getIterator($itf);
 					if ($it->hasNext())
 					{
@@ -1445,7 +1452,7 @@ class Context
 
     /**
      *
-     * @return IUsersBase
+     * @return UsersBase
      */
     public function getUsersDatabase()
     {
@@ -1455,7 +1462,7 @@ class Context
 			$conn = $this->get("xmlnuke.USERSDATABASE");
 			if ($class != "")
 			{
-				$this->__userdb = new $class($this, $conn);
+				$this->__userdb = new $class($conn);
 				if (!($this->__userdb instanceof IUsersBase))
 				{
 					throw new InvalidArgumentException("Authentication class '$class' must implement IUsersBase interface");
@@ -1463,11 +1470,11 @@ class Context
 			}
 			elseif ($conn == "")
 			{
-				$this->__userdb = new UsersAnyDataSet($this);
+				$this->__userdb = new UsersAnyDataset();
 			}
 			else
 			{
-				$this->__userdb = new UsersDBDataSet($this, $conn);
+				$this->__userdb = new UsersDBDataset($conn, new UserTable('xmlnuke_users'), new CustomTable('xmlnuke_custom'));
 			}
 		}
 
@@ -1565,4 +1572,8 @@ class Context
 		return $servername;
 	}
 
+	public function toArray()
+	{
+		return $this->_config;
+	}
 }

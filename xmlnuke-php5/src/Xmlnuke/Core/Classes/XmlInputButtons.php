@@ -35,7 +35,7 @@ namespace Xmlnuke\Core\Classes;
 use DOMNode;
 use Xmlnuke\Core\Enum\ButtonType;
 use Xmlnuke\Core\Enum\InputButton;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class  XmlInputButtons extends XmlnukeDocumentObject
 {

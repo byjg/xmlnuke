@@ -7,10 +7,10 @@ namespace Xmlnuke\Core\Net;
 
 use InvalidArgumentException;
 use ReflectionClass;
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
-use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use ByJG\AnyDataset\Repository\AnyDataset;
+use ByJG\AnyDataset\Repository\IteratorFilter;
 use Xmlnuke\Core\Engine\Context;
-use Xmlnuke\Core\Enum\Relation;
+use ByJG\AnyDataset\Enum\Relation;
 use Xmlnuke\Core\Exception\NotAuthenticatedException;
 use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
 
@@ -61,10 +61,10 @@ class OAuthClient10
 		}
 
 		$oauthFile = new AnydatasetFilenameProcessor("_oauthclient10");
-		$oauthAny = new AnyDataSet($oauthFile);
+		$oauthAny = new AnyDataset($oauthFile->FullQualifiedNameAndPath());
 
 		$itf = new IteratorFilter();
-		$itf->addRelation("appname", Relation::Equal, $appName);
+		$itf->addRelation("appname",  Relation::EQUAL, $appName);
 		$it = $oauthAny->getIterator($itf);
 
 		if ($it->hasNext())
@@ -135,10 +135,10 @@ class OAuthClient10
 			foreach ($names as $name)
 			{
 				$field = $this->_appName . '_' . $name;
-				$users->removePropertyValueFromUser($this->_user->getField($users->getUserTable()->Id), null, $field);
+				$users->removePropertyValueFromUser($this->_user->getField($users->getUserTable()->id), null, $field);
 				
 				if (!$forget)
-					$users->addPropertyValueToUser($this->_user->getField($users->getUserTable()->Id), $this->getVar($name), $field);
+					$users->addPropertyValueToUser($this->_user->getField($users->getUserTable()->id), $this->getVar($name), $field);
 				else
 					$this->forgetVar($name);
 			}

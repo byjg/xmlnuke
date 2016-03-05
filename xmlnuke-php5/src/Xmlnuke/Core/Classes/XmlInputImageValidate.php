@@ -37,7 +37,7 @@ use Captcha\Captcha;
 use DOMNode;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\BlockPosition;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class  XmlInputImageValidate extends XmlnukeDocumentObject
 {

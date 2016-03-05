@@ -35,7 +35,7 @@
  */
 namespace Xmlnuke\Core\Classes;
 
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class  XmlnukeCalendar extends XmlnukeDocumentObject 
 {
@@ -122,7 +122,7 @@ class  XmlnukeCalendar extends XmlnukeDocumentObject
 
 namespace Xmlnuke\Core\Classes;
 
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class  XmlnukeCalendarEvent extends XmlnukeCollection implements IXmlnukeDocumentObject
 {

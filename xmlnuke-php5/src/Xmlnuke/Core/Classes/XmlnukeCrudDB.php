@@ -30,22 +30,22 @@
 namespace Xmlnuke\Core\Classes;
 
 use Exception;
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
-use Xmlnuke\Core\AnyDataset\DBDataSet;
-use Xmlnuke\Core\AnyDataset\IIterator;
-use Xmlnuke\Core\AnyDataset\SingleRow;
-use Xmlnuke\Core\Database\SQLHelper;
+use ByJG\AnyDataset\Repository\AnyDataset;
+use ByJG\AnyDataset\Repository\DBDataset;
+use ByJG\AnyDataset\Repository\IteratorInterface;
+use ByJG\AnyDataset\Repository\SingleRow;
+use ByJG\AnyDataset\Database\SQLHelper;
 use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\EditListFieldType;
 use Xmlnuke\Core\Enum\INPUTTYPE;
-use Xmlnuke\Core\Enum\SQLFieldType;
-use Xmlnuke\Core\Enum\SQLType;
+use ByJG\AnyDataset\Enum\SQLFieldType;
+use ByJG\AnyDataset\Enum\SQLType;
 use Xmlnuke\Core\Enum\XmlInputObjectType;
 use Xmlnuke\Core\Formatter\CrudDateFormatter;
 use Xmlnuke\Util\Debug;
 
 /**
- * Basic CRUD based on XmlEditList, XmlFormCollection and DBDataSet classes
+ * Basic CRUD based on XmlEditList, XmlFormCollection and DBDataset classes
  * 
  * XmlnukeCrudDB is class to make easy View, Edit, Delete and Update single tables from relational databases like MySQL, PostGres, Oracle, SQLServer and others->
  * To use $this class is necessary define the $fields are used->
@@ -122,7 +122,7 @@ class XmlnukeCrudDB extends XmlnukeCrudBase
 	*/
 	protected $_fieldDeliRight = "";
 	/**
-	 * @var DBDataSet
+	 * @var DBDataset
 	 */
 	protected $_dbData = null;
 
@@ -141,13 +141,13 @@ class XmlnukeCrudDB extends XmlnukeCrudBase
 		parent::__construct($context, $fields, $header, $module, $buttons);
 		$this->_conn = $connection;
 		$this->_table = $table;
-		$this->_dbData = new DBDataSet($this->_conn, $this->_context);
+		$this->_dbData = new DBDataset($this->_conn);
 	}
 
 	/**
-	*@desc Returns an IIterator with all records in table
+	*@desc Returns an IteratorInterface with all records in table
 	*@param
-	*@return IIterator
+	*@return IteratorInterface
 	*/
 	public function getAllRecords()
 	{
@@ -175,13 +175,17 @@ class XmlnukeCrudDB extends XmlnukeCrudBase
 
 	protected function getWhereClause(&$param)
 	{
+        if (empty($this->_valueId)) {
+            return "";
+        }
 		$arValueId = explode("|", $this->_valueId);
 		$where = "";
 		$i = 0;
 		foreach ($this->_keyIndex as $keyIndex)
 		{
 			$where .= (($where!="")? " and " : "") . $this->_fields[$keyIndex]->fieldName . " = [[valueid" . $keyIndex. "]] ";
-			$param["valueid" . $keyIndex] = $arValueId[$i++];
+			$param["valueid" . $keyIndex] = isset($arValueId[$i]) ? $arValueId[$i] : null;
+            $i++;
 		}
 		return $where;
 	}
@@ -279,7 +283,7 @@ class XmlnukeCrudDB extends XmlnukeCrudBase
 		if ($sqlType != SQLType::SQL_DELETE)
 		{
 			// Get a SingleRow with all field values
-			$anyCurInfo = new AnyDataSet();
+			$anyCurInfo = new AnyDataset();
 			$anyCurInfo->appendRow();
 			foreach ($this->_fields as $field)
 			{
@@ -306,7 +310,7 @@ class XmlnukeCrudDB extends XmlnukeCrudBase
 						$value = $field->beforeInsertFormatter->Format($srCurInfo, $field->fieldName, $value);
 					}
 
-					$fieldList[$field->fieldName] = array(SQLFieldType::Text, $value);
+					$fieldList[$field->fieldName] = array(SQLFieldType::TEXT, $value);
 				}
 			}
 		}
@@ -330,7 +334,7 @@ class XmlnukeCrudDB extends XmlnukeCrudBase
 
 	/**
 	 * @param bool $getAll
-	 * @return IIterator
+	 * @return IteratorInterface
 	 */
 	protected function GetIterator($getAll)
 	{

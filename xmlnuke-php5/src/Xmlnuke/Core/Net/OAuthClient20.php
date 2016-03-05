@@ -8,10 +8,10 @@ namespace Xmlnuke\Core\Net;
 use ByJG\Util\WebRequest;
 use InvalidArgumentException;
 use OAuthClient\v20\BaseOAuth20;
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
-use Xmlnuke\Core\AnyDataset\IteratorFilter;
+use ByJG\AnyDataset\Repository\AnyDataset;
+use ByJG\AnyDataset\Repository\IteratorFilter;
 use Xmlnuke\Core\Engine\Context;
-use Xmlnuke\Core\Enum\Relation;
+use ByJG\AnyDataset\Enum\Relation;
 use Xmlnuke\Core\Exception\NotAuthenticatedException;
 use Xmlnuke\Core\Processor\AnydatasetFilenameProcessor;
 
@@ -68,10 +68,10 @@ class OAuthClient20
 		}
 
 		$oauthFile = new AnydatasetFilenameProcessor("_oauthclient20");
-		$oauthAny = new AnyDataSet($oauthFile);
+		$oauthAny = new AnyDataset($oauthFile->FullQualifiedNameAndPath());
 
 		$itf = new IteratorFilter();
-		$itf->addRelation("appname", Relation::Equal, $appName);
+		$itf->addRelation("appname",  Relation::EQUAL, $appName);
 		$it = $oauthAny->getIterator($itf);
 
 		if ($it->hasNext())
@@ -109,10 +109,10 @@ class OAuthClient20
 	public static function existsApp($appName)
 	{
 		$oauthFile = new AnydatasetFilenameProcessor("_oauthclient20");
-		$oauthAny = new AnyDataSet($oauthFile);
+		$oauthAny = new AnyDataset($oauthFile->FullQualifiedNameAndPath());
 
 		$itf = new IteratorFilter();
-		$itf->addRelation("appname", Relation::Equal, $appName);
+		$itf->addRelation("appname",  Relation::EQUAL, $appName);
 		$it = $oauthAny->getIterator($itf);
 
 		return ($it->hasNext());
@@ -167,10 +167,10 @@ class OAuthClient20
 			$users = $this->_context->getUsersDatabase();
 		
 			$field = $this->_appName . '_' . $name;
-			$users->removePropertyValueFromUser($this->_user->getField($users->getUserTable()->Id), null, $field);
+			$users->removePropertyValueFromUser($this->_user->getField($users->getUserTable()->id), null, $field);
 
 			if (!$forget)
-				$users->addPropertyValueToUser($this->_user->getField($users->getUserTable()->Id), $this->getVar($name), $field);
+				$users->addPropertyValueToUser($this->_user->getField($users->getUserTable()->id), $this->getVar($name), $field);
 			else
 					$this->forgetVar($name);
 		

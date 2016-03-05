@@ -40,11 +40,11 @@ use Exception;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionProperty;
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
-use Xmlnuke\Core\AnyDataset\AnyIterator;
-use Xmlnuke\Core\AnyDataset\IIterator;
-use Xmlnuke\Core\AnyDataset\IteratorFilter;
-use Xmlnuke\Core\AnyDataset\SingleRow;
+use ByJG\AnyDataset\Repository\AnyDataset;
+use ByJG\AnyDataset\Repository\AnyIterator;
+use ByJG\AnyDataset\Repository\IteratorInterface;
+use ByJG\AnyDataset\Repository\IteratorFilter;
+use ByJG\AnyDataset\Repository\SingleRow;
 use Xmlnuke\Core\Engine\ErrorHandler;
 use Xmlnuke\Core\Locale\LanguageCollection;
 use Xmlnuke\Core\Processor\FilenameProcessor;
@@ -72,7 +72,7 @@ class Debug
 
 	/**
 	 * Assist your to debug vars. Accept n vars parameters
-	 * Included Debug on ARRAY an IIterator Object
+	 * Included Debug on ARRAY an IteratorInterface Object
 	 *
 	 * @param mixed $arg1
 	 * @param mixed $arg2
@@ -99,18 +99,18 @@ class Debug
 			}
 			elseif ($var instanceof SingleRow)
 			{
-				self::writeLog('SingleRow', print_r($var->getRawFormat(), true), true);
+				self::writeLog('SingleRow', print_r($var->toArray(), true), true);
 			}
-			elseif ($var instanceof AnyDataSet)
+			elseif ($var instanceof AnyDataset)
 			{
 				Debug::PrintValue($var->getIterator());
 			}
-			elseif ( ($var instanceof IIterator) || ($var instanceof AnyIterator) )
+			elseif ( ($var instanceof IteratorInterface) || ($var instanceof AnyIterator) )
 			{
 				$it = $var;
 				if (!$it->hasNext())
 				{
-					self::writeLog('IIterator', "Não trouxe registros.", false);
+					self::writeLog('IteratorInterface', "Não trouxe registros.", false);
 				}
 				else
 				{
@@ -130,7 +130,7 @@ class Debug
 							$result .= '<tr><th class="devdebug">' . implode('</b></th><th class="devdebug">', $arr) . '</th></tr>';
 						}
 
-						$raw = $sr->getRawFormat();
+						$raw = $sr->toArray();
 						$result .= '<tr>';
 						foreach($raw as $item)
 						{
@@ -148,7 +148,7 @@ class Debug
 						$result .= '</tr>';
 					}
 					$result .= "</table>";
-					self::writeLog('IIterator', $result, false);
+					self::writeLog('IteratorInterface', $result, false);
 				}
 			}
 			elseif ($var instanceof IteratorFilter)

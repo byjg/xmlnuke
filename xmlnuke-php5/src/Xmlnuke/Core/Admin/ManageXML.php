@@ -38,7 +38,7 @@ use Xmlnuke\Core\Enum\INPUTTYPE;
 use Xmlnuke\Core\Processor\XMLFilenameProcessor;
 use Xmlnuke\Core\Processor\XSLCacheFilenameProcessor;
 use Xmlnuke\Util\FileUtil;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 use Xmlnuke\XmlFS\XmlnukeDB;
 
 class ManageXML extends BaseAdminModule

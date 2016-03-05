@@ -37,7 +37,7 @@ use Xmlnuke\Core\Engine\Context;
 use Xmlnuke\Core\Enum\UIAlert;
 use Xmlnuke\Core\Enum\UIAlertOpenAction;
 use Xmlnuke\Core\Processor\ParamProcessor;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class  XmlnukeUIAlert extends XmlnukeCollection implements IXmlnukeDocumentObject 
 {

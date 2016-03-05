@@ -39,10 +39,10 @@ namespace Xmlnuke\Core\Classes;
 
 use DOMNode;
 use InvalidArgumentException;
-use Xmlnuke\Core\AnyDataset\IIterator;
-use Xmlnuke\Core\Database\BaseDBAccess;
+use ByJG\AnyDataset\Repository\IteratorInterface;
+use ByJG\AnyDataset\Database\BaseDBAccess;
 use Xmlnuke\Core\Enum\EasyListType;
-use Xmlnuke\Util\XmlUtil;
+use ByJG\Util\XmlUtil;
 
 class  XmlEasyList extends XmlnukeDocumentObject
 {
@@ -111,13 +111,13 @@ class  XmlEasyList extends XmlnukeDocumentObject
 		$this->_readOnly = false;
 		$this->_size = 1;
 
-		if (!is_array($iterator) && !($iterator instanceof IIterator))
+		if (!is_array($iterator) && !($iterator instanceof IteratorInterface))
 			throw new InvalidArgumentException("I expected an Iterator or an Array");
 
-		if (($iterator instanceof IIterator) && (empty($fieldKey) || empty($fieldValue)))
-			throw new InvalidArgumentException("IIterator object requires the parameters fieldKey and fieldValue");
+		if (($iterator instanceof IteratorInterface) && (empty($fieldKey) || empty($fieldValue)))
+			throw new InvalidArgumentException("IteratorInterface object requires the parameters fieldKey and fieldValue");
 
-		if ($iterator instanceof IIterator)
+		if ($iterator instanceof IteratorInterface)
 			$this->_values = BaseDBAccess::getArrayFromIterator($iterator, $fieldKey, $fieldValue, "");
 	}
 

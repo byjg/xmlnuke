@@ -34,8 +34,8 @@
 namespace Xmlnuke\Core\Admin;
 
 use Exception;
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
-use Xmlnuke\Core\AnyDataset\DBDataSet;
+use ByJG\AnyDataset\Repository\AnyDataset;
+use ByJG\AnyDataset\Repository\DBDataset;
 use Xmlnuke\Core\Classes\CrudField;
 use Xmlnuke\Core\Classes\CrudFieldCollection;
 use Xmlnuke\Core\Classes\XmlBlockCollection;
@@ -113,7 +113,7 @@ class ManagePoll extends NewBaseAdminModule
 		}
 		else 
 		{
-			$anyconfig = new AnyDataSet($configfile);
+			$anyconfig = new AnyDataset($configfile->FullQualifiedNameAndPath());
 			$it = $anyconfig->getIterator();
 			if ($it->hasNext())
 			{
@@ -170,7 +170,7 @@ class ManagePoll extends NewBaseAdminModule
 					$tbllastip = $this->_context->get("tbl_lastip");
 					$suffix = $this->_context->get("tablesuffix");
 					
-					$dbdata = new DBDataSet($this->_context->get("type"), $this->_context);
+					$dbdata = new DBDataset($this->_context->get("type"));
 					$results = array();
 					$results[] = $this->CreateTable($dbdata, "create table $tblpoll", "create table $tblpoll (name varchar(15), lang char(5), question varchar(150), multiple char(1), showresults char(1), active char(1)) $suffix");
 					$results[] = $this->CreateTable($dbdata, "create table $tblanswer", "create table $tblanswer (name varchar(15), lang char(5), code int, short varchar(10), answer varchar(50), votes int) $suffix");
@@ -185,8 +185,9 @@ class ManagePoll extends NewBaseAdminModule
 					//$results[] = $this->CreateTable($dbdata, "add foreign key lastip", "alter table $tbllastip add constraint pk_lastip_poll foreign key (name) references $tblpoll(name)");
 					
 					$block->addXmlnukeObject(new XmlEasyList(EasyListType::UNORDEREDLIST, "", $this->myWords->Value("RESULTSQL"), $results));
-					
-					$anypoll = new AnyDataSet(new AnydatasetFilenameProcessor("_poll"));
+
+					$poll = new AnydatasetFilenameProcessor("_poll");
+					$anypoll = new AnyDataset($poll);
 					$anypoll->appendRow();
 					$anypoll->addField("dbname", $this->_context->get("type"));
 					$anypoll->addField("tbl_poll", $tblpoll);
@@ -201,7 +202,8 @@ class ManagePoll extends NewBaseAdminModule
 			}
 			else 
 			{
-				$anypoll = new AnyDataSet(new AnydatasetFilenameProcessor("_poll"));
+				$poll = new AnydatasetFilenameProcessor("_poll");
+				$anypoll = new AnyDataset($poll);
 				$anypoll->appendRow();
 				$anypoll->addField("dbname", "-anydata-");
 				$anypoll->Save();
@@ -220,7 +222,7 @@ class ManagePoll extends NewBaseAdminModule
 			$form->addXmlnukeObject(new XmlInputHidden("action", ModuleAction::CreateConfirm));
 			$db = array("-anydata-"=>$this->myWords->Value("NOTUSEDB"));
 			$anydatafile = new AnydatasetFilenameProcessor("_db");
-			$anydata = new AnyDataSet($anydatafile);
+			$anydata = new AnyDataset($anydatafile->FullQualifiedNameAndPath());
 			$it = $anydata->getIterator();
 			while ($it->hasNext())
 			{

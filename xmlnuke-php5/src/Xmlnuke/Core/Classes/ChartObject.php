@@ -6,25 +6,25 @@
  *  XMLNuke: A Web Development Framework based on XML.
  *
  *  Main Specification: Joao Gilberto Magalhaes, joao at byjg dot com
- * 
+ *
  *  This file is part of XMLNuke project. Visit http://www.xmlnuke.com
  *  for more information.
- *  
+ *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
  *  as published by the Free Software Foundation; either version 2
  *  of the License, or (at your option) any later version.
- *  
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
- *  
+ *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
- *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
+ *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 /**
 *@package xmlnuke
@@ -34,10 +34,10 @@
 namespace Xmlnuke\Core\Classes;
 
 use UnexpectedValueException;
-use Xmlnuke\Core\AnyDataset\AnyDataSet;
+use ByJG\AnyDataset\Repository\AnyDataset;
 use Xmlnuke\Core\Enum\ChartColumnType;
 use Xmlnuke\Core\Enum\ChartType;
-use Xmlnuke\Util\ConvertFromUTF8;
+use ByJG\Convert\FromUTF8;
 
 /**
  * @Xmlnuke:NodeName ChartObject
@@ -71,7 +71,7 @@ class ChartObject
 
 	/**
 	 *
-	 * @var AnyDataSet
+	 * @var AnyDataset
 	 */
 	protected $_Serie;
 
@@ -82,7 +82,7 @@ class ChartObject
 		$this->_Height = 600;
 		$this->_Title = $title;
 		$this->_ChartType = ChartType::Column;
-		$this->_Serie = new AnyDataSet();
+		$this->_Serie = new AnyDataset();
 	}
 
 	public function getId()
@@ -222,7 +222,7 @@ class ChartObject
 			{
 				if ($type == ChartColumnType::String)
 				{
-					$item = "'" . ConvertFromUTF8::RemoveAccent($item) . "'";
+					$item = "'" . FromUTF8::removeAccent($item) . "'";
 				}
 				else if ($type == ChartColumnType::Number)
 				{
@@ -244,7 +244,7 @@ class ChartObject
 			{
 				if ($serieCount == null)
 				{
-					$serieCount = count($row->getRawFormat());
+					$serieCount = count($row->toArray());
 					$row->addField("data_$serieCount", "'$name'");
 				}
 				else if (count($data) > 0)
