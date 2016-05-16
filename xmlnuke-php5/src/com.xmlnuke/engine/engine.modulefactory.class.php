@@ -267,7 +267,7 @@ class ModuleFactory
 				{
 					$filePath = $namespacePath . FileUtil::Slash() . implode(FileUtil::Slash(), $auxArBase) . (sizeof($auxArBase) > 0 ? FileUtil::Slash() : "");
 					ModuleFactory::SetLibDir($namespaceBase, $filePath);
-					break;
+					return;
 				}
 				else
 				{
