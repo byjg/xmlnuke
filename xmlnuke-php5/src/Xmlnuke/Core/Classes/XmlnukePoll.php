@@ -203,7 +203,11 @@ class  XmlnukePoll extends XmlnukeDocumentObject
 							"ip" => $this->_context->getClientIp(),
 							"name" => $this->_poll
 						);
-						$dbdata->execSQL($sql, $param);
+						try {
+							$dbdata->execSQL($sql, $param);
+						} catch (\PDOException $ex) {
+							$ok = false;
+						}
 					}
 				}
 
