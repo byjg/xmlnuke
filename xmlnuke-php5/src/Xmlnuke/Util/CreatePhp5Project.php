@@ -264,8 +264,6 @@ class CreatePhp5Project
 			$contents = file_get_contents($CONFIG);
 			$contents = str_replace($xmlnukePathConfig, $PHPDIR, $contents);
 			file_put_contents($CONFIG, $contents);
-
-			throw new Exception("Config points to '$xmlnukePathConfig' and the script is running on '$PHPDIR'\n\nYour config is now updated. Please run it again;");
 		}
 
 
