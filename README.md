@@ -22,6 +22,7 @@ The legacy software based on XMLNuke will continue to run, but XMLNuke won't be 
 
 
 ## Description
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1b976590e6674e1fbe6a0f5e0d040574)](https://www.codacy.com/app/joao/xmlnuke?utm_source=github.com&utm_medium=referral&utm_content=byjg/xmlnuke&utm_campaign=badger)
 [![Build Status](https://travis-ci.org/byjg/xmlnuke.png?branch=master)](https://travis-ci.org/byjg/xmlnuke)
 
 **[ *The master branch requires PHP53 or higher and is full PSR-0 compliant by using namespaces. The branch 'php50' is the legacy XMLNuke version and is now deprecated.* ]**
