@@ -7,9 +7,13 @@
 {
 	display: block;
 	margin: 0 0 1em 0;
-	border: 0 solid #FFFFFF;
-	border-top: 1px solid #000000;
-	padding: 0 1em 1em 1em;
+}
+
+#editform legend
+{
+	display: block;
+	padding: 0.25em;
+	background-color: #eee;
 }
 
 #editform .title
@@ -22,6 +26,15 @@
 	width: 97%;
 	text-align: left;
 	/*background-color: rgb(200, 200, 200);*/
+}
+
+#editform input[type=text], #editform input[type=password], #editform select, #editform textarea{
+	width: 100%;
+	padding: 12px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	resize: vertical;
 }
 
 #editform dt {
