@@ -31,10 +31,14 @@
 }
 
 #editlist caption {
+	caption-side: top;
 	font-size: 14px;
 	font-weight: bold;
 	line-height: 30px;
 	text-align: left;
+	padding: 8px;
+	color: black;
+	font-size: 1.2em;
 }
 
 
@@ -93,16 +97,14 @@
 	background:#BBCDE0 none repeat scroll 0 0;
 	border:1px solid #94B2D1;
 	font-weight:bold;
-	height:20px;
-	padding:1px 3px;
-	font-size:0.9em;
+	padding: 6px;
+	font-size:0.8em;
 	color:#000;
 	margin-right:2px;
 	margin-bottom:2px;
 }
 
 #editlist .edit_nav input[require="0"] {
-	padding: 1px 15px;
 	background:#9bbac0;
 }
 
