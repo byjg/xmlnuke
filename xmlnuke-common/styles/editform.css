@@ -37,6 +37,23 @@
 	resize: vertical;
 }
 
+#editform input[type=submit], #editform input[type=button], #editform input[type=reset] {
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	background: #BBCDE0 none repeat scroll 0 0;
+	border: 1px solid #94B2D1;
+	font-weight: bold;
+	padding: 8px;
+	font-size: 1em;
+	color: #000;
+	margin-right: 2px;
+	margin-bottom: 2px;
+}
+
+#editform input[type=button], #editform input[type=reset] {
+	background-color: #CCC;
+}
+
 #editform dt {
    clear:both;
    width:30%;
