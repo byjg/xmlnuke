@@ -1,0 +1,8 @@
+{
+  "name": "byjg/xmlnuke-php50",
+  "require": {
+    "php": "5.6.*",
+    "byjg/jwt-session": "1.0.*",
+    "byjg/cache-engine": "4.0.*"
+  }
+}

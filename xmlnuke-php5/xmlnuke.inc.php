@@ -14,7 +14,10 @@
 ##########################
 
 ob_start();
-session_start();
+
+require "/opt/vendor/autoload.php";
+$handler = new \ByJG\Session\JwtSession('byjg.com.br', '+JBl0lztOPkdFMYEdKkshb53SNhrx3nPeXPY6OiqkgWLL5l9PQKKzISv1bYayDkF');
+$handler->replaceSessionHandler(true);
 
 set_include_path(get_include_path() . PATH_SEPARATOR . '.');
 // Solve problem Page Expired when Back button was selected

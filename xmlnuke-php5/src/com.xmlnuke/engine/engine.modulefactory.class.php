@@ -47,6 +47,17 @@ class ModuleFactory
 	public function __construct()
 	{}
 
+	private static $_cache;
+
+	protected static function getCache()
+	{
+		if (empty(ModuleFactory::$_cache)) {
+            ModuleFactory::$_cache = new \ByJG\Cache\Psr16\FileSystemCacheEngine();
+            print_r(ModuleFactory::$_cache->get('LIBRARY'));
+        }
+        return ModuleFactory::$_cache;
+	}
+
 	/**
 		* Locate and create custom module if exists. Otherwise throw exception.
 		*
@@ -193,22 +204,27 @@ class ModuleFactory
 		}
 	}
 
-	protected static function SetLibDir($key, $path)
+    /**
+     * @param $key
+     * @param $path
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
+    protected static function SetLibDir($key, $path)
 	{
 		ModuleFactory::$_phpLibDir[$key] = $path;
-		$_SESSION["SESS_XMLNUKE_PHPLIBDIR"] = ModuleFactory::$_phpLibDir;
+		ModuleFactory::getCache()->set('LIBRARY', ModuleFactory::$_phpLibDir);
 	}
 
-	/**
-	 *
-	 * @param Context $context
-	 * @return array()
-	 */
-	public static function PhpLibDir($context)
+    /**
+     * @param Context $context
+     * @return array()
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
+    public static function PhpLibDir($context)
 	{
 		if (ModuleFactory::$_phpLibDir == null)
 		{
-			if ( (empty($_SESSION["SESS_XMLNUKE_PHPLIBDIR"])) || ($context->getNoCache()) || ($context->getReset()) )
+			if ( !ModuleFactory::getCache()->has('LIBRARY') || ($context->getNoCache()) || ($context->getReset()) )
 			{
 				$phpLibDir = $context->ContextValue("xmlnuke.PHPLIBDIR");
 				if (is_array($phpLibDir))
@@ -225,11 +241,11 @@ class ModuleFactory
 						//set_include_path(get_include_path() . PATH_SEPARATOR . $phpLib[1]);
 					}
 				}
-				$_SESSION["SESS_XMLNUKE_PHPLIBDIR"] = ModuleFactory::$_phpLibDir;
+                ModuleFactory::getCache()->set('LIBRARY', ModuleFactory::$_phpLibDir);
 			}
 			else
 			{
-				ModuleFactory::$_phpLibDir = $_SESSION["SESS_XMLNUKE_PHPLIBDIR"];
+				ModuleFactory::$_phpLibDir = ModuleFactory::getCache()->get('LIBRARY');
 			}
 		}
 		return ModuleFactory::$_phpLibDir;
