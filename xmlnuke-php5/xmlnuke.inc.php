@@ -15,7 +15,7 @@
 
 ob_start();
 
-require "/opt/vendor/autoload.php";
+require dirname(__FILE__) . "/../../../autoload.php";
 $handler = new \ByJG\Session\JwtSession('byjg.com.br', '+JBl0lztOPkdFMYEdKkshb53SNhrx3nPeXPY6OiqkgWLL5l9PQKKzISv1bYayDkF');
 $handler->replaceSessionHandler(true);
 

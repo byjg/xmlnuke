@@ -53,7 +53,6 @@ class ModuleFactory
 	{
 		if (empty(ModuleFactory::$_cache)) {
             ModuleFactory::$_cache = new \ByJG\Cache\Psr16\FileSystemCacheEngine();
-            print_r(ModuleFactory::$_cache->get('LIBRARY'));
         }
         return ModuleFactory::$_cache;
 	}
