@@ -120,7 +120,7 @@ class Context extends BaseSingleton
 	{
 		$valuesConfig = Config::getValuesConfig();
 
-		if (strpos($_SERVER["SERVER_SOFTWARE"], 'nginx') !== false)
+		if (isset($_SERVER["SERVER_SOFTWARE"]) && strpos($_SERVER["SERVER_SOFTWARE"], 'nginx') !== false)
 			$this->_PHP_SELF = 'DOCUMENT_URI';
 		
 		if (!is_array($valuesConfig))
@@ -167,8 +167,8 @@ class Context extends BaseSingleton
 		$this->AddSessionToConfig($_SESSION);
 		$this->AddCookieToConfig($_COOKIE);
 
-		$this->AddPairToConfig("SELFURLREAL", $_SERVER["SCRIPT_NAME"]."?".$_SERVER["QUERY_STRING"]."&");
-		$this->AddPairToConfig("SELFURL", $_SERVER["REQUEST_URI"]);
+		$this->AddPairToConfig("SELFURLREAL", $_SERVER["SCRIPT_NAME"]."?".(isset($_SERVER["QUERY_STRING"]) ? $_SERVER["QUERY_STRING"] : '')."&");
+		$this->AddPairToConfig("SELFURL", isset($_SERVER["REQUEST_URI"]) ? $_SERVER["REQUEST_URI"] : '');
 		$this->AddPairToConfig("ROOTDIR", $this->_xmlnukepath."/".$this-> _site);
 		$this->AddPairToConfig("SITE", $this->_site);
 		$this->AddPairToConfig("XMLNUKE", $this->_XmlNukeVersion);
