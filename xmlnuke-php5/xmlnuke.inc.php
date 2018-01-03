@@ -16,7 +16,7 @@
 ob_start();
 
 require dirname(__FILE__) . "/../../../autoload.php";
-$handler = new \ByJG\Session\JwtSession('byjg.com.br', '+JBl0lztOPkdFMYEdKkshb53SNhrx3nPeXPY6OiqkgWLL5l9PQKKzISv1bYayDkF');
+$handler = new \ByJG\Session\JwtSession(getenv('JWT_SERVER'), getenv('JWT_SECRET'), getenv('JWT_TIMEOUT'));
 $handler->replaceSessionHandler(true);
 
 set_include_path(get_include_path() . PATH_SEPARATOR . '.');
