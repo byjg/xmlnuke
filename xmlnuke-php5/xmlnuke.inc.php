@@ -16,8 +16,11 @@
 ob_start();
 
 require dirname(__FILE__) . "/../../../autoload.php";
-$handler = new \ByJG\Session\JwtSession(getenv('JWT_SERVER'), getenv('JWT_SECRET'), getenv('JWT_TIMEOUT'));
-$handler->replaceSessionHandler(true);
+$handler = new \ByJG\Session\JwtSession((new \ByJG\Session\SessionConfig(getenv('JWT_SERVER')))
+	->withSecret(getenv('JWT_SECRET'))
+	->withTimeoutMinutes(getenv('JWT_TIMEOUT'))
+	->replaceSessionHandler()
+);
 
 set_include_path(get_include_path() . PATH_SEPARATOR . '.');
 // Solve problem Page Expired when Back button was selected

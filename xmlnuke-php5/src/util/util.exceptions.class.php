@@ -234,28 +234,6 @@ class EngineException extends XMLNukeException
 }
 
 /**
- * This Image Util exception type
- * Range code error: 801 to 820
- * @package xmlnuke
- * @subpackage xmlnuke.kernel
- */
-class ImageUtilException extends XMLNukeException
-{
-
-	/**
-	 *
-	 * @param type $message
-	 * @param type $code
-	 * @param type $previous
-	 */
-	public function __construct($message = "", $code = null, $previous = null)
-	{
-		parent::__construct($message, $code, $previous);
-		$this->showStackTrace = true;
-	}
-}
-
-/**
  * This Upload Util exception type
  * Range code error: 821 to 840
  * @package xmlnuke
