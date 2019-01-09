@@ -37,7 +37,7 @@ class XmlInputValidate extends XmlnukeDocumentObject
 	/**
 	*@var bool
 	*/
-	private $_required;
+	protected $_required;
 	/**
 	*@var INPUTTYPE
 	*/
