@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -53,7 +55,7 @@ class XmlInputCaption extends XmlnukeDocumentObject
 	*/
 	public function generateObject($current)
 	{
-		XmlUtil::CreateChild($current, "caption", $this->_caption);
+		XmlUtil::createChild($current, "caption", $this->_caption);
 	}
 }
 ?>

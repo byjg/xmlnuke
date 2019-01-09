@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -62,10 +64,10 @@ class XmlInputFile extends XmlnukeDocumentObject
 	*/
 	public function generateObject($current)
 	{
-		XmlUtil::AddAttribute($current, "ENCTYPE", 'multipart/form-data');
-		$nodeWorking = XmlUtil::CreateChild($current, "file", "");
-		XmlUtil::AddAttribute($nodeWorking, "caption", $this->_caption);
-		XmlUtil::AddAttribute($nodeWorking, "name", $this->_name);
+		XmlUtil::addAttribute($current, "ENCTYPE", 'multipart/form-data');
+		$nodeWorking = XmlUtil::createChild($current, "file", "");
+		XmlUtil::addAttribute($nodeWorking, "caption", $this->_caption);
+		XmlUtil::addAttribute($nodeWorking, "name", $this->_name);
 	}
 }
 ?>

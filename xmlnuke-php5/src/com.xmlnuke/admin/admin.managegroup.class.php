@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -86,9 +88,9 @@ class ManageGroup extends BaseAdminModule
 		{
 		        //XmlNode
 
-			//$editNode = XmlUtil::SelectSingleNode($index->documentElement,"xmlindex");
+			//$editNode = XmlUtil::selectSingleNode($index->documentElement,"xmlindex");
 			$editNode =$index->getElementsByTagName("xmlindex")->item(0);
-			$delNode = XmlUtil::SelectSingleNode($editNode,"/group[id='" . $id . "']");
+			$delNode = XmlUtil::selectSingleNode($editNode,"/group[id='" . $id . "']");
 			$editNode->removeChild($delNode);
 			$paragraph = $this->_px->addParagraph($block);
 			$this->_context->getXMLDataBase()->saveDocumentXML($indexFile->FullQualifiedName(), $index);
@@ -103,21 +105,21 @@ class ManageGroup extends BaseAdminModule
 			if ($this->_context->ContextValue("new") != "")
 			{
 				
-				//$editNode = XmlUtil::SelectSingleNode($index->documentElement,"xmlindex");
+				//$editNode = XmlUtil::selectSingleNode($index->documentElement,"xmlindex");
 				$editNode = $index->getElementsByTagName("xmlindex")->item(0);
 
-				$newNode = XmlUtil::CreateChild($editNode, "group", "");					
-				XmlUtil::CreateChild($newNode, "id", $id);
-				XmlUtil::CreateChild($newNode, "title", $title);
-				XmlUtil::CreateChild($newNode, "keyword", $keyword);					
+				$newNode = XmlUtil::createChild($editNode, "group", "");
+				XmlUtil::createChild($newNode, "id", $id);
+				XmlUtil::createChild($newNode, "title", $title);
+				XmlUtil::createChild($newNode, "keyword", $keyword);
 				
 			}
 			else
 			{
-				//$editNode = XmlUtil::SelectSingleNode($index->documentElement,"/xmlindex/group[id='" . $id . "']");
-				$editNode = XmlUtil::SelectSingleNode($index->documentElement,"group[id='" . $id . "']");
-				XmlUtil::SelectSingleNode($editNode,"title")->nodeValue = $title;
-				XmlUtil::SelectSingleNode($editNode,"keyword")->nodeValue = $keyword;
+				//$editNode = XmlUtil::selectSingleNode($index->documentElement,"/xmlindex/group[id='" . $id . "']");
+				$editNode = XmlUtil::selectSingleNode($index->documentElement,"group[id='" . $id . "']");
+				XmlUtil::selectSingleNode($editNode,"title")->nodeValue = $title;
+				XmlUtil::selectSingleNode($editNode,"keyword")->nodeValue = $keyword;
 			}
 			$paragraph = $this->_px->addParagraph($block);		
 			$this->_context->getXMLDataBase()->saveDocumentXML($indexFile->FullQualifiedName(), $index);
@@ -129,13 +131,13 @@ class ManageGroup extends BaseAdminModule
 		// Get new Index from disk
 		$idnew = "true";
 		$index = $this->_context->getXMLDataBase()->getDocument($indexFile->FullQualifiedName(), null);
-		//$edit = XmlUtil::SelectSingleNode($index->documentElement,"/xmlindex/group[id='" . $id . "']");
-		$edit = XmlUtil::SelectSingleNode($index->documentElement,"group[id='" . $id . "']");
+		//$edit = XmlUtil::selectSingleNode($index->documentElement,"/xmlindex/group[id='" . $id . "']");
+		$edit = XmlUtil::selectSingleNode($index->documentElement,"group[id='" . $id . "']");
 		if ($edit != null)
 		{
 			$idnew = "";
-			$title = XmlUtil::SelectSingleNode($edit,"title")->nodeValue;
-			$keyword = XmlUtil::SelectSingleNode($edit,"keyword")->nodeValue;
+			$title = XmlUtil::selectSingleNode($edit,"title")->nodeValue;
+			$keyword = XmlUtil::selectSingleNode($edit,"keyword")->nodeValue;
 		}
 
 		// Show form to Edit/Insert

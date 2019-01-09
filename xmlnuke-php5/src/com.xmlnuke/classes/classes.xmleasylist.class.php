@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * Class to represent all the most used list of itens in XML
  * You can create the object pass a $name $value collection and the list of object will be create
@@ -213,7 +215,7 @@ class XmlEasyList extends XmlnukeDocumentObject
 		{
 			case EasyListType::CHECKBOX:
 			{
-				XmlUtil::CreateChild($current, "caption", $this->_caption);
+				XmlUtil::createChild($current, "caption", $this->_caption);
 				$nodeWorking = $current;
 				$iHid = new XmlInputHidden("qty" . $this->_name, count($this->_values));
 				$iHid->generateObject($nodeWorking);
@@ -221,7 +223,7 @@ class XmlEasyList extends XmlnukeDocumentObject
 			}
 			case EasyListType::RADIOBOX:
 			{
-				XmlUtil::CreateChild($current, "caption", $this->_caption);
+				XmlUtil::createChild($current, "caption", $this->_caption);
 				$nodeWorking = $current;
 				break;
 			}
@@ -251,32 +253,32 @@ class XmlEasyList extends XmlnukeDocumentObject
 				}
 				else
 				{
-					$nodeWorking = XmlUtil::CreateChild($current, "select", "");
-					XmlUtil::AddAttribute($nodeWorking, "caption", $this->_caption);
-					XmlUtil::AddAttribute($nodeWorking, "name", $this->_name);
+					$nodeWorking = XmlUtil::createChild($current, "select", "");
+					XmlUtil::addAttribute($nodeWorking, "caption", $this->_caption);
+					XmlUtil::addAttribute($nodeWorking, "name", $this->_name);
 					if($this->_required)
 					{
-						XmlUtil::AddAttribute($nodeWorking , "required", "true");
+						XmlUtil::addAttribute($nodeWorking , "required", "true");
 					}
 					if($this->_size > 1)
 					{
-						XmlUtil::AddAttribute($nodeWorking , "size", $this->_size);
+						XmlUtil::addAttribute($nodeWorking , "size", $this->_size);
 					}
 					
 					if ($this->_easyListType == EasyListType::SELECTIMAGELIST)
 					{
-						XmlUtil::AddAttribute($nodeWorking , "imagelist", "true");
-						XmlUtil::AddAttribute($nodeWorking , "thumbnailsize", $this->_thumbnailSize);
-						XmlUtil::AddAttribute($nodeWorking , "notfoundimage", $this->_notFoundImage);
-						XmlUtil::AddAttribute($nodeWorking , "noimage", $this->_noImage);
+						XmlUtil::addAttribute($nodeWorking , "imagelist", "true");
+						XmlUtil::addAttribute($nodeWorking , "thumbnailsize", $this->_thumbnailSize);
+						XmlUtil::addAttribute($nodeWorking , "notfoundimage", $this->_notFoundImage);
+						XmlUtil::addAttribute($nodeWorking , "noimage", $this->_noImage);
 					}
 				}
 				break;
 			}
 			case EasyListType::UNORDEREDLIST:
 			{
-				XmlUtil::CreateChild($current, "b", $this->_caption);
-				$nodeWorking = XmlUtil::CreateChild($current, "ul", "");
+				XmlUtil::createChild($current, "b", $this->_caption);
+				$nodeWorking = XmlUtil::createChild($current, "ul", "");
 				break;
 			}
 		}
@@ -310,18 +312,18 @@ class XmlEasyList extends XmlnukeDocumentObject
 				case EasyListType::SELECTLIST:
 				case EasyListType::SELECTIMAGELIST:
 				{
-					$node = XmlUtil::CreateChild($nodeWorking, "option", "");
-					XmlUtil::AddAttribute($node, "value", $key);
+					$node = XmlUtil::createChild($nodeWorking, "option", "");
+					XmlUtil::addAttribute($node, "value", $key);
 					if ($key == $this->_selected)
 					{
-						XmlUtil::AddAttribute($node, "selected", "yes");
+						XmlUtil::addAttribute($node, "selected", "yes");
 					}
-					XmlUtil::AddTextNode($node, $value);
+					XmlUtil::addTextNode($node, $value);
 					break;
 				}
 				case EasyListType::UNORDEREDLIST:
 				{
-					XmlUtil::CreateChild($nodeWorking, "li", $value);
+					XmlUtil::createChild($nodeWorking, "li", $value);
 					break;
 				}
 			}

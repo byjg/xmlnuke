@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -141,18 +143,18 @@ class XmlInputCheck extends XmlnukeDocumentObject
 //			XmlNode $nodeWorking;
 			if ($this->_inputCheckType == InputCheckType::CHECKBOX)
 			{
-				$nodeWorking = XmlUtil::CreateChild($current, "checkbox", "");
+				$nodeWorking = XmlUtil::createChild($current, "checkbox", "");
 			}
 			else
 			{
-				$nodeWorking = XmlUtil::CreateChild($current, "radiobox", "");
+				$nodeWorking = XmlUtil::createChild($current, "radiobox", "");
 			}
-			XmlUtil::AddAttribute($nodeWorking, "caption", $this->_caption);
-			XmlUtil::AddAttribute($nodeWorking, "name", $this->_name);
-			XmlUtil::AddAttribute($nodeWorking, "value", $this->_value);
+			XmlUtil::addAttribute($nodeWorking, "caption", $this->_caption);
+			XmlUtil::addAttribute($nodeWorking, "name", $this->_name);
+			XmlUtil::addAttribute($nodeWorking, "value", $this->_value);
 			if ($this->_checked)
 			{
-				XmlUtil::AddAttribute($nodeWorking, "selected", "yes");
+				XmlUtil::addAttribute($nodeWorking, "selected", "yes");
 			}
 		}
 	}

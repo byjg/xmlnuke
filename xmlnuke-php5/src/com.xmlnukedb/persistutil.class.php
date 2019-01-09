@@ -27,6 +27,8 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
+use ByJG\Util\XmlUtil;
+
 class PersistUtil
 {
 
@@ -160,12 +162,12 @@ class PersistUtil
 		
 		if ($xpath == "")
 		{
-			$doc = XmlUtil::CreateXmlDocumentFromFile($documentName);
+			$doc = XmlUtil::createXmlDocumentFromFile($documentName);
 		}
 		else
 		{
-			$doc = XmlUtil::CreateXmlDocumentFromStr("< $rootNode />", false);
-			$source = XmlUtil::CreateXmlDocumentFromFile($documentName);
+			$doc = XmlUtil::createXmlDocumentFromStr("< $rootNode />", false);
+			$source = XmlUtil::createXmlDocumentFromFile($documentName);
 			
 			$DocXpath = new DOMXPath($source);
 			$nodes = $DocXpath->query($xpath);
@@ -197,7 +199,7 @@ class PersistUtil
 		{
 			foreach($files as $file)
 			{
-				$doc = XmlUtil::CreateXmlDocumentFromFile($file);
+				$doc = XmlUtil::createXmlDocumentFromFile($file);
 				if ($saveDocs)
 				{				
 					$btree = self::saveDocument(self::getNameFromFile($file), $xmldoc, $btree);
@@ -233,7 +235,7 @@ class PersistUtil
 		$documentName = self::getFullFileName($documentName);
 		FileUtil::ForceDirectories(self::getPathFromFile($documentName));
 		$xml->normalize();
-		XmlUtil::SaveXmlDocument($xml, $documentName);
+		XmlUtil::saveXmlDocument($xml, $documentName);
 		return $btree;
 	}
 

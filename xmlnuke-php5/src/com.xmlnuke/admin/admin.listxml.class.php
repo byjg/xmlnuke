@@ -28,6 +28,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -78,13 +80,13 @@ class ListXML extends NewBaseAdminModule
 		
 		$index = $this->_context->getXMLDataBase()->getDocument($indexFile->FullQualifiedName(),null);
 
-		$groupList = XmlUtil::SelectNodes($index->documentElement,"group");
+		$groupList = XmlUtil::selectNodes($index->documentElement,"group");
 		$table = new XmlTableCollection();
 		foreach( $groupList as $node )					
 		{				
 			
-			$groupText = XmlUtil::SelectSingleNode($node,"title")->nodeValue;
-			$groupId = XmlUtil::SelectSingleNode($node,"id")->nodeValue;
+			$groupText = XmlUtil::selectSingleNode($node,"title")->nodeValue;
+			$groupId = XmlUtil::selectSingleNode($node,"id")->nodeValue;
 			
 			$row = new XmlTableRowCollection();
 
@@ -107,12 +109,12 @@ class ListXML extends NewBaseAdminModule
 
 			if (!$onlyGroup)
 			{
-				$fileList = XmlUtil::SelectNodes($index->documentElement,"group[id='".$groupId."']/page");
+				$fileList = XmlUtil::selectNodes($index->documentElement,"group[id='".$groupId."']/page");
 				foreach( $fileList as $nodeFile )
 				{
-					$fileText = XmlUtil::SelectSingleNode($nodeFile,"title")->nodeValue;
-					$fileId = XmlUtil::SelectSingleNode($nodeFile,"id")->nodeValue;
-					$fileAbstract = XmlUtil::SelectSingleNode($nodeFile,"summary")->nodeValue;
+					$fileText = XmlUtil::selectSingleNode($nodeFile,"title")->nodeValue;
+					$fileId = XmlUtil::selectSingleNode($nodeFile,"id")->nodeValue;
+					$fileAbstract = XmlUtil::selectSingleNode($nodeFile,"summary")->nodeValue;
 
 					$row = new XmlTableRowCollection();
 					

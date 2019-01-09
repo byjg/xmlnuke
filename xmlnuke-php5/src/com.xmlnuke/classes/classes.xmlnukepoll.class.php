@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -238,8 +240,8 @@ class XmlnukePoll extends XmlnukeDocumentObject
 		// Is there some error?
 		if ($this->_error)
 		{
-			$nodeWorking = XmlUtil::CreateChild($current, "poll");
-			XmlUtil::CreateChild($nodeWorking, "error", $this->_myWords->Value("ERROR_POLLNOTSETUP"));
+			$nodeWorking = XmlUtil::createChild($current, "poll");
+			XmlUtil::createChild($nodeWorking, "error", $this->_myWords->Value("ERROR_POLLNOTSETUP"));
 		}
 		else
 		{
@@ -267,40 +269,40 @@ class XmlnukePoll extends XmlnukeDocumentObject
 			// Show the answers if not was called the method processVote()
 			if (!$this->_processed)
 			{
-				$nodeWorking = XmlUtil::CreateChild($current, "poll");
-				XmlUtil::AddAttribute($nodeWorking, "url", $this->_url);
-				XmlUtil::AddAttribute($nodeWorking, "name", $this->_poll);
-				XmlUtil::AddAttribute($nodeWorking, "lang", $this->_lang);
+				$nodeWorking = XmlUtil::createChild($current, "poll");
+				XmlUtil::addAttribute($nodeWorking, "url", $this->_url);
+				XmlUtil::addAttribute($nodeWorking, "name", $this->_poll);
+				XmlUtil::addAttribute($nodeWorking, "lang", $this->_lang);
 
 				// Show Data Only if Poll is active
 				if ($itPoll->hasNext())
 				{
 					$sr = $itPoll->moveNext();
 					
-					XmlUtil::AddAttribute($nodeWorking, "multiple", $sr->getField("multiple") == "Y" ? "true" : "false");
+					XmlUtil::addAttribute($nodeWorking, "multiple", $sr->getField("multiple") == "Y" ? "true" : "false");
 
 					if ($sr->getField("active") == "Y")
 					{
-						XmlUtil::AddAttribute($nodeWorking, "active", "true");
-						XmlUtil::AddAttribute($nodeWorking, "sendbtn", $this->_myWords->Value("SENDBTN"));
-						XmlUtil::CreateChild($nodeWorking, "question", $sr->getField("question"));
+						XmlUtil::addAttribute($nodeWorking, "active", "true");
+						XmlUtil::addAttribute($nodeWorking, "sendbtn", $this->_myWords->Value("SENDBTN"));
+						XmlUtil::createChild($nodeWorking, "question", $sr->getField("question"));
 
 						while ($itAnswer->hasNext())
 						{
 							$sr = $itAnswer->moveNext();
-							$nodeanswer = XmlUtil::CreateChild($nodeWorking, "answer", $sr->getField("answer"));
-							XmlUtil::AddAttribute($nodeanswer, "code", $sr->getField("code"));
+							$nodeanswer = XmlUtil::createChild($nodeWorking, "answer", $sr->getField("answer"));
+							XmlUtil::addAttribute($nodeanswer, "code", $sr->getField("code"));
 						}
 					}
 					else
 					{
-						XmlUtil::AddAttribute($nodeWorking, "sendbtn", $this->_myWords->Value("VIEWRESULTSBTN"));
-						XmlUtil::CreateChild($nodeWorking, "question", $sr->getField("question") . " - " . $this->_myWords->Value("POLLENDED"));
+						XmlUtil::addAttribute($nodeWorking, "sendbtn", $this->_myWords->Value("VIEWRESULTSBTN"));
+						XmlUtil::createChild($nodeWorking, "question", $sr->getField("question") . " - " . $this->_myWords->Value("POLLENDED"));
 					}
 				}
 				else
 				{
-					XmlUtil::CreateChild($nodeWorking, "error", $this->_myWords->Value("ERROR_POLLEMPTY"));
+					XmlUtil::createChild($nodeWorking, "error", $this->_myWords->Value("ERROR_POLLEMPTY"));
 				}
 			}
 			// Show the chart if poll is processed.

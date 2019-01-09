@@ -28,6 +28,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -95,23 +97,23 @@ class XmlInputGroup extends XmlnukeCollection implements IXmlnukeDocumentObject
 	
 	public function generateObject($current)
 	{
-		$node = XmlUtil::CreateChild($current, "inputgroup", "");
-		XmlUtil::AddAttribute($node, "name", $this->_name);
+		$node = XmlUtil::createChild($current, "inputgroup", "");
+		XmlUtil::addAttribute($node, "name", $this->_name);
 		if ($this->_caption)
 		{
-			XmlUtil::AddAttribute($node, "caption", $this->_caption);
+			XmlUtil::addAttribute($node, "caption", $this->_caption);
 		}
 		if ($this->_canhide)
 		{
-			XmlUtil::AddAttribute($node, "canhide", "true");
+			XmlUtil::addAttribute($node, "canhide", "true");
 		}
 		if ($this->_breakline)
 		{
-			XmlUtil::AddAttribute($node, "breakline", "true");
+			XmlUtil::addAttribute($node, "breakline", "true");
 		}
 		if (!$this->_visible)
 		{
-			XmlUtil::AddAttribute($node, "visible", "false");
+			XmlUtil::addAttribute($node, "visible", "false");
 		}
 		parent::generatePage($node);
 	}

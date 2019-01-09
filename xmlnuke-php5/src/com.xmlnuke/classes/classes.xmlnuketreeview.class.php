@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 
 /**
  * @package xmlnuke
@@ -72,8 +74,8 @@ class XmlnukeTreeview extends XmlnukeDocumentObject
 	*/
 	public function generateObject($current)
 	{
-		$treeview = XmlUtil::CreateChild($current, "treeview");
-		XmlUtil::AddAttribute($treeview, "title", $this->_title);
+		$treeview = XmlUtil::createChild($current, "treeview");
+		XmlUtil::addAttribute($treeview, "title", $this->_title);
 		
 		foreach ($this->_collection as $value)
 		{
@@ -179,18 +181,18 @@ class XmlnukeTreeViewLeaf extends XmlnukeDocumentObject
 	*/
 	public function generateObject($current)
 	{
-		$leaf = XmlUtil::CreateChild($current, $this->_NODE);
-		XmlUtil::AddAttribute($leaf, "title", $this->_title);
-		XmlUtil::AddAttribute($leaf, "img", $this->_img);
-		XmlUtil::AddAttribute($leaf, "code", $this->_id);
+		$leaf = XmlUtil::createChild($current, $this->_NODE);
+		XmlUtil::addAttribute($leaf, "title", $this->_title);
+		XmlUtil::addAttribute($leaf, "img", $this->_img);
+		XmlUtil::addAttribute($leaf, "code", $this->_id);
 		if ($this->_expanded)
 		{
-			XmlUtil::AddAttribute($leaf, "expanded", "true");
+			XmlUtil::addAttribute($leaf, "expanded", "true");
 		}
 		
 		if ($this->_selected)
 		{
-			XmlUtil::AddAttribute($leaf, "selected", "true");
+			XmlUtil::addAttribute($leaf, "selected", "true");
 		}
 		
 		if ($this->_action != "")
@@ -221,7 +223,7 @@ class XmlnukeTreeViewLeaf extends XmlnukeDocumentObject
 					break;
 			}
 
-			XmlUtil::AddAttribute($leaf, "action", str_replace("&", "&amp;", $jsAction));
+			XmlUtil::addAttribute($leaf, "action", str_replace("&", "&amp;", $jsAction));
 		}
 		
 		foreach ($this->_collection as $value)

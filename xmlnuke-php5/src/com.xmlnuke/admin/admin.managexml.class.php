@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -111,28 +113,28 @@ class ManageXML extends BaseAdminModule
 
 				// Get edited XML and update info about INDEX.
 				//XmlDocument
-				$xml = XmlUtil::CreateXmlDocumentFromStr($contents);
+				$xml = XmlUtil::createXmlDocumentFromStr($contents);
 
-				//$node = XmlUtil::SelectSingleNode($xml->documentElement, "/page/meta/title");
-				$node = XmlUtil::SelectSingleNode($xml->documentElement, "meta/title");
+				//$node = XmlUtil::selectSingleNode($xml->documentElement, "/page/meta/title");
+				$node = XmlUtil::selectSingleNode($xml->documentElement, "meta/title");
 				if ($node != null)
 				{
 					$title = $node->nodeValue;
 				}
-				//$node = XmlUtil::SelectSingleNode($xml->documentElement,"/page/meta/abstract");
-				$node = XmlUtil::SelectSingleNode($xml->documentElement,"meta/abstract");
+				//$node = XmlUtil::selectSingleNode($xml->documentElement,"/page/meta/abstract");
+				$node = XmlUtil::selectSingleNode($xml->documentElement,"meta/abstract");
 				if ($node != null)
 				{
 					$summary = $node->nodeValue;
 				}
-				//$node = XmlUtil::SelectSingleNode($xml->documentElement,"/page/meta/modified");
-				$node = XmlUtil::SelectSingleNode($xml->documentElement,"meta/modified");
+				//$node = XmlUtil::selectSingleNode($xml->documentElement,"/page/meta/modified");
+				$node = XmlUtil::selectSingleNode($xml->documentElement,"meta/modified");
 				if ($node != null)
 				{
 					$node->nodeValue = date("D M j Y G:i:s");
 				}
-				//$node = XmlUtil::SelectSingleNode($xml->documentElement,"/page/meta/groupkeyword");
-				$node = XmlUtil::SelectSingleNode($xml->documentElement,"meta/groupkeyword");
+				//$node = XmlUtil::selectSingleNode($xml->documentElement,"/page/meta/groupkeyword");
+				$node = XmlUtil::selectSingleNode($xml->documentElement,"meta/groupkeyword");
 				
 				if ($node != null)
 				{
@@ -143,29 +145,29 @@ class ManageXML extends BaseAdminModule
 				{
 					if ($action == "edit")
 					{
-						//$editNode = XmlUtil::SelectSingleNode($index->documentElement, "/xmlindex/group[id='" . $group . "']/page[id='" . $id . "']");
-						$editNode = XmlUtil::SelectSingleNode($index->documentElement, "group[id='" . $group . "']/page[id='" . $id . "']");
+						//$editNode = XmlUtil::selectSingleNode($index->documentElement, "/xmlindex/group[id='" . $group . "']/page[id='" . $id . "']");
+						$editNode = XmlUtil::selectSingleNode($index->documentElement, "group[id='" . $group . "']/page[id='" . $id . "']");
 						if ($titleIndex == "")
 						{
 							$titleIndex = $title;
 						}
-						XmlUtil::SelectSingleNode($editNode,"title")->nodeValue = $titleIndex;
+						XmlUtil::selectSingleNode($editNode,"title")->nodeValue = $titleIndex;
 
 						if ($summaryIndex == "")
 						{
 							$summaryIndex = $summary;
 						}
-						XmlUtil::SelectSingleNode($editNode,"summary")->nodeValue = $summaryIndex;
+						XmlUtil::selectSingleNode($editNode,"summary")->nodeValue = $summaryIndex;
 					}
 					else
 					{
 						
-						//$editNode = XmlUtil::SelectSingleNode($index->documentElement,"/xmlindex/group[id='" . $group . "']");		
-						$editNode = XmlUtil::SelectSingleNode($index->documentElement,"group[id='" . $group . "']");									
-						$newNode = XmlUtil::CreateChild($editNode, "page", "");
-						XmlUtil::CreateChild($newNode, "id", $id);
-						XmlUtil::CreateChild($newNode, "title", $title);
-						XmlUtil::CreateChild($newNode, "summary", $summary);
+						//$editNode = XmlUtil::selectSingleNode($index->documentElement,"/xmlindex/group[id='" . $group . "']");
+						$editNode = XmlUtil::selectSingleNode($index->documentElement,"group[id='" . $group . "']");
+						$newNode = XmlUtil::createChild($editNode, "page", "");
+						XmlUtil::createChild($newNode, "id", $id);
+						XmlUtil::createChild($newNode, "title", $title);
+						XmlUtil::createChild($newNode, "summary", $summary);
 						$titleIndex = $title;
 						$summaryIndex = $summary;
 					}
@@ -191,15 +193,15 @@ class ManageXML extends BaseAdminModule
 		}
 
 		// Get the group from the Index and Update Edit Fields
-		//$editNode = XmlUtil::SelectSingleNode( $index->documentElement,"/xmlindex/group[page[id='" . $id . "']]/id");
-		$editNode = XmlUtil::SelectSingleNode( $index->documentElement,"group[page[id='" . $id . "']]/id");
+		//$editNode = XmlUtil::selectSingleNode( $index->documentElement,"/xmlindex/group[page[id='" . $id . "']]/id");
+		$editNode = XmlUtil::selectSingleNode( $index->documentElement,"group[page[id='" . $id . "']]/id");
 		if ($editNode != null)
 		{
 			$group = $editNode->nodeValue;
-			//$editNode = XmlUtil::SelectSingleNode($index->documentElement,"/xmlindex/group[id='" . $group . "']/page[id='" . $id . "']");
-			$editNode = XmlUtil::SelectSingleNode($index->documentElement,"group[id='" . $group . "']/page[id='" . $id . "']");
-			$titleIndex = XmlUtil::SelectSingleNode($editNode,"title")->nodeValue;
-			$summaryIndex = XmlUtil::SelectSingleNode($editNode,"summary")->nodeValue;
+			//$editNode = XmlUtil::selectSingleNode($index->documentElement,"/xmlindex/group[id='" . $group . "']/page[id='" . $id . "']");
+			$editNode = XmlUtil::selectSingleNode($index->documentElement,"group[id='" . $group . "']/page[id='" . $id . "']");
+			$titleIndex = XmlUtil::selectSingleNode($editNode,"title")->nodeValue;
+			$summaryIndex = XmlUtil::selectSingleNode($editNode,"summary")->nodeValue;
 		}
 		
 		if ($action == "delete")
@@ -212,9 +214,9 @@ class ManageXML extends BaseAdminModule
 		if ($action == "confirmdelete")
 		{
 			$paragraph = $this->_px->addParagraph($block);
-			//$editNode = XmlUtil::SelectSingleNode($index->documentElement,"/xmlindex/group[id='" . $group . "']");		
-			$editNode = XmlUtil::SelectSingleNode($index->documentElement,"group[id='" . $group . "']");
-			$delNode = XmlUtil::SelectSingleNode($editNode,"page[id='" . $id . "']");
+			//$editNode = XmlUtil::selectSingleNode($index->documentElement,"/xmlindex/group[id='" . $group . "']");
+			$editNode = XmlUtil::selectSingleNode($index->documentElement,"group[id='" . $group . "']");
+			$delNode = XmlUtil::selectSingleNode($editNode,"page[id='" . $id . "']");
 			if ($delNode != null)
 			{
 				$editNode->removeChild($delNode);
@@ -326,8 +328,8 @@ class ManageXML extends BaseAdminModule
 				//XmlDocument 
 				$xml = $this->_context->getXMLDataBase()->getDocument($xmlFile->FullQualifiedName(), null);
 				//if($contents!="")					
-					$contents = str_replace("&amp;", "&", XmlUtil::GetFormattedDocument($xml));
-				$editNode = XmlUtil::SelectSingleNode($xml->documentElement,"meta/groupkeyword");
+					$contents = str_replace("&amp;", "&", XmlUtil::getFormattedDocument($xml));
+				$editNode = XmlUtil::selectSingleNode($xml->documentElement,"meta/groupkeyword");
 				if ($editNode != null)
 				{
 					$groupKeyword = $editNode->nodeValue;
@@ -348,17 +350,17 @@ class ManageXML extends BaseAdminModule
 				$this->_px->addOption($selectPageNode, $myWords->Value("NOTLISTEDOPTION"), "-", null);					
 				
 				//XmlNodeList 
-				//$groupList = XmlUtil::SelectNodes($index->documentElement,"/xmlindex/group");
-				$groupList = XmlUtil::SelectNodes($index->documentElement,"/group");
+				//$groupList = XmlUtil::selectNodes($index->documentElement,"/xmlindex/group");
+				$groupList = XmlUtil::selectNodes($index->documentElement,"/group");
 				
 				foreach( $groupList as $node )					
 				{				
 					
-					$value = XmlUtil::SelectSingleNode($node,"title")->nodeValue;
+					$value = XmlUtil::selectSingleNode($node,"title")->nodeValue;
 										
-					$this->_px->addOption($selectNode, XmlUtil::SelectSingleNode($node,"title")->nodeValue . " (" . XmlUtil::SelectSingleNode($node,"/id")->nodeValue . ")", XmlUtil::SelectSingleNode($node,"/id")->nodeValue, XmlUtil::SelectSingleNode($node,"/id")->nodeValue == $group);
+					$this->_px->addOption($selectNode, XmlUtil::selectSingleNode($node,"title")->nodeValue . " (" . XmlUtil::selectSingleNode($node,"/id")->nodeValue . ")", XmlUtil::selectSingleNode($node,"/id")->nodeValue, XmlUtil::selectSingleNode($node,"/id")->nodeValue == $group);
 					
-					$this->_px->addOption($selectPageNode, XmlUtil::SelectSingleNode($node,"title")->nodeValue . " (" . XmlUtil::SelectSingleNode($node,"/keyword")->nodeValue . ")", XmlUtil::SelectSingleNode($node,"/keyword")->nodeValue, XmlUtil::SelectSingleNode($node,"/keyword")->nodeValue == $groupKeyword);
+					$this->_px->addOption($selectPageNode, XmlUtil::selectSingleNode($node,"title")->nodeValue . " (" . XmlUtil::selectSingleNode($node,"/keyword")->nodeValue . ")", XmlUtil::selectSingleNode($node,"/keyword")->nodeValue, XmlUtil::selectSingleNode($node,"/keyword")->nodeValue == $groupKeyword);
 				
 				}
 			

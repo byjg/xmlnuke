@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -65,8 +67,8 @@ class XmlTableColumnCollection extends XmlTableCollectionBase
 	public function generateObject($current)
 	{
 		parent::generateObject($current);
-		XmlUtil::AddAttribute($this->_genNode, "colspan", $this->getColspan());
-		XmlUtil::AddAttribute($this->_genNode, "rowspan", $this->getRowspan());
+		XmlUtil::addAttribute($this->_genNode, "colspan", $this->getColspan());
+		XmlUtil::addAttribute($this->_genNode, "rowspan", $this->getRowspan());
 	}
 	
 }

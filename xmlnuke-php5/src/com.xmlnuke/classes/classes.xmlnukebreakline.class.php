@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -39,7 +41,7 @@ class XmlnukeBreakLine extends XmlnukeDocumentObject
 	*/
 	public function generateObject($current)
 	{
-		XmlUtil::CreateChild($current, "br", "");
+		XmlUtil::createChild($current, "br", "");
 	}
 }
 ?>

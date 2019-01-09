@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -138,23 +140,23 @@ class XmlInputValidate extends XmlnukeDocumentObject
 	*/
 	public function generateObject($current)
 	{
-		XmlUtil::AddAttribute($current, "required", ($this->_required ? "true" : "false" ));
-		XmlUtil::AddAttribute($current, "type", $this->_inputtype);
+		XmlUtil::addAttribute($current, "required", ($this->_required ? "true" : "false" ));
+		XmlUtil::addAttribute($current, "type", $this->_inputtype);
 		if ($this->_minvalue != "")
 		{
-			XmlUtil::AddAttribute($current, "minvalue", $this->_minvalue);
+			XmlUtil::addAttribute($current, "minvalue", $this->_minvalue);
 		}
 		if ($this->_maxvalue != "")
 		{
-			XmlUtil::AddAttribute($current, "maxvalue", $this->_maxvalue);
+			XmlUtil::addAttribute($current, "maxvalue", $this->_maxvalue);
 		}
 		if ($this->_description != "")
 		{
-			XmlUtil::AddAttribute($current, "description", $this->_description);
+			XmlUtil::addAttribute($current, "description", $this->_description);
 		}
 		if ($this->_customjs != "")
 		{
-			XmlUtil::AddAttribute($current, "customjs", $this->_customjs);
+			XmlUtil::addAttribute($current, "customjs", $this->_customjs);
 		}
 	}
 }

@@ -28,6 +28,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -131,33 +133,33 @@ class XmlnukeUIAlert extends XmlnukeCollection implements IXmlnukeDocumentObject
 	
 	public function generateObject($current)
 	{
-		$node = XmlUtil::CreateChild($current, "uialert", "");
-		XmlUtil::AddAttribute($node, "type", $this->_uialert);
-		XmlUtil::AddAttribute($node, "name", $this->_name);
-		XmlUtil::AddAttribute($node, "title", $this->_title);
+		$node = XmlUtil::createChild($current, "uialert", "");
+		XmlUtil::addAttribute($node, "type", $this->_uialert);
+		XmlUtil::addAttribute($node, "name", $this->_name);
+		XmlUtil::addAttribute($node, "title", $this->_title);
 		if ($this->_autoHide > 0)
 		{
-			XmlUtil::AddAttribute($node, "autohide", $this->_autoHide);
+			XmlUtil::addAttribute($node, "autohide", $this->_autoHide);
 		}
 		if ($this->_openAction)
 		{
-			XmlUtil::AddAttribute($node, "openaction", $this->_openAction);
-			XmlUtil::AddAttribute($node, "openactiontext", $this->_openActionText);
+			XmlUtil::addAttribute($node, "openaction", $this->_openAction);
+			XmlUtil::addAttribute($node, "openactiontext", $this->_openActionText);
 		}
 		if ($this->_width > 0)
 		{
-			XmlUtil::AddAttribute($node, "width", $this->_width);
+			XmlUtil::addAttribute($node, "width", $this->_width);
 		}
 		if ($this->_height > 0)
 		{
-			XmlUtil::AddAttribute($node, "height", $this->_height);
+			XmlUtil::addAttribute($node, "height", $this->_height);
 		}
 		foreach ($this->_buttons as $key=>$value)
 		{
-			$btn = XmlUtil::CreateChild($node, "button", $value);
-			XmlUtil::AddAttribute($btn, "text", $key);
+			$btn = XmlUtil::createChild($node, "button", $value);
+			XmlUtil::addAttribute($btn, "text", $key);
 		}
-		$body = XmlUtil::CreateChild($node, "body");
+		$body = XmlUtil::createChild($node, "body");
 		parent::generatePage($body);
 	}
 }

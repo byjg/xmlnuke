@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -86,18 +88,18 @@ class XmlnukeTabView extends XmlnukeDocumentObject
 
 	public function generateObject($current)
 	{
-		$node = XmlUtil::CreateChild($current, "tabview", "");
+		$node = XmlUtil::createChild($current, "tabview", "");
 		foreach ($this->_tabs as $key=>$value) 
 		{
 			$title = $value[0];
 			$type = $value[1];
 			$content = $value[2];
 
-			$nodetab = XmlUtil::CreateChild($node, "tabitem", "");
-			XmlUtil::AddAttribute($nodetab, "title", $title);
+			$nodetab = XmlUtil::createChild($node, "tabitem", "");
+			XmlUtil::addAttribute($nodetab, "title", $title);
 			if ($this->_tabDefault == $key)
 			{
-				XmlUtil::AddAttribute($nodetab, "default", "true");
+				XmlUtil::addAttribute($nodetab, "default", "true");
 			}
 			if ($type == "OBJ")
 			{
@@ -105,7 +107,7 @@ class XmlnukeTabView extends XmlnukeDocumentObject
 			}
 			else
 			{
-				XmlUtil::AddAttribute($nodetab, "url", $content);
+				XmlUtil::addAttribute($nodetab, "url", $content);
 			}
 		}
 	}

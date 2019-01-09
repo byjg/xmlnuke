@@ -28,6 +28,8 @@
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * Implements a collection of Xmlnuke Xml Objects.
  *
@@ -156,7 +158,7 @@ class XmlnukeCollection
 			{
 				$prefix = strtok($value, "!");
 				$uri = str_replace($prefix . "!", "", $value);
-				XmlUtil::AddNamespaceToDocument($current, $prefix, XmlnukeCollection::replaceVars($model, $_name, $uri));
+				XmlUtil::addNamespaceToDocument($current, $prefix, XmlnukeCollection::replaceVars($model, $_name, $uri));
 			}
 		}
 
@@ -167,14 +169,14 @@ class XmlnukeCollection
 		else
 		{
 			if (!$_isRDF)
-				$node = XmlUtil::CreateChild($current, $_name);
+				$node = XmlUtil::createChild($current, $_name);
 			else
 			{
-				XmlUtil::AddNamespaceToDocument($current, "rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-				$node = XmlUtil::CreateChild($current, "rdf:Description");
-				XmlUtil::AddAttribute($node, "rdf:about", $_rdfAbout);
-				$nodeType = XmlUtil::CreateChild($node, "rdf:type");
-				XmlUtil::AddAttribute($nodeType, "rdf:resource", $_rdfType);
+				XmlUtil::addNamespaceToDocument($current, "rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+				$node = XmlUtil::createChild($current, "rdf:Description");
+				XmlUtil::addAttribute($node, "rdf:about", $_rdfAbout);
+				$nodeType = XmlUtil::createChild($node, "rdf:type");
+				XmlUtil::addAttribute($nodeType, "rdf:resource", $_rdfType);
 			}
 		}
 
@@ -235,7 +237,7 @@ class XmlnukeCollection
 					if ($_dontCreatePropNode)
 						$nodeUsed = $node;
 					else
-						$nodeUsed = XmlUtil::CreateChild($node, $_propName);
+						$nodeUsed = XmlUtil::createChild($node, $_propName);
 
 					$used = XmlnukeCollection::CreateObjectFromModel($nodeUsed, $propValue, $config);
 				}
@@ -244,7 +246,7 @@ class XmlnukeCollection
 					if ($_dontCreatePropNode)
 						$nodeUsed = $node;
 					else
-						$nodeUsed = $used = XmlUtil::CreateChild($node, $_propName);
+						$nodeUsed = $used = XmlUtil::createChild($node, $_propName);
 
 					foreach ($propValue as $key=>$value)
 					{
@@ -254,41 +256,41 @@ class XmlnukeCollection
 						{
 							if (is_numeric($key))
 								$key = "item";
-							XmlUtil::CreateChild ($nodeUsed, $key, $value);
+							XmlUtil::createChild ($nodeUsed, $key, $value);
 						}
 					}
 				}
 				else if (($propValue != "") || ($_writeEmpty))
 				{
 					if ($_isClassAttr)
-						XmlUtil::AddAttribute ($node, $_propName, $propValue);
+						XmlUtil::addAttribute ($node, $_propName, $propValue);
 					elseif ($_isBlankNode != "")
 					{
 						if (!array_key_exists($_isBlankNode, $nodeRefs))
 						{
-							$nodeRefs[$_isBlankNode] = XmlUtil::CreateChild($node, $_isBlankNode);
-							XmlUtil::AddAttribute($nodeRefs[$_isBlankNode], "rdf:parseType", "Resource");
+							$nodeRefs[$_isBlankNode] = XmlUtil::createChild($node, $_isBlankNode);
+							XmlUtil::addAttribute($nodeRefs[$_isBlankNode], "rdf:parseType", "Resource");
 						}
 
 						if ($_isResourceUri)
 						{
-							$blankNodeType = XmlUtil::CreateChild($nodeRefs[$_isBlankNode], "rdf:type");
-							XmlUtil::AddAttribute($blankNodeType, "rdf:resource", $propValue);
+							$blankNodeType = XmlUtil::createChild($nodeRefs[$_isBlankNode], "rdf:type");
+							XmlUtil::addAttribute($blankNodeType, "rdf:resource", $propValue);
 						}
 						else
 						{
-							XmlUtil::CreateChild($nodeRefs[$_isBlankNode], $_propName, $propValue);
+							XmlUtil::createChild($nodeRefs[$_isBlankNode], $_propName, $propValue);
 						}
 					}
 					elseif (($_attributeOf != "") && (array_key_exists($_attributeOf, $nodeRefs)))
-						XmlUtil::AddAttribute ($nodeRefs[$_attributeOf], $_propName, $propValue);
+						XmlUtil::addAttribute ($nodeRefs[$_attributeOf], $_propName, $propValue);
 					elseif ((preg_match('|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $propValue)) && $_isRDF)
 					{
-						$used = XmlUtil::CreateChild($node, $_propName);
-						XmlUtil::AddAttribute($used, "rdf:resource", $propValue);
+						$used = XmlUtil::createChild($node, $_propName);
+						XmlUtil::addAttribute($used, "rdf:resource", $propValue);
 					}
 					else
-						$used = XmlUtil::CreateChild($node, $_propName, $propValue);
+						$used = XmlUtil::createChild($node, $_propName, $propValue);
 				}
 
 				# Save Reference for "isAttributeOf" attribute.

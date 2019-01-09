@@ -29,6 +29,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 
 /**
  * @package xmlnuke
@@ -99,12 +101,12 @@ class XmlnukeCalendar extends XmlnukeDocumentObject
 	/// <param name="current">XmlNode where the XML will be created.</param>
 	public function generateObject($current)
 	{
-		$nodeCalendar = XmlUtil::CreateChild($current, "calendar", "");
+		$nodeCalendar = XmlUtil::createChild($current, "calendar", "");
 				
-		XmlUtil::AddAttribute($nodeCalendar, "name", "cal" . (rand(1000, 9999)) );
-		XmlUtil::AddAttribute($nodeCalendar, "month", $this->_month);
-		XmlUtil::AddAttribute($nodeCalendar, "year", $this->_year);
-		XmlUtil::AddAttribute($nodeCalendar, "title", $this->_title);
+		XmlUtil::addAttribute($nodeCalendar, "name", "cal" . (rand(1000, 9999)) );
+		XmlUtil::addAttribute($nodeCalendar, "month", $this->_month);
+		XmlUtil::addAttribute($nodeCalendar, "year", $this->_year);
+		XmlUtil::addAttribute($nodeCalendar, "title", $this->_title);
 		
 		foreach($this->_events as $key=>$calendarEvent)
 		{
@@ -136,12 +138,12 @@ class XmlnukeCalendarEvent extends XmlnukeCollection implements IXmlnukeDocument
 	/// <param name="current">XmlNode where the XML will be created.</param>
 	public function generateObject($current)
 	{
-		$nodeCalendarEvent = XmlUtil::CreateChild($current, "event", $this->_text);
+		$nodeCalendarEvent = XmlUtil::createChild($current, "event", $this->_text);
 		
-		XmlUtil::AddAttribute($nodeCalendarEvent, "day", $this->_day);
+		XmlUtil::addAttribute($nodeCalendarEvent, "day", $this->_day);
 		if ($this->_type > 0)
 		{
-			XmlUtil::AddAttribute($nodeCalendarEvent, "type", ($this->_type-1) % 24 + 1);
+			XmlUtil::addAttribute($nodeCalendarEvent, "type", ($this->_type-1) % 24 + 1);
 		}
 		
 		$this->generatePage($nodeCalendarEvent);

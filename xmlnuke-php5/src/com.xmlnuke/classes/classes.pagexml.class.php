@@ -28,6 +28,8 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  * @deprecated since version 2.0.
@@ -80,7 +82,7 @@ class PageXml implements IXmlnukeDocument
 			"<keyword>all</keyword>\r\n".
 			"</group>\r\n".
 			"</page>";
-			$this->_xmlDoc = XmlUtil::CreateXmlDocumentFromStr($auxStr);
+			$this->_xmlDoc = XmlUtil::createXmlDocumentFromStr($auxStr);
 			$xpath = new DOMXPath($this->_xmlDoc);
 			$this->_nodePage = $this->_xmlDoc->getElementsByTagName("page")->item(0);
 			$this->_nodeGroup = $xpath->query("/page/group")->item(0);
@@ -92,7 +94,7 @@ class PageXml implements IXmlnukeDocument
 		}
 		else if(($xmlfilename == null)&&($path != null)&&($strfilename != null))
 		{
-			$xmlDoc = XmlUtil::CreateXmlDocument();
+			$xmlDoc = XmlUtil::createXmlDocument();
 			$xmlDoc->Load(FileUtil::AdjustSlashes($path.FileUtil::Slash().$strfilename) );
 		}
 
@@ -263,23 +265,23 @@ class PageXml implements IXmlnukeDocument
 	
 	public function addBlockCenter($title)
 	{
-		//$objBlockCenter = XmlUtil::CreateChild($this->_nodePage, "blockcenter", "");
-		$objBlockCenter = XmlUtil::CreateChild($this->_xmlDoc->documentElement, "blockcenter", "");
-		XmlUtil::CreateChild($objBlockCenter, "title", $title);
-		return XmlUtil::CreateChild($objBlockCenter, "body", "");
+		//$objBlockCenter = XmlUtil::createChild($this->_nodePage, "blockcenter", "");
+		$objBlockCenter = XmlUtil::createChild($this->_xmlDoc->documentElement, "blockcenter", "");
+		XmlUtil::createChild($objBlockCenter, "title", $title);
+		return XmlUtil::createChild($objBlockCenter, "body", "");
 	}
 	
 	public function addBlockRight($title)
 	{		
-		$objBlockRight = XmlUtil::CreateChild($this->_xmlDoc->documentElement, "blockright", "");
-		XmlUtil::CreateChild($objBlockRight, "title", $title);
-		return XmlUtil::CreateChild($objBlockRight, "body", "");
+		$objBlockRight = XmlUtil::createChild($this->_xmlDoc->documentElement, "blockright", "");
+		XmlUtil::createChild($objBlockRight, "title", $title);
+		return XmlUtil::createChild($objBlockRight, "body", "");
 	}
 	public function addBlockLeft($title)
 	{		
-		$objBlockLeft = XmlUtil::CreateChild($this->_xmlDoc->documentElement, "blockleft", "");
-		XmlUtil::CreateChild($objBlockLeft, "title", $title);
-		return XmlUtil::CreateChild($objBlockLeft, "body", "");
+		$objBlockLeft = XmlUtil::createChild($this->_xmlDoc->documentElement, "blockleft", "");
+		XmlUtil::createChild($objBlockLeft, "title", $title);
+		return XmlUtil::createChild($objBlockLeft, "body", "");
 	}
 	
 
@@ -304,7 +306,7 @@ class PageXml implements IXmlnukeDocument
 	
 	public function  addParagraph($objBlockCenter)
 	{
-		return XmlUtil::CreateChild($objBlockCenter, "p", "");
+		return XmlUtil::createChild($objBlockCenter, "p", "");
 	}
 	
 	/**
@@ -313,7 +315,7 @@ class PageXml implements IXmlnukeDocument
 	*/
 	public function addCode($objParagraph,$code)
 	{
-		XmlUtil::CreateChild($objParagraph, "code", $code);
+		XmlUtil::createChild($objParagraph, "code", $code);
 	}
 
 	/// <summary>
@@ -333,10 +335,10 @@ class PageXml implements IXmlnukeDocument
 	
 	public function addText($objParagraph,$strText)
 	{
-		XmlUtil::AddTextNode($objParagraph, $strText);
+		XmlUtil::addTextNode($objParagraph, $strText);
 		if ($this->_breakLine)
 		{
-			XmlUtil::CreateChild($objParagraph, "br", "");
+			XmlUtil::createChild($objParagraph, "br", "");
 		}
 	}
 
@@ -357,10 +359,10 @@ class PageXml implements IXmlnukeDocument
 	
 	public function addItalic($objParagraph, $strText)
 	{
-		XmlUtil::CreateChild($objParagraph, "i", $strText);
+		XmlUtil::createChild($objParagraph, "i", $strText);
 		if ($this->_breakLine)
 		{
-			XmlUtil::CreateChild($objParagraph, "br", "");
+			XmlUtil::createChild($objParagraph, "br", "");
 		}
 	}
 
@@ -381,26 +383,26 @@ class PageXml implements IXmlnukeDocument
 	
 	public function addBold($objParagraph, $strText)
 	{
-		XmlUtil::CreateChild($objParagraph, "b", $strText);
+		XmlUtil::createChild($objParagraph, "b", $strText);
 		if ($this->_breakLine)
 		{
-			XmlUtil::CreateChild($objParagraph, "br", "");
+			XmlUtil::createChild($objParagraph, "br", "");
 		}
 	}
 	//Parameter: DOMNode $objParagraph // Return: DOMNode
 	public function addTable($objParagraph)
 	{
-		return XmlUtil::CreateChild($objParagraph, "table", "");
+		return XmlUtil::createChild($objParagraph, "table", "");
 	}
 	// DOMNode $objTable // Return: DOMNode
 	public function addTableRow($objTable)
 	{
-		return XmlUtil::CreateChild($objTable, "tr", "");
+		return XmlUtil::createChild($objTable, "tr", "");
 	}
 	// DOMNode $objTableRow // Return: DOMNode
 	public function addTableColumn($objTableRow)
 	{
-		return XmlUtil::CreateChild($objTableRow, "td", "");
+		return XmlUtil::createChild($objTableRow, "td", "");
 	}
 
 	/// <summary>
@@ -430,14 +432,14 @@ class PageXml implements IXmlnukeDocument
 	
 	public function addImage($objParagraph, $strSrc, $strAlt, $intWidth, $intHeight)
 	{
-		$nodeWorking = XmlUtil::CreateChild($objParagraph, "img", "");
-		XmlUtil::AddAttribute($nodeWorking, "src", $strSrc);
-		XmlUtil::AddAttribute($nodeWorking, "alt", $strAlt);
-		XmlUtil::AddAttribute($nodeWorking, "width", $intWidth);
-		XmlUtil::AddAttribute($nodeWorking, "height", $intHeight);
+		$nodeWorking = XmlUtil::createChild($objParagraph, "img", "");
+		XmlUtil::addAttribute($nodeWorking, "src", $strSrc);
+		XmlUtil::addAttribute($nodeWorking, "alt", $strAlt);
+		XmlUtil::addAttribute($nodeWorking, "width", $intWidth);
+		XmlUtil::addAttribute($nodeWorking, "height", $intHeight);
 		if ($this->_breakLine)
 		{
-			XmlUtil::CreateChild($objParagraph, "br", "");
+			XmlUtil::createChild($objParagraph, "br", "");
 		}
 		return $nodeWorking;
 	}
@@ -466,31 +468,31 @@ class PageXml implements IXmlnukeDocument
 			$target = "";
 		}
 
-		$nodeWorking = XmlUtil::CreateChild($objParagraph, "a", $text);
+		$nodeWorking = XmlUtil::createChild($objParagraph, "a", $text);
 		
 		if(strpos($link, "&amp;")=== false)
 			$link = str_replace("&", "&amp;",$link);#Acrescentado PHP Version
 		
-		XmlUtil::AddAttribute($nodeWorking, "href", $link);
+		XmlUtil::addAttribute($nodeWorking, "href", $link);
 		if ($target != "")
 		{
-			XmlUtil::AddAttribute($nodeWorking, "target", $target);
+			XmlUtil::addAttribute($nodeWorking, "target", $target);
 		}
 		if ($this->_breakLine)
 		{
-			XmlUtil::CreateChild($objParagraph,"br","");
+			XmlUtil::createChild($objParagraph,"br","");
 		}
 		return $nodeWorking;
 	}
 	///Parameters: DOMNode
 	public function addUnorderedList($objParagraph)
 	{
-		return XmlUtil::CreateChild($objParagraph, "ul", "");
+		return XmlUtil::createChild($objParagraph, "ul", "");
 	}
 
 	public function addOptionList($objList)
 	{
-		return XmlUtil::CreateChild($objList, "li", "");
+		return XmlUtil::createChild($objList, "li", "");
 	}
 
 	//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -526,27 +528,27 @@ class PageXml implements IXmlnukeDocument
 	
 	public function addForm($objBlockCenter, $action, $title, $formName=null, $jsValidate=null, $decimalSeparator=null, $dateformat = null)
 	{
-		$nodeWorking = XmlUtil::CreateChild($objBlockCenter, "editform", "");
-		XmlUtil::AddAttribute($nodeWorking, "action", $action);
-		XmlUtil::AddAttribute($nodeWorking, "title", $title);
+		$nodeWorking = XmlUtil::createChild($objBlockCenter, "editform", "");
+		XmlUtil::addAttribute($nodeWorking, "action", $action);
+		XmlUtil::addAttribute($nodeWorking, "title", $title);
 		if($formName!=null)
 		{
-			XmlUtil::AddAttribute($nodeWorking, "name", $formName);
+			XmlUtil::addAttribute($nodeWorking, "name", $formName);
 		}
 		
 		if($jsValidate!=null)
 		{			
 			//$jsValidate = strtolower((string)$jsValidate);
 			//echo "Validate: ".($jsValidate)?"true":"false";
-			XmlUtil::AddAttribute($nodeWorking, "jsvalidate", ($jsValidate)?"true":"false");
+			XmlUtil::addAttribute($nodeWorking, "jsvalidate", ($jsValidate)?"true":"false");
 		}
 		if($decimalSeparator!=null)
 		{
-			XmlUtil::AddAttribute($nodeWorking, "decimalseparator", (string)$decimalSeparator);
+			XmlUtil::addAttribute($nodeWorking, "decimalseparator", (string)$decimalSeparator);
 		}
 		if($dateformat!=null)
 		{
-			XmlUtil::AddAttribute($nodeWorking, "dateformat", (string)$dateformat);
+			XmlUtil::addAttribute($nodeWorking, "dateformat", (string)$dateformat);
 		}		
 		return $nodeWorking;
 	}
@@ -564,7 +566,7 @@ class PageXml implements IXmlnukeDocument
 	
 	public function addCaption($objForm,$text)
 	{
-		XmlUtil::CreateChild($objForm, "caption", $text);
+		XmlUtil::createChild($objForm, "caption", $text);
 	}
 
 	/// <summary>
@@ -584,9 +586,9 @@ class PageXml implements IXmlnukeDocument
 	
 	public function addHidden($objForm, $name, $value)
 	{
-		$nodeWorking = XmlUtil::CreateChild($objForm, "hidden", "");
-		XmlUtil::AddAttribute($nodeWorking, "name", $name);
-		XmlUtil::AddAttribute($nodeWorking, "value", $value);
+		$nodeWorking = XmlUtil::createChild($objForm, "hidden", "");
+		XmlUtil::addAttribute($nodeWorking, "name", $name);
+		XmlUtil::addAttribute($nodeWorking, "value", $value);
 	}
 
 	/// <summary>
@@ -601,11 +603,11 @@ class PageXml implements IXmlnukeDocument
 /*
 	public function addTextBox($objForm, $caption, $name, $value, $size)
 	{
-		$nodeWorking = XmlUtil::CreateChild($objForm, "textbox", "");
-		XmlUtil::AddAttribute($nodeWorking, "caption", $caption);
-		XmlUtil::AddAttribute($nodeWorking, "name", $name);
-		XmlUtil::AddAttribute($nodeWorking, "value", $value);
-		XmlUtil::AddAttribute($nodeWorking, "size", $size);
+		$nodeWorking = XmlUtil::createChild($objForm, "textbox", "");
+		XmlUtil::addAttribute($nodeWorking, "caption", $caption);
+		XmlUtil::addAttribute($nodeWorking, "name", $name);
+		XmlUtil::addAttribute($nodeWorking, "value", $value);
+		XmlUtil::addAttribute($nodeWorking, "size", $size);
 	}
 */
 
@@ -620,11 +622,11 @@ class PageXml implements IXmlnukeDocument
 
 	public function addTextBox($objForm, $caption, $name, $value, $size, $required=false, $inputtype=0,$maxLength="", $minvalue="", $maxvalue="", $description="", $customjs="")
 	{
-		$nodeWorking = XmlUtil::CreateChild($objForm, "textbox", "");
-		XmlUtil::AddAttribute($nodeWorking, "caption", $caption);
-		XmlUtil::AddAttribute($nodeWorking, "name", $name);
-		XmlUtil::AddAttribute($nodeWorking, "value", $value);
-		XmlUtil::AddAttribute($nodeWorking, "size", $size);
+		$nodeWorking = XmlUtil::createChild($objForm, "textbox", "");
+		XmlUtil::addAttribute($nodeWorking, "caption", $caption);
+		XmlUtil::addAttribute($nodeWorking, "name", $name);
+		XmlUtil::addAttribute($nodeWorking, "value", $value);
+		XmlUtil::addAttribute($nodeWorking, "size", $size);
 		$this->addJSValidation($nodeWorking, $required, $inputtype,$maxLength, $minvalue, $maxvalue, $description, $customjs);
 		
 		return $nodeWorking;
@@ -633,36 +635,36 @@ class PageXml implements IXmlnukeDocument
 
 	private function addJSValidation($objInput, $required, $inputtype,$maxLength, $minvalue, $maxvalue, $description, $customjs)
 	{		
-		XmlUtil::AddAttribute($objInput, "required", ($required?"true":"false"));
-		XmlUtil::AddAttribute($objInput, "type", (string)$inputtype);
+		XmlUtil::addAttribute($objInput, "required", ($required?"true":"false"));
+		XmlUtil::addAttribute($objInput, "type", (string)$inputtype);
 		if ($minvalue != "")
 		{
-			XmlUtil::AddAttribute($objInput, "minvalue", $minvalue);
+			XmlUtil::addAttribute($objInput, "minvalue", $minvalue);
 		}
 		if ($maxvalue != "")
 		{
-			XmlUtil::AddAttribute($objInput, "maxvalue", $maxvalue);
+			XmlUtil::addAttribute($objInput, "maxvalue", $maxvalue);
 		}
 		if ($description != "")
 		{
-			XmlUtil::AddAttribute($objInput, "description", $description);
+			XmlUtil::addAttribute($objInput, "description", $description);
 		}
 		if ($customjs != "")
 		{
-			XmlUtil::AddAttribute($objInput, "customjs", $customjs);
+			XmlUtil::addAttribute($objInput, "customjs", $customjs);
 		}
 		if ($maxLength != "")
 		{
-			XmlUtil::AddAttribute($objInput, "maxlength", $maxLength);
+			XmlUtil::addAttribute($objInput, "maxlength", $maxLength);
 		}
 	}
 	
 	
 	public function addLabelField($objForm, $caption, $value)
 	{
-		$nodeWorking = XmlUtil::CreateChild($objForm, "label", "");
-		XmlUtil::AddAttribute($nodeWorking, "caption", $caption);
-		XmlUtil::AddAttribute($nodeWorking, "value", $value);
+		$nodeWorking = XmlUtil::createChild($objForm, "label", "");
+		XmlUtil::addAttribute($nodeWorking, "caption", $caption);
+		XmlUtil::addAttribute($nodeWorking, "value", $value);
 	}
 
 	/// <summary>
@@ -684,10 +686,10 @@ class PageXml implements IXmlnukeDocument
 	
 	public function addPassword($objForm, $caption, $name, $size, $required="", $inputtype="",$maxLength="", $minvalue="", $maxvalue="", $description="", $customjs="")
 	{
-		$nodeWorking = XmlUtil::CreateChild($objForm, "password", "");
-		XmlUtil::AddAttribute($nodeWorking, "caption", $caption);
-		XmlUtil::AddAttribute($nodeWorking, "name", $name);
-		XmlUtil::AddAttribute($nodeWorking, "size", $size);
+		$nodeWorking = XmlUtil::createChild($objForm, "password", "");
+		XmlUtil::addAttribute($nodeWorking, "caption", $caption);
+		XmlUtil::addAttribute($nodeWorking, "name", $name);
+		XmlUtil::addAttribute($nodeWorking, "size", $size);
 		$this->addJSValidation($nodeWorking, $required, $inputtype,$maxLength, $minvalue, $maxvalue, $description, $customjs);
 	}
 
@@ -718,13 +720,13 @@ class PageXml implements IXmlnukeDocument
 	public function addMemo($objForm, $caption, $name, $value, $cols, $rows, $wrap)
 	{
 
-		$nodeWorking = XmlUtil::CreateChild($objForm, "memo", "");
-		XmlUtil::AddAttribute($nodeWorking, "caption", $caption);
-		XmlUtil::AddAttribute($nodeWorking, "name", $name);
-		XmlUtil::AddAttribute($nodeWorking, "cols", $cols);
-		XmlUtil::AddAttribute($nodeWorking, "rows", $rows);
-		XmlUtil::AddAttribute($nodeWorking, "wrap", $wrap);
-		XmlUtil::AddTextNode($nodeWorking, $value);
+		$nodeWorking = XmlUtil::createChild($objForm, "memo", "");
+		XmlUtil::addAttribute($nodeWorking, "caption", $caption);
+		XmlUtil::addAttribute($nodeWorking, "name", $name);
+		XmlUtil::addAttribute($nodeWorking, "cols", $cols);
+		XmlUtil::addAttribute($nodeWorking, "rows", $rows);
+		XmlUtil::addAttribute($nodeWorking, "wrap", $wrap);
+		XmlUtil::addTextNode($nodeWorking, $value);
 
 	}
 
@@ -747,10 +749,10 @@ class PageXml implements IXmlnukeDocument
 	
 	public function addRadioBox($objForm, $caption, $name, $value)
 	{
-		$nodeWorking = XmlUtil::CreateChild($objForm, "radiobox", "");
-		XmlUtil::AddAttribute($nodeWorking, "caption", $caption);
-		XmlUtil::AddAttribute($nodeWorking, "name", $name);
-		XmlUtil::AddAttribute($nodeWorking, "value", $value);
+		$nodeWorking = XmlUtil::createChild($objForm, "radiobox", "");
+		XmlUtil::addAttribute($nodeWorking, "caption", $caption);
+		XmlUtil::addAttribute($nodeWorking, "name", $name);
+		XmlUtil::addAttribute($nodeWorking, "value", $value);
 	}
 
 	/// <summary>
@@ -772,12 +774,12 @@ class PageXml implements IXmlnukeDocument
 	
 	public function addCheckBox($objForm, $caption, $name, $value, $selected=false)
 	{
-		$nodeWorking = XmlUtil::CreateChild($objForm, "checkbox", "");
-		XmlUtil::AddAttribute($nodeWorking, "caption", $caption);
-		XmlUtil::AddAttribute($nodeWorking, "name", $name);
-		XmlUtil::AddAttribute($nodeWorking, "value", $value);
+		$nodeWorking = XmlUtil::createChild($objForm, "checkbox", "");
+		XmlUtil::addAttribute($nodeWorking, "caption", $caption);
+		XmlUtil::addAttribute($nodeWorking, "name", $name);
+		XmlUtil::addAttribute($nodeWorking, "value", $value);
 		if($selected)
-			XmlUtil::AddAttribute($nodeWorking, "selected", "yes");
+			XmlUtil::addAttribute($nodeWorking, "selected", "yes");
 	}
 
 	/// <summary>
@@ -800,14 +802,14 @@ class PageXml implements IXmlnukeDocument
 	public function addSelect($objForm, $caption, $name, $values=null, $defaultValue="", $required=false, $customJs=null)
 	{
 		
-		$nodeWorking = XmlUtil::CreateChild($objForm, "select", "");
-		XmlUtil::AddAttribute($nodeWorking, "caption", $caption);
-		XmlUtil::AddAttribute($nodeWorking, "name", $name);
+		$nodeWorking = XmlUtil::createChild($objForm, "select", "");
+		XmlUtil::addAttribute($nodeWorking, "caption", $caption);
+		XmlUtil::addAttribute($nodeWorking, "name", $name);
 		($required)?$required = "true":$required = "false";	
-		XmlUtil::AddAttribute($nodeWorking , "required", $required);
+		XmlUtil::addAttribute($nodeWorking , "required", $required);
 		if ($customJs != null)
 		{
-			XmlUtil::AddAttribute($nodeWorking, "customjs", $customJs);
+			XmlUtil::addAttribute($nodeWorking, "customjs", $customJs);
 		}
 
 		//$nodeWorking = $this->addSelect3($objForm, $caption, $name);
@@ -825,9 +827,9 @@ class PageXml implements IXmlnukeDocument
 	//@ESSES TR�S MET�DOS SER�O SUBSTITUIDOS POR ADDSELECT()
 	public function addSelect3($objForm, $caption, $name)
 	{
-		$nodeWorking = XmlUtil::CreateChild($objForm, "select", "");
-		XmlUtil::AddAttribute($nodeWorking, "caption", $caption);
-		XmlUtil::AddAttribute($nodeWorking, "name", $name);
+		$nodeWorking = XmlUtil::createChild($objForm, "select", "");
+		XmlUtil::addAttribute($nodeWorking, "caption", $caption);
+		XmlUtil::addAttribute($nodeWorking, "name", $name);
 		return $nodeWorking;
 	}
 	///Parameters: DOMNode objForm, string caption, string name, string[] values // Returns: DOMNode
@@ -875,13 +877,13 @@ class PageXml implements IXmlnukeDocument
 		{
 			$selected=false;
 		}
-		$nodeWorking = XmlUtil::CreateChild($objSelect, "option", "");
-		XmlUtil::AddAttribute($nodeWorking, "value", $value);
+		$nodeWorking = XmlUtil::createChild($objSelect, "option", "");
+		XmlUtil::addAttribute($nodeWorking, "value", $value);
 		if ($selected)
 		{
-			XmlUtil::AddAttribute($nodeWorking, "selected", "yes");
+			XmlUtil::addAttribute($nodeWorking, "selected", "yes");
 		}
-		XmlUtil::AddTextNode($nodeWorking, $caption);
+		XmlUtil::addTextNode($nodeWorking, $caption);
 	}
 
 	/// <summary>
@@ -899,7 +901,7 @@ class PageXml implements IXmlnukeDocument
 	
 	public function addBoxButtons($objForm)
 	{
-		return XmlUtil::CreateChild($objForm, "buttons", "");
+		return XmlUtil::createChild($objForm, "buttons", "");
 	}
 
 	/// <summary>
@@ -921,10 +923,10 @@ class PageXml implements IXmlnukeDocument
 	
 	public function addButton($objBoxButtons, $name, $caption, $onclick )
 	{
-		$nodeWorking = XmlUtil::CreateChild($objBoxButtons, "button", "");
-		XmlUtil::AddAttribute($nodeWorking, "caption", $caption);
-		XmlUtil::AddAttribute($nodeWorking, "name", $name);
-		XmlUtil::AddAttribute($nodeWorking, "onclick", $onclick);
+		$nodeWorking = XmlUtil::createChild($objBoxButtons, "button", "");
+		XmlUtil::addAttribute($nodeWorking, "caption", $caption);
+		XmlUtil::addAttribute($nodeWorking, "name", $name);
+		XmlUtil::addAttribute($nodeWorking, "onclick", $onclick);
 	}
 
 	/// <summary>
@@ -943,9 +945,9 @@ class PageXml implements IXmlnukeDocument
 	
 	public function addSubmit($objBoxButtons, $name, $caption)
 	{
-		$nodeWorking = XmlUtil::CreateChild($objBoxButtons, "submit", "");
-		XmlUtil::AddAttribute($nodeWorking, "caption", $caption);
-		XmlUtil::AddAttribute($nodeWorking, "name", $name);
+		$nodeWorking = XmlUtil::createChild($objBoxButtons, "submit", "");
+		XmlUtil::addAttribute($nodeWorking, "caption", $caption);
+		XmlUtil::addAttribute($nodeWorking, "name", $name);
 	}
 
 	/// <summary>
@@ -965,9 +967,9 @@ class PageXml implements IXmlnukeDocument
 	
 	public function addReset($objBoxButtons, $name, $caption)
 	{
-		$nodeWorking = XmlUtil::CreateChild($objBoxButtons, "reset", "");
-		XmlUtil::AddAttribute($nodeWorking, "caption", $caption);
-		XmlUtil::AddAttribute($nodeWorking, "name", $name);
+		$nodeWorking = XmlUtil::createChild($objBoxButtons, "reset", "");
+		XmlUtil::addAttribute($nodeWorking, "caption", $caption);
+		XmlUtil::addAttribute($nodeWorking, "name", $name);
 	}
 	//Acrescentado bot�o do tipo FILE
 	/// <summary>
@@ -985,8 +987,8 @@ class PageXml implements IXmlnukeDocument
 	
 	public function addLineButtons($objForm, $label="")
 	{
-		$nodeWorking = XmlUtil::CreateChild($objForm, "buttonsline", "");
-		XmlUtil::AddAttribute($nodeWorking, "label", $label);
+		$nodeWorking = XmlUtil::createChild($objForm, "buttonsline", "");
+		XmlUtil::addAttribute($nodeWorking, "label", $label);
 		return $nodeWorking;
 	
 	}
@@ -1010,9 +1012,9 @@ class PageXml implements IXmlnukeDocument
 	
 	public function addFileButton($objBoxButtons, $name)
 	{
-		$nodeWorking = XmlUtil::CreateChild($objBoxButtons, "filebutton", "");
-		XmlUtil::AddAttribute($nodeWorking, "caption", $caption);
-		XmlUtil::AddAttribute($nodeWorking, "name", $name);
+		$nodeWorking = XmlUtil::createChild($objBoxButtons, "filebutton", "");
+		XmlUtil::addAttribute($nodeWorking, "caption", $caption);
+		XmlUtil::addAttribute($nodeWorking, "name", $name);
 
 	}
 
@@ -1043,10 +1045,10 @@ class PageXml implements IXmlnukeDocument
 	
 	public function addMenuItem($xmlID, $title, $summary)
 	{
-		$nodeWorking = XmlUtil::CreateChild($this->_nodeGroup, "page", "");
-		XmlUtil::CreateChild($nodeWorking, "id", $xmlID);
-		XmlUtil::CreateChild($nodeWorking, "title", $title);
-		XmlUtil::CreateChild($nodeWorking, "summary", $summary);
+		$nodeWorking = XmlUtil::createChild($this->_nodeGroup, "page", "");
+		XmlUtil::createChild($nodeWorking, "id", $xmlID);
+		XmlUtil::createChild($nodeWorking, "title", $title);
+		XmlUtil::createChild($nodeWorking, "summary", $summary);
 	}
 
 	//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -1054,26 +1056,26 @@ class PageXml implements IXmlnukeDocument
 	//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 	public function addJavaScript($javascript, $location = 'up')
 	{
-		$nodeWorking = XmlUtil::CreateChild($this->_nodePage, "script", "");
-		XmlUtil::AddAttribute($nodeWorking, "language", "javascript");
-		XmlUtil::AddAttribute($nodeWorking, "location", $location);
-		XmlUtil::AddTextNode($nodeWorking, $javascript);
+		$nodeWorking = XmlUtil::createChild($this->_nodePage, "script", "");
+		XmlUtil::addAttribute($nodeWorking, "language", "javascript");
+		XmlUtil::addAttribute($nodeWorking, "location", $location);
+		XmlUtil::addTextNode($nodeWorking, $javascript);
 	}
 	
 	public function addJavaScriptSrc($javascriptSrc, $location = 'up')
 	{
-		$nodeWorking = XmlUtil::CreateChild($this->_nodePage, "script", "");
-		XmlUtil::AddAttribute($nodeWorking, "language", "javascript");
-		XmlUtil::AddAttribute($nodeWorking, "location", $location);
-		XmlUtil::AddAttribute($nodeWorking, "src", $javascriptSrc);
+		$nodeWorking = XmlUtil::createChild($this->_nodePage, "script", "");
+		XmlUtil::addAttribute($nodeWorking, "language", "javascript");
+		XmlUtil::addAttribute($nodeWorking, "location", $location);
+		XmlUtil::addAttribute($nodeWorking, "src", $javascriptSrc);
 	}
 	
 	public function addFlash($movie, $width, $height)
 	{
-		$nodeWorking = XmlUtil::CreateChild($this->_nodePage, "script", "");
-		XmlUtil::AddAttribute($nodeWorking, "movie", $movie);
-		XmlUtil::AddAttribute($nodeWorking, "width", (string)$width);
-		XmlUtil::AddAttribute($nodeWorking, "height", (string)$height);
+		$nodeWorking = XmlUtil::createChild($this->_nodePage, "script", "");
+		XmlUtil::addAttribute($nodeWorking, "movie", $movie);
+		XmlUtil::addAttribute($nodeWorking, "width", (string)$width);
+		XmlUtil::addAttribute($nodeWorking, "height", (string)$height);
 	}
 
 	

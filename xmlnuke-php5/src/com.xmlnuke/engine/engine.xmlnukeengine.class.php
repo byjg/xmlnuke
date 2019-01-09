@@ -27,6 +27,8 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * This class call all of other xmlnuke classes and return the XML/XSL processed. 
  * @package xmlnuke
@@ -272,7 +274,7 @@ class XmlNukeEngine
 		}
 		if (empty($element)) 
 		{
-			return XmlUtil::SaveXmlNodeToString($px->getRootNode());
+			return XmlUtil::saveXmlNodeToString($px->getRootNode());
 		}
 		
 		//DOMNode
@@ -281,7 +283,7 @@ class XmlNukeEngine
 			$element = "blockcenter";
 		}
 		$findedElements = XmlUtil::selectSingleNode($nodePage, $element);
-		return XmlUtil::SaveXmlNodeToString($findedElements);
+		return XmlUtil::saveXmlNodeToString($findedElements);
 	}
 
 	/**
@@ -295,8 +297,8 @@ class XmlNukeEngine
 		$allFile = new XMLFilenameProcessor("_all");
 		$indexFile = new XMLFilenameProcessor("index");
 
-		XmlUtil::AddNodeFromFile($nodePage, $allFile, "page");
-		XmlUtil::AddNodeFromFile($nodePage, $indexFile, "xmlindex");
+		XmlUtil::addNodeFromFile($nodePage, $allFile, "page");
+		XmlUtil::addNodeFromFile($nodePage, $indexFile, "xmlindex");
 
 	}
 
@@ -384,26 +386,26 @@ class XmlNukeEngine
 			else 
 			{
 				$nodes = XmlUtil::selectNodes($xml->documentElement, "/".$this->_extractNodes);
-				$retDocument = XmlUtil::CreateXmlDocumentFromStr("<".$this->_extractNodesRoot."/>", false);
+				$retDocument = XmlUtil::createXmlDocumentFromStr("<".$this->_extractNodesRoot."/>", false);
 				$nodeRoot = $retDocument->documentElement;
-				XmlUtil::AddAttribute($nodeRoot, "xpath", $this->_extractNodes);
-				XmlUtil::AddAttribute($nodeRoot, "site", $this->_context->getSite());
+				XmlUtil::addAttribute($nodeRoot, "xpath", $this->_extractNodes);
+				XmlUtil::addAttribute($nodeRoot, "site", $this->_context->getSite());
 				foreach ($nodes as $node) 
 				{
-					$nodeToAdd = XmlUtil::CreateChild($nodeRoot, $node->nodeName, "");
+					$nodeToAdd = XmlUtil::createChild($nodeRoot, $node->nodeName, "");
 					$attributes = $node->attributes;
 					foreach ($attributes as $value) 
 					{
-						XmlUtil::AddAttribute($nodeToAdd, $value->nodeName, $value->nodeValue);
+						XmlUtil::addAttribute($nodeToAdd, $value->nodeName, $value->nodeValue);
 					}
-					XmlUtil::AddNodeFromNode($nodeToAdd, $node);
+					XmlUtil::addNodeFromNode($nodeToAdd, $node);
 				}
 				$outDocument = $retDocument;
 			}
 
 			if ($this->_outputResult == XmlNukeEngine::OUTPUT_JSON)
 			{
-				return XmlUtil::xml2json($outDocument, $this->_extraParams["json_function"]);
+				return json_encode(XmlUtil::xml2Array($outDocument, $this->_extraParams["json_function"]));
 			}
 			else // Default XML.
 			{
@@ -503,7 +505,7 @@ class XmlNukeEngine
 			}
 			else
 			{
-				$xmlDoc = XmlUtil::CreateXmlDocumentFromFile($xmlFile->FullQualifiedNameAndPath());
+				$xmlDoc = XmlUtil::createXmlDocumentFromFile($xmlFile->FullQualifiedNameAndPath());
 			}
 		}
 		catch (Exception $ex)

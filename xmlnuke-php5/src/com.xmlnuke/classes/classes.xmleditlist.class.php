@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -277,7 +279,7 @@ class XmlEditList extends XmlnukeDocumentObject
 		{ 
 			case EditListFieldType::TEXT:
 			{ 
-				XmlUtil::AddTextNode($column, $row->getField($field->fieldData));
+				XmlUtil::addTextNode($column, $row->getField($field->fieldData));
 				break; 
 			} 
 			case EditListFieldType::IMAGE:
@@ -298,7 +300,7 @@ class XmlEditList extends XmlnukeDocumentObject
 				{
 					$value = $field->arrayLookup[$value];
 				}
-				XmlUtil::AddTextNode($column, $value);
+				XmlUtil::addTextNode($column, $value);
 				break;
 			}
 			case EditListFieldType::FORMATTER:
@@ -310,13 +312,13 @@ class XmlEditList extends XmlnukeDocumentObject
 				}
 				else 
 				{
-					XmlUtil::AddTextNode($column, $obj->Format($row, $field->fieldData, $row->getField($field->fieldData)));
+					XmlUtil::addTextNode($column, $obj->Format($row, $field->fieldData, $row->getField($field->fieldData)));
 				}
 				break;
 			}
 			default:
 			{
-				XmlUtil::AddTextNode($column, $row->getField($field->fieldData));
+				XmlUtil::addTextNode($column, $row->getField($field->fieldData));
 				break;
 			}
 		}
@@ -329,31 +331,31 @@ class XmlEditList extends XmlnukeDocumentObject
 	*/
 	public function generateObject($current)
 	{
-		$nodeWorking = XmlUtil::CreateChild($current, "editlist", "");
-		XmlUtil::AddAttribute($nodeWorking, "module", $this->_module);
-		XmlUtil::AddAttribute($nodeWorking, "title", $this->_title);
-		XmlUtil::AddAttribute($nodeWorking, "name", $this->_name);
+		$nodeWorking = XmlUtil::createChild($current, "editlist", "");
+		XmlUtil::addAttribute($nodeWorking, "module", $this->_module);
+		XmlUtil::addAttribute($nodeWorking, "title", $this->_title);
+		XmlUtil::addAttribute($nodeWorking, "name", $this->_name);
 
 		if($this->_new)
-			XmlUtil::AddAttribute($nodeWorking, "new", "true");
+			XmlUtil::addAttribute($nodeWorking, "new", "true");
 		if($this->_edit)
-			XmlUtil::AddAttribute($nodeWorking, "edit", "true");
+			XmlUtil::addAttribute($nodeWorking, "edit", "true");
 		if($this->_view)
-			XmlUtil::AddAttribute($nodeWorking, "view", "true");
+			XmlUtil::addAttribute($nodeWorking, "view", "true");
 		if($this->_delete)
-			XmlUtil::AddAttribute($nodeWorking, "delete", "true");
+			XmlUtil::addAttribute($nodeWorking, "delete", "true");
 		if($this->_readonly)
-			XmlUtil::AddAttribute($nodeWorking, "readonly", "true");
+			XmlUtil::addAttribute($nodeWorking, "readonly", "true");
 		if($this->_selecttype == SelectType::CHECKBOX)
-			XmlUtil::AddAttribute($nodeWorking, "selecttype", "check");
+			XmlUtil::addAttribute($nodeWorking, "selecttype", "check");
 
 		if($this->_extraParam != null)
 		{
 			foreach ($this->_extraParam as $key => $value)
 			{
-				$param = XmlUtil::CreateChild($nodeWorking, "param", "");
-				XmlUtil::AddAttribute($param, "name", $key);
-				XmlUtil::AddAttribute($param, "value", $value);
+				$param = XmlUtil::createChild($nodeWorking, "param", "");
+				XmlUtil::addAttribute($param, "name", $key);
+				XmlUtil::addAttribute($param, "value", $value);
 			}
 		}
 
@@ -366,18 +368,18 @@ class XmlEditList extends XmlnukeDocumentObject
 				$cb = $this->_customButton[$i];
 				if ($cb->enabled)
 				{
-					$nodeButton = XmlUtil::CreateChild($nodeWorking, "button");
+					$nodeButton = XmlUtil::createChild($nodeWorking, "button");
 					if ($cb->url != "")
 					{
 						$cb->url = str_replace("&", "&amp;", $processor->GetFullLink($cb->url));
 					}
-					XmlUtil::AddAttribute($nodeButton, "custom", $i+1);
-					XmlUtil::AddAttribute($nodeButton, "acao", $cb->action);
-					XmlUtil::AddAttribute($nodeButton, "alt", $cb->alternateText);
-					XmlUtil::AddAttribute($nodeButton, "url", $cb->url);
-					XmlUtil::AddAttribute($nodeButton, "img", $cb->icon);
-					XmlUtil::AddAttribute($nodeButton, "multiple", $cb->multiple);
-					XmlUtil::AddAttribute($nodeButton, "message", $cb->message);
+					XmlUtil::addAttribute($nodeButton, "custom", $i+1);
+					XmlUtil::addAttribute($nodeButton, "acao", $cb->action);
+					XmlUtil::addAttribute($nodeButton, "alt", $cb->alternateText);
+					XmlUtil::addAttribute($nodeButton, "url", $cb->url);
+					XmlUtil::addAttribute($nodeButton, "img", $cb->icon);
+					XmlUtil::addAttribute($nodeButton, "multiple", $cb->multiple);
+					XmlUtil::addAttribute($nodeButton, "message", $cb->message);
 				}
 			}
 		}
@@ -423,7 +425,7 @@ class XmlEditList extends XmlnukeDocumentObject
 
 			if ($started)
 			{   //DOMNode
-				$row = XmlUtil::CreateChild($nodeWorking, "row", "");
+				$row = XmlUtil::createChild($nodeWorking, "row", "");
 				$currentNode = null;
 				if (is_null($this->_fields))
 				{
@@ -433,23 +435,23 @@ class XmlEditList extends XmlnukeDocumentObject
 				{
 					if(($field->newColumn) || ($currentNode == null))
 					{
-						$currentNode = XmlUtil::CreateChild($row, "field", "");
+						$currentNode = XmlUtil::createChild($row, "field", "");
 						if ($firstRow)
 						{
 							if (!$first)
 							{
-								XmlUtil::AddAttribute($currentNode, "name", $field->editlistName);
+								XmlUtil::addAttribute($currentNode, "name", $field->editlistName);
 							}
 							else
 							{
 								$first = false;
 							}
-							XmlUtil::AddAttribute($currentNode, "source", $field->fieldData);
+							XmlUtil::addAttribute($currentNode, "source", $field->fieldData);
 						}
 					}
 					else
 					{
-						XmlUtil::CreateChild($currentNode ,"br","");
+						XmlUtil::createChild($currentNode ,"br","");
 					}
 					$this->renderColumn($currentNode, $registro, $field);
 					
@@ -496,50 +498,50 @@ class XmlEditList extends XmlnukeDocumentObject
 			$ittemp = $anydata->getIterator();
 			$registro = $ittemp->moveNext();
 			
-			$row = XmlUtil::CreateChild($nodeWorking, "row", "");
-			XmlUtil::AddAttribute($row, "total", "true");
+			$row = XmlUtil::createChild($nodeWorking, "row", "");
+			XmlUtil::addAttribute($row, "total", "true");
 			foreach($this->_fields as $chave=>$field)
 			{	 
 				$currentNode = null;
 				if(($field->newColumn) || ($currentNode == null))
 				{
-					$currentNode = XmlUtil::CreateChild($row, "field", "");
+					$currentNode = XmlUtil::createChild($row, "field", "");
 				}
 				else
 				{
-					XmlUtil::CreateChild($currentNode ,"br","");
+					XmlUtil::createChild($currentNode ,"br","");
 				}
 				$this->renderColumn($currentNode, $registro, $field);
 			}
 		}		
 		
 		// Create other properties
-		XmlUtil::AddAttribute($nodeWorking, "cols", sizeof($this->_fields));
+		XmlUtil::addAttribute($nodeWorking, "cols", sizeof($this->_fields));
 
 		if($this->_enablePages)
 		{
 			if ($this->_curPage > 1)
 			{
-				XmlUtil::AddAttribute($nodeWorking, "pageback", strval($this->_curPage - 1));
+				XmlUtil::addAttribute($nodeWorking, "pageback", strval($this->_curPage - 1));
 			}
 
 			if (!$started) // In this case, the list reachs the last element, so you dont need move forward!
 			{
-				XmlUtil::AddAttribute($nodeWorking, "pagefwd", strval($this->_curPage + 1));
+				XmlUtil::addAttribute($nodeWorking, "pagefwd", strval($this->_curPage + 1));
 			}
-			XmlUtil::AddAttribute($nodeWorking, "curpage", strval($this->_curPage));
-			XmlUtil::AddAttribute($nodeWorking, "offset", strval($this->_qtdRows));
-			XmlUtil::AddAttribute($nodeWorking, "pages", strval($page));
+			XmlUtil::addAttribute($nodeWorking, "curpage", strval($this->_curPage));
+			XmlUtil::addAttribute($nodeWorking, "offset", strval($this->_qtdRows));
+			XmlUtil::addAttribute($nodeWorking, "pages", strval($page));
 		}
 
 		if ($this->_customsubmit != "")
 		{
-			XmlUtil::AddAttribute($nodeWorking, "customsubmit", $this->_customsubmit);
+			XmlUtil::addAttribute($nodeWorking, "customsubmit", $this->_customsubmit);
 		}
 
 		if (!is_null($this->_objXmlHeader))
 		{
-			$nodeHeader = XmlUtil::CreateChild($nodeWorking ,"xmlheader","");
+			$nodeHeader = XmlUtil::createChild($nodeWorking ,"xmlheader","");
 			$this->_objXmlHeader->generateObject($nodeHeader);
 		}
 

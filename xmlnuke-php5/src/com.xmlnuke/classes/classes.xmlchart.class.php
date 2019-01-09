@@ -31,6 +31,8 @@
 *@subpackage xmlnukeobject
 */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * Enum to define ChartSeriesFormat
  */
@@ -359,50 +361,50 @@ class XmlChart extends XmlnukeDocumentObject
 			}
 			elseif ($this->_context->ContextValue("xcrt") == "flash")
 			{
-				$doc = XmlUtil::CreateXmlDocumentFromStr("<chart/>", false);
+				$doc = XmlUtil::createXmlDocumentFromStr("<chart/>", false);
 				$root = $doc->documentElement;
 				
-				$chartLabel = XmlUtil::CreateChild($root, "chart_label");
-				XmlUtil::AddAttribute($chartLabel, "position", "outsize");
-				XmlUtil::AddAttribute($chartLabel, "size", "12");
-				XmlUtil::AddAttribute($chartLabel, "color", "FF4400");
-				XmlUtil::AddAttribute($chartLabel, "alpha", "100");
+				$chartLabel = XmlUtil::createChild($root, "chart_label");
+				XmlUtil::addAttribute($chartLabel, "position", "outsize");
+				XmlUtil::addAttribute($chartLabel, "size", "12");
+				XmlUtil::addAttribute($chartLabel, "color", "FF4400");
+				XmlUtil::addAttribute($chartLabel, "alpha", "100");
 
-				$chartAxis = XmlUtil::CreateChild($root, "chart_guide");
-				XmlUtil::AddAttribute($chartAxis, "horizontal", "true");
-				XmlUtil::AddAttribute($chartAxis, "vertical", "true");
+				$chartAxis = XmlUtil::createChild($root, "chart_guide");
+				XmlUtil::addAttribute($chartAxis, "horizontal", "true");
+				XmlUtil::addAttribute($chartAxis, "vertical", "true");
 
-				$chartAxis = XmlUtil::CreateChild($root, "axis_ticks");
-				XmlUtil::AddAttribute($chartAxis, "value_ticks", "true");
-				XmlUtil::AddAttribute($chartAxis, "category_ticks", "true");
-				XmlUtil::AddAttribute($chartAxis, "position", "centered");
+				$chartAxis = XmlUtil::createChild($root, "axis_ticks");
+				XmlUtil::addAttribute($chartAxis, "value_ticks", "true");
+				XmlUtil::addAttribute($chartAxis, "category_ticks", "true");
+				XmlUtil::addAttribute($chartAxis, "position", "centered");
 				
-				$chartAxis = XmlUtil::CreateChild($root, "axis_value");
+				$chartAxis = XmlUtil::createChild($root, "axis_value");
 				if (!$this->_axisAutomatic)
 				{
-					XmlUtil::AddAttribute($chartAxis, "min", $this->_axisMinValue);
-					XmlUtil::AddAttribute($chartAxis, "max", $this->_axisMaxValue);
-					XmlUtil::AddAttribute($chartAxis, "steps", $this->_axisStep);
+					XmlUtil::addAttribute($chartAxis, "min", $this->_axisMinValue);
+					XmlUtil::addAttribute($chartAxis, "max", $this->_axisMaxValue);
+					XmlUtil::addAttribute($chartAxis, "steps", $this->_axisStep);
 				}
-				XmlUtil::AddAttribute($chartAxis, "size", "12");
+				XmlUtil::addAttribute($chartAxis, "size", "12");
 				
-				$chartLegend = XmlUtil::CreateChild($root, "legend");
-				XmlUtil::AddAttribute($chartLegend, "size", "12");
+				$chartLegend = XmlUtil::createChild($root, "legend");
+				XmlUtil::addAttribute($chartLegend, "size", "12");
 				
 				// Create Basic Chart Nodes
-				$chart_type = XmlUtil::CreateChild($root, "chart_type", (($this->_defaultChartType != ChartSeriesFormat::Mixed) ? $this->_defaultChartType : ""));
-				$chart_data = XmlUtil::CreateChild($root, "chart_data");
-				$series_color = XmlUtil::CreateChild($root, "series_color");
-				$axis_category = XmlUtil::CreateChild($root, "axis_category");
-				XmlUtil::AddAttribute($axis_category, "size", "11");
+				$chart_type = XmlUtil::createChild($root, "chart_type", (($this->_defaultChartType != ChartSeriesFormat::Mixed) ? $this->_defaultChartType : ""));
+				$chart_data = XmlUtil::createChild($root, "chart_data");
+				$series_color = XmlUtil::createChild($root, "series_color");
+				$axis_category = XmlUtil::createChild($root, "axis_category");
+				XmlUtil::addAttribute($axis_category, "size", "11");
 				
 				// Create Top Row
-				$row = XmlUtil::CreateChild($chart_data, "row");
-				XmlUtil::CreateChild($row, "null");
+				$row = XmlUtil::createChild($chart_data, "row");
+				XmlUtil::createChild($row, "null");
 				foreach ($dataseries["LEGEND"] as $mixedValue) 
 				{
 					$value = explode($SEPARATOR, $mixedValue);
-					XmlUtil::CreateChild($row, "string", $value[0]);
+					XmlUtil::createChild($row, "string", $value[0]);
 				}
 				
 				// Create Data Row
@@ -411,30 +413,30 @@ class XmlChart extends XmlnukeDocumentObject
 					if (strcmp($key,"LEGEND")!=0)
 					{
 						// Add chart series NAME and VALUES
-						$row = XmlUtil::CreateChild($chart_data, "row");
-						XmlUtil::CreateChild($row, "string", $this->_series[$key]->name);
+						$row = XmlUtil::createChild($chart_data, "row");
+						XmlUtil::createChild($row, "string", $this->_series[$key]->name);
 						foreach ($data as $mixedValue) 
 						{
 							$value = explode($SEPARATOR, $mixedValue);
-							$number = XmlUtil::CreateChild($row, "number", $value[0]);
+							$number = XmlUtil::createChild($row, "number", $value[0]);
 							if ($value[1] == SeriesNotesType::Legend)
 							{
-								XmlUtil::AddAttribute($number, "label", $value[2]);
+								XmlUtil::addAttribute($number, "label", $value[2]);
 							}
 							elseif ($value[1] == SeriesNotesType::Tooltip)
 							{
-								XmlUtil::AddAttribute($number, "tooltip", $value[2]);
+								XmlUtil::addAttribute($number, "tooltip", $value[2]);
 							}
 							elseif ($value[1] == SeriesNotesType::Note)
 							{
-								XmlUtil::AddAttribute($number, "note", $value[2]);
+								XmlUtil::addAttribute($number, "note", $value[2]);
 							}
 						}
 
 						// Add Series type ONLY if DEFAULT Chart Type is MIXED
 						if ($this->_defaultChartType == ChartSeriesFormat::Mixed)
 						{
-							XmlUtil::CreateChild($chart_type, "string", $this->_series[$key]->type);
+							XmlUtil::createChild($chart_type, "string", $this->_series[$key]->type);
 						}
 						
 						// Add color if exists
@@ -445,7 +447,7 @@ class XmlChart extends XmlnukeDocumentObject
 							{
 								$fillColor = substr($fillColor, 1);
 							}
-							XmlUtil::CreateChild($series_color, "color", $fillColor);
+							XmlUtil::createChild($series_color, "color", $fillColor);
 						}
 					}
 					

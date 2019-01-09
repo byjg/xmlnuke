@@ -28,6 +28,8 @@
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -154,25 +156,25 @@ class XmlInputDateTime extends XmlnukeDocumentObject
 	 */
 	public function generateObject($current)
 	{
-		$datetimebox = XmlUtil::CreateChild($current, "datetimebox");
+		$datetimebox = XmlUtil::createChild($current, "datetimebox");
 		$date = DateUtil::TimeStampFromStr($this->_date, $this->_dateformat);
-		XmlUtil::AddAttribute($datetimebox, "name", $this->_name);
-		XmlUtil::AddAttribute($datetimebox, "caption", $this->_caption);
-		XmlUtil::AddAttribute($datetimebox, "day", date('j', $date)); // Day without leading zeros
-		XmlUtil::AddAttribute($datetimebox, "month", date('n', $date)); // Month without leading zeros
-		XmlUtil::AddAttribute($datetimebox, "year", date('Y', $date));
-		XmlUtil::AddAttribute($datetimebox, "dateformat", INPUTTYPE::DATE);
-		XmlUtil::AddAttribute($datetimebox, "date", $this->_date);
+		XmlUtil::addAttribute($datetimebox, "name", $this->_name);
+		XmlUtil::addAttribute($datetimebox, "caption", $this->_caption);
+		XmlUtil::addAttribute($datetimebox, "day", date('j', $date)); // Day without leading zeros
+		XmlUtil::addAttribute($datetimebox, "month", date('n', $date)); // Month without leading zeros
+		XmlUtil::addAttribute($datetimebox, "year", date('Y', $date));
+		XmlUtil::addAttribute($datetimebox, "dateformat", INPUTTYPE::DATE);
+		XmlUtil::addAttribute($datetimebox, "date", $this->_date);
 		if ($this->_showHour)
 		{
 			$time = explode(":", $this->_time);
-			XmlUtil::AddAttribute($datetimebox, "showhour", "true");
-			XmlUtil::AddAttribute($datetimebox, "hour", $this->removeLeadingZero($time[0])); // Hour without leading zeros
-			XmlUtil::AddAttribute($datetimebox, "minute", $this->removeLeadingZero($time[1]));
+			XmlUtil::addAttribute($datetimebox, "showhour", "true");
+			XmlUtil::addAttribute($datetimebox, "hour", $this->removeLeadingZero($time[0])); // Hour without leading zeros
+			XmlUtil::addAttribute($datetimebox, "minute", $this->removeLeadingZero($time[1]));
 		}
-		XmlUtil::AddAttribute($datetimebox, "yearmin", $this->_yearmin);
-		XmlUtil::AddAttribute($datetimebox, "yearmax", $this->_yearmax);
-		XmlUtil::AddAttribute($datetimebox, "showday", $this->_showDay ? 'true' : 'false');
+		XmlUtil::addAttribute($datetimebox, "yearmin", $this->_yearmin);
+		XmlUtil::addAttribute($datetimebox, "yearmax", $this->_yearmax);
+		XmlUtil::addAttribute($datetimebox, "showday", $this->_showDay ? 'true' : 'false');
 	}
 
 	protected function removeLeadingZero($str)

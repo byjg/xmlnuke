@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -283,7 +285,7 @@ class XmlDualList extends XmlnukeDocumentObject
 			}
 			else 
 			{
-				XmlUtil::AddAttribute($editForm, "customsubmit", $submitFunction);
+				XmlUtil::addAttribute($editForm, "customsubmit", $submitFunction);
 			}
 		}
 		else
@@ -291,7 +293,7 @@ class XmlDualList extends XmlnukeDocumentObject
 			throw new InvalidArgumentException("XMLDualList must be inside a XmlFormCollection");
 		}
 		
-		$nodeWorking = XmlUtil::CreateChild($current, "duallist", "");
+		$nodeWorking = XmlUtil::createChild($current, "duallist", "");
 		
 		if (is_a($this->_buttonAllRight, "DualListButton") && $this->_buttonAllRight->type != DualListButtonType::None ) 
 		{
@@ -310,15 +312,15 @@ class XmlDualList extends XmlnukeDocumentObject
 			$this->makeButton($this->_buttonAllLeft, "allleft", $nodeWorking, $this->_listRightName, $this->_listLeftName, "true");
 		}
 		
-		XmlUtil::AddAttribute($nodeWorking, "name", $this->_name);
-		$leftList = XmlUtil::CreateChild($nodeWorking, "leftlist", "");
-		$rightList = XmlUtil::CreateChild($nodeWorking, "rightlist", "");
-		XmlUtil::AddAttribute($leftList, "name", $this->_listLeftName);
-		XmlUtil::AddAttribute($leftList, "caption", $this->_listLeftCaption);
-		XmlUtil::AddAttribute($leftList, "size", $this->_listLeftSize);
-		XmlUtil::AddAttribute($rightList, "name", $this->_listRightName);
-		XmlUtil::AddAttribute($rightList, "caption", $this->_listRightCaption);
-		XmlUtil::AddAttribute($rightList, "size", $this->_listRightSize);
+		XmlUtil::addAttribute($nodeWorking, "name", $this->_name);
+		$leftList = XmlUtil::createChild($nodeWorking, "leftlist", "");
+		$rightList = XmlUtil::createChild($nodeWorking, "rightlist", "");
+		XmlUtil::addAttribute($leftList, "name", $this->_listLeftName);
+		XmlUtil::addAttribute($leftList, "caption", $this->_listLeftCaption);
+		XmlUtil::addAttribute($leftList, "size", $this->_listLeftSize);
+		XmlUtil::addAttribute($rightList, "name", $this->_listRightName);
+		XmlUtil::addAttribute($rightList, "caption", $this->_listRightCaption);
+		XmlUtil::addAttribute($rightList, "size", $this->_listRightSize);
 		
 		$arrRight = array();
 		if (!is_null($this->_listRightDataSource)) 
@@ -377,9 +379,9 @@ class XmlDualList extends XmlnukeDocumentObject
 	{
 		foreach ($arr as $key=>$value) 
 		{
-			$item = XmlUtil::CreateChild($list, "item", "");
-			XmlUtil::AddAttribute($item, "id", $key);
-			XmlUtil::AddAttribute($item, "text", $value);
+			$item = XmlUtil::createChild($list, "item", "");
+			XmlUtil::addAttribute($item, "id", $key);
+			XmlUtil::addAttribute($item, "text", $value);
 		}
 	}
 	
@@ -395,19 +397,19 @@ class XmlDualList extends XmlnukeDocumentObject
 	 */
 	private function makeButton($button, $name, $duallist, $from, $to, $all)
 	{
-		$newbutton = XmlUtil::CreateChild($duallist, "button", "");
-		XmlUtil::AddAttribute($newbutton, "name", $name);
+		$newbutton = XmlUtil::createChild($duallist, "button", "");
+		XmlUtil::addAttribute($newbutton, "name", $name);
 		if ($button->type == DualListButtonType::Image ) {
-			XmlUtil::AddAttribute($newbutton, "type", "image");
-			XmlUtil::AddAttribute($newbutton, "src", $button->href);
-			XmlUtil::AddAttribute($newbutton, "value", $button->text);
+			XmlUtil::addAttribute($newbutton, "type", "image");
+			XmlUtil::addAttribute($newbutton, "src", $button->href);
+			XmlUtil::addAttribute($newbutton, "value", $button->text);
 		}else {
-			XmlUtil::AddAttribute($newbutton, "type", "button");
-			XmlUtil::AddAttribute($newbutton, "value", $button->text);
+			XmlUtil::addAttribute($newbutton, "type", "button");
+			XmlUtil::addAttribute($newbutton, "value", $button->text);
 		}
-		XmlUtil::AddAttribute($newbutton, "from", $from);
-		XmlUtil::AddAttribute($newbutton, "to", $to);
-		XmlUtil::AddAttribute($newbutton, "all", $all);
+		XmlUtil::addAttribute($newbutton, "from", $from);
+		XmlUtil::addAttribute($newbutton, "to", $to);
+		XmlUtil::addAttribute($newbutton, "all", $all);
 	}
 }
 

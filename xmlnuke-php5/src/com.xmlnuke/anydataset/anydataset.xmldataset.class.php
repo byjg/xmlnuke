@@ -80,7 +80,7 @@ class XmlDataSet
 		}
 		else 
 		{
-			$this->_domDocument = XmlUtil::CreateXmlDocumentFromStr($xml);
+			$this->_domDocument = XmlUtil::createXmlDocumentFromStr($xml);
 		}
 
 		$this->_rowNode = $rowNode;

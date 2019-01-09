@@ -28,6 +28,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -97,29 +99,29 @@ class XmlNukeFlash extends XmlnukeCollection implements IXmlnukeDocumentObject
 	
 	public function generateObject($current)
 	{
-		$node = XmlUtil::CreateChild($current, "flash", "");
-		XmlUtil::AddAttribute($node, "major", $this->_majorVersion);
-		XmlUtil::AddAttribute($node, "minor", $this->_minorVersion);
-		XmlUtil::AddAttribute($node, "revision", $this->_revision);
+		$node = XmlUtil::createChild($current, "flash", "");
+		XmlUtil::addAttribute($node, "major", $this->_majorVersion);
+		XmlUtil::addAttribute($node, "minor", $this->_minorVersion);
+		XmlUtil::addAttribute($node, "revision", $this->_revision);
 		
 		if ($this->_movie != "")
 		{
-			XmlUtil::AddAttribute($node, "movie", $this->getMovie());
+			XmlUtil::addAttribute($node, "movie", $this->getMovie());
 		}
 		if ($this->_width != "")
 		{
-			XmlUtil::AddAttribute($node, "width", $this->getWidth());
+			XmlUtil::addAttribute($node, "width", $this->getWidth());
 		}
 		if ($this->_height != "")
 		{
-			XmlUtil::AddAttribute($node, "height", $this->getHeight());
+			XmlUtil::addAttribute($node, "height", $this->getHeight());
 		}
 		
 		foreach ($this->_extraParams as $key=>$value) 
 		{
-			$param = XmlUtil::CreateChild($node, "param");
-			XmlUtil::AddAttribute($param, "name", $key);
-			XmlUtil::AddAttribute($param, "value", str_replace("&", "&amp;", $value));
+			$param = XmlUtil::createChild($node, "param");
+			XmlUtil::addAttribute($param, "name", $key);
+			XmlUtil::addAttribute($param, "value", str_replace("&", "&amp;", $value));
 		}
 				
 		parent::generatePage($node);

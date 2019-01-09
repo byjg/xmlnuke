@@ -28,6 +28,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -103,26 +105,26 @@ class XmlContainerCollection extends XmlnukeCollection implements IXmlnukeDocume
 	
 	public function generateObject($current)
 	{
-		$node = XmlUtil::CreateChild($current, "container", "");
+		$node = XmlUtil::createChild($current, "container", "");
 		if ($this->_class != "")
 		{
-			XmlUtil::AddAttribute($node, "class", $this->getClass());
+			XmlUtil::addAttribute($node, "class", $this->getClass());
 		}
 		if ($this->_align != "")
 		{
-			XmlUtil::AddAttribute($node, "align", $this->getAlign());
+			XmlUtil::addAttribute($node, "align", $this->getAlign());
 		}
 		if ($this->_style != "")
 		{
-			XmlUtil::AddAttribute($node, "style", $this->getStyle());
+			XmlUtil::addAttribute($node, "style", $this->getStyle());
 		}
 		if ($this->_id != "")
 		{
-			XmlUtil::AddAttribute($node, "id", $this->getId());
+			XmlUtil::addAttribute($node, "id", $this->getId());
 		}
 		if ($this->_timeOut > 0)
 		{
-			XmlUtil::AddAttribute($node, "timeout", $this->getHideAfterTime());
+			XmlUtil::addAttribute($node, "timeout", $this->getHideAfterTime());
 		}
 		parent::generatePage($node);
 	}

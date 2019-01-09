@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -116,26 +118,26 @@ class XmlnukeImage extends XmlnukeDocumentObject
 	*/
 	public function generateObject($current)
 	{
-		$nodeWorking = XmlUtil::CreateChild($current, "img", "");
+		$nodeWorking = XmlUtil::createChild($current, "img", "");
 		
 		$link = $this->_src;
-		XmlUtil::AddAttribute($nodeWorking, "src", $link);
-		XmlUtil::AddAttribute($nodeWorking, "alt", $this->_alt);
+		XmlUtil::addAttribute($nodeWorking, "src", $link);
+		XmlUtil::addAttribute($nodeWorking, "alt", $this->_alt);
 		if (!empty($this->_id))
 		{
-			XmlUtil::AddAttribute($nodeWorking, "id", $this->_id);
+			XmlUtil::addAttribute($nodeWorking, "id", $this->_id);
 		}
 		if ($this->_width != 0)
 		{
-			XmlUtil::AddAttribute($nodeWorking, "width", $this->_width);
+			XmlUtil::addAttribute($nodeWorking, "width", $this->_width);
 		}
 		if ($this->_height != 0)
 		{
-		 	XmlUtil::AddAttribute($nodeWorking, "height", $this->_height);
+		 	XmlUtil::addAttribute($nodeWorking, "height", $this->_height);
 		}
 		if ($this->_alternateImage != "")
 		{
-		 	XmlUtil::AddAttribute($nodeWorking, "altimage", $this->_alternateImage);
+		 	XmlUtil::addAttribute($nodeWorking, "altimage", $this->_alternateImage);
 		}
 	}
 

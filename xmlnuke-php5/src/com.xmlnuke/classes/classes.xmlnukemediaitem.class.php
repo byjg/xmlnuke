@@ -28,6 +28,8 @@
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -131,13 +133,13 @@ class XmlnukeMediaItem extends XmlnukeCollection implements IXmlnukeDocumentObje
 
 	public function generateObject($current)
 	{
-		$mediaGallery = XmlUtil::CreateChild($current, "mediaitem");
-		XmlUtil::AddAttribute($mediaGallery, "src", $this->_src);
-		XmlUtil::AddAttribute($mediaGallery, "thumb", $this->_thumb);
-		XmlUtil::AddAttribute($mediaGallery, "title", $this->_title);
-		XmlUtil::AddAttribute($mediaGallery, "caption", $this->_caption);
-		XmlUtil::AddAttribute($mediaGallery, "width", $this->_width);
-		XmlUtil::AddAttribute($mediaGallery, "height", $this->_height);
+		$mediaGallery = XmlUtil::createChild($current, "mediaitem");
+		XmlUtil::addAttribute($mediaGallery, "src", $this->_src);
+		XmlUtil::addAttribute($mediaGallery, "thumb", $this->_thumb);
+		XmlUtil::addAttribute($mediaGallery, "title", $this->_title);
+		XmlUtil::addAttribute($mediaGallery, "caption", $this->_caption);
+		XmlUtil::addAttribute($mediaGallery, "width", $this->_width);
+		XmlUtil::addAttribute($mediaGallery, "height", $this->_height);
 	}
 }
 

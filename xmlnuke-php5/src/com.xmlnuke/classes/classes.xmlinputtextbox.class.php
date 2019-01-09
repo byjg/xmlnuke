@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -282,20 +284,20 @@ class XmlInputTextBox extends XmlInputValidate
 		{
 			if ($this->_inputextboxtype == InputTextBoxType::TEXT)
 			{
-				$nodeWorking = XmlUtil::CreateChild($current, "textbox", "");
+				$nodeWorking = XmlUtil::createChild($current, "textbox", "");
 			}
 			else
 			{
-				$nodeWorking = XmlUtil::CreateChild($current, "password", "");
+				$nodeWorking = XmlUtil::createChild($current, "password", "");
 			}
 			if(intval($this->_maxlength) != 0)
 			{
-				XmlUtil::AddAttribute($nodeWorking, "maxlength", $this->_maxlength);
+				XmlUtil::addAttribute($nodeWorking, "maxlength", $this->_maxlength);
 			}
-			XmlUtil::AddAttribute($nodeWorking, "caption", $this->_caption);
-			XmlUtil::AddAttribute($nodeWorking, "name", $this->_name);
-			XmlUtil::AddAttribute($nodeWorking, "value", $this->_value);
-			XmlUtil::AddAttribute($nodeWorking, "size", $this->_size);
+			XmlUtil::addAttribute($nodeWorking, "caption", $this->_caption);
+			XmlUtil::addAttribute($nodeWorking, "name", $this->_name);
+			XmlUtil::addAttribute($nodeWorking, "value", $this->_value);
+			XmlUtil::addAttribute($nodeWorking, "size", $this->_size);
 			
 			if ($this->_autosuggestUrl != "")
 			{
@@ -309,13 +311,13 @@ class XmlInputTextBox extends XmlInputValidate
 				{
 					$urlStr .= "&";
 				}
-				XmlUtil::AddAttribute($nodeWorking, "autosuggesturl", str_replace("&", "&amp;", $urlStr));
-				XmlUtil::AddAttribute($nodeWorking, "autosuggestparamreq", $this->_autosuggestParamReq);
-				if ($this->_autosuggestCallback) XmlUtil::AddAttribute($nodeWorking, "autosuggestcallback", $this->_autosuggestCallback);
-				XmlUtil::AddAttribute($nodeWorking, "autosuggest_array", $this->_autosuggestJsonArray);
-				XmlUtil::AddAttribute($nodeWorking, "autosuggest_objid", $this->_autosuggestJsonObjKey);
-				XmlUtil::AddAttribute($nodeWorking, "autosuggest_objvalue", $this->_autosuggestJsonObjValue);
-				XmlUtil::AddAttribute($nodeWorking, "autosuggest_objinfo", $this->_autosuggestJsonObjInfo);
+				XmlUtil::addAttribute($nodeWorking, "autosuggesturl", str_replace("&", "&amp;", $urlStr));
+				XmlUtil::addAttribute($nodeWorking, "autosuggestparamreq", $this->_autosuggestParamReq);
+				if ($this->_autosuggestCallback) XmlUtil::addAttribute($nodeWorking, "autosuggestcallback", $this->_autosuggestCallback);
+				XmlUtil::addAttribute($nodeWorking, "autosuggest_array", $this->_autosuggestJsonArray);
+				XmlUtil::addAttribute($nodeWorking, "autosuggest_objid", $this->_autosuggestJsonObjKey);
+				XmlUtil::addAttribute($nodeWorking, "autosuggest_objvalue", $this->_autosuggestJsonObjValue);
+				XmlUtil::addAttribute($nodeWorking, "autosuggest_objinfo", $this->_autosuggestJsonObjInfo);
 			}
 			
 			if ($this->getMask() == "")
@@ -332,12 +334,12 @@ class XmlInputTextBox extends XmlInputValidate
 			
 			if ($this->getMask() != "")
 			{
-				XmlUtil::AddAttribute($nodeWorking, "mask", $this->_maskText);
+				XmlUtil::addAttribute($nodeWorking, "mask", $this->_maskText);
 			}
 			
 			if ($this->_disableAutoComplete)
 			{
-				XmlUtil::AddAttribute($nodeWorking, "autocomplete", "off");
+				XmlUtil::addAttribute($nodeWorking, "autocomplete", "off");
 			}
 			
 			parent::generateObject($nodeWorking);

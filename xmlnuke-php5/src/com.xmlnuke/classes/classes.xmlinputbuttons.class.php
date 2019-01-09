@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -147,7 +149,7 @@ class XmlInputButtons extends XmlnukeDocumentObject
 	*/
 	public function generateObject($current)
 	{
-		$objBoxButtons = XmlUtil::CreateChild($current, "buttons", "");
+		$objBoxButtons = XmlUtil::createChild($current, "buttons", "");
 		$clickEvent = "";
 		
 		foreach($this->_values as $button)
@@ -164,30 +166,30 @@ class XmlInputButtons extends XmlnukeDocumentObject
 				case ButtonType::CLICKEVENT:
 				case ButtonType::SUBMIT:
 				{
-					$nodeWorking = XmlUtil::CreateChild($objBoxButtons, "submit", "");
+					$nodeWorking = XmlUtil::createChild($objBoxButtons, "submit", "");
 					break;
 				}
 				case ButtonType::RESET:
 				{
-					$nodeWorking = XmlUtil::CreateChild($objBoxButtons, "reset", "");
+					$nodeWorking = XmlUtil::createChild($objBoxButtons, "reset", "");
 					break;
 				}
 				case ButtonType::BUTTON:
 				{
-					$nodeWorking = XmlUtil::CreateChild($objBoxButtons, "button", "");
-					XmlUtil::AddAttribute($nodeWorking, "onclick", $button->onClick);
+					$nodeWorking = XmlUtil::createChild($objBoxButtons, "button", "");
+					XmlUtil::addAttribute($nodeWorking, "onclick", $button->onClick);
 					break;
 				}
 			}
-			XmlUtil::AddAttribute($nodeWorking, "caption", $button->caption);
-			XmlUtil::AddAttribute($nodeWorking, "name", $button->name);
+			XmlUtil::addAttribute($nodeWorking, "caption", $button->caption);
+			XmlUtil::addAttribute($nodeWorking, "name", $button->name);
 		}
 		
 		// Add Click Event
 		$clickEventNode = XmlUtil::selectSingleNode($current, "clickevent");
 		if (is_null($clickEventNode))
 		{
-			$clickEventNode = XmlUtil::CreateChild($current, "clickevent", $clickEvent);
+			$clickEventNode = XmlUtil::createChild($current, "clickevent", $clickEvent);
 		}
 		else
 		{

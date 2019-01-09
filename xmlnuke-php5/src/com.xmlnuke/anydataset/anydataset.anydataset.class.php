@@ -27,6 +27,8 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * AnyDataSet is a simple way to store data using only XML file.
  * Your structure is hierarquical and each "row" contains "fields" but these structure can vary for each row.
@@ -117,7 +119,7 @@ class AnyDataSet
 	{
 		if (FileUtil::Exists ( $filepath ))
 		{
-			$anyDataSet = XmlUtil::CreateXmlDocumentFromFile ( $filepath );
+			$anyDataSet = XmlUtil::createXmlDocumentFromFile ( $filepath );
 			$this->_collection = array();
 
 			$rows = $anyDataSet->getElementsByTagName ( "row" );
@@ -153,14 +155,14 @@ class AnyDataSet
 	 */
 	public function getDomObject()
 	{
-		$anyDataSet = XmlUtil::CreateXmlDocumentFromStr ( "<anydataset/>" );
+		$anyDataSet = XmlUtil::createXmlDocumentFromStr ( "<anydataset/>" );
 		$nodeRoot = $anyDataSet->getElementsByTagName ( "anydataset" )->item ( 0 );
 		foreach ($this->_collection as $sr)
 		{
 			$row = $sr->getDomObject();
 			$nodeRow = $row->getElementsByTagName ( "row" )->item ( 0 );
-			$newRow = XmlUtil::CreateChild($nodeRoot, "row");
-			XmlUtil::AddNodeFromNode($newRow, $nodeRow);
+			$newRow = XmlUtil::createChild($nodeRoot, "row");
+			XmlUtil::addNodeFromNode($newRow, $nodeRow);
 		}
 
 		return $anyDataSet;
@@ -188,7 +190,7 @@ class AnyDataSet
 		if (is_null ( $this->_path )) {
 			throw new DataBaseException ( "No such file path to save anydataset", 1000 );
 		}
-		XmlUtil::SaveXmlDocument ( $this->getDomObject(), $this->_path );
+		XmlUtil::saveXmlDocument ( $this->getDomObject(), $this->_path );
 	}
 
 	/**

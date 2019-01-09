@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -89,10 +91,10 @@ class XmlnukeCode extends XmlnukeDocumentObject
 	*/
 	public function generateObject($current)
 	{
-		$node = XmlUtil::CreateChild($current, "code", $this->_text);
+		$node = XmlUtil::createChild($current, "code", $this->_text);
 		if ($this->_title != "")
 		{
-			XmlUtil::AddAttribute($node, "information", $this->_title);
+			XmlUtil::addAttribute($node, "information", $this->_title);
 		}
 	}
 }

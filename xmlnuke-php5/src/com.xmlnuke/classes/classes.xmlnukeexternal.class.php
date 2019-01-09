@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -77,14 +79,14 @@ class XmlnukeExternal extends XmlnukeDocumentObject
 	*/
 	public function generateObject($current)
 	{
-		$node = XmlUtil::CreateChild($current, "external");
+		$node = XmlUtil::createChild($current, "external");
 		if ($this->_name != "")
 		{
-			XmlUtil::AddAttribute($node, "name", $this->_name);
+			XmlUtil::addAttribute($node, "name", $this->_name);
 		}
-		XmlUtil::AddAttribute($node, "src", $this->_src);
-		XmlUtil::AddAttribute($node, "width", $this->_width);
-		XmlUtil::AddAttribute($node, "height", $this->_height);
+		XmlUtil::addAttribute($node, "src", $this->_src);
+		XmlUtil::addAttribute($node, "width", $this->_width);
+		XmlUtil::addAttribute($node, "height", $this->_height);
 	}
 }
 ?>

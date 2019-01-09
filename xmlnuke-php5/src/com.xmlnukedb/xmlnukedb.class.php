@@ -27,6 +27,8 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
+use ByJG\Util\XmlUtil;
+
 class XmlNukeDB
 {
 	private $_btree;
@@ -116,7 +118,7 @@ class XmlNukeDB
 	//Parameters : Strings
 	public function saveDocumentStr($documentName, $xmlstr)
 	{
-		$xml = XmlUtil::CreateXmlDocumentFromStr($xmlstr);
+		$xml = XmlUtil::createXmlDocumentFromStr($xmlstr);
 		self::saveDocumentXML($documentName, $xml);
 	}
 	//Parameters: string $documentName, DOMDocument $xml

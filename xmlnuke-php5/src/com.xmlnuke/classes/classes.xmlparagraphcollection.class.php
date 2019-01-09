@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * Xml Paragraph Collection
  *
@@ -41,7 +43,7 @@ class XmlParagraphCollection extends XmlnukeCollection implements IXmlnukeDocume
 	 */
 	public function generateObject($current)
 	{
-		parent::generatePage(XmlUtil::CreateChild($current, "p", ""));
+		parent::generatePage(XmlUtil::createChild($current, "p", ""));
 	}
 }
 

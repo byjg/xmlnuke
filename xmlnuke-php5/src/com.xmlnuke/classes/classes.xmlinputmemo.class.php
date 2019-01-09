@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -176,22 +178,22 @@ class XmlInputMemo extends XmlnukeDocumentObject
 		}
 		else
 		{
-			$nodeWorking = XmlUtil::CreateChild($current, "memo", "");
-			XmlUtil::AddAttribute($nodeWorking, "caption", $this->_caption);
-			XmlUtil::AddAttribute($nodeWorking, "name", $this->_name);
-			XmlUtil::AddAttribute($nodeWorking, "cols", $this->_cols);
-			XmlUtil::AddAttribute($nodeWorking, "rows", $this->_rows);
-			XmlUtil::AddAttribute($nodeWorking, "wrap", $this->_wrap);
+			$nodeWorking = XmlUtil::createChild($current, "memo", "");
+			XmlUtil::addAttribute($nodeWorking, "caption", $this->_caption);
+			XmlUtil::addAttribute($nodeWorking, "name", $this->_name);
+			XmlUtil::addAttribute($nodeWorking, "cols", $this->_cols);
+			XmlUtil::addAttribute($nodeWorking, "rows", $this->_rows);
+			XmlUtil::addAttribute($nodeWorking, "wrap", $this->_wrap);
 			if ($this->_visualEditor) 
 			{
-				XmlUtil::AddAttribute($nodeWorking, "visualedit", "true");
-				XmlUtil::AddAttribute($nodeWorking, "visualeditbasehref", $this->_visualEditorBaseHref);
+				XmlUtil::addAttribute($nodeWorking, "visualedit", "true");
+				XmlUtil::addAttribute($nodeWorking, "visualeditbasehref", $this->_visualEditorBaseHref);
 			}
 			elseif ($this->_maxLength > 0) 
 			{
-				XmlUtil::AddAttribute($nodeWorking, "maxlength", $this->_maxLength);
+				XmlUtil::addAttribute($nodeWorking, "maxlength", $this->_maxLength);
 			}
-			XmlUtil::AddTextNode($nodeWorking, $this->_value);
+			XmlUtil::addTextNode($nodeWorking, $this->_value);
 		}
 	}
 

@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -59,9 +61,9 @@ class XmlInputLabelField extends XmlnukeDocumentObject
 	*/
 	public function generateObject($current)
 	{
-		$nodeWorking = XmlUtil::CreateChild($current, "label", "");
-		XmlUtil::AddAttribute($nodeWorking, "caption", $this->_caption);
-		XmlUtil::AddAttribute($nodeWorking, "value", $this->_value);
+		$nodeWorking = XmlUtil::createChild($current, "label", "");
+		XmlUtil::addAttribute($nodeWorking, "caption", $this->_caption);
+		XmlUtil::addAttribute($nodeWorking, "value", $this->_value);
 	}
 }
 ?>

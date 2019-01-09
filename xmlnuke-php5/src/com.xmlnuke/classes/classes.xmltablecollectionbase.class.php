@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -62,9 +64,9 @@ abstract class XmlTableCollectionBase extends XmlnukeCollection implements IXmln
 	*/
 	public function generateObject($current)
 	{
-		$this->_genNode = XmlUtil::CreateChild($current, $this->_NODE, "");
-		XmlUtil::AddAttribute($this->_genNode, "id", $this->getId());
-		XmlUtil::AddAttribute($this->_genNode, "style", $this->getStyle());
+		$this->_genNode = XmlUtil::createChild($current, $this->_NODE, "");
+		XmlUtil::addAttribute($this->_genNode, "id", $this->getId());
+		XmlUtil::addAttribute($this->_genNode, "style", $this->getStyle());
 		parent::generatePage($this->_genNode);
 	}
 }

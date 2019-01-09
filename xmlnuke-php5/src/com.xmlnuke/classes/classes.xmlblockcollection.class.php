@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -82,9 +84,9 @@ class XmlBlockCollection extends XmlnukeCollection implements IXmlnukeDocumentOb
 		if ($block == "")
 			throw new InvalidArgumentException("XmlBlockCollection: You selected an unknown Block Position.");
 		
-		$objBlockCenter = XmlUtil::CreateChild($current, $block, "");
-		XmlUtil::CreateChild($objBlockCenter, "title", $this->_title);	
-		parent::generatePage(XmlUtil::CreateChild($objBlockCenter, "body", ""));
+		$objBlockCenter = XmlUtil::createChild($current, $block, "");
+		XmlUtil::createChild($objBlockCenter, "title", $this->_title);
+		parent::generatePage(XmlUtil::createChild($objBlockCenter, "body", ""));
 	}
 
 }

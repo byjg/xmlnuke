@@ -28,6 +28,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -93,7 +95,7 @@ class XmlListCollection extends XmlnukeCollection implements IXmlnukeDocumentObj
 			{
 				if (($this->_type == XmlListType::UnorderedList) || ($this->_type == XmlListType::OrderedList))
 				{
-					$node = XmlUtil::CreateChild($current, "li", "");
+					$node = XmlUtil::createChild($current, "li", "");
 				}
 				$item->generateObject($node);
 			}
@@ -114,15 +116,15 @@ class XmlListCollection extends XmlnukeCollection implements IXmlnukeDocumentObj
 		}
 		if ($this->_type == XmlListType::UnorderedList)
 		{
-			$node = XmlUtil::CreateChild($current, "ul", "");
+			$node = XmlUtil::createChild($current, "ul", "");
 		}
 		elseif ($this->_type == XmlListType::OrderedList)
 		{
-			$node = XmlUtil::CreateChild($current, "ol", "");
+			$node = XmlUtil::createChild($current, "ol", "");
 		}
 		if ($this->_name != "")
 		{
-			XmlUtil::AddAttribute($node, "name", $this->_name);
+			XmlUtil::addAttribute($node, "name", $this->_name);
 		}
 		$this->generatePage($node);
 	}

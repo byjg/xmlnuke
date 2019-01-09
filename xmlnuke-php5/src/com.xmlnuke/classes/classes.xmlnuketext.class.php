@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -81,22 +83,22 @@ class XmlnukeText extends XmlnukeDocumentObject
 		$node = $current;
 		if ($this->_bold)
 		{
-			$node = XmlUtil::CreateChild($node, "b", "");
+			$node = XmlUtil::createChild($node, "b", "");
 		}
 		if ($this->_italic)
 		{
-			$node = XmlUtil::CreateChild($node, "i", "");
+			$node = XmlUtil::createChild($node, "i", "");
 		}
 		if ($this->_underline)
 		{
-			$node = XmlUtil::CreateChild($node, "u", "");
+			$node = XmlUtil::createChild($node, "u", "");
 		}
 
-		XmlUtil::AddTextNode($node, $this->_text);
+		XmlUtil::addTextNode($node, $this->_text);
 		
 		if ($this->_breakline)
 		{
-			XmlUtil::CreateChild($node, "br", "");
+			XmlUtil::createChild($node, "br", "");
 		}
 
 	}

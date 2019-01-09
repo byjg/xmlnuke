@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * Implements a XMLNuke Document. 
  * 
@@ -241,21 +243,21 @@ class XmlnukeDocument extends XmlnukeCollection implements IXmlnukeDocument
 		$created = date("d/M/y h:m:s");
 		$createdTimeStamp = microtime(true);
 		
-		$xmlDoc = XmlUtil::CreateXmlDocument();
+		$xmlDoc = XmlUtil::createXmlDocument();
 
 		// Create the First first NODE ELEMENT!
 		$nodePage = $xmlDoc->createElement("page");
 		$xmlDoc->appendChild($nodePage);
 
 		// Create the META node
-		$nodeMeta = XmlUtil::CreateChild($nodePage, "meta", "");
-		XmlUtil::CreateChild($nodeMeta, "title", $this->_pageTitle);
-		XmlUtil::CreateChild($nodeMeta, "abstract", $this->_abstract);
-		XmlUtil::CreateChild($nodeMeta, "keyword", $this->_keyword);
-		XmlUtil::CreateChild($nodeMeta, "groupkeyword", $this->_groupKeyword);
+		$nodeMeta = XmlUtil::createChild($nodePage, "meta", "");
+		XmlUtil::createChild($nodeMeta, "title", $this->_pageTitle);
+		XmlUtil::createChild($nodeMeta, "abstract", $this->_abstract);
+		XmlUtil::createChild($nodeMeta, "keyword", $this->_keyword);
+		XmlUtil::createChild($nodeMeta, "groupkeyword", $this->_groupKeyword);
 		foreach ($this->_metaTag as $key=>$value)
 		{
-			XmlUtil::CreateChild($nodeMeta, $key, $value);
+			XmlUtil::createChild($nodeMeta, $key, $value);
 		}
 		
 		// Create MENU (if exists some elements in menu).
@@ -263,20 +265,20 @@ class XmlnukeDocument extends XmlnukeCollection implements IXmlnukeDocument
 		{
 			if (sizeof($menuGroup->menus) > 0)
 			{
-				$nodeGroup = XmlUtil::CreateChild($nodePage, "group", "");
-				XmlUtil::CreateChild($nodeGroup, "id", $key);
-				XmlUtil::CreateChild($nodeGroup, "title", $menuGroup->menuTitle);
-				XmlUtil::CreateChild($nodeGroup, "keyword", "all");
+				$nodeGroup = XmlUtil::createChild($nodePage, "group", "");
+				XmlUtil::createChild($nodeGroup, "id", $key);
+				XmlUtil::createChild($nodeGroup, "title", $menuGroup->menuTitle);
+				XmlUtil::createChild($nodeGroup, "keyword", "all");
 
 				foreach($menuGroup->menus as $item)
 				{ 
-					$nodeWorking = XmlUtil::CreateChild($nodeGroup, "page", "");
-					XmlUtil::CreateChild($nodeWorking, "id", $item->id);
-					XmlUtil::CreateChild($nodeWorking, "title", $item->title);
-					XmlUtil::CreateChild($nodeWorking, "summary", $item->summary);
+					$nodeWorking = XmlUtil::createChild($nodeGroup, "page", "");
+					XmlUtil::createChild($nodeWorking, "id", $item->id);
+					XmlUtil::createChild($nodeWorking, "title", $item->title);
+					XmlUtil::createChild($nodeWorking, "summary", $item->summary);
 					if ($item->icon != "")
 					{
-						XmlUtil::CreateChild($nodeWorking, "icon", $item->icon);
+						XmlUtil::createChild($nodeWorking, "icon", $item->icon);
 					}
 				} 
 			}
@@ -297,14 +299,14 @@ class XmlnukeDocument extends XmlnukeCollection implements IXmlnukeDocument
 		{
 			foreach($this->_scripts as $script) 
 			{		
-				$nodeWorking = XmlUtil::CreateChild($nodePage, "script", "");
-				XmlUtil::AddAttribute($nodeWorking, "language", "javascript");
+				$nodeWorking = XmlUtil::createChild($nodePage, "script", "");
+				XmlUtil::addAttribute($nodeWorking, "language", "javascript");
 				if(!is_null($script->source))
-					XmlUtil::AddTextNode($nodeWorking, $script->source, true);
+					XmlUtil::addTextNode($nodeWorking, $script->source, true);
 				if(!is_null($script->file))
-					XmlUtil::AddAttribute($nodeWorking, "src", $script->file);
+					XmlUtil::addAttribute($nodeWorking, "src", $script->file);
 				
-				XmlUtil::AddAttribute($nodeWorking, "location", $script->location);
+				XmlUtil::addAttribute($nodeWorking, "location", $script->location);
 			}
 		}
 		
@@ -314,11 +316,11 @@ class XmlnukeDocument extends XmlnukeCollection implements IXmlnukeDocument
 		//----------------------------------------------------------
 
 		// Finalize the Create Page Execution
-		XmlUtil::CreateChild($nodeMeta, "created", $created);
-		XmlUtil::CreateChild($nodeMeta, "modified", date("d/M/y h:m:s"));
+		XmlUtil::createChild($nodeMeta, "created", $created);
+		XmlUtil::createChild($nodeMeta, "modified", date("d/M/y h:m:s"));
 		$elapsed = microtime(true)-$createdTimeStamp;
-		XmlUtil::CreateChild($nodeMeta, "timeelapsed", intval($elapsed/3600) . ":" . intval($elapsed/60)%60 . ":" . $elapsed%60 . "." . substr(intval((($elapsed - intval($elapsed))*1000))/1000, 2) );
-		XmlUtil::CreateChild($nodeMeta, "timeelapsedsec", $elapsed );
+		XmlUtil::createChild($nodeMeta, "timeelapsed", intval($elapsed/3600) . ":" . intval($elapsed/60)%60 . ":" . $elapsed%60 . "." . substr(intval((($elapsed - intval($elapsed))*1000))/1000, 2) );
+		XmlUtil::createChild($nodeMeta, "timeelapsedsec", $elapsed );
 		
 		return $xmlDoc;
 	}

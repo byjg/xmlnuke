@@ -28,6 +28,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+use ByJG\Util\XmlUtil;
+
 
 /**
  * @package xmlnuke
@@ -158,11 +160,11 @@ class XmlnukeMediaGallery extends XmlnukeCollection implements IXmlnukeDocumentO
 
 	public function generateObject($current)
 	{
-		$mediaGallery = XmlUtil::CreateChild($current, "mediagallery");
-		XmlUtil::AddAttribute($mediaGallery, "name", $this->_name);
-		XmlUtil::AddAttribute($mediaGallery, "api", ($this->_api ? "true" : "false"));
-		XmlUtil::AddAttribute($mediaGallery, "visible", ($this->_visible ? "true" : "false"));
-		XmlUtil::AddAttribute($mediaGallery, "showthumbcaption", ($this->_showCaptionOnThumb ? "true" : "false"));
+		$mediaGallery = XmlUtil::createChild($current, "mediagallery");
+		XmlUtil::addAttribute($mediaGallery, "name", $this->_name);
+		XmlUtil::addAttribute($mediaGallery, "api", ($this->_api ? "true" : "false"));
+		XmlUtil::addAttribute($mediaGallery, "visible", ($this->_visible ? "true" : "false"));
+		XmlUtil::addAttribute($mediaGallery, "showthumbcaption", ($this->_showCaptionOnThumb ? "true" : "false"));
 		$this->generatePage($mediaGallery);
 		
 		return $mediaGallery;

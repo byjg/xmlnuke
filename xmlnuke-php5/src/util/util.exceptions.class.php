@@ -166,28 +166,6 @@ class FileUtilException extends XMLNukeException
 }
 
 /**
- * This Xml Util exception type
- * Range code error: 250 to 399
- * @package xmlnuke
- * @subpackage xmlnuke.kernel
- */
-class XmlUtilException extends XMLNukeException
-{
-
-	/**
-	 *
-	 * @param type $message
-	 * @param type $code
-	 * @param type $previous
-	 */
-	public function __construct($message = "", $code = null, $previous = null)
-	{
-		parent::__construct($message, $code, $previous);
-		$this->showStackTrace = true;
-	}
-}
-
-/**
  * This Date Util exception type
  * Range code error: 700 to 749
  * @package xmlnuke

@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -59,9 +61,9 @@ class XmlInputHidden extends XmlnukeDocumentObject
 	*/
 	public function generateObject($current)
 	{
-		$nodeWorking = XmlUtil::CreateChild($current, "hidden", "");
-		XmlUtil::AddAttribute($nodeWorking, "name", $this->_name);
-		XmlUtil::AddAttribute($nodeWorking, "value", $this->_value);
+		$nodeWorking = XmlUtil::createChild($current, "hidden", "");
+		XmlUtil::addAttribute($nodeWorking, "name", $this->_name);
+		XmlUtil::addAttribute($nodeWorking, "value", $this->_value);
 	}
 }
 ?>

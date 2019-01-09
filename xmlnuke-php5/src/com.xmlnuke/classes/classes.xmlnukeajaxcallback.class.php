@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -91,13 +93,13 @@ class XmlnukeAjaxCallback extends XmlnukeDocumentObject
 	
 	public function generateObject($current)
 	{
-		$node = XmlUtil::CreateChild($current, "ajaxcallback", "");
+		$node = XmlUtil::createChild($current, "ajaxcallback", "");
 		if ($this->_class != "")
 		{
-			XmlUtil::AddAttribute($node, "class", $this->getClass());
+			XmlUtil::addAttribute($node, "class", $this->getClass());
 		}
-		XmlUtil::AddAttribute($node, "style", $this->getStyle());
-		XmlUtil::AddAttribute($node, "id", $this->getId());
+		XmlUtil::addAttribute($node, "style", $this->getStyle());
+		XmlUtil::addAttribute($node, "id", $this->getId());
 	}
 }
 

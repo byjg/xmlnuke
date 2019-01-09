@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+use ByJG\Util\XmlUtil;
+
 
 /**
  * @package xmlnuke
@@ -57,9 +59,9 @@ class XmlnukeProgressBar extends XmlnukeDocumentObject
 
 	public function generateObject($current)
 	{
-		$node = XmlUtil::CreateChild($current, "progressbar", "");
-		XmlUtil::AddAttribute($node, "name", $this->_name);
-		XmlUtil::AddAttribute($node, "value", $this->_value);
+		$node = XmlUtil::createChild($current, "progressbar", "");
+		XmlUtil::addAttribute($node, "name", $this->_name);
+		XmlUtil::addAttribute($node, "value", $this->_value);
 	}
 }
 

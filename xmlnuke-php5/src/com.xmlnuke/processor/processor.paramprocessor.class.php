@@ -26,7 +26,9 @@
  *
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
-	
+
+use ByJG\Util\XmlUtil;
+
 /**
 *ParamProcessor can process the XSL transform result (or xhtml cache) and replace the [PARAM:...] 
 *and Adjust Links to Full XMLNuke link (when is possible).
@@ -296,15 +298,15 @@ class ParamProcessor
 
 						//$result = str_replace("&amp;","&",$result);
 					
-						$nodeToProc = XmlUtil::CreateXmlDocumentFromStr("<root>$result</root>", false)->documentElement;
+						$nodeToProc = XmlUtil::createXmlDocumentFromStr("<root>$result</root>", false)->documentElement;
 						if ($node->nodeType == XML_TEXT_NODE)
 						{
 							$node->nodeValue = "";
-							XmlUtil::AddNodeFromNode($node->parentNode, $nodeToProc);
+							XmlUtil::addNodeFromNode($node->parentNode, $nodeToProc);
 						}
 						else
 						{
-							XmlUtil::AddNodeFromNode($node, $nodeToProc);
+							XmlUtil::addNodeFromNode($node, $nodeToProc);
 						}
 					}
 					catch (Exception $ex)

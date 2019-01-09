@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -61,12 +63,12 @@ class XmlAnchorCollection extends XmlnukeCollection implements IXmlnukeDocumentO
 	public function generateObject($current)
 	{
 		
-		$nodeWorking = XmlUtil::CreateChild($current, "a", "");
+		$nodeWorking = XmlUtil::createChild($current, "a", "");
 		$link = str_replace("&", "&amp;", $this->_src);
-		XmlUtil::AddAttribute($nodeWorking, "href", $link);
+		XmlUtil::addAttribute($nodeWorking, "href", $link);
 		if ($this->_target != "")
 		{
-			XmlUtil::AddAttribute($nodeWorking, "target", $this->_target);
+			XmlUtil::addAttribute($nodeWorking, "target", $this->_target);
 		}
 		$this->generatePage($nodeWorking);		
 	}

@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * Implements a XMLNuke Document. 
  * 
@@ -57,7 +59,7 @@ class XmlnukeEmptyDocument extends XmlnukeCollection implements IXmlnukeDocument
 	*/
 	public function makeDomObject()
 	{
-		$xmlDoc = XmlUtil::CreateXmlDocument();
+		$xmlDoc = XmlUtil::createXmlDocument();
 
 		// Create the First first NODE ELEMENT!
 		$nodePage = $xmlDoc->createElement($this->_rootNode);
@@ -70,11 +72,11 @@ class XmlnukeEmptyDocument extends XmlnukeCollection implements IXmlnukeDocument
 
 		/*
 		// Finalize the Create Page Execution
-		XmlUtil::CreateChild($nodeMeta, "created", $created);
-		XmlUtil::CreateChild($nodeMeta, "modified", date("d/M/y h:m:s"));
+		XmlUtil::createChild($nodeMeta, "created", $created);
+		XmlUtil::createChild($nodeMeta, "modified", date("d/M/y h:m:s"));
 		$elapsed = microtime(true)-$createdTimeStamp;
-		XmlUtil::CreateChild($nodeMeta, "timeelapsed", intval($elapsed/3600) . ":" . intval($elapsed/60)%60 . ":" . $elapsed%60 . "." . substr(intval((($elapsed - intval($elapsed))*1000))/1000, 2) );
-		XmlUtil::CreateChild($nodeMeta, "timeelapsedsec", $elapsed );
+		XmlUtil::createChild($nodeMeta, "timeelapsed", intval($elapsed/3600) . ":" . intval($elapsed/60)%60 . ":" . $elapsed%60 . "." . substr(intval((($elapsed - intval($elapsed))*1000))/1000, 2) );
+		XmlUtil::createChild($nodeMeta, "timeelapsedsec", $elapsed );
 		*/
 
 		return $xmlDoc;

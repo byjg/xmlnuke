@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -56,12 +58,12 @@ class XmlnukeFaq extends XmlnukeDocumentObject
 		
 	public function generateObject($current)
 	{
-		$node = XmlUtil::CreateChild($current, "faq", "");
-		XmlUtil::AddAttribute($node, "title", $this->_title);
+		$node = XmlUtil::createChild($current, "faq", "");
+		XmlUtil::addAttribute($node, "title", $this->_title);
 		foreach ($this->_faqs as $key=>$value) 
 		{
-			$nodefaq = XmlUtil::CreateChild($node, "item", "");
-			XmlUtil::AddAttribute($nodefaq, "question", $key);
+			$nodefaq = XmlUtil::createChild($node, "item", "");
+			XmlUtil::addAttribute($nodefaq, "question", $key);
 			$value->generateObject($nodefaq);
 		}
 	}

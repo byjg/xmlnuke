@@ -27,6 +27,8 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
+use ByJG\Util\XmlUtil;
+
 /**
 * Generic functions to manipulate Files and system access.
 */
@@ -611,7 +613,7 @@ class FileUtil
 		$xmlString = preg_replace($search, $replace, $xmlString);
 		//$xmlString = tidy_parse_string($xmlString, array('output-xml' => TRUE), 'UTF8');
 
-		$xmldoc = XmlUtil::CreateXmlDocumentFromStr($xmlString);
+		$xmldoc = XmlUtil::createXmlDocumentFromStr($xmlString);
 
 		return $xmldoc;
 	}

@@ -27,7 +27,9 @@
  *
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
-	
+
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -64,10 +66,10 @@ class XmlInputImageValidate extends XmlnukeDocumentObject
 	*/
 	public function generateObject($current)
 	{
-		$nodeWorking = XmlUtil::CreateChild($current, "imagevalidate", "");
-		XmlUtil::AddAttribute($nodeWorking, "caption", $this->_caption);
-		XmlUtil::AddAttribute($nodeWorking, "challengequestion", $this->_challengeQuestion);
-		XmlUtil::AddAttribute($nodeWorking, "chars", $this->_chars);
+		$nodeWorking = XmlUtil::createChild($current, "imagevalidate", "");
+		XmlUtil::addAttribute($nodeWorking, "caption", $this->_caption);
+		XmlUtil::addAttribute($nodeWorking, "challengequestion", $this->_challengeQuestion);
+		XmlUtil::addAttribute($nodeWorking, "chars", $this->_chars);
 	}
 	
 	/**

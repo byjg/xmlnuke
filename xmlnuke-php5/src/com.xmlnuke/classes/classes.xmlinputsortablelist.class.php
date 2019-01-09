@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -137,26 +139,26 @@ class XmlInputSortableList extends XmlnukeDocumentObject
 			throw new InvalidArgumentException("XmlInputSortableList must be inside a XmlFormCollection");
 		}
 
-		$node = XmlUtil::CreateChild($current, "sortablelist", "");
-		XmlUtil::AddAttribute($node, "name", $this->_name);
-		XmlUtil::AddAttribute($node, "caption", $this->_caption);
-		XmlUtil::AddAttribute($node, "connectkey", $this->getConnectKey());
-		XmlUtil::AddAttribute($node, "columns", $this->_columns);
-		XmlUtil::AddAttribute($node, "fullsize", ($this->_fullSize ? "true" : "false"));
+		$node = XmlUtil::createChild($current, "sortablelist", "");
+		XmlUtil::addAttribute($node, "name", $this->_name);
+		XmlUtil::addAttribute($node, "caption", $this->_caption);
+		XmlUtil::addAttribute($node, "connectkey", $this->getConnectKey());
+		XmlUtil::addAttribute($node, "columns", $this->_columns);
+		XmlUtil::addAttribute($node, "fullsize", ($this->_fullSize ? "true" : "false"));
 		foreach ($this->_items as $index=>$column)
 		{
-			$columnNode = XmlUtil::CreateChild($node, "column", "");
-			XmlUtil::AddAttribute($columnNode, "id", $index);
+			$columnNode = XmlUtil::createChild($node, "column", "");
+			XmlUtil::addAttribute($columnNode, "id", $index);
 
 			foreach ($column as $key=>$value)
 			{
 				$info = explode("|", $key);
-				$nodeitem = XmlUtil::CreateChild($columnNode, "item", "");
-				XmlUtil::AddAttribute($nodeitem, "key", $info[0]);
-				XmlUtil::AddAttribute($nodeitem, "state", $info[1]);
+				$nodeitem = XmlUtil::createChild($columnNode, "item", "");
+				XmlUtil::addAttribute($nodeitem, "key", $info[0]);
+				XmlUtil::addAttribute($nodeitem, "state", $info[1]);
 				if (is_array($value))
 				{
-					XmlUtil::AddAttribute($nodeitem, "title", $value[0]);
+					XmlUtil::addAttribute($nodeitem, "title", $value[0]);
 					$value[1]->generateObject($nodeitem);
 				}
 				else

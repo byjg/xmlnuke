@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -84,7 +86,7 @@ class ManageXSL extends BaseAdminModule
 			{
 				// It is necessary only to load the document to check if it is OK.
 				// If OK, use the original raw file
-				$xsl = XmlUtil::CreateXmlDocumentFromStr($contents);
+				$xsl = XmlUtil::createXmlDocumentFromStr($contents);
 				$xslFile = new XSLFilenameProcessor($id);
 				FileUtil::QuickFileWrite($xslFile->FullQualifiedNameAndPath(), str_replace("&amp;#", "&#", $contents));
 
@@ -182,8 +184,8 @@ class ManageXSL extends BaseAdminModule
 				if (FileUtil::Exists($xslFile->FullQualifiedNameAndPath()))
 				{
 					//XmlDocument
-					$xsl = XmlUtil::CreateXmlDocumentFromFile($xslFile->FullQualifiedNameAndPath());
-					$contents = XmlUtil::GetFormattedDocument($xsl);
+					$xsl = XmlUtil::createXmlDocumentFromFile($xslFile->FullQualifiedNameAndPath());
+					$contents = XmlUtil::getFormattedDocument($xsl);
 
 				}
 			}

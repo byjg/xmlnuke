@@ -27,6 +27,8 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
+use ByJG\Util\XmlUtil;
+
 /**
  * @package xmlnuke
  */
@@ -174,19 +176,19 @@ class XmlFormCollection extends XmlnukeCollection implements IXmlnukeDocumentObj
 	*/
 	public function generateObject($current)
 	{
-		$nodeWorking = XmlUtil::CreateChild($current, "editform", "");
-		XmlUtil::AddAttribute($nodeWorking, "action", $this->_action);
-		XmlUtil::AddAttribute($nodeWorking, "title", $this->_title);
-		XmlUtil::AddAttribute($nodeWorking, "name", $this->_formname);
+		$nodeWorking = XmlUtil::createChild($current, "editform", "");
+		XmlUtil::addAttribute($nodeWorking, "action", $this->_action);
+		XmlUtil::addAttribute($nodeWorking, "title", $this->_title);
+		XmlUtil::addAttribute($nodeWorking, "name", $this->_formname);
 		if ($this->_target != "")
 		{
-			XmlUtil::AddAttribute($nodeWorking, "target", $this->_target);
+			XmlUtil::addAttribute($nodeWorking, "target", $this->_target);
 		}
 		if ($this->_jsValidate)
 		{
-			XmlUtil::AddAttribute($nodeWorking, "jsvalidate", "true");
-			XmlUtil::AddAttribute($nodeWorking, "decimalseparator", $this->_decimalSeparator);
-			XmlUtil::AddAttribute($nodeWorking, "dateformat", $this->_dateformat);
+			XmlUtil::addAttribute($nodeWorking, "jsvalidate", "true");
+			XmlUtil::addAttribute($nodeWorking, "decimalseparator", $this->_decimalSeparator);
+			XmlUtil::addAttribute($nodeWorking, "dateformat", $this->_dateformat);
 			$this->_customSubmit .= (($this->_customSubmit!="")?" &amp;&amp; ":"") . $this->_formname . "_checksubmit()";
 		}
 
@@ -197,11 +199,11 @@ class XmlFormCollection extends XmlnukeCollection implements IXmlnukeDocumentObj
 		}
 		if ($this->_customSubmit != "")
 		{
-			XmlUtil::AddAttribute($nodeWorking, "customsubmit", $this->_customSubmit);
+			XmlUtil::addAttribute($nodeWorking, "customsubmit", $this->_customSubmit);
 		}
 		if ($this->_disableAutoComplete)
 		{
-			XmlUtil::AddAttribute($nodeWorking, "autocomplete", "off");
+			XmlUtil::addAttribute($nodeWorking, "autocomplete", "off");
 		}
 
 		$this->generatePage($nodeWorking);
