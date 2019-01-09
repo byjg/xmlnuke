@@ -297,8 +297,8 @@ class XmlNukeEngine
 		$allFile = new XMLFilenameProcessor("_all");
 		$indexFile = new XMLFilenameProcessor("index");
 
-		XmlUtil::addNodeFromFile($nodePage, $allFile, "page");
-		XmlUtil::addNodeFromFile($nodePage, $indexFile, "xmlindex");
+		XmlUtil::addNodeFromFile($nodePage, $allFile->FullQualifiedNameAndPath(), "page");
+		XmlUtil::addNodeFromFile($nodePage, $indexFile->FullQualifiedNameAndPath(), "xmlindex");
 
 	}
 
