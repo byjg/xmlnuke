@@ -1,0 +1,13 @@
+#!/bin/bash
+#docker build -t composer56 -f Dockerfile-composer56 .
+
+docker run \
+    -u $UID:${GROUPS[0]} \
+    -it --rm --name byjgcli \
+    -v "$PWD":/usr/src/myapp \
+    -v /etc/passwd:/etc/passwd:ro \
+    -v /etc/group:/etc/group:ro \
+    -w /usr/src/myapp \
+    -e COMPOSER_HOME=/usr/src/myapp \
+    byjg/php:5.6-base \
+    composer "$@"

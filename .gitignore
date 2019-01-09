@@ -46,3 +46,8 @@ bin/*
 .parent
 Thumbs.db
 
+vendor
+composer.lock
+cache
+.idea
+.htaccess
