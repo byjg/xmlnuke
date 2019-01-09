@@ -1,5 +1,7 @@
 <?php
 
+use ByJG\Util\WebRequest;
+
 /**
  * @package xmlnuke
  */
@@ -195,7 +197,7 @@ class OAuthClient20
 				);
 				
 				$req = new WebRequest($to->authorizationURL());
-				$req->Redirect($params, $this->_window_top);
+				$req->redirect($params, $this->_window_top);
 			}
 			
 			// Request the Access Token
@@ -209,7 +211,7 @@ class OAuthClient20
 				);
 				
 				$req = new WebRequest($to->accessTokenURL());
-				$response = $req->Get($params);
+				$response = $req->get($params);
 
 				$paramsResp = null;
 				parse_str($response, $paramsResp);
@@ -224,7 +226,7 @@ class OAuthClient20
 				if ($this->_app_uri != "")
 				{
 					$req = new WebRequest($this->_app_uri);
-					$response = $req->Redirect();
+					$response = $req->redirect();
 				}
 			}
 		}
