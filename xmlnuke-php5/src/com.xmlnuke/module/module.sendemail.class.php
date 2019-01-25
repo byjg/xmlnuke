@@ -237,7 +237,7 @@ class SendEmail extends BaseModule
 				$this->_subject,
 				$this->_extraMessage . $this->_message
 			);
-			$envelope->setReplyTo(Util::getFullEmail($this->_fromName, $this->_fromEmail));
+			$envelope->setReplyTo(Util::getFullEmail($this->_fromEmail, $this->_fromName));
 			$envelope->setBCC($this->_fromEmail);
 
 			$mailer = MailerFactory::create(Context::getInstance()->get("xmlnuke.SMTPSERVER"));

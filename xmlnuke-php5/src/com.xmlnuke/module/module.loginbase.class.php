@@ -153,7 +153,7 @@ abstract class LoginBase extends BaseModule
 
 		$envelope = new Envelope(
 			Context::getInstance()->get("new.EMAIL_DEFAULT"),
-			Util::getFullEmail($name, $email),
+			Util::getFullEmail($email, $name),
 			$myWords->Value("SUBJECTMESSAGE", "[" . $this->_context->ContextValue("SERVER_NAME") . "]"),
 			$body
 		);
