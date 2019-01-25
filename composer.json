@@ -7,6 +7,7 @@
     "byjg/imageutil": "1.0.*",
     "byjg/webrequest": "1.0.*",
     "byjg/xmlutil": "1.0.*",
+    "byjg/mailwrapper": "2.0.*",
     "ext-json": "*"
   }
 }

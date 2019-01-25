@@ -4,7 +4,5 @@ require_once(PHPXMLNUKEDIR . "src/util/util.dateutil.class.php");
 require_once(PHPXMLNUKEDIR . "src/util/util.debug.class.php");
 require_once(PHPXMLNUKEDIR . "src/util/util.exceptions.class.php");
 require_once(PHPXMLNUKEDIR . "src/util/util.fileutil.class.php");
-require_once(PHPXMLNUKEDIR . "src/util/util.mailutil.class.php");
-require_once(PHPXMLNUKEDIR . "src/util/util.xmlutil.class.php");
 require_once(PHPXMLNUKEDIR . "src/util/util.logwrapper.class.php");
 ?>

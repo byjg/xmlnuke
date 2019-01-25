@@ -27,6 +27,10 @@
 *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
+use ByJG\Mail\Envelope;
+use ByJG\Mail\MailerFactory;
+use ByJG\Mail\Util;
+
 /**
  * Login is a default module descendant from BaseModule class.
  * This class shows/edit the profile from the current user.
@@ -138,6 +142,7 @@ abstract class LoginBase extends BaseModule
 	 * @param String $user
 	 * @param String $email
 	 * @param String $password
+	 * @throws \ByJG\Mail\Exception\ProtocolNotRegisteredException
 	 */
 	protected function sendWelcomeMessage($myWords, $name, $user, $email, $password)
 	{
@@ -146,12 +151,15 @@ abstract class LoginBase extends BaseModule
 		$url = "http://" . $this->_context->ContextValue("SERVER_NAME").$path;
 		$body = $myWords->ValueArgs("WELCOMEMESSAGE", array($name, $this->_context->ContextValue("SERVER_NAME"), $user, $password, $url.$this->_context->bindModuleUrl("UserProfile")));
 
-		$envelope = new MailEnvelope(
-			MailUtil::getFullEmailName($name, $email),
+		$envelope = new Envelope(
+			Context::getInstance()->get("new.EMAIL_DEFAULT"),
+			Util::getFullEmail($name, $email),
 			$myWords->Value("SUBJECTMESSAGE", "[" . $this->_context->ContextValue("SERVER_NAME") . "]"),
 			$body
 		);
-		$envelope->Send();
+
+		$mailer = MailerFactory::create(Context::getInstance()->get("xmlnuke.SMTPSERVER"));
+		$mailer->send($envelope);
 	}
 }
 ?>

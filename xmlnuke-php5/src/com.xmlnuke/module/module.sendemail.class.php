@@ -27,6 +27,10 @@
  *=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
  */
 
+use ByJG\Mail\Envelope;
+use ByJG\Mail\MailerFactory;
+use ByJG\Mail\Util;
+
 /**
  * SendEmail is a sample module descendant from BaseModule class.
  * This class shows how to create a simple module to send a email from Xmlnuke site.
@@ -227,11 +231,17 @@ class SendEmail extends BaseModule
 		}
 		else
 		{
-			$envelope = new MailEnvelope(MailUtil::getEmailFromID($this->_toName_ID), $this->_subject, $this->_extraMessage . $this->_message);
-			$envelope->setFrom(MailUtil::getEmailFromID("DEFAULT", $this->_fromName));
-			$envelope->setReplyTo(MailUtil::getFullEmailName($this->_fromName, $this->_fromEmail));
+			$envelope = new Envelope(
+				Context::getInstance()->get("new.EMAIL_DEFAULT"),
+				Context::getInstance()->get("new.EMAIL_DEFAULT"),
+				$this->_subject,
+				$this->_extraMessage . $this->_message
+			);
+			$envelope->setReplyTo(Util::getFullEmail($this->_fromName, $this->_fromEmail));
 			$envelope->setBCC($this->_fromEmail);
-			$envelope->Send();
+
+			$mailer = MailerFactory::create(Context::getInstance()->get("xmlnuke.SMTPSERVER"));
+			$mailer->send($envelope);
 
 			if ($this->_redirect != "")
 			{
