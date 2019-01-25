@@ -697,7 +697,12 @@ class Context extends BaseSingleton
 	{
 		return $this->Value($key);
 	}
-	
+
+	public function get($key)
+    {
+        return $this->Value($key);
+    }
+
 	/**
 	 *
 	 * @deprecated since version 3.6. use putValue() instead.
