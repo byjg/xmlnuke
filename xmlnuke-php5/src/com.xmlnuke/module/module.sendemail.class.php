@@ -235,7 +235,8 @@ class SendEmail extends BaseModule
 				Context::getInstance()->get("new.EMAIL_DEFAULT"),
 				Context::getInstance()->get("new.EMAIL_DEFAULT"),
 				$this->_subject,
-				$this->_extraMessage . $this->_message
+				$this->_extraMessage . $this->_message,
+				false
 			);
 			$envelope->setReplyTo(Util::getFullEmail($this->_fromEmail, $this->_fromName));
 			$envelope->setBCC($this->_fromEmail);

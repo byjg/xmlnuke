@@ -155,7 +155,7 @@ abstract class LoginBase extends BaseModule
 			Context::getInstance()->get("new.EMAIL_DEFAULT"),
 			Util::getFullEmail($email, $name),
 			$myWords->Value("SUBJECTMESSAGE", "[" . $this->_context->ContextValue("SERVER_NAME") . "]"),
-			$body
+			str_replace("\n", "<br>", $body)
 		);
 
 		$mailer = MailerFactory::create(Context::getInstance()->get("xmlnuke.SMTPSERVER"));
