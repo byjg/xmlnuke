@@ -5,7 +5,7 @@
     "byjg/jwt-session": "2.0.*",
     "byjg/cache-engine": "4.0.*",
     "byjg/imageutil": "1.0.*",
-    "byjg/webrequest": "1.0.*",
+    "byjg/webrequest": "dev-psr7",
     "byjg/xmlutil": "1.0.*",
     "byjg/mailwrapper": "2.0.*",
     "ext-json": "*"
