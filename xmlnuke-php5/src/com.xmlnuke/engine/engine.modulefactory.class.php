@@ -111,7 +111,7 @@ class ModuleFactory
 		$result->Setup($xml, $o);
 
 		$urlSSL = "";
-		$isHttps = ( ($context->Value("HTTPS") == "on") || ($context->Value("HTTP_X_FORWARDED_PROTO") == "https") );
+		$isHttps = ( ($context->Value("HTTPS") == "on") || ($context->Value("HTTP_X_FORWARDED_PROTO") == "https") || (strpos($context->Value("HTTP_CF_VISITOR"), "https") !== false) );
 		$requireSSL = $result->requiresSSL();
 
 		if ( ($requireSSL == SSLAccess::ForcePlain) && $isHttps )
